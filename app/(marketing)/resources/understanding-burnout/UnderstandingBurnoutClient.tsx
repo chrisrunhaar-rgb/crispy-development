@@ -146,6 +146,7 @@ export default function UnderstandingBurnoutClient({
   const [currentQ, setCurrentQ] = useState(0);
   const [showResult, setShowResult] = useState(false);
   const [bgOpen, setBgOpen] = useState(false);
+  const [leaderOpen, setLeaderOpen] = useState(false);
 
   function handleAnswer(value: number) {
     const next = [...answers];
@@ -1575,6 +1576,129 @@ export default function UnderstandingBurnoutClient({
           </ol>
         </div>
       </section>
+
+      {/* ============================================================
+          FOR TEAM LEADERS CALLOUT
+          ============================================================ */}
+      <div style={{ background: "oklch(93% 0.005 80)", padding: "48px 24px" }}>
+        <div style={{ maxWidth: 780, margin: "0 auto" }}>
+          <div
+            style={{
+              border: "1.5px solid oklch(82% 0.012 80)",
+              borderRadius: 12,
+              background: "oklch(97% 0.004 80)",
+              overflow: "hidden",
+            }}
+          >
+            <div style={{ padding: "28px 32px 24px" }}>
+              <p
+                style={{
+                  fontFamily: "Montserrat, sans-serif",
+                  fontSize: "0.7rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.14em",
+                  textTransform: "uppercase" as const,
+                  color: orange,
+                  margin: "0 0 10px 0",
+                }}
+              >
+                {t("For Team Leaders", "Untuk Pemimpin Tim", lang)}
+              </p>
+              <button
+                onClick={() => setLeaderOpen((v) => !v)}
+                aria-expanded={leaderOpen}
+                aria-controls="leader-callout-body"
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  gap: "1rem",
+                  background: "transparent",
+                  border: "none",
+                  padding: 0,
+                  cursor: "pointer",
+                  textAlign: "left" as const,
+                }}
+              >
+                <h3
+                  style={{
+                    fontFamily: "'Cormorant Garamond', Georgia, serif",
+                    fontSize: "clamp(22px, 3vw, 30px)",
+                    fontWeight: 600,
+                    lineHeight: 1.2,
+                    color: navy,
+                    margin: 0,
+                  }}
+                >
+                  {t("If You Lead a Cross-Cultural Team", "Jika Kamu Memimpin Tim Lintas Budaya", lang)}
+                </h3>
+                <span
+                  style={{
+                    flexShrink: 0,
+                    fontFamily: "Montserrat, sans-serif",
+                    fontSize: "0.85rem",
+                    fontWeight: 700,
+                    color: leaderOpen ? "#fff" : orange,
+                    border: `1.5px solid ${orange}`,
+                    borderRadius: 8,
+                    padding: "6px 14px",
+                    whiteSpace: "nowrap" as const,
+                    transition: "background 0.15s ease, color 0.15s ease",
+                    background: leaderOpen ? orange : "transparent",
+                  }}
+                >
+                  {leaderOpen ? t("Close", "Tutup", lang) + " ↑" : t("Read", "Baca", lang) + " →"}
+                </span>
+              </button>
+            </div>
+            <div
+              id="leader-callout-body"
+              role="region"
+              aria-label={t("For Team Leaders content", "Konten untuk pemimpin tim", lang)}
+              style={{
+                display: "grid",
+                gridTemplateRows: leaderOpen ? "1fr" : "0fr",
+                transition: "grid-template-rows 0.3s ease",
+              }}
+            >
+              <div style={{ overflow: "hidden" }}>
+                <div
+                  style={{
+                    borderTop: "1px solid oklch(85% 0.008 80)",
+                    padding: "24px 32px 32px",
+                  }}
+                >
+                  {(lang === "en" ? [
+                    "When someone on your team burns out, the instinct is to focus on them, to offer support, rest, or counselling. That matters. But research by Leiter and Maslach shows something uncomfortable: the same person placed in a different organisational context frequently does not burn out. The syndrome is triggered by structural conditions, not solely by individual vulnerability.",
+                    "That means burnout on your team is often a signal about your organisation, not a verdict on the person.",
+                    "Six risk factors shape whether your team environment protects or depletes: workload, control over one’s own work, reward (financial and relational), community cohesion, perceived fairness, and values alignment. These are not abstract theory. The Maslach Burnout Inventory (MBI) and the Areas of Worklife Survey (AWS) give you concrete tools to screen for these conditions before people collapse.",
+                    "The shift leaders need to make is from reactive care to structural prevention. Your team deserves both.",
+                  ] : [
+                    "Ketika seseorang di timmu mengalami burnout, naluri pertama adalah fokus pada mereka, menawarkan dukungan, istirahat, atau konseling. Itu penting. Namun penelitian oleh Leiter dan Maslach mengungkapkan sesuatu yang tidak nyaman: orang yang sama, ketika ditempatkan dalam konteks organisasi yang berbeda, sering kali tidak mengalami burnout. Sindrom ini dipicu oleh kondisi struktural, bukan semata-mata oleh kerentanan pribadi seseorang.",
+                    "Artinya, burnout dalam timmu sering kali adalah sinyal tentang organisasimu, bukan penilaian atas individu tersebut.",
+                    "Ada enam faktor risiko yang menentukan apakah lingkungan timmu melindungi atau justru menguras tenaga: beban kerja, kendali atas pekerjaan sendiri, penghargaan (finansial maupun relasional), kohesi komunitas, keadilan yang dirasakan, dan keselarasan nilai. Ini bukan teori semata. Maslach Burnout Inventory (MBI) dan Areas of Worklife Survey (AWS) memberikan alat yang konkret untuk mendeteksi kondisi-kondisi ini sebelum orang-orang di timmu jatuh.",
+                    "Pergeseran yang perlu dibuat oleh pemimpin adalah dari perawatan reaktif menuju pencegahan struktural. Timmu layak mendapatkan keduanya.",
+                  ]).map((para, i) => (
+                    <p
+                      key={i}
+                      style={{
+                        fontFamily: "Montserrat, sans-serif",
+                        fontSize: "0.93rem",
+                        lineHeight: 1.85,
+                        color: bodyText,
+                        margin: i === 0 ? 0 : "1rem 0 0 0",
+                      }}
+                    >
+                      {para}
+                    </p>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* ════════════════════════════════════════════════════════════
           LONG-FORM SEO BACKGROUND
