@@ -317,6 +317,8 @@ export default function SabbathLeaderClient({
   const [decision3, setDecision3] = useState<number | null>(null);
   const [digDeeper1Open, setDigDeeper1Open] = useState(false);
   const [digDeeper2Open, setDigDeeper2Open] = useState(false);
+  const [openSrdcCard, setOpenSrdcCard] = useState<string | null>(null);
+  const [sourcesOpen, setSourcesOpen] = useState(false);
 
   const t = (en: string, id: string) => lang === "id" ? id : en;
 
@@ -673,35 +675,12 @@ export default function SabbathLeaderClient({
             lineHeight: 1.65,
           }}>
             {t(
-              "The leaders who most need rest are the ones who find it hardest to reach. This module follows one burned-out prophet through five stations -- and what happened when God didn't fix him, but fed him. By the time you finish, you'll have a framework you can actually use.",
-              "Pemimpin yang paling butuh istirahat justru sering kali paling sulit untuk berhenti. Modul ini mengikuti perjalanan seorang nabi yang kelelahan melalui lima pos cerita -- dan apa yang terjadi ketika Tuhan tidak memperbaiki dia, tapi memberi makan dia. Saat kamu selesai, kamu akan punya kerangka kerja yang benar-benar bisa kamu pakai."
+              "God rested. He commanded rest. Jesus defended it. This module traces the biblical foundation of Sabbath -- and puts it into a framework cross-cultural leaders can actually use.",
+              "Tuhan beristirahat. Dia memerintahkan istirahat. Yesus membelanya. Modul ini menelusuri landasan alkitabiah Sabat -- dan mengubahnya menjadi kerangka yang benar-benar bisa dipakai oleh pemimpin lintas budaya."
             )}
           </p>
         </div>
       </section>
-
-      {/* ─── Slow-read notice ─── */}
-      <div style={{
-        background: "oklch(96% 0.035 75)",
-        borderBottom: `1px solid oklch(88% 0.05 75)`,
-        padding: "0.875rem 24px",
-      }}>
-        <div style={{ maxWidth: MX, margin: "0 auto", display: "flex", alignItems: "center", gap: "0.75rem" }}>
-          <span style={{ fontSize: "1rem", flexShrink: 0 }}>📖</span>
-          <p style={{
-            fontFamily: FONT,
-            fontSize: "0.78rem",
-            color: "oklch(42% 0.08 60)",
-            margin: 0,
-            lineHeight: 1.5,
-          }}>
-            {t(
-              "This module takes 15--20 minutes to read. It is built for slow reading -- follow Elijah through each station before moving on.",
-              "Modul ini membutuhkan 15--20 menit untuk dibaca. Dirancang untuk dibaca pelan -- ikuti perjalanan Elia di setiap pos sebelum melanjutkan."
-            )}
-          </p>
-        </div>
-      </div>
 
       {/* ════════════════════════════════════════════════════════════
           INTRODUCTION
@@ -710,36 +689,20 @@ export default function SabbathLeaderClient({
         <div style={inner}>
           <p style={prose}>
             {t(
-              "Burnout is not a season you push through. That is the lie most leaders are living with -- the idea that if you just stay the course long enough, the exhaustion will lift and momentum will return. It rarely works that way.",
-              "Kelelahan bukan musim yang harus kamu terobos. Itu adalah kebohongan yang dihidupi oleh banyak pemimpin -- gagasan bahwa jika kamu cukup bertahan, kelelahan akan hilang dan momentum akan kembali. Itu jarang berhasil."
+              "On the seventh day, God rested. Not because creation had worn Him out -- but because rest was built into the fabric of what He made. Genesis 2:2-3 describes God ceasing from His work and blessing the seventh day, setting it apart. Rest was not an afterthought. It was the completion of creation.",
+              "Pada hari ketujuh, Tuhan beristirahat. Bukan karena penciptaan telah melelahkan-Nya -- tetapi karena istirahat ditenun ke dalam kain dari apa yang Dia ciptakan. Kejadian 2:2-3 menggambarkan Allah berhenti dari pekerjaan-Nya dan memberkati hari ketujuh, mengkhususkannya. Istirahat bukanlah renungan. Itu adalah kesempurnaan penciptaan."
             )}
           </p>
           <p style={prose}>
             {t(
-              "The numbers are stark. A 2024 study of 4,338 full-time employees across Malaysia, Singapore, the Philippines, and Indonesia found that 62.91% experienced high or very high burnout.",
-              "Angkanya jelas. Sebuah studi 2024 terhadap 4.338 karyawan penuh waktu di Malaysia, Singapura, Filipina, dan Indonesia menemukan bahwa 62,91% mengalami kelelahan tinggi atau sangat tinggi."
-            )}
-            <sup style={supStyle}>1</sup>
-            {" "}{t(
-              "That is not a minority experience -- it is the majority one. And that figure covers the broader workforce. Cross-cultural workers and ministry leaders carry additional layers: language acquisition demands, spiritual pressure, donor visibility, cultural navigation, and the particular loneliness of living between worlds.",
-              " Itu bukan pengalaman minoritas -- itu adalah pengalaman mayoritas. Dan angka itu mencakup tenaga kerja secara umum. Pekerja lintas budaya dan pemimpin pelayanan menanggung lapisan tambahan: tuntutan belajar bahasa, tekanan spiritual, akuntabilitas donor, navigasi budaya, dan kesendirian khas dari hidup di antara dua dunia."
-            )}
-          </p>
-          <p style={prose}>
-            {t(
-              "Research by Compass Asia found that 71% of field workers leave the field for preventable reasons.",
-              "Penelitian dari Compass Asia menemukan bahwa 71% pekerja lapangan meninggalkan ladang karena alasan yang bisa dicegah."
-            )}
-            <sup style={supStyle}>2</sup>
-            {" "}{t(
-              "When those workers were asked the single factor most often cited in their burnout, they named their own unwillingness to take one complete day off per week. Not organizational failure. Not persecution. Not circumstance. A rhythm they had stopped keeping.",
-              " Ketika para pekerja itu ditanya faktor tunggal yang paling sering disebutkan dalam kelelahan mereka, mereka menyebut keengganan mereka sendiri untuk mengambil satu hari penuh istirahat per minggu. Bukan kegagalan organisasi. Bukan penganiayaan. Bukan keadaan. Sebuah ritme yang telah berhenti mereka jaga."
+              "Centuries later, God gave Israel the Ten Commandments. The Sabbath was among them -- not a recommendation but a command. Exodus 20:8-11 grounds the Sabbath in creation itself: \"For in six days the LORD made the heavens and the earth... but he rested on the seventh day. Therefore the LORD blessed the Sabbath day and made it holy.\" The rhythm God kept at creation, He commanded His people to keep.",
+              "Berabad-abad kemudian, Allah memberikan Israel Sepuluh Perintah. Sabat ada di antaranya -- bukan rekomendasi melainkan perintah. Keluaran 20:8-11 mendasarkan Sabat pada penciptaan itu sendiri: \"Sebab enam hari lamanya TUHAN menjadikan langit dan bumi... tetapi pada hari ketujuh Ia berhenti bekerja dan beristirahat. Itulah sebabnya TUHAN memberkati hari Sabat dan menguduskannya.\" Ritme yang Allah jaga saat penciptaan, Dia perintahkan kepada umat-Nya untuk dijaga."
             )}
           </p>
           <p style={{ ...prose, marginBottom: 0 }}>
             {t(
-              "Here is what makes this hard: the people most depleted are the ones who find rest hardest to reach. Researchers call this the recovery paradox. High job demands -- the very conditions that create exhaustion -- also reduce your ability to psychologically detach from work. The more you need to stop, the harder stopping feels.",
-              "Inilah yang membuat ini sulit: orang-orang yang paling terkuras adalah orang-orang yang paling sulit meraih istirahat. Para peneliti menyebut ini paradoks pemulihan. Tuntutan pekerjaan yang tinggi -- kondisi yang sama yang menciptakan kelelahan -- juga mengurangi kemampuanmu untuk melepaskan diri secara psikologis dari pekerjaan. Semakin kamu perlu berhenti, semakin sulit rasanya untuk berhenti."
+              "When Jesus was challenged for healing on the Sabbath, He did not abolish it -- He clarified it. \"The Sabbath was made for man, not man for the Sabbath\" (Mark 2:27). Rest is not a burden placed on you. It is a gift made for you. For cross-cultural leaders who pour themselves into mission, language, culture, and community -- this reclaims something important: Sabbath is not a luxury you earn when the work allows. It is the rhythm God designed for people who do the kind of work that does not stop.",
+              "Ketika Yesus ditantang karena menyembuhkan pada hari Sabat, Dia tidak menghapuskannya -- Dia mengklarifikasinya. \"Hari Sabat diadakan untuk manusia dan bukan manusia untuk hari Sabat\" (Markus 2:27). Istirahat bukan beban yang diletakkan pada kamu. Itu adalah hadiah yang dibuat untuk kamu. Bagi pemimpin lintas budaya yang mencurahkan diri untuk misi, bahasa, budaya, dan komunitas -- ini merebut kembali sesuatu yang penting: Sabat bukan kemewahan yang kamu peroleh ketika pekerjaan mengizinkan. Itu adalah ritme yang Allah rancang untuk orang-orang yang melakukan pekerjaan yang tidak berhenti."
             )}
           </p>
         </div>
@@ -775,6 +738,10 @@ export default function SabbathLeaderClient({
             <ol style={{ paddingLeft: "1.25rem", margin: 0 }}>
               {[
                 {
+                  en: "Articulate the biblical foundation for Sabbath rest -- why God built rest into creation, what the commandment establishes, and what Jesus clarified about it.",
+                  id: "Menjelaskan landasan alkitabiah istirahat Sabat -- mengapa Allah membangun istirahat ke dalam penciptaan, apa yang ditetapkan perintah itu, dan apa yang Yesus klarifikasi tentangnya.",
+                },
+                {
                   en: "Describe the psychological mechanism that makes rest hardest when it is most needed -- the recovery paradox -- and why willpower alone cannot solve it.",
                   id: "Menggambarkan mekanisme psikologis yang membuat istirahat paling sulit saat paling dibutuhkan -- paradoks pemulihan -- dan mengapa kekuatan tekad saja tidak cukup untuk mengatasinya.",
                 },
@@ -792,7 +759,7 @@ export default function SabbathLeaderClient({
                   fontSize: "0.875rem",
                   color: bodyText,
                   lineHeight: 1.7,
-                  marginBottom: i < 2 ? "0.75rem" : 0,
+                  marginBottom: i < 3 ? "0.75rem" : 0,
                 }}>
                   {t(item.en, item.id)}
                 </li>
@@ -803,7 +770,7 @@ export default function SabbathLeaderClient({
       </section>
 
       {/* ════════════════════════════════════════════════════════════
-          STATION 1 -- THE COLLAPSE  (offWhite)
+          STATION 1 -- THE BROOM TREE  (offWhite)
       ════════════════════════════════════════════════════════════ */}
       <div style={{ padding: "3rem 0 0" }}>
         <StationDivider />
@@ -812,9 +779,9 @@ export default function SabbathLeaderClient({
       <section style={sec(offWhite, "3rem")}>
         <div style={inner}>
           <StationHeader
-            eyebrowEN="STATION 1 -- THE COLLAPSE"
-            eyebrowID="STASIUN 1 -- KERUNTUHAN"
-            bilingualLabel="Station 1: The Collapse / Stasiun 1: Keruntuhan"
+            eyebrowEN="STATION 1 -- THE BROOM TREE"
+            eyebrowID="STASIUN 1 -- POHON ARAR"
+            bilingualLabel="Station 1: The Broom Tree / Stasiun 1: Pohon Arar"
           />
 
           <Scripture
@@ -841,29 +808,6 @@ export default function SabbathLeaderClient({
             {t(
               "The sequence matters. Elijah didn't collapse during the lean years of hiding by the Kerith Brook. He didn't break under three and a half years of drought. He collapsed after Carmel. After the triumph. After the adrenaline drained.",
               "Urutannya penting. Elia tidak runtuh selama tahun-tahun sulit bersembunyi di tepi sungai Kerit. Dia tidak hancur dalam tiga setengah tahun kemarau. Dia runtuh setelah Karmel. Setelah kemenangan. Setelah adrenalin habis."
-            )}
-          </p>
-          <p style={prose}>
-            {t(
-              "This is the pattern that burnout researchers keep finding. It is not weakness that drops a leader. It is the crash that follows a sustained peak. The high-demand context accumulates. The big win arrives. The adrenaline fades. And beneath it, the reserves are already gone.",
-              "Inilah pola yang terus-menerus ditemukan oleh para peneliti kelelahan. Bukan kelemahan yang menjatuhkan seorang pemimpin. Melainkan keruntuhan yang mengikuti puncak yang berkepanjangan. Konteks yang menuntut tinggi terakumulasi. Kemenangan besar tiba. Adrenalin memudar. Dan di balik itu, cadangan sudah habis."
-            )}
-          </p>
-          <p style={prose}>
-            {t(
-              "There is important research here. A meta-analysis of over 38,000 employees confirmed what practitioners in ministry have long observed: high job demands negatively predict your ability to detach from work.",
-              "Ada penelitian penting di sini. Sebuah meta-analisis terhadap lebih dari 38.000 karyawan mengonfirmasi apa yang sudah lama diamati oleh para praktisi pelayanan: tuntutan pekerjaan yang tinggi secara negatif memprediksi kemampuanmu untuk melepaskan diri dari pekerjaan."
-            )}
-            <sup style={supStyle}>3</sup>
-            {" "}{t(
-              "The more demanding your context, the harder it becomes to psychologically step away from it -- even when you technically have the time.",
-              " Semakin menuntut konteksmu, semakin sulit untuk secara psikologis melangkah pergi dari sana -- bahkan ketika kamu secara teknis punya waktu."
-            )}
-          </p>
-          <p style={prose}>
-            {t(
-              "This is what researchers call the recovery paradox. It is not a character flaw. It is a documented psychological dynamic: the people who most need to rest are the least equipped, in that moment, to do so.",
-              "Inilah yang disebut para peneliti sebagai paradoks pemulihan. Ini bukan cacat karakter. Ini adalah dinamika psikologis yang terdokumentasi: orang-orang yang paling butuh istirahat adalah orang-orang yang paling tidak siap, pada saat itu, untuk melakukannya."
             )}
           </p>
           <p style={{ ...prose, marginBottom: 0 }}>
@@ -973,7 +917,53 @@ export default function SabbathLeaderClient({
             )}
           </p>
 
-          {/* Dig Deeper 1 */}
+        </div>
+      </section>
+
+      {/* ════════════════════════════════════════════════════════════
+          THE RECOVERY PARADOX  (standalone section)
+      ════════════════════════════════════════════════════════════ */}
+      <section style={sec("white", "3rem")}>
+        <div style={inner}>
+          <p style={{
+            fontFamily: FONT,
+            fontSize: "0.68rem",
+            letterSpacing: "0.14em",
+            color: orange,
+            fontWeight: 700,
+            marginBottom: "0.5rem",
+          }}>
+            {t("THE RECOVERY PARADOX", "PARADOKS PEMULIHAN")}
+          </p>
+          <h2 style={{
+            fontFamily: CORMORANT,
+            fontWeight: 600,
+            fontSize: "clamp(1.5rem, 3vw, 2rem)",
+            color: navy,
+            marginBottom: "1.5rem",
+          }}>
+            {t("The more you need rest, the harder it is to reach.", "Semakin kamu butuh istirahat, semakin sulit untuk meraihnya.")}
+          </h2>
+
+          <p style={prose}>
+            {t(
+              "This is not a character flaw. It is a documented psychological dynamic. High job demands -- the very conditions that create exhaustion -- also reduce your ability to psychologically detach from work. The more demanding your context, the harder it becomes to step away from it, even when you technically have the time.",
+              "Ini bukan cacat karakter. Ini adalah dinamika psikologis yang terdokumentasi. Tuntutan pekerjaan yang tinggi -- kondisi yang sama yang menciptakan kelelahan -- juga mengurangi kemampuanmu untuk melepaskan diri secara psikologis dari pekerjaan. Semakin menuntut konteksmu, semakin sulit untuk melangkah pergi dari sana, bahkan ketika kamu secara teknis punya waktu."
+            )}
+          </p>
+          <p style={{ ...prose, marginBottom: "2rem" }}>
+            {t(
+              "This is why Sabbath cannot be left to willpower. When leaders are most depleted, the instinct to rest is crowded out by guilt, urgency, and accumulated pressure. The practice has to be built before the depletion arrives.",
+              "Inilah mengapa Sabat tidak bisa diserahkan pada kekuatan tekad. Ketika pemimpin paling terkuras, naluri untuk beristirahat ditenggelamkan oleh rasa bersalah, urgensi, dan tekanan yang terakumulasi. Praktik itu harus dibangun sebelum kelelahan datang."
+            )}
+          </p>
+        </div>
+
+        <div style={{ maxWidth: MX, margin: "0 auto", padding: "0 0 1rem" }}>
+          <RecoveryParadoxSVG lang={lang} />
+        </div>
+
+        <div style={inner}>
           <DigDeeper
             id="dd1-panel"
             labelEN="Dig Deeper: The Research Behind the Recovery Paradox"
@@ -1048,11 +1038,6 @@ export default function SabbathLeaderClient({
               )}
             </p>
           </DigDeeper>
-        </div>
-
-        {/* Recovery Paradox SVG */}
-        <div style={{ maxWidth: MX, margin: "3rem auto 0", padding: "0 0 1rem" }}>
-          <RecoveryParadoxSVG lang={lang} />
         </div>
       </section>
 
@@ -1307,6 +1292,62 @@ export default function SabbathLeaderClient({
       </section>
 
       {/* ════════════════════════════════════════════════════════════
+          WHAT HAPPENS WITHOUT SABBATH  (white)
+      ════════════════════════════════════════════════════════════ */}
+      <section id="mc-burnout-stats" style={sec("white", "4rem")}>
+        <div style={inner}>
+          <p style={{
+            fontFamily: FONT,
+            fontSize: "0.68rem",
+            letterSpacing: "0.14em",
+            color: orange,
+            fontWeight: 700,
+            marginBottom: "0.5rem",
+          }}>
+            {t("WHEN LEADERS SKIP SABBATH", "KETIKA PEMIMPIN MELEWATKAN SABAT")}
+          </p>
+          <h2 style={{
+            fontFamily: CORMORANT,
+            fontWeight: 600,
+            fontSize: "clamp(1.5rem, 3vw, 2rem)",
+            color: navy,
+            marginBottom: "1.5rem",
+          }}>
+            {t("The cost is higher than most leaders realise.", "Biayanya lebih tinggi dari yang kebanyakan pemimpin sadari.")}
+          </h2>
+
+          <p style={prose}>
+            {t(
+              "A 2024 study of 4,338 full-time employees across Malaysia, Singapore, the Philippines, and Indonesia found that 62.91% experienced high or very high burnout.",
+              "Sebuah studi 2024 terhadap 4.338 karyawan penuh waktu di Malaysia, Singapura, Filipina, dan Indonesia menemukan bahwa 62,91% mengalami kelelahan tinggi atau sangat tinggi."
+            )}
+            <sup style={supStyle}>1</sup>
+            {" "}{t(
+              "That is not a minority experience -- it is the majority one. Cross-cultural workers and ministry leaders carry additional layers: language acquisition demands, spiritual pressure, donor visibility, cultural navigation, and the particular loneliness of living between worlds.",
+              " Itu bukan pengalaman minoritas -- itu adalah pengalaman mayoritas. Pekerja lintas budaya dan pemimpin pelayanan menanggung lapisan tambahan: tuntutan belajar bahasa, tekanan spiritual, akuntabilitas donor, navigasi budaya, dan kesendirian khas dari hidup di antara dua dunia."
+            )}
+          </p>
+          <p style={prose}>
+            {t(
+              "Research by Compass Asia found that 71% of field workers leave the field for preventable reasons.",
+              "Penelitian dari Compass Asia menemukan bahwa 71% pekerja lapangan meninggalkan ladang karena alasan yang bisa dicegah."
+            )}
+            <sup style={supStyle}>2</sup>
+            {" "}{t(
+              "When those workers were asked the single factor most often cited in their burnout, they named their own unwillingness to take one complete day off per week. Not organizational failure. Not persecution. Not circumstance. A rhythm they had stopped keeping.",
+              " Ketika para pekerja itu ditanya faktor tunggal yang paling sering disebutkan dalam kelelahan mereka, mereka menyebut keengganan mereka sendiri untuk mengambil satu hari penuh istirahat per minggu. Bukan kegagalan organisasi. Bukan penganiayaan. Bukan keadaan. Sebuah ritme yang telah berhenti mereka jaga."
+            )}
+          </p>
+          <p style={{ ...prose, marginBottom: 0 }}>
+            {t(
+              "Sabbath is not merely helpful for leaders -- it is protective. The data tracks what Scripture already established: without it, the work consumes the worker.",
+              "Sabat tidak sekadar berguna bagi pemimpin -- itu bersifat protektif. Data melacak apa yang sudah ditetapkan Kitab Suci: tanpanya, pekerjaan mengonsumsi pekerja."
+            )}
+          </p>
+        </div>
+      </section>
+
+      {/* ════════════════════════════════════════════════════════════
           SRDC PRACTICE CARDS  (offWhite)
       ════════════════════════════════════════════════════════════ */}
       <section style={sec(offWhite, "5rem")}>
@@ -1347,72 +1388,102 @@ export default function SabbathLeaderClient({
 
           <div style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(290px, 1fr))",
-            gap: "1.5rem",
+            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+            gap: "1.25rem",
           }}>
-            {srdcCards.map((card) => (
-              <article
-                key={card.letter}
-                style={{
-                  background: offWhite,
-                  border: `1px solid ${lightGray}`,
-                  borderRadius: "6px",
-                  padding: "2rem",
-                  cursor: "default",
-                }}
-              >
-                {/* Big letter */}
-                <p style={{
-                  fontFamily: CORMORANT,
-                  fontWeight: 600,
-                  fontSize: "clamp(52px, 8vw, 72px)",
-                  color: orange,
-                  lineHeight: 1,
-                  marginBottom: "0.25rem",
-                }}>
-                  {card.letter}
-                </p>
+            {srdcCards.map((card) => {
+              const isOpen = openSrdcCard === card.letter;
+              return (
+                <article
+                  key={card.letter}
+                  onClick={() => setOpenSrdcCard(isOpen ? null : card.letter)}
+                  style={{
+                    background: "white",
+                    border: `1px solid ${isOpen ? orange : lightGray}`,
+                    borderRadius: "8px",
+                    padding: "1.75rem",
+                    cursor: "pointer",
+                    transition: "border-color 0.2s ease, box-shadow 0.2s ease",
+                    boxShadow: isOpen ? `0 0 0 3px ${orange}22` : "none",
+                  }}
+                >
+                  {/* Big letter */}
+                  <p style={{
+                    fontFamily: CORMORANT,
+                    fontWeight: 600,
+                    fontSize: "clamp(48px, 7vw, 64px)",
+                    color: orange,
+                    lineHeight: 1,
+                    marginBottom: "0.2rem",
+                  }}>
+                    {card.letter}
+                  </p>
 
-                {/* Word */}
-                <h3 style={{
-                  fontFamily: FONT,
-                  fontWeight: 700,
-                  fontSize: "1.05rem",
-                  color: navy,
-                  marginBottom: "0.75rem",
-                  letterSpacing: "0.02em",
-                }}>
-                  {t(card.word, card.wordID)}
-                </h3>
+                  {/* Word */}
+                  <h3 style={{
+                    fontFamily: FONT,
+                    fontWeight: 700,
+                    fontSize: "1rem",
+                    color: navy,
+                    marginBottom: "0.6rem",
+                    letterSpacing: "0.02em",
+                  }}>
+                    {t(card.word, card.wordID)}
+                  </h3>
 
-                {/* Description */}
-                <p style={{
-                  fontFamily: FONT,
-                  fontSize: "0.85rem",
-                  color: "oklch(42% 0.06 260)",
-                  lineHeight: 1.65,
-                  marginBottom: "1.5rem",
-                  fontStyle: "italic",
-                }}>
-                  {t(card.desc, card.descID)}
-                </p>
+                  {/* Description */}
+                  <p style={{
+                    fontFamily: FONT,
+                    fontSize: "0.82rem",
+                    color: "oklch(42% 0.06 260)",
+                    lineHeight: 1.65,
+                    marginBottom: "1rem",
+                    fontStyle: "italic",
+                  }}>
+                    {t(card.desc, card.descID)}
+                  </p>
 
-                {/* Practices */}
-                <ol style={{ paddingLeft: "1.1rem", margin: 0 }}>
-                  {(lang === "id" ? card.practicesID : card.practices).map((p, i) => (
-                    <li key={i} style={{
-                      fontFamily: FONT,
-                      fontSize: "0.82rem",
-                      color: bodyText,
-                      lineHeight: 1.7,
-                      marginBottom: i < 2 ? "0.875rem" : 0,
-                    }}>
-                      {p}
-                    </li>
-                  ))}
-                </ol>
-              </article>
-            ))}
+                  {/* Expand indicator */}
+                  <p style={{
+                    fontFamily: FONT,
+                    fontSize: "0.72rem",
+                    color: isOpen ? orange : "oklch(58% 0.05 260)",
+                    fontWeight: 600,
+                    letterSpacing: "0.06em",
+                    margin: 0,
+                    transition: "color 0.2s ease",
+                  }}>
+                    {isOpen
+                      ? t("CLOSE ▲", "TUTUP ▲")
+                      : t("SEE PRACTICES ▼", "LIHAT PRAKTIK ▼")}
+                  </p>
+
+                  {/* Practices — collapsible */}
+                  <div style={{
+                    display: "grid",
+                    gridTemplateRows: isOpen ? "1fr" : "0fr",
+                    transition: "grid-template-rows 0.3s ease",
+                    overflow: "hidden",
+                  }}>
+                    <div style={{ minHeight: 0 }}>
+                      <ol style={{ paddingLeft: "1.1rem", margin: 0, paddingTop: "1rem" }}>
+                        {(lang === "id" ? card.practicesID : card.practices).map((p, i) => (
+                          <li key={i} style={{
+                            fontFamily: FONT,
+                            fontSize: "0.82rem",
+                            color: bodyText,
+                            lineHeight: 1.7,
+                            marginBottom: i < 2 ? "0.75rem" : 0,
+                          }}>
+                            {p}
+                          </li>
+                        ))}
+                      </ol>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -1587,54 +1658,85 @@ export default function SabbathLeaderClient({
       ════════════════════════════════════════════════════════════ */}
       <section style={sec(lightGray, "0")}>
         <div style={{ ...inner, paddingBottom: "3rem" }}>
-          <div style={{ borderTop: `1px solid ${lightGray}`, paddingTop: "2rem" }}>
-            <p style={{
-              fontFamily: FONT,
-              fontSize: "0.68rem",
-              letterSpacing: "0.12em",
-              textTransform: "uppercase" as const,
-              color: orange,
-              fontWeight: 700,
-              marginBottom: "1.5rem",
-            }}>
-              Sources
-            </p>
+          <div style={{ borderTop: `1px solid oklch(80% 0.01 260)`, paddingTop: "2rem" }}>
+            <button
+              onClick={() => setSourcesOpen(!sourcesOpen)}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "0.5rem",
+                background: "none",
+                border: "none",
+                padding: 0,
+                cursor: "pointer",
+                marginBottom: sourcesOpen ? "1.5rem" : 0,
+              }}
+            >
+              <p style={{
+                fontFamily: FONT,
+                fontSize: "0.68rem",
+                letterSpacing: "0.12em",
+                textTransform: "uppercase" as const,
+                color: orange,
+                fontWeight: 700,
+                margin: 0,
+              }}>
+                {t("Sources", "Sumber")}
+              </p>
+              <span style={{
+                fontFamily: FONT,
+                fontSize: "0.65rem",
+                color: sourcesOpen ? orange : "oklch(58% 0.05 260)",
+                transition: "color 0.2s ease",
+              }}>
+                {sourcesOpen ? "▲" : "▼"}
+              </span>
+            </button>
 
-            {[
-              { n: 1, text: "Abdul Aziz, N., & Ong, M. (2024). Burnout prevalence among full-time employees in Southeast Asia. N=4,338 across Malaysia, Singapore, Philippines, and Indonesia." },
-              { n: 2, text: "Compass Asia & Shepherd's Staff. Research on field worker attrition and preventable burnout. Finding: 71% of field workers leave for preventable reasons; single most-cited factor was failure to maintain one complete rest day per week." },
-              { n: 3, text: "Wendsche, J., & Lohmann-Haislah, A. (2017). A meta-analysis on antecedents and outcomes of detachment from work. Frontiers in Psychology, 7. N=38,124 across 91 samples and 86 studies." },
-              { n: 4, text: "Sonnentag, S., & Schiffner, J. (2019). Psychological detachment from work during nonwork time and employee well-being: The role of leader detachment. Journal of Work and Organizational Psychology, 35(1), 1--9." },
-              { n: 5, text: "Scazzero, P. (2006). Emotionally Healthy Spirituality. Zondervan. SRDC framework: Stop, Rest, Delight, Contemplate." },
-              { n: 6, text: "Brueggemann, W. (2013). Sabbath as Resistance: Saying No to the Culture of Now. Westminster John Knox Press." },
-              { n: 7, text: "IMD Business School. Research distinguishing excessive overwork (recoverable with genuine downtime) from compulsive overwork (where guilt during nominal rest prevents true recovery)." },
-              { n: 8, text: "Heschel, A. J. (1951). The Sabbath: Its Meaning for Modern Man. Farrar, Straus and Giroux. Concepts of menuha and Sabbath as 'a palace in time.'" },
-              { n: 9, text: "De Villiers, P. G. R., & Marchinkowski, T. (2021). Sabbath as a covenantal act in the Old Testament. HTS Theological Studies, 77(4)." },
-              { n: 10, text: "Buchanan, M. (2006). The Rest of God: Restoring Your Soul by Restoring Sabbath. Thomas Nelson. Quote: Sabbath imparts 'a time on the calendar and a way we see.'" },
-            ].map(({ n, text }) => (
-              <div key={n} style={{ display: "flex", gap: "0.75rem", marginBottom: "0.75rem", alignItems: "flex-start" }}>
-                <span style={{
-                  fontFamily: FONT,
-                  fontSize: "0.7rem",
-                  color: orange,
-                  fontWeight: 700,
-                  minWidth: "1.25rem",
-                  paddingTop: "0.15rem",
-                  flexShrink: 0,
-                }}>
-                  {n}
-                </span>
-                <p style={{
-                  fontFamily: FONT,
-                  fontSize: "0.75rem",
-                  color: "oklch(52% 0.05 260)",
-                  margin: 0,
-                  lineHeight: 1.65,
-                }}>
-                  {text}
-                </p>
+            <div style={{
+              display: "grid",
+              gridTemplateRows: sourcesOpen ? "1fr" : "0fr",
+              transition: "grid-template-rows 0.3s ease",
+              overflow: "hidden",
+            }}>
+              <div style={{ minHeight: 0 }}>
+                {[
+                  { n: 1, text: "Abdul Aziz, N., & Ong, M. (2024). Burnout prevalence among full-time employees in Southeast Asia. N=4,338 across Malaysia, Singapore, Philippines, and Indonesia." },
+                  { n: 2, text: "Compass Asia & Shepherd's Staff. Research on field worker attrition and preventable burnout. Finding: 71% of field workers leave for preventable reasons; single most-cited factor was failure to maintain one complete rest day per week." },
+                  { n: 3, text: "Wendsche, J., & Lohmann-Haislah, A. (2017). A meta-analysis on antecedents and outcomes of detachment from work. Frontiers in Psychology, 7. N=38,124 across 91 samples and 86 studies." },
+                  { n: 4, text: "Sonnentag, S., & Schiffner, J. (2019). Psychological detachment from work during nonwork time and employee well-being: The role of leader detachment. Journal of Work and Organizational Psychology, 35(1), 1--9." },
+                  { n: 5, text: "Scazzero, P. (2006). Emotionally Healthy Spirituality. Zondervan. SRDC framework: Stop, Rest, Delight, Contemplate." },
+                  { n: 6, text: "Brueggemann, W. (2013). Sabbath as Resistance: Saying No to the Culture of Now. Westminster John Knox Press." },
+                  { n: 7, text: "IMD Business School. Research distinguishing excessive overwork (recoverable with genuine downtime) from compulsive overwork (where guilt during nominal rest prevents true recovery)." },
+                  { n: 8, text: "Heschel, A. J. (1951). The Sabbath: Its Meaning for Modern Man. Farrar, Straus and Giroux. Concepts of menuha and Sabbath as 'a palace in time.'" },
+                  { n: 9, text: "De Villiers, P. G. R., & Marchinkowski, T. (2021). Sabbath as a covenantal act in the Old Testament. HTS Theological Studies, 77(4)." },
+                  { n: 10, text: "Buchanan, M. (2006). The Rest of God: Restoring Your Soul by Restoring Sabbath. Thomas Nelson. Quote: Sabbath imparts 'a time on the calendar and a way we see.'" },
+                ].map(({ n, text }) => (
+                  <div key={n} style={{ display: "flex", gap: "0.75rem", marginBottom: "0.75rem", alignItems: "flex-start" }}>
+                    <span style={{
+                      fontFamily: FONT,
+                      fontSize: "0.7rem",
+                      color: orange,
+                      fontWeight: 700,
+                      minWidth: "1.25rem",
+                      paddingTop: "0.15rem",
+                      flexShrink: 0,
+                    }}>
+                      {n}
+                    </span>
+                    <p style={{
+                      fontFamily: FONT,
+                      fontSize: "0.75rem",
+                      color: "oklch(52% 0.05 260)",
+                      margin: 0,
+                      lineHeight: 1.65,
+                    }}>
+                      {text}
+                    </p>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
           </div>
         </div>
       </section>

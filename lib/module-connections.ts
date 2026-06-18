@@ -36,10 +36,10 @@ export const MODULE_CONNECTIONS: ModuleConnection[] = [
   },
 
   // Sabbath Leadership → Understanding Burnout
-  // (portraits section explicitly names burnout — "He doesn't recognise it as burnout")
+  // (burnout stats section: 62.91% Southeast Asia, 71% field workers, framed as "cost of skipping Sabbath")
   {
     sourceSlug: "sabbath-leadership",
-    sourceSectionId: "mc-portraits",
+    sourceSectionId: "mc-burnout-stats",
     targetSlug: "understanding-burnout",
     targetTitle: "Understanding Burnout",
     targetTitle_id: "Memahami Burnout",
