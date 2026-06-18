@@ -17,6 +17,15 @@ type Article = {
 
 const articles: Article[] = [
   {
+    image: "/pathway-team.jpg",
+    source: "Lausanne Movement",
+    title: "Burnout Among Cross-Cultural Workers: The Systemic Causes Sending Organisations Miss",
+    summary: "A member care trainer who led his own family through severe burnout draws on his MA dissertation to argue that missionary burnout is largely a systemic problem — not a personal failure. Using Maslach and Leiter's six organisational risk factors, Billy Drum identifies how lack of control, unrealistic workload expectations, values mismatch, breakdown of community, inadequate reward, and perceived unfairness combine to push cross-cultural workers toward collapse. A Barna estimate puts the figure at 1,500 North American ministry workers leaving monthly in part due to burnout — at a financial cost of USD 500,000 per worker in the first four years alone. But the real cost lands on families, teams, and gospel witness. Drum ends with concrete preventative tools — the Maslach Burnout Inventory and Areas of Worklife Survey — calling mission agencies to move from reactive care to structural change. Essential reading for any leader responsible for the health of a cross-cultural team.",
+    author: "Billy Drum",
+    date: "2024",
+    url: "https://lausanne.org/global-analysis/burnout-among-missionaries",
+  },
+  {
     image: "https://scx1.b-cdn.net/csz/news/800a/2020/businesstrav.jpg",
     source: "Phys.org / Journal of Global Mobility",
     title: "Why Sending Staff Overseas Often Fails — and How Companies Can Fix It",
