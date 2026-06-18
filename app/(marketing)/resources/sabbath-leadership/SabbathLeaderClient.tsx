@@ -1319,62 +1319,6 @@ export default function SabbathLeaderClient({
       </section>
 
       {/* ════════════════════════════════════════════════════════════
-          WHAT HAPPENS WITHOUT SABBATH  (white)
-      ════════════════════════════════════════════════════════════ */}
-      <section id="mc-burnout-stats" style={sec("white", "4rem")}>
-        <div style={inner}>
-          <p style={{
-            fontFamily: FONT,
-            fontSize: "0.68rem",
-            letterSpacing: "0.14em",
-            color: orange,
-            fontWeight: 700,
-            marginBottom: "0.5rem",
-          }}>
-            {t("WHEN LEADERS SKIP SABBATH", "KETIKA PEMIMPIN MELEWATKAN SABAT")}
-          </p>
-          <h2 style={{
-            fontFamily: CORMORANT,
-            fontWeight: 600,
-            fontSize: "clamp(1.5rem, 3vw, 2rem)",
-            color: navy,
-            marginBottom: "1.5rem",
-          }}>
-            {t("The cost is higher than most leaders realise.", "Biayanya lebih tinggi dari yang kebanyakan pemimpin sadari.")}
-          </h2>
-
-          <p style={prose}>
-            {t(
-              "A 2024 study of 4,338 full-time employees across Malaysia, Singapore, the Philippines, and Indonesia found that 62.91% experienced high or very high burnout.",
-              "Sebuah studi 2024 terhadap 4.338 karyawan penuh waktu di Malaysia, Singapura, Filipina, dan Indonesia menemukan bahwa 62,91% mengalami kelelahan tinggi atau sangat tinggi."
-            )}
-            <sup style={supStyle}>1</sup>
-            {" "}{t(
-              "That is not a minority experience. It is the majority one. Cross-cultural workers and ministry leaders carry additional layers: language acquisition demands, spiritual pressure, donor visibility, cultural navigation, and the particular loneliness of living between worlds.",
-              " Itu bukan pengalaman minoritas. Itu adalah pengalaman mayoritas. Pekerja lintas budaya dan pemimpin pelayanan menanggung lapisan tambahan: tuntutan belajar bahasa, tekanan spiritual, akuntabilitas donor, navigasi budaya, dan kesendirian khas dari hidup di antara dua dunia."
-            )}
-          </p>
-          <p style={prose}>
-            {t(
-              "Research by Compass Asia found that 71% of field workers leave the field for preventable reasons.",
-              "Penelitian dari Compass Asia menemukan bahwa 71% pekerja lapangan meninggalkan ladang karena alasan yang bisa dicegah."
-            )}
-            <sup style={supStyle}>2</sup>
-            {" "}{t(
-              "When those workers were asked the single factor most often cited in their burnout, they named their own unwillingness to take one complete day off per week. Not organizational failure. Not persecution. Not circumstance. A rhythm they had stopped keeping.",
-              " Ketika para pekerja itu ditanya faktor tunggal yang paling sering disebutkan dalam kelelahan mereka, mereka menyebut keengganan mereka sendiri untuk mengambil satu hari penuh istirahat per minggu. Bukan kegagalan organisasi. Bukan penganiayaan. Bukan keadaan. Sebuah ritme yang telah berhenti mereka jaga."
-            )}
-          </p>
-          <p style={{ ...prose, marginBottom: 0 }}>
-            {t(
-              "Sabbath is not merely helpful for leaders. It is protective. The data tracks what Scripture already established: without it, the work consumes the worker.",
-              "Sabat tidak sekadar berguna bagi pemimpin. Itu bersifat protektif. Data melacak apa yang sudah ditetapkan Kitab Suci: tanpanya, pekerjaan mengonsumsi pekerja."
-            )}
-          </p>
-        </div>
-      </section>
-
-      {/* ════════════════════════════════════════════════════════════
           SRDC PRACTICE CARDS  (navy)
       ════════════════════════════════════════════════════════════ */}
       <section style={sec(navy, "5rem")}>
@@ -1538,6 +1482,62 @@ export default function SabbathLeaderClient({
               })}
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* ════════════════════════════════════════════════════════════
+          WHAT HAPPENS WITHOUT SABBATH  (white)
+      ════════════════════════════════════════════════════════════ */}
+      <section id="mc-burnout-stats" style={sec("white", "4rem")}>
+        <div style={inner}>
+          <p style={{
+            fontFamily: FONT,
+            fontSize: "0.68rem",
+            letterSpacing: "0.14em",
+            color: orange,
+            fontWeight: 700,
+            marginBottom: "0.5rem",
+          }}>
+            {t("WHEN LEADERS SKIP SABBATH", "KETIKA PEMIMPIN MELEWATKAN SABAT")}
+          </p>
+          <h2 style={{
+            fontFamily: CORMORANT,
+            fontWeight: 600,
+            fontSize: "clamp(1.5rem, 3vw, 2rem)",
+            color: navy,
+            marginBottom: "1.5rem",
+          }}>
+            {t("The cost is higher than most leaders realise.", "Biayanya lebih tinggi dari yang kebanyakan pemimpin sadari.")}
+          </h2>
+
+          <p style={prose}>
+            {t(
+              "A 2024 study of 4,338 full-time employees across Malaysia, Singapore, the Philippines, and Indonesia found that 62.91% experienced high or very high burnout.",
+              "Sebuah studi 2024 terhadap 4.338 karyawan penuh waktu di Malaysia, Singapura, Filipina, dan Indonesia menemukan bahwa 62,91% mengalami kelelahan tinggi atau sangat tinggi."
+            )}
+            <sup style={supStyle}>1</sup>
+            {" "}{t(
+              "That is not a minority experience. It is the majority one. Cross-cultural workers and ministry leaders carry additional layers: language acquisition demands, spiritual pressure, donor visibility, cultural navigation, and the particular loneliness of living between worlds.",
+              " Itu bukan pengalaman minoritas. Itu adalah pengalaman mayoritas. Pekerja lintas budaya dan pemimpin pelayanan menanggung lapisan tambahan: tuntutan belajar bahasa, tekanan spiritual, akuntabilitas donor, navigasi budaya, dan kesendirian khas dari hidup di antara dua dunia."
+            )}
+          </p>
+          <p style={prose}>
+            {t(
+              "Research by Compass Asia found that 71% of field workers leave the field for preventable reasons.",
+              "Penelitian dari Compass Asia menemukan bahwa 71% pekerja lapangan meninggalkan ladang karena alasan yang bisa dicegah."
+            )}
+            <sup style={supStyle}>2</sup>
+            {" "}{t(
+              "When those workers were asked the single factor most often cited in their burnout, they named their own unwillingness to take one complete day off per week. Not organizational failure. Not persecution. Not circumstance. A rhythm they had stopped keeping.",
+              " Ketika para pekerja itu ditanya faktor tunggal yang paling sering disebutkan dalam kelelahan mereka, mereka menyebut keengganan mereka sendiri untuk mengambil satu hari penuh istirahat per minggu. Bukan kegagalan organisasi. Bukan penganiayaan. Bukan keadaan. Sebuah ritme yang telah berhenti mereka jaga."
+            )}
+          </p>
+          <p style={{ ...prose, marginBottom: 0 }}>
+            {t(
+              "Sabbath is not merely helpful for leaders. It is protective. The data tracks what Scripture already established: without it, the work consumes the worker.",
+              "Sabat tidak sekadar berguna bagi pemimpin. Itu bersifat protektif. Data melacak apa yang sudah ditetapkan Kitab Suci: tanpanya, pekerjaan mengonsumsi pekerja."
+            )}
+          </p>
         </div>
       </section>
 
