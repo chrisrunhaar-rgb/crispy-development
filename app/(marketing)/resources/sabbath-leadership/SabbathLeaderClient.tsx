@@ -323,6 +323,7 @@ export default function SabbathLeaderClient({
   const [digDeeper2Open, setDigDeeper2Open] = useState(false);
   const [openSrdcCard, setOpenSrdcCard] = useState<string | null>(null);
   const [sourcesOpen, setSourcesOpen] = useState(false);
+  const [bgOpen, setBgOpen] = useState(false);
 
   const t = (en: string, id: string) => lang === "id" ? id : en;
 
@@ -1688,6 +1689,49 @@ export default function SabbathLeaderClient({
           </div>
         </div>
       </section>
+
+      {/* ════════════════════════════════════════════════════════════
+          LONG-FORM SEO BACKGROUND
+      ════════════════════════════════════════════════════════════ */}
+      <div style={{ background: lightGray, padding: "80px 24px" }}>
+        <div style={{ maxWidth: 780, margin: "0 auto" }}>
+          <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" as const, marginBottom: 12 }}>
+            Background
+          </p>
+          <h2 style={{ fontFamily: FONT, fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: navy, marginBottom: 32, lineHeight: 1.2 }}>
+            Sabbath Leadership: What the Research and Theology Say About Rest, Burnout, and Sustainable Leadership
+          </h2>
+          <button
+            onClick={() => setBgOpen(!bgOpen)}
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 6,
+              marginTop: 20, marginBottom: 24, padding: "10px 20px",
+              background: "transparent", border: `1.5px solid ${orange}`,
+              color: orange, borderRadius: 12,
+              fontFamily: FONT, fontSize: 13, fontWeight: 700,
+              cursor: "pointer", letterSpacing: "0.04em",
+            }}
+          >
+            {bgOpen ? "Close ↑" : "Read the research →"}
+          </button>
+          {bgOpen && [
+            "Sabbath has been practised for millennia, but it has only recently emerged in leadership research as a serious performance variable. The evidence now points consistently in one direction: leaders who do not rest do not lead sustainably. The convergence of burnout research, work psychology, and millennia of theological reflection on rest produces a conclusion that Christian leaders have been told from the beginning — but rarely believed deeply enough to act on.",
+            "The burnout data establishes the scale of the problem. Abdul Aziz and Ong's 2024 study across Malaysia, Singapore, the Philippines, and Indonesia found that 62.91% of full-time employees reported significant burnout.¹ Among cross-cultural workers and field-based ministry leaders the rates are higher still — contexts where geographic isolation, cultural stress, and spiritual pressure compound the baseline exhaustion that affects all high-demand roles. The study's most important implication for leaders is not the percentage itself but what it reveals about the systemic assumption underneath: that leaders are expected to give indefinitely without structured replenishment.",
+            "Work psychology has documented what leaders already sense in their bodies. Sonnentag and Schiffner's research on psychological detachment demonstrates a clear link: leaders who mentally disconnect from work during nonwork hours report better wellbeing, lower emotional exhaustion, and improved team climate.³ Wendsche and Lohmann-Haislah's meta-analysis, drawing on 91 samples across 86 studies and a combined N of more than 38,000, found that the ability to detach from work is among the strongest predictors of sustainable performance over time.² What the research calls psychological detachment, the Hebrew Bible calls Sabbath — and it calls it a commandment, not a suggestion.",
+            "Abraham Joshua Heschel's 1951 work remains the most penetrating theological treatment of Sabbath for modern leaders.⁶ His central claim is that Sabbath is not primarily about what you stop doing — it is about entering a different mode of being. The Hebrew concept of menuha, which Heschel translates as rest, carries none of the passivity its English equivalent suggests. It is a condition of completeness, of shalom, of the soul at rest in the sufficiency of God. Heschel described Sabbath as a palace in time — not an absence, but an arrival. For leaders who have spent the week building, directing, and problem-solving, this reframing is genuinely disruptive: Sabbath is not the space between productive days. It is the destination those days are moving toward.",
+            "Theologically, Sabbath is not a spiritual practice layered on top of leadership work. De Villiers and Marchinkowski's study of the Old Testament material demonstrates that Sabbath functions as a covenantal act — a weekly, embodied declaration that the leader is a creature and not the Creator.⁷ The Israelites were commanded not only to rest themselves but to ensure that their servants, their animals, and even the sojourners among them rested too. The leader's rhythm becomes the team's rhythm. The leader's refusal to stop becomes the permission structure for everyone around them to run until collapse. This is the organisational consequence that most leadership frameworks miss: Sabbath observance is not a personal spiritual discipline. It is a leadership decision with systemic effects.",
+            "Walter Brueggemann frames Sabbath as a counter-cultural act of resistance.⁵ In a culture that measures worth in output and presence in hours logged, stopping is a political statement — an act of defiance against the assumption that constant productivity is faithfulness. For Christian leaders working in cultures where rest is conflated with laziness, or where spiritual commitment is measured in sacrifice and availability, Brueggemann's framing provides important permission: Sabbath is not a concession to human weakness. It is an act of obedience to a God who rested on the seventh day not because he was tired, but because the work was finished.",
+            "Peter Scazzero's SRDC framework — Stop, Rest, Delight, Contemplate — provides a practical structure for leaders who find unstructured Sabbath difficult to inhabit.⁴ Many leaders can stop physically. Fewer can actually rest — that is, cease internal striving and allow themselves to receive rather than produce. Even fewer can delight without the undercurrent of guilt that insists something urgent is being neglected. The Contemplate dimension — sitting long enough with God to hear something — requires a level of interior stillness that most high-capacity leaders have never developed because they have never needed to. Until the system breaks.",
+            "Mark Buchanan's observation in The Rest of God is instructive for leaders who struggle to justify Sabbath practically: Sabbath imparts not only a time on the calendar but a way we see.⁸ Leaders who consistently observe Sabbath begin to perceive their work differently during the other six days. They become less reactive. They make better decisions because they are operating from rest rather than scarcity. The compulsive quality of urgency — the sense that everything is always almost on fire — begins to diminish. They start to experience what they lead: their team, their calling, their relationships, with something closer to the delight that motivated the calling in the first place.",
+            "Dan Allender connects Sabbath to eschatological joy — to the anticipation of the fullness of what is coming.⁹ The leader who observes Sabbath is practising for eternity: learning to inhabit the delight of completion before the final completion arrives. In this frame, Sabbath is not merely a rhythm for longevity, though it is that. It is training for a life oriented toward the right telos — not toward productivity or platform, but toward the rest that waits at the end of faithful work done in the right spirit.",
+            "For cross-cultural leaders specifically, Sabbath carries an additional layer of complexity. The cultures they serve often embed assumptions about rest, time, and work ethic that differ significantly from their own formation — and those differences can make Sabbath feel culturally impossible or spiritually compromised. The leader who has learned to stop and attend to what God is doing will find that the same interior posture — willingness to receive rather than to drive — is exactly what cross-cultural relationship requires. Sabbath and cultural intelligence share the same root: the capacity to hold one's own agenda loosely enough to notice what is actually happening.",
+          ].map((para, i) => (
+            <p key={i} style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 20 }}>
+              {para}
+            </p>
+          ))}
+        </div>
+      </div>
 
       {/* ════════════════════════════════════════════════════════════
           SOURCES  (lightGray, continued)
