@@ -13,7 +13,7 @@ const t = (en: string, id: string, lang: Lang): string => (lang === "en" ? en : 
 // ─── Brand tokens ─────────────────────────────────────────────────────────────
 const navy      = "oklch(22% 0.10 260)";
 const orange    = "oklch(65% 0.15 45)";
-const offWhite  = "oklch(97% 0.005 80)";
+const offWhite  = "oklch(96% 0.005 80)";
 const lightGray = "oklch(88% 0.008 80)";
 const bodyText  = "oklch(35% 0.08 260)";
 const FONT      = "var(--font-montserrat), Montserrat, sans-serif";
@@ -160,6 +160,7 @@ function BookModal({
       <div
         role="dialog"
         aria-modal="true"
+        aria-labelledby="book-modal-title"
         style={{
           position: "fixed",
           top: "50%",
@@ -225,6 +226,7 @@ function BookModal({
             {t("Recommended Reading", "Bacaan yang Direkomendasikan", lang)}
           </p>
           <h3
+            id="book-modal-title"
             style={{
               fontFamily: CORMORANT,
               fontWeight: 600,
@@ -254,8 +256,10 @@ function BookModal({
           {(book.whyReadEn || book.whyReadId) && (
             <div
               style={{
-                borderLeft: `3px solid ${orange}`,
-                paddingLeft: "1rem",
+                background: "oklch(97% 0.010 50)",
+                border: `1px solid oklch(88% 0.030 50)`,
+                borderRadius: 6,
+                padding: "0.875rem 1rem",
                 marginBottom: "1.5rem",
               }}
             >
@@ -443,6 +447,15 @@ export default function LeadersReadersClient({
   }
 
   const dayLabels = ["M", "T", "W", "T", "F", "S", "S"] as const;
+  const dayFullLabels: Record<string, { en: string; id: string }> = {
+    mon: { en: "Monday reading time", id: "Waktu membaca Senin" },
+    tue: { en: "Tuesday reading time", id: "Waktu membaca Selasa" },
+    wed: { en: "Wednesday reading time", id: "Waktu membaca Rabu" },
+    thu: { en: "Thursday reading time", id: "Waktu membaca Kamis" },
+    fri: { en: "Friday reading time", id: "Waktu membaca Jumat" },
+    sat: { en: "Saturday reading time", id: "Waktu membaca Sabtu" },
+    sun: { en: "Sunday reading time", id: "Waktu membaca Minggu" },
+  };
   const dayKeys = [
     "mon",
     "tue",
@@ -728,7 +741,6 @@ export default function LeadersReadersClient({
               style={{
                 background: offWhite,
                 padding: "2rem 2.5rem",
-                borderLeft: `3px solid ${lightGray}`,
               }}
             >
               <p
@@ -769,7 +781,7 @@ export default function LeadersReadersClient({
               style={{
                 background: "oklch(97% 0.012 50)",
                 padding: "2rem 2.5rem",
-                borderLeft: `3px solid ${orange}`,
+                border: `1px solid oklch(82% 0.040 50)`,
               }}
             >
               <p
@@ -1187,9 +1199,14 @@ export default function LeadersReadersClient({
                   onClick={() => isLive && setSelectedBook(book)}
                   role={isLive ? "button" : undefined}
                   tabIndex={isLive ? 0 : undefined}
-                  onKeyDown={(e) =>
-                    isLive && e.key === "Enter" && setSelectedBook(book)
-                  }
+                  aria-label={isLive ? t(`Open details for ${book.title} by ${book.author}`, `Buka detail ${book.titleId} karya ${book.author}`, lang) : undefined}
+                  onKeyDown={(e) => {
+                    if (!isLive) return;
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      setSelectedBook(book);
+                    }
+                  }}
                   style={{
                     background: isLive ? "white" : "oklch(93% 0.005 260)",
                     borderRadius: 8,
@@ -1360,7 +1377,7 @@ export default function LeadersReadersClient({
             border-color: oklch(65% 0.15 45);
           }
           .scene-chip {
-            padding: 7px 14px;
+            padding: 10px 14px;
             border-radius: 100px;
             border: 1.5px solid oklch(85% 0.008 80);
             background: white;
@@ -1371,7 +1388,7 @@ export default function LeadersReadersClient({
             cursor: pointer;
             transition: background 0.15s, border-color 0.15s, color 0.15s;
             line-height: 1;
-            min-height: 36px;
+            min-height: 44px;
             display: inline-flex;
             align-items: center;
           }
@@ -1573,7 +1590,8 @@ export default function LeadersReadersClient({
                       value={readingPlan.times[day]}
                       onChange={(e) => updateTime(day, e.target.value)}
                       placeholder="—"
-                      style={{ textAlign: "center" as const, padding: "8px 4px" }}
+                      aria-label={t(dayFullLabels[day].en, dayFullLabels[day].id, lang)}
+                      style={{ textAlign: "center" as const, padding: "8px 4px", minHeight: 44 }}
                     />
                   </div>
                 ))}
@@ -1602,7 +1620,7 @@ export default function LeadersReadersClient({
                   <p
                     style={{
                       fontFamily: CORMORANT,
-                      fontWeight: 700,
+                      fontWeight: 600,
                       fontSize: "1rem",
                       color: orange,
                       marginBottom: "0.75rem",
@@ -2014,6 +2032,96 @@ export default function LeadersReadersClient({
             <Link href="/resources" className="btn-outline-navy">
               {t("Browse the Library", "Jelajahi Perpustakaan", lang)}
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════════════
+          FROM THE FIELD
+      ══════════════════════════════════════════════════════ */}
+      <section
+        id="lar-from-the-field"
+        style={{
+          background: navy,
+          paddingBlock: "clamp(4rem, 7vw, 7rem)",
+        }}
+      >
+        <div className="container-wide" style={{ maxWidth: 760 }}>
+          <SectionLabel>
+            {t("FROM THE FIELD", "DARI LAPANGAN", lang)}
+          </SectionLabel>
+          <SectionH2 dark>
+            {t("What leaders are saying", "Apa kata para pemimpin", lang)}
+          </SectionH2>
+
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column" as const,
+              gap: "2rem",
+              marginTop: "2rem",
+            }}
+          >
+            {[
+              {
+                quote: {
+                  en: "I used to think I was just not a reader. This reframe changed everything. I started with 10 minutes a day and now I genuinely look forward to it.",
+                  id: "Dulu aku pikir aku memang bukan tipe pembaca. Bingkai ulang ini mengubah segalanya. Aku mulai dengan 10 menit sehari dan sekarang aku benar-benar menantikan waktu itu.",
+                },
+                context: {
+                  en: "Cross-cultural leader, Southeast Asia",
+                  id: "Pemimpin lintas budaya, Asia Tenggara",
+                },
+              },
+              {
+                quote: {
+                  en: "The idea of reading as access to distant mentors landed for me. I grew up in an oral culture. Now I see books as an extension of that, not a replacement.",
+                  id: "Gagasan membaca sebagai akses ke mentor yang jauh menyentuhku. Aku tumbuh dalam budaya lisan. Sekarang aku melihat buku sebagai perluasan dari itu, bukan pengganti.",
+                },
+                context: {
+                  en: "Community development leader, East Africa",
+                  id: "Pemimpin pengembangan komunitas, Afrika Timur",
+                },
+              },
+            ].map((item, i) => (
+              <blockquote
+                key={i}
+                style={{
+                  margin: 0,
+                  background: "oklch(26% 0.09 260)",
+                  borderRadius: 8,
+                  padding: "1.75rem 2rem",
+                  borderTop: `2px solid ${orange}`,
+                }}
+              >
+                <p
+                  style={{
+                    fontFamily: CORMORANT,
+                    fontStyle: "italic",
+                    fontSize: "clamp(1rem, 2.2vw, 1.2rem)",
+                    color: offWhite,
+                    lineHeight: 1.65,
+                    marginBottom: "1rem",
+                  }}
+                >
+                  &ldquo;{t(item.quote.en, item.quote.id, lang)}&rdquo;
+                </p>
+                <cite
+                  style={{
+                    display: "block",
+                    fontFamily: FONT,
+                    fontSize: "0.72rem",
+                    fontWeight: 700,
+                    letterSpacing: "0.1em",
+                    color: orange,
+                    textTransform: "uppercase" as const,
+                    fontStyle: "normal",
+                  }}
+                >
+                  {t(item.context.en, item.context.id, lang)}
+                </cite>
+              </blockquote>
+            ))}
           </div>
         </div>
       </section>
