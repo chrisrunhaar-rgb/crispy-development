@@ -1185,8 +1185,8 @@ export default function SabbathLeaderClient({
           </p>
           <p style={prose}>
             {t(
-              "This is the contemplative core of Sabbath. Not information, but attention. Not answers, but presence. Abraham Joshua Heschel writes that Western culture is organized around the conquest of space and objects, but that Sabbath sanctifies time instead.",
-              "Inilah inti kontemplatif dari Sabat. Bukan informasi, tapi perhatian. Bukan jawaban, tapi kehadiran. Abraham Joshua Heschel menulis bahwa budaya Barat diorganisir di sekitar penaklukan ruang dan objek, tetapi bahwa Sabat menyucikan waktu."
+              "This is the contemplative core of Sabbath. Not information, but attention. Not answers, but presence. Abraham Joshua Heschel, writing from the Jewish tradition, argues that Western culture is organized around the conquest of space and objects, but that Sabbath sanctifies time instead.",
+              "Inilah inti kontemplatif dari Sabat. Bukan informasi, tapi perhatian. Bukan jawaban, tapi kehadiran. Abraham Joshua Heschel, menulis dari tradisi Yahudi, berargumen bahwa budaya Barat diorganisir di sekitar penaklukan ruang dan objek, tetapi bahwa Sabat menyucikan waktu."
             )}
             <sup style={supStyle}>8</sup>
             {" "}{t(
@@ -1648,7 +1648,7 @@ export default function SabbathLeaderClient({
                 marginBottom: i < 3 ? "1.25rem" : 0,
               }}
             >
-              {t(p.en, p.id)}
+              {t(p.en, p.id)}{i === 2 && <sup style={supStyle}>11</sup>}
             </p>
           ))}
         </div>
@@ -1764,6 +1764,7 @@ export default function SabbathLeaderClient({
                   { n: 8, text: "Heschel, A. J. (1951). The Sabbath: Its Meaning for Modern Man. Farrar, Straus and Giroux. Concepts of menuha and Sabbath as 'a palace in time.'" },
                   { n: 9, text: "De Villiers, P. G. R., & Marchinkowski, T. (2021). Sabbath as a covenantal act in the Old Testament. HTS Theological Studies, 77(4)." },
                   { n: 10, text: "Buchanan, M. (2006). The Rest of God: Restoring Your Soul by Restoring Sabbath. Thomas Nelson. Quote: Sabbath imparts 'a time on the calendar and a way we see.'" },
+                  { n: 11, text: "Allender, D. B. (2009). Sabbath. Thomas Nelson. The Ancient Practices Series, gen. ed. Phyllis Tickle. Concept of eschatological joy and menuha as delight, not mere cessation." },
                 ].map(({ n, text }) => (
                   <div key={n} style={{ display: "flex", gap: "0.75rem", marginBottom: "0.75rem", alignItems: "flex-start" }}>
                     <span style={{
@@ -1790,6 +1791,19 @@ export default function SabbathLeaderClient({
                 ))}
               </div>
             </div>
+
+            <p style={{
+              fontFamily: FONT,
+              fontSize: "0.68rem",
+              color: "oklch(58% 0.05 260)",
+              marginTop: "1.5rem",
+              lineHeight: 1.6,
+            }}>
+              {t(
+                "Scripture quotations marked NIV are taken from the Holy Bible, New International Version®. Copyright © 1973, 1978, 1984, 2011 by Biblica, Inc.™ Used by permission.",
+                "Kutipan Kitab Suci yang ditandai NIV diambil dari Alkitab Bahasa Inggris, New International Version®. Hak Cipta © 1973, 1978, 1984, 2011 oleh Biblica, Inc.™ Digunakan dengan izin."
+              )}
+            </p>
           </div>
         </div>
       </section>
