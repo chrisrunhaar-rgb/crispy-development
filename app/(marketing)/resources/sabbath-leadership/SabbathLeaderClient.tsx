@@ -110,12 +110,12 @@ const srdcCards = [
     practices: [
       `Sleep in on your Sabbath day without guilt. Not as self-indulgence, but as an act of trust. If the work will continue without you on any other day, it will continue while you sleep. Your body is not a machine you can run indefinitely without maintenance. Elijah's first provision was sleep before food.`,
       `Eat one slow, unhurried meal. Sit down. Not at your desk. Not while checking your phone. Take your time. In a world where even mealtimes have been colonized by productivity, a slow meal is a small act of resistance.`,
-      `When something feels like work, treat it as work, and leave it for tomorrow. This includes answering "just one email." The IMD research is clear: compulsive overwork is defined precisely by the inability to stop even during nominally free time. Name the impulse when it comes. Then set it down.`,
+      `When something feels like work, treat it as work, and leave it for tomorrow. This includes answering "just one email." Compulsive overwork is defined precisely by the inability to stop even during nominally free time. Name the impulse when it comes. Then set it down.`,
     ],
     practicesID: [
       `Tidur lebih lama di hari Sabatmu tanpa rasa bersalah. Bukan sebagai kesenangan diri, melainkan sebagai tindakan kepercayaan. Jika pekerjaan akan berlanjut tanpa kamu di hari lain, itu akan berlanjut saat kamu tidur. Tubuhmu bukan mesin yang bisa kamu jalankan tanpa batas tanpa perawatan. Provisi pertama Elia adalah tidur sebelum makan.`,
       `Makan satu kali makan yang lambat dan tidak terburu-buru. Duduk. Bukan di mejamu. Bukan sambil memeriksa ponselmu. Ambil waktumu. Di dunia di mana bahkan waktu makan telah dikolonisasi oleh produktivitas, makan yang lambat adalah tindakan perlawanan kecil.`,
-      `Ketika sesuatu terasa seperti pekerjaan, perlakukan itu sebagai pekerjaan, dan tinggalkan untuk besok. Ini termasuk menjawab "hanya satu email." Penelitian IMD jelas: kerja kompulsif didefinisikan tepatnya oleh ketidakmampuan untuk berhenti bahkan selama waktu yang secara nominal bebas. Namai dorongan itu ketika datang. Kemudian letakkan.`,
+      `Ketika sesuatu terasa seperti pekerjaan, perlakukan itu sebagai pekerjaan, dan tinggalkan untuk besok. Ini termasuk menjawab "hanya satu email." Kerja kompulsif didefinisikan tepatnya oleh ketidakmampuan untuk berhenti bahkan selama waktu yang secara nominal bebas. Namai dorongan itu ketika datang. Kemudian letakkan.`,
     ],
   },
   {
@@ -913,7 +913,7 @@ export default function SabbathLeaderClient({
               "Peter Scazzero uses the framework Stop/Rest/Delight/Contemplate to describe what a full Sabbath practice involves.",
               "Peter Scazzero menggunakan kerangka Stop/Rest/Delight/Contemplate untuk menggambarkan apa yang dimaksud dengan praktik Sabat yang penuh."
             )}
-            <sup style={supStyle}>5</sup>
+            <sup style={supStyle}>4</sup>
             {" "}{t(
               "But the first letter (the S) is not \"slow down a little.\" It is Stop. Completely. The way Elijah stopped.",
               " Tapi huruf pertama (S) bukan \"sedikit melambat.\" Ini adalah Stop. Sepenuhnya. Seperti cara Elia berhenti."
@@ -921,15 +921,10 @@ export default function SabbathLeaderClient({
           </p>
           <p style={prose}>
             {t(
-              "Brueggemann captures what is at stake:",
-              "Brueggemann menangkap apa yang dipertaruhkan:"
+              "Brueggemann argues that Sabbath is not simply the pause that refreshes — it is the pause that transforms.",
+              "Brueggemann berargumen bahwa Sabat bukan sekadar jeda yang menyegarkan, melainkan jeda yang mengubah."
             )}
-            {" "}
-            <em>{t(
-              `"Sabbath is not simply the pause that refreshes. It is the pause that transforms."`,
-              `"Sabat bukan sekadar jeda yang menyegarkan. Itu adalah jeda yang mengubah."`
-            )}</em>
-            <sup style={supStyle}>6</sup>
+            <sup style={supStyle}>5</sup>
             {" "}{t(
               "That word, \"transforms,\" is stronger than recover. Recovery implies returning to where you were. Transformation implies becoming someone the rest shaped.",
               " Kata itu, \"mengubah,\" lebih kuat dari pulih. Pemulihan berarti kembali ke tempat kamu berada. Transformasi berarti menjadi seseorang yang dibentuk oleh istirahat itu."
@@ -937,10 +932,9 @@ export default function SabbathLeaderClient({
           </p>
           <p style={{ ...prose, marginBottom: 0 }}>
             {t(
-              "Researchers at IMD Business School distinguish between excessive overwork (which is demanding but recoverable with genuine downtime) and compulsive overwork, where guilt during breaks prevents true recovery even when you are nominally off duty.",
-              "Para peneliti di IMD Business School membedakan antara kerja berlebihan yang berlebihan (yang menuntut tapi bisa dipulihkan dengan waktu istirahat yang sungguh-sungguh) dan kerja berlebihan yang kompulsif, di mana rasa bersalah saat istirahat mencegah pemulihan sejati bahkan ketika kamu secara nominal sedang libur."
+              "Burnout research distinguishes between excessive overwork (which is demanding but recoverable with genuine downtime) and compulsive overwork, where guilt during breaks prevents true recovery even when you are nominally off duty.",
+              "Penelitian tentang burnout membedakan antara kerja berlebihan yang berlebihan (yang menuntut tapi bisa dipulihkan dengan waktu istirahat yang sungguh-sungguh) dan kerja berlebihan yang kompulsif, di mana rasa bersalah saat istirahat mencegah pemulihan sejati bahkan ketika kamu secara nominal sedang libur."
             )}
-            <sup style={supStyle}>7</sup>
             {" "}{t(
               "Ministry culture often produces the second type. Leaders who stop physically but continue mentally are not resting. They are pausing. Sabbath requires not just absence from work but freedom from the guilt of not working.",
               " Budaya pelayanan sering menghasilkan tipe kedua. Pemimpin yang berhenti secara fisik tetapi terus berlanjut secara mental tidak sedang beristirahat. Mereka sedang berhenti sejenak. Sabat membutuhkan bukan hanya absen dari pekerjaan tetapi kebebasan dari rasa bersalah karena tidak bekerja."
@@ -1006,7 +1000,7 @@ export default function SabbathLeaderClient({
                 "The meta-analysis by Wendsche and Lohmann-Haislah (2017) drew on 91 samples across 86 studies, totalling 38,124 participants.",
                 "Meta-analisis oleh Wendsche dan Lohmann-Haislah (2017) mengambil data dari 91 sampel di 86 studi, dengan total 38.124 peserta."
               )}
-              <sup style={supStyle}>3</sup>
+              <sup style={supStyle}>2</sup>
               {" "}{t(
                 "Findings on psychological detachment:",
                 "Temuan tentang pelepasan psikologis:"
@@ -1035,7 +1029,7 @@ export default function SabbathLeaderClient({
                 "Sonnentag and Schiffner (2019) extended this into leadership specifically.",
                 "Sonnentag dan Schiffner (2019) memperluas ini ke kepemimpinan secara khusus."
               )}
-              <sup style={supStyle}>4</sup>
+              <sup style={supStyle}>3</sup>
               {" "}{t(
                 "When supervisors psychologically disengage from work during leisure time, their subordinates show measurably improved recovery outcomes. Three mechanisms explain this:",
                 " Ketika supervisor secara psikologis melepaskan diri dari pekerjaan selama waktu luang, bawahan mereka menunjukkan hasil pemulihan yang terukur membaik. Tiga mekanisme menjelaskan ini:"
@@ -1122,7 +1116,7 @@ export default function SabbathLeaderClient({
               "De Villiers and Marchinkowski (2021), writing in HTS Theological Studies, offer a framing that responds to this directly. They describe Sabbath as a covenantal act: not a personal preference, but a structured commitment in relationship to God and community.",
               "De Villiers dan Marchinkowski (2021), menulis dalam HTS Theological Studies, menawarkan kerangka yang merespons ini secara langsung. Mereka menggambarkan Sabat sebagai tindakan perjanjian: bukan preferensi pribadi, tetapi komitmen terstruktur dalam hubungan dengan Tuhan dan komunitas."
             )}
-            <sup style={supStyle}>9</sup>
+            <sup style={supStyle}>7</sup>
             {" "}{t(
               "Sabbath, in this frame, is the regular act of trust that says: the work belongs to God. I can stop because God does not.",
               " Sabat, dalam kerangka ini, adalah tindakan kepercayaan rutin yang berkata: pekerjaan ini milik Tuhan. Aku bisa berhenti karena Tuhan tidak berhenti."
@@ -1188,7 +1182,7 @@ export default function SabbathLeaderClient({
               "This is the contemplative core of Sabbath. Not information, but attention. Not answers, but presence. Abraham Joshua Heschel, writing from the Jewish tradition, argues that Western culture is organized around the conquest of space and objects, but that Sabbath sanctifies time instead.",
               "Inilah inti kontemplatif dari Sabat. Bukan informasi, tapi perhatian. Bukan jawaban, tapi kehadiran. Abraham Joshua Heschel, menulis dari tradisi Yahudi, berargumen bahwa budaya Barat diorganisir di sekitar penaklukan ruang dan objek, tetapi bahwa Sabat menyucikan waktu."
             )}
-            <sup style={supStyle}>8</sup>
+            <sup style={supStyle}>6</sup>
             {" "}{t(
               "He calls it \"a palace in time,\" a sanctuary built not in stone or location, but in hours. For cross-cultural leaders who live in transit, who belong fully to no single place, this framing carries particular weight. The Sabbath travels with them.",
               " Dia menyebutnya \"istana dalam waktu,\" tempat suci yang dibangun bukan dalam batu atau lokasi, tetapi dalam jam-jam. Bagi pemimpin lintas budaya yang hidup dalam transit, yang tidak sepenuhnya milik satu tempat, kerangka ini memiliki bobot tertentu. Sabat bepergian bersama mereka."
@@ -1214,7 +1208,7 @@ export default function SabbathLeaderClient({
                 "Walter Brueggemann's Sabbath as Resistance (Westminster John Knox, 2013) opens with the Egyptian slave economy. In Egypt, there was no Sabbath. Production was continuous. Workers were defined entirely by their output. Worth was calculated in bricks.",
                 "Sabbath as Resistance (Westminster John Knox, 2013) karya Walter Brueggemann dibuka dengan ekonomi budak Mesir. Di Mesir, tidak ada Sabat. Produksi berlangsung terus-menerus. Para pekerja didefinisikan sepenuhnya oleh hasilnya. Nilai dihitung dalam batu bata."
               )}
-              <sup style={supStyle}>6</sup>
+              <sup style={supStyle}>5</sup>
             </p>
             <p style={prose}>
               {t(
@@ -1227,7 +1221,7 @@ export default function SabbathLeaderClient({
                 "Abraham Joshua Heschel, writing from the Jewish tradition in The Sabbath (1951), argues that Western civilization is dominated by an orientation toward space: we build, occupy, conquer, and acquire. But the Sabbath sanctifies time. It builds a \"palace in time,\" a sanctuary that requires no location, no building, no deed.",
                 "Abraham Joshua Heschel, menulis dari tradisi Yahudi dalam The Sabbath (1951), berargumen bahwa peradaban Barat didominasi oleh orientasi terhadap ruang: kita membangun, menempati, menaklukkan, dan memperoleh. Tapi Sabat menyucikan waktu. Ia membangun \"istana dalam waktu,\" tempat suci yang tidak memerlukan lokasi, bangunan, atau kepemilikan."
               )}
-              <sup style={supStyle}>8</sup>
+              <sup style={supStyle}>6</sup>
             </p>
             <p style={{ ...prose, marginBottom: 0 }}>
               {t(
@@ -1290,7 +1284,7 @@ export default function SabbathLeaderClient({
               "Sonnentag and Schiffner (2019) showed that leader detachment from work during leisure time was a stronger predictor of team member wellbeing than the quality of the relationship between leader and supervisor.",
               "Sonnentag dan Schiffner (2019) menunjukkan bahwa pelepasan pemimpin dari pekerjaan selama waktu luang adalah prediktor kesejahteraan anggota tim yang lebih kuat dibanding kualitas hubungan antara pemimpin dan supervisor."
             )}
-            <sup style={supStyle}>4</sup>
+            <sup style={supStyle}>3</sup>
             {" "}{t(
               "Leaders who model relentless availability teach their teams that rest is disloyal. Leaders who model Sabbath give their teams organizational permission to stop.",
               " Pemimpin yang memodelkan ketersediaan tanpa henti mengajari tim mereka bahwa istirahat itu tidak setia. Pemimpin yang memodelkan Sabat memberi tim mereka izin organisasi untuk berhenti."
@@ -1301,7 +1295,7 @@ export default function SabbathLeaderClient({
               "Mark Buchanan puts it plainly: Sabbath imparts both a day and a disposition. It is \"a time on the calendar and a way we see.\" Protecting your Sabbath is protecting your team. That is not self-care language. That is stewardship language.",
               "Mark Buchanan mengatakannya dengan jelas: Sabat memberikan keduanya: hari dan disposisi. Ini adalah \"waktu dalam kalender dan cara kita melihat.\" Melindungi Sabatmu berarti melindungi timmu. Itu bukan bahasa perawatan diri. Itu adalah bahasa penatalayanan."
             )}
-            <sup style={supStyle}>10</sup>
+            <sup style={supStyle}>8</sup>
           </p>
 
           {/* Decision Moment 3 */}
@@ -1333,7 +1327,7 @@ export default function SabbathLeaderClient({
               fontWeight: 700,
               marginBottom: "0.75rem",
             }}>
-              {t("SRDC FRAMEWORK", "KERANGKA SRDC")}
+              {t("SRDC FRAMEWORK", "KERANGKA BIBM")}
             </p>
             <h2 style={{
               fontFamily: CORMORANT,
@@ -1521,17 +1515,6 @@ export default function SabbathLeaderClient({
               " Itu bukan pengalaman minoritas. Itu adalah pengalaman mayoritas. Pekerja lintas budaya dan pemimpin pelayanan menanggung lapisan tambahan: tuntutan belajar bahasa, tekanan spiritual, akuntabilitas donor, navigasi budaya, dan kesendirian khas dari hidup di antara dua dunia."
             )}
           </p>
-          <p style={prose}>
-            {t(
-              "Research by Compass Asia found that 71% of field workers leave the field for preventable reasons.",
-              "Penelitian dari Compass Asia menemukan bahwa 71% pekerja lapangan meninggalkan ladang karena alasan yang bisa dicegah."
-            )}
-            <sup style={supStyle}>2</sup>
-            {" "}{t(
-              "When those workers were asked the single factor most often cited in their burnout, they named their own unwillingness to take one complete day off per week. Not organizational failure. Not persecution. Not circumstance. A rhythm they had stopped keeping.",
-              " Ketika para pekerja itu ditanya faktor tunggal yang paling sering disebutkan dalam kelelahan mereka, mereka menyebut keengganan mereka sendiri untuk mengambil satu hari penuh istirahat per minggu. Bukan kegagalan organisasi. Bukan penganiayaan. Bukan keadaan. Sebuah ritme yang telah berhenti mereka jaga."
-            )}
-          </p>
           <p style={{ ...prose, marginBottom: 0 }}>
             {t(
               "Sabbath is not merely helpful for leaders. It is protective. The data tracks what Scripture already established: without it, the work consumes the worker.",
@@ -1648,7 +1631,7 @@ export default function SabbathLeaderClient({
                 marginBottom: i < 3 ? "1.25rem" : 0,
               }}
             >
-              {t(p.en, p.id)}{i === 2 && <sup style={supStyle}>11</sup>}
+              {t(p.en, p.id)}{i === 2 && <sup style={supStyle}>9</sup>}
             </p>
           ))}
         </div>
@@ -1755,16 +1738,14 @@ export default function SabbathLeaderClient({
               <div style={{ minHeight: 0 }}>
                 {[
                   { n: 1, text: "Abdul Aziz, N., & Ong, M. (2024). Burnout prevalence among full-time employees in Southeast Asia. N=4,338 across Malaysia, Singapore, Philippines, and Indonesia." },
-                  { n: 2, text: "Compass Asia & Shepherd's Staff. Research on field worker attrition and preventable burnout. Finding: 71% of field workers leave for preventable reasons; single most-cited factor was failure to maintain one complete rest day per week." },
-                  { n: 3, text: "Wendsche, J., & Lohmann-Haislah, A. (2017). A meta-analysis on antecedents and outcomes of detachment from work. Frontiers in Psychology, 7. N=38,124 across 91 samples and 86 studies." },
-                  { n: 4, text: "Sonnentag, S., & Schiffner, J. (2019). Psychological detachment from work during nonwork time and employee well-being: The role of leader detachment. Journal of Work and Organizational Psychology, 35(1), 1–9." },
-                  { n: 5, text: "Scazzero, P. (2006). Emotionally Healthy Spirituality. Zondervan. SRDC framework: Stop, Rest, Delight, Contemplate." },
-                  { n: 6, text: "Brueggemann, W. (2013). Sabbath as Resistance: Saying No to the Culture of Now. Westminster John Knox Press." },
-                  { n: 7, text: "IMD Business School. Research distinguishing excessive overwork (recoverable with genuine downtime) from compulsive overwork (where guilt during nominal rest prevents true recovery)." },
-                  { n: 8, text: "Heschel, A. J. (1951). The Sabbath: Its Meaning for Modern Man. Farrar, Straus and Giroux. Concepts of menuha and Sabbath as 'a palace in time.'" },
-                  { n: 9, text: "De Villiers, P. G. R., & Marchinkowski, T. (2021). Sabbath as a covenantal act in the Old Testament. HTS Theological Studies, 77(4)." },
-                  { n: 10, text: "Buchanan, M. (2006). The Rest of God: Restoring Your Soul by Restoring Sabbath. Thomas Nelson. Quote: Sabbath imparts 'a time on the calendar and a way we see.'" },
-                  { n: 11, text: "Allender, D. B. (2009). Sabbath. Thomas Nelson. The Ancient Practices Series, gen. ed. Phyllis Tickle. Concept of eschatological joy and menuha as delight, not mere cessation." },
+                  { n: 2, text: "Wendsche, J., & Lohmann-Haislah, A. (2017). A meta-analysis on antecedents and outcomes of detachment from work. Frontiers in Psychology, 7. N=38,124 across 91 samples and 86 studies." },
+                  { n: 3, text: "Sonnentag, S., & Schiffner, J. (2019). Psychological detachment from work during nonwork time and employee well-being: The role of leader detachment. Journal of Work and Organizational Psychology, 35(1), 1–9." },
+                  { n: 4, text: "Scazzero, P. (2006). Emotionally Healthy Spirituality. Zondervan. SRDC framework: Stop, Rest, Delight, Contemplate." },
+                  { n: 5, text: "Brueggemann, W. (2014). Sabbath as Resistance: Saying No to the Culture of Now. Westminster John Knox Press." },
+                  { n: 6, text: "Heschel, A. J. (1951). The Sabbath: Its Meaning for Modern Man. Farrar, Straus and Giroux. Concepts of menuha and Sabbath as 'a palace in time.'" },
+                  { n: 7, text: "De Villiers, P. G. R., & Marchinkowski, T. (2021). Sabbath as a covenantal act in the Old Testament. HTS Theological Studies, 77(4)." },
+                  { n: 8, text: "Buchanan, M. (2006). The Rest of God: Restoring Your Soul by Restoring Sabbath. Thomas Nelson. Sabbath imparts 'a time on the calendar and a way we see.'" },
+                  { n: 9, text: "Allender, D. B. (2009). Sabbath. Thomas Nelson. The Ancient Practices Series, gen. ed. Phyllis Tickle. Concept of eschatological joy and menuha as delight, not mere cessation." },
                 ].map(({ n, text }) => (
                   <div key={n} style={{ display: "flex", gap: "0.75rem", marginBottom: "0.75rem", alignItems: "flex-start" }}>
                     <span style={{
