@@ -12,6 +12,7 @@
     "remotion:studio": "remotion studio"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.104.2",
     "@google/genai": "^2.2.0",
     "@remotion/bundler": "^4.0.474",
     "@remotion/cli": "^4.0.474",

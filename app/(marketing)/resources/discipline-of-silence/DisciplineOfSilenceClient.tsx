@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import LangToggle from "@/components/LangToggle";
 import { saveResourceToDashboard } from "../actions";
+import { generateSilenceAdvice } from "./silence-actions";
 
 type Lang = "en" | "id";
 
@@ -59,32 +60,47 @@ const assessmentQuestions = [
 // ─── Scenario cards ──────────────────────────────────────────────────────────
 const personalCards = [
   {
-    labelEN: "5-Minute Morning Anchor",
-    labelID: "Jangkar Pagi 5 Menit",
+    icon: "🌅",
+    title: "The Morning Quiet",
+    titleId: "Keheningan Pagi",
+    labelEN: "The Morning Quiet",
+    labelID: "Keheningan Pagi",
     responseEN: "Before you check your phone, before you open email, before the first notification lands - sit in silence for five minutes. No agenda. No words. Just willingness. This is the smallest sustainable version of the practice. Five minutes is not ideal. It is a beginning. The Desert Fathers called the early morning hours Vigils - the time when the self is most undefended and God is most audible. You do not need to be a monk to steal five minutes from your morning before the world finds you.",
     responseID: "Sebelum Anda memeriksa ponsel, sebelum membuka email, sebelum notifikasi pertama datang - duduklah dalam keheningan selama lima menit. Tidak ada agenda. Tidak ada kata-kata. Hanya kesediaan. Ini adalah versi terkecil dari praktik yang berkelanjutan. Lima menit tidak ideal. Ini adalah awal. Para Bapa Padang Gurun menyebut jam-jam pagi awal sebagai Vigils - waktu ketika diri paling tidak terjaga dan Allah paling terdengar.",
   },
   {
-    labelEN: "A 24-Hour Digital Fast",
-    labelID: "Puasa Digital 24 Jam",
+    icon: "📵",
+    title: "A Day Without Screens",
+    titleId: "Sehari Tanpa Layar",
+    labelEN: "A Day Without Screens",
+    labelID: "Sehari Tanpa Layar",
     responseEN: "Once a month, put down the devices for 24 hours. No social media, no news, no email. Not as punishment - as an act of love. Layne McDonald, who writes on digital wisdom, frames a digital fast as saying: 'I love You more than I love being informed.' Jesus regularly withdrew to desolate places (Luke 5:16). He was not irresponsible. He was replenishing the source from which everything else came. The fast reveals what the device was filling. Often, it is a restlessness that God wants to address - not the device itself.",
     responseID: "Sebulan sekali, letakkan perangkat selama 24 jam. Tidak ada media sosial, tidak ada berita, tidak ada email. Bukan sebagai hukuman - sebagai tindakan kasih. Layne McDonald membingkai puasa digital sebagai mengatakan: 'Aku mencintai-Mu lebih dari aku mencintai keinginan untuk selalu terinformasi.' Yesus secara teratur menarik diri ke tempat-tempat sepi (Lukas 5:16). Dia tidak tidak bertanggung jawab. Dia mengisi ulang sumber dari mana segalanya datang.",
   },
   {
-    labelEN: "Lectio Divina (Sacred Reading)",
-    labelID: "Lectio Divina (Bacaan Sakral)",
+    icon: "📖",
+    title: "Lectio Divina",
+    titleId: "Lectio Divina",
+    labelEN: "Lectio Divina",
+    labelID: "Lectio Divina",
     responseEN: "Choose a short passage of Scripture - six to ten verses. Read it once, slowly. Read it a second time. On the third reading, ask one question: what word or phrase caught my attention? Do not analyse it. Sit with it for five minutes. Let it rest in you. This is lectio divina - the practice the monastic tradition has used for fifteen hundred years to hear Scripture as a living word rather than a text to be studied. The final movement, contemplatio, is wordless rest in God's presence. No agenda, no performance. Just arrival.",
     responseID: "Pilih bagian Kitab Suci yang pendek - enam hingga sepuluh ayat. Baca sekali, perlahan. Baca kedua kali. Pada bacaan ketiga, ajukan satu pertanyaan: kata atau frasa apa yang menarik perhatian saya? Jangan menganalisisnya. Duduk bersamanya selama lima menit. Biarkan beristirahat dalam diri Anda. Ini adalah lectio divina - praktik yang telah digunakan tradisi monastik selama lima belas ratus tahun untuk mendengar Kitab Suci sebagai firman yang hidup.",
   },
   {
-    labelEN: "Annual Silent Retreat (48 hours)",
-    labelID: "Retret Hening Tahunan (48 jam)",
+    icon: "🌿",
+    title: "A Silent Retreat",
+    titleId: "Retret Hening",
+    labelEN: "A Silent Retreat",
+    labelID: "Retret Hening",
     responseEN: "Once a year, go somewhere quiet - a monastery, a retreat house, a cabin - for 48 hours of intentional silence. Bring your Bible. Bring a journal. Bring nothing that requires a screen. This is not a working retreat. It is not strategic planning dressed up in spiritual language. It is stopping. Many leaders resist this because they cannot see the ROI. The ROI is not visible in the same accounting system. Leaders who build this into their year consistently report that more clarity comes from those 48 hours than from any planning weekend.",
     responseID: "Setahun sekali, pergilah ke tempat yang tenang - biara, rumah retret, kabin - selama 48 jam keheningan yang intentional. Bawa Alkitab Anda. Bawa jurnal. Jangan bawa apa pun yang membutuhkan layar. Ini bukan retret kerja. Ini bukan perencanaan strategis yang dibungkus dalam bahasa rohani. Ini adalah berhenti. Banyak pemimpin menolak ini karena mereka tidak dapat melihat hasilnya. Hasilnya tidak terlihat dalam sistem akuntansi yang sama.",
   },
   {
-    labelEN: "Phone-Free Commute or Walk",
-    labelID: "Perjalanan atau Jalan Tanpa Ponsel",
+    icon: "🚶",
+    title: "Walking Without Noise",
+    titleId: "Berjalan Tanpa Kebisingan",
+    labelEN: "Walking Without Noise",
+    labelID: "Berjalan Tanpa Kebisingan",
     responseEN: "Leave your phone behind for one commute or walk per day. No earbuds. No podcast. No audiobook. Just movement and whatever arises. This may feel wasteful at first. That feeling is data - it tells you how thoroughly the space for unstructured thought has been colonised. The research suggests that the default mode network - the part of the brain active in unfocused thought - is where creativity, self-reflection, and emotional processing happen. You do not need to fill every commute with content. Some of your most important thinking happens when you stop feeding the mind and let it breathe.",
     responseID: "Tinggalkan ponsel Anda untuk satu perjalanan atau jalan per hari. Tidak ada earbuds. Tidak ada podcast. Tidak ada audiobook. Hanya gerakan dan apa pun yang muncul. Ini mungkin terasa sia-sia pada awalnya. Perasaan itu adalah data - itu memberi tahu Anda betapa menyeluruhnya ruang untuk pemikiran tidak terstruktur telah dikolonisasi.",
   },
@@ -92,54 +108,43 @@ const personalCards = [
 
 const teamCards = [
   {
-    labelEN: "Opening Silence Before Team Meetings",
-    labelID: "Keheningan Pembuka Sebelum Rapat Tim",
+    icon: "🤝",
+    title: "Beginning in Stillness",
+    titleId: "Memulai dalam Ketenangan",
+    labelEN: "Beginning in Stillness",
+    labelID: "Memulai dalam Ketenangan",
     responseEN: "Begin every team meeting with two minutes of silence. No agenda. No prayer request list. No opening song. Just two minutes of quiet, together. This practice is countercultural enough that it will feel awkward the first few times. That is normal. What teams consistently report after six weeks is that meetings change character. People arrive less frantic. Conversation is more honest. Decisions feel more grounded. You are not just managing productivity. You are modelling that silence is safe - that it is not dead space but living space.",
     responseID: "Mulai setiap rapat tim dengan dua menit keheningan. Tidak ada agenda. Tidak ada daftar permintaan doa. Tidak ada lagu pembuka. Hanya dua menit tenang, bersama. Praktik ini cukup berlawanan dengan budaya sehingga akan terasa canggung beberapa kali pertama. Itu normal. Apa yang secara konsisten dilaporkan tim setelah enam minggu adalah rapat berubah karakternya.",
   },
   {
-    labelEN: "Team Digital Sabbath (One Day Per Week)",
-    labelID: "Sabat Digital Tim (Satu Hari Per Minggu)",
+    icon: "🔕",
+    title: "A Day Without Messages",
+    titleId: "Sehari Tanpa Pesan",
+    labelEN: "A Day Without Messages",
+    labelID: "Sehari Tanpa Pesan",
     responseEN: "As a team, choose one day per week where no work communication is sent. No WhatsApp messages, no emails, no 'just checking in.' This is harder to implement than it sounds - there will always be something urgent. But the practice of naming a boundary together does something that individual discipline cannot: it creates a shared culture of rest. Global Frontier Missions frames the Sabbath as a weekly confession that ministry is ultimately God's work, not ours. A team that rests together models something the communities they serve desperately need to see.",
     responseID: "Sebagai tim, pilih satu hari per minggu di mana tidak ada komunikasi pekerjaan yang dikirim. Tidak ada pesan WhatsApp, tidak ada email, tidak ada 'hanya memeriksa.' Ini lebih sulit diterapkan dari yang terdengar - selalu ada sesuatu yang mendesak. Tapi praktik menetapkan batas bersama melakukan sesuatu yang tidak bisa dilakukan disiplin individu: menciptakan budaya istirahat bersama.",
   },
   {
-    labelEN: "Silent Prayer Together (Monthly)",
-    labelID: "Doa Hening Bersama (Bulanan)",
+    icon: "🔵",
+    title: "The Listening Circle",
+    titleId: "Lingkaran Mendengar",
+    labelEN: "The Listening Circle",
+    labelID: "Lingkaran Mendengar",
     responseEN: "Once a month, gather your team for 20 minutes of corporate silent prayer. Open with a short Scripture reading. Then sit in silence together. Close with one question: 'What did you notice?' You do not need to share deeply. The act of naming what arrived in the silence is often enough. The Quaker tradition has practised corporate silence for four hundred years, describing it as 'an intensified pause, a vitalised hush, a creative quiet.' Teams who introduce this practice often report that it changes the quality of prayer in the team more than any training on intercession.",
     responseID: "Sebulan sekali, kumpulkan tim Anda selama 20 menit doa hening bersama. Buka dengan bacaan Kitab Suci yang singkat. Kemudian duduk dalam keheningan bersama. Tutup dengan satu pertanyaan: 'Apa yang Anda perhatikan?' Anda tidak perlu berbagi secara mendalam. Tradisi Quaker telah mempraktikkan keheningan bersama selama empat ratus tahun, menggambarkannya sebagai 'jeda yang diintensifkan, kesunyian yang dihidupkan, ketenangan yang kreatif.'",
   },
   {
-    labelEN: "Structured Debrief with Space for Silence",
-    labelID: "Debriefing Terstruktur dengan Ruang untuk Keheningan",
+    icon: "💭",
+    title: "The Silent Debrief",
+    titleId: "Debriefing Hening",
+    labelEN: "The Silent Debrief",
+    labelID: "Debriefing Hening",
     responseEN: "After significant events - a difficult season, a major project, a leadership crisis - build a structured debrief that begins not with reporting but with silence. Ask the team to sit quietly for five minutes before anyone speaks. Then ask: 'What happened inside you during that season?' Not just 'what went well' or 'what could we improve,' but what happened in the interior. Cross-cultural workers often move from one intense experience to the next without processing what each one left behind. Silence before debrief creates the conditions for honesty that polished reporting rarely allows.",
     responseID: "Setelah peristiwa-peristiwa penting - musim yang sulit, proyek besar, krisis kepemimpinan - bangun debriefing terstruktur yang dimulai bukan dengan pelaporan tetapi dengan keheningan. Minta tim untuk duduk diam selama lima menit sebelum siapa pun berbicara. Kemudian tanya: 'Apa yang terjadi di dalam diri Anda selama musim itu?' Tidak hanya 'apa yang berjalan dengan baik' - tapi apa yang terjadi di interior.",
   },
 ];
 
-// ─── Goal dropdowns labels ────────────────────────────────────────────────────
-const goalLabels = [
-  {
-    labelEN: "In 30 days, how often do you want to practice intentional silence?",
-    labelID: "Dalam 30 hari, seberapa sering Anda ingin mempraktikkan keheningan yang intentional?",
-  },
-  {
-    labelEN: "What duration will you aim for?",
-    labelID: "Durasi apa yang akan Anda tuju?",
-  },
-  {
-    labelEN: "What quality of presence do you want to reach?",
-    labelID: "Kualitas kehadiran apa yang ingin Anda capai?",
-  },
-  {
-    labelEN: "Where do you want to be on the ease scale?",
-    labelID: "Di mana Anda ingin berada pada skala kemudahan?",
-  },
-  {
-    labelEN: "How intentional do you want your silence practice to be?",
-    labelID: "Seberapa intentional Anda ingin praktik keheningan Anda?",
-  },
-];
 
 // ─── Shared styles ────────────────────────────────────────────────────────────
 const prose: React.CSSProperties = {
@@ -157,97 +162,6 @@ const supStyle: React.CSSProperties = {
   lineHeight: 0,
 };
 
-// ─── Sources dropdown ─────────────────────────────────────────────────────────
-function SourcesDropdown({ lang }: { lang: Lang }) {
-  const [open, setOpen] = useState(false);
-
-  const sources = [
-    {
-      n: 1,
-      text: "Frontiers in Cognition, \"The Impact of Digital Technology, Social Media, and AI on Cognitive Functions\" (2023)",
-      url: "https://www.frontiersin.org/journals/cognition/articles/10.3389/fcogn.2023.1203077/full",
-    },
-    {
-      n: 2,
-      text: "Scientific Reports, \"Acute Smartphone Use Impairs Vigilance and Inhibition Capacities\" (2023)",
-      url: "https://preview-www.nature.com/articles/s41598-023-50354-3",
-    },
-    {
-      n: 3,
-      text: "Scientific Reports / PMC, \"Does the Brain Drain Effect Really Exist?\" (2023)",
-      url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC10525686/",
-    },
-    {
-      n: 4,
-      text: "Church Life Journal (Notre Dame), \"This Is Your Brain in a Digital Age\"",
-      url: "https://churchlifejournal.nd.edu/articles/this-is-your-brain-in-a-digital-age/",
-    },
-    {
-      n: 5,
-      text: "Working Preacher, Commentary on 1 Kings 19:1-15",
-      url: "https://www.workingpreacher.org/commentaries/revised-common-lectionary/ordinary-12-3/commentary-on-1-kings-191-45-78-15a-2",
-    },
-    {
-      n: 6,
-      text: "JesusWalk Bible Study, \"Recognizing God's Voice: 1 Kings 19\"",
-      url: "https://www.jesuswalk.com/voice/2_recognizing.htm",
-    },
-    {
-      n: 7,
-      text: "Conversatio Divina, \"Ancient Christian Wisdom for a Postmodern Age: Knowledge Born in Silence\"",
-      url: "https://conversatio.org/ancient-christian-wisdom-for-a-postmodern-age-knowledge-born-in-silence/",
-    },
-    {
-      n: 8,
-      text: "Henri Nouwen, \"From Solitude to Community to Ministry\" - Christianity Today",
-      url: "https://www.christianitytoday.com/pastors/content/from-solitude-to-community-to-ministry/",
-    },
-    {
-      n: 9,
-      text: "Thomas Merton, New Seeds of Contemplation",
-      url: "https://www.goodreads.com/work/quotes/1133302-new-seeds-of-contemplation",
-    },
-    {
-      n: 10,
-      text: "Transforming Center, \"Practicing What We Preach: Solitude and Leadership\" (Ruth Haley Barton)",
-      url: "https://transformingcenter.org/2016/07/practicing-preach/",
-    },
-  ];
-
-  return (
-    <div style={{ maxWidth: MX, margin: "0 auto", padding: "0 24px 48px" }}>
-      <button
-        onClick={() => setOpen(o => !o)}
-        style={{
-          background: "none",
-          border: "none",
-          cursor: "pointer",
-          fontFamily: FONT,
-          fontSize: 11,
-          fontWeight: 700,
-          letterSpacing: "0.1em",
-          textTransform: "uppercase" as const,
-          color: orange,
-          padding: 0,
-        }}
-      >
-        {lang === "id" ? (open ? "- Sembunyikan Sumber" : "+ Lihat Sumber") : (open ? "- Hide Sources" : "+ View Sources")}
-      </button>
-      {open && (
-        <ol style={{ marginTop: 16, paddingLeft: 20, color: bodyText, fontFamily: FONT, fontSize: 13, lineHeight: 1.8 }}>
-          {sources.map(s => (
-            <li key={s.n} style={{ marginBottom: 8 }}>
-              {s.text}{" "}
-              <a href={s.url} target="_blank" rel="noopener noreferrer" style={{ color: orange, textDecoration: "underline", wordBreak: "break-all" }}>
-                {s.url}
-              </a>
-            </li>
-          ))}
-        </ol>
-      )}
-    </div>
-  );
-}
 
 // ─── Main component ───────────────────────────────────────────────────────────
 export default function DisciplineOfSilenceClient({
@@ -266,15 +180,16 @@ export default function DisciplineOfSilenceClient({
   // Assessment state
   const [answers, setAnswers] = useState<(number | null)[]>([null, null, null, null, null]);
   const [assessmentComplete, setAssessmentComplete] = useState(false);
+  const [currentQ, setCurrentQ] = useState(0);
+  const [assessmentResult, setAssessmentResult] = useState<string | null>(null);
 
   // Scenario cards
-  const [openPersonalCard, setOpenPersonalCard] = useState<number | null>(null);
-  const [openTeamCard, setOpenTeamCard] = useState<number | null>(null);
+  const [activeCard, setActiveCard] = useState<{ type: "personal" | "team"; index: number } | null>(null);
 
   // Goal-setter state
-  const [goals, setGoals] = useState<string[]>(["", "", "", "", ""]);
-  const [weekCommitment, setWeekCommitment] = useState("");
-  const [goalsSaved, setGoalsSaved] = useState(false);
+  const [openAnswers, setOpenAnswers] = useState({ area: "", challenge: "", impact: "" });
+  const [aiAdvice, setAiAdvice] = useState<string | null>(null);
+  const [aiLoading, setAiLoading] = useState(false);
 
   // Background / Sources
   const [bgOpen, setBgOpen] = useState(false);
@@ -290,35 +205,43 @@ export default function DisciplineOfSilenceClient({
     });
   }
 
-  const allAnswered = answers.every(a => a !== null);
-
   function handleAnswerSelect(qIdx: number, optIdx: number) {
     const next = [...answers];
     next[qIdx] = next[qIdx] === optIdx ? null : optIdx;
     setAnswers(next);
   }
 
-  function getDefaultGoal(qIdx: number): string {
-    const answer = answers[qIdx];
-    if (answer === null) return "";
-    const q = assessmentQuestions[qIdx];
-    const opts = lang === "id" ? q.optionsID : q.optionsEN;
-    const nextIdx = Math.min(answer + 1, opts.length - 1);
-    return opts[nextIdx];
+  function handleSeeResults() {
+    const total = answers.reduce<number>((sum, val) => sum + (val ?? 0), 0);
+    let resultText = "";
+    if (total <= 5) {
+      resultText = "Silence is not yet a habit in your life. That's not a failure — it's the starting point. This module was made for exactly where you are.";
+    } else if (total <= 9) {
+      resultText = "You're reaching for silence, but haven't found a steady rhythm yet. This module will help you build one.";
+    } else if (total <= 12) {
+      resultText = "Silence is growing in your practice, but it hasn't fully settled. This module will help you protect and deepen it.";
+    } else {
+      resultText = "Silence is already a discipline in your life. Use this module to sharpen your practice and learn how to lead others into it.";
+    }
+    setAssessmentResult(resultText);
+    setAssessmentComplete(true);
   }
 
-  function handleReveal() {
-    if (!allAnswered) return;
-    setAssessmentComplete(true);
-    // Pre-fill goals at one step above assessment answers
-    const prefilled = answers.map((a, i) => {
-      const q = assessmentQuestions[i];
-      const opts = lang === "id" ? q.optionsID : q.optionsEN;
-      if (a === null) return "";
-      return opts[Math.min(a + 1, opts.length - 1)];
-    });
-    setGoals(prefilled);
-  }
+  const handleGenerateAdvice = async () => {
+    setAiLoading(true);
+    try {
+      const assessmentSummary = assessmentQuestions.map((q, i) => ({
+        dimension: q.dimension ?? `Area ${i + 1}`,
+        selectedOption: answers[i] !== null ? (lang === "id" ? q.optionsID[answers[i]!] : q.optionsEN[answers[i]!]) : "Not answered",
+      }));
+      const advice = await generateSilenceAdvice(assessmentSummary, openAnswers);
+      setAiAdvice(advice);
+    } catch {
+      setAiAdvice("Keep pressing in. Silence will reward your faithfulness.");
+    } finally {
+      setAiLoading(false);
+    }
+  };
 
   // ─── Layout helpers ────────────────────────────────────────────────────────
   const sec = (bg: string, py = "4rem"): React.CSSProperties => ({
@@ -434,19 +357,30 @@ export default function DisciplineOfSilenceClient({
           <button
             onClick={handleSave}
             disabled={saved || isPending}
+            aria-label={saved ? t("Saved to Dashboard", "Tersimpan di Dashboard") : t("Save to Dashboard", "Simpan ke Dashboard")}
             style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.5rem",
               padding: "12px 28px",
-              border: "none",
+              background: "transparent",
+              border: `1.5px solid ${saved ? "oklch(60% 0.05 260)" : orange}`,
+              color: saved ? "oklch(60% 0.05 260)" : orange,
               cursor: saved ? "default" : "pointer",
               fontFamily: FONT,
               fontSize: 13,
               fontWeight: 700,
-              background: saved ? "oklch(35% 0.05 260)" : orange,
-              color: offWhite,
               letterSpacing: "0.04em",
               borderRadius: 4,
+              minHeight: 44,
             }}
           >
+            <svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ flexShrink: 0 }}>
+              {saved
+                ? <path d="M2 7l3.5 3.5L12 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                : <path d="M7 1v8M4 6l3 3 3-3M2 11h10" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+              }
+            </svg>
             {saved ? t("Saved to Dashboard", "Tersimpan di Dashboard") : t("Save to Dashboard", "Simpan ke Dashboard")}
           </button>
         </div>
@@ -463,12 +397,6 @@ export default function DisciplineOfSilenceClient({
               "Kita hidup di dunia yang tidak berhenti. Bagi pemimpin lintas budaya, kebisingan itu berlipat ganda: belajar bahasa, gegar budaya, kompleksitas tim, zona waktu, harapan pendukung, dan beban pekerjaan yang membawa taruhan abadi. Dan sekarang, di atas segalanya, sebuah perangkat di saku Anda yang selalu menyala."
             )}
           </p>
-          <p style={prose}>
-            {t(
-              "The question this module asks is simple: If God speaks in silence, and we have stopped seeking silence, what are we missing?",
-              "Pertanyaan yang diajukan modul ini sederhana: Jika Allah berbicara dalam keheningan, dan kita telah berhenti mencari keheningan, apa yang kita lewatkan?"
-            )}
-          </p>
           <p style={{ ...prose, marginBottom: 0 }}>
             {t(
               "This module will help you diagnose where you are, understand why silence matters - both theologically and practically - and implement it, personally and with your team.",
@@ -482,9 +410,9 @@ export default function DisciplineOfSilenceClient({
       <section style={sec(offWhite, "0")}>
         <div style={{ ...inner, paddingBottom: "4rem" }}>
           <div style={{
-            background: "white",
-            borderLeft: `4px solid ${orange}`,
-            borderRadius: "0 6px 6px 0",
+            background: "oklch(97% 0.010 50)",
+            border: `1px solid oklch(88% 0.030 50)`,
+            borderRadius: "6px",
             padding: "1.75rem 2rem",
           }}>
             <p style={{
@@ -566,116 +494,185 @@ export default function DisciplineOfSilenceClient({
             )}
           </p>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: "2.5rem" }}>
-            {assessmentQuestions.map((q, qIdx) => {
-              const opts = lang === "id" ? q.optionsID : q.optionsEN;
-              const selected = answers[qIdx];
-              return (
-                <div key={q.dimension}>
-                  <p style={{
-                    fontFamily: FONT,
-                    fontSize: "0.7rem",
-                    fontWeight: 700,
-                    letterSpacing: "0.1em",
-                    color: "oklch(58% 0.05 260)",
-                    marginBottom: "0.5rem",
-                  }}>
-                    {q.dimension}
-                  </p>
-                  <p style={{
-                    fontFamily: FONT,
-                    fontSize: "clamp(0.9rem, 1.6vw, 1rem)",
-                    color: navy,
-                    fontWeight: 600,
-                    marginBottom: "1rem",
-                    lineHeight: 1.5,
-                  }}>
-                    {lang === "id" ? q.id : q.en}
-                  </p>
-                  <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                    {opts.map((opt, optIdx) => {
-                      const isSelected = selected === optIdx;
-                      return (
-                        <button
-                          key={optIdx}
-                          onClick={() => handleAnswerSelect(qIdx, optIdx)}
-                          style={{
-                            width: "100%",
-                            padding: "0.875rem 1.25rem",
-                            background: isSelected ? navy : "white",
-                            border: isSelected ? `2px solid ${navy}` : `2px solid ${lightGray}`,
-                            borderLeft: `4px solid ${isSelected ? orange : lightGray}`,
-                            borderRadius: "4px",
-                            cursor: "pointer",
-                            textAlign: "left",
-                            fontFamily: FONT,
-                            fontSize: "0.875rem",
-                            color: isSelected ? "white" : bodyText,
-                            fontWeight: isSelected ? 600 : 400,
-                            transition: "background 0.2s ease, color 0.2s ease",
-                            minHeight: 44,
-                            lineHeight: 1.5,
-                          }}
-                        >
-                          {opt}
-                        </button>
-                      );
-                    })}
-                  </div>
+          {!assessmentComplete && (() => {
+            const q = assessmentQuestions[currentQ];
+            const opts = lang === "id" ? q.optionsID : q.optionsEN;
+            const selected = answers[currentQ];
+            const isLast = currentQ === 4;
+            return (
+              <div>
+                <p style={{
+                  fontFamily: FONT,
+                  fontSize: "0.72rem",
+                  color: "oklch(58% 0.05 260)",
+                  marginBottom: "1.5rem",
+                }}>
+                  {t(`Question ${currentQ + 1} of 5`, `Pertanyaan ${currentQ + 1} dari 5`)}
+                </p>
+                <p style={{
+                  fontFamily: FONT,
+                  fontSize: "0.7rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.1em",
+                  color: "oklch(58% 0.05 260)",
+                  marginBottom: "0.5rem",
+                }}>
+                  {q.dimension}
+                </p>
+                <p style={{
+                  fontFamily: FONT,
+                  fontSize: "clamp(0.9rem, 1.6vw, 1rem)",
+                  color: navy,
+                  fontWeight: 600,
+                  marginBottom: "1rem",
+                  lineHeight: 1.5,
+                }}>
+                  {lang === "id" ? q.id : q.en}
+                </p>
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", marginBottom: "2rem" }}>
+                  {opts.map((opt, optIdx) => {
+                    const isSelected = selected === optIdx;
+                    return (
+                      <button
+                        key={optIdx}
+                        onClick={() => handleAnswerSelect(currentQ, optIdx)}
+                        aria-pressed={isSelected}
+                        style={{
+                          width: "100%",
+                          padding: "0.875rem 1.25rem",
+                          background: isSelected ? navy : "white",
+                          border: isSelected ? `2px solid ${orange}` : `2px solid ${lightGray}`,
+                          borderRadius: "4px",
+                          cursor: "pointer",
+                          textAlign: "left",
+                          fontFamily: FONT,
+                          fontSize: "0.875rem",
+                          color: isSelected ? "white" : bodyText,
+                          fontWeight: isSelected ? 600 : 400,
+                          transition: "background 0.2s ease, color 0.2s ease, border-color 0.2s ease",
+                          minHeight: 44,
+                          lineHeight: 1.5,
+                          boxShadow: isSelected ? `inset 3px 0 0 ${orange}` : "none",
+                        }}
+                      >
+                        {opt}
+                      </button>
+                    );
+                  })}
                 </div>
-              );
-            })}
-          </div>
+                <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
+                  {currentQ > 0 && (
+                    <button
+                      onClick={() => setCurrentQ(q => q - 1)}
+                      style={{
+                        padding: "12px 24px",
+                        background: "transparent",
+                        border: `1.5px solid ${lightGray}`,
+                        color: bodyText,
+                        borderRadius: 4,
+                        fontFamily: FONT,
+                        fontSize: 13,
+                        fontWeight: 700,
+                        cursor: "pointer",
+                        minHeight: 44,
+                        letterSpacing: "0.04em",
+                      }}
+                    >
+                      {t("← Back", "← Kembali")}
+                    </button>
+                  )}
+                  {!isLast && (
+                    <button
+                      onClick={() => setCurrentQ(q => q + 1)}
+                      disabled={selected === null || selected === undefined}
+                      style={{
+                        padding: "12px 28px",
+                        background: (selected === null || selected === undefined) ? lightGray : orange,
+                        border: "none",
+                        color: (selected === null || selected === undefined) ? "oklch(65% 0.01 80)" : offWhite,
+                        borderRadius: 4,
+                        fontFamily: FONT,
+                        fontSize: 13,
+                        fontWeight: 700,
+                        cursor: (selected === null || selected === undefined) ? "default" : "pointer",
+                        minHeight: 44,
+                        letterSpacing: "0.04em",
+                        transition: "background 0.2s ease",
+                      }}
+                    >
+                      {t("Next →", "Lanjut →")}
+                    </button>
+                  )}
+                  {isLast && (
+                    <button
+                      onClick={handleSeeResults}
+                      disabled={selected === null || selected === undefined}
+                      style={{
+                        padding: "12px 28px",
+                        background: (selected === null || selected === undefined) ? lightGray : orange,
+                        border: "none",
+                        color: (selected === null || selected === undefined) ? "oklch(65% 0.01 80)" : offWhite,
+                        borderRadius: 4,
+                        fontFamily: FONT,
+                        fontSize: 13,
+                        fontWeight: 700,
+                        cursor: (selected === null || selected === undefined) ? "default" : "pointer",
+                        minHeight: 44,
+                        letterSpacing: "0.04em",
+                        transition: "background 0.2s ease",
+                      }}
+                    >
+                      {t("See Results →", "Lihat Hasil →")}
+                    </button>
+                  )}
+                </div>
+              </div>
+            );
+          })()}
 
-          {!assessmentComplete && (
-            <div style={{ marginTop: "2.5rem", textAlign: "center" }}>
+          {assessmentComplete && (
+            <div style={{ textAlign: "center", padding: "2rem 0" }}>
+              <p style={{
+                fontFamily: CORMORANT,
+                fontStyle: "italic",
+                fontSize: "clamp(1.1rem, 2.2vw, 1.35rem)",
+                color: navy,
+                lineHeight: 1.7,
+                marginBottom: "1.25rem",
+              }}>
+                {assessmentResult}
+              </p>
+              <p style={{
+                fontFamily: FONT,
+                fontSize: "0.85rem",
+                color: bodyText,
+                lineHeight: 1.65,
+                maxWidth: 480,
+                margin: "0 auto 2rem",
+              }}>
+                {t(
+                  "At the end of this module, we'll return to these areas — to see where you want to grow and how to get there.",
+                  "Di akhir modul ini, kita akan kembali ke area-area ini — untuk melihat di mana kamu ingin bertumbuh dan bagaimana caranya."
+                )}
+              </p>
               <button
-                onClick={handleReveal}
-                disabled={!allAnswered}
+                onClick={() => { /* content below is already revealed */ }}
                 style={{
-                  padding: "14px 40px",
+                  padding: "12px 32px",
+                  background: orange,
+                  color: offWhite,
                   border: "none",
-                  cursor: allAnswered ? "pointer" : "default",
+                  borderRadius: 4,
                   fontFamily: FONT,
                   fontSize: 13,
                   fontWeight: 700,
-                  background: allAnswered ? orange : lightGray,
-                  color: allAnswered ? offWhite : "oklch(65% 0.01 80)",
-                  letterSpacing: "0.06em",
-                  borderRadius: 4,
+                  letterSpacing: "0.04em",
+                  cursor: "pointer",
+                  minHeight: 44,
                 }}
               >
-                {allAnswered
-                  ? t("See My Results - Continue to Teaching", "Lihat Hasil Saya - Lanjut ke Pengajaran")
-                  : t("Answer all 5 questions to continue", "Jawab semua 5 pertanyaan untuk melanjutkan")}
+                {t("Continue to module →", "Lanjutkan ke modul →")}
               </button>
-            </div>
-          )}
-
-          {assessmentComplete && (
-            <div style={{
-              marginTop: "2rem",
-              padding: "1.25rem 1.5rem",
-              background: offWhite,
-              borderLeft: `4px solid ${orange}`,
-              borderRadius: "0 4px 4px 0",
-            }}>
-              <p style={{
-                fontFamily: FONT,
-                fontSize: "0.8rem",
-                fontWeight: 700,
-                color: orange,
-                letterSpacing: "0.08em",
-                marginBottom: "0.25rem",
-              }}>
-                {t("ASSESSMENT COMPLETE", "PENILAIAN SELESAI")}
-              </p>
-              <p style={{ fontFamily: FONT, fontSize: "0.875rem", color: bodyText, margin: 0 }}>
-                {t(
-                  "Your answers have been recorded. Continue reading - your snapshot will appear in the Goal-Setter at the end.",
-                  "Jawaban Anda telah dicatat. Lanjutkan membaca - snapshot Anda akan muncul di Goal-Setter di akhir."
-                )}
-              </p>
             </div>
           )}
         </div>
@@ -688,16 +685,6 @@ export default function DisciplineOfSilenceClient({
         <>
           <section style={sec(offWhite)}>
             <div style={inner}>
-              <p style={{
-                fontFamily: FONT,
-                fontSize: "0.68rem",
-                letterSpacing: "0.14em",
-                color: orange,
-                fontWeight: 700,
-                marginBottom: "0.5rem",
-              }}>
-                {t("PART 1 OF 3", "BAGIAN 1 DARI 3")}
-              </p>
               <h2 style={{
                 fontFamily: CORMORANT,
                 fontWeight: 600,
@@ -764,16 +751,6 @@ export default function DisciplineOfSilenceClient({
           ════════════════════════════════════════════════════════════ */}
           <section style={sec("white")}>
             <div style={inner}>
-              <p style={{
-                fontFamily: FONT,
-                fontSize: "0.68rem",
-                letterSpacing: "0.14em",
-                color: orange,
-                fontWeight: 700,
-                marginBottom: "0.5rem",
-              }}>
-                {t("PART 2 OF 3", "BAGIAN 2 DARI 3")}
-              </p>
               <h2 style={{
                 fontFamily: CORMORANT,
                 fontWeight: 600,
@@ -852,16 +829,6 @@ export default function DisciplineOfSilenceClient({
           ════════════════════════════════════════════════════════════ */}
           <section style={sec(offWhite)}>
             <div style={inner}>
-              <p style={{
-                fontFamily: FONT,
-                fontSize: "0.68rem",
-                letterSpacing: "0.14em",
-                color: orange,
-                fontWeight: 700,
-                marginBottom: "0.5rem",
-              }}>
-                {t("PART 3 OF 3", "BAGIAN 3 DARI 3")}
-              </p>
               <h2 style={{
                 fontFamily: CORMORANT,
                 fontWeight: 600,
@@ -900,7 +867,7 @@ export default function DisciplineOfSilenceClient({
           </section>
 
           {/* ════════════════════════════════════════════════════════════
-              SCENARIO CARDS — PERSONAL
+              SCENARIO CARDS — 3×3 GRID
           ════════════════════════════════════════════════════════════ */}
           <section style={sec(navy, "5rem")}>
             <div style={inner}>
@@ -921,7 +888,7 @@ export default function DisciplineOfSilenceClient({
                 color: "white",
                 marginBottom: "0.5rem",
               }}>
-                {t("Personal Practices", "Praktik Pribadi")}
+                {t("Practices for You and Your Team", "Praktik untuk Anda dan Tim Anda")}
               </h2>
               <p style={{
                 fontFamily: FONT,
@@ -930,157 +897,63 @@ export default function DisciplineOfSilenceClient({
                 maxWidth: 520,
                 marginBottom: "3rem",
               }}>
-                {t(
-                  "Select any card to read the full practice.",
-                  "Pilih kartu mana saja untuk membaca praktik lengkapnya."
-                )}
+                {t("Select any card to read the full practice.", "Pilih kartu untuk membaca praktik lengkapnya.")}
               </p>
 
-              <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-                {personalCards.map((card, i) => {
-                  const isOpen = openPersonalCard === i;
+              <div style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(3, 1fr)",
+                gap: 16,
+              }}>
+                {[...personalCards, ...teamCards].map((card, i) => {
+                  const isTeam = i >= 5;
                   return (
-                    <div key={i}>
-                      <button
-                        onClick={() => setOpenPersonalCard(isOpen ? null : i)}
-                        style={{
-                          width: "100%",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-between",
-                          padding: "1rem 1.25rem",
-                          background: isOpen ? orange : "oklch(28% 0.10 260)",
-                          border: `2px solid ${isOpen ? orange : "oklch(30% 0.10 260)"}`,
-                          borderRadius: "4px",
-                          cursor: "pointer",
-                          textAlign: "left",
-                          fontFamily: FONT,
-                          fontSize: "0.9rem",
-                          fontWeight: 600,
-                          color: "white",
-                          transition: "background 0.2s ease",
-                          minHeight: 44,
-                        }}
-                      >
-                        <span>{lang === "id" ? card.labelID : card.labelEN}</span>
-                        <span style={{ color: isOpen ? "white" : orange, fontSize: "0.75rem", flexShrink: 0, marginLeft: "1rem" }}>
-                          {isOpen ? t("CLOSE", "TUTUP") + " ▲" : t("READ", "BACA") + " ▼"}
-                        </span>
-                      </button>
-                      <div style={{
-                        display: "grid",
-                        gridTemplateRows: isOpen ? "1fr" : "0fr",
-                        transition: "grid-template-rows 0.3s ease",
-                        overflow: "hidden",
+                    <div
+                      key={i}
+                      onClick={() => setActiveCard({ type: isTeam ? "team" : "personal", index: isTeam ? i - 5 : i })}
+                      role="button"
+                      tabIndex={0}
+                      onKeyDown={e => e.key === "Enter" && setActiveCard({ type: isTeam ? "team" : "personal", index: isTeam ? i - 5 : i })}
+                      style={{
+                        background: "white",
+                        border: `1.5px solid ${lightGray}`,
+                        borderRadius: 12,
+                        padding: "20px 14px",
+                        cursor: "pointer",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        gap: 10,
+                        textAlign: "center",
+                      }}
+                    >
+                      <span style={{ fontSize: "1.75rem", lineHeight: 1 }}>{card.icon}</span>
+                      <p style={{
+                        fontFamily: FONT,
+                        fontWeight: 700,
+                        fontSize: "0.82rem",
+                        color: navy,
+                        margin: 0,
+                        lineHeight: 1.35,
                       }}>
-                        <div style={{ minHeight: 0 }}>
-                          <div style={{
-                            padding: "1.25rem 1.25rem 1.5rem",
-                            background: "oklch(26% 0.09 260)",
-                            borderLeft: `4px solid ${orange}`,
-                            borderRadius: "0 0 4px 4px",
-                          }}>
-                            <p style={{
-                              fontFamily: FONT,
-                              fontSize: "0.875rem",
-                              color: "oklch(82% 0.03 260)",
-                              lineHeight: 1.85,
-                              margin: 0,
-                            }}>
-                              {lang === "id" ? card.responseID : card.responseEN}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
+                        {t(card.title, card.titleId)}
+                      </p>
+                      <span style={{
+                        fontFamily: FONT,
+                        fontSize: "0.58rem",
+                        fontWeight: 700,
+                        letterSpacing: "0.09em",
+                        textTransform: "uppercase" as const,
+                        color: isTeam ? "oklch(50% 0.05 260)" : orange,
+                        background: isTeam ? lightGray : "oklch(96% 0.03 45)",
+                        padding: "3px 8px",
+                        borderRadius: 4,
+                      }}>
+                        {isTeam ? t("Team", "Tim") : t("Personal", "Pribadi")}
+                      </span>
                     </div>
                   );
                 })}
-              </div>
-
-              {/* Team cards */}
-              <div style={{ marginTop: "4rem" }}>
-                <h2 style={{
-                  fontFamily: CORMORANT,
-                  fontWeight: 600,
-                  fontSize: "clamp(1.6rem, 3.5vw, 2.2rem)",
-                  color: "white",
-                  marginBottom: "0.5rem",
-                }}>
-                  {t("Team Practices", "Praktik Tim")}
-                </h2>
-                <p style={{
-                  fontFamily: FONT,
-                  fontSize: "0.875rem",
-                  color: "oklch(68% 0.04 260)",
-                  maxWidth: 520,
-                  marginBottom: "2rem",
-                }}>
-                  {t(
-                    "Practices you can introduce with the people you lead.",
-                    "Praktik yang dapat Anda perkenalkan kepada orang-orang yang Anda pimpin."
-                  )}
-                </p>
-
-                <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-                  {teamCards.map((card, i) => {
-                    const isOpen = openTeamCard === i;
-                    return (
-                      <div key={i}>
-                        <button
-                          onClick={() => setOpenTeamCard(isOpen ? null : i)}
-                          style={{
-                            width: "100%",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            padding: "1rem 1.25rem",
-                            background: isOpen ? orange : "oklch(28% 0.10 260)",
-                            border: `2px solid ${isOpen ? orange : "oklch(30% 0.10 260)"}`,
-                            borderRadius: "4px",
-                            cursor: "pointer",
-                            textAlign: "left",
-                            fontFamily: FONT,
-                            fontSize: "0.9rem",
-                            fontWeight: 600,
-                            color: "white",
-                            transition: "background 0.2s ease",
-                            minHeight: 44,
-                          }}
-                        >
-                          <span>{lang === "id" ? card.labelID : card.labelEN}</span>
-                          <span style={{ color: isOpen ? "white" : orange, fontSize: "0.75rem", flexShrink: 0, marginLeft: "1rem" }}>
-                            {isOpen ? t("CLOSE", "TUTUP") + " ▲" : t("READ", "BACA") + " ▼"}
-                          </span>
-                        </button>
-                        <div style={{
-                          display: "grid",
-                          gridTemplateRows: isOpen ? "1fr" : "0fr",
-                          transition: "grid-template-rows 0.3s ease",
-                          overflow: "hidden",
-                        }}>
-                          <div style={{ minHeight: 0 }}>
-                            <div style={{
-                              padding: "1.25rem 1.25rem 1.5rem",
-                              background: "oklch(26% 0.09 260)",
-                              borderLeft: `4px solid ${orange}`,
-                              borderRadius: "0 0 4px 4px",
-                            }}>
-                              <p style={{
-                                fontFamily: FONT,
-                                fontSize: "0.875rem",
-                                color: "oklch(82% 0.03 260)",
-                                lineHeight: 1.85,
-                                margin: 0,
-                              }}>
-                                {lang === "id" ? card.responseID : card.responseEN}
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
               </div>
             </div>
           </section>
@@ -1188,7 +1061,7 @@ export default function DisciplineOfSilenceClient({
                 fontWeight: 700,
                 marginBottom: "0.5rem",
               }}>
-                {t("GOAL-SETTER", "PENETAPAN TUJUAN")}
+                {t("YOUR NEXT STEP", "LANGKAH SELANJUTNYA")}
               </p>
               <h2 style={{
                 fontFamily: CORMORANT,
@@ -1197,178 +1070,119 @@ export default function DisciplineOfSilenceClient({
                 color: navy,
                 marginBottom: "0.75rem",
               }}>
-                {t("Where Do You Want to Be?", "Di Mana Anda Ingin Berada?")}
+                {t("Make It Personal", "Jadikan Personal")}
               </h2>
               <p style={{ ...prose, marginBottom: "2.5rem" }}>
                 {t(
-                  "Here is a snapshot of where you started. Set your 30-day goals below.",
-                  "Berikut adalah snapshot dari mana Anda memulai. Tetapkan tujuan 30 hari Anda di bawah ini."
+                  "You've completed the module. Now take a moment to reflect on what this means for you specifically.",
+                  "Kamu telah menyelesaikan modul ini. Sekarang luangkan waktu untuk merenungkan apa artinya ini bagimu secara pribadi."
                 )}
               </p>
 
-              {/* Assessment snapshot */}
-              <div style={{
-                background: offWhite,
-                borderLeft: `4px solid ${orange}`,
-                borderRadius: "0 4px 4px 0",
-                padding: "1.5rem 2rem",
-                marginBottom: "2.5rem",
-              }}>
-                <p style={{
-                  fontFamily: FONT,
-                  fontSize: "0.7rem",
-                  fontWeight: 700,
-                  letterSpacing: "0.1em",
-                  color: orange,
-                  marginBottom: "1.25rem",
-                }}>
-                  {t("YOUR STARTING POINT", "TITIK MULAI ANDA")}
-                </p>
-                {assessmentQuestions.map((q, i) => {
-                  const answer = answers[i];
-                  if (answer === null) return null;
-                  const opts = lang === "id" ? q.optionsID : q.optionsEN;
-                  return (
-                    <div key={i} style={{ marginBottom: i < assessmentQuestions.length - 1 ? "0.875rem" : 0 }}>
-                      <p style={{
-                        fontFamily: FONT,
-                        fontSize: "0.72rem",
-                        fontWeight: 700,
-                        color: "oklch(58% 0.05 260)",
-                        letterSpacing: "0.06em",
-                        margin: "0 0 0.2rem",
-                      }}>
-                        {q.dimension}
-                      </p>
-                      <p style={{
-                        fontFamily: FONT,
-                        fontSize: "0.9rem",
-                        color: bodyText,
-                        margin: 0,
-                        lineHeight: 1.5,
-                      }}>
-                        {opts[answer]}
-                      </p>
-                    </div>
-                  );
-                })}
-              </div>
-
-              {/* Goal inputs */}
-              <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem", marginBottom: "2rem" }}>
-                {goalLabels.map((gl, i) => {
-                  const q = assessmentQuestions[i];
-                  const opts = lang === "id" ? q.optionsID : q.optionsEN;
-                  return (
-                    <div key={i}>
-                      <label style={{
-                        display: "block",
-                        fontFamily: FONT,
-                        fontSize: "0.75rem",
-                        fontWeight: 700,
-                        color: navy,
-                        letterSpacing: "0.04em",
-                        marginBottom: "0.5rem",
-                      }}>
-                        {lang === "id" ? gl.labelID : gl.labelEN}
-                      </label>
-                      <select
-                        value={goals[i]}
-                        onChange={e => {
-                          const next = [...goals];
-                          next[i] = e.target.value;
-                          setGoals(next);
-                        }}
-                        style={{
-                          width: "100%",
-                          padding: "12px 16px",
-                          fontFamily: FONT,
-                          fontSize: "0.9rem",
-                          color: bodyText,
-                          background: offWhite,
-                          border: `1px solid ${lightGray}`,
-                          borderRadius: 4,
-                          appearance: "none" as const,
-                          cursor: "pointer",
-                        }}
-                      >
-                        <option value="">{t("Select a goal...", "Pilih tujuan...")}</option>
-                        {opts.map((opt, oi) => (
-                          <option key={oi} value={opt}>{opt}</option>
-                        ))}
-                      </select>
-                    </div>
-                  );
-                })}
-              </div>
-
-              <div style={{ marginBottom: "2rem" }}>
-                <label style={{
-                  display: "block",
-                  fontFamily: FONT,
-                  fontSize: "0.75rem",
-                  fontWeight: 700,
-                  color: navy,
-                  letterSpacing: "0.04em",
-                  marginBottom: "0.5rem",
-                }}>
-                  {t("One thing I will try this week:", "Satu hal yang akan saya coba minggu ini:")}
-                </label>
-                <textarea
-                  value={weekCommitment}
-                  onChange={e => setWeekCommitment(e.target.value)}
-                  rows={3}
-                  placeholder={t("Describe one specific practice you will attempt...", "Jelaskan satu praktik spesifik yang akan Anda coba...")}
-                  style={{
-                    width: "100%",
-                    padding: "12px 16px",
+              {[
+                {
+                  key: "area" as const,
+                  label: t("After reading this module, in what area do you most want to grow?", "Setelah membaca modul ini, di area apa kamu paling ingin bertumbuh?"),
+                  placeholder: t("Be specific — what came to mind while reading?", "Jadilah spesifik — apa yang terlintas saat membaca?"),
+                },
+                {
+                  key: "challenge" as const,
+                  label: t("What is your biggest challenge in making silence a habit?", "Apa tantangan terbesarmu dalam menjadikan keheningan sebagai kebiasaan?"),
+                  placeholder: t("What gets in the way for you?", "Apa yang menghalangimu?"),
+                },
+                {
+                  key: "impact" as const,
+                  label: t("What would change in your leadership if silence became a discipline?", "Apa yang akan berubah dalam kepemimpinanmu jika keheningan menjadi disiplin?"),
+                  placeholder: t("Think practically...", "Pikirkan secara praktis..."),
+                },
+              ].map(({ key, label, placeholder }) => (
+                <div key={key} style={{ marginBottom: "1.75rem" }}>
+                  <label style={{
+                    display: "block",
                     fontFamily: FONT,
-                    fontSize: "0.9rem",
-                    color: bodyText,
-                    background: offWhite,
-                    border: `1px solid ${lightGray}`,
-                    borderRadius: 4,
-                    resize: "vertical",
-                    boxSizing: "border-box",
-                  }}
-                />
-              </div>
-
-              {!goalsSaved ? (
-                <button
-                  onClick={() => setGoalsSaved(true)}
-                  style={{
-                    padding: "14px 40px",
-                    border: "none",
-                    cursor: "pointer",
-                    fontFamily: FONT,
-                    fontSize: 13,
                     fontWeight: 700,
-                    background: orange,
-                    color: offWhite,
-                    letterSpacing: "0.06em",
-                    borderRadius: 4,
-                  }}
-                >
-                  {t("Save My Goals", "Simpan Tujuan Saya")}
-                </button>
-              ) : (
+                    fontSize: "0.85rem",
+                    color: navy,
+                    marginBottom: "0.5rem",
+                  }}>
+                    {label}
+                  </label>
+                  <textarea
+                    value={openAnswers[key]}
+                    onChange={e => setOpenAnswers(prev => ({ ...prev, [key]: e.target.value }))}
+                    placeholder={placeholder}
+                    rows={3}
+                    style={{
+                      width: "100%",
+                      padding: "12px 14px",
+                      fontFamily: FONT,
+                      fontSize: "0.9rem",
+                      color: bodyText,
+                      border: `1.5px solid ${lightGray}`,
+                      borderRadius: 8,
+                      resize: "vertical" as const,
+                      outline: "none",
+                      lineHeight: 1.6,
+                      boxSizing: "border-box" as const,
+                    }}
+                  />
+                </div>
+              ))}
+
+              <button
+                onClick={handleGenerateAdvice}
+                disabled={aiLoading || (!openAnswers.area && !openAnswers.challenge && !openAnswers.impact)}
+                style={{
+                  padding: "13px 32px",
+                  background: aiLoading ? "oklch(70% 0.05 260)" : ((!openAnswers.area && !openAnswers.challenge && !openAnswers.impact) ? lightGray : orange),
+                  color: (!openAnswers.area && !openAnswers.challenge && !openAnswers.impact) ? "oklch(65% 0.01 80)" : offWhite,
+                  border: "none",
+                  borderRadius: 4,
+                  fontFamily: FONT,
+                  fontSize: 13,
+                  fontWeight: 700,
+                  letterSpacing: "0.04em",
+                  cursor: aiLoading || (!openAnswers.area && !openAnswers.challenge && !openAnswers.impact) ? "default" : "pointer",
+                  minHeight: 44,
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                }}
+              >
+                {aiLoading
+                  ? t("Generating advice...", "Membuat saran...")
+                  : t("Generate My Advice →", "Buat Saran Saya →")
+                }
+              </button>
+
+              {aiAdvice && (
                 <div style={{
-                  padding: "1.25rem 1.5rem",
-                  background: offWhite,
-                  borderLeft: `4px solid ${orange}`,
-                  borderRadius: "0 4px 4px 0",
+                  marginTop: "2rem",
+                  background: "oklch(97% 0.012 60)",
+                  borderTop: `3px solid ${orange}`,
+                  borderRadius: "0 0 8px 8px",
+                  padding: "24px 28px",
                 }}>
                   <p style={{
                     fontFamily: FONT,
-                    fontSize: "0.875rem",
-                    color: bodyText,
+                    fontSize: "0.62rem",
+                    fontWeight: 700,
+                    letterSpacing: "0.12em",
+                    textTransform: "uppercase" as const,
+                    color: orange,
+                    marginBottom: "0.75rem",
+                  }}>
+                    {t("For You", "Untukmu")}
+                  </p>
+                  <p style={{
+                    fontFamily: CORMORANT,
+                    fontStyle: "italic",
+                    fontSize: "clamp(1rem, 2vw, 1.2rem)",
+                    color: navy,
+                    lineHeight: 1.75,
                     margin: 0,
                   }}>
-                    {t(
-                      "Goals saved. Come back to this page at the end of 30 days to review your progress.",
-                      "Tujuan tersimpan. Kembali ke halaman ini setelah 30 hari untuk meninjau kemajuan Anda."
-                    )}
+                    {aiAdvice}
                   </p>
                 </div>
               )}
@@ -1467,9 +1281,10 @@ export default function DisciplineOfSilenceClient({
                     gap: "0.5rem",
                     background: "none",
                     border: "none",
-                    padding: 0,
+                    padding: "10px 0",
                     cursor: "pointer",
-                    marginBottom: sourcesOpen ? "1.5rem" : 0,
+                    marginBottom: sourcesOpen ? "1rem" : 0,
+                    minHeight: 44,
                   }}
                 >
                   <p style={{
@@ -1550,6 +1365,7 @@ export default function DisciplineOfSilenceClient({
           <div style={{ background: navy, padding: "80px 24px" }}>
             <div style={{ maxWidth: 780, margin: "0 auto" }}>
               <p style={{
+                fontFamily: FONT,
                 color: orange,
                 fontSize: 11,
                 fontWeight: 700,
@@ -1557,7 +1373,7 @@ export default function DisciplineOfSilenceClient({
                 textTransform: "uppercase" as const,
                 marginBottom: 12,
               }}>
-                Background
+                {t("Background", "Latar Belakang")}
               </p>
               <h2 style={{
                 fontFamily: FONT,
@@ -1577,7 +1393,7 @@ export default function DisciplineOfSilenceClient({
                   gap: 6,
                   marginTop: 4,
                   marginBottom: 24,
-                  padding: "10px 20px",
+                  padding: "12px 20px",
                   background: "transparent",
                   border: `1.5px solid ${orange}`,
                   color: orange,
@@ -1587,6 +1403,7 @@ export default function DisciplineOfSilenceClient({
                   fontWeight: 700,
                   cursor: "pointer",
                   letterSpacing: "0.04em",
+                  minHeight: 44,
                 }}
               >
                 {bgOpen ? "Close ↑" : "Read background →"}
@@ -1637,6 +1454,97 @@ export default function DisciplineOfSilenceClient({
           </div>
         </section>
       )}
+
+      {/* ════════════════════════════════════════════════════════════
+          SCENARIO CARD MODAL
+      ════════════════════════════════════════════════════════════ */}
+      {activeCard !== null && (() => {
+        const cards = activeCard.type === "personal" ? personalCards : teamCards;
+        const card = cards[activeCard.index];
+        if (!card) return null;
+        return (
+          <div
+            onClick={() => setActiveCard(null)}
+            style={{
+              position: "fixed",
+              inset: 0,
+              background: "rgba(10, 15, 30, 0.72)",
+              zIndex: 1000,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "24px",
+            }}
+          >
+            <div
+              onClick={e => e.stopPropagation()}
+              style={{
+                background: "white",
+                borderRadius: 16,
+                padding: "32px",
+                maxWidth: 520,
+                width: "100%",
+                maxHeight: "82vh",
+                overflowY: "auto" as const,
+                position: "relative",
+              }}
+            >
+              <button
+                onClick={() => setActiveCard(null)}
+                aria-label="Close"
+                style={{
+                  position: "absolute",
+                  top: 14,
+                  right: 14,
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  fontSize: "1.4rem",
+                  color: "oklch(58% 0.05 260)",
+                  minHeight: 44,
+                  minWidth: 44,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >×</button>
+
+              <span style={{ fontSize: "2rem" }}>{card.icon}</span>
+              <h3 style={{
+                fontFamily: FONT,
+                fontWeight: 800,
+                fontSize: "1.1rem",
+                color: navy,
+                marginTop: "0.75rem",
+                marginBottom: "0.5rem",
+              }}>
+                {t(card.title, card.titleId)}
+              </h3>
+              <span style={{
+                display: "inline-block",
+                fontFamily: FONT,
+                fontSize: "0.6rem",
+                fontWeight: 700,
+                letterSpacing: "0.09em",
+                textTransform: "uppercase" as const,
+                color: activeCard.type === "team" ? "oklch(50% 0.05 260)" : orange,
+                background: activeCard.type === "team" ? lightGray : "oklch(96% 0.03 45)",
+                padding: "3px 8px",
+                borderRadius: 4,
+                marginBottom: "1.5rem",
+              }}>
+                {activeCard.type === "team" ? t("Team Practice", "Praktik Tim") : t("Personal Practice", "Praktik Pribadi")}
+              </span>
+
+              <div style={{ fontFamily: FONT, fontSize: "0.9rem", color: bodyText, lineHeight: 1.7 }}>
+                <p style={{ margin: 0 }}>
+                  {lang === "id" ? card.responseID : card.responseEN}
+                </p>
+              </div>
+            </div>
+          </div>
+        );
+      })()}
     </div>
   );
 }
