@@ -166,6 +166,10 @@ export const resourceMetadata: Record<string, { title: string; description: stri
     title: "The Sabbath Leader — Crispy Development",
     description: "Why sustainable leaders build rhythms of Sabbath — and how to practise it in high-demand cross-cultural environments. A story-based module through the Elijah narrative.",
   },
+  "discipline-of-silence": {
+    title: "The Discipline of Silence — Crispy Development",
+    description: "Silence as a leadership practice is rare and countercultural. For cross-cultural leaders, it may be the most essential discipline you are not protecting.",
+  },
   "leaders-are-readers": {
     title: "Leaders Are Readers — Crispy Development",
     description: "Develop through reading. Build a leadership library and integrate learning into your development.",
