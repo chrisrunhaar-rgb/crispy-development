@@ -672,24 +672,6 @@ export default function DisciplineOfSilenceClient({
                   "Di akhir modul ini, kita akan kembali ke area-area ini — untuk melihat di mana kamu ingin bertumbuh dan bagaimana caranya."
                 )}
               </p>
-              <button
-                onClick={() => { /* content below is already revealed */ }}
-                style={{
-                  padding: "12px 32px",
-                  background: orange,
-                  color: offWhite,
-                  border: "none",
-                  borderRadius: 4,
-                  fontFamily: FONT,
-                  fontSize: 13,
-                  fontWeight: 700,
-                  letterSpacing: "0.04em",
-                  cursor: "pointer",
-                  minHeight: 44,
-                }}
-              >
-                {t("Continue to module →", "Lanjutkan ke modul →")}
-              </button>
             </div>
           )}
         </div>
@@ -698,9 +680,7 @@ export default function DisciplineOfSilenceClient({
       {/* ════════════════════════════════════════════════════════════
           TEACHING — THE PROBLEM
       ════════════════════════════════════════════════════════════ */}
-      {assessmentComplete && (
-        <>
-          <section style={sec(offWhite)}>
+      <section style={sec(offWhite)}>
             <div style={inner}>
               <h2 style={{
                 fontFamily: CORMORANT,
@@ -1450,27 +1430,6 @@ export default function DisciplineOfSilenceClient({
               ))}
             </div>
           </div>
-        </>
-      )}
-
-      {/* ─── If assessment not yet complete, show a prompt ─── */}
-      {!assessmentComplete && (
-        <section style={{ background: offWhite, padding: "3rem 24px", textAlign: "center" }}>
-          <div style={{ maxWidth: MX, margin: "0 auto" }}>
-            <p style={{
-              fontFamily: FONT,
-              fontSize: "0.875rem",
-              color: "oklch(58% 0.05 260)",
-              fontStyle: "italic",
-            }}>
-              {t(
-                "Complete the self-assessment above to unlock the teaching section.",
-                "Selesaikan penilaian diri di atas untuk membuka bagian pengajaran."
-              )}
-            </p>
-          </div>
-        </section>
-      )}
 
       {/* ════════════════════════════════════════════════════════════
           SCENARIO CARD MODAL
