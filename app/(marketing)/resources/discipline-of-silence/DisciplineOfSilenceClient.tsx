@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import React, { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import LangToggle from "@/components/LangToggle";
 import { saveResourceToDashboard } from "../actions";
@@ -57,10 +57,127 @@ const assessmentQuestions = [
   },
 ];
 
+// ─── Scenario card SVG icons ──────────────────────────────────────────────────
+const _navy = "oklch(22% 0.10 260)";
+const svgProps = {
+  width: 36,
+  height: 36,
+  viewBox: "0 0 36 36",
+  fill: "none",
+  stroke: _navy,
+  strokeWidth: 1.5,
+  strokeLinecap: "round" as const,
+  strokeLinejoin: "round" as const,
+};
+
+// 1. Rising sun
+const IconMorningSun = (
+  <svg {...svgProps}>
+    <path d="M18 22 A8 8 0 0 1 10 22" />
+    <line x1="18" y1="10" x2="18" y2="7" />
+    <line x1="23.5" y1="11.5" x2="25.6" y2="9.4" />
+    <line x1="25" y1="17" x2="28" y2="17" />
+    <line x1="12.5" y1="11.5" x2="10.4" y2="9.4" />
+    <line x1="11" y1="17" x2="8" y2="17" />
+    <line x1="7" y1="22" x2="29" y2="22" />
+  </svg>
+);
+
+// 2. Phone with strike-through
+const IconNoScreens = (
+  <svg {...svgProps}>
+    <rect x="12" y="6" width="12" height="24" rx="2" />
+    <line x1="9" y1="9" x2="27" y2="27" />
+  </svg>
+);
+
+// 3. Open book
+const IconBook = (
+  <svg {...svgProps}>
+    <path d="M18 28 C18 28 9 24 7 8 L18 10 L29 8 C27 24 18 28 18 28Z" />
+    <line x1="18" y1="10" x2="18" y2="28" />
+    <line x1="10" y1="14" x2="16" y2="13" />
+    <line x1="10" y1="18" x2="16" y2="17" />
+    <line x1="10" y1="22" x2="16" y2="21" />
+    <line x1="20" y1="13" x2="26" y2="14" />
+    <line x1="20" y1="17" x2="26" y2="18" />
+    <line x1="20" y1="21" x2="26" y2="22" />
+  </svg>
+);
+
+// 4. Mountain peaks with moon
+const IconRetreat = (
+  <svg {...svgProps}>
+    <polyline points="5,28 14,12 22,24 26,18 31,28" />
+    <line x1="4" y1="28" x2="32" y2="28" />
+    <path d="M25 8 A4 4 0 1 0 25 16 A3 3 0 1 1 25 8Z" fill={_navy} stroke="none" />
+  </svg>
+);
+
+// 5. Walking figure (no earbuds)
+const IconWalking = (
+  <svg {...svgProps}>
+    <circle cx="18" cy="9" r="3" />
+    <line x1="18" y1="12" x2="17" y2="20" />
+    <line x1="17" y1="20" x2="12" y2="27" />
+    <line x1="17" y1="20" x2="22" y2="27" />
+    <line x1="18" y1="14" x2="13" y2="18" />
+    <line x1="18" y1="14" x2="23" y2="18" />
+  </svg>
+);
+
+// 6. Three seated people connected
+const IconStillness = (
+  <svg {...svgProps}>
+    <circle cx="10" cy="14" r="3" />
+    <circle cx="18" cy="14" r="3" />
+    <circle cx="26" cy="14" r="3" />
+    <line x1="7" y1="28" x2="13" y2="28" />
+    <line x1="10" y1="17" x2="10" y2="28" />
+    <line x1="15" y1="28" x2="21" y2="28" />
+    <line x1="18" y1="17" x2="18" y2="28" />
+    <line x1="23" y1="28" x2="29" y2="28" />
+    <line x1="26" y1="17" x2="26" y2="28" />
+  </svg>
+);
+
+// 7. Speech bubble with line through it
+const IconNoMessages = (
+  <svg {...svgProps}>
+    <path d="M7 8 L29 8 Q31 8 31 10 L31 22 Q31 24 29 24 L15 24 L10 29 L10 24 L9 24 Q7 24 7 22 L7 10 Q7 8 9 8Z" />
+    <line x1="9" y1="10" x2="29" y2="22" />
+  </svg>
+);
+
+// 8. Ear outline
+const IconEar = (
+  <svg {...svgProps}>
+    <path d="M24 16 A6 6 0 1 0 12 16 C12 20 15 22 16 25 C16.5 26.5 16 28 14 28 C11 28 9 25 9 22" />
+    <path d="M18 16 A0 0 0 0 0 18 16 C18 19 16 21 16 25" />
+  </svg>
+);
+
+// 9. Two overlapping speech bubbles
+const IconDebrief = (
+  <svg {...svgProps}>
+    <path d="M5 8 L22 8 Q24 8 24 10 L24 19 Q24 21 22 21 L13 21 L9 25 L9 21 L7 21 Q5 21 5 19 L5 10 Q5 8 7 8Z" />
+    <path d="M14 14 L28 14 Q30 14 30 16 L30 25 Q30 27 28 27 L18 27 L25 27 L27 30 L27 27 Q30 27 30 25" />
+    <path d="M24 14 L28 14 Q30 14 30 16 L30 25 Q30 27 28 27 L20 27 L27 31 L27 27" />
+  </svg>
+);
+
 // ─── Scenario cards ──────────────────────────────────────────────────────────
-const personalCards = [
+const personalCards: Array<{
+  icon: React.ReactNode;
+  title: string;
+  titleId: string;
+  labelEN: string;
+  labelID: string;
+  responseEN: string;
+  responseID: string;
+}> = [
   {
-    icon: "🌅",
+    icon: IconMorningSun,
     title: "The Morning Quiet",
     titleId: "Keheningan Pagi",
     labelEN: "The Morning Quiet",
@@ -69,7 +186,7 @@ const personalCards = [
     responseID: "Sebelum Anda memeriksa ponsel, sebelum membuka email, sebelum notifikasi pertama datang - duduklah dalam keheningan selama lima menit. Tidak ada agenda. Tidak ada kata-kata. Hanya kesediaan. Ini adalah versi terkecil dari praktik yang berkelanjutan. Lima menit tidak ideal. Ini adalah awal. Para Bapa Padang Gurun menyebut jam-jam pagi awal sebagai Vigils - waktu ketika diri paling tidak terjaga dan Allah paling terdengar.",
   },
   {
-    icon: "📵",
+    icon: IconNoScreens,
     title: "A Day Without Screens",
     titleId: "Sehari Tanpa Layar",
     labelEN: "A Day Without Screens",
@@ -78,7 +195,7 @@ const personalCards = [
     responseID: "Sebulan sekali, letakkan perangkat selama 24 jam. Tidak ada media sosial, tidak ada berita, tidak ada email. Bukan sebagai hukuman - sebagai tindakan kasih. Layne McDonald membingkai puasa digital sebagai mengatakan: 'Aku mencintai-Mu lebih dari aku mencintai keinginan untuk selalu terinformasi.' Yesus secara teratur menarik diri ke tempat-tempat sepi (Lukas 5:16). Dia tidak tidak bertanggung jawab. Dia mengisi ulang sumber dari mana segalanya datang.",
   },
   {
-    icon: "📖",
+    icon: IconBook,
     title: "Lectio Divina",
     titleId: "Lectio Divina",
     labelEN: "Lectio Divina",
@@ -87,7 +204,7 @@ const personalCards = [
     responseID: "Pilih bagian Kitab Suci yang pendek - enam hingga sepuluh ayat. Baca sekali, perlahan. Baca kedua kali. Pada bacaan ketiga, ajukan satu pertanyaan: kata atau frasa apa yang menarik perhatian saya? Jangan menganalisisnya. Duduk bersamanya selama lima menit. Biarkan beristirahat dalam diri Anda. Ini adalah lectio divina - praktik yang telah digunakan tradisi monastik selama lima belas ratus tahun untuk mendengar Kitab Suci sebagai firman yang hidup.",
   },
   {
-    icon: "🌿",
+    icon: IconRetreat,
     title: "A Silent Retreat",
     titleId: "Retret Hening",
     labelEN: "A Silent Retreat",
@@ -96,7 +213,7 @@ const personalCards = [
     responseID: "Setahun sekali, pergilah ke tempat yang tenang - biara, rumah retret, kabin - selama 48 jam keheningan yang intentional. Bawa Alkitab Anda. Bawa jurnal. Jangan bawa apa pun yang membutuhkan layar. Ini bukan retret kerja. Ini bukan perencanaan strategis yang dibungkus dalam bahasa rohani. Ini adalah berhenti. Banyak pemimpin menolak ini karena mereka tidak dapat melihat hasilnya. Hasilnya tidak terlihat dalam sistem akuntansi yang sama.",
   },
   {
-    icon: "🚶",
+    icon: IconWalking,
     title: "Walking Without Noise",
     titleId: "Berjalan Tanpa Kebisingan",
     labelEN: "Walking Without Noise",
@@ -106,9 +223,17 @@ const personalCards = [
   },
 ];
 
-const teamCards = [
+const teamCards: Array<{
+  icon: React.ReactNode;
+  title: string;
+  titleId: string;
+  labelEN: string;
+  labelID: string;
+  responseEN: string;
+  responseID: string;
+}> = [
   {
-    icon: "🤝",
+    icon: IconStillness,
     title: "Beginning in Stillness",
     titleId: "Memulai dalam Ketenangan",
     labelEN: "Beginning in Stillness",
@@ -117,7 +242,7 @@ const teamCards = [
     responseID: "Mulai setiap rapat tim dengan dua menit keheningan. Tidak ada agenda. Tidak ada daftar permintaan doa. Tidak ada lagu pembuka. Hanya dua menit tenang, bersama. Praktik ini cukup berlawanan dengan budaya sehingga akan terasa canggung beberapa kali pertama. Itu normal. Apa yang secara konsisten dilaporkan tim setelah enam minggu adalah rapat berubah karakternya.",
   },
   {
-    icon: "🔕",
+    icon: IconNoMessages,
     title: "A Day Without Messages",
     titleId: "Sehari Tanpa Pesan",
     labelEN: "A Day Without Messages",
@@ -126,7 +251,7 @@ const teamCards = [
     responseID: "Sebagai tim, pilih satu hari per minggu di mana tidak ada komunikasi pekerjaan yang dikirim. Tidak ada pesan WhatsApp, tidak ada email, tidak ada 'hanya memeriksa.' Ini lebih sulit diterapkan dari yang terdengar - selalu ada sesuatu yang mendesak. Tapi praktik menetapkan batas bersama melakukan sesuatu yang tidak bisa dilakukan disiplin individu: menciptakan budaya istirahat bersama.",
   },
   {
-    icon: "🔵",
+    icon: IconEar,
     title: "The Listening Circle",
     titleId: "Lingkaran Mendengar",
     labelEN: "The Listening Circle",
@@ -135,7 +260,7 @@ const teamCards = [
     responseID: "Sebulan sekali, kumpulkan tim Anda selama 20 menit doa hening bersama. Buka dengan bacaan Kitab Suci yang singkat. Kemudian duduk dalam keheningan bersama. Tutup dengan satu pertanyaan: 'Apa yang Anda perhatikan?' Anda tidak perlu berbagi secara mendalam. Tradisi Quaker telah mempraktikkan keheningan bersama selama empat ratus tahun, menggambarkannya sebagai 'jeda yang diintensifkan, kesunyian yang dihidupkan, ketenangan yang kreatif.'",
   },
   {
-    icon: "💭",
+    icon: IconDebrief,
     title: "The Silent Debrief",
     titleId: "Debriefing Hening",
     labelEN: "The Silent Debrief",
@@ -927,7 +1052,7 @@ export default function DisciplineOfSilenceClient({
                         textAlign: "center",
                       }}
                     >
-                      <span style={{ fontSize: "1.75rem", lineHeight: 1 }}>{card.icon}</span>
+                      <span style={{ display: "flex", alignItems: "center", justifyContent: "center", width: 36, height: 36 }}>{card.icon}</span>
                       <p style={{
                         fontFamily: FONT,
                         fontWeight: 700,
@@ -1509,7 +1634,7 @@ export default function DisciplineOfSilenceClient({
                 }}
               >×</button>
 
-              <span style={{ fontSize: "2rem" }}>{card.icon}</span>
+              <span style={{ display: "flex", alignItems: "center", justifyContent: "center", width: 36, height: 36 }}>{card.icon}</span>
               <h3 style={{
                 fontFamily: FONT,
                 fontWeight: 800,
