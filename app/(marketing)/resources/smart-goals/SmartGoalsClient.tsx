@@ -244,6 +244,7 @@ export default function SmartGoalsClient({
   const [coachingResult, setCoachingResult] = useState<Partial<Record<"clarify" | "reframe" | "negotiate", string>>>({});
   const [coachingLoading, setCoachingLoading] = useState<Partial<Record<"clarify" | "reframe" | "negotiate", boolean>>>({});
   const [aiScore, setAiScore] = useState<{ score: number; reason: string } | null>(null);
+  const [bgOpen, setBgOpen] = useState(false);
   const worksheetCardRef = useRef<HTMLDivElement>(null);
 
   const t = (en: string, id: string) => lang === "id" ? id : en;
@@ -1067,6 +1068,49 @@ export default function SmartGoalsClient({
           )}
         </div>
       </section>
+
+      {/* ════════════════════════════════════════════════════════════
+          LONG-FORM SEO BACKGROUND
+      ════════════════════════════════════════════════════════════ */}
+      <div style={{ background: "oklch(88% 0.008 80)", padding: "80px 24px" }}>
+        <div style={{ maxWidth: 780, margin: "0 auto" }}>
+          <p style={{ color: "oklch(65% 0.15 45)", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" as const, marginBottom: 12 }}>
+            Background
+          </p>
+          <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: "oklch(22% 0.10 260)", marginBottom: 32, lineHeight: 1.2 }}>
+            SMART Goals: What the Research Says About Goal-Setting, Motivation, and Sustainable Achievement
+          </h2>
+          <button
+            onClick={() => setBgOpen(!bgOpen)}
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 6,
+              marginTop: 20, marginBottom: 24, padding: "10px 20px",
+              background: "transparent", border: "1.5px solid oklch(65% 0.15 45)",
+              color: "oklch(65% 0.15 45)", borderRadius: 12,
+              fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, fontWeight: 700,
+              cursor: "pointer", letterSpacing: "0.04em",
+            }}
+          >
+            {bgOpen ? "Close ↑" : "Read the research →"}
+          </button>
+          {bgOpen && [
+            "The SMART goal framework — Specific, Measurable, Achievable, Relevant, Time-bound — emerged from the management literature of the 1980s, most commonly attributed to George Doran's 1981 Management Review article. It synthesised and operationalised a body of goal-setting research that had been developing since the 1960s, making it accessible for practitioners in ways that academic literature rarely achieves.",
+            "Locke and Latham's Goal Setting Theory (1968, revised and expanded through decades of research) is the scientific foundation beneath SMART goals. Their research, across hundreds of studies and multiple decades, established that specific and challenging goals consistently produce higher performance than vague goals (\"do your best\") or no goals at all. The research is among the most replicated in organisational psychology.",
+            "Specificity and performance: Locke and Latham's research consistently shows that specific goals outperform vague ones not only in achievability but in intrinsic motivation. Clarity about the target activates attention, increases effort, and produces more strategic planning. The \"S\" in SMART is not administrative discipline — it is a motivational mechanism.",
+            "Stretch goals research: Gary Latham's research distinguishes between specific difficult goals (optimal for motivation and performance) and specific easy goals (which reduce motivation by providing insufficient challenge). The \"A\" for Achievable in SMART is sometimes misread as \"easy\" — but the research supports goals that are challenging while remaining within the realm of possibility.",
+            "The role of commitment: a finding that the SMART framework often underemphasises is that goal-setting only produces its motivational benefits when the person is genuinely committed to the goal. Locke and Latham found that assigned goals without commitment produce no performance benefit over no goals. Participation in goal-setting (or sufficient autonomy) is a prerequisite for commitment.",
+            "Cross-cultural goal-setting: research by Erez and Earley (1987) examined whether the benefits of goal-setting transfer across cultures — and found that participative goal-setting (involving the individual) is necessary for goal commitment in both individualist and collectivist cultures, though the mechanism differs. In collectivist cultures, goals set by respected group leaders receive commitment without individual participation, because the group leader's goals are internalised as the individual's own.",
+            "Feedback and goal progress: Locke and Latham's research established that goals without feedback produce significantly lower performance than goals with feedback. The \"M\" for Measurable in SMART is not primarily an accountability tool — it is the feedback mechanism that allows the person to know whether their effort is producing results and to adjust accordingly.",
+            "Goal hierarchies: Emmons' research on personal strivings and goal hierarchies shows that individual goals exist within a motivational hierarchy connected to higher-order purposes. When SMART goals are disconnected from this hierarchy — when they feel arbitrary or disconnected from calling — compliance may occur without engagement. Cross-cultural workers who set SMART goals for ministry impact need to connect them explicitly to the larger vision they serve.",
+            "The limitations of SMART goals in complex environments: research on planning under uncertainty (Snowden's Cynefin framework, Klein's recognition-primed decision-making) suggests that SMART goals are most effective in complicated (knowable) environments, and less effective in complex (unpredictable) ones. In cross-cultural pioneer contexts — where the environment is genuinely complex and outcomes are highly uncertain — adaptive goals (directional rather than specific and measurable) may produce better navigational behaviour than tight SMART specifications.",
+            "SMART goals and cross-cultural leadership development: the most effective use of SMART goals in cross-cultural leadership development anchors each goal to a specific developmental challenge (a skill gap, a relationship to build, a cultural competency to practise) with a time-bound review. The measurability dimension is often better served by a portfolio of evidence than a single metric — what does it look like when I have improved in this area? This question, answered in advance, produces more culturally sensitive developmental goals than pure output metrics.",
+          ].map((para, i) => (
+            <p key={i} style={{ fontSize: 16, color: "oklch(35% 0.08 260)", lineHeight: 1.85, marginBottom: 20 }}>
+              {para}
+            </p>
+          ))}
+        </div>
+      </div>
 
       {/* ── Sources ── */}
       <SourcesDropdown sources={[

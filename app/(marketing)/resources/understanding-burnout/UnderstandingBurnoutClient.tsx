@@ -145,6 +145,7 @@ export default function UnderstandingBurnoutClient({
   const [answers, setAnswers] = useState<(number | null)[]>(Array(20).fill(null));
   const [currentQ, setCurrentQ] = useState(0);
   const [showResult, setShowResult] = useState(false);
+  const [bgOpen, setBgOpen] = useState(false);
 
   function handleAnswer(value: number) {
     const next = [...answers];
@@ -1574,6 +1575,49 @@ export default function UnderstandingBurnoutClient({
           </ol>
         </div>
       </section>
+
+      {/* ════════════════════════════════════════════════════════════
+          LONG-FORM SEO BACKGROUND
+      ════════════════════════════════════════════════════════════ */}
+      <div style={{ background: lightGray, padding: "80px 24px" }}>
+        <div style={{ maxWidth: 780, margin: "0 auto" }}>
+          <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" as const, marginBottom: 12 }}>
+            Background
+          </p>
+          <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: navy, marginBottom: 32, lineHeight: 1.2 }}>
+            Understanding Burnout: What the Research Says About Exhaustion, Recovery, and Leaders Who Last
+          </h2>
+          <button
+            onClick={() => setBgOpen(!bgOpen)}
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 6,
+              marginTop: 20, marginBottom: 24, padding: "10px 20px",
+              background: "transparent", border: `1.5px solid ${orange}`,
+              color: orange, borderRadius: 12,
+              fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, fontWeight: 700,
+              cursor: "pointer", letterSpacing: "0.04em",
+            }}
+          >
+            {bgOpen ? "Close ↑" : "Read the research →"}
+          </button>
+          {bgOpen && [
+            "Christina Maslach's burnout model remains the most rigorously validated framework in the field after more than four decades of research.² Her three-dimensional model — emotional exhaustion, depersonalisation (or cynicism), and reduced sense of personal efficacy — identifies not a single symptom but a progressive syndrome that develops in stages. The Maslach Burnout Inventory, developed from her framework, has been administered in hundreds of studies across dozens of countries and remains the gold standard instrument for measuring burnout in research and clinical contexts. Understanding burnout begins with understanding that it is not a single event but a trajectory.",
+            "The distinction between stress and burnout matters clinically and practically, and the confusion between them is one of the most common reasons early burnout goes unaddressed.² Stress is characterised by overengagement: too many demands, too much urgency, too much emotional activation. Burnout is characterised by disengagement: emotional numbness, loss of meaning, withdrawal from connection. Stress says everything matters too much; burnout says nothing matters enough. A leader attempting to recover from burnout by applying stress-management techniques — working harder, pushing through, maintaining high output — is accelerating the syndrome, not reversing it.",
+            "The exhaustion phase develops first, typically through a combination of sustained role overload, insufficient autonomy, inadequate recognition, and chronic interpersonal friction.² It is the loss of emotional energy — the depletion of the internal resource that enables genuine connection, empathy, and sustained engagement with work. Leaders in this phase often continue to function at a high level externally while experiencing significant internal depletion. This dissociation between visible performance and inner experience is one of the reasons burnout in senior leaders is frequently identified late — by the time the external signals appear, the internal trajectory is often well advanced.",
+            "Depersonalisation — the second stage of Maslach's model — is characterised by emotional distance from the people and the work that previously carried meaning.² Leaders in this phase describe going through the motions: still delivering outputs, still managing relationships, but with a felt absence of genuine care for the outcomes. Cynicism becomes the default register — a protective emotional strategy that, paradoxically, deepens the disengagement it was designed to manage. Colleagues and team members typically sense this shift before the leader acknowledges it, and the relational damage it creates is one of the more persistent consequences of burnout.",
+            "Reduced personal efficacy — the third stage — produces a paralysing combination that is particularly disorienting for high-achieving leaders.² They continue to work, often intensively, while becoming progressively convinced that their work is making no meaningful difference. This conviction is not a factual assessment; it is a symptom of the syndrome. But it feels like clear-eyed realism, which is what makes it so difficult to counter. Leaders in this stage often interpret their reduced efficacy as evidence that they were never as capable as others believed — a form of post-burnout identity collapse that requires both clinical support and, often, sustained relational investment to address.",
+            "Regional prevalence data contextualises what individual leaders may experience as personal failure within a larger epidemiological picture.⁶ Abdul Aziz and Ong's 2024 study found 62.91% of full-time employees across Southeast Asia reporting significant burnout — a prevalence rate that should shift the response from individual intervention to systemic concern. Among field-based cross-cultural workers, rates are consistently higher, compounded by cultural stress, geographic isolation, support deficits, and the weight of sustained high-commitment work without structural protection. The evidence is clear: burnout in these contexts is not primarily a personal resilience failure — it is a structural and systemic condition.",
+            "Recovery from burnout requires more than rest — a finding that surprises many leaders who believe a holiday or a sabbatical will resolve the syndrome. Michael Leiter and Christina Maslach's intervention research identifies six dimensions of work-life fit — workload, control, reward, community, fairness, and values alignment — and demonstrates that effective recovery requires addressing the structural drivers, not just the symptoms. Vacation produces temporary symptom relief but not sustained recovery if the conditions that produced burnout remain unchanged on return. Genuine recovery requires both physiological restoration and structural change, and often takes significantly longer than leaders expect.",
+            "For Christian leaders, burnout carries a particular spiritual dimension that compounds the syndrome through a shame dynamic. The belief that spiritual dedication should override human limits — that a genuine calling produces inexhaustible capacity, and that exhaustion indicates insufficient faith or commitment — functions as an active barrier to early help-seeking. This theological distortion, well-documented in research on missionary attrition and cross-cultural worker health, frames burnout as a spiritual failure rather than a medical and organisational condition. The result is that leaders who most need support are least likely to seek it, and those around them are least equipped to offer it without inadvertently reinforcing the shame.",
+            "Organisational dynamics are co-producers of burnout, not a passive backdrop to individual experience. Leiter and Maslach's research demonstrates that the same person in a different organisational context will frequently not burn out — the syndrome is triggered by specific combinations of structural conditions, not solely by individual vulnerability. This has significant implications for how leaders at every level think about burnout in their teams: it is not sufficient to support individuals who are showing signs of burnout while leaving the organisational conditions unchanged. The most protective environments are those where workload equity, genuine autonomy, fair recognition, and values alignment are structurally maintained.",
+            "The most protective factors against burnout are not primarily individual practices — though those matter — but organisational and relational conditions that leaders can actively build.² Autonomy: the experience of meaningful control over one's work. Genuine recognition: reward that is proportionate to contribution and sincerely given. Real community: relationships characterised by mutual support and honest communication, not performative collegiality. Workload equity: distribution of demands that does not consistently overload some members while underloading others. Values alignment: the experience that the work being asked for is consistent with what one believes matters. Leaders who build these conditions are doing burnout prevention work — and modelling, in their leadership, the very quality of engagement that makes long-term, sustainable, faithful contribution possible.²",
+          ].map((para, i) => (
+            <p key={i} style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 20 }}>
+              {para}
+            </p>
+          ))}
+        </div>
+      </div>
 
       {/* ── Sources ── */}
       <SourcesDropdown sources={[

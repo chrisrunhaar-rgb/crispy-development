@@ -214,6 +214,7 @@ export default function AboveBelowClient(_props: {
 
   const [saveState, setSaveState] = useState<SaveState>(isSaved ? "already" : "idle");
   const [, startSaving] = useTransition();
+  const [bgOpen, setBgOpen] = useState(false);
 
   function handleSave() {
     if (!isLoggedIn) { setSaveState("signin"); return; }
@@ -711,6 +712,49 @@ export default function AboveBelowClient(_props: {
               {t("Training Library", "Perpustakaan Pelatihan", lang)}
             </Link>
           </div>
+        </div>
+      </div>
+
+      {/* ════════════════════════════════════════════════════════════
+          LONG-FORM SEO BACKGROUND
+      ════════════════════════════════════════════════════════════ */}
+      <div style={{ background: lightGray, padding: "80px 24px" }}>
+        <div style={{ maxWidth: 780, margin: "0 auto" }}>
+          <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" as const, marginBottom: 12 }}>
+            Background
+          </p>
+          <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: navy, marginBottom: 32, lineHeight: 1.2 }}>
+            Above and Below the Line: What the Research Says About Accountability, Drama, and Leaders Who Choose
+          </h2>
+          <button
+            onClick={() => setBgOpen(!bgOpen)}
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 6,
+              marginTop: 20, marginBottom: 24, padding: "10px 20px",
+              background: "transparent", border: `1.5px solid ${orange}`,
+              color: orange, borderRadius: 12,
+              fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, fontWeight: 700,
+              cursor: "pointer", letterSpacing: "0.04em",
+            }}
+          >
+            {bgOpen ? "Close ↑" : "Read the research →"}
+          </button>
+          {bgOpen && [
+            "The distinction between above-the-line and below-the-line behaviour is not merely motivational language — it maps to decades of rigorous research on psychological safety, emotional reactivity, and accountability in organisations. The framework gives leaders a diagnostic tool with real empirical depth: a way to name what is happening in their teams and in themselves, rooted in findings that have been replicated across industries, cultures, and contexts.",
+            "Jim Dethmer, Diana Chapman, and Kaley Warner Klemp developed the conscious leadership framework from which this model draws most directly. Their work, published as The 15 Commitments of Conscious Leadership (2015)¹, synthesises organisational psychology with mindfulness research to describe two fundamentally different operating modes. Leaders operating below the line are closed, defensive, and committed to being right. Leaders above the line are open, curious, and committed to learning. The shift between the two is not automatic — it is a choice, and it requires the capacity to notice where you are before you can move.",
+            "Amy Edmondson's research on psychological safety at Harvard Business School establishes why below-the-line behaviour is so costly to organisational performance. Her work demonstrates that teams in which members feel safe to speak up, admit mistakes, and raise concerns significantly outperform those where blame and defensiveness dominate. Psychological safety is not a soft cultural preference — it is a structural enabler of the learning, innovation, and honest communication that high-performing teams require. A leader who defaults to blame extinguishes that safety, often without realising it.",
+            "Neuroscience gives us the physiological picture behind why leaders default to below-the-line behaviour under pressure. When the brain registers a threat — to identity, status, competence, or belonging — the amygdala triggers a stress response. Cortisol floods the system, the prefrontal cortex (responsible for nuanced reasoning and empathy) is effectively sidelined, and the brain defaults to fight, flight, or freeze. Blame and defensiveness are not character flaws in these moments — they are the output of a nervous system doing what it was designed to do. The research distinguishes these reactive states from chosen responses, and the above/below model provides a vocabulary for that distinction.",
+            "Cross-cultural dimension: below-the-line behaviour looks different depending on cultural context, even when the underlying mechanism is identical. In high-power-distance cultures (Hofstede's research spans 50+ countries), blame tends to be directed downward through the hierarchy — accountability is expected of subordinates, not superiors. In collectivist cultures, defensiveness frequently takes the form of face-saving: deflection, ambiguity, or silence that preserves group harmony at the cost of honest problem-solving. The threat response is universal; its cultural expression varies. Cross-cultural leaders who apply above/below frameworks without this awareness may misread below-the-line behaviour entirely.",
+            "Brené Brown's research on shame and guilt — developed across two decades of qualitative and quantitative study — illuminates the difference between ownership and blame at a neurological and behavioural level. Guilt says 'I did something bad and I want to fix it.' Shame says 'I am bad and I want to hide.' Above-the-line accountability maps directly onto guilt-based learning: it produces energy, motivation, and constructive change. Below-the-line defensiveness maps onto shame: it produces paralysis, withdrawal, and recursive self-protection. The implication for leaders is significant — accountability conversations that trigger shame produce the opposite of the intended result.",
+            "Research on emotional contagion by Hatfield, Cacioppo, and Rapson demonstrates that emotions spread between people involuntarily, through mimicry of facial expression, posture, and vocal tone. Leaders are the most watched people in any group, and their emotional state is the most contagious. A leader operating below the line — visibly reactive, defensive, or blaming — sets the emotional permission structure for the entire team. A leader who remains above the line under pressure communicates, through their very presence, that it is safe to do the same. This is not a metaphor. It is documented social neuroscience.",
+            "Tasha Eurich's research on self-awareness in leadership (Insight, 2017) produced a finding that should arrest every leader who reads it: while 95% of leaders believe they are self-aware, only 10–15% actually are by the criteria her research uses. Self-awareness — the capacity to see oneself accurately — is the foundational prerequisite for the above/below model to work. Without it, leaders cannot recognise where they are operating. They remain below the line while convinced they are above it. Developing genuine self-awareness is therefore not a personal development nicety; it is the baseline requirement for accountability-based leadership.",
+            "Contemplative and mindfulness-based interventions offer the most empirically grounded pathway for building the pause capacity the model requires. The moment between stimulus and response — what Viktor Frankl called the space of human freedom — is the exact terrain where above/below-the-line choice lives. Research on mindfulness-based stress reduction (Kabat-Zinn) and mindful leadership development (Boyatzis and McKee's resonant leadership work) both point toward the same conclusion: leaders who practise present-moment awareness are significantly more capable of choosing response over reaction, particularly under pressure.",
+            "For cross-cultural workers and leaders operating in high-friction, high-demand environments, the above/below model acquires particular urgency. Cultural misunderstanding activates the threat response with greater frequency and intensity than familiar-culture settings — the cues are harder to read, the social scripts are unfamiliar, and the risk of misattribution is higher. These leaders face more below-the-line triggers per day than their monocultural counterparts, and they typically have fewer social resources to process those moments well. The above/below framework gives them a language for what is happening in real time, and a practice for return. The research base behind it is not motivational scaffolding — it is a map of human behaviour under pressure, drawn by people who studied it carefully.",
+          ].map((para, i) => (
+            <p key={i} style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 20 }}>
+              {para}
+            </p>
+          ))}
         </div>
       </div>
 

@@ -255,6 +255,7 @@ export default function SixThinkingHatsClient({ userPathway, isSaved: initialSav
   const lang = (_ctxLang === "id" ? _ctxLang : "en") as Lang;
   const [saved, setSaved] = useState(initialSaved);
   const [activeHat, setActiveHat] = useState<number | null>(null);
+  const [bgOpen, setBgOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
 
   const tr = (en: string, id: string) => t(en, id, lang);
@@ -472,6 +473,49 @@ export default function SixThinkingHatsClient({ userPathway, isSaved: initialSav
           ))}
         </div>
       </section>
+
+      {/* ════════════════════════════════════════════════════════════
+          LONG-FORM SEO BACKGROUND
+      ════════════════════════════════════════════════════════════ */}
+      <div style={{ background: "oklch(88% 0.008 80)", padding: "80px 24px" }}>
+        <div style={{ maxWidth: 780, margin: "0 auto" }}>
+          <p style={{ color: "oklch(65% 0.15 45)", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" as const, marginBottom: 12 }}>
+            Background
+          </p>
+          <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: "oklch(22% 0.10 260)", marginBottom: 32, lineHeight: 1.2 }}>
+            Six Thinking Hats: What the Research Says About Parallel Thinking, Group Decisions, and Creative Problem-Solving
+          </h2>
+          <button
+            onClick={() => setBgOpen(!bgOpen)}
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 6,
+              marginTop: 20, marginBottom: 24, padding: "10px 20px",
+              background: "transparent", border: "1.5px solid oklch(65% 0.15 45)",
+              color: "oklch(65% 0.15 45)", borderRadius: 12,
+              fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, fontWeight: 700,
+              cursor: "pointer", letterSpacing: "0.04em",
+            }}
+          >
+            {bgOpen ? "Close ↑" : "Read the research →"}
+          </button>
+          {bgOpen && [
+            "Edward de Bono developed the Six Thinking Hats framework in 1985 as a tool for overcoming the fundamental inefficiency of adversarial thinking in group settings. Most meetings are implicitly structured as debates — positions are taken, defended, and attacked. De Bono's insight was that all thinking could be disaggregated into parallel streams, explored separately, and then integrated — producing better decisions with less interpersonal conflict.",
+            "The six hats: White (facts and data), Red (emotions and instincts), Black (critical judgement), Yellow (optimism and value), Green (creativity and new ideas), Blue (process management). Each hat represents not a personality type but a mode of thinking that any person can inhabit deliberately. The key innovation is making the thinking mode explicit and shared.",
+            "The research on group decision-making (Janis' groupthink research, Irving Janis 1972) established that cohesive groups under pressure systematically suppress dissent, overestimate consensus, and make worse decisions than structured individual analysis would produce. The Six Thinking Hats method structurally addresses this by making dissent a designated and valued mode (Black Hat) rather than an implicit challenge to group cohesion.",
+            "Parallel thinking vs. adversarial thinking: de Bono argued that Western intellectual tradition is fundamentally adversarial — shaped by Socratic dialectic, where truth is pursued by attacking falsehood. Parallel thinking proposes that all thinkers explore the same direction simultaneously, then shift direction together. The research on creativity (Amabile, Osborn) supports this — generating and evaluating ideas in separate phases produces significantly more creative output than simultaneous evaluation.",
+            "Cross-cultural applications: in high-context, high-power-distance cultures, adversarial debate is particularly unproductive — public disagreement violates face norms, and subordinates will not openly challenge senior perspectives regardless of the quality of their own thinking. The Six Thinking Hats method creates a structural permission for all modes of thinking to be voiced without personal attribution, which makes it more culturally inclusive than open debate.",
+            "The Black Hat in cross-cultural teams: the critical thinking mode (Black Hat) is the mode most suppressed in high-context and collectivist team cultures. Providing an explicit and bounded space for critical thinking — where all team members are simultaneously in critical mode, so criticism is a shared exercise rather than an individual attack — unlocks perspectives that would otherwise remain unspoken.",
+            "Creativity research and de Bono: research on divergent thinking (Guilford, Torrance) shows that creativity in groups is systematically inhibited by premature evaluation. The Green Hat creates a designated divergent phase — ideas are generated without critique — that research consistently shows increases both the quantity and quality of creative output.",
+            "Decision quality research: research on structured decision processes (Heuer's structured analytic techniques, developed for intelligence analysis) shows that explicit frameworks for disaggregating thinking modes improve decision quality, particularly in complex and uncertain environments. De Bono's framework, applied to leadership decisions, produces similar benefits.",
+            "Cross-cultural leadership and structured facilitation: in multicultural team settings, unstructured discussion systematically advantages members from low-context, high-verbal, low-power-distance cultures — those most comfortable speaking freely in group settings. Structured tools like Six Thinking Hats create equity by giving every thinking mode equal airtime and allowing quieter team members to contribute through designated channels.",
+            "Implementing Six Thinking Hats in cross-cultural contexts: the most effective implementations adapt the hat sequence to cultural context — not every situation requires all six hats, and the sequence matters. In contexts where critical thinking (Black Hat) is culturally sensitive, positioning it after Yellow Hat (value identification) and before integration reduces the social risk. Cross-cultural facilitators who understand both the tool and the cultural dynamics of their groups use the framework as a structure for equality, not just efficiency.",
+          ].map((para, i) => (
+            <p key={i} style={{ fontSize: 16, color: "oklch(35% 0.08 260)", lineHeight: 1.85, marginBottom: 20 }}>
+              {para}
+            </p>
+          ))}
+        </div>
+      </div>
 
       {/* ── Sources ── */}
       <SourcesDropdown sources={[

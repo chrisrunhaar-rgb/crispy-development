@@ -224,6 +224,7 @@ export default function OvercomingProcrastinationClient({
   const [commitTime, setCommitTime] = useState("");
   const [commitPlace, setCommitPlace] = useState("");
   const [reminderStatus, setReminderStatus] = useState<"idle" | "loading" | "set" | "error">("idle");
+  const [bgOpen, setBgOpen] = useState(false);
 
   function handleAddToCalendar() {
     const start = new Date(`${commitDate}T${commitTime}`);
@@ -986,6 +987,49 @@ export default function OvercomingProcrastinationClient({
           </blockquote>
         </div>
       </section>
+
+      {/* ════════════════════════════════════════════════════════════
+          LONG-FORM SEO BACKGROUND
+      ════════════════════════════════════════════════════════════ */}
+      <div style={{ background: LIGHT_GRAY, padding: "80px 24px" }}>
+        <div style={{ maxWidth: 780, margin: "0 auto" }}>
+          <p style={{ color: ORANGE, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" as const, marginBottom: 12 }}>
+            Background
+          </p>
+          <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: NAVY, marginBottom: 32, lineHeight: 1.2 }}>
+            Overcoming Procrastination: What the Research Says About Delay, Emotion, and Getting Important Work Done
+          </h2>
+          <button
+            onClick={() => setBgOpen(!bgOpen)}
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 6,
+              marginTop: 20, marginBottom: 24, padding: "10px 20px",
+              background: "transparent", border: `1.5px solid ${ORANGE}`,
+              color: ORANGE, borderRadius: 12,
+              fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, fontWeight: 700,
+              cursor: "pointer", letterSpacing: "0.04em",
+            }}
+          >
+            {bgOpen ? "Close ↑" : "Read the research →"}
+          </button>
+          {bgOpen && [
+            "Procrastination is not a time management problem. Timothy Pychyl's research — some of the most rigorous in the field — demonstrates that procrastination is fundamentally an emotion regulation problem. People avoid tasks not because they are bad at time management but because tasks trigger negative emotions (anxiety, boredom, frustration, self-doubt) that avoidance temporarily relieves.",
+            "Fuschia Sirois and Timothy Pychyl's research identifies procrastination as a preference for short-term mood regulation over long-term goal attainment. The avoider gets immediate relief from not doing the thing; the cost comes later. This frame explains why productivity tips that do not address the emotional driver of avoidance produce minimal long-term change.",
+            "Temporal motivation theory (Steel and König) provides a mathematical model of procrastination: motivation is a function of expectancy (will I succeed?), value (does it matter?), impulsiveness (how easily distracted am I?), and delay (how far away is the deadline?). Procrastination increases when expectancy or value is low, or when impulsiveness or delay is high.",
+            "The role of perfectionism: research by Frost, Marten, Lahart, and Rosenblate identified perfectionism as a significant driver of procrastination. Perfectionist procrastination is specifically tied to fear of failure — the task is avoided because starting means the possibility of failing, and the perfect-appearing self must not be exposed to that possibility.",
+            "Procrastination and self-compassion: counterintuitively, research by Kristin Neff and Michael Hall shows that self-compassion reduces procrastination. When individuals treat their lapses with kindness rather than self-criticism, they are better able to reengage with tasks. Harsh self-judgment after avoidance intensifies the negative emotional state and extends the avoidance cycle.",
+            "Cross-cultural dimensions of procrastination: research across cultures (Ferrari et al.) shows that procrastination rates are not uniform across societies. Cultures with high uncertainty avoidance, high perfectionism norms, or high face-risk may produce specific patterns of procrastination tied to social consequences of failure rather than individual emotion regulation.",
+            "Procrastination in ministry and cross-cultural work: cross-cultural workers face specific procrastination patterns tied to the size and complexity of their calling. When the task is \"make disciples of all nations,\" the gap between daily effort and visible impact is enormous. This impact-delay creates the low expectancy and high delay conditions that temporal motivation theory identifies as procrastination-producing.",
+            "Implementation intentions: research by Peter Gollwitzer on implementation intentions (the if-then planning strategy) shows that specifying exactly when, where, and how a task will be completed dramatically increases follow-through. The research suggests this works by pre-loading the decision — the situation, when encountered, automatically triggers the intention without requiring fresh motivation.",
+            "The two-minute rule and activation energy: the research on behavioural activation (derived from cognitive behavioural therapy for depression) shows that beginning a task — even for a very short duration — changes the emotional state toward the task. Starting is the highest-activation moment; continuing is easier. This explains the practical efficacy of the two-minute rule and structured commitment devices.",
+            "Procrastination and calling: for Christian leaders, procrastination on important work often involves avoiding work that matters deeply — because it matters deeply. The higher the stakes of the task, the greater the emotional risk of engaging it. Understanding this dynamic reframes procrastination not as laziness or lack of discipline but as misapplied self-protection — and opens a path of compassionate re-engagement with the work that only the leader can do.",
+          ].map((para, i) => (
+            <p key={i} style={{ fontSize: 16, color: BODY_TEXT, lineHeight: 1.85, marginBottom: 20 }}>
+              {para}
+            </p>
+          ))}
+        </div>
+      </div>
 
       {/* SOURCES */}
       <SourcesDropdown sources={[

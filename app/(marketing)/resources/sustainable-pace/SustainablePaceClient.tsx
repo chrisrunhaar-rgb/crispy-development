@@ -567,6 +567,7 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
   const [activeVerse, setActiveVerse] = useState<string | null>(null);
   const [activeSphere, setActiveSphere] = useState<SphereKey | null>(null);
   const [openHabit, setOpenHabit] = useState<string | null>(null);
+  const [bgOpen, setBgOpen] = useState(false);
 
   // Stress Audit sequential state
   const [auditStarted, setAuditStarted] = useState(false);
@@ -1729,6 +1730,49 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
           </div>
         </div>
       </section>
+
+      {/* ════════════════════════════════════════════════════════════
+          LONG-FORM SEO BACKGROUND
+      ════════════════════════════════════════════════════════════ */}
+      <div style={{ background: lightGray, padding: "80px 24px" }}>
+        <div style={{ maxWidth: 780, margin: "0 auto" }}>
+          <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" as const, marginBottom: 12 }}>
+            Background
+          </p>
+          <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: navy, marginBottom: 32, lineHeight: 1.2 }}>
+            Sustainable Pace: What the Research Says About Energy, Recovery, and Long-Term Leadership Effectiveness
+          </h2>
+          <button
+            onClick={() => setBgOpen(!bgOpen)}
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 6,
+              marginTop: 20, marginBottom: 24, padding: "10px 20px",
+              background: "transparent", border: `1.5px solid ${orange}`,
+              color: orange, borderRadius: 12,
+              fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, fontWeight: 700,
+              cursor: "pointer", letterSpacing: "0.04em",
+            }}
+          >
+            {bgOpen ? "Close ↑" : "Read the research →"}
+          </button>
+          {bgOpen && [
+            "The energy management paradigm represents one of the most significant shifts in thinking about leadership performance in the past three decades. Jim Loehr and Tony Schwartz's research — developed through their work with elite athletes and extended to corporate leaders — established a foundational reframe: performance is not managed through time, but through energy. Time is a finite, non-renewable resource that depletes at a fixed rate regardless of what you do with it. Energy, by contrast, can be expanded, renewed, and managed with skill. The leader who understands this distinction stops treating exhaustion as a badge of commitment and starts treating it as a performance liability.",
+            "Anders Ericsson's deliberate practice research — which underpins much of what became popularised as the '10,000 hours' concept — contained a finding that is often overlooked in the popular version: elite performers do not work more hours than average performers. They alternate periods of intense, focused practice with structured recovery. The best surgeons, classical musicians, chess players, and athletes do not practise longer — they rest more deliberately and use their work time with higher intentionality. Recovery is not the absence of performance; it is the precondition for sustained high performance.",
+            "The ultradian rhythm is the physiological infrastructure on which sustainable pace is built. Human biology operates in approximately 90 to 120 minute cycles of higher and lower alertness — a pattern documented across multiple fields of chronobiology research. During the high phase, cognitive performance, focus, and creative output are significantly stronger. During the low phase, the body signals a need for recovery through restlessness, difficulty concentrating, and physical fatigue. Leaders who learn to align intensive cognitive work with their high phase and use low phases for less demanding tasks — or genuine rest — report substantially better output quality and lower cumulative fatigue than those who override the cycle with caffeine and willpower.",
+            "The physiological costs of chronic overload are documented across large-scale longitudinal studies. Mika Kivimäki and colleagues have produced some of the most rigorous long-term data on work stress and health outcomes, including studies tracking tens of thousands of workers across multiple countries. Their findings link sustained overwork — defined as consistently working more than 55 hours per week — to significantly increased cardiovascular risk, immune suppression, and measurable cognitive decline. The leader who insists on operating at maximum output indefinitely is not being productive. They are liquidating a non-renewable physiological resource that will eventually stop replenishing.",
+            "Cross-cultural workers face a specific and compounding form of unsustainable pace that deserves separate attention. The physiological exhaustion of demanding work is layered with cultural stress — the cognitive load of perpetual code-switching, the relational investment required to build trust across cultural distance, and the identity pressure of operating far from familiar social frameworks. Research in missionary and cross-cultural worker contexts consistently shows burnout rates significantly higher than corporate sector benchmarks. A primary barrier to earlier help-seeking is a spiritual narrative in which exhaustion is reframed as faithfulness — a form of theological distortion that the research identifies as a significant risk factor.¹",
+            "The distinction between sustainable pace and Sabbath is important and frequently confused. Sustainable pace is a work science question: how do you structure your rhythms so that you can continue at high quality over years and decades without breakdown? Sabbath is a theological question: why does rest matter at a cosmic level, and what does it mean for human beings made in the image of a God who rested? Both answers are necessary and neither replaces the other. Sustainable pace prevents breakdown. Sabbath reorients identity — it is the declaration that the world does not run on your output, and that your worth is not constituted by your productivity.",
+            "The concept of sustainable pace entered the professional lexicon through Agile software development, where it appears as one of the core principles of the Agile Manifesto (2001): agile processes promote sustainable development — sponsors, developers, and users should be able to maintain a constant pace indefinitely. This framing is striking because it is explicitly about indefinite duration, not temporary sprint. The team that can maintain its pace without escalating cost or declining output is more valuable than the team that peaks dramatically and then collapses. The same principle applies to individual leaders and to organisations.",
+            "Energy management across cultures creates genuine complexity that monocultural frameworks tend to miss. Different cultural contexts hold fundamentally different assumptions about rest, productivity, and visible busyness. In some cultural contexts, appearing busy signals virtue, commitment, and social responsibility. In others, a leader who is always rushing signals poor management and low social status — the truly effective person has systems and people in place so they are not constantly overwhelmed. Cross-cultural workers who import their home culture's assumptions about pace and productivity into a different cultural context often create misunderstanding without realising it — misreading their own busyness as commitment and their counterparts' apparent ease as lack of seriousness.",
+            "Christina Maslach's three-stage burnout model provides the most practically useful early warning framework for leaders monitoring their own sustainability. The first stage — emotional exhaustion — is characterised by the chronic depletion of the emotional energy that enables genuine connection, empathy, and sustained engagement. Leaders in this stage describe going through the motions: still functional, still performing, but with an inner depletion that they may be actively concealing from those around them. Emotional exhaustion, identified early, is recoverable. Left unaddressed, it progresses to depersonalisation and then to reduced personal efficacy — stages that are significantly harder to reverse.",
+            "Building sustainable pace at a systems level — not just personally — is the highest-leverage intervention available to leaders who want to go the distance. The most effective leaders create structural conditions for recovery: they protect their teams' downtime, push back on organisational cultures of performative busyness, set boundaries around communication outside working hours, and model a relationship to work that is oriented not toward output maximisation but toward faithful, excellent contribution over a lifetime. The research is consistent: leaders who build recovery into the system produce more over time than leaders who drive for maximum output in every season. The goal is not to work less — it is to work in a way that can be sustained, replicated, and ultimately handed on.¹",
+          ].map((para, i) => (
+            <p key={i} style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 20 }}>
+              {para}
+            </p>
+          ))}
+        </div>
+      </div>
 
       {/* ── Sources ── */}
       <SourcesDropdown sources={[

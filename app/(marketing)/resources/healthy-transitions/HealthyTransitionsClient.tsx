@@ -192,6 +192,7 @@ export default function HealthyTransitionsClient({ userPathway, isSaved: initial
   const [plannerAnswers, setPlannerAnswers] = useState(["", "", "", ""]);
   const [plannerSubmitted, setPlannerSubmitted] = useState(false);
   const [planSaved, setPlanSaved] = useState(false);
+  const [bgOpen, setBgOpen] = useState(false);
 
   const t = (en: string, id: string) => tFn(en, id, lang);
 
@@ -788,6 +789,49 @@ export default function HealthyTransitionsClient({ userPathway, isSaved: initial
               </div>
             </div>
           )}
+        </div>
+      </div>
+
+      {/* ════════════════════════════════════════════════════════════
+          LONG-FORM SEO BACKGROUND
+      ════════════════════════════════════════════════════════════ */}
+      <div style={{ background: lightGray, padding: "80px 24px" }}>
+        <div style={{ maxWidth: 780, margin: "0 auto" }}>
+          <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" as const, marginBottom: 12 }}>
+            Background
+          </p>
+          <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: navy, marginBottom: 32, lineHeight: 1.2 }}>
+            Healthy Transitions: What the Research Says About Change, Loss, and the Inner Journey of Moving On
+          </h2>
+          <button
+            onClick={() => setBgOpen(!bgOpen)}
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 6,
+              marginTop: 20, marginBottom: 24, padding: "10px 20px",
+              background: "transparent", border: `1.5px solid ${orange}`,
+              color: orange, borderRadius: 12,
+              fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 700,
+              cursor: "pointer", letterSpacing: "0.04em",
+            }}
+          >
+            {bgOpen ? "Close ↑" : "Read the research →"}
+          </button>
+          {bgOpen && [
+            "Transition — the internal psychological process of adapting to change — is distinct from change itself. This distinction, first clearly articulated by William Bridges, is foundational to understanding why so many organisational changes fail even when the logistical execution is flawless. Change is situational: a new role, a new city, a new team structure, a new assignment. Transition is psychological: the process of letting go of the old situation, moving through a period of ambiguity and disorientation, and eventually making meaning within the new context. Bridges observed that organisations routinely manage change while neglecting transition — assuming that once the structural change is made, the human adjustment will follow automatically. It rarely does.",
+            "The cross-cultural dimension of transition adds layers of complexity that general transition theory does not fully address. Research on acculturation — how people adapt when they encounter a new cultural environment — has documented predictable psychological patterns that parallel Bridges's transition model but add culture-specific content. Acculturative stress, described by John Berry and colleagues, involves not just logistical adjustment but the disruption of the cultural frameworks through which a person makes sense of daily life: how relationships work, what competence looks like, how time is structured, what constitutes success or failure. These frameworks are so deeply embedded that their disruption is often experienced as disorientation without a clear cause.",
+            "The U-curve of adjustment — a model developed through field research on students, diplomats, and workers living abroad — describes a characteristic trajectory: an initial honeymoon phase characterised by excitement and surface-level engagement with the new environment, followed by a crisis phase of frustration, withdrawal, and sometimes depression as the depth of cultural difference becomes apparent, followed eventually by a recovery and adaptation phase in which new competencies are developed and a revised sense of identity and belonging begins to form. Research on the reliability and timing of this curve has produced mixed results — not everyone follows the pattern, and individual trajectories vary enormously — but the framework remains useful as a normalising map for people experiencing transition who may otherwise interpret their distress as personal failure.",
+            "Reverse culture shock — the disorientation experienced upon returning to a previously familiar cultural environment — is consistently reported in the literature as more difficult and less anticipated than the initial cross-cultural adjustment. Research by Adrian Furnham, Stephen Bochner, and others has found that returnees frequently expect to 'come home' to a place that remains as they left it, only to discover that both they and their home context have changed. The people who remained at home cannot fully understand what the returnee has experienced; the returnee cannot easily explain or share experiences that require cultural context to appreciate. The result is often a profound sense of loneliness — surrounded by familiar people in a familiar setting, yet feeling foreign.",
+            "The RAFT model — developed by David Pollock and Ruth Van Reken through decades of work with cross-cultural workers and their families — provides a structured framework for departure that directly addresses the conditions that make transitions healthy or unhealthy. RAFT stands for Reconciliation (addressing unresolved relational issues before leaving), Affirmation (expressing gratitude and care to people and places that have mattered), Farewell (saying goodbye intentionally rather than avoiding the pain of parting), and Think Destination (beginning to orient toward the next context). Research on attrition in cross-cultural workers, notably by Melissa Selby, has found that the quality of departure — particularly the degree to which relational closure is achieved — is a significant predictor of psychological wellbeing and effectiveness in the subsequent assignment.",
+            "Grief and loss are central to the transition literature in ways that leadership development programmes often underplay. Leaving a place, a role, or a community involves genuine loss — of relationships, of competence and social standing built over years, of a known and trusted environment, of a sense of belonging. Researchers in the field of attachment theory, following John Bowlby's foundational work, have noted that loss triggers the same neurological and psychological processes regardless of whether the departed person is alive or not. Leaders who minimise the grief dimensions of transition — or who model a culture of stoic 'onwards and upwards' — often find that the unprocessed loss resurfaces as resistance, distraction, or conflict in the new context.",
+            "Social support is one of the most consistently identified protective factors in cross-cultural transition research. Studies on expatriate adjustment have found that the quality rather than the quantity of support relationships predicts outcomes: one deeply attuned relationship that provides emotional validation, practical help, and genuine understanding is more protective than a large social network of more superficial connections. This finding has important implications for how organisations support cross-cultural workers: formal orientation programmes and buddy systems can provide structural support, but they cannot substitute for the kind of spontaneous, responsive attunement that characterises genuine friendship and community.",
+            "Identity is at the centre of healthy transition in a way that is often underappreciated in professional development contexts. Cross-cultural transition disrupts not just skills and competencies but the narratives through which people understand who they are and what they are capable of. Research on narrative identity — the stories people tell themselves about their lives — suggests that major transitions are periods of identity construction rather than just adjustment, requiring the integration of old and new elements of self into a revised story. Leaders who emerge from significant cross-cultural transitions with a richer, more complex identity — one that can hold multiple cultural frameworks without forcing them into a single dominant narrative — are better equipped for the cultural complexity of modern organisational life.",
+            "The role of institutional and organisational support in cross-cultural transition has been studied primarily in the context of expatriate assignment management. Research consistently finds that pre-departure preparation, family support, regular check-ins during the assignment, and planned repatriation processes significantly reduce attrition and improve performance. However, the same research identifies a persistent gap between what organisations say they provide and what cross-cultural workers actually receive: formal preparation processes often focus on logistical and informational content (housing, legal requirements, cost of living) while underinvesting in psychological and relational preparation. The result is that many leaders arrive in new cultural contexts well-informed about their destination but unprepared for the internal journey.",
+            "The research on transition ultimately points to a set of capacities that distinguish leaders who navigate change well from those who struggle: the ability to tolerate ambiguity without premature resolution, the willingness to grieve losses rather than bypass them, the skill of making meaning from disruption rather than being undone by it, and the relational intelligence to seek and receive genuine support. These capacities are not fixed personality traits — they can be developed through structured reflection, intentional community, and the kind of leadership development that takes the inner life as seriously as the outer agenda. Healthy transitions are not accidents. They are the result of intentional preparation, honest self-awareness, and the courage to move through disorientation toward something genuinely new.",
+          ].map((para, i) => (
+            <p key={i} style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 20 }}>
+              {para}
+            </p>
+          ))}
         </div>
       </div>
 

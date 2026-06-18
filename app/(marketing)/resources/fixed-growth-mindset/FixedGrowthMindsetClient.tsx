@@ -239,6 +239,7 @@ export default function FixedGrowthMindsetClient({
   const [scoreSaved, setScoreSaved] = useState(savedScore != null);
   const [isSavingScore, startSaveScore] = useTransition();
   const [expandedStep, setExpandedStep] = useState<string | null>(null);
+  const [bgOpen, setBgOpen] = useState(false);
 
   const t = (en: string, id: string) => lang === "id" ? id : en;
 
@@ -994,6 +995,49 @@ export default function FixedGrowthMindsetClient({
           </div>
         </div>
       </section>
+
+      {/* ════════════════════════════════════════════════════════════
+          LONG-FORM SEO BACKGROUND
+      ════════════════════════════════════════════════════════════ */}
+      <div style={{ background: LIGHT_GRAY, padding: "80px 24px" }}>
+        <div style={{ maxWidth: 780, margin: "0 auto" }}>
+          <p style={{ color: ORANGE, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" as const, marginBottom: 12 }}>
+            Background
+          </p>
+          <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: NAVY, marginBottom: 32, lineHeight: 1.2 }}>
+            Fixed and Growth Mindset: What the Research Says About Ability, Learning, and Leaders Who Develop
+          </h2>
+          <button
+            onClick={() => setBgOpen(!bgOpen)}
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 6,
+              marginTop: 20, marginBottom: 24, padding: "10px 20px",
+              background: "transparent", border: `1.5px solid ${ORANGE}`,
+              color: ORANGE, borderRadius: 12,
+              fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 700,
+              cursor: "pointer", letterSpacing: "0.04em",
+            }}
+          >
+            {bgOpen ? "Close ↑" : "Read the research →"}
+          </button>
+          {bgOpen && [
+            "Carol Dweck's mindset theory, developed through decades of research at Columbia and Stanford, begins with a deceptively simple observation: people hold fundamentally different beliefs about whether human qualities — intelligence, talent, character — are fixed or malleable. Those who believe these qualities are fixed (a fixed mindset) tend to interpret their performance as evidence of who they are. Those who believe they can be developed (a growth mindset) tend to interpret the same performance as evidence of where they currently are, and what needs to happen next. The difference in this single interpretive move has enormous downstream consequences for how people respond to challenge, failure, feedback, and the possibility of change.",
+            "The research foundation for mindset theory draws on Dweck's earlier work on learned helplessness and implicit theories of intelligence. In a landmark series of studies, children who were praised for effort — 'you worked really hard on that' — responded to subsequent failure very differently from children praised for ability — 'you're so smart'. Ability-praised children, when faced with harder problems, were more likely to give up, to attribute their failure to lack of talent, and to choose easier tasks in the future. Effort-praised children were more likely to persist, to interpret difficulty as a signal to try harder, and to seek out more challenging problems. The praise manipulation was mild, brief, and seemingly innocuous — yet it produced strikingly different mindset orientations.",
+            "Dweck is careful to distinguish mindset from motivation, optimism, or self-esteem, though these constructs often co-travel. A person can be highly motivated and still hold a fixed mindset — indeed, fixed-mindset individuals are often intensely motivated to succeed precisely because they believe their performance reveals something fundamental about their worth. The problem is that this motivation becomes fragile under genuine challenge, because failure carries a deeper and more threatening meaning. Growth-mindset individuals can tolerate more ambiguity and setback not because they care less but because their model of success includes the possibility of failure as a developmental stage.",
+            "In leadership contexts, the implications of mindset theory extend well beyond individual development. Research by Chia-Jung Tsay and Mahzarin Banaji found that even people who explicitly endorse growth mindset beliefs show systematic implicit biases toward 'naturalness' — preferring musicians and entrepreneurs described as naturally talented over equally accomplished individuals described as hard workers. This 'naturalness bias' suggests that fixed-mindset assumptions operate at a level below conscious endorsement, and that organisational cultures can embed fixed-mindset norms even when their stated values are growth-oriented.",
+            "The relationship between mindset and feedback is particularly important for leadership effectiveness. Research by Dweck and colleagues found that fixed-mindset individuals tend to avoid seeking feedback after failure, prefer to compare their performance with people who did worse rather than better, and are less likely to benefit from critical feedback even when they receive it. Growth-mindset individuals show the opposite pattern: they are more likely to seek out challenging comparisons, to actively solicit critical feedback, and to use negative feedback as a diagnostic resource. For leaders responsible for the development of others, these differences predict not just personal effectiveness but the quality of the developmental environment they create.",
+            "Meta-analyses of mindset research have produced mixed results, leading to a productive debate about the scope and boundary conditions of mindset effects. A 2018 meta-analysis by Sisk and colleagues found that growth mindset interventions produced only small effects on academic achievement in general populations, with stronger effects for students from disadvantaged backgrounds or those at academic risk. A 2022 Nature study by Yeager and colleagues found significant synergistic effects when growth mindset was combined with a 'stress-is-enhancing' intervention — suggesting that mindset effects are strongest when they address a specific, relevant anxiety rather than being delivered as generic self-improvement messaging. The implication for leadership development is that mindset interventions need to be contextualised and targeted to be effective.",
+            "Cultural context mediates mindset in ways that are still being mapped by researchers. While Dweck's framework has been replicated in numerous countries, the meaning of effort, failure, and ability varies across cultural settings. In Confucian-heritage cultures, where effort is already highly valued as a moral virtue independent of outcome, the growth mindset framework may land differently — or may need to address different embedded assumptions. In cultures where failure carries strong social shame, the practical barriers to growth-mindset behaviour may be environmental rather than individual: no amount of internal reframing changes the fact that publicly acknowledging a mistake has real social costs in certain contexts.",
+            "The concept of 'false growth mindset' — introduced by Dweck herself in later writing — addresses a critical failure mode in how the framework has been applied. False growth mindset occurs when individuals or organisations endorse growth mindset language without doing the real work: reframing difficulty as learning without actually investing in the conditions that make learning from difficulty possible, or praising effort while still primarily rewarding outcomes. Dweck has noted with some frustration that mindset theory has been widely misunderstood as 'just believe you can do it' or as a blanket endorsement of effort over results, when the real insight is about the underlying belief system that determines how people relate to their own potential.",
+            "For leaders working across cultures, growth mindset is not just a personal development philosophy but an organisational design question. Research on psychological safety by Amy Edmondson, which closely parallels mindset theory at the team level, shows that teams where people believe mistakes will be met with curiosity rather than blame produce more innovation, better error detection, and higher learning rates. Building growth-mindset cultures across cultural lines requires attention to how feedback norms, status dynamics, and face concerns intersect with the team's willingness to acknowledge what isn't working — which varies significantly across cultural contexts.",
+            "The lasting contribution of mindset research to leadership development is the evidence that capability is not primarily a matter of fixed endowment but of sustained practice under the right conditions. The research does not suggest that everyone can do everything — genuine constraints of aptitude, context, and opportunity are real. But it does suggest that the beliefs people hold about whether they can grow determine, to a substantial degree, whether they do. For leaders operating across cultures, where the demands for adaptation and learning are especially high, this is not a peripheral insight. It is a foundational one.",
+          ].map((para, i) => (
+            <p key={i} style={{ fontSize: 16, color: BODY_TEXT, lineHeight: 1.85, marginBottom: 20 }}>
+              {para}
+            </p>
+          ))}
+        </div>
+      </div>
 
       {/* SOURCES */}
       <SourcesDropdown sources={[

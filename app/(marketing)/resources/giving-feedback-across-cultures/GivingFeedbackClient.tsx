@@ -2067,6 +2067,7 @@ export default function GivingFeedbackClient({ isSaved, ...rest }: Props) {
   const [saved, setSaved] = useState(isSaved);
   const [isPending, startTransition] = useTransition();
   const [fieldExpanded, setFieldExpanded] = useState<boolean[]>([false, false, false]);
+  const [bgOpen, setBgOpen] = useState(false);
 
   function handleSave() {
     startTransition(async () => {
@@ -2512,6 +2513,49 @@ export default function GivingFeedbackClient({ isSaved, ...rest }: Props) {
           </div>
         </div>
       </section>
+
+      {/* ════════════════════════════════════════════════════════════
+          LONG-FORM SEO BACKGROUND
+      ════════════════════════════════════════════════════════════ */}
+      <div style={{ background: LIGHT_GRAY, padding: "80px 24px" }}>
+        <div style={{ maxWidth: 780, margin: "0 auto" }}>
+          <p style={{ color: ORANGE, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" as const, marginBottom: 12 }}>
+            Background
+          </p>
+          <h2 style={{ fontFamily: FONT_BODY, fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: NAVY, marginBottom: 32, lineHeight: 1.2 }}>
+            Giving Feedback Across Cultures: What the Research Says About Truth-Telling, Face, and Feedback That Lands
+          </h2>
+          <button
+            onClick={() => setBgOpen(!bgOpen)}
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 6,
+              marginTop: 20, marginBottom: 24, padding: "10px 20px",
+              background: "transparent", border: `1.5px solid ${ORANGE}`,
+              color: ORANGE, borderRadius: 12,
+              fontFamily: FONT_BODY, fontSize: 13, fontWeight: 700,
+              cursor: "pointer", letterSpacing: "0.04em",
+            }}
+          >
+            {bgOpen ? "Close ↑" : "Read the research →"}
+          </button>
+          {bgOpen && [
+            "Feedback is one of the most extensively studied topics in organisational psychology, and also one of the most culturally variable. For decades, the dominant model in Western leadership literature treated effective feedback as synonymous with directness: clear, specific, timely, and unambiguous. The SBI model (Situation-Behaviour-Impact) and similar frameworks assumed that if feedback is honest and well-structured, it will be received as useful information. What cross-cultural research has revealed is that this assumption only holds when the giver and receiver share the same cultural model of what feedback is for — and those models differ far more dramatically than most leadership training programmes acknowledge.",
+            "Erin Meyer's research, synthesised in 'The Culture Map', maps feedback norms on two independent dimensions: the Communicating scale (low-context to high-context) and the Evaluating scale (direct negative feedback to indirect negative feedback). Her key insight is that these scales do not correlate: a culture can be high-context in general communication but still prefer direct negative feedback, as is the case in Israel or Russia. Conversely, cultures like Japan and Indonesia tend toward both high-context communication and highly indirect negative feedback. The mismatch between a Dutch executive giving 'honest' feedback and a Japanese colleague receiving what feels like a devastating public attack illustrates what happens when these scales collide without awareness.",
+            "The concept of face — or mianzi and lian in Chinese cultural terms — provides a deeper explanatory framework for why indirect feedback is not simply a matter of politeness but of identity and social standing. Face is not equivalent to self-esteem; it is a social resource that exists in relationship to others and can only be given, maintained, or taken by others. Research in Chinese management contexts has shown that face concerns directly affect information sharing, error reporting, and willingness to raise concerns with superiors — with significant implications for organisational safety and learning in multicultural environments. Feedback that causes face loss, even if factually accurate, can damage not just a relationship but an individual's standing in their broader social network.",
+            "Indonesian workplace culture offers a particularly instructive case study in indirect feedback. The concept of malu — often translated as shame but more precisely understood as a social emotion that regulates conformity to group norms and expectations — creates a powerful inhibitor on explicit negative feedback. Giving direct critical feedback to someone in front of others is understood as causing malu and is experienced as an act of relational aggression rather than professional support. This does not mean that Indonesians do not evaluate each other — they do, constantly — but the channels for that evaluation are informal, relational, and indirect: a quiet word after the meeting, a slight reduction in warmth, a comment channelled through a trusted third party.",
+            "Korean workplace norms illustrate another dimension: the role of nunchi — a Korean concept describing the social intelligence required to read what others are thinking and feeling without explicit communication. Nunchi is the capacity to pick up on subtle cues of disapproval, tension, or discomfort and to adjust one's behaviour accordingly. In Korean professional contexts, much of what Western practitioners would call feedback is communicated through these subtle signals rather than explicit statement. A leader who lacks nunchi, or who operates in a cultural context that doesn't practise it, will miss most of the feedback that is actually being given and will interpret the absence of explicit criticism as approval.",
+            "Sub-Saharan African contexts add yet another layer through the Ubuntu philosophy — 'I am because we are' — which frames individual performance and evaluation within a communal relational context. Feedback in Ubuntu-influenced cultures is embedded in relationship: it is something that happens between people who are in ongoing relationship with each other, not a transactional exchange between a manager and a subordinate. Research on management practices in South Africa and across francophone and anglophone Africa has highlighted the importance of relational investment as a precondition for effective feedback — a message that lands differently in a society where relationship is the primary unit of meaning.",
+            "Research on the psychological mechanics of feedback reception helps explain why cultural context has such profound effects on what is heard and what is dismissed. Feedback is processed through a dual evaluation: first, is the feedback credible (is this person qualified to evaluate me, and is their information accurate?); second, is the feedback safe (if I accept this feedback, what are the relational and social consequences?). In cultures where accepting critical feedback publicly may be interpreted as weakness or loss of face, the second question dominates the first, regardless of how accurate or well-intentioned the feedback is. This means that technically correct feedback, delivered without cultural sensitivity, can produce defensiveness, disengagement, or relational damage — the opposite of its intended effect.",
+            "The literature on psychological safety — particularly Amy Edmondson's research on team learning and performance — intersects significantly with cross-cultural feedback dynamics. Edmondson's finding that psychological safety is the primary predictor of team learning means that feedback systems need to be embedded in contexts where people genuinely believe that raising concerns and acknowledging mistakes will not damage their standing. Building psychological safety in multicultural teams requires attending to the specific face-saving and relational norms of each cultural group represented — a one-size-fits-all approach to feedback culture consistently underserves team members from high-context, high-face-concern backgrounds.",
+            "The practical question of how to give feedback across cultural lines has generated a body of applied research and practitioner frameworks that go beyond simple 'be more indirect' advice. Researchers and practitioners have converged on several principles: separating the feedback relationship (building the relational capital that makes feedback receivable) from the feedback event itself; using inquiry before advocacy (asking what the person thinks before offering an evaluation); providing feedback in private whenever possible in high-face contexts; framing critical feedback in terms of shared goals rather than personal shortfall; and developing cultural informants within a team who can help calibrate how messages are likely to be received.",
+            "What the research ultimately establishes is that feedback is not a neutral information transfer but a culturally situated social act. Its effectiveness depends not just on its content or delivery but on whether it operates within or against the relational assumptions of the people involved. Leaders who develop the capacity to give feedback across cultural lines are not compromising on honesty — they are developing a more sophisticated model of what honesty requires: not just the courage to say what you see, but the cultural intelligence to communicate it in a register that the other person can actually use.",
+          ].map((para, i) => (
+            <p key={i} style={{ fontSize: 16, color: BODY_TEXT, lineHeight: 1.85, marginBottom: 20 }}>
+              {para}
+            </p>
+          ))}
+        </div>
+      </div>
 
       {/* Sources */}
       <SourcesDropdown sources={[

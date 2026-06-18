@@ -214,6 +214,7 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
   const lang = (_ctxLang === "id" ? _ctxLang : "en") as Lang;
   const [saved, setSaved] = useState(initialSaved);
   const [isPending, startTransition] = useTransition();
+  const [bgOpen, setBgOpen] = useState(false);
 
   const tr = (en: string, id: string) => t(en, id, lang);
 
@@ -518,6 +519,49 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
           </p>
         </div>
       </section>
+
+      {/* ════════════════════════════════════════════════════════════
+          LONG-FORM SEO BACKGROUND
+      ════════════════════════════════════════════════════════════ */}
+      <div style={{ background: "oklch(88% 0.008 80)", padding: "80px 24px" }}>
+        <div style={{ maxWidth: 780, margin: "0 auto" }}>
+          <p style={{ color: "oklch(65% 0.15 45)", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" as const, marginBottom: 12 }}>
+            Background
+          </p>
+          <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: "oklch(22% 0.10 260)", marginBottom: 32, lineHeight: 1.2 }}>
+            Attention and Retention: What Learning Science Says About Teaching That Actually Sticks
+          </h2>
+          <button
+            onClick={() => setBgOpen(!bgOpen)}
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 6,
+              marginTop: 20, marginBottom: 24, padding: "10px 20px",
+              background: "transparent", border: "1.5px solid oklch(65% 0.15 45)",
+              color: "oklch(65% 0.15 45)", borderRadius: 12,
+              fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 700,
+              cursor: "pointer", letterSpacing: "0.04em",
+            }}
+          >
+            {bgOpen ? "Close ↑" : "Read the research →"}
+          </button>
+          {bgOpen && [
+            "There is a persistent gap between teaching and learning that most trainers never close — not because their content is poor, but because they misunderstand how the brain acquires and retains information. Research in cognitive psychology and learning science is consistent: if you taught it once and moved on, the majority of what you taught has already been forgotten. Understanding why this happens — and what to do about it — is the foundational competency of any leader or educator who wants their investment in training to actually change behaviour.",
+            "Hermann Ebbinghaus mapped the forgetting curve in 1885 through meticulous self-experimentation with nonsense syllables, and more than a century of replication has confirmed his central finding: memory decays exponentially after initial learning. Within 24 hours of a single exposure to new material, approximately 50% is lost. Within a week, retention drops below 25% without deliberate reinforcement. This is not a failure of intelligence or motivation — it is the default operation of the human memory system, which discards information it does not need. Modern replication studies, including those using neuroimaging, confirm that the curve holds across diverse populations and content types.¹",
+            "John Medina's Brain Rules synthesises decades of cognitive neuroscience into practical principles for learning environments. One of his most cited findings is that the human brain's natural attention cycle runs in approximately 10-minute windows, after which attention dips significantly before re-engaging. This is not a cultural or generational artifact — it is a neurological rhythm. Effective facilitators and teachers design for this cycle: they structure their content in segments, build in pattern interrupts, and use novelty and relevance to re-capture attention at the transition points. Teaching in unbroken blocks of 60 or 90 minutes runs directly against the brain's operating system.¹",
+            "John Sweller's cognitive load theory explains the mechanism behind another common training failure: information overload. Working memory — the mental workspace where new information is processed — is severely limited in capacity. When training presents too many new concepts simultaneously, working memory becomes overwhelmed, and encoding fails entirely. The practical implication is counterintuitive to most content creators: less information, taught well, is always superior to more information, taught poorly. Prioritisation is not a compromise; it is a learning science imperative.",
+            "Malcolm Knowles' andragogy framework — developed across several decades and published in foundational texts from 1968 onward — identifies the core ways adults learn differently from children.² Adults need to know why something matters before they can engage with how it works. They bring extensive prior experience that must be connected to rather than ignored. They are internally motivated by relevance to real challenges, not compliance with external authority. And they need to see immediate application potential for learning to engage at depth. Most leadership training violates at least three of these principles by defaulting to pedagogical models designed for school-age learners.",
+            "Cross-cultural attention dynamics add another layer of complexity that learning designers rarely account for. What captures and sustains attention is culturally shaped. In oral cultures — which constitute the majority of the world's population — narrative structure, call-and-response, and embodied learning activate attention in ways that linear slide-based presentations do not. In high-context cultures, the relational frame of the learning environment matters as much as the content. In collectivist settings, learning activities that create individual competition may undermine the group safety that enables genuine engagement. Trainers who export Western pedagogical methods wholesale into non-Western contexts often misread the resulting disengagement as a learner deficit rather than a facilitation mismatch.",
+            "Spaced repetition is one of the most robustly supported findings in the entire literature on memory and learning. Ebbinghaus himself demonstrated that distributing retrieval attempts across expanding time intervals produces dramatically stronger long-term retention than massed practice. Modern research has confirmed and extended this finding: spacing that begins within 24 hours of initial learning and continues at increasing intervals over days and weeks produces retention rates many times higher than a single intensive session. The implications for training design are significant — a single workshop or intensive without structured follow-up produces minimal lasting change regardless of content quality.",
+            "The testing effect — also called retrieval practice — is perhaps the most underutilised tool in the learning facilitator's repertoire. Research by Roediger and Butler and others consistently shows that actively retrieving information from memory strengthens the memory trace far more effectively than re-reading, re-listening, or re-watching the same material. The act of retrieval itself is a learning intervention, not just a measurement tool. Assessment, in other words, is not merely evaluation — it changes the brain. Trainers and leaders who build in frequent low-stakes retrieval opportunities throughout and after learning events produce significantly better retention outcomes.",
+            "Emotional resonance is the final variable that transforms retention from possible to likely. Medina's research on emotion and memory shows that emotionally salient content — material connected to genuine personal relevance, story, or felt experience — is retained far longer than emotionally neutral information. The amygdala, which processes emotional significance, directly influences which memories are flagged for consolidation in long-term storage. Field stories, case studies, and personal application exercises are not supplementary entertainment; they are the delivery mechanisms through which content moves from working memory into long-term retention.¹",
+            "For cross-cultural trainers and leadership developers working across different learning cultures, the most adaptive facilitators are also the most learning-science literate. Understanding the mechanics of attention — how it is gained, lost, and regained — across cultural contexts, and the mechanics of retention — how memory is encoded, consolidated, and retrieved — is not a Western pedagogical import. It is a description of human neurology that applies across cultures, even as the specific cultural expressions of those mechanisms vary. The cross-cultural trainer who understands both the universal science and the culturally specific expressions is equipped to design learning that actually transforms, not merely informs.²",
+          ].map((para, i) => (
+            <p key={i} style={{ fontSize: 16, color: "oklch(35% 0.08 260)", lineHeight: 1.85, marginBottom: 20 }}>
+              {para}
+            </p>
+          ))}
+        </div>
+      </div>
 
       {/* -- SOURCES ------------------------------------------------------------ */}
       <SourcesDropdown sources={[

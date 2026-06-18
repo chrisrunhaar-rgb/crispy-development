@@ -154,6 +154,7 @@ export default function InterculturalCommunicationClient({ userPathway, isSaved:
   const [saved, setSaved] = useState(initialSaved);
   const [isPending, startTransition] = useTransition();
   const [openDim, setOpenDim] = useState<number | null>(null);
+  const [bgOpen, setBgOpen] = useState(false);
   const t = (en: string, id: string) => tFn(en, id, lang);
 
   function handleSave() {
@@ -470,6 +471,49 @@ export default function InterculturalCommunicationClient({ userPathway, isSaved:
                 {lang === "id" ? q.id : q.en}
               </p>
             </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ════════════════════════════════════════════════════════════
+          LONG-FORM SEO BACKGROUND
+      ════════════════════════════════════════════════════════════ */}
+      <div style={{ background: lightGray, padding: "80px 24px" }}>
+        <div style={{ maxWidth: 780, margin: "0 auto" }}>
+          <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" as const, marginBottom: 12 }}>
+            Background
+          </p>
+          <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: navy, marginBottom: 32, lineHeight: 1.2 }}>
+            Intercultural Communication: What the Research Says About Misunderstanding, Meaning, and Cross-Cultural Dialogue
+          </h2>
+          <button
+            onClick={() => setBgOpen(!bgOpen)}
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 6,
+              marginTop: 20, marginBottom: 24, padding: "10px 20px",
+              background: "transparent", border: `1.5px solid ${orange}`,
+              color: orange, borderRadius: 12,
+              fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, fontWeight: 700,
+              cursor: "pointer", letterSpacing: "0.04em",
+            }}
+          >
+            {bgOpen ? "Close ↑" : "Read the research →"}
+          </button>
+          {bgOpen && [
+            "The foundational error in most cross-cultural communication failures is the assumption that communication is primarily a transmission problem — that if a message is sent clearly, it will be received correctly. Research in intercultural communication theory, developed by scholars including Stella Ting-Toomey and William Gudykunst, demonstrates consistently that meaning is not transmitted; it is constructed by the receiver within their own cultural framework. What is communicated is not what is said by the sender — it is what is understood by the receiver. This distinction changes everything about how cross-cultural leaders prepare for and engage in high-stakes conversations across cultural lines.",
+            "Edward Hall's foundational work in the 1950s through 1970s introduced the high-context and low-context communication framework that remains one of the most practically useful lenses in cross-cultural practice.¹ Hall was an anthropologist who observed that cultures differ fundamentally in where they locate meaning: in the words themselves, or in the surrounding context of relationship, tone, timing, and implication. His The Silent Language (1959) and Beyond Culture (1976) gave practitioners a vocabulary for a phenomenon they had been experiencing without being able to name. The framework is descriptive rather than prescriptive — it does not capture the full complexity of any single culture, but it reliably identifies a real and consequential axis of difference.",
+            "Geert Hofstede's cross-national research — conducted initially with IBM employees across more than 50 countries and extended over subsequent decades — produced the most widely cited dimensional framework for understanding cultural difference.³ His dimensions of power distance, individualism versus collectivism, uncertainty avoidance, and long versus short-term orientation each shape communication patterns at a fundamental level. High power distance affects who can speak to whom, on what topics, and with what degree of directness. Individualism versus collectivism shapes whether communication optimises for personal clarity or group harmony. Uncertainty avoidance influences comfort with ambiguity and indirect messaging. These dimensions interact with each other and with situational factors in ways that make cultural communication genuinely complex.",
+            "The business cost of intercultural communication failure has been documented at significant scale. Research commissioned by the British Council and others has estimated the annual cost of cross-cultural communication failures in global business at billions of dollars — through broken contracts, stalled negotiations, misread intentions, and the long-tail costs of sustained misattribution of behaviour to character. When a low-context communicator reads directness as honesty and interprets high-context indirectness as evasion, or when a high-context communicator reads Western directness as aggression and interprets it as relational aggression rather than information transfer, the resulting misattribution tends to harden over time into generalised distrust.",
+            "Code-switching — the process by which multilingual or multicultural individuals shift between communication styles, languages, or cultural registers depending on their interlocutor and context — is one of the most cognitively demanding activities in cross-cultural communication. Research by Andy Molinsky demonstrates that code-switching is not merely linguistic; it involves identity negotiation, moral tension, and a significant cognitive and emotional cost that monoculturals rarely account for when engaging cross-culturally. The person across the table who is communicating in their second or third language, in a culturally unfamiliar register, is carrying a cognitive load that fundamentally affects what they can process, express, and retain — and this asymmetry requires deliberate compensation from the culturally dominant party.",
+            "Non-verbal communication is the channel through which the majority of relational and emotional meaning moves — and it is the channel most subject to cross-cultural misread. Albert Mehrabian's research on congruence between verbal and non-verbal signals established the principle that when verbal and non-verbal messages conflict, the non-verbal message dominates interpretation. Cross-cultural non-verbal misreads — of gesture, eye contact, physical proximity, silence, and facial expression — are among the most persistent and least-addressed failure modes in intercultural encounters. What communicates engagement in one culture (sustained eye contact, leaning forward, nodding) signals aggression or disrespect in another. Silence, particularly, is radically differently interpreted: pregnant with meaning in high-context cultures, discomforting and in need of immediate filling in low-context ones.",
+            "Face and face-saving — the complex social work of maintaining and protecting the public social image that each person presents — shape what can be said, how, and when in high-context and collectivist cultures in ways that direct communicators frequently underestimate.⁴ Erving Goffman's foundational concept of face, extended in cross-cultural research by Ting-Toomey and others, describes the relational investment each person makes in their social image and the conversational moves they make to protect it. In cultures where face is a primary social currency, direct criticism, public disagreement, and blunt negative assessment create relational damage that can be irreparable — not because the content was wrong, but because the delivery violated the relational protocol within which content can be received.",
+            "Language asymmetry in cross-cultural encounters creates structural disadvantage that is frequently ignored by native speakers. When one party in a conversation is operating in their second or third language, the research consistently shows disadvantage not only in vocabulary range and grammatical precision but in processing speed, confidence, perceived competence, and capacity to handle ambiguity and abstraction. The native speaker who does not slow down, simplify their register, check for comprehension, or acknowledge the inherent unfairness of the asymmetry is not being neutral — they are actively benefiting from a structural advantage while contributing to a communication failure they will likely attribute to the other party.",
+            "The history of cross-cultural mission provides some of the most instructive and sobering examples of intercultural communication failure at scale. Theological content encoded in Western conceptual categories, presented in Western communicative forms, and embedded in Western institutional structures has repeatedly failed to communicate across cultural distance — not because the content was untrue but because the communicative vehicle did not translate. The principle of incarnation — the Word becoming flesh, taking on the form of the receiver rather than requiring the receiver to take on the form of the transmitter — is the highest theological statement of intercultural communication ethics. The cross-cultural communicator who takes it seriously asks not 'how do I say what I believe' but 'how do I say it in a form my listener's culture can receive.'",
+            "Building intercultural communicative competence is a developmental process that Darla Deardorff's research identifies as beginning with attitude rather than technique. Respect for cultural difference — genuine, not performative — openness to encountering the world from an unfamiliar framework, and curiosity about what one does not understand are the attitudinal preconditions for developing genuine skill. Without those attitudinal foundations, techniques remain superficial and tend to break down under pressure. Leaders who approach cross-cultural difference with curiosity rather than tolerance, and with genuine interest rather than managed discomfort, are not just better communicators — they are modelling the very orientation that makes cross-cultural learning communities possible.⁵",
+          ].map((para, i) => (
+            <p key={i} style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 20 }}>
+              {para}
+            </p>
           ))}
         </div>
       </div>

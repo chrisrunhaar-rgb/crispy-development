@@ -240,6 +240,7 @@ export default function LeadershipAltitudesClient({ userPathway, isSaved: initia
   const lang = (_ctxLang === "id" ? _ctxLang : "en") as Lang;
   const [saved, setSaved] = useState(initialSaved);
   const [activeAltitude, setActiveAltitude] = useState<number | null>(null);
+  const [bgOpen, setBgOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
 
   const t = (en: string, id: string) => tFn(en, id, lang);
@@ -563,6 +564,49 @@ export default function LeadershipAltitudesClient({ userPathway, isSaved: initia
           ))}
         </div>
       </section>
+
+      {/* ════════════════════════════════════════════════════════════
+          LONG-FORM SEO BACKGROUND
+      ════════════════════════════════════════════════════════════ */}
+      <div style={{ background: "oklch(88% 0.008 80)", padding: "80px 24px" }}>
+        <div style={{ maxWidth: 780, margin: "0 auto" }}>
+          <p style={{ color: "oklch(65% 0.15 45)", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" as const, marginBottom: 12 }}>
+            Background
+          </p>
+          <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: "oklch(22% 0.10 260)", marginBottom: 32, lineHeight: 1.2 }}>
+            Leadership Altitudes: What the Research Says About Vision, Strategy, and Leading at the Right Level
+          </h2>
+          <button
+            onClick={() => setBgOpen(!bgOpen)}
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 6,
+              marginTop: 20, marginBottom: 24, padding: "10px 20px",
+              background: "transparent", border: "1.5px solid oklch(65% 0.15 45)",
+              color: "oklch(65% 0.15 45)", borderRadius: 12,
+              fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, fontWeight: 700,
+              cursor: "pointer", letterSpacing: "0.04em",
+            }}
+          >
+            {bgOpen ? "Close ↑" : "Read the research →"}
+          </button>
+          {bgOpen && [
+            "The leadership altitudes metaphor — leading at different elevations (strategic, operational, relational) — draws on Ron Heifetz and Marty Linsky's concept of \"getting on the balcony\" to see patterns invisible from the dance floor. The ability to move fluidly between levels of analysis is one of the most consistently cited differentiators between effective and ineffective senior leaders.",
+            "Heifetz's adaptive leadership framework distinguishes between technical problems (solvable with known expertise) and adaptive challenges (requiring new learning, value shifts, and behaviour change). The failure to distinguish between them is one of the most common leadership errors — applying technical solutions to adaptive challenges and wondering why nothing changes.",
+            "Elliot Jaques' Requisite Organisation theory introduced the concept of time-span of discretion — the longest time horizon a role requires its holder to manage. Jaques' research showed that leaders are most effective when placed at the level that matches their natural cognitive horizon. A leader whose natural span is six months will struggle in a role requiring three-year strategic thinking — not because of intelligence but because of cognitive architecture.",
+            "Stratified Systems Theory (Jaques, Clement) identifies multiple hierarchical strata of work, each requiring qualitatively different cognitive capacities. The research suggests that leadership failure in senior roles is often a stratum mismatch — a leader who excels at operational problem-solving is placed in a strategic role and continues solving operational problems, bypassing the adaptive challenge entirely.",
+            "Collins' Level 5 Leadership research: Jim Collins' Good to Great research identified Level 5 leaders — those who combine fierce professional will with personal humility — as the distinguishing factor in companies that made the leap from good to great. Level 5 leaders consistently work at multiple altitudes, knowing when to set vision and when to clear the runway for others to execute.",
+            "The cross-cultural altitude challenge: in high-power-distance cultures, leaders are expected to operate at all altitudes simultaneously — providing strategic direction, operational decisions, and relational guidance without delegation. This cultural expectation conflicts with the altitude discipline that adaptive leadership requires. Cross-cultural leaders must navigate both their own altitude discipline and the cultural expectations of those they lead.",
+            "Staying on the balcony: the research on leadership effectiveness under pressure (Heifetz, Grashow, Linsky) shows that heat tends to drive leaders back to the dance floor — into reactive, operational mode — precisely when strategic clarity is most needed. The capacity to stay elevated under pressure is a practice, not a trait.",
+            "Vision and execution: the research on execution failure (Ram Charan, Larry Bossidy) consistently identifies the gap between strategy formulation and execution as the primary site of organisational underperformance. Leaders who excel at altitude (vision) often struggle to descend into operational altitude to ensure execution. The converse — leaders who excel at operational altitude — often lack the capacity to rise to genuine strategic thinking.",
+            "Cross-cultural organisations and altitude gaps: in many cross-cultural organisational contexts, Western expatriate leaders operate at strategic altitude while national leaders are confined to operational altitude — not because of competence but because of structural and cultural assumptions. This altitude assignment by ethnicity rather than capacity represents both an injustice and a significant organisational waste.",
+            "Developing altitude fluency: the research on leadership development (Day's meta-analysis) identifies altitude fluency as developable through deliberate reflection practice, mentoring relationships that model strategic thinking, and exposure to complex adaptive challenges with adequate support. Leaders who develop the capacity to move intentionally between altitudes — and to know which altitude the situation requires — can lead organisations through genuine complexity.",
+          ].map((para, i) => (
+            <p key={i} style={{ fontSize: 16, color: "oklch(35% 0.08 260)", lineHeight: 1.85, marginBottom: 20 }}>
+              {para}
+            </p>
+          ))}
+        </div>
+      </div>
 
       {/* -- SOURCES ------------------------------------------------------------- */}
       <SourcesDropdown sources={[

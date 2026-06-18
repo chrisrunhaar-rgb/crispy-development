@@ -729,6 +729,7 @@ export default function BuildingTrustClient({ isSaved: initialSaved }: Props) {
   const [ratings, setRatings] = useState<Record<number, number>>({});
   const [revealedScenarios, setRevealedScenarios] = useState<Set<number>>(new Set());
   const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({});
+  const [bgOpen, setBgOpen] = useState(false);
 
   const t = (en: string, id: string) => (lang === "id" ? id : en);
 
@@ -1215,6 +1216,49 @@ export default function BuildingTrustClient({ isSaved: initialSaved }: Props) {
               </div>
             ))}
           </div>
+        </div>
+      </div>
+
+      {/* ════════════════════════════════════════════════════════════
+          LONG-FORM SEO BACKGROUND
+      ════════════════════════════════════════════════════════════ */}
+      <div style={{ background: LIGHT_GRAY, padding: "80px 24px" }}>
+        <div style={{ maxWidth: 780, margin: "0 auto" }}>
+          <p style={{ color: ORANGE, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" as const, marginBottom: 12 }}>
+            Background
+          </p>
+          <h2 style={{ fontFamily: FONT_BODY, fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: NAVY, marginBottom: 32, lineHeight: 1.2 }}>
+            Building Trust Across Cultures: What the Research Says About Credibility, Reliability, and Relational Foundations
+          </h2>
+          <button
+            onClick={() => setBgOpen(!bgOpen)}
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 6,
+              marginTop: 20, marginBottom: 24, padding: "10px 20px",
+              background: "transparent", border: `1.5px solid ${ORANGE}`,
+              color: ORANGE, borderRadius: 12,
+              fontFamily: FONT_BODY, fontSize: 13, fontWeight: 700,
+              cursor: "pointer", letterSpacing: "0.04em",
+            }}
+          >
+            {bgOpen ? "Close ↑" : "Read the research →"}
+          </button>
+          {bgOpen && [
+            "Trust is not a single thing. Researchers have identified at least two distinct forms of interpersonal trust that operate across cultures: cognitive trust, which is based on an assessment of competence and reliability, and affective trust, which is rooted in emotional bonds and genuine care. In cross-cultural teams, these two forms rarely develop on the same timeline — and misreading which kind of trust your counterpart is building toward you is one of the most common causes of misaligned expectations between international colleagues.",
+            "The distinction matters practically because it shapes how trust is initiated, tested, and repaired. People who default to cognitive trust tend to extend provisional credibility to a new colleague based on their credentials, track record, or organisational role — and then update that assessment over time based on performance. People who default to affective trust tend to withhold deep confidence until relational warmth has been established through shared meals, informal conversation, or demonstrated loyalty. Neither approach is naive; they are simply different protocols for managing risk in relationships.",
+            "Erin Meyer's work on 'task-based' versus 'relationship-based' trust cultures brought this distinction into mainstream leadership training. Her research, drawing on cross-cultural surveys and field observations across dozens of countries, found consistent clustering: northern European and Anglo-American cultures tend toward task-based trust, while much of Asia, Latin America, the Middle East, and parts of Africa tend toward relationship-based trust. When a task-based leader meets a relationship-based colleague and launches straight into the business agenda, the colleague may interpret this as coldness, disrespect, or even dishonesty. When a relationship-based leader spends the first hour of a meeting on personal questions before discussing deliverables, the task-based leader may grow frustrated or suspicious.",
+            "Trust research within organisations has also examined how consistency and predictability function as trust signals. Studies by Roger Mayer, James Davis, and F. David Schoorman identified ability, benevolence, and integrity as the three primary antecedents of organisational trust. Importantly, these antecedents are evaluated differently depending on cultural context. In high-uncertainty-avoidance cultures — as identified by Geert Hofstede — formal procedures, clear roles, and written agreements serve as primary evidence of integrity. In lower-uncertainty-avoidance cultures, the same degree of formality can feel like a signal of distrust, as if the other party is preparing for a dispute rather than entering a genuine partnership.",
+            "The role of face — or social dignity and honour — cannot be overstated in many cross-cultural trust relationships. Research in Chinese business contexts has examined 'mianzi' (social face tied to prestige and achievement) and 'lian' (moral face tied to character and trustworthiness). Causing someone to lose face publicly, even unintentionally, can sever a trust relationship that has taken months to build. Western leaders who offer direct negative feedback in group settings, or who correct a colleague's error in front of others, often discover this the hard way. Understanding face-dynamics is not about avoiding honesty — it is about timing, framing, and choosing the right relational context for difficult conversations.",
+            "Trust formation also intersects with time. In monochronic cultures, which value linear scheduling and punctuality, arriving late signals disorganisation or disrespect. In polychronic cultures, which prioritise the quality of human interaction over clock adherence, insisting on strict time boundaries can signal rigidity or a lack of genuine relationship investment. Research on international joint ventures consistently finds that early-stage trust failures are often rooted not in dishonesty or incompetence, but in these mismatched assumptions about what professionalism looks like.",
+            "Language introduces another layer of complexity. Trust often travels through nuance — a hesitation, a qualification, an indirect refusal. When communication crosses language barriers, these nuances are easily lost or misread. Studies on intercultural communication competence have found that non-native speakers in English-dominant professional environments are frequently perceived as less competent or less engaged than they actually are — a bias that directly affects whether trust is extended to them. Effective cross-cultural leaders actively compensate for this by seeking confirmation, creating space for indirect communication, and resisting the assumption that silence or vagueness signals agreement.",
+            "Power distance — another of Hofstede's dimensions — affects who initiates trust and under what circumstances. In high-power-distance cultures, trust relationships with leaders carry hierarchical expectations: a senior leader is extended automatic credibility based on position, and expressing doubt about their judgment may feel inappropriate. In low-power-distance cultures, trust must be earned regardless of title, and leaders who rely on positional authority to secure compliance are often viewed as insecure or autocratic. Cross-cultural leaders must navigate this without either imposing their own norms or abandoning their integrity to meet cultural expectations that conflict with their values.",
+            "Repair is the most underexamined dimension of cross-cultural trust. Research by Kim, Dirks, and Cooper found that the most effective trust repair strategies vary significantly depending on the type of trust violation and the relational context. A cognitive trust violation — such as a missed deadline or a factual error — is often best repaired through concrete action and demonstrated competence. An affective trust violation — such as a perceived betrayal, public embarrassment, or failure to support someone in a difficult moment — requires emotional acknowledgment, time, and sometimes third-party mediation. Leaders who treat all trust violations as cognitive problems and respond only with performance improvement miss the deeper relational work that affective repair requires.",
+            "What the research ultimately tells us is that trust is not a universal currency exchanged at the same rate across borders. It is a culturally situated practice that reflects deep assumptions about personhood, obligation, time, risk, and relationship. Building trust across cultures requires more than good intentions — it requires the kind of cultural self-awareness and interpersonal agility that allows a leader to read which form of trust their counterpart is building toward them, and to respond in a register that the other person can actually receive. This module is designed to develop exactly that capacity.",
+          ].map((para, i) => (
+            <p key={i} style={{ fontSize: 16, color: BODY_TEXT, lineHeight: 1.85, marginBottom: 20 }}>
+              {para}
+            </p>
+          ))}
         </div>
       </div>
 

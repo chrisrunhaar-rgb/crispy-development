@@ -232,6 +232,7 @@ export default function ComfortZoneClient({
 
   // AI encouragement state
   const [encourageState, setEncourageState] = useState<{ loading: boolean; text: string; error: string | null }>({ loading: false, text: "", error: null });
+  const [bgOpen, setBgOpen] = useState(false);
 
   async function handleEncourage() {
     setEncourageState({ loading: true, text: "", error: null });
@@ -780,6 +781,49 @@ export default function ComfortZoneClient({
           </ol>
         </div>
       </section>
+
+      {/* ════════════════════════════════════════════════════════════
+          LONG-FORM SEO BACKGROUND
+      ════════════════════════════════════════════════════════════ */}
+      <div style={{ background: LIGHT_GRAY, padding: "80px 24px" }}>
+        <div style={{ maxWidth: 780, margin: "0 auto" }}>
+          <p style={{ color: ORANGE, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" as const, marginBottom: 12 }}>
+            Background
+          </p>
+          <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: NAVY, marginBottom: 32, lineHeight: 1.2 }}>
+            Escaping the Comfort Zone: What the Research Says About Growth, Risk, and Leaders Who Keep Learning
+          </h2>
+          <button
+            onClick={() => setBgOpen(!bgOpen)}
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 6,
+              marginTop: 20, marginBottom: 24, padding: "10px 20px",
+              background: "transparent", border: `1.5px solid ${ORANGE}`,
+              color: ORANGE, borderRadius: 12,
+              fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 700,
+              cursor: "pointer", letterSpacing: "0.04em",
+            }}
+          >
+            {bgOpen ? "Close ↑" : "Read the research →"}
+          </button>
+          {bgOpen && [
+            "The concept of the comfort zone entered popular psychology through Judith Bardwick's 1991 book 'Danger in the Comfort Zone', which argued that organisations — and the people in them — tend toward a state of complacency that feels safe but is ultimately corrosive to performance and development. Bardwick was writing about corporate culture, but her core observation translates directly to the psychology of individual growth: the very conditions that reduce anxiety also reduce the stimulation required for learning. A leader who has optimised for comfort has, by definition, stopped developing.",
+            "The scientific foundation for understanding how challenge and growth interact comes partly from Yerkes and Dodson's inverted-U model of arousal and performance, originally published in 1908 and refined by subsequent researchers. The model proposes that performance is maximised at moderate levels of arousal — too little and the brain is understimulated, too much and cognitive resources are overwhelmed. For complex tasks like cross-cultural leadership, the optimal arousal window is narrower than for simple tasks, meaning that leaders operating in genuinely novel or stressful cultural environments need more careful management of the learning load than leaders operating in familiar contexts.",
+            "Daniel Siegel's concept of the 'window of tolerance' offers a related framework grounded in neuroscience and trauma-informed practice. Siegel describes the window as the zone of arousal within which the prefrontal cortex — the seat of executive function, empathy, and complex reasoning — remains fully online. Below the window, leaders may become disengaged or dissociated; above it, they may become reactive, defensive, or cognitively constricted. The practical implication is that real growth — the kind that involves changing long-held assumptions and behavioural patterns — can only happen within this window. Pushing too hard or too fast collapses it.",
+            "In cross-cultural leadership specifically, the comfort zone expands and contracts in predictable patterns. Research on cultural adaptation and acculturation stress — including John Berry's work on immigration and adjustment — shows that leaders entering a new cultural environment typically experience a sequence: initial enthusiasm or over-confidence, followed by frustration and withdrawal as the depth of cultural difference becomes apparent, followed eventually by integration or adaptation. This U-curve of adjustment is well documented in expatriate literature, but it applies equally to any leader who is genuinely engaging with cultural frameworks significantly different from their own.",
+            "What makes the comfort zone particularly treacherous for leaders is that it masquerades as competence. A leader who has been operating in the same cultural and organisational context for years has developed a highly refined intuitive repertoire — they know what works, how to read a room, what signals mean what. This intuitive fluency feels like wisdom, and in a stable environment it often is. But when the environment changes — a new market, a merger with a foreign company, a team that suddenly skews to a different generational or cultural cohort — that intuitive repertoire can become a liability. The cues no longer mean what the leader thinks they mean.",
+            "Carol Dweck's research on fixed versus growth mindset provides a motivational lens on why some leaders extend their comfort zones more readily than others. Leaders with a growth mindset interpret difficulty and failure as information — signals that current strategies need revision, that skills can be developed, that the gap between current and desired performance is navigable. Leaders with a fixed mindset interpret the same difficulty as evidence of limitation — either theirs or the environment's — and are more likely to disengage, blame external factors, or double down on familiar approaches. Mindset, Dweck argues, is not a fixed personality trait but a pattern of interpretation that can be shifted with deliberate practice and the right kind of feedback.",
+            "Psychological safety — Amy Edmondson's concept, developed through field research in hospital teams and later extended to organisational contexts — is the environmental counterpart to growth mindset. Even leaders with high intrinsic motivation to grow will not extend their comfort zones in environments where mistakes are punished, where uncertainty signals weakness, or where asking for help is interpreted as incompetence. The research on psychological safety suggests that the willingness to take interpersonal risks — to say 'I don't know', to try an approach that might fail, to voice a dissenting perspective — depends heavily on the perceived safety of the relational and organisational context.",
+            "Self-efficacy theory, developed by Albert Bandura, offers a precision instrument for understanding the mechanics of growth at the individual level. Bandura argued that belief in one's capacity to perform a specific task is the primary predictor of whether people will attempt that task, persist through difficulty, and recover from setbacks. Importantly, self-efficacy is task-specific and can be developed through four mechanisms: mastery experiences (actually succeeding at progressively challenging tasks), vicarious experience (observing credible models succeed), verbal persuasion (specific, credible encouragement from trusted sources), and physiological management (interpreting stress signals as energy rather than threat). Each of these mechanisms has direct implications for how leaders can structure their own development.",
+            "The literature on deliberate practice — most associated with K. Anders Ericsson — provides a framework for understanding the kind of discomfort that actually produces growth. Not all challenge is equal: random exposure to difficulty does not reliably produce skill development. What produces development is targeted practice at the edge of current ability, with immediate and specific feedback, and structured repetition. For leaders, this means that genuine growth rarely happens through experience alone — it requires the kind of structured reflection, coaching, and deliberate iteration that most busy professionals systematically avoid because it feels inefficient.",
+            "The research ultimately converges on a paradox: the most capable leaders are often the ones who have learned to be most comfortable with discomfort. They have developed what Nassim Taleb calls 'antifragility' — not just resilience (bouncing back from adversity) but the capacity to be strengthened by it. This is not a natural disposition but an acquired practice, built through repeated cycles of exposure, reflection, and recalibration. Every time a leader steps into genuinely unfamiliar cultural territory, experiences the disorientation of not knowing, and stays present long enough to learn — they expand not just their cultural competence but their fundamental capacity to grow. That is the return on the discomfort investment.",
+          ].map((para, i) => (
+            <p key={i} style={{ fontSize: 16, color: BODY_TEXT, lineHeight: 1.85, marginBottom: 20 }}>
+              {para}
+            </p>
+          ))}
+        </div>
+      </div>
 
       {/* ── SOURCES ── */}
       <SourcesDropdown sources={[

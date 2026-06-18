@@ -641,6 +641,7 @@ export default function CognitiveBiasesClient({ userPathway, isSaved: initialSav
   const [activeCategory, setActiveCategory] = useState<BiasCategory | "all">("all");
   const [selectedBias, setSelectedBias] = useState<Bias | null>(null);
   const [sourcesOpen, setSourcesOpen] = useState(false);
+  const [bgOpen, setBgOpen] = useState(false);
   const t = (en: string, id: string) => tFn(en, id, lang);
 
   useEffect(() => {
@@ -977,6 +978,49 @@ export default function CognitiveBiasesClient({ userPathway, isSaved: initialSav
                 {lang === "en" ? q.en : q.id}
               </p>
             </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ════════════════════════════════════════════════════════════
+          LONG-FORM SEO BACKGROUND
+      ════════════════════════════════════════════════════════════ */}
+      <div style={{ background: lightGray, padding: "80px 24px" }}>
+        <div style={{ maxWidth: 780, margin: "0 auto" }}>
+          <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" as const, marginBottom: 12 }}>
+            Background
+          </p>
+          <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: navy, marginBottom: 32, lineHeight: 1.2 }}>
+            Cognitive Biases in Leadership: What the Research Says About Thinking Errors, Decision-Making, and Cultural Blind Spots
+          </h2>
+          <button
+            onClick={() => setBgOpen(!bgOpen)}
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 6,
+              marginTop: 20, marginBottom: 24, padding: "10px 20px",
+              background: "transparent", border: `1.5px solid ${orange}`,
+              color: orange, borderRadius: 12,
+              fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 700,
+              cursor: "pointer", letterSpacing: "0.04em",
+            }}
+          >
+            {bgOpen ? "Close ↑" : "Read the research →"}
+          </button>
+          {bgOpen && [
+            "Cognitive biases are systematic errors in thinking that affect the judgments and decisions of every human being — including leaders. Unlike random mistakes, biases are predictable patterns rooted in the brain's tendency to simplify complex information processing through mental shortcuts known as heuristics. The pioneering research of Daniel Kahneman and Amos Tversky established that these shortcuts operate largely outside conscious awareness, meaning that intelligence and experience offer little protection against them. A senior leader with thirty years of cross-cultural experience is no less susceptible to confirmation bias than a first-year graduate student — unless they have learned to actively counter it.",
+            "Kahneman's dual-process theory — popularised in 'Thinking, Fast and Slow' — distinguishes between System 1 thinking (fast, automatic, associative) and System 2 thinking (slow, deliberate, analytical). Most leadership decisions under pressure draw heavily on System 1, which is efficient but bias-prone. Research in high-stakes domains — medical diagnosis, military intelligence, financial forecasting — consistently shows that expert intuition is highly reliable within stable, well-structured domains, but fails systematically in complex, ambiguous, or cross-cultural environments where the cues that feed intuition may be misleading.",
+            "Confirmation bias is among the most extensively studied and consequential of all cognitive biases in leadership contexts. It refers to the tendency to search for, interpret, and remember information in ways that confirm pre-existing beliefs. In practice, this means that leaders who hold a negative assessment of a team member will disproportionately notice their errors and discount their successes. It also means that strategic plans developed under strong leadership advocacy tend to be evaluated with less critical scrutiny than alternative proposals — a dynamic that explains why groupthink and confirmation bias so often co-occur in organisations.",
+            "The fundamental attribution error — sometimes called correspondence bias — is particularly problematic in cross-cultural leadership. It refers to the tendency to attribute others' behaviour to their character rather than to situational factors, while attributing our own behaviour to circumstances. When a team member in a collectivist culture declines to voice disagreement publicly, a leader from an individualist culture may interpret this as passive-aggressiveness or lack of engagement, rather than culturally appropriate respect for group harmony. The bias compounds: the leader forms a dispositional conclusion about the person that then filters all future interactions.",
+            "Availability heuristic describes the tendency to judge the likelihood or frequency of events based on how easily examples come to mind. In leadership, this manifests when a single vivid anecdote — a failed hire, a successful market entry, a memorable board presentation — shapes policy or strategy disproportionately. Research in organisational decision-making has shown that post-mortem analyses and near-miss reviews are often superficial because the events that are most vividly remembered are not necessarily the most representative of underlying patterns. Leaders who have experienced a single dramatic failure in one market may over-generalise caution across unrelated markets.",
+            "Anchoring bias — the tendency to rely too heavily on the first piece of information encountered — is well documented in negotiation, performance evaluation, and salary setting. Cross-cultural research adds another layer: in some cultural contexts, initial offers or assessments carry strong social significance and are not expected to shift substantially. In others, the first offer is understood as an opening move in an expected negotiation dance. A leader who anchors to a figure in one cultural register may find their counterpart anchoring to the social meaning of being offered that number — leading to a miscommunication that has nothing to do with the actual figures involved.",
+            "In-group bias — the tendency to favour people who are perceived as similar to oneself — has serious implications for hiring, promotion, and delegation decisions in culturally diverse organisations. Research by Roberto and Edmondson has connected in-group bias to reduced psychological safety for out-group members, who perceive that candid contributions are not rewarded equally. This creates a self-reinforcing cycle: leaders who unconsciously favour in-group members receive less honest feedback from the broader team, reinforcing their existing mental models and reducing their capacity to detect their own blind spots.",
+            "Overconfidence bias — consistently found in studies of leaders, managers, and high-performers across cultures — manifests as an inflated assessment of one's own knowledge, predictive accuracy, and decision-making ability. Research by Philip Tetlock on expert political forecasters found that high-confidence predictions were correct at lower rates than the forecasters believed, and that self-described experts were often less accurate than careful generalists who maintained calibrated uncertainty. In cross-cultural environments, overconfidence is particularly dangerous because leaders often lack real-time feedback signals that would correct their errors — misread cultural dynamics rarely surface as immediate, legible consequences.",
+            "The sunk cost fallacy — continuing to invest in a failing course of action because of prior investment — intersects with cultural dynamics around long-term orientation and relationship preservation. In cultures where long-term relationships and commitments carry deep social weight, the social cost of abandoning a partnership or strategy may be interpreted as face loss or dishonour, intensifying the pull toward continued investment beyond what rational analysis would support. Research on cross-cultural negotiation has noted that exit strategies and disengagement processes require careful cultural translation to avoid triggering exactly these dynamics.",
+            "Debiasing — the systematic effort to reduce bias in individual and group decision-making — is a growing field of applied research. Evidence-based strategies include structured decision processes (forcing consideration of alternatives before converging on a recommendation), pre-mortem analysis (imagining a plan has failed and working backward to explain why), red-teaming (assigning a role to actively critique a preferred option), and diversity in deliberation (including people with genuinely different perspectives and background knowledge). Research suggests that these interventions are more effective when embedded in organisational process rather than left to individual initiative — bias reduction requires structural supports, not just self-awareness.",
+          ].map((para, i) => (
+            <p key={i} style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 20 }}>
+              {para}
+            </p>
           ))}
         </div>
       </div>

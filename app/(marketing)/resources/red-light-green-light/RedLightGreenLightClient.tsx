@@ -193,6 +193,7 @@ export default function RedLightGreenLightClient({
   const [quizSubmitted, setQuizSubmitted] = useState(false);
   const [quizScore, setQuizScore] = useState<number | null>(savedScore ?? null);
   const [scoreSaved, setScoreSaved] = useState(savedScore != null);
+  const [bgOpen, setBgOpen] = useState(false);
   const [isSavingScore, startSaveScore] = useTransition();
 
   const t = (en: string, id: string) => tr(en, id, lang);
@@ -577,6 +578,49 @@ export default function RedLightGreenLightClient({
           </p>
         </div>
       </section>
+
+      {/* ════════════════════════════════════════════════════════════
+          LONG-FORM SEO BACKGROUND
+      ════════════════════════════════════════════════════════════ */}
+      <div style={{ background: "oklch(88% 0.008 80)", padding: "80px 24px" }}>
+        <div style={{ maxWidth: 780, margin: "0 auto" }}>
+          <p style={{ color: "oklch(65% 0.15 45)", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" as const, marginBottom: 12 }}>
+            Background
+          </p>
+          <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: "oklch(22% 0.10 260)", marginBottom: 32, lineHeight: 1.2 }}>
+            Red Light, Green Light: What the Research Says About Pause, Reflection, and Leaders Who Respond Rather Than React
+          </h2>
+          <button
+            onClick={() => setBgOpen(!bgOpen)}
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 6,
+              marginTop: 20, marginBottom: 24, padding: "10px 20px",
+              background: "transparent", border: "1.5px solid oklch(65% 0.15 45)",
+              color: "oklch(65% 0.15 45)", borderRadius: 12,
+              fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, fontWeight: 700,
+              cursor: "pointer", letterSpacing: "0.04em",
+            }}
+          >
+            {bgOpen ? "Close ↑" : "Read the research →"}
+          </button>
+          {bgOpen && [
+            "The distinction between reaction and response is not merely semantic. Neurologically, reaction is a subcortical process — the amygdala threat-detection system triggering fight-flight-freeze before the prefrontal cortex has fully processed the situation. Response involves prefrontal cortex engagement — deliberate assessment and chosen action. The red-light/green-light model is a practical tool for introducing that gap.",
+            "Viktor Frankl's famous formulation — between stimulus and response there is a space, and in that space lies our freedom and our growth — was written from Auschwitz, not a leadership seminar. His observation that human beings retain the capacity to choose their response under any external conditions is the philosophical foundation for all pause-and-reflect leadership practice.",
+            "Neuroscience of self-regulation: research on the prefrontal cortex (particularly the work of researchers like Matthew Lieberman on affect labelling) shows that naming an emotion — saying \"I feel anxious\" rather than simply being anxious — engages the prefrontal cortex in ways that reduce amygdala activation. The simple act of noticing and naming buys processing time.",
+            "The cost of reactivity in leadership: research on leader emotional expression (Sy, Côté, and Saavedra) shows that leader mood is highly contagious in teams. Leaders who react emotionally — expressing frustration, anxiety, or dismissiveness in real-time — create corresponding emotional states in their teams. The reactive leader's feelings become the team's emotional climate, often without either party realising it.",
+            "Mindfulness research: Kabat-Zinn's foundational work on mindfulness-based stress reduction, and subsequent neuroscience research by Hölzel and others, shows measurable changes in prefrontal cortex thickness and amygdala reactivity in long-term meditators. The capacity to pause before reacting is not merely a willpower exercise — it is a trainable neurological skill.",
+            "Cross-cultural reactivity patterns: what triggers the threat response is culturally shaped. Leaders who have been raised in honour cultures may react strongly to perceived disrespect in ways that leaders from dignity cultures find disproportionate. Leaders from low-context cultures may react to what they perceive as evasiveness with frustration that reads in the high-context other as hostility. The trigger is cross-cultural; the reaction is universal.",
+            "Emotional intelligence and the pause: Goleman's emotional intelligence framework identifies self-regulation (managing one's emotions and impulses) as a key leadership competency. His research distinguishes leaders who derail — often through reactive behaviour under pressure — from leaders who sustain long-term effectiveness. The pause is the practical mechanism of self-regulation in action.",
+            "Conflict and the reactive cycle: Gottman's research on relationship dynamics (developed in marriage research, extended to team and leadership contexts) identifies contempt, criticism, defensiveness, and stonewalling as the four most destructive responses in conflict — all of which are reactive rather than responsive. The ability to pause before entering these patterns is among the highest-impact relational skills a leader can develop.",
+            "Prayer and reflective practice: the contemplative Christian tradition has always known what neuroscience has recently confirmed. The practices of silence, stillness, and examination of conscience are not merely spiritual disciplines — they are neurological training for the capacity to pause between stimulus and response. Leaders who maintain reflective practices demonstrate measurably different reactive patterns under pressure.",
+            "Designing pause into culture: the most effective cross-cultural leaders not only practise the pause personally but create organisational conditions that build it in structurally — decision processes that include a delay period, meeting designs that begin with silence or reflection, feedback systems that separate immediate response from considered reply. The pause becomes a cultural norm, not just a personal practice.",
+          ].map((para, i) => (
+            <p key={i} style={{ fontSize: 16, color: "oklch(35% 0.08 260)", lineHeight: 1.85, marginBottom: 20 }}>
+              {para}
+            </p>
+          ))}
+        </div>
+      </div>
 
       {/* SOURCES */}
       <SourcesDropdown sources={[

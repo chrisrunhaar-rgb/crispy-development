@@ -518,6 +518,7 @@ export default function DiscClient({
   const [playingVideo, setPlayingVideo] = useState<string | null>(null);
   const [noHover, setNoHover] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [bgOpen, setBgOpen] = useState(false);
   useEffect(() => {
     if (!noHover) return;
     const t = setTimeout(() => setNoHover(false), 120);
@@ -1736,6 +1737,49 @@ export default function DiscClient({
           </div>
         </div>
       </section>
+
+      {/* ════════════════════════════════════════════════════════════
+          LONG-FORM SEO BACKGROUND
+      ════════════════════════════════════════════════════════════ */}
+      <div style={{ background: "oklch(88% 0.008 80)", padding: "80px 24px" }}>
+        <div style={{ maxWidth: 780, margin: "0 auto" }}>
+          <p style={{ color: "oklch(65% 0.15 45)", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" as const, marginBottom: 12 }}>
+            Background
+          </p>
+          <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: "oklch(22% 0.10 260)", marginBottom: 32, lineHeight: 1.2 }}>
+            DISC in Context: What the Research Says About Personality, Behaviour, and Cross-Cultural Leadership
+          </h2>
+          <button
+            onClick={() => setBgOpen(!bgOpen)}
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 6,
+              marginTop: 20, marginBottom: 24, padding: "10px 20px",
+              background: "transparent", border: "1.5px solid oklch(65% 0.15 45)",
+              color: "oklch(65% 0.15 45)", borderRadius: 12,
+              fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, fontWeight: 700,
+              cursor: "pointer", letterSpacing: "0.04em",
+            }}
+          >
+            {bgOpen ? "Close ↑" : "Read the research →"}
+          </button>
+          {bgOpen && [
+            "DISC traces its origins to William Moulton Marston's 1928 work Emotions of Normal People — a book with a deliberately ordinary title that reflects its central concern: not pathology, but the observable behaviour of people functioning within normal range.¹ Marston was a psychologist interested in how people respond to their environment, particularly how they relate to power and to favorable or antagonistic conditions. His four-dimensional model — Dominance, Inducement, Submission, Compliance — described behavioural responses rather than fixed traits, and this distinction has remained important to how DISC practitioners frame the framework.",
+            "The scientific validity question matters and deserves honest engagement. The Big Five personality model (OCEAN: Openness, Conscientiousness, Extraversion, Agreeableness, Neuroticism) is the most extensively validated personality framework in academic psychology. Meta-analyses spanning decades and replication studies across 56 countries have established its predictive validity for a wide range of life outcomes. DISC lacks equivalent peer-reviewed validation in the academic literature.³ What it offers instead is strong practical utility — a vocabulary for workplace behaviour conversations that is accessible, non-pathologising, and action-oriented. The responsible practitioner holds both truths: DISC is useful, and its scientific limitations are real.",
+            "The distinction between behavioural and trait models is conceptually important and practically useful. The Big Five describes relatively stable personality traits — enduring dispositions that show up consistently across contexts. DISC, as Marston originally conceived it, describes observable behavioural patterns that can and do shift depending on the environment. This contextual flexibility is precisely what makes DISC attractive for team communication work: the goal is not to define who someone fundamentally is, but to create useful language for how they tend to behave and how they might flex that behaviour for more effective collaboration.",
+            "Research on personality and leadership effectiveness via meta-analysis consistently identifies conscientiousness and openness to experience as the two strongest Big Five predictors of leadership performance across contexts.³ Conscientiousness — reliability, follow-through, attention to quality — maps loosely to DISC's C and S types. Openness — intellectual curiosity, comfort with ambiguity, receptivity to new ideas — has no clean DISC equivalent. The mapping between frameworks is imperfect and should not be over-extended, but the general finding that reliable follow-through and intellectual flexibility predict leadership effectiveness is compatible with what DISC practitioners observe in high-performing leaders.",
+            "Cross-cultural validity is where personality frameworks face their most significant challenge, and DISC is no exception. The concept of WEIRD sampling — Western, Educated, Industrialised, Rich, Democratic — names the bias embedded in most foundational psychology research. Studies by Gurven and colleagues in non-WEIRD populations have found significant variation in Big Five profiles across cultures, casting doubt on universality claims. For DISC, which has been applied globally but validated primarily in Western organisational contexts, cross-cultural caution is even more warranted. The framework describes behaviour patterns observed within a particular cultural tradition — applying it across cultures requires both transparency about its origins and sensitivity to where its categories may not map cleanly.",
+            "D-type directness — the preference for decisive, rapid, results-oriented communication — is deeply consonant with low-context, individualist culture norms. In these settings, directness reads as confidence and competence. In high-context, high-power-distance cultures, which include most of Southeast Asia, the Arab world, and much of Africa and Latin America, the same directness reads as aggression, disrespect, or social immaturity. The D-type leader working cross-culturally is not wrong to be direct — but they need to understand that their natural pace and communication style create relational friction in the majority of the world's cultural contexts, and that adaptation is not inauthenticity but skill.",
+            "I-type expressiveness — enthusiasm, spontaneity, verbal fluency, personal visibility — reflects the ideals of individualist, extravert-valorising cultures in which self-expression is a social virtue. In more collectivist cultural contexts, the same expressiveness can feel disruptive, self-centred, or status-claiming. The social function of exuberant positivity differs across cultures: in some contexts it builds connection; in others it creates discomfort by violating norms of group-centred modesty and social restraint. I-types working cross-culturally gain significant advantage by developing contextual reading — understanding when their natural energy is an asset and when it needs to be modulated.",
+            "S-type steadiness — loyalty, consistency, collaborative orientation, preference for stable relational environments — is highly valued across many non-Western cultural contexts, particularly those shaped by long-term relationship investment and communal interdependence. The S-type's natural orientation toward group harmony and patient trust-building is genuinely cross-cultural in its appeal. The liability emerges from the same source: S-types' conflict avoidance and reluctance to deliver direct negative assessment can become a significant barrier in contexts that require clear disagreement, honest feedback, or rapid course correction.",
+            "C-type conscientiousness — detail orientation, systematic analysis, preference for accuracy over speed, discomfort with ambiguity — maps interestingly onto Hofstede's uncertainty avoidance dimension. Cultures with high uncertainty avoidance tend to invest heavily in rules, procedures, and documentation as adaptive strategies for managing unpredictable environments. This cultural conditioning can reinforce C-type tendencies in ways that make the framework feel intuitive in those contexts while potentially masking the difference between cultural adaptation and innate behavioural preference. The C-type's strengths — rigour, quality, analytical depth — are genuine assets in data-heavy, compliance-driven, or technically complex environments across cultures.",
+            "Using DISC well cross-culturally requires holding the framework loosely: as a starting point for curiosity, not a final label. The most effective cross-cultural leaders use DISC to understand their own default behavioural style, recognise the gap between their instinct and their counterpart's cultural context, and flex deliberately — not to abandon who they are, but to expand their range. The research base beneath DISC is thinner than the Big Five, but the practical value of a shared vocabulary for behaviour — used with appropriate humility and cross-cultural awareness — is real and well-documented in organisational development practice.¹",
+          ].map((para, i) => (
+            <p key={i} style={{ fontSize: 16, color: "oklch(38% 0.05 260)", lineHeight: 1.85, marginBottom: 20 }}>
+              {para}
+            </p>
+          ))}
+        </div>
+      </div>
 
       {/* -- SOURCES -- */}
       <SourcesDropdown sources={[
