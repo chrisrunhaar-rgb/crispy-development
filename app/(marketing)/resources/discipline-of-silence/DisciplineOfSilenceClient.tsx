@@ -232,13 +232,25 @@ export default function DisciplineOfSilenceClient({
     const total = answers.reduce<number>((sum, val) => sum + (val ?? 0), 0);
     let resultText = "";
     if (total <= 5) {
-      resultText = "Silence is not yet a habit in your life. That's not a failure — it's the starting point. This module was made for exactly where you are.";
+      resultText = t(
+        "Silence is not yet a habit in your life. That's not a failure — it's the starting point. This module was made for exactly where you are.",
+        "Keheningan belum menjadi kebiasaan dalam hidupmu. Itu bukan kegagalan — itu adalah titik awal. Modul ini dibuat untuk tepat di mana kamu berada."
+      );
     } else if (total <= 9) {
-      resultText = "You're reaching for silence, but haven't found a steady rhythm yet. This module will help you build one.";
+      resultText = t(
+        "You're reaching for silence, but haven't found a steady rhythm yet. This module will help you build one.",
+        "Kamu sedang meraih keheningan, tetapi belum menemukan ritme yang stabil. Modul ini akan membantumu membangunnya."
+      );
     } else if (total <= 12) {
-      resultText = "Silence is growing in your practice, but it hasn't fully settled. This module will help you protect and deepen it.";
+      resultText = t(
+        "Silence is growing in your practice, but it hasn't fully settled. This module will help you protect and deepen it.",
+        "Keheningan sedang bertumbuh dalam praktikmu, tetapi belum sepenuhnya menetap. Modul ini akan membantumu melindungi dan memperdalamannya."
+      );
     } else {
-      resultText = "Silence is already a discipline in your life. Use this module to sharpen your practice and learn how to lead others into it.";
+      resultText = t(
+        "Silence is already a discipline in your life. Use this module to sharpen your practice and learn how to lead others into it.",
+        "Keheningan sudah menjadi disiplin dalam hidupmu. Gunakan modul ini untuk mempertajam praktikmu dan belajar bagaimana memimpin orang lain ke dalamnya."
+      );
     }
     setAssessmentResult(resultText);
     setAssessmentComplete(true);
@@ -1403,7 +1415,7 @@ export default function DisciplineOfSilenceClient({
                   minHeight: 44,
                 }}
               >
-                {bgOpen ? "Close ↑" : "Read background →"}
+                {bgOpen ? t("Close ↑", "Tutup ↑") : t("Read background →", "Baca latar belakang →")}
               </button>
 
               {bgOpen && [
@@ -1467,7 +1479,7 @@ export default function DisciplineOfSilenceClient({
             >
               <button
                 onClick={() => setActiveCard(null)}
-                aria-label="Close"
+                aria-label={t("Close", "Tutup")}
                 style={{
                   position: "absolute",
                   top: 14,
