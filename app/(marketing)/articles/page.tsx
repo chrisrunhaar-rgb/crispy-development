@@ -17,7 +17,7 @@ type Article = {
 
 const articles: Article[] = [
   {
-    image: "/pathway-team.jpg",
+    image: "https://scx1.b-cdn.net/csz/news/800a/2020/businesstrav.jpg",
     source: "Phys.org / Journal of Global Mobility",
     title: "Why Sending Staff Overseas Often Fails — and How Companies Can Fix It",
     summary: "University of Portsmouth and Reutlingen University researchers interviewed expats, host-country colleagues, managers, and HR professionals at a multinational retail company to understand why international assignments succeed or struggle. The finding cuts through the usual focus on the expat: success depends far more on workplace relationships than formal policies. Local line managers are the pivotal factor — how they set the tone for collaboration determines whether knowledge transfer and cross-cultural trust actually develop. Structured onboarding, a shared workplace language, intercultural training for all staff (not just the expat), and informal social contact all matter. The takeaway: organisations need to move beyond an individual-focused approach and invest in the wider relational environment.",
