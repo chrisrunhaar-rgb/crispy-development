@@ -1,6 +1,6 @@
 "use server";
 
-import Anthropic from "@anthropic-ai/sdk";
+import { GoogleGenAI } from "@google/genai";
 
 interface AssessmentSummary {
   dimension: string;
@@ -17,7 +17,7 @@ export async function generateSilenceAdvice(
   assessmentSummary: AssessmentSummary[],
   openAnswers: OpenAnswers
 ): Promise<string> {
-  const client = new Anthropic();
+  const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! });
 
   const assessmentContext = assessmentSummary
     .map(({ dimension, selectedOption }) => `${dimension}: ${selectedOption}`)
@@ -35,13 +35,10 @@ They reflected:
 
 Write 3-4 sentences of personalized advice and encouragement. Be specific to what they shared. Reference silence as a spiritual discipline. End with a brief faith-rooted blessing. Warm, direct, no em dashes, no generic phrases.`;
 
-  const message = await client.messages.create({
-    model: "claude-haiku-4-5-20251001",
-    max_tokens: 300,
-    messages: [{ role: "user", content: prompt }],
+  const response = await ai.models.generateContent({
+    model: "gemini-2.0-flash",
+    contents: prompt,
   });
 
-  const block = message.content[0];
-  if (block.type !== "text") return "Keep pressing in. Silence will reward your faithfulness.";
-  return block.text;
+  return response.text ?? "Keep pressing in. Silence will reward your faithfulness.";
 }
