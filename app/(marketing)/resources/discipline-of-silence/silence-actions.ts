@@ -36,7 +36,7 @@ They reflected:
 Write 3-4 sentences of personalized advice and encouragement. Be specific to what they shared. Reference silence as a spiritual discipline. End with a brief faith-rooted blessing. Warm, direct, no em dashes, no generic phrases.`;
 
   const response = await ai.models.generateContent({
-    model: "gemini-2.0-flash",
+    model: "gemini-2.5-flash",
     contents: prompt,
   });
 
