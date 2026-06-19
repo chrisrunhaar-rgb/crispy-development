@@ -632,7 +632,7 @@ export default function ManagingUpClient({ userPathway, isSaved: initialSaved }:
                 }}
               >
                 <span style={{
-                  fontFamily: CORMORANT, fontSize: 52, fontWeight: 700,
+                  fontFamily: CORMORANT, fontSize: 52, fontWeight: 600,
                   color: ORANGE, lineHeight: 1, minWidth: 36, flexShrink: 0,
                 }}>
                   {tk.num}
@@ -761,7 +761,7 @@ export default function ManagingUpClient({ userPathway, isSaved: initialSaved }:
             aria-controls="bg-panel"
             style={{
               display: "flex", alignItems: "center", justifyContent: "space-between",
-              width: "100%", padding: "20px 0",
+              width: "100%", padding: "20px 0", minHeight: 44,
               background: "transparent", border: "none", cursor: "pointer", textAlign: "left",
             }}
           >
