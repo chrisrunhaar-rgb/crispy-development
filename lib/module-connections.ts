@@ -202,6 +202,34 @@ export const MODULE_CONNECTIONS: ModuleConnection[] = [
     angle: "why high power-distance cultures make leader blind spots larger — and what to do about it",
     angle_id: "mengapa budaya jarak kekuasaan tinggi memperbesar titik buta pemimpin — dan apa yang harus dilakukan",
   },
+
+  // Leaders Are Readers → Cultural Intelligence
+  // (Movement 2 cites Castano & Kidd research: reading builds "empathy and perspective-taking" — "exactly what cross-cultural work demands")
+  {
+    sourceSlug: "leaders-are-readers",
+    sourceSectionId: "lar-movement-2",
+    targetSlug: "cultural-intelligence",
+    targetTitle: "Cultural Intelligence (CQ)",
+    targetTitle_id: "Kecerdasan Budaya (CQ)",
+    topic: "empathy and perspective-taking in cross-cultural work",
+    topic_id: "empati dan pengambilan perspektif dalam pekerjaan lintas budaya",
+    angle: "the research behind how reading builds your capacity to understand people from other cultures — and the CQ framework that puts it into practice",
+    angle_id: "penelitian di balik bagaimana membaca membangun kapasitasmu untuk memahami orang dari budaya lain — dan kerangka CQ yang mempraktikkannya",
+  },
+
+  // Leaders Are Readers → Fixed vs Growth Mindset
+  // (Movement 1 explicitly: "identity-based habits stick" + "behaviour follows identity" — the identity-shift framing is core to growth mindset)
+  {
+    sourceSlug: "leaders-are-readers",
+    sourceSectionId: "lar-movement-1",
+    targetSlug: "fixed-growth-mindset",
+    targetTitle: "Fixed vs Growth Mindset",
+    targetTitle_id: "Pola Pikir Tetap vs Berkembang",
+    topic: "identity-based habits and behaviour change",
+    topic_id: "kebiasaan berbasis identitas dan perubahan perilaku",
+    angle: "how your belief about who you are determines what you do — and how a growth mindset reframes the reader's identity",
+    angle_id: "bagaimana keyakinanmu tentang siapa dirimu menentukan apa yang kamu lakukan — dan bagaimana pola pikir berkembang membingkai ulang identitas pembaca",
+  },
 ];
 
 export function getConnectionsForSection(
