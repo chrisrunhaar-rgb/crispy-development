@@ -476,6 +476,7 @@ export default function DiscClient({
   const [activeTypeTab, setActiveTypeTab] = useState<Record<string, "communication" | "crossCultural">>({});
   const [openAccordion, setOpenAccordion] = useState<string | null>(null);
   const [hoveredQuadrant, setHoveredQuadrant] = useState<string | null>(null);
+  const [selectedType, setSelectedType] = useState<"D" | "I" | "S" | "C" | null>(null);
 
   // Touch detection
   useEffect(() => {
@@ -603,8 +604,8 @@ export default function DiscClient({
   // -- SCROLL HELPERS ----------------------------------------------------------------
 
   function scrollToType(key: string) {
-    const el = document.getElementById(`disc-type-${key}`);
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    setSelectedType(key as "D" | "I" | "S" | "C");
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   function scrollToAssessment() {
@@ -630,10 +631,258 @@ export default function DiscClient({
 
   return (
     <>
-      {/* LANG TOGGLE */}
-      <div style={{ display: "flex", justifyContent: "flex-end", padding: "0.75rem 1.5rem 0" }}>
-        <LangToggle />
-      </div>
+      {/* ===================================================================
+          FULL-PAGE TYPE MODAL
+      =================================================================== */}
+      {selectedType && (() => {
+        const type = DISC_TYPES.find(t => t.key === selectedType)!;
+        const accentColor = type.color;
+        const activeTab = activeTypeTab[type.key] ?? "communication";
+        return (
+          <div
+            style={{
+              position: "fixed",
+              inset: 0,
+              zIndex: 1000,
+              background: "oklch(96% 0.005 80)",
+              overflowY: "auto",
+            }}
+          >
+            {/* Modal top bar */}
+            <div
+              style={{
+                position: "sticky",
+                top: 0,
+                zIndex: 10,
+                background: "oklch(96% 0.005 80)",
+                borderBottom: `3px solid ${accentColor}`,
+                padding: "0.75rem 1.5rem",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <button
+                onClick={() => setSelectedType(null)}
+                style={{
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  fontFamily: "Montserrat, sans-serif",
+                  fontWeight: 700,
+                  fontSize: "0.8rem",
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase",
+                  color: "oklch(35% 0.05 260)",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                  padding: "0.5rem 0",
+                  minHeight: 44,
+                }}
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M19 12H5M12 5l-7 7 7 7" />
+                </svg>
+                {lang === "en" ? "All Types" : "Semua Tipe"}
+              </button>
+              <LangToggle />
+            </div>
+
+            {/* Modal content */}
+            <div style={{ maxWidth: 760, margin: "0 auto", padding: "2.5rem 1.5rem 4rem" }}>
+              {/* Watermark */}
+              <div aria-hidden="true" style={{
+                position: "relative", overflow: "hidden",
+              }}>
+                <span style={{
+                  position: "absolute", top: "-2rem", right: "-1rem",
+                  fontFamily: "Montserrat, sans-serif", fontWeight: 900,
+                  fontSize: "clamp(8rem, 20vw, 14rem)",
+                  color: accentColor, opacity: 0.06, lineHeight: 1,
+                  pointerEvents: "none", userSelect: "none",
+                }}>{type.key}</span>
+              </div>
+
+              {/* Eyebrow pill */}
+              <span style={{
+                display: "inline-block", background: accentColor,
+                color: "oklch(96% 0.005 80)", fontFamily: "Montserrat, sans-serif",
+                fontWeight: 700, fontSize: "0.75rem", letterSpacing: "0.12em",
+                textTransform: "uppercase", padding: "0.35rem 1rem", marginBottom: "1.25rem",
+                borderRadius: "9999px",
+              }}>
+                {type.key} — {tr(type.label)}
+              </span>
+
+              {/* Tagline */}
+              <h1 style={{
+                fontFamily: "'Cormorant Garamond', serif", fontWeight: 600,
+                fontSize: "clamp(1.75rem, 4vw, 2.75rem)", color: "oklch(22% 0.10 260)",
+                lineHeight: 1.2, marginBottom: "1.25rem",
+              }}>
+                {tr(type.tagline)}
+              </h1>
+
+              {/* Overview */}
+              <p style={{
+                fontFamily: "Montserrat, sans-serif", fontSize: "clamp(0.9rem, 1.8vw, 1rem)",
+                color: "oklch(35% 0.04 260)", lineHeight: 1.75, marginBottom: "2rem",
+              }}>
+                {tr(type.overview)}
+              </p>
+
+              {/* Strengths + Blind Spots */}
+              <div style={{
+                display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+                gap: "1.5rem", marginBottom: "2rem",
+              }}>
+                <div>
+                  <p style={{
+                    fontFamily: "Montserrat, sans-serif", fontWeight: 700, fontSize: "0.75rem",
+                    letterSpacing: "0.12em", textTransform: "uppercase", color: accentColor, marginBottom: "0.75rem",
+                  }}>
+                    {lang === "en" ? "Strengths" : "Kekuatan"}
+                  </p>
+                  <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                    {type.strengths[lang].map((s, i) => (
+                      <li key={i} style={{
+                        fontFamily: "Montserrat, sans-serif", fontWeight: 500, fontSize: "0.875rem",
+                        color: "oklch(30% 0.05 260)", display: "flex", alignItems: "center", gap: "0.5rem",
+                      }}>
+                        <span style={{ color: accentColor, fontWeight: 700, fontSize: "1rem", lineHeight: 1 }}>+</span>
+                        {s}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <p style={{
+                    fontFamily: "Montserrat, sans-serif", fontWeight: 700, fontSize: "0.75rem",
+                    letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(55% 0.04 260)", marginBottom: "0.75rem",
+                  }}>
+                    {lang === "en" ? "Blind Spots" : "Titik Buta"}
+                  </p>
+                  <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                    {type.blindspots[lang].map((b, i) => (
+                      <li key={i} style={{
+                        fontFamily: "Montserrat, sans-serif", fontWeight: 400, fontStyle: "italic",
+                        fontSize: "0.875rem", color: "oklch(50% 0.04 260)", display: "flex", alignItems: "center", gap: "0.5rem",
+                      }}>
+                        <span style={{ color: "oklch(65% 0.03 80)", fontWeight: 700, fontSize: "1rem", lineHeight: 1 }}>-</span>
+                        {b}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              {/* Motivated by + Fears */}
+              <div style={{
+                display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+                border: "1px solid oklch(88% 0.008 80)", background: "oklch(88% 0.008 80)",
+                gap: "1px", overflow: "hidden", marginBottom: "2rem",
+              }}>
+                <div style={{ padding: "1.25rem 1.5rem", background: "oklch(96% 0.005 80)" }}>
+                  <p style={{
+                    fontFamily: "Montserrat, sans-serif", fontWeight: 700, fontSize: "0.7rem",
+                    letterSpacing: "0.12em", textTransform: "uppercase", color: accentColor, marginBottom: "0.5rem",
+                  }}>
+                    {lang === "en" ? "Motivated by" : "Termotivasi oleh"}
+                  </p>
+                  <p style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 400, fontSize: "0.875rem", color: "oklch(35% 0.04 260)", lineHeight: 1.65, margin: 0 }}>
+                    {tr(type.motivation)}
+                  </p>
+                </div>
+                <div style={{ padding: "1.25rem 1.5rem", background: "oklch(96% 0.005 80)" }}>
+                  <p style={{
+                    fontFamily: "Montserrat, sans-serif", fontWeight: 700, fontSize: "0.7rem",
+                    letterSpacing: "0.12em", textTransform: "uppercase", color: accentColor, marginBottom: "0.5rem",
+                  }}>
+                    {lang === "en" ? "Fears" : "Ditakuti"}
+                  </p>
+                  <p style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 400, fontSize: "0.875rem", color: "oklch(35% 0.04 260)", lineHeight: 1.65, margin: 0 }}>
+                    {tr(type.fear)}
+                  </p>
+                </div>
+              </div>
+
+              {/* Communication Style tabs */}
+              <div style={{ marginBottom: "2rem" }}>
+                <div style={{ display: "flex", gap: "0", borderBottom: "1px solid oklch(88% 0.008 80)", marginBottom: "1.25rem" }}>
+                  {(["communication", "crossCultural"] as const).map((tab) => (
+                    <button
+                      key={tab}
+                      onClick={() => setActiveTypeTab((prev) => ({ ...prev, [type.key]: tab }))}
+                      style={{
+                        background: "none", border: "none",
+                        borderBottom: activeTab === tab ? `2px solid ${accentColor}` : "2px solid transparent",
+                        marginBottom: "-1px", cursor: "pointer", padding: "0.5rem 1rem 0.625rem",
+                        fontFamily: "Montserrat, sans-serif", fontWeight: 600, fontSize: "0.8rem",
+                        color: activeTab === tab ? "oklch(22% 0.10 260)" : "oklch(55% 0.04 260)",
+                        minHeight: 44, whiteSpace: "nowrap",
+                      }}
+                    >
+                      {tab === "communication"
+                        ? (lang === "en" ? "Communication Style" : "Gaya Komunikasi")
+                        : (lang === "en" ? "Cross-Cultural Note" : "Catatan Lintas Budaya")}
+                    </button>
+                  ))}
+                </div>
+                <p style={{
+                  fontFamily: "Montserrat, sans-serif", fontWeight: 400, fontSize: "0.9rem",
+                  color: "oklch(35% 0.04 260)", lineHeight: 1.75, margin: 0,
+                }}>
+                  {activeTab === "communication" ? tr(type.communication) : tr(type.crossCultural)}
+                </p>
+              </div>
+
+              {/* Biblical Example */}
+              <div style={{
+                background: "oklch(97% 0.010 50)", border: "1px solid oklch(88% 0.030 50)",
+                padding: "1.5rem", marginBottom: "1.5rem",
+              }}>
+                <p style={{
+                  fontFamily: "Montserrat, sans-serif", fontWeight: 700, fontSize: "0.7rem",
+                  letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.5rem",
+                }}>
+                  {lang === "en" ? "Biblical Example" : "Contoh Alkitabiah"}
+                </p>
+                <h3 style={{
+                  fontFamily: "'Cormorant Garamond', serif", fontWeight: 600, fontSize: "1.25rem",
+                  color: "oklch(22% 0.10 260)", marginBottom: "0.75rem",
+                }}>
+                  {type.biblical.name}
+                </h3>
+                <p style={{
+                  fontFamily: "Montserrat, sans-serif", fontWeight: 400, fontSize: "0.875rem",
+                  color: "oklch(35% 0.04 260)", lineHeight: 1.75, margin: 0,
+                }}>
+                  {type.biblical.text}
+                </p>
+              </div>
+
+              {/* Cross-Cultural Contexts — inline (no accordion) */}
+              {type.digDeeper && (
+                <div style={{ marginTop: "1.5rem" }}>
+                  <p style={{
+                    fontFamily: "Montserrat, sans-serif", fontWeight: 700, fontSize: "0.75rem",
+                    letterSpacing: "0.12em", textTransform: "uppercase", color: accentColor, marginBottom: "0.75rem",
+                  }}>
+                    {lang === "en" ? `${type.key}-type in Cross-Cultural Contexts` : `Tipe ${type.key} dalam Konteks Lintas Budaya`}
+                  </p>
+                  <p style={{
+                    fontFamily: "Montserrat, sans-serif", fontSize: "0.9rem",
+                    color: "oklch(40% 0.05 260)", lineHeight: 1.75, margin: 0,
+                  }}>
+                    {type.digDeeper[lang]}
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+        );
+      })()}
 
       {/* ===================================================================
           SECTION 1 — HERO
@@ -648,10 +897,15 @@ export default function DiscClient({
           padding: "clamp(3rem, 8vw, 5rem) clamp(1.25rem, 5vw, 3rem) clamp(2.5rem, 6vw, 4rem)",
         }}
       >
+        {/* LangToggle — inside hero, top-right */}
+        <div style={{ position: "absolute", top: "1rem", right: "1.5rem", zIndex: 10 }}>
+          <LangToggle />
+        </div>
+
         {/* Hero image — luminosity blend */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/hero.jpg"
+          src="/disc/portraits.png"
           alt=""
           aria-hidden="true"
           style={{
@@ -773,6 +1027,7 @@ export default function DiscClient({
                 textTransform: "uppercase",
                 padding: "0.875rem 2rem",
                 border: "none",
+                borderRadius: "9999px",
                 cursor: "pointer",
                 minHeight: 44,
               }}
@@ -793,6 +1048,7 @@ export default function DiscClient({
                 textTransform: "uppercase",
                 padding: "0.875rem 2rem",
                 border: "1.5px solid oklch(45% 0.06 260)",
+                borderRadius: "9999px",
                 cursor: "pointer",
                 minHeight: 44,
               }}
@@ -809,6 +1065,7 @@ export default function DiscClient({
                 style={{
                   background: "transparent",
                   border: "1.5px solid oklch(45% 0.06 260)",
+                  borderRadius: "9999px",
                   color: "oklch(65% 0.04 260)",
                   cursor: isPending ? "default" : "pointer",
                   padding: "0.75rem",
@@ -847,8 +1104,9 @@ export default function DiscClient({
       <section
         id="disc-outcomes"
         style={{
-          background: "oklch(22% 0.10 260)",
+          background: "oklch(96% 0.005 80)",
           padding: "clamp(2.5rem, 6vw, 4rem) clamp(1.25rem, 5vw, 3rem)",
+          borderTop: "1px solid oklch(88% 0.008 80)",
         }}
       >
         <div style={{ maxWidth: 720, margin: "0 auto" }}>
@@ -906,7 +1164,7 @@ export default function DiscClient({
                     fontFamily: "Montserrat, sans-serif",
                     fontWeight: 400,
                     fontSize: "clamp(0.9rem, 1.8vw, 1rem)",
-                    color: "oklch(78% 0.04 260)",
+                    color: "oklch(35% 0.04 260)",
                     lineHeight: 1.75,
                     margin: 0,
                   }}
@@ -1244,19 +1502,30 @@ export default function DiscClient({
           </div>
         </div>
 
-        {/* BLOCK C — 2x2 MATRIX SVG */}
+      </section>
+
+      {/* ===================================================================
+          SECTION 3b — 2x2 MATRIX
+      =================================================================== */}
+      <section
+        id="disc-matrix"
+        style={{
+          background: "oklch(96% 0.005 80)",
+          padding: "clamp(3rem, 8vw, 5rem) clamp(1.25rem, 5vw, 3rem)",
+          borderTop: "1px solid oklch(88% 0.008 80)",
+        }}
+      >
         <div
           style={{
             maxWidth: 720,
-            margin: "3rem auto 0",
-            padding: "0 clamp(1.25rem, 5vw, 3rem)",
+            margin: "0 auto",
           }}
         >
           <p
             style={{
               fontFamily: "Montserrat, sans-serif",
               fontSize: "0.9rem",
-              color: "oklch(68% 0.04 260)",
+              color: "oklch(35% 0.04 260)",
               lineHeight: 1.65,
               marginBottom: "1.5rem",
               textAlign: "center",
@@ -1277,28 +1546,27 @@ export default function DiscClient({
             }
             style={{ width: "100%", maxWidth: 640, display: "block", margin: "0 auto", cursor: "pointer" }}
           >
-            {/* Axis label: TASK-FOCUSED (left) */}
+            {/* Axis label: TASK-FOCUSED (centered above left quadrant) */}
             <text
-              x="80" y="18"
+              x="172" y="18"
               textAnchor="middle"
               fontFamily="Montserrat, sans-serif"
-              fontWeight="600"
+              fontWeight="700"
               fontSize="11"
               letterSpacing="0.12em"
-              fill="oklch(60% 0.04 260)"
-              style={{ textTransform: "uppercase" }}
+              fill="oklch(40% 0.05 260)"
             >
               TASK-FOCUSED
             </text>
-            {/* Axis label: PEOPLE-FOCUSED (right) */}
+            {/* Axis label: PEOPLE-FOCUSED (centered above right quadrant) */}
             <text
-              x="560" y="18"
+              x="465" y="18"
               textAnchor="middle"
               fontFamily="Montserrat, sans-serif"
-              fontWeight="600"
+              fontWeight="700"
               fontSize="11"
               letterSpacing="0.12em"
-              fill="oklch(60% 0.04 260)"
+              fill="oklch(40% 0.05 260)"
             >
               PEOPLE-FOCUSED
             </text>
@@ -1309,7 +1577,7 @@ export default function DiscClient({
               fontWeight="600"
               fontSize="11"
               letterSpacing="0.12em"
-              fill="oklch(60% 0.04 260)"
+              fill="oklch(40% 0.05 260)"
               transform="translate(18,150) rotate(-90)"
               textAnchor="middle"
             >
@@ -1322,7 +1590,7 @@ export default function DiscClient({
               fontWeight="600"
               fontSize="11"
               letterSpacing="0.12em"
-              fill="oklch(60% 0.04 260)"
+              fill="oklch(40% 0.05 260)"
               transform="translate(18,430) rotate(-90)"
               textAnchor="middle"
             >
@@ -1330,8 +1598,8 @@ export default function DiscClient({
             </text>
 
             {/* Axis lines */}
-            <line x1="320" y1="30" x2="320" y2="555" stroke="oklch(55% 0.04 260)" strokeWidth="1.5" strokeOpacity="0.5" />
-            <line x1="30" y1="290" x2="610" y2="290" stroke="oklch(55% 0.04 260)" strokeWidth="1.5" strokeOpacity="0.5" />
+            <line x1="320" y1="30" x2="320" y2="555" stroke="oklch(30% 0.05 260)" strokeWidth="1.5" strokeOpacity="0.25" />
+            <line x1="30" y1="290" x2="610" y2="290" stroke="oklch(30% 0.05 260)" strokeWidth="1.5" strokeOpacity="0.25" />
 
             {/* Quadrant: D — top-left */}
             <g
@@ -1458,38 +1726,6 @@ export default function DiscClient({
             </g>
           </svg>
 
-          {/* Mobile type nav pills */}
-          <div
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              gap: "0.5rem",
-              justifyContent: "center",
-              marginTop: "1.5rem",
-            }}
-          >
-            {DISC_TYPES.map((t) => (
-              <button
-                key={t.key}
-                onClick={() => scrollToType(t.key)}
-                style={{
-                  background: t.color,
-                  color: "oklch(96% 0.005 80)",
-                  fontFamily: "Montserrat, sans-serif",
-                  fontWeight: 700,
-                  fontSize: "0.75rem",
-                  letterSpacing: "0.1em",
-                  textTransform: "uppercase",
-                  padding: "0.5rem 1.25rem",
-                  border: "none",
-                  cursor: "pointer",
-                  minHeight: 44,
-                }}
-              >
-                {t.key} — {tr(t.label)}
-              </button>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -2223,62 +2459,29 @@ export default function DiscClient({
                   </p>
                 </div>
 
-                {/* Dig Deeper accordion per type */}
+                {/* Cross-cultural context — inline */}
                 {type.digDeeper && (
-                  <div style={{ borderTop: "1px solid oklch(88% 0.008 80)" }}>
-                    <button
-                      onClick={() => setOpenFaq(openFaq === DISC_TYPES.indexOf(type) ? null : DISC_TYPES.indexOf(type))}
-                      aria-expanded={openFaq === DISC_TYPES.indexOf(type)}
-                      style={{
-                        width: "100%",
-                        background: "none",
-                        border: "none",
-                        cursor: "pointer",
-                        padding: "1rem 0",
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        minHeight: 44,
-                      }}
-                    >
-                      <span
-                        style={{
-                          fontFamily: "Montserrat, sans-serif",
-                          fontWeight: 600,
-                          fontSize: "0.875rem",
-                          color: "oklch(40% 0.05 260)",
-                          textAlign: "left",
-                        }}
-                      >
-                        {lang === "en" ? `Dig Deeper: ${type.key}-type in Cross-Cultural Contexts` : `Lebih Dalam: Tipe ${type.key} dalam Konteks Lintas Budaya`}
-                      </span>
-                      <svg
-                        width="16" height="16" viewBox="0 0 16 16" fill="none"
-                        style={{
-                          flexShrink: 0,
-                          transform: openFaq === DISC_TYPES.indexOf(type) ? "rotate(180deg)" : "rotate(0deg)",
-                          transition: "transform 0.2s ease",
-                          color: "oklch(65% 0.15 45)",
-                        }}
-                      >
-                        <path d="M2 5l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                    </button>
-                    {openFaq === DISC_TYPES.indexOf(type) && (
-                      <div style={{ paddingBottom: "1.5rem" }}>
-                        <p
-                          style={{
-                            fontFamily: "Montserrat, sans-serif",
-                            fontSize: "0.875rem",
-                            color: "oklch(45% 0.04 260)",
-                            lineHeight: 1.75,
-                            margin: 0,
-                          }}
-                        >
-                          {type.digDeeper[lang]}
-                        </p>
-                      </div>
-                    )}
+                  <div style={{ marginTop: "1.5rem", borderTop: "1px solid oklch(88% 0.008 80)", paddingTop: "1.25rem" }}>
+                    <p style={{
+                      fontFamily: "Montserrat, sans-serif",
+                      fontWeight: 700,
+                      fontSize: "0.7rem",
+                      letterSpacing: "0.12em",
+                      textTransform: "uppercase",
+                      color: accentColor,
+                      marginBottom: "0.75rem",
+                    }}>
+                      {lang === "en" ? `${type.key}-type in Cross-Cultural Contexts` : `Tipe ${type.key} dalam Konteks Lintas Budaya`}
+                    </p>
+                    <p style={{
+                      fontFamily: "Montserrat, sans-serif",
+                      fontSize: "0.875rem",
+                      color: "oklch(40% 0.05 260)",
+                      lineHeight: 1.75,
+                      margin: 0,
+                    }}>
+                      {type.digDeeper[lang]}
+                    </p>
                   </div>
                 )}
               </div>
@@ -2515,38 +2718,9 @@ export default function DiscClient({
         <div style={{ maxWidth: 720, margin: "0 auto" }}>
           <SourcesDropdown
             sources={[
-              "Voges, Ken — Understanding How Others Misunderstand You (Moody Press, 1990) — https://www.amazon.com/Understanding-How-Others-Misunderstand-You/dp/B01K2WKWAS",
-              "Voges, Ken & Kempainen, Mike — DISCovering the Leadership Styles of Jesus (In His Grace Publishing, 2014) — https://www.amazon.com/DISCovering-Leadership-Styles-Jesus-Voges/dp/0970380895",
-              "Littauer, Florence — Personality Plus (Baker Books, 1983) — https://bakerpublishinggroup.com/products/9780800754457_personality-plus",
-              "Blanchard, Ken & Hodges, Phil — Lead Like Jesus (Thomas Nelson, 2005) — https://www.kenblanchardbooks.com/book/lead-like-jesus/",
-              "LaHaye, Tim — Spirit-Controlled Temperament (Tyndale House, 1966)",
-              "Church Consultant — Christian DISC Personality Types Expanded (2023) — https://churchconsultant.org/christian-disc-personality-types-expanded/",
-              "Lead Like Jesus — Biblical DISC Practitioner Virtual Certification (2022) — https://leadlikejesus.com/courses/biblical-disc-virtual-certification/",
-              "Houston Christian University — Interview with Ken Voges (2016) — https://hc.edu/center-for-christianity-in-business/2016/11/18/god-picks-right-people-right-roles-interview-w-ken-voges-creator-biblical-personal-profile/",
-              "Scripture Insight — 1 Corinthians 12: Unity in Diversity — https://scriptureinsight.org/study/1corinthians/12",
-              "Enduringword.com — 1 Corinthians 12 Commentary — https://enduringword.com/bible-commentary/1-corinthians-12/",
-              "Logos — Paul: A Multicultural Leader — https://www.logos.com/grow/paul-a-multicultural-leader/",
-              "Regent University — Spiropoulos, D. — Paul's Leadership Style (Journal of Biblical Perspectives in Leadership, 2019) — https://www.regent.edu/journal/journal-of-biblical-perspectives-in-leadership/pauls-leadership-style-cultural-confluence-in-christian-community/",
-              "Mufanebadza, N. — Imago Dei (HTS Teologiese Studies, 2022) — https://hts.org.za/index.php/hts/article/view/10719/29183",
-              "Lemke, S. — The Meaning of the Imago Dei for Theological Anthropology (NOBTS) — https://nobts.edu/about/institutional-effectiveness1/LemkeSW-files/LemkeSW-files/PersonhoodETSpaper.pdf",
-              "Biblical Archaeology Society — Barnabas: An Encouraging Early Church Leader (2021) — https://www.biblicalarchaeology.org/daily/people-cultures-in-the-bible/people-in-the-bible/barnabas-an-encouraging-early-church-leader/",
-              "Bible Study Toolbox — Barnabas: Son of Encouragement and Mission — https://biblestudytoolbox.com/bible-studies/bible-characters/barnabas/",
-              "Goserv Global — Luke the Beloved Physician (2021) — https://goservglobal.org/2021/10/18/luke-the-beloved-physician-colossians-414/",
               "Marston, William Moulton — Emotions of Normal People (Harcourt, Brace and Company, 1928) — https://www.goodreads.com/book/show/6827443-emotions-of-normal-people",
-              "McCrae et al. — Personality Profiles of Cultures (Journal of Personality and Social Psychology, 2005) — https://socialsci.libretexts.org/Bookshelves/Psychology/Culture_and_Community/Personality_Theory_in_a_Cultural_Context_(Kelland)/10:_Trait_Theories_of_Personality/10.07:_Paul_Costa_and_Robert_McCrae_and_the_Five-Factor_Model_of_Personality",
-              "Schmitt et al. — Geographic Distribution of Big Five (Journal of Cross-Cultural Psychology, 2007) — https://www.toddkshackelford.com/downloads/Schmitt-JCCP-2007.pdf",
-              "PMC — Understanding and assessing personality across cultures: A scoping review (2024-2025) — https://pmc.ncbi.nlm.nih.gov/articles/PMC12758732/",
-              "Wikipedia — DISC Assessment — https://en.wikipedia.org/wiki/DISC_assessment",
-              "Wikipedia — Four Temperaments — https://en.wikipedia.org/wiki/Four_temperaments",
-              "Hofstede, G. — Indonesia Country Data — https://internationalbusinesscenter.org/geert-hofstede/hofstede_indonesia.shtml",
-              "Training Indonesia — Cultural Leadership in Indonesia — https://training-indonesia.org/news/cultural-leadership-in-indonesia-managing-power-distance-collectivism-for-effective-leadership",
-              "discprofile.com (Wiley) — Science Behind DiSC — https://www.discprofile.com/what-is-disc/research-reliability-and-validity",
-              "discprofile.com (Wiley) — History of DiSC — https://www.discprofile.com/what-is-disc/history-of-disc",
               "International DISC Institute — Marston's Theoretical Work — https://interdisc.org/marstons-theoretical-work/",
-              "The Practical Psych — The DISC Personality Assessment: Worthwhile Investment or Con? (2023) — https://thepracticalpsych.com/blog/disc-personality-types",
-              "Internal Change — Common Misuses of the DiSC Personality Assessment — https://internalchange.com/common-misuses-of-the-disc-personality-assessment/",
-              "cogn-iq.org — DISC vs Big Five: Which Personality Framework Has Better Research? (2024) — https://www.cogn-iq.org/blog/disc-vs-big-five/",
-              "CatholicMatch — History of the Four Temperaments — https://www.catholicmatch.com/blog/temperaments/history-of-the-four-temperaments/",
+              "discprofile.com (Wiley) — Science Behind DiSC — https://www.discprofile.com/what-is-disc/research-reliability-and-validity",
             ]}
             lang={lang}
             markerStyle="superscript"

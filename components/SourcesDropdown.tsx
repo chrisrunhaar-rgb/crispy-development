@@ -25,8 +25,8 @@ export default function SourcesDropdown({
   const [open, setOpen] = useState(false);
 
   const label = lang === "id"
-    ? `Sumber yang digunakan dalam modul ini (${sources.length})`
-    : `Resources used in this module (${sources.length})`;
+    ? "Sumber yang digunakan dalam modul ini"
+    : "Resources used in this module";
 
   return (
     <div style={{ background, padding: "32px 24px" }}>
