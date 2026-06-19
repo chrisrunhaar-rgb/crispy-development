@@ -105,6 +105,7 @@ const principles = [
     padded: "01",
     en_title: "Know Their World",
     id_title: "Kenali Dunia Mereka",
+    cite: "³",
     en_body: "Senior leaders have limited bandwidth. They are managing multiple channels of information simultaneously, and they do not always have context for what you are about to say. Lead with the conclusion. Tell them what happened, what it means, and what you need, in that order. Then offer detail if they want it. This structure — most important thing first, supporting information after — is what your leader's brain is looking for even if they have never articulated it.",
     id_body: "Pemimpin senior memiliki bandwidth yang terbatas. Mereka mengelola beberapa saluran informasi sekaligus, dan tidak selalu punya konteks untuk apa yang akan kamu katakan. Mulailah dengan kesimpulan. Beritahu mereka apa yang terjadi, apa artinya, dan apa yang kamu butuhkan, dalam urutan itu. Itulah struktur yang dicari otak pemimpinmu bahkan jika mereka belum pernah mengungkapkannya.",
   },
@@ -112,6 +113,7 @@ const principles = [
     padded: "02",
     en_title: "Match Medium to Message",
     id_title: "Sesuaikan Media dengan Pesan",
+    cite: undefined,
     en_body: "Some leaders want data. Some want narrative. Some need a two-minute verbal briefing; others want a bullet-point email they can read at 6am. Managing up means adapting to your leader's style, not the other way around. This is asymmetric by design: the one who is managing up carries the responsibility for the fit. Pay attention to how your leader communicates with others. What format do their own communications take? These are signals worth reading.",
     id_body: "Sebagian pemimpin butuh data. Sebagian butuh narasi. Sebagian butuh briefing verbal dua menit; yang lain butuh email berpoin-poin yang bisa mereka baca jam 6 pagi. Mengelola ke atas berarti beradaptasi dengan gaya pemimpinmu, bukan sebaliknya. Ini asimetris secara desain: yang mengelola ke atas bertanggung jawab atas kesesuaiannya. Perhatikan cara pemimpinmu berkomunikasi dengan orang lain. Format apa yang digunakan komunikasi mereka kepada kamu? Itu adalah sinyal yang layak dibaca.",
   },
@@ -119,6 +121,7 @@ const principles = [
     padded: "03",
     en_title: "Read the Moment",
     id_title: "Baca Situasinya",
+    cite: "⁴",
     en_body: "Timing matters more than most people realise. The same conversation, on the same topic, with the same content, lands completely differently depending on when it happens. A complex issue raised when your leader is walking between two meetings will receive a fraction of the attention it deserves. Reading your leader's energy and context is a skill. It requires observation. When in doubt, ask: 'Is now a good time?' It is a simple question that signals respect for your leader's attention, and it almost always works.",
     id_body: "Waktu lebih penting dari yang disadari kebanyakan orang. Percakapan yang sama, tentang topik yang sama, dengan konten yang sama, mendarat sangat berbeda tergantung kapan terjadi. Isu kompleks yang diangkat ketika pemimpinmu sedang berjalan di antara dua rapat akan mendapat sebagian kecil perhatian yang layak diterimanya. Membaca energi dan konteks pemimpinmu adalah keterampilan. Ketika ragu, tanya: 'Apakah ini waktu yang tepat?' Pertanyaan sederhana yang memberi sinyal rasa hormat terhadap perhatian pemimpinmu.",
   },
@@ -126,6 +129,7 @@ const principles = [
     padded: "04",
     en_title: "Disagree Well",
     id_title: "Tidak Setuju dengan Baik",
+    cite: undefined,
     en_body: "Raise concerns in private; once a decision is made, support it publicly. This principle does not suppress honest disagreement — it channels it wisely. A leader who hears your concerns privately and considers them is far more likely to adjust course than one who is ambushed publicly. And a team that sees you publicly support decisions even when you disagreed in private is watching a model of integrity. These two moves together — private honesty, public alignment — are the highest form of upward influence.",
     id_body: "Angkat kekhawatiran secara pribadi; setelah keputusan dibuat, dukung secara publik. Prinsip ini tidak menekan ketidaksetujuan yang jujur, melainkan menyalurkannya dengan bijaksana. Seorang pemimpin yang mendengar kekhawatiranmu secara pribadi jauh lebih mungkin menyesuaikan arah daripada yang diserang di depan umum. Dan tim yang melihat kamu mendukung keputusan secara publik bahkan ketika kamu tidak setuju secara pribadi sedang menyaksikan model integritas.",
   },
@@ -133,6 +137,7 @@ const principles = [
     padded: "05",
     en_title: "Protect Their Radar",
     id_title: "Jaga Radar Mereka",
+    cite: undefined,
     en_body: "No leader should hear bad news from someone else first. After a conversation, a decision, or a completed task, close the loop. A brief message confirming what was agreed, what you did, and what comes next. Most people forget this step because the task feels complete when it is done. But the loop is not just for your records. It gives your leader certainty, confirms that things are moving, and reduces the number of things they have to track actively. Over time, consistent loop-closing becomes the highest form of reliability.",
     id_body: "Tidak ada pemimpin yang harus mendengar berita buruk dari orang lain lebih dulu. Setelah percakapan, keputusan, atau tugas yang selesai, tutup lingkarannya. Pesan singkat mengkonfirmasi apa yang disepakati, apa yang kamu lakukan, dan apa yang akan datang. Kebanyakan orang melupakan langkah ini karena tugas terasa selesai. Tapi lingkaran bukan hanya untuk catatanmu. Ia memberi pemimpinmu kepastian dan mengurangi jumlah hal yang harus mereka lacak secara aktif.",
   },
@@ -168,6 +173,7 @@ const digDeeperPanels = [
   {
     en_title: "The Cross-Cultural Dimension of Managing Up",
     id_title: "Dimensi Lintas Budaya dari Mengelola ke Atas",
+    cite: "²",
     en_paras: [
       "Different cultures hold profoundly different assumptions about authority. In high power-distance contexts — common across much of Asia, the Middle East, and parts of Africa and Latin America — approaching a senior leader proactively with bad news or a contrary opinion may feel presumptuous or disrespectful. Silence in these contexts is not agreement; it is often honour.",
       "In lower power-distance contexts — Northern Europe, much of North America — the expectation is often that team members will speak up directly, offer opinions freely, and flag problems early. A leader who has to dig for information from their team sees it as a sign of disengagement or even dishonesty.",
@@ -182,6 +188,7 @@ const digDeeperPanels = [
   {
     en_title: "When Your Leader Is Difficult",
     id_title: "Ketika Pemimpin Anda Sulit",
+    cite: undefined,
     en_paras: [
       "Managing up assumes a leader worth managing up to. But what happens when your leader is weak, insecure, politically motivated, or simply unkind? The theology of authority does not ask you to pretend these realities do not exist.",
       "There is a difference between managing up and enabling dysfunction. Managing up means taking responsibility for your side of the relationship — being reliable, clear, honest, and proactive — regardless of how your leader behaves. It does not mean absorbing abuse, covering incompetence, or betraying your integrity for the sake of the relationship.",
@@ -196,6 +203,7 @@ const digDeeperPanels = [
   {
     en_title: "Managing Up and Whistleblowing: Where Is the Line?",
     id_title: "Mengelola ke Atas dan Whistleblowing: Di Mana Batasnya?",
+    cite: undefined,
     en_paras: [
       "This question comes up in every high-stakes leadership context: when does loyalty to your leader cross into complicity with something wrong? The principle that guides this is not loyalty to the person, but loyalty to the mission and to truth.",
       "Managing up operates in the space of legitimate disagreement, honest feedback, and wise timing. Whistleblowing enters the picture when the issue is no longer a matter of style, judgment, or cultural difference — but genuine ethical failure: deception, abuse of power, financial misconduct, harm to people.",
@@ -351,7 +359,7 @@ export default function ManagingUpClient({ userPathway, isSaved: initialSaved }:
             {t(
               "Managing up is not a political game. It is not flattery or self-promotion. It is the practice of leading intentionally in the upward direction: understanding what your leader needs, communicating in ways that work for them, and building the kind of trust that creates room for you to lead well. This module covers the core needs your leader has from you, and five principles for communicating upward that actually work across cultural contexts.",
               "Mengelola ke atas bukan permainan politik. Bukan pula sanjungan atau promosi diri. Ini adalah praktik memimpin secara sengaja ke arah atas: memahami apa yang dibutuhkan pemimpin kamu, berkomunikasi dengan cara yang tepat bagi mereka, dan membangun kepercayaan yang memberi ruang untuk kamu memimpin dengan baik. Modul ini membahas kebutuhan inti pemimpin kamu dari kamu, dan lima prinsip berkomunikasi ke atas yang benar-benar berhasil lintas konteks budaya.",
-            )}
+            )}<span style={{ color: ORANGE, fontWeight: 700 }}>¹</span>
           </p>
         </div>
       </div>
@@ -422,7 +430,7 @@ export default function ManagingUpClient({ userPathway, isSaved: initialSaved }:
             {t(
               "Influence flows to those who make their leader's job easier. Before thinking about communication tactics or career moves, master these four fundamentals.",
               "Pengaruh mengalir kepada mereka yang membuat pekerjaan pemimpin mereka lebih mudah. Sebelum memikirkan taktik komunikasi atau langkah karier, kuasai empat hal mendasar ini.",
-            )}
+            )}<span style={{ color: ORANGE, fontWeight: 700 }}>⁷</span>
           </p>
 
           <div
@@ -510,6 +518,7 @@ export default function ManagingUpClient({ userPathway, isSaved: initialSaved }:
                     </h3>
                     <p style={{ ...proseLight, marginBottom: 0 }}>
                       {lang === "id" ? p.id_body : p.en_body}
+                      {p.cite && <span style={{ color: ORANGE, fontWeight: 700 }}>{p.cite}</span>}
                     </p>
                   </div>
                 </div>
@@ -554,7 +563,7 @@ export default function ManagingUpClient({ userPathway, isSaved: initialSaved }:
               {t(
                 "Romans 13:1 — 'Let everyone be subject to the governing authorities, for there is no authority except that which God has established.'",
                 "Roma 13:1 — 'Setiap orang harus tunduk kepada pemerintah yang di atasnya, sebab tidak ada pemerintah yang tidak berasal dari Allah.'",
-              )}
+              )}<span style={{ color: ORANGE, fontWeight: 700 }}>⁵</span>
             </p>
           </div>
 
@@ -562,7 +571,7 @@ export default function ManagingUpClient({ userPathway, isSaved: initialSaved }:
             {t(
               "Scripture does not treat authority as a necessary evil. It treats it as a gift — a structure God placed in creation not to constrain human flourishing, but to enable it. Romans 13 and 1 Peter 2 are not calls to passive submission to corrupt systems. They are calls to recognize that God works through human authority structures, however imperfect.",
               "Alkitab tidak memperlakukan otoritas sebagai kejahatan yang diperlukan. Alkitab memperlakukannya sebagai anugerah — struktur yang Allah tempatkan dalam ciptaan bukan untuk membatasi kemakmuran manusia, tetapi untuk memungkinkannya. Roma 13 dan 1 Petrus 2 bukan seruan untuk tunduk secara pasif pada sistem yang korup. Ini adalah seruan untuk mengenali bahwa Allah bekerja melalui struktur otoritas manusiawi, betapapun tidak sempurnanya.",
-            )}
+            )}<span style={{ color: ORANGE, fontWeight: 700 }}>⁶</span>
           </p>
           <p style={proseLight}>
             {t(
@@ -714,17 +723,21 @@ export default function ManagingUpClient({ userPathway, isSaved: initialSaved }:
                         padding: "0 24px 24px",
                         borderTop: "1px solid oklch(22% 0.10 260 / 0.10)",
                       }}>
-                        {(lang === "id" ? panel.id_paras : panel.en_paras).map((para, pi) => (
-                          <p key={pi} style={{
-                            fontFamily: FONT,
-                            fontSize: "clamp(15px, 1.6vw, 17px)",
-                            color: BODY_TEXT, lineHeight: 1.85,
-                            marginBottom: pi < panel.en_paras.length - 1 ? 16 : 0,
-                            marginTop: pi === 0 ? 20 : 0,
-                          }}>
-                            {para}
-                          </p>
-                        ))}
+                        {(lang === "id" ? panel.id_paras : panel.en_paras).map((para, pi) => {
+                          const isLast = pi === panel.en_paras.length - 1;
+                          return (
+                            <p key={pi} style={{
+                              fontFamily: FONT,
+                              fontSize: "clamp(15px, 1.6vw, 17px)",
+                              color: BODY_TEXT, lineHeight: 1.85,
+                              marginBottom: isLast ? 0 : 16,
+                              marginTop: pi === 0 ? 20 : 0,
+                            }}>
+                              {para}
+                              {isLast && panel.cite && <span style={{ color: ORANGE, fontWeight: 700 }}>{panel.cite}</span>}
+                            </p>
+                          );
+                        })}
                       </div>
                     </div>
                   </div>
