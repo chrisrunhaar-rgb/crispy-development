@@ -332,8 +332,8 @@ function SectionH2({
   );
 }
 
-// ─── Quote interstitial ────────────────────────────────────────────────────────
-function QuoteInterstitial({
+// ─── Inline pull quote ─────────────────────────────────────────────────────────
+function PullQuote({
   quote,
   attribution,
   dark = false,
@@ -343,37 +343,41 @@ function QuoteInterstitial({
   dark?: boolean;
 }) {
   return (
-    <section style={{ background: dark ? navy : offWhite, padding: "5rem 1.5rem" }}>
-      <div style={{ maxWidth: "680px", margin: "0 auto", textAlign: "center" }}>
-        <p
-          style={{
-            fontFamily: CORMORANT,
-            fontStyle: "italic",
-            fontSize: "clamp(1.4rem, 3.2vw, 2rem)",
-            color: dark ? offWhite : navy,
-            lineHeight: 1.55,
-            marginBottom: "1.5rem",
-            marginTop: 0,
-          }}
-        >
-          &ldquo;{quote}&rdquo;
-        </p>
-        <cite
-          style={{
-            display: "block",
-            fontFamily: FONT,
-            fontSize: "0.72rem",
-            fontWeight: 700,
-            letterSpacing: "0.12em",
-            color: orange,
-            textTransform: "uppercase",
-            fontStyle: "normal",
-          }}
-        >
-          — {attribution}
-        </cite>
-      </div>
-    </section>
+    <div
+      style={{
+        margin: "2.5rem 0",
+        paddingLeft: "1.25rem",
+        borderLeft: `2px solid ${orange}`,
+      }}
+    >
+      <p
+        style={{
+          fontFamily: CORMORANT,
+          fontStyle: "italic",
+          fontSize: "clamp(1.05rem, 2vw, 1.3rem)",
+          color: dark ? "oklch(80% 0.04 260)" : "oklch(32% 0.07 260)",
+          lineHeight: 1.65,
+          margin: 0,
+          marginBottom: "0.5rem",
+        }}
+      >
+        &ldquo;{quote}&rdquo;
+      </p>
+      <cite
+        style={{
+          display: "block",
+          fontFamily: FONT,
+          fontSize: "0.68rem",
+          fontWeight: 700,
+          letterSpacing: "0.1em",
+          color: orange,
+          textTransform: "uppercase" as const,
+          fontStyle: "normal",
+        }}
+      >
+        — {attribution}
+      </cite>
+    </div>
   );
 }
 
@@ -882,120 +886,8 @@ export default function LeadersReadersClient({
         </div>
       </section>
 
-      {/* Q1 — C.S. Lewis */}
-      <QuoteInterstitial
-        quote="In reading great literature I become a thousand men and yet remain myself."
-        attribution="C.S. Lewis — An Experiment in Criticism, 1961"
-        dark
-      />
-
       {/* ══════════════════════════════════════════════════════
-          BEFORE / AFTER
-      ══════════════════════════════════════════════════════ */}
-      <section
-        style={{
-          background: "white",
-          paddingBlock: "clamp(4rem, 7vw, 7rem)",
-        }}
-      >
-        <div className="container-wide">
-          <SectionLabel>
-            {t("THE IDENTITY SHIFT", "PERGESERAN IDENTITAS", lang)}
-          </SectionLabel>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-              gap: "1px",
-              background: lightGray,
-            }}
-          >
-            {/* Before */}
-            <div
-              style={{
-                background: offWhite,
-                padding: "2rem 2.5rem",
-              }}
-            >
-              <p
-                style={{
-                  fontFamily: FONT,
-                  fontSize: "0.65rem",
-                  fontWeight: 700,
-                  letterSpacing: "0.14em",
-                  color: "oklch(52% 0.008 260)",
-                  textTransform: "uppercase" as const,
-                  marginBottom: "1rem",
-                }}
-              >
-                {t("Before", "Sebelum", lang)}
-              </p>
-              <p
-                style={{
-                  fontFamily: CORMORANT,
-                  fontStyle: "italic",
-                  fontSize: "clamp(1.1rem, 2.2vw, 1.35rem)",
-                  color: "oklch(48% 0.01 260)",
-                  lineHeight: 1.55,
-                  margin: 0,
-                }}
-              >
-                &ldquo;
-                {t(
-                  "I'm the kind of leader who never has time to read.",
-                  "Aku tipe pemimpin yang tidak pernah punya waktu untuk membaca.",
-                  lang
-                )}
-                &rdquo;
-              </p>
-            </div>
-
-            {/* After */}
-            <div
-              style={{
-                background: "oklch(97% 0.012 50)",
-                padding: "2rem 2.5rem",
-                border: `1px solid oklch(82% 0.040 50)`,
-              }}
-            >
-              <p
-                style={{
-                  fontFamily: FONT,
-                  fontSize: "0.65rem",
-                  fontWeight: 700,
-                  letterSpacing: "0.14em",
-                  color: orange,
-                  textTransform: "uppercase" as const,
-                  marginBottom: "1rem",
-                }}
-              >
-                {t("After", "Sesudah", lang)}
-              </p>
-              <p
-                style={{
-                  fontFamily: CORMORANT,
-                  fontStyle: "italic",
-                  fontSize: "clamp(1.1rem, 2.2vw, 1.35rem)",
-                  color: navy,
-                  lineHeight: 1.55,
-                  margin: 0,
-                }}
-              >
-                &ldquo;
-                {t(
-                  "I read because it keeps me teachable, and that changes everything.",
-                  "Aku membaca karena itu membuat aku tetap bisa diajar, dan itu mengubah segalanya.",
-                  lang
-                )}
-                &rdquo;
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ══════════════════════════════════════════════════════
-          TEACHING — MOVEMENT 1: THE IDENTITY SHIFT
+          TEACHING — MOVEMENT 1: THE LEADER WHO READS
       ══════════════════════════════════════════════════════ */}
       <section
         id="lar-movement-1"
@@ -1035,6 +927,24 @@ export default function LeadersReadersClient({
               <p style={prose}>
                 Telling yourself &ldquo;I want to read 20 books this year&rdquo; is fragile. Telling yourself &ldquo;I am the kind of leader who reads&rdquo; is load-bearing. When you are a reader, 15 minutes in the morning with a book is just what you do. It doesn&apos;t require willpower. It is who you are.
               </p>
+
+              {/* Before / After — identity shift */}
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", margin: "2rem 0" }}>
+                <div style={{ background: "white", borderRadius: 8, padding: "1.25rem 1.5rem", border: `1px solid ${lightGray}` }}>
+                  <p style={{ fontFamily: FONT, fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.12em", color: "oklch(60% 0.008 260)", textTransform: "uppercase" as const, marginBottom: "0.75rem", marginTop: 0 }}>Before</p>
+                  <p style={{ fontFamily: CORMORANT, fontStyle: "italic", fontSize: "1rem", color: bodyText, lineHeight: 1.55, margin: 0 }}>&ldquo;I&apos;m the kind of leader who never has time to read.&rdquo;</p>
+                </div>
+                <div style={{ background: navy, borderRadius: 8, padding: "1.25rem 1.5rem" }}>
+                  <p style={{ fontFamily: FONT, fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.12em", color: orange, textTransform: "uppercase" as const, marginBottom: "0.75rem", marginTop: 0 }}>After</p>
+                  <p style={{ fontFamily: CORMORANT, fontStyle: "italic", fontSize: "1rem", color: offWhite, lineHeight: 1.55, margin: 0 }}>&ldquo;I read because it keeps me teachable, and that changes everything.&rdquo;</p>
+                </div>
+              </div>
+
+              <PullQuote
+                quote="In my whole life, I have known no wise people who didn't read all the time, none, zero."
+                attribution="Charlie Munger — Poor Charlie's Almanack, 2005"
+              />
+
               <p style={proseSubhead}>The reader is always a learner</p>
               <p style={{ ...prose, marginBottom: 0 }}>
                 The reader, almost by definition, is always a learner. And the learner is a better leader. Not because they know more facts. But because they have practised, repeatedly, the discipline of sitting with someone else&apos;s thinking and letting it work on them. That posture, curious and open and willing to be changed, is the core posture of effective leadership.
@@ -1063,6 +973,24 @@ export default function LeadersReadersClient({
               <p style={prose}>
                 Memberi tahu dirimu &ldquo;aku ingin membaca 20 buku tahun ini&rdquo; itu rapuh. Memberi tahu dirimu &ldquo;aku adalah tipe pemimpin yang membaca&rdquo; itu menopang. Ketika kamu adalah seorang pembaca, 15 menit di pagi hari dengan sebuah buku sudah menjadi bagian dari dirimu. Tidak butuh kemauan keras. Itulah siapa kamu.
               </p>
+
+              {/* Before / After — pergeseran identitas */}
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", margin: "2rem 0" }}>
+                <div style={{ background: "white", borderRadius: 8, padding: "1.25rem 1.5rem", border: `1px solid ${lightGray}` }}>
+                  <p style={{ fontFamily: FONT, fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.12em", color: "oklch(60% 0.008 260)", textTransform: "uppercase" as const, marginBottom: "0.75rem", marginTop: 0 }}>Sebelum</p>
+                  <p style={{ fontFamily: CORMORANT, fontStyle: "italic", fontSize: "1rem", color: bodyText, lineHeight: 1.55, margin: 0 }}>&ldquo;Aku adalah tipe pemimpin yang tidak pernah punya waktu untuk membaca.&rdquo;</p>
+                </div>
+                <div style={{ background: navy, borderRadius: 8, padding: "1.25rem 1.5rem" }}>
+                  <p style={{ fontFamily: FONT, fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.12em", color: orange, textTransform: "uppercase" as const, marginBottom: "0.75rem", marginTop: 0 }}>Sesudah</p>
+                  <p style={{ fontFamily: CORMORANT, fontStyle: "italic", fontSize: "1rem", color: offWhite, lineHeight: 1.55, margin: 0 }}>&ldquo;Aku membaca karena itu membuatku tetap bisa diajar, dan itu mengubah segalanya.&rdquo;</p>
+                </div>
+              </div>
+
+              <PullQuote
+                quote="Sepanjang hidupku, aku tidak pernah mengenal orang bijak yang tidak selalu membaca, tidak ada, nol."
+                attribution="Charlie Munger — Poor Charlie's Almanack, 2005"
+              />
+
               <p style={proseSubhead}>Pembaca selalu menjadi pelajar</p>
               <p style={{ ...prose, marginBottom: 0 }}>
                 Pembaca, hampir secara definisi, selalu menjadi pelajar. Dan pelajar adalah pemimpin yang lebih baik. Bukan karena mereka mengetahui lebih banyak fakta. Tapi karena mereka sudah berlatih, berulang kali, disiplin duduk dengan pemikiran orang lain dan membiarkannya bekerja pada mereka. Sikap itu, penasaran, terbuka, dan mau diubah, adalah sikap inti dari kepemimpinan yang efektif.
@@ -1072,12 +1000,6 @@ export default function LeadersReadersClient({
         </div>
       </section>
 
-      {/* Q4 — Charlie Munger */}
-      <QuoteInterstitial
-        quote="In my whole life, I have known no wise people who didn't read all the time, none, zero."
-        attribution="Charlie Munger — Poor Charlie's Almanack, 2005"
-        dark
-      />
 
       {/* ══════════════════════════════════════════════════════
           TEACHING — MOVEMENT 2: CROSS-CULTURAL DISCIPLINE
@@ -1134,6 +1056,11 @@ export default function LeadersReadersClient({
               <p style={{ ...prose, marginBottom: 0 }}>
                 The reason? Literary fiction forces you to practise exactly what cross-cultural work demands: holding uncertainty, making inferences about people who are not like you, and staying curious rather than closing down. If you want to be better at reading rooms and reading people, one of the best tools is reading books.
               </p>
+
+              <PullQuote
+                quote="Until the lions have their own historians, the history of the hunt will always glorify the hunter."
+                attribution="Chinua Achebe — The Paris Review, 1994"
+              />
             </>
           ) : (
             <>
@@ -1168,23 +1095,15 @@ export default function LeadersReadersClient({
               <p style={{ ...prose, marginBottom: 0 }}>
                 Alasannya? Fiksi sastra memaksamu untuk melatih persis apa yang dituntut oleh pekerjaan lintas budaya: memegang ketidakpastian, membuat kesimpulan tentang orang yang tidak sepertimu, dan tetap penasaran daripada menutup diri. Kalau kamu ingin lebih baik dalam membaca situasi dan membaca orang, salah satu alat terbaik adalah membaca buku.
               </p>
+
+              <PullQuote
+                quote="Sampai para singa memiliki sejarawan mereka sendiri, sejarah perburuan akan selalu memuliakan pemburu."
+                attribution="Chinua Achebe — The Paris Review, 1994"
+              />
             </>
           )}
         </div>
       </section>
-
-      {/* Q3 — Abraham Lincoln */}
-      <QuoteInterstitial
-        quote="A capacity, and taste, for reading gives access to whatever has already been discovered by others."
-        attribution="Abraham Lincoln — Address to Wisconsin State Agricultural Society, 1859"
-      />
-
-      {/* Q6 — Chinua Achebe */}
-      <QuoteInterstitial
-        quote="Until the lions have their own historians, the history of the hunt will always glorify the hunter."
-        attribution="Chinua Achebe — The Paris Review, 1994"
-        dark
-      />
 
       {/* ══════════════════════════════════════════════════════
           TEACHING — MOVEMENT 3: BUILDING THE HABIT
@@ -1365,14 +1284,18 @@ export default function LeadersReadersClient({
               )}
             </p>
           </div>
+
+          <PullQuote
+            quote={t(
+              "Some books are to be tasted, others to be swallowed, and some few to be chewed and digested.",
+              "Beberapa buku hanya perlu dicicipi, yang lain perlu ditelan, dan sebagian kecil perlu dikunyah dan dicerna.",
+              lang
+            )}
+            attribution={t("Francis Bacon — Of Studies, 1625", "Francis Bacon — Of Studies, 1625", lang)}
+            dark
+          />
         </div>
       </section>
-
-      {/* Q2 — Francis Bacon */}
-      <QuoteInterstitial
-        quote="Some books are to be tasted, others to be swallowed, and some few to be chewed and digested."
-        attribution="Francis Bacon — Of Studies, 1625"
-      />
 
       {/* ══════════════════════════════════════════════════════
           BOOK LIBRARY
@@ -1395,6 +1318,15 @@ export default function LeadersReadersClient({
               lang
             )}
           </SectionH2>
+
+          <PullQuote
+            quote={t(
+              "You must linger among a limited number of master-thinkers, and digest their works, if you would derive ideas which shall win firm hold in your mind.",
+              "Kamu harus berlama-lama bersama sejumlah kecil pemikir terbaik, dan mencerna karya-karya mereka, jika ingin mendapatkan gagasan yang benar-benar tertanam dalam pikiranmu.",
+              lang
+            )}
+            attribution="Seneca — Letters to Lucilius, c. 65 AD"
+          />
 
           {/* Category filter tabs */}
           <div
@@ -1604,13 +1536,6 @@ export default function LeadersReadersClient({
           onClose={() => setSelectedBook(null)}
         />
       )}
-
-      {/* Q5 — Seneca */}
-      <QuoteInterstitial
-        quote="You must linger among a limited number of master-thinkers, and digest their works, if you would derive ideas which shall win firm hold in your mind."
-        attribution="Seneca — Letters to Lucilius, c. 65 AD"
-        dark
-      />
 
       {/* ══════════════════════════════════════════════════════
           READING PLAN
@@ -2101,12 +2026,6 @@ export default function LeadersReadersClient({
         </div>
       </section>
 
-      {/* Q9 — Frederick Douglass */}
-      <QuoteInterstitial
-        quote="From that moment, I understood the pathway from slavery to freedom. Knowledge unfits a child to be a slave."
-        attribution="Frederick Douglass — Narrative of the Life of Frederick Douglass, 1845"
-      />
-
       {/* ══════════════════════════════════════════════════════
           FAITH ANCHOR
       ══════════════════════════════════════════════════════ */}
@@ -2188,6 +2107,13 @@ export default function LeadersReadersClient({
               <p style={proseDark}>
                 That is the calling this module is pointing toward. Not an impressive reading list. Just the continued posture of someone who knows there is more to know, and who is willing to sit with someone else&apos;s thinking long enough for it to change something.
               </p>
+
+              <PullQuote
+                quote="From that moment, I understood the pathway from slavery to freedom. Knowledge unfits a child to be a slave."
+                attribution="Frederick Douglass — Narrative of the Life of Frederick Douglass, 1845"
+                dark
+              />
+
               <p style={{ ...proseDark, marginBottom: 0, fontStyle: "italic" }}>
                 Who are the mentors on your shelf that you haven&apos;t met yet?
               </p>
@@ -2215,6 +2141,13 @@ export default function LeadersReadersClient({
               <p style={proseDark}>
                 Itulah panggilan yang ditunjukkan modul ini. Bukan daftar bacaan yang mengesankan. Hanya sikap yang terus-menerus dari seseorang yang tahu masih ada lebih banyak lagi yang perlu diketahui, dan yang bersedia duduk dengan pemikiran orang lain cukup lama sampai sesuatu berubah.
               </p>
+
+              <PullQuote
+                quote="Sejak saat itu, aku memahami jalan dari perbudakan menuju kebebasan. Pengetahuan tidak layak bagi seorang hamba."
+                attribution="Frederick Douglass — Narrative of the Life of Frederick Douglass, 1845"
+                dark
+              />
+
               <p style={{ ...proseDark, marginBottom: 0, fontStyle: "italic" }}>
                 Siapa saja mentor di rakmu yang belum pernah kamu temui?
               </p>
@@ -2294,6 +2227,15 @@ export default function LeadersReadersClient({
             ))}
           </div>
 
+          <PullQuote
+            quote={t(
+              "Reading a book should be a conversation between you and the author. Presumably he knows more about the subject than you do; if not, you probably should not be bothering with his book.",
+              "Membaca sebuah buku seharusnya menjadi percakapan antara kamu dan penulisnya. Dia diasumsikan tahu lebih banyak tentang topik itu daripada kamu; jika tidak, kamu mungkin tidak perlu repot-repot membaca bukunya.",
+              lang
+            )}
+            attribution="Mortimer Adler — How to Read a Book, 1940"
+          />
+
           {/* Dashboard CTA at bottom */}
           <div
             style={{
@@ -2332,13 +2274,6 @@ export default function LeadersReadersClient({
           </div>
         </div>
       </section>
-
-      {/* Q10 — Mortimer Adler */}
-      <QuoteInterstitial
-        quote="Reading a book should be a conversation between you and the author. Presumably he knows more about the subject than you do; if not, you probably should not be bothering with his book."
-        attribution="Mortimer Adler — How to Read a Book, 1940"
-        dark
-      />
 
       {/* ══════════════════════════════════════════════════════
           FROM THE FIELD
