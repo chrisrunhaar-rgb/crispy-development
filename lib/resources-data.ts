@@ -472,11 +472,11 @@ export const RESOURCES: Resource[] = [
     titleId: "Pemimpin Adalah Pembaca",
     description: "Great leaders commit to continuous learning. Discover why reading is a cornerstone of effective leadership and how to build a sustainable reading habit.",
     descriptionId: "Pemimpin hebat berkomitmen pada pembelajaran berkelanjutan. Temukan mengapa membaca adalah landasan kepemimpinan efektif dan cara membangun kebiasaan membaca yang berkelanjutan.",
-    time: "15 min",
+    time: "20 min",
     format: "Guide",
     languages: ["en", "id"],
     gated: true,
-    topics: ["personal-development"],
+    topics: ["personal-development", "leadership", "faith-calling"],
     keywords: ["atomic habits", "james clear", "jim kwik", "robert clinton", "mortimer adler", "identity", "formation", "lifelong learner", "book recommendations", "membaca", "kebiasaan membaca", "pembaca", "literary fiction", "curiosity", "study"],
   },
   {

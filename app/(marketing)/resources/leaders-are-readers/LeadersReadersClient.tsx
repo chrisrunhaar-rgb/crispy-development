@@ -559,7 +559,10 @@ export default function LeadersReadersClient({
     if (saved) return;
     startTransition(async () => {
       const result = await saveResourceToDashboard("leaders-are-readers");
-      if (!result.error) setSaved(true);
+      if (!result.error) {
+        setSaved(true);
+        window.gtag?.("event", "resource_saved", { resource: "leaders-are-readers" });
+      }
     });
   }
 
@@ -896,7 +899,7 @@ export default function LeadersReadersClient({
               </p>
               <p style={proseSubhead}>Reading builds empathy — and research proves it</p>
               <p style={prose}>
-                Literary fiction has been shown in peer-reviewed research to measurably improve the capacity to understand what is happening inside other people&apos;s minds. Researchers Emanuele Castano and David Kidd found that reading literary fiction significantly improved performance on validated tests of empathy and perspective-taking.²
+                Literary fiction has been shown in peer-reviewed research to measurably improve the capacity to understand what is happening inside other people&apos;s minds. Researchers Emanuele Castano and David Kidd found evidence that reading literary fiction can improve performance on validated tests of empathy and perspective-taking — a finding that has generated substantial scholarly discussion and further research.²
               </p>
               <p style={{ ...prose, marginBottom: 0 }}>
                 The reason? Literary fiction forces you to practise exactly what cross-cultural work demands: holding uncertainty, making inferences about people who are not like you, and staying curious rather than closing down. If you want to be better at reading rooms and reading people, one of the best tools is reading books.
@@ -935,7 +938,7 @@ export default function LeadersReadersClient({
               </p>
               <p style={proseSubhead}>Membaca membangun empati — dan riset membuktikannya</p>
               <p style={prose}>
-                Fiksi sastra telah terbukti dalam penelitian yang ditinjau sejawat secara terukur meningkatkan kapasitas untuk memahami apa yang terjadi di dalam pikiran orang lain. Para peneliti Emanuele Castano dan David Kidd menemukan bahwa membaca fiksi sastra secara signifikan meningkatkan kinerja pada tes empati dan pengambilan perspektif yang tervalidasi.²
+                Fiksi sastra telah terbukti dalam penelitian yang ditinjau sejawat secara terukur meningkatkan kapasitas untuk memahami apa yang terjadi di dalam pikiran orang lain. Para peneliti Emanuele Castano dan David Kidd menemukan bukti bahwa membaca fiksi sastra dapat meningkatkan kinerja pada tes empati dan pengambilan perspektif yang tervalidasi — sebuah temuan yang telah menghasilkan diskusi ilmiah yang substansial dan penelitian lebih lanjut.²
               </p>
               <p style={{ ...prose, marginBottom: 0 }}>
                 Alasannya? Fiksi sastra memaksamu untuk melatih persis apa yang dituntut oleh pekerjaan lintas budaya: memegang ketidakpastian, membuat kesimpulan tentang orang yang tidak sepertimu, dan tetap penasaran daripada menutup diri. Kalau kamu ingin lebih baik dalam membaca situasi dan membaca orang, salah satu alat terbaik adalah membaca buku.
@@ -1196,7 +1199,7 @@ export default function LeadersReadersClient({
               return (
                 <button
                   key={key}
-                  onClick={() => setBookCategoryFilter(key)}
+                  onClick={() => { setBookCategoryFilter(key); window.gtag?.("event", "book_category_filter", { category: key }); }}
                   style={{
                     fontFamily: FONT,
                     fontSize: "0.72rem",
@@ -1234,7 +1237,7 @@ export default function LeadersReadersClient({
               return (
                 <div
                   key={book.id}
-                  onClick={() => isLive && setSelectedBook(book)}
+                  onClick={() => { if (isLive) { setSelectedBook(book); window.gtag?.("event", "book_detail_viewed", { book_id: book.id, book_title: book.title, book_category: book.category }); } }}
                   role={isLive ? "button" : undefined}
                   tabIndex={isLive ? 0 : undefined}
                   aria-label={isLive ? t(`Open details for ${book.title} by ${book.author}`, `Buka detail ${book.titleId} karya ${book.author}`, lang) : undefined}
@@ -1527,10 +1530,10 @@ export default function LeadersReadersClient({
             <>
               <p style={proseSubhead}>Wesley&apos;s instruction</p>
               <p style={proseDark}>
-                In 1760, John Wesley wrote a letter to a pastor named Samuel Premboth. The letter was brief and its instruction was direct: &ldquo;Whether you like it or no, read and pray daily. It is for your life.&rdquo;
+                In 1760, John Wesley wrote a letter to a young minister. The letter was brief and its instruction was direct: &ldquo;Whether you like it or no, read and pray daily. It is for your life.&rdquo;
               </p>
               <p style={proseDark}>
-                What strikes me about that sentence is that Wesley named the resistance first. He did not assume Premboth would be delighted to hear this. He assumed Premboth would find it inconvenient, or uncomfortable, or irrelevant. And he said it anyway, with pastoral weight.
+                What strikes me about that sentence is that Wesley named the resistance first. He did not assume the minister would be delighted to hear this. He assumed the minister would find it inconvenient, or uncomfortable, or irrelevant. And he said it anyway, with pastoral weight.
               </p>
               <p style={proseSubhead}>Still true today</p>
               <p style={proseDark}>
@@ -1561,10 +1564,10 @@ export default function LeadersReadersClient({
             <>
               <p style={proseSubhead}>Instruksi Wesley</p>
               <p style={proseDark}>
-                Pada tahun 1760, John Wesley menulis surat kepada seorang pendeta bernama Samuel Premboth. Suratnya singkat dan instruksinya langsung: &ldquo;Suka atau tidak suka, bacalah dan berdoalah setiap hari. Itu demi hidupmu.&rdquo;
+                Pada tahun 1760, John Wesley menulis surat kepada seorang pendeta muda. Suratnya singkat dan instruksinya langsung: &ldquo;Suka atau tidak suka, bacalah dan berdoalah setiap hari. Itu demi hidupmu.&rdquo;
               </p>
               <p style={proseDark}>
-                Yang menarik bagiku dari kalimat itu adalah Wesley menamai perlawanannya terlebih dahulu. Ia tidak mengasumsikan Premboth akan senang mendengar ini. Ia mengasumsikan Premboth akan merasa ini merepotkan, atau tidak nyaman, atau tidak relevan. Dan ia mengatakannya juga, dengan bobot pastoral.
+                Yang menarik bagiku dari kalimat itu adalah Wesley menamai perlawanannya terlebih dahulu. Ia tidak mengasumsikan sang pendeta akan senang mendengar ini. Ia mengasumsikan sang pendeta akan merasa ini merepotkan, atau tidak nyaman, atau tidak relevan. Dan ia mengatakannya juga, dengan bobot pastoral.
               </p>
               <p style={proseSubhead}>Masih berlaku hari ini</p>
               <p style={proseDark}>
@@ -1672,7 +1675,7 @@ export default function LeadersReadersClient({
               "Membaca sebuah buku seharusnya menjadi percakapan antara kamu dan penulisnya. Dia diasumsikan tahu lebih banyak tentang topik itu daripada kamu; jika tidak, kamu mungkin tidak perlu repot-repot membaca bukunya.",
               lang
             )}
-            attribution="Mortimer Adler — How to Read a Book, 1940"
+            attribution="Mortimer Adler — How to Read a Book"
           />
 
           {/* Dashboard CTA at bottom */}
