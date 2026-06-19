@@ -15,7 +15,7 @@ const navy      = "oklch(22% 0.10 260)";
 const orange    = "oklch(65% 0.15 45)";
 const offWhite  = "oklch(96% 0.005 80)";
 const lightGray = "oklch(88% 0.008 80)";
-const bodyText  = "oklch(35% 0.08 260)";
+const bodyText  = "oklch(38% 0.05 260)";
 const FONT      = "var(--font-montserrat), Montserrat, sans-serif";
 const CORMORANT = "var(--font-cormorant), 'Cormorant Garamond', Georgia, serif";
 
@@ -109,21 +109,21 @@ const BOOKS: Book[] = [
     buyUrl: "https://www.amazon.com/dp/1610392507",
   },
   {
-    id: "foreign-to-familiar",
-    title: "Foreign to Familiar",
-    titleId: "Foreign to Familiar",
-    author: "Sarah Lanier",
-    coverUrl: "https://covers.openlibrary.org/b/isbn/9781882655366-L.jpg",
+    id: "tribe",
+    title: "Tribe",
+    titleId: "Tribe",
+    author: "Sebastian Junger",
+    coverUrl: "https://covers.openlibrary.org/b/isbn/9781455566389-L.jpg",
     descriptionEn:
-      "Sarah Lanier offers one of the clearest introductions to hot-climate and cold-climate cultures, high-context and low-context communication, and what it actually feels like to move between them. Short, readable, and deeply practical for cross-cultural workers.",
+      "Sebastian Junger investigates why soldiers often miss war and why so many people feel a deep longing for belonging and shared purpose. Drawing on anthropology, history, and conflict reporting, he reveals how modern life has stripped away the tight-knit community that human beings are wired for. A short, powerful read on what holds people together.",
     descriptionId:
-      "Sarah Lanier menawarkan salah satu pengantar terjelas tentang budaya iklim panas dan dingin, komunikasi konteks tinggi dan rendah, serta rasanya berpindah di antara keduanya. Singkat, mudah dibaca, dan sangat praktis bagi pekerja lintas budaya.",
+      "Sebastian Junger menyelidiki mengapa tentara sering merindukan masa perang dan mengapa banyak orang merasakan kerinduan mendalam akan rasa memiliki dan tujuan bersama. Buku singkat dan kuat tentang apa yang menyatukan manusia.",
     whyReadEn:
-      "A short read that carries a long impact. Many cross-cultural workers say this is the first book that finally made sense of their own confusion.",
+      "For any leader working in community, this names the human need for belonging with striking clarity. The cross-cultural tension — between individual autonomy and tribal solidarity — is at the heart of the book.",
     whyReadId:
-      "Bacaan singkat yang berdampak panjang. Banyak pekerja lintas budaya mengatakan ini adalah buku pertama yang akhirnya menjelaskan kebingungan mereka sendiri.",
+      "Bagi pemimpin yang bekerja dalam komunitas, buku ini menamai kebutuhan manusia akan rasa memiliki dengan kejernihan yang mencolok. Ketegangan lintas budaya antara otonomi individu dan solidaritas kelompok ada di jantung buku ini.",
     category: "cross-cultural",
-    buyUrl: "https://www.amazon.com/dp/1882655362",
+    buyUrl: "https://www.amazon.com/dp/1455566381",
   },
   {
     id: "when-helping-hurts",
@@ -144,28 +144,28 @@ const BOOKS: Book[] = [
   },
   // ── Faith ─────────────────────────────────────────────────────────────────
   {
-    id: "spiritual-leadership",
-    title: "Spiritual Leadership",
-    titleId: "Spiritual Leadership",
-    author: "J. Oswald Sanders",
-    coverUrl: "https://covers.openlibrary.org/b/isbn/9780802430175-L.jpg",
+    id: "ruthless-elimination-of-hurry",
+    title: "The Ruthless Elimination of Hurry",
+    titleId: "The Ruthless Elimination of Hurry",
+    author: "John Mark Comer",
+    coverUrl: "https://covers.openlibrary.org/b/isbn/9780525653097-L.jpg",
     descriptionEn:
-      "First published in 1967 and never outdated, Sanders lays out what it means to lead under God's authority rather than by personal ambition. One of the most widely assigned books in leadership formation programs for Christian workers around the world.",
+      "John Mark Comer argues that hurry is the great enemy of the spiritual life, and that the pace at which most leaders live is incompatible with the formation Jesus modelled. Drawing on Dallas Willard and the Desert Fathers, he makes a compelling case for a slower, more intentional life. Reading, by nature, requires you to slow down.",
     descriptionId:
-      "Pertama diterbitkan tahun 1967 dan tidak pernah usang, Sanders memaparkan apa artinya memimpin di bawah otoritas Allah daripada ambisi pribadi. Salah satu buku yang paling banyak ditugaskan dalam program pembentukan kepemimpinan bagi pekerja Kristen di seluruh dunia.",
+      "John Mark Comer berargumen bahwa tergesa-gesa adalah musuh besar kehidupan rohani, dan bahwa tempo di mana sebagian besar pemimpin hidup tidak sejalan dengan pembentukan yang dicontohkan Yesus. Sebuah seruan yang meyakinkan untuk hidup yang lebih lambat dan lebih disengaja.",
     whyReadEn:
-      "If you have been in leadership for years and have never read this, it will stop you in your tracks. Read it slowly.",
+      "If you feel too busy to read, this is the first book to read. Comer diagnoses the hurry that keeps leaders from the formation they most need.",
     whyReadId:
-      "Jika kamu sudah bertahun-tahun dalam kepemimpinan dan belum pernah membaca ini, buku ini akan membuatmu berhenti sejenak. Bacalah perlahan.",
+      "Kalau kamu merasa terlalu sibuk untuk membaca, inilah buku pertama yang perlu dibaca. Comer mendiagnosis ketergesa-gesaan yang menghalangi pemimpin dari pembentukan yang paling mereka butuhkan.",
     category: "faith",
-    buyUrl: "https://www.amazon.com/dp/0802430171",
+    buyUrl: "https://www.amazon.com/dp/0525653090",
   },
   {
     id: "making-of-a-leader",
     title: "The Making of a Leader",
     titleId: "The Making of a Leader",
     author: "Robert Clinton",
-    coverUrl: "https://covers.openlibrary.org/b/isbn/9780891091837-L.jpg",
+    coverUrl: "https://covers.openlibrary.org/b/isbn/0891091831-L.jpg",
     descriptionEn:
       "Robert Clinton spent decades studying the life patterns of Christian leaders and found that the most significant growth usually comes through trial, not success. This book gives you a map of leadership development stages and helps you locate yourself on it.",
     descriptionId:
@@ -271,12 +271,13 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
     <p
       style={{
         fontFamily: FONT,
-        fontSize: "0.68rem",
-        letterSpacing: "0.18em",
+        fontSize: "0.75rem",
+        letterSpacing: "0.12em",
         color: orange,
         fontWeight: 700,
         marginBottom: "1.25rem",
         textTransform: "uppercase" as const,
+        marginTop: 0,
       }}
     >
       {children}
@@ -297,14 +298,60 @@ function SectionH2({
       style={{
         fontFamily: CORMORANT,
         fontWeight: 600,
-        fontSize: "clamp(1.6rem, 3.5vw, 2.2rem)",
+        fontSize: "clamp(28px, 4vw, 48px)",
         color: dark ? "white" : navy,
         marginBottom: "1.25rem",
         lineHeight: 1.15,
+        marginTop: 0,
       }}
     >
       {children}
     </h2>
+  );
+}
+
+// ─── Quote interstitial ────────────────────────────────────────────────────────
+function QuoteInterstitial({
+  quote,
+  attribution,
+  dark = false,
+}: {
+  quote: string;
+  attribution: string;
+  dark?: boolean;
+}) {
+  return (
+    <section style={{ background: dark ? navy : offWhite, padding: "5rem 1.5rem" }}>
+      <div style={{ maxWidth: "680px", margin: "0 auto", textAlign: "center" }}>
+        <p
+          style={{
+            fontFamily: CORMORANT,
+            fontStyle: "italic",
+            fontSize: "clamp(1.4rem, 3.2vw, 2rem)",
+            color: dark ? offWhite : navy,
+            lineHeight: 1.55,
+            marginBottom: "1.5rem",
+            marginTop: 0,
+          }}
+        >
+          &ldquo;{quote}&rdquo;
+        </p>
+        <cite
+          style={{
+            display: "block",
+            fontFamily: FONT,
+            fontSize: "0.72rem",
+            fontWeight: 700,
+            letterSpacing: "0.12em",
+            color: orange,
+            textTransform: "uppercase",
+            fontStyle: "normal",
+          }}
+        >
+          — {attribution}
+        </cite>
+      </div>
+    </section>
   );
 }
 
@@ -662,15 +709,20 @@ export default function LeadersReadersClient({
           overflow: "hidden",
         }}
       >
-        {/* Orange accent bar */}
-        <div
+        {/* Background image — luminosity overlay */}
+        <img
+          src="/pathway-library.jpg"
+          alt=""
+          aria-hidden="true"
           style={{
             position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            height: "3px",
-            background: orange,
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            opacity: 0.22,
+            mixBlendMode: "luminosity",
+            pointerEvents: "none",
           }}
         />
         <div className="container-wide" style={{ position: "relative" }}>
@@ -895,6 +947,13 @@ export default function LeadersReadersClient({
         </div>
       </section>
 
+      {/* Q1 — C.S. Lewis */}
+      <QuoteInterstitial
+        quote="In reading great literature I become a thousand men and yet remain myself."
+        attribution="C.S. Lewis — An Experiment in Criticism, 1961"
+        dark
+      />
+
       {/* ══════════════════════════════════════════════════════
           BEFORE / AFTER
       ══════════════════════════════════════════════════════ */}
@@ -1058,49 +1117,12 @@ export default function LeadersReadersClient({
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════
-          STAT CALLOUT
-      ══════════════════════════════════════════════════════ */}
-      <section style={{ background: navy, paddingBlock: "clamp(3rem, 5vw, 5rem)" }}>
-        <div
-          className="container-wide"
-          style={{
-            maxWidth: 680,
-            textAlign: "center",
-          }}
-        >
-          <p
-            style={{
-              fontFamily: CORMORANT,
-              fontStyle: "italic",
-              fontSize: "clamp(1.3rem, 3vw, 1.8rem)",
-              color: offWhite,
-              lineHeight: 1.6,
-              marginBottom: "1.25rem",
-            }}
-          >
-            &ldquo;
-            {t(
-              "In my whole life, I have known no wise people who didn't read all the time, none, zero.",
-              "Sepanjang hidupku, aku tidak pernah mengenal orang bijak yang tidak membaca sepanjang waktu, tidak ada satu pun.",
-              lang
-            )}
-            &rdquo;
-          </p>
-          <p
-            style={{
-              fontFamily: FONT,
-              fontSize: "0.72rem",
-              fontWeight: 700,
-              letterSpacing: "0.12em",
-              color: orange,
-              textTransform: "uppercase" as const,
-            }}
-          >
-            — Charlie Munger
-          </p>
-        </div>
-      </section>
+      {/* Q4 — Charlie Munger */}
+      <QuoteInterstitial
+        quote="In my whole life, I have known no wise people who didn't read all the time, none, zero."
+        attribution="Charlie Munger — Poor Charlie's Almanack, 2005"
+        dark
+      />
 
       {/* ══════════════════════════════════════════════════════
           TEACHING — MOVEMENT 2: CROSS-CULTURAL DISCIPLINE
@@ -1170,117 +1192,18 @@ export default function LeadersReadersClient({
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════
-          QUOTE HIGHLIGHTS
-      ══════════════════════════════════════════════════════ */}
-      <section
-        style={{
-          background: offWhite,
-          paddingBlock: "clamp(4rem, 7vw, 7rem)",
-        }}
-      >
-        <div className="container-wide">
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-              gap: "1px",
-              background: lightGray,
-            }}
-          >
-            {/* Quote 1 — Wesley */}
-            <blockquote
-              style={{
-                background: "white",
-                padding: "2rem 2.5rem",
-                borderTop: `3px solid ${orange}`,
-                margin: 0,
-              }}
-            >
-              <p
-                style={{
-                  fontFamily: CORMORANT,
-                  fontStyle: "italic",
-                  fontSize: "clamp(1.05rem, 2.2vw, 1.25rem)",
-                  color: navy,
-                  lineHeight: 1.55,
-                  marginBottom: "1rem",
-                }}
-              >
-                &ldquo;
-                {t(
-                  "Whether you like it or no, read and pray daily. It is for your life.",
-                  "Suka atau tidak suka, bacalah dan berdoalah setiap hari. Itu demi hidupmu.",
-                  lang
-                )}
-                &rdquo;
-              </p>
-              <cite
-                style={{
-                  display: "block",
-                  fontFamily: FONT,
-                  fontSize: "0.72rem",
-                  fontWeight: 700,
-                  letterSpacing: "0.1em",
-                  color: orange,
-                  textTransform: "uppercase" as const,
-                  fontStyle: "normal",
-                }}
-              >
-                —{" "}
-                {t(
-                  "John Wesley, letter to a pastor, 1760",
-                  "John Wesley, surat kepada seorang pendeta, 1760",
-                  lang
-                )}
-              </cite>
-            </blockquote>
+      {/* Q3 — Abraham Lincoln */}
+      <QuoteInterstitial
+        quote="A capacity, and taste, for reading gives access to whatever has already been discovered by others."
+        attribution="Abraham Lincoln — Address to Wisconsin State Agricultural Society, 1859"
+      />
 
-            {/* Quote 2 — Sanders */}
-            <blockquote
-              style={{
-                background: navy,
-                padding: "2rem 2.5rem",
-                borderTop: `3px solid ${orange}`,
-                margin: 0,
-              }}
-            >
-              <p
-                style={{
-                  fontFamily: CORMORANT,
-                  fontStyle: "italic",
-                  fontSize: "clamp(1.05rem, 2.2vw, 1.25rem)",
-                  color: offWhite,
-                  lineHeight: 1.55,
-                  marginBottom: "1rem",
-                }}
-              >
-                &ldquo;
-                {t(
-                  "Seek knowledge from the cradle to the grave.",
-                  "Tuntutlah ilmu dari buaian hingga liang lahat.",
-                  lang
-                )}
-                &rdquo;
-              </p>
-              <cite
-                style={{
-                  display: "block",
-                  fontFamily: FONT,
-                  fontSize: "0.72rem",
-                  fontWeight: 700,
-                  letterSpacing: "0.1em",
-                  color: orange,
-                  textTransform: "uppercase" as const,
-                  fontStyle: "normal",
-                }}
-              >
-                — J. Oswald Sanders, Spiritual Leadership
-              </cite>
-            </blockquote>
-          </div>
-        </div>
-      </section>
+      {/* Q6 — Chinua Achebe */}
+      <QuoteInterstitial
+        quote="Until the lions have their own historians, the history of the hunt will always glorify the hunter."
+        attribution="Chinua Achebe — The Paris Review, 1994"
+        dark
+      />
 
       {/* ══════════════════════════════════════════════════════
           TEACHING — MOVEMENT 3: BUILDING THE HABIT
@@ -1292,7 +1215,7 @@ export default function LeadersReadersClient({
           paddingBlock: "clamp(4rem, 7vw, 7rem)",
         }}
       >
-        <div className="container-wide" style={{ maxWidth: 760 }}>
+        <div className="container-wide" style={{ maxWidth: 860 }}>
           <SectionLabel>
             {t("MOVEMENT 3", "GERAKAN 3", lang)}
           </SectionLabel>
@@ -1300,45 +1223,175 @@ export default function LeadersReadersClient({
             {t("Building the Habit", "Membangun Kebiasaan", lang)}
           </SectionH2>
 
-          {lang === "en" ? (
-            <>
-              <p style={proseDark}>
-                The shift from guilt to identity is real, and it matters. But it still has to land somewhere practical. So here is what I have found works, and what I have seen work in leaders I know.
+          <p style={{ ...proseDark, maxWidth: 640, marginBottom: "3rem" }}>
+            {t(
+              "The identity shift is real. But it has to land somewhere practical. These four steps are where most leaders find traction.",
+              "Pergeseran identitas itu nyata. Tapi harus mendarat di suatu tempat yang praktis. Empat langkah ini adalah tempat sebagian besar pemimpin menemukan momentum.",
+              lang
+            )}
+          </p>
+
+          {/* Step cards */}
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+              gap: "1.25rem",
+              marginBottom: "3rem",
+            }}
+          >
+            {/* Step 1 */}
+            <div
+              style={{
+                background: "oklch(26% 0.09 260)",
+                borderRadius: 8,
+                padding: "1.75rem",
+                borderTop: `3px solid ${orange}`,
+              }}
+            >
+              <div style={{ marginBottom: "1rem" }}>
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+                  <circle cx="16" cy="16" r="14" stroke={orange} strokeWidth="1.5"/>
+                  <path d="M16 10v6l4 2" stroke={orange} strokeWidth="1.5" strokeLinecap="round"/>
+                </svg>
+              </div>
+              <p style={{ fontFamily: FONT, fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.12em", color: orange, textTransform: "uppercase" as const, marginBottom: "0.5rem", marginTop: 0 }}>
+                {t("Step 1", "Langkah 1", lang)}
               </p>
-              <p style={proseDark}>
-                <strong style={{ color: offWhite }}>Start small and stay consistent.</strong> Fifteen minutes a day is not much. But it compounds in a way that an occasional reading marathon does not. The research on habit formation consistently shows that frequency beats duration. A leader who reads 15 minutes every morning for a year has built something durable and interior. A leader who reads 3 hours every few months has a pleasant memory and not much else. The daily practice builds the muscle. The muscle is what you take into difficult conversations, confusing contexts, and decisions that don&apos;t have obvious answers.
+              <p style={{ fontFamily: CORMORANT, fontSize: "1.3rem", fontWeight: 600, color: offWhite, marginBottom: "0.75rem", marginTop: 0, lineHeight: 1.2 }}>
+                {t("Start Embarrassingly Small", "Mulailah dari yang Sangat Kecil", lang)}
               </p>
-              <p style={proseDark}>
-                <strong style={{ color: offWhite }}>Protect the time.</strong> This is not romantic advice. This is scheduling. Leaders who read &ldquo;when they have time&rdquo; never read, because there is never spare time, only scheduled time. Find where your reading sits in the day. Morning is often best, before the inbox and the urgent crowd in. But the right time is the time you will actually keep. Put it in your calendar. Treat it the way you treat a commitment to someone else.
+              <p style={{ fontFamily: FONT, fontSize: "0.875rem", color: "oklch(75% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
+                {t(
+                  "Ten minutes a day beats two hours once a month. Frequency builds the identity. Duration follows later.",
+                  "Sepuluh menit sehari mengalahkan dua jam sekali sebulan. Frekuensilah yang membangun identitas. Durasinya mengikuti kemudian.",
+                  lang
+                )}
               </p>
-              <p style={proseDark}>
-                <strong style={{ color: offWhite }}>Read with purpose, not guilt.</strong> You do not have to finish every book. I have started books, read what I needed, and closed them without ceremony. Some books are worth reading cover to cover, slowly. Others give you what they have in three chapters and then you are done. The goal is not to complete books. The goal is to be formed by reading. Give yourself permission to read what is feeding you right now and to set aside what isn&apos;t.
+            </div>
+
+            {/* Step 2 */}
+            <div
+              style={{
+                background: "oklch(26% 0.09 260)",
+                borderRadius: 8,
+                padding: "1.75rem",
+                borderTop: `3px solid ${orange}`,
+              }}
+            >
+              <div style={{ marginBottom: "1rem" }}>
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+                  <rect x="4" y="6" width="24" height="20" rx="2" stroke={orange} strokeWidth="1.5"/>
+                  <path d="M4 12h24" stroke={orange} strokeWidth="1.5"/>
+                  <path d="M10 18h4M10 22h8" stroke={orange} strokeWidth="1.5" strokeLinecap="round"/>
+                </svg>
+              </div>
+              <p style={{ fontFamily: FONT, fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.12em", color: orange, textTransform: "uppercase" as const, marginBottom: "0.5rem", marginTop: 0 }}>
+                {t("Step 2", "Langkah 2", lang)}
               </p>
-              <p style={{ ...proseDark, marginBottom: 0 }}>
-                <strong style={{ color: offWhite }}>Read across cultures deliberately.</strong> Here is a simple practice worth building: keep a rough mental count of the last five books you read and notice who wrote them. If they were all from one country or one tradition, that is worth noticing. Not as an accusation, but as information. The cross-cultural leader who only reads cross-cultural books by Western observers of other cultures is still reading through one lens. Find the thinkers who are speaking from inside the contexts you are trying to understand. They exist. They are often not in the airport bookshop, but they are findable.
+              <p style={{ fontFamily: CORMORANT, fontSize: "1.3rem", fontWeight: 600, color: offWhite, marginBottom: "0.75rem", marginTop: 0, lineHeight: 1.2 }}>
+                {t("Guard the Time", "Jaga Waktunya", lang)}
               </p>
-            </>
-          ) : (
-            <>
-              <p style={proseDark}>
-                Pergeseran dari rasa bersalah ke identitas itu nyata dan penting. Tapi ia tetap harus mendarat di suatu tempat yang praktis. Jadi ini yang aku temukan berhasil, dan yang aku lihat berhasil pada pemimpin yang aku kenal.
+              <p style={{ fontFamily: FONT, fontSize: "0.875rem", color: "oklch(75% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
+                {t(
+                  "Leaders who read 'when they have time' never read. Put it in your calendar like you would a meeting.",
+                  "Pemimpin yang membaca 'kalau ada waktu' tidak pernah membaca. Masukkan ke kalender seperti jadwal pertemuan.",
+                  lang
+                )}
               </p>
-              <p style={proseDark}>
-                <strong style={{ color: offWhite }}>Mulailah kecil dan tetap konsisten.</strong> Lima belas menit sehari bukan hal yang besar. Tapi itu bertumbuh secara berganda dengan cara yang tidak bisa dilakukan oleh maraton membaca yang sesekali. Penelitian tentang pembentukan kebiasaan secara konsisten menunjukkan bahwa frekuensi mengalahkan durasi. Seorang pemimpin yang membaca 15 menit setiap pagi selama setahun telah membangun sesuatu yang tahan lama dan berakar dalam. Seorang pemimpin yang membaca 3 jam setiap beberapa bulan sekali memiliki kenangan yang menyenangkan dan tidak banyak lagi. Latihan harian membangun otot. Otot itulah yang kamu bawa ke dalam percakapan sulit, konteks yang membingungkan, dan keputusan yang tidak memiliki jawaban jelas.
+            </div>
+
+            {/* Step 3 */}
+            <div
+              style={{
+                background: "oklch(26% 0.09 260)",
+                borderRadius: 8,
+                padding: "1.75rem",
+                borderTop: `3px solid ${orange}`,
+              }}
+            >
+              <div style={{ marginBottom: "1rem" }}>
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+                  <path d="M6 8h14a2 2 0 010 4H6V8z" stroke={orange} strokeWidth="1.5"/>
+                  <path d="M6 12v12l4-3 4 3 4-3 4 3V8" stroke={orange} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </div>
+              <p style={{ fontFamily: FONT, fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.12em", color: orange, textTransform: "uppercase" as const, marginBottom: "0.5rem", marginTop: 0 }}>
+                {t("Step 3", "Langkah 3", lang)}
               </p>
-              <p style={proseDark}>
-                <strong style={{ color: offWhite }}>Lindungi waktu itu.</strong> Ini bukan saran yang romantis. Ini soal penjadwalan. Pemimpin yang membaca &ldquo;kalau ada waktu&rdquo; tidak pernah membaca, karena tidak pernah ada waktu luang, hanya ada waktu yang dijadwalkan. Temukan di mana waktu membacamu berada dalam satu hari. Pagi hari sering kali paling baik, sebelum kotak masuk dan hal-hal mendesak berdatangan. Tapi waktu yang tepat adalah waktu yang benar-benar akan kamu pertahankan. Masukkan ke kalendermu. Perlakukan seperti kamu memperlakukan komitmen kepada orang lain.
+              <p style={{ fontFamily: CORMORANT, fontSize: "1.3rem", fontWeight: 600, color: offWhite, marginBottom: "0.75rem", marginTop: 0, lineHeight: 1.2 }}>
+                {t("Drop the Guilt Book", "Tinggalkan Buku Rasa Bersalah", lang)}
               </p>
-              <p style={proseDark}>
-                <strong style={{ color: offWhite }}>Bacalah dengan tujuan, bukan rasa bersalah.</strong> Kamu tidak harus menyelesaikan setiap buku. Aku sudah memulai buku, membaca apa yang aku butuhkan, dan menutupnya tanpa seremonial. Beberapa buku layak dibaca dari awal hingga akhir, dengan perlahan. Yang lain memberikan apa yang mereka miliki dalam tiga bab dan selesai. Tujuannya bukan menyelesaikan buku. Tujuannya adalah dibentuk oleh membaca. Beri dirimu izin untuk membaca apa yang memberimu makan sekarang dan menyisihkan yang tidak.
+              <p style={{ fontFamily: FONT, fontSize: "0.875rem", color: "oklch(75% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
+                {t(
+                  "You don't have to finish every book. Read what feeds you now. Set aside what doesn't. The goal is formation, not completion.",
+                  "Kamu tidak harus menyelesaikan setiap buku. Bacalah yang memberimu makan sekarang. Sisihkan yang tidak. Tujuannya adalah pembentukan, bukan penyelesaian.",
+                  lang
+                )}
               </p>
-              <p style={{ ...proseDark, marginBottom: 0 }}>
-                <strong style={{ color: offWhite }}>Bacalah lintas budaya dengan sengaja.</strong> Ini adalah praktik sederhana yang layak dibangun: pertahankan perhitungan kasar dalam pikiranmu tentang lima buku terakhir yang kamu baca dan perhatikan siapa yang menulisnya. Kalau semuanya dari satu negara atau satu tradisi, itu layak untuk diperhatikan. Bukan sebagai tuduhan, tapi sebagai informasi. Pemimpin lintas budaya yang hanya membaca buku lintas budaya oleh pengamat Barat tentang budaya lain masih membaca melalui satu lensa. Temukan pemikir yang berbicara dari dalam konteks yang sedang kamu coba pahami. Mereka ada. Mereka sering tidak ada di toko buku bandara, tapi mereka bisa ditemukan.
+            </div>
+
+            {/* Step 4 */}
+            <div
+              style={{
+                background: "oklch(26% 0.09 260)",
+                borderRadius: 8,
+                padding: "1.75rem",
+                borderTop: `3px solid ${orange}`,
+              }}
+            >
+              <div style={{ marginBottom: "1rem" }}>
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+                  <circle cx="16" cy="16" r="12" stroke={orange} strokeWidth="1.5"/>
+                  <path d="M10 16c0-3.3 2.7-6 6-6s6 2.7 6 6-2.7 6-6 6" stroke={orange} strokeWidth="1.5" strokeLinecap="round"/>
+                  <circle cx="16" cy="16" r="2" fill={orange}/>
+                </svg>
+              </div>
+              <p style={{ fontFamily: FONT, fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.12em", color: orange, textTransform: "uppercase" as const, marginBottom: "0.5rem", marginTop: 0 }}>
+                {t("Step 4", "Langkah 4", lang)}
               </p>
-            </>
-          )}
+              <p style={{ fontFamily: CORMORANT, fontSize: "1.3rem", fontWeight: 600, color: offWhite, marginBottom: "0.75rem", marginTop: 0, lineHeight: 1.2 }}>
+                {t("Notice the Pattern", "Perhatikan Polanya", lang)}
+              </p>
+              <p style={{ fontFamily: FONT, fontSize: "0.875rem", color: "oklch(75% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
+                {t(
+                  "Who are you reading? Check your last five books. If every voice comes from the same tradition, that's worth noticing.",
+                  "Siapa yang kamu baca? Periksa lima buku terakhirmu. Kalau setiap suara berasal dari tradisi yang sama, itu layak diperhatikan.",
+                  lang
+                )}
+              </p>
+            </div>
+          </div>
+
+          {/* Try this */}
+          <div
+            style={{
+              background: "oklch(26% 0.09 260)",
+              borderLeft: `3px solid ${orange}`,
+              borderRadius: 4,
+              padding: "1.25rem 1.5rem",
+              maxWidth: 640,
+            }}
+          >
+            <p style={{ fontFamily: FONT, fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.12em", color: orange, textTransform: "uppercase" as const, marginBottom: "0.5rem", marginTop: 0 }}>
+              {t("Try this week", "Coba minggu ini", lang)}
+            </p>
+            <p style={{ fontFamily: FONT, fontSize: "0.9rem", color: offWhite, lineHeight: 1.7, margin: 0 }}>
+              {t(
+                "Pick one book you've been meaning to read. Not the one you think you should read — the one you actually want to read. Block 10 minutes tomorrow morning and start.",
+                "Pilih satu buku yang sudah lama ingin kamu baca. Bukan yang kamu pikir harus dibaca — tapi yang benar-benar ingin kamu baca. Blokir 10 menit besok pagi dan mulailah.",
+                lang
+              )}
+            </p>
+          </div>
         </div>
       </section>
+
+      {/* Q2 — Francis Bacon */}
+      <QuoteInterstitial
+        quote="Some books are to be tasted, others to be swallowed, and some few to be chewed and digested."
+        attribution="Francis Bacon — Of Studies, 1625"
+      />
 
       {/* ══════════════════════════════════════════════════════
           BOOK LIBRARY
@@ -1570,6 +1623,13 @@ export default function LeadersReadersClient({
           onClose={() => setSelectedBook(null)}
         />
       )}
+
+      {/* Q5 — Seneca */}
+      <QuoteInterstitial
+        quote="You must linger among a limited number of master-thinkers, and digest their works, if you would derive ideas which shall win firm hold in your mind."
+        attribution="Seneca — Letters to Lucilius, c. 65 AD"
+        dark
+      />
 
       {/* ══════════════════════════════════════════════════════
           READING PLAN
@@ -2060,6 +2120,12 @@ export default function LeadersReadersClient({
         </div>
       </section>
 
+      {/* Q9 — Frederick Douglass */}
+      <QuoteInterstitial
+        quote="From that moment, I understood the pathway from slavery to freedom. Knowledge unfits a child to be a slave."
+        attribution="Frederick Douglass — Narrative of the Life of Frederick Douglass, 1845"
+      />
+
       {/* ══════════════════════════════════════════════════════
           FAITH ANCHOR
       ══════════════════════════════════════════════════════ */}
@@ -2261,6 +2327,13 @@ export default function LeadersReadersClient({
           </div>
         </div>
       </section>
+
+      {/* Q10 — Mortimer Adler */}
+      <QuoteInterstitial
+        quote="Reading a book should be a conversation between you and the author. Presumably he knows more about the subject than you do; if not, you probably should not be bothering with his book."
+        attribution="Mortimer Adler — How to Read a Book, 1940"
+        dark
+      />
 
       {/* ══════════════════════════════════════════════════════
           FROM THE FIELD
