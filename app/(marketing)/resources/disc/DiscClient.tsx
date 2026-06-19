@@ -887,6 +887,8 @@ export default function DiscClient({
       {/* ===================================================================
           SECTION 1 — HERO
       =================================================================== */}
+      <LangToggle />
+
       <section
         id="disc-hero"
         style={{
@@ -897,15 +899,10 @@ export default function DiscClient({
           padding: "clamp(3rem, 8vw, 5rem) clamp(1.25rem, 5vw, 3rem) clamp(2.5rem, 6vw, 4rem)",
         }}
       >
-        {/* LangToggle — inside hero, top-right */}
-        <div style={{ position: "absolute", top: "1rem", right: "1.5rem", zIndex: 10 }}>
-          <LangToggle />
-        </div>
-
         {/* Hero image — luminosity blend */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/disc/portraits.png"
+          src="/images/resources/disc/hero.jpg"
           alt=""
           aria-hidden="true"
           style={{
