@@ -882,73 +882,6 @@ export default function LeadersReadersClient({
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════
-          LEARNING OUTCOMES
-      ══════════════════════════════════════════════════════ */}
-      <section
-        style={{
-          background: offWhite,
-          paddingBlock: "clamp(4rem, 7vw, 7rem)",
-        }}
-      >
-        <div className="container-wide">
-          <div
-            style={{
-              background: "oklch(97% 0.010 50)",
-              border: `1px solid oklch(88% 0.030 50)`,
-              borderRadius: 6,
-              padding: "1.75rem 2rem",
-              maxWidth: 760,
-            }}
-          >
-            <SectionLabel>{t("LEARNING OUTCOMES", "TUJUAN PEMBELAJARAN", lang)}</SectionLabel>
-            <p
-              style={{
-                fontFamily: FONT,
-                fontSize: "0.875rem",
-                color: "oklch(55% 0.05 260)",
-                marginBottom: "0.875rem",
-              }}
-            >
-              {t(
-                "After this module, you will be able to:",
-                "Setelah modul ini, kamu akan mampu:",
-                lang
-              )}
-            </p>
-            <ol style={{ paddingLeft: "1.25rem", margin: 0 }}>
-              {[
-                {
-                  en: "Articulate why reading is a distinctly cross-cultural leadership discipline, not just a general self-improvement habit",
-                  id: "Menjelaskan mengapa membaca adalah disiplin kepemimpinan lintas budaya yang khas, bukan sekadar kebiasaan pengembangan diri umum",
-                },
-                {
-                  en: "Describe yourself as a leader who reads because of who you are becoming, not because of guilt about what you are not doing",
-                  id: "Menggambarkan dirimu sebagai pemimpin yang membaca karena siapa yang sedang kamu jadikan, bukan karena rasa bersalah tentang apa yang belum kamu lakukan",
-                },
-                {
-                  en: "Identify at least two voices from outside your own cultural background to add to your regular reading",
-                  id: "Mengidentifikasi setidaknya dua suara dari luar latar belakang budayamu sendiri untuk ditambahkan ke daftar bacaanmu",
-                },
-              ].map((item, i) => (
-                <li
-                  key={i}
-                  style={{
-                    fontFamily: FONT,
-                    fontSize: "0.875rem",
-                    color: bodyText,
-                    lineHeight: 1.7,
-                    marginBottom: i < 2 ? "0.75rem" : 0,
-                  }}
-                >
-                  {t(item.en, item.id, lang)}
-                </li>
-              ))}
-            </ol>
-          </div>
-        </div>
-      </section>
-
       {/* Q1 — C.S. Lewis */}
       <QuoteInterstitial
         quote="In reading great literature I become a thousand men and yet remain myself."
@@ -1076,21 +1009,21 @@ export default function LeadersReadersClient({
             {t("MOVEMENT 1", "GERAKAN 1", lang)}
           </SectionLabel>
           <SectionH2>
-            {t("The Identity Shift", "Pergeseran Identitas", lang)}
+            {t("The Leader Who Reads", "Pemimpin yang Membaca", lang)}
           </SectionH2>
 
           {lang === "en" ? (
             <>
-              <p style={proseSubhead}>The guilt doesn&apos;t work</p>
+              <p style={proseSubhead}>You want to read more</p>
               <p style={prose}>
-                Most of us carry a reading guilt that functions like background noise. Not loud enough to do anything about, but never fully gone either. There is a book you meant to finish six months ago. An author someone recommended two years back that you still haven&apos;t read.
+                Most leaders want to read more than they currently do. If you opened this module, you&apos;re probably one of them. Not because you don&apos;t care — you do. It&apos;s just that the day fills up, the book stays on the shelf, and after a while it starts to feel like reading is something other people do.
               </p>
               <p style={prose}>
-                This guilt has never helped. And one of the most honest things you can do as a leader is stop treating guilt as a motivator and ask what is actually going on.
+                There is a more useful way into this. And it does not start with discipline or a longer to-do list.
               </p>
-              <p style={proseSubhead}>The wrong question</p>
+              <p style={proseSubhead}>A better question</p>
               <p style={prose}>
-                &ldquo;How do I read more?&rdquo; is the wrong question. It is a question about behaviour, and behaviour follows identity.
+                Most people ask: &ldquo;How do I read more?&rdquo; That is a question about behaviour, and behaviour follows identity.
               </p>
               <p style={prose}>
                 The more useful question is: what kind of leader do I want to be? Because if reading is part of the answer to that question, it will happen. If it is only on the to-do list, it will keep getting bumped.
@@ -1109,16 +1042,16 @@ export default function LeadersReadersClient({
             </>
           ) : (
             <>
-              <p style={proseSubhead}>Rasa bersalah tidak berhasil</p>
+              <p style={proseSubhead}>Kamu ingin membaca lebih banyak</p>
               <p style={prose}>
-                Kebanyakan dari kita membawa rasa bersalah soal membaca yang terasa seperti suara latar. Tidak cukup keras untuk berbuat sesuatu, tapi juga tidak pernah benar-benar hilang. Ada buku yang seharusnya kamu selesaikan enam bulan lalu. Ada penulis yang direkomendasikan seseorang dua tahun lalu yang belum juga kamu baca.
+                Kebanyakan pemimpin ingin membaca lebih banyak dari yang mereka lakukan sekarang. Kalau kamu membuka modul ini, kemungkinan besar kamu salah satunya. Bukan karena kamu tidak peduli — kamu peduli. Tapi hari-hari terasa penuh, buku tetap di rak, dan lama-lama rasanya seperti membaca adalah sesuatu yang dilakukan orang lain.
               </p>
               <p style={prose}>
-                Rasa bersalah ini tidak pernah membantu. Dan salah satu hal paling jujur yang bisa kamu lakukan sebagai pemimpin adalah berhenti menjadikan rasa bersalah sebagai motivator, dan mulai bertanya apa yang sebenarnya sedang terjadi.
+                Ada cara yang lebih berguna untuk masuk ke dalam ini. Dan itu tidak dimulai dengan disiplin atau daftar tugas yang lebih panjang.
               </p>
-              <p style={proseSubhead}>Pertanyaan yang salah</p>
+              <p style={proseSubhead}>Pertanyaan yang lebih baik</p>
               <p style={prose}>
-                &ldquo;Bagaimana aku bisa membaca lebih banyak?&rdquo; adalah pertanyaan yang salah. Itu pertanyaan tentang perilaku, dan perilaku mengikuti identitas.
+                Kebanyakan orang bertanya: &ldquo;Bagaimana aku bisa membaca lebih banyak?&rdquo; Itu pertanyaan tentang perilaku, dan perilaku mengikuti identitas.
               </p>
               <p style={prose}>
                 Pertanyaan yang lebih berguna adalah: pemimpin seperti apa yang ingin aku jadi? Karena kalau membaca adalah bagian dari jawaban atas pertanyaan itu, itu akan terjadi. Kalau membaca hanya ada di daftar tugas, ia akan terus tergeser.
