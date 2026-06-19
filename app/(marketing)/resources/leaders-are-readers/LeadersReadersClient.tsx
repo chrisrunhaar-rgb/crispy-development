@@ -166,7 +166,7 @@ const BOOKS: Book[] = [
     title: "The Making of a Leader",
     titleId: "The Making of a Leader",
     author: "Robert Clinton",
-    coverUrl: "https://covers.openlibrary.org/b/isbn/9780891091837-L.jpg",
+    coverUrl: "https://covers.openlibrary.org/b/id/14326841-L.jpg",
     descriptionEn:
       "Robert Clinton spent decades studying the life patterns of Christian leaders and found that the most significant growth usually comes through trial, not success. This book gives you a map of leadership development stages and helps you locate yourself on it.",
     descriptionId:
