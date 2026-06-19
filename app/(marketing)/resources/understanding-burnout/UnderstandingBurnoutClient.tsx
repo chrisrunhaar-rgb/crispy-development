@@ -83,7 +83,7 @@ function RiskSpectrumDiagram({ lang }: { lang: Lang }) {
         <div
           style={{
             position: "absolute", top: 0, left: "25%", width: "25%", height: 28,
-            background: "oklch(35% 0.09 260)", borderRadius: 4,
+            background: "oklch(65% 0.15 45)", borderRadius: 4,
             display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
           }}
         >
@@ -121,7 +121,7 @@ function RiskSpectrumDiagram({ lang }: { lang: Lang }) {
         <div
           style={{
             position: "absolute", top: 72, left: "50%", right: 0, height: 28,
-            background: "oklch(22% 0.10 260)", borderRadius: 4,
+            background: "oklch(65% 0.15 45)", borderRadius: 4,
             display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
           }}
         >
@@ -1134,96 +1134,6 @@ export default function UnderstandingBurnoutClient({
           {/* Hub-and-spoke SVG diagram */}
           <BurnoutCausesSpoke lang={lang} />
 
-          {/* 6 systemic cause cards */}
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-            gap: "1.25rem",
-            marginTop: "2.5rem",
-          }}>
-            {[
-              {
-                title: t("Lack of Control", "Kurangnya Kendali", lang),
-                body: t(
-                  "When leaders have little say over the decisions, resources, or pace that affect their work, the result is a chronic sense of helplessness. The work continues, but the ability to shape it diminishes. Over time, this erodes agency — and without agency, sustained engagement becomes impossible.",
-                  "Ketika para pemimpin memiliki sedikit kendali atas keputusan, sumber daya, atau tempo yang mempengaruhi pekerjaan mereka, hasilnya adalah rasa tidak berdaya yang kronis. Pekerjaan terus berlanjut, tetapi kemampuan untuk membentuknya berkurang. Seiring waktu, ini mengikis agensi — dan tanpa agensi, keterlibatan yang berkelanjutan menjadi tidak mungkin.",
-                  lang
-                ),
-              },
-              {
-                title: t("Lack of Reward", "Kurangnya Penghargaan", lang),
-                body: t(
-                  "Reward is not only financial. When contribution goes unacknowledged — by supervisors, teams, or the broader community — the intrinsic motivation that sustains cross-cultural workers begins to erode. The question 'does my work matter?' starts to go unanswered, and the silence becomes its own kind of weight.",
-                  "Penghargaan bukan hanya soal finansial. Ketika kontribusi tidak diakui — oleh atasan, tim, atau komunitas yang lebih luas — motivasi intrinsik yang menopang para pekerja lintas budaya mulai terkikis. Pertanyaan 'apakah pekerjaan saya berarti?' mulai tidak terjawab, dan keheningan itu menjadi bebannya sendiri.",
-                  lang
-                ),
-              },
-              {
-                title: t("Values Mismatch", "Ketidaksesuaian Nilai", lang),
-                body: t(
-                  "When the organization asks for things that conflict with what the leader believes matters — whether in ethics, priorities, or methodology — the dissonance is not abstract. It is felt in every decision, every meeting, every report. Over time, the cost of maintaining integrity in a misaligned system is one of the most consistent predictors of burnout.",
-                  "Ketika organisasi meminta hal-hal yang bertentangan dengan apa yang diyakini pemimpin sebagai penting — baik dalam etika, prioritas, maupun metodologi — disonans ini bukan sesuatu yang abstrak. Ini dirasakan dalam setiap keputusan, setiap pertemuan, setiap laporan. Seiring waktu, biaya mempertahankan integritas dalam sistem yang tidak selaras adalah salah satu prediktor kelelahan yang paling konsisten.",
-                  lang
-                ),
-              },
-              {
-                title: t("Work Overload", "Beban Kerja Berlebih", lang),
-                body: t(
-                  "Sustained overload — not temporary intensity — is the most direct path to exhaustion. In cross-cultural contexts, role boundaries are frequently unclear, reporting lines often span time zones, and the sense of responsibility to the work rarely turns off. The result is not just busyness: it is the slow depletion of the very resources needed to sustain the work.",
-                  "Beban berlebih yang berkelanjutan — bukan intensitas sementara — adalah jalur paling langsung menuju kelelahan. Dalam konteks lintas budaya, batas peran sering kali tidak jelas, jalur pelaporan seringkali merentang lintas zona waktu, dan rasa tanggung jawab terhadap pekerjaan jarang mati. Hasilnya bukan sekadar kesibukan: melainkan penipisan perlahan dari sumber daya yang justru dibutuhkan untuk mempertahankan pekerjaan.",
-                  lang
-                ),
-              },
-              {
-                title: t("Lack of Community", "Kurangnya Komunitas", lang),
-                body: t(
-                  "Cross-cultural workers are uniquely vulnerable to isolation — geographically, culturally, and relationally. When genuine community is absent, there is no one to name the warning signs, no one to carry part of the weight, no one to reflect back what is being lost. The research is consistent: social support is not a comfort, it is a structural protection against burnout.",
-                  "Pekerja lintas budaya sangat rentan terhadap isolasi — secara geografis, budaya, dan relasional. Ketika komunitas yang sejati tidak ada, tidak ada yang bisa menyebutkan tanda-tanda peringatan, tidak ada yang bisa menanggung sebagian beban, tidak ada yang bisa mencerminkan kembali apa yang sedang hilang. Penelitian ini konsisten: dukungan sosial bukan sekadar kenyamanan, melainkan perlindungan struktural terhadap kelelahan.",
-                  lang
-                ),
-              },
-              {
-                title: t("Lack of Fairness", "Kurangnya Keadilan", lang),
-                body: t(
-                  "When leaders observe inconsistency in how decisions are made — who receives support, who carries the heaviest loads, whose concerns are heard and whose are dismissed — the cumulative effect is a loss of trust in the system itself. This erosion of trust is one of the more insidious burnout drivers because it is relational and often unspoken.",
-                  "Ketika pemimpin mengamati inkonsistensi dalam cara keputusan dibuat — siapa yang mendapat dukungan, siapa yang menanggung beban paling berat, siapa yang keprihatinannya didengar dan siapa yang diabaikan — efek kumulatifnya adalah hilangnya kepercayaan pada sistem itu sendiri. Erosi kepercayaan ini adalah salah satu pendorong kelelahan yang lebih berbahaya karena bersifat relasional dan sering kali tidak terucapkan.",
-                  lang
-                ),
-              },
-            ].map(({ title, body }) => (
-              <div
-                key={title}
-                style={{
-                  background: navy,
-                  borderRadius: 10,
-                  padding: "1.5rem",
-                  display: "flex",
-                  flexDirection: "column" as const,
-                  gap: "0.75rem",
-                }}
-              >
-                <h3 style={{
-                  fontFamily: "Montserrat, sans-serif",
-                  fontSize: "0.95rem",
-                  fontWeight: 700,
-                  color: orange,
-                  margin: 0,
-                  letterSpacing: "0.02em",
-                }}>
-                  {title}
-                </h3>
-                <p style={{
-                  fontFamily: "Montserrat, sans-serif",
-                  fontSize: "0.88rem",
-                  lineHeight: 1.75,
-                  color: "oklch(82% 0.03 260)",
-                  margin: 0,
-                }}>
-                  {body}
-                </p>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
