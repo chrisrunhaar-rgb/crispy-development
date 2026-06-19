@@ -119,6 +119,21 @@ export const MODULE_CONNECTIONS: ModuleConnection[] = [
     angle_id: "mengapa komunikasi langsung dan berorientasi tugas sering menciptakan gesekan dalam budaya konteks tinggi — dan apa yang harus dilakukan",
   },
 
+  // DISC → Power Distance
+  // (Important Context section explicitly warns DISC was developed in Western corporate settings
+  //  and assumes cultural norms that do not hold in high-PDI contexts)
+  {
+    sourceSlug: "disc",
+    sourceSectionId: "disc-cultural-limits",
+    targetSlug: "power-distance",
+    targetTitle: "Power Distance in Leadership",
+    targetTitle_id: "Jarak Kekuasaan dalam Kepemimpinan",
+    topic: "how power distance shapes cultural assumptions in DISC",
+    topic_id: "bagaimana jarak kekuasaan membentuk asumsi budaya dalam DISC",
+    angle: "why Hofstede's Power Distance Index reveals the cultural blindspot at the heart of DISC — and what it means for leading in high-PDI contexts",
+    angle_id: "mengapa Indeks Jarak Kekuasaan Hofstede mengungkap titik buta budaya di inti DISC — dan artinya bagi kepemimpinan dalam konteks PDI tinggi",
+  },
+
   // Cultural Intelligence → Emotional Intelligence
   // (Section 2 explicitly says "Emotional intelligence helps you read people; cultural intelligence helps you read context")
   {

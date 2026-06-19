@@ -49,7 +49,6 @@ export default async function ResourcePage(props: any) {
   await requireModuleAccess(supabase, user?.id ?? null, RESOURCE_SLUG, user?.email ?? null);
 
   const savedResources = (user?.user_metadata?.saved_resources ?? []) as string[];
-  const isSaved = savedResources.includes(RESOURCE_SLUG);
 
   const breadcrumbSchema = generateResourceBreadcrumbSchema(RESOURCE_SLUG);
   const discResult = (user?.user_metadata?.disc_result ?? null) as string | null;
@@ -100,7 +99,7 @@ export default async function ResourcePage(props: any) {
       </div>
 
       {/* Assessment Content */}
-      <DiscClient isSaved={isSaved} discResult={discResult} discScores={discScores} />
+      <DiscClient discResult={discResult} discScores={discScores} />
       <ModuleConnector currentSlug={RESOURCE_SLUG} savedResources={savedResources} isLoggedIn={!!user} />
 
       {/* Related Resources */}

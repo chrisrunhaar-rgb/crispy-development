@@ -3,7 +3,7 @@
 import { useState, useTransition, useEffect } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
-import { saveResourceToDashboard, saveDISCResult } from "../actions";
+import { saveDISCResult } from "../actions";
 import { trackAssessmentCompletion } from "@/lib/ga-events";
 import LangToggle from "@/components/LangToggle";
 import SourcesDropdown from "@/components/SourcesDropdown";
@@ -416,11 +416,9 @@ type QuizState = "not-started" | "in-progress" | "done";
 // -- COMPONENT -------------------------------------------------------------------------
 
 export default function DiscClient({
-  isSaved,
   discResult,
   discScores,
 }: {
-  isSaved: boolean;
   discResult: string | null;
   discScores: { D: number; I: number; S: number; C: number } | null;
 }) {
@@ -433,7 +431,6 @@ export default function DiscClient({
   const [answerHistory, setAnswerHistory] = useState<Array<{ q: number; t: string }>>([]);
 
   // Save state
-  const [saved, setSaved] = useState(isSaved);
   const [resultSaved, setResultSaved] = useState(false);
   const [isPending, startTransition] = useTransition();
 
@@ -525,13 +522,6 @@ export default function DiscClient({
   const pC = displayTotal > 0 ? Math.round((displayScores.C / displayTotal) * 100) : 0;
 
   // -- SAVE HANDLERS -----------------------------------------------------------------
-
-  async function handleSave() {
-    startTransition(async () => {
-      await saveResourceToDashboard("disc");
-      setSaved(true);
-    });
-  }
 
   async function handleSaveResult() {
     if (!resultKey) return;
@@ -1003,44 +993,6 @@ export default function DiscClient({
                 : (discResult ? "Ulangi Tes" : "Mulai Tes")}
             </button>
 
-            {/* Save to dashboard */}
-            {!saved ? (
-              <button
-                onClick={handleSave}
-                disabled={isPending}
-                style={{
-                  background: "transparent",
-                  border: "1.5px solid oklch(45% 0.06 260)",
-                  color: "oklch(78% 0.04 260)",
-                  fontFamily: "Montserrat, sans-serif",
-                  fontWeight: 600,
-                  fontSize: "0.875rem",
-                  letterSpacing: "0.06em",
-                  textTransform: "uppercase",
-                  cursor: isPending ? "default" : "pointer",
-                  padding: "0.875rem 2rem",
-                  borderRadius: "12px",
-                  minHeight: 44,
-                  opacity: isPending ? 0.6 : 1,
-                }}
-              >
-                {lang === "en" ? "Save to dashboard" : "Simpan ke dashboard"}
-              </button>
-            ) : (
-              <span
-                style={{
-                  fontFamily: "Montserrat, sans-serif",
-                  fontSize: "0.875rem",
-                  fontWeight: 600,
-                  letterSpacing: "0.06em",
-                  textTransform: "uppercase",
-                  color: "oklch(65% 0.15 45)",
-                  padding: "0.875rem 0.5rem",
-                }}
-              >
-                {lang === "en" ? "Saved ✓" : "Tersimpan ✓"}
-              </span>
-            )}
           </div>
         </div>
       </section>
@@ -1298,6 +1250,7 @@ export default function DiscClient({
 
         {/* BLOCK B — WHAT DISC IS NOT */}
         <div
+          id="disc-cultural-limits"
           style={{
             background: "oklch(26% 0.09 260)",
             borderTop: "2px solid oklch(65% 0.15 45)",
@@ -1997,126 +1950,14 @@ export default function DiscClient({
       </section>
 
       {/* ===================================================================
-          SECTION 5 — THE FOUR TYPES
-      =================================================================== */}
-      <div id="disc-types">
-        {DISC_TYPES.map((type) => {
-          const accentColor = type.color;
-
-          return (
-            <section
-              key={type.key}
-              id={`disc-type-${type.key}`}
-              style={{
-                background: "oklch(96% 0.005 80)",
-                borderTop: `3px solid ${accentColor}`,
-                position: "relative",
-                overflow: "hidden",
-                padding: "clamp(2.5rem, 6vw, 4rem) clamp(1.25rem, 5vw, 3rem)",
-              }}
-            >
-              {/* Watermark letter */}
-              <div
-                aria-hidden="true"
-                style={{
-                  position: "absolute",
-                  top: "-1rem",
-                  right: "1rem",
-                  fontFamily: "Montserrat, sans-serif",
-                  fontWeight: 900,
-                  fontSize: "clamp(8rem, 20vw, 14rem)",
-                  color: accentColor,
-                  opacity: 0.06,
-                  lineHeight: 1,
-                  pointerEvents: "none",
-                  userSelect: "none",
-                }}
-              >
-                {type.key}
-              </div>
-
-              <div style={{ maxWidth: 720, margin: "0 auto", position: "relative", zIndex: 1 }}>
-
-                {/* Eyebrow pill */}
-                <span
-                  style={{
-                    display: "inline-block",
-                    background: accentColor,
-                    color: "oklch(96% 0.005 80)",
-                    fontFamily: "Montserrat, sans-serif",
-                    fontWeight: 700,
-                    fontSize: "0.75rem",
-                    letterSpacing: "0.12em",
-                    textTransform: "uppercase",
-                    padding: "0.35rem 1rem",
-                    marginBottom: "1.25rem",
-                  }}
-                >
-                  {type.key} — {tr(type.label)}
-                </span>
-
-                {/* Type tagline */}
-                <h2
-                  style={{
-                    fontFamily: "'Cormorant Garamond', serif",
-                    fontWeight: 600,
-                    fontSize: "clamp(1.75rem, 4vw, 2.5rem)",
-                    color: "oklch(22% 0.10 260)",
-                    lineHeight: 1.2,
-                    marginBottom: "1.25rem",
-                  }}
-                >
-                  {tr(type.tagline)}
-                </h2>
-
-                {/* Overview */}
-                <p
-                  style={{
-                    fontFamily: "Montserrat, sans-serif",
-                    fontSize: "clamp(0.9rem, 1.8vw, 1rem)",
-                    color: "oklch(35% 0.04 260)",
-                    lineHeight: 1.75,
-                    marginBottom: "2rem",
-                  }}
-                >
-                  {tr(type.overview)}
-                </p>
-
-                {/* Explore CTA */}
-                <button
-                  onClick={() => scrollToType(type.key)}
-                  style={{
-                    background: "transparent",
-                    border: `1.5px solid ${accentColor}`,
-                    color: accentColor,
-                    fontFamily: "Montserrat, sans-serif",
-                    fontWeight: 700,
-                    fontSize: "0.8rem",
-                    letterSpacing: "0.1em",
-                    textTransform: "uppercase",
-                    padding: "0.75rem 1.75rem",
-                    borderRadius: "12px",
-                    cursor: "pointer",
-                    minHeight: 44,
-                  }}
-                >
-                  {lang === "en" ? `Explore ${tr(type.label)} Type` : `Jelajahi Tipe ${tr(type.label)}`}
-                </button>
-              </div>
-            </section>
-          );
-        })}
-      </div>
-
-      {/* ===================================================================
-          SECTION 6 — FAITH ANCHOR
+          SECTION 5 — FAITH ANCHOR
       =================================================================== */}
       <section
         id="disc-faith"
         style={{
-          background: "oklch(22% 0.10 260)",
+          background: "oklch(96% 0.005 80)",
           padding: "clamp(3rem, 8vw, 5rem) clamp(1.25rem, 5vw, 3rem)",
-          borderTop: "1px solid oklch(32% 0.06 260)",
+          borderTop: "1px solid oklch(88% 0.008 80)",
         }}
       >
         <div style={{ maxWidth: 720, margin: "0 auto" }}>
@@ -2141,7 +1982,7 @@ export default function DiscClient({
               fontFamily: "'Cormorant Garamond', serif",
               fontWeight: 600,
               fontSize: "clamp(1.75rem, 4vw, 2.75rem)",
-              color: "oklch(96% 0.005 80)",
+              color: "oklch(22% 0.10 260)",
               lineHeight: 1.2,
               marginBottom: "1.75rem",
             }}
@@ -2158,7 +1999,7 @@ export default function DiscClient({
               fontStyle: "italic",
               fontWeight: 600,
               fontSize: "clamp(1.1rem, 2.5vw, 1.35rem)",
-              color: "oklch(78% 0.04 260)",
+              color: "oklch(38% 0.05 260)",
               lineHeight: 1.65,
               borderLeft: "none",
               padding: 0,
@@ -2176,7 +2017,7 @@ export default function DiscClient({
             style={{
               fontFamily: "Montserrat, sans-serif",
               fontSize: "clamp(0.9rem, 1.8vw, 1rem)",
-              color: "oklch(68% 0.04 260)",
+              color: "oklch(38% 0.05 260)",
               lineHeight: 1.75,
               marginBottom: "1.25rem",
             }}
@@ -2190,7 +2031,7 @@ export default function DiscClient({
             style={{
               fontFamily: "Montserrat, sans-serif",
               fontSize: "clamp(0.9rem, 1.8vw, 1rem)",
-              color: "oklch(68% 0.04 260)",
+              color: "oklch(38% 0.05 260)",
               lineHeight: 1.75,
               marginBottom: "1.25rem",
             }}
@@ -2204,7 +2045,7 @@ export default function DiscClient({
             style={{
               fontFamily: "Montserrat, sans-serif",
               fontSize: "clamp(0.9rem, 1.8vw, 1rem)",
-              color: "oklch(68% 0.04 260)",
+              color: "oklch(38% 0.05 260)",
               lineHeight: 1.75,
               marginBottom: "2rem",
             }}
@@ -2221,9 +2062,9 @@ export default function DiscClient({
               fontStyle: "italic",
               fontWeight: 600,
               fontSize: "clamp(1.05rem, 2.2vw, 1.25rem)",
-              color: "oklch(78% 0.04 260)",
+              color: "oklch(38% 0.05 260)",
               lineHeight: 1.65,
-              borderTop: "1px solid oklch(32% 0.06 260)",
+              borderTop: "1px solid oklch(88% 0.008 80)",
               paddingTop: "1.5rem",
             }}
           >
