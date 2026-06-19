@@ -165,7 +165,7 @@ const BOOKS: Book[] = [
     title: "The Making of a Leader",
     titleId: "The Making of a Leader",
     author: "Robert Clinton",
-    coverUrl: "https://covers.openlibrary.org/b/isbn/0891091831-L.jpg",
+    coverUrl: "https://covers.openlibrary.org/b/isbn/9780891091837-L.jpg",
     descriptionEn:
       "Robert Clinton spent decades studying the life patterns of Christian leaders and found that the most significant growth usually comes through trial, not success. This book gives you a map of leadership development stages and helps you locate yourself on it.",
     descriptionId:
@@ -531,30 +531,6 @@ function BookModal({
                 {lang === "en" ? book.whyReadEn : book.whyReadId}
               </p>
             </div>
-          )}
-          {book.buyUrl && (
-            <a
-              href={book.buyUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "0.4rem",
-                background: orange,
-                color: "white",
-                fontFamily: FONT,
-                fontWeight: 700,
-                fontSize: "0.78rem",
-                letterSpacing: "0.05em",
-                padding: "11px 20px",
-                borderRadius: 6,
-                textDecoration: "none",
-                minHeight: 44,
-              }}
-            >
-              {t("Buy this book →", "Beli buku ini →", lang)}
-            </a>
           )}
         </div>
       </div>
