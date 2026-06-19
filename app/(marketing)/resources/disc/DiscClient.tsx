@@ -1001,46 +1001,25 @@ export default function DiscClient({
                 : (discResult ? "Ulangi Tes" : "Mulai Tes")}
             </button>
 
-            {/* Ghost CTA */}
-            <button
-              onClick={scrollToTypes}
-              style={{
-                background: "transparent",
-                color: "oklch(78% 0.04 260)",
-                fontFamily: "Montserrat, sans-serif",
-                fontWeight: 600,
-                fontSize: "0.875rem",
-                letterSpacing: "0.06em",
-                textTransform: "uppercase",
-                padding: "0.875rem 2rem",
-                border: "1.5px solid oklch(45% 0.06 260)",
-                borderRadius: "12px",
-                cursor: "pointer",
-                minHeight: 44,
-              }}
-            >
-              {lang === "en" ? "Explore the Styles" : "Jelajahi Keempat Tipe"}
-            </button>
-
-            {/* Save to dashboard — transparent text */}
+            {/* Save to dashboard */}
             {!saved ? (
               <button
                 onClick={handleSave}
                 disabled={isPending}
                 style={{
                   background: "transparent",
-                  border: "none",
-                  color: "oklch(62% 0.04 260)",
+                  border: "1.5px solid oklch(45% 0.06 260)",
+                  color: "oklch(78% 0.04 260)",
                   fontFamily: "Montserrat, sans-serif",
                   fontWeight: 600,
-                  fontSize: "0.8rem",
+                  fontSize: "0.875rem",
                   letterSpacing: "0.06em",
                   textTransform: "uppercase",
                   cursor: isPending ? "default" : "pointer",
-                  padding: "0.75rem 0.5rem",
+                  padding: "0.875rem 2rem",
+                  borderRadius: "12px",
                   minHeight: 44,
-                  textDecoration: "underline",
-                  textUnderlineOffset: "3px",
+                  opacity: isPending ? 0.6 : 1,
                 }}
               >
                 {lang === "en" ? "Save to dashboard" : "Simpan ke dashboard"}
@@ -1049,9 +1028,12 @@ export default function DiscClient({
               <span
                 style={{
                   fontFamily: "Montserrat, sans-serif",
-                  fontSize: "0.8rem",
+                  fontSize: "0.875rem",
+                  fontWeight: 600,
+                  letterSpacing: "0.06em",
+                  textTransform: "uppercase",
                   color: "oklch(65% 0.15 45)",
-                  padding: "0.75rem 0.5rem",
+                  padding: "0.875rem 0.5rem",
                 }}
               >
                 {lang === "en" ? "Saved ✓" : "Tersimpan ✓"}
