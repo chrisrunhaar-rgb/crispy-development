@@ -269,6 +269,7 @@ export default function ResourcesContent({
   const [pendingSlug, setPendingSlug] = useState<string | null>(null);
   const [, startTransition] = useTransition();
   const [openSections, setOpenSections] = useState<Set<string>>(new Set());
+  const [searchQuery, setSearchQuery] = useState("");
 
   function toggleSection(key: string) {
     setOpenSections(prev => {
@@ -301,6 +302,19 @@ export default function ResourcesContent({
     if (lang === "id" && resource.descriptionId) return resource.descriptionId;
     return resource.description;
   }
+
+  const trimmedQuery = searchQuery.trim().toLowerCase();
+  const searchResults = trimmedQuery
+    ? RESOURCES.filter((res) => {
+        const haystack = [
+          res.title,
+          res.description,
+          res.titleId ?? "",
+          res.descriptionId ?? "",
+        ].join(" ").toLowerCase();
+        return haystack.includes(trimmedQuery);
+      })
+    : null;
 
   return (
     <>
@@ -350,6 +364,53 @@ export default function ResourcesContent({
             {r.tagline}
           </p>
 
+          {/* Search */}
+          <div style={{ marginTop: "1.75rem", maxWidth: "420px", position: "relative" }}>
+            <svg
+              viewBox="0 0 20 20"
+              fill="none"
+              stroke="oklch(60% 0.04 260)"
+              strokeWidth="1.8"
+              style={{ position: "absolute", left: "0.875rem", top: "50%", transform: "translateY(-50%)", width: 16, height: 16, pointerEvents: "none" }}
+            >
+              <circle cx="8.5" cy="8.5" r="5.5" />
+              <line x1="13" y1="13" x2="18" y2="18" />
+            </svg>
+            <input
+              type="search"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder={lang === "id" ? "Cari modul..." : "Search modules..."}
+              style={{
+                width: "100%",
+                boxSizing: "border-box",
+                paddingLeft: "2.5rem",
+                paddingRight: searchQuery ? "2.5rem" : "1rem",
+                paddingBlock: "0.65rem",
+                fontFamily: "var(--font-montserrat)",
+                fontSize: "0.875rem",
+                color: "oklch(22% 0.005 260)",
+                background: "oklch(97% 0.005 80)",
+                border: "1.5px solid oklch(60% 0.04 260 / 0.4)",
+                borderRadius: "6px",
+                outline: "none",
+              }}
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery("")}
+                aria-label="Clear search"
+                style={{
+                  position: "absolute", right: "0.75rem", top: "50%", transform: "translateY(-50%)",
+                  background: "none", border: "none", cursor: "pointer",
+                  color: "oklch(55% 0.008 260)", fontSize: "1rem", lineHeight: 1, padding: 0,
+                }}
+              >
+                ×
+              </button>
+            )}
+          </div>
+
           {isTeamLeader && pathway === "team" && (
             <div style={{ marginTop: "1.25rem" }}>
               <Link
@@ -372,7 +433,47 @@ export default function ResourcesContent({
       {/* ── SECTIONS ── */}
       <section style={{ paddingBlock: "clamp(2rem, 4vw, 4rem)", background: "oklch(97% 0.005 80)" }}>
         <div className="container-wide">
-          {SECTION_ORDER.map((section) => {
+
+          {/* Search results */}
+          {searchResults !== null && (
+            <div>
+              <p style={{
+                fontFamily: "var(--font-montserrat)",
+                fontSize: "0.8rem",
+                fontWeight: 600,
+                color: "oklch(52% 0.008 260)",
+                marginBottom: "1.25rem",
+              }}>
+                {searchResults.length === 0
+                  ? (lang === "id" ? "Tidak ada hasil ditemukan." : "No results found.")
+                  : lang === "id"
+                    ? `${searchResults.length} modul ditemukan`
+                    : `${searchResults.length} module${searchResults.length === 1 ? "" : "s"} found`}
+              </p>
+              {searchResults.length > 0 && (
+                <div className="resource-grid">
+                  {searchResults.map((resource) => (
+                    <ResourceTile
+                      key={resource.id}
+                      resource={resource}
+                      userId={userId}
+                      moduleStatuses={moduleStatuses}
+                      moduleFormats={moduleFormats}
+                      localSaved={localSaved}
+                      pendingSlug={pendingSlug}
+                      onAddToDashboard={handleAddToDashboard}
+                      lang={lang}
+                      localTitle={localTitle}
+                      localDescription={localDescription}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Category accordions — hidden while searching */}
+          {searchResults === null && SECTION_ORDER.map((section) => {
             const sectionResources = RESOURCES.filter(
               (res) => getLibraryCategory(res, moduleCategories) === section.key
             );
@@ -444,6 +545,7 @@ export default function ResourcesContent({
               </div>
             );
           })}
+
         </div>
       </section>
 
