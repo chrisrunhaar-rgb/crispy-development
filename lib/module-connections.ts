@@ -245,6 +245,62 @@ export const MODULE_CONNECTIONS: ModuleConnection[] = [
     angle: "how your belief about who you are determines what you do — and how a growth mindset reframes the reader's identity",
     angle_id: "bagaimana keyakinanmu tentang siapa dirimu menentukan apa yang kamu lakukan — dan bagaimana pola pikir berkembang membingkai ulang identitas pembaca",
   },
+
+  // Managing Up → Power Distance
+  // (Dig Deeper: "The Cross-Cultural Dimension" explicitly cites Hofstede's power distance theory and high/low-PDI authority norms)
+  {
+    sourceSlug: "managing-up",
+    sourceSectionId: "mc-cross-cultural",
+    targetSlug: "power-distance",
+    targetTitle: "Power Distance in Leadership",
+    targetTitle_id: "Jarak Kekuasaan dalam Kepemimpinan",
+    topic: "how power distance shapes upward communication",
+    topic_id: "bagaimana jarak kekuasaan membentuk komunikasi ke atas",
+    angle: "why silence, deference, and proactivity mean different things in high- and low-PDI cultures — and what that means for managing your leader",
+    angle_id: "mengapa keheningan, kepatuhan, dan proaktivitas berarti hal berbeda dalam budaya PDI tinggi dan rendah — dan apa artinya untuk mengelola pemimpin Anda",
+  },
+
+  // Managing Up → Giving Feedback Across Cultures
+  // (Principle 04 "Disagree Well": raise concerns privately, public alignment — directly mirrors cross-cultural feedback principles)
+  {
+    sourceSlug: "managing-up",
+    sourceSectionId: "mc-disagree-well",
+    targetSlug: "giving-feedback-across-cultures",
+    targetTitle: "Giving Feedback Across Cultures",
+    targetTitle_id: "Memberikan Umpan Balik Lintas Budaya",
+    topic: "delivering honest feedback in culturally appropriate ways",
+    topic_id: "menyampaikan umpan balik jujur dengan cara yang sesuai budaya",
+    angle: "how to raise disagreement privately and maintain public alignment — adapted for high- and low-context cultural settings",
+    angle_id: "cara mengangkat ketidaksetujuan secara pribadi dan mempertahankan keselarasan publik — disesuaikan untuk konteks budaya tinggi dan rendah",
+  },
+
+  // Managing Up → Emotional Intelligence
+  // (Principles section explicitly cites SCARF model for reading what leaders need from direct reports)
+  {
+    sourceSlug: "managing-up",
+    sourceSectionId: "mc-scarf",
+    targetSlug: "emotional-intelligence",
+    targetTitle: "Emotional Intelligence",
+    targetTitle_id: "Kecerdasan Emosional",
+    topic: "reading your leader's emotional needs and triggers",
+    topic_id: "membaca kebutuhan emosional dan pemicu pemimpin Anda",
+    angle: "how the SCARF model reveals what your manager is actually responding to — and how EQ helps you navigate it",
+    angle_id: "bagaimana model SCARF mengungkap apa yang sebenarnya direspons manajer Anda — dan bagaimana EQ membantu Anda menavigasinya",
+  },
+
+  // Managing Up → Healthy Conflict
+  // (Dig Deeper: "When Your Leader Is Difficult" directly addresses navigating conflict upward with integrity)
+  {
+    sourceSlug: "managing-up",
+    sourceSectionId: "mc-difficult-leader",
+    targetSlug: "healthy-conflict",
+    targetTitle: "Healthy Conflict",
+    targetTitle_id: "Konflik yang Sehat",
+    topic: "navigating conflict with someone in authority over you",
+    topic_id: "menavigasi konflik dengan seseorang yang berwenang atas Anda",
+    angle: "when managing up becomes managing conflict — and how to speak truth to power without burning the relationship",
+    angle_id: "ketika mengelola ke atas menjadi mengelola konflik — dan cara berbicara kebenaran kepada yang berkuasa tanpa membakar hubungan",
+  },
 ];
 
 export function getConnectionsForSection(

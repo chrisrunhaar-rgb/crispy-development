@@ -238,6 +238,7 @@ export default function ManagingUpClient({ userPathway, isSaved: initialSaved }:
   const [saved, setSaved] = useState(initialSaved);
   const [isPending, startTransition] = useTransition();
   const [openPanel, setOpenPanel] = useState<number | null>(null);
+  const [bgOpen, setBgOpen] = useState(false);
   const t = (en: string, id: string) => tFn(en, id, lang);
 
   function handleSave() {
@@ -485,7 +486,7 @@ export default function ManagingUpClient({ userPathway, isSaved: initialSaved }:
       {/* ══════════════════════════════════════════════════════════════
           6. SECTION 2: 5 PRINCIPLES FOR COMMUNICATING UPWARD
       ══════════════════════════════════════════════════════════════ */}
-      <div style={{ background: LIGHT_GRAY, padding: "72px 24px" }}>
+      <div id="mc-scarf" style={{ background: LIGHT_GRAY, padding: "72px 24px" }}>
         <div style={{ maxWidth: 760, margin: "0 auto" }}>
           <p style={eyebrow}>{t("The Practice", "Praktik")}</p>
           <h2 style={sectionH2Light}>
@@ -494,7 +495,7 @@ export default function ManagingUpClient({ userPathway, isSaved: initialSaved }:
 
           <div style={{ display: "flex", flexDirection: "column" }}>
             {principles.map((p, idx) => (
-              <div key={p.padded}>
+              <div key={p.padded} id={p.padded === "04" ? "mc-disagree-well" : undefined}>
                 <div style={{ display: "flex", gap: 28, alignItems: "flex-start", paddingBottom: 32 }}>
                   <span style={{
                     fontFamily: CORMORANT,
@@ -672,6 +673,7 @@ export default function ManagingUpClient({ userPathway, isSaved: initialSaved }:
               return (
                 <div
                   key={i}
+                  id={i === 0 ? "mc-cross-cultural" : i === 1 ? "mc-difficult-leader" : undefined}
                   style={{
                     border: "1px solid oklch(22% 0.10 260 / 0.14)",
                     borderRadius: 10,
@@ -749,7 +751,121 @@ export default function ManagingUpClient({ userPathway, isSaved: initialSaved }:
       </div>
 
       {/* ══════════════════════════════════════════════════════════════
-          10. SOURCES (SourcesDropdown — LIGHT_GRAY bg via prop)
+          10. BACKGROUND (collapsible, Phase 9 SEO)
+      ══════════════════════════════════════════════════════════════ */}
+      <div style={{ background: OFF_WHITE, borderTop: "1px solid oklch(22% 0.10 260 / 0.10)" }}>
+        <div style={{ maxWidth: 760, margin: "0 auto", padding: "0 24px" }}>
+          <button
+            onClick={() => setBgOpen(!bgOpen)}
+            aria-expanded={bgOpen}
+            aria-controls="bg-panel"
+            style={{
+              display: "flex", alignItems: "center", justifyContent: "space-between",
+              width: "100%", padding: "20px 0",
+              background: "transparent", border: "none", cursor: "pointer", textAlign: "left",
+            }}
+          >
+            <span style={{ fontFamily: FONT, fontSize: 15, fontWeight: 700, color: NAVY }}>
+              {t("Background", "Latar Belakang")}
+            </span>
+            <span style={{
+              display: "inline-block", width: 9, height: 9,
+              borderRight: `2px solid ${NAVY}`,
+              borderBottom: `2px solid ${NAVY}`,
+              transform: bgOpen ? "rotate(-135deg)" : "rotate(45deg)",
+              transition: "transform 0.25s ease",
+              flexShrink: 0, marginLeft: 8, marginTop: bgOpen ? 4 : 0,
+            }} />
+          </button>
+
+          <div
+            id="bg-panel"
+            style={{
+              display: "grid",
+              gridTemplateRows: bgOpen ? "1fr" : "0fr",
+              transition: "grid-template-rows 0.3s ease",
+              overflow: "hidden",
+            }}
+          >
+            <div style={{ minHeight: 0 }}>
+              <div style={{ paddingBottom: 40, borderTop: "1px solid oklch(22% 0.10 260 / 0.10)" }}>
+
+                <h3 style={{ fontFamily: CORMORANT, fontSize: "clamp(18px, 2.5vw, 22px)", fontWeight: 600, color: NAVY, margin: "28px 0 12px" }}>
+                  {t("What Is Managing Up?", "Apa Itu Mengelola ke Atas?")}
+                </h3>
+                <p style={proseLight}>
+                  {t(
+                    "Managing up is the deliberate practice of improving your working relationship with your direct manager or senior leader. It is not flattery, impression management, or political maneuvering. It is about taking conscious responsibility for a relationship that significantly shapes your ability to do meaningful work. The term was first articulated by Harvard Business School professors John Gabarro and John Kotter, whose research demonstrated that the quality of the leader-manager relationship is one of the strongest predictors of individual and organisational performance. Their key finding was counterintuitive: the most effective direct reports were not necessarily the most technically skilled — they were those who actively managed the relationship itself.",
+                    "Mengelola ke atas adalah praktik yang disengaja untuk memperbaiki hubungan kerja Anda dengan manajer langsung atau pemimpin senior Anda. Ini bukan sanjungan, manajemen kesan, atau manuver politik. Ini tentang mengambil tanggung jawab yang sadar atas hubungan yang secara signifikan membentuk kemampuan Anda untuk melakukan pekerjaan yang bermakna. Istilah ini pertama kali diungkapkan oleh profesor Harvard Business School John Gabarro dan John Kotter, yang penelitiannya menunjukkan bahwa kualitas hubungan pemimpin-manajer adalah salah satu prediktor terkuat kinerja individu dan organisasi."
+                  )}
+                </p>
+
+                <h3 style={{ fontFamily: CORMORANT, fontSize: "clamp(18px, 2.5vw, 22px)", fontWeight: 600, color: NAVY, margin: "28px 0 12px" }}>
+                  {t("Why Managing Up Matters", "Mengapa Mengelola ke Atas Penting")}
+                </h3>
+                <p style={proseLight}>
+                  {t(
+                    "Leaders who manage up well tend to receive more resources, greater autonomy, and more developmental opportunities — not through favouritism, but because trust creates latitude. A manager who is confident that their direct report will deliver reliably, communicate honestly, and surface problems early is far more likely to delegate meaningful work, include that person in critical decisions, and advocate for them when opportunities arise. Managing up is how you earn that trust systematically, through consistent behaviour over time.",
+                    "Pemimpin yang mengelola ke atas dengan baik cenderung menerima lebih banyak sumber daya, otonomi yang lebih besar, dan lebih banyak peluang pengembangan — bukan melalui favoritisme, tetapi karena kepercayaan menciptakan keleluasaan. Seorang manajer yang yakin bawahan langsungnya akan memberikan hasil secara andal, berkomunikasi dengan jujur, dan mengangkat masalah lebih awal jauh lebih mungkin mendelegasikan pekerjaan yang bermakna dan mengadvokasi mereka ketika peluang muncul."
+                  )}
+                </p>
+                <p style={proseLight}>
+                  {t(
+                    "The absence of managing-up skills creates compounding friction. When direct reports fail to communicate proactively, managers fill information gaps with assumptions — and leadership assumptions under pressure tend to be pessimistic. When bad news arrives late, confidence erodes. When communication is reactive rather than proactive, the relationship feels fragile. These small failures compound quietly over months into a dynamic where both parties are navigating by assumption rather than genuine understanding.",
+                    "Ketiadaan keterampilan mengelola ke atas menciptakan gesekan yang terus bertambah. Ketika bawahan langsung gagal berkomunikasi secara proaktif, manajer mengisi kesenjangan informasi dengan asumsi — dan asumsi kepemimpinan di bawah tekanan cenderung pesimistis. Ketika berita buruk datang terlambat, kepercayaan terkikis. Kegagalan kecil ini bertambah diam-diam selama berbulan-bulan menjadi dinamika di mana kedua pihak menavigasi berdasarkan asumsi daripada pemahaman yang tulus."
+                  )}
+                </p>
+
+                <h3 style={{ fontFamily: CORMORANT, fontSize: "clamp(18px, 2.5vw, 22px)", fontWeight: 600, color: NAVY, margin: "28px 0 12px" }}>
+                  {t("Managing Up Across Cultures", "Mengelola ke Atas Lintas Budaya")}
+                </h3>
+                <p style={proseLight}>
+                  {t(
+                    "Managing up is a universal leadership challenge with culture-specific expressions. The core task — building a productive, trust-based relationship with the person above you in an organisational hierarchy — remains consistent across cultural contexts. But what that trust looks like in practice varies significantly based on cultural norms around authority, directness, and status. Geert Hofstede's research on power distance is foundational here: in high power-distance cultures — which include much of Southeast Asia, South Asia, the Middle East, and parts of Africa and Latin America — approaching a senior leader proactively with unsolicited feedback or contradictory information can feel culturally taboo. Silence in these contexts signals respect, not evasion.",
+                    "Mengelola ke atas adalah tantangan kepemimpinan universal dengan ekspresi yang spesifik budaya. Tugas inti — membangun hubungan yang produktif dan berbasis kepercayaan dengan orang di atas Anda dalam hierarki organisasi — konsisten di berbagai konteks budaya. Tetapi seperti apa kepercayaan itu dalam praktiknya sangat bervariasi berdasarkan norma budaya tentang otoritas, ketegasan, dan status. Penelitian Geert Hofstede tentang jarak kekuasaan sangat mendasar di sini: dalam budaya jarak kekuasaan tinggi, mendekati pemimpin senior secara proaktif dengan umpan balik yang tidak diminta dapat terasa tabu secara budaya. Diam dalam konteks ini menandakan rasa hormat, bukan penghindaran."
+                  )}
+                </p>
+                <p style={proseLight}>
+                  {t(
+                    "In lower power-distance cultures — typically Northern Europe and parts of North America — the expectation runs the opposite direction. Direct reports are expected to speak up, challenge ideas constructively, and flag problems early. A manager in these contexts who rarely hears from their team interprets silence as disengagement or even dishonesty. The critical insight for cross-cultural leaders is that the same behaviour — silence — carries completely opposite meanings depending on which cultural frame is active. Effective managing up in cross-cultural contexts requires the capacity to notice when a cultural framework is shaping the interaction, and adapt accordingly without abandoning the core discipline.",
+                    "Dalam budaya jarak kekuasaan lebih rendah — biasanya Eropa Utara dan bagian Amerika Utara — ekspektasinya berjalan ke arah yang berlawanan. Bawahan langsung diharapkan untuk berbicara, menantang ide secara konstruktif, dan menandai masalah lebih awal. Wawasan kritis bagi pekerja lintas budaya adalah bahwa perilaku yang sama — keheningan — membawa makna yang berlawanan tergantung kerangka budaya mana yang aktif. Mengelola ke atas yang efektif dalam konteks lintas budaya membutuhkan kapasitas untuk memperhatikan kapan kerangka budaya membentuk interaksi, dan beradaptasi sesuai tanpa meninggalkan disiplin inti."
+                  )}
+                </p>
+
+                <h3 style={{ fontFamily: CORMORANT, fontSize: "clamp(18px, 2.5vw, 22px)", fontWeight: 600, color: NAVY, margin: "28px 0 12px" }}>
+                  {t("The SCARF Model and Upward Communication", "Model SCARF dan Komunikasi ke Atas")}
+                </h3>
+                <p style={proseLight}>
+                  {t(
+                    "David Rock's SCARF model — which maps five social domains the brain monitors as potential threats or rewards (Status, Certainty, Autonomy, Relatedness, Fairness) — offers a useful neurological lens for understanding what leaders actually need from their direct reports. Most managers are under chronic status and certainty pressure from above. When direct reports add to that uncertainty — by delivering bad news late, failing to follow through, or going around the manager — the threat response intensifies. When direct reports reduce uncertainty — through reliable delivery, proactive communication, and honest problem-sharing — they become genuinely valuable: not just as workers, but as people who make their manager's world more manageable.",
+                    "Model SCARF David Rock — yang memetakan lima domain sosial yang dipantau otak sebagai ancaman atau penghargaan potensial (Status, Kepastian, Otonomi, Keterhubungan, Keadilan) — menawarkan lensa neurologis yang berguna untuk memahami apa yang sebenarnya dibutuhkan pemimpin dari bawahan langsung mereka. Sebagian besar manajer berada di bawah tekanan status dan kepastian yang kronis dari atas. Ketika bawahan langsung mengurangi ketidakpastian itu — melalui pengiriman yang andal, komunikasi proaktif, dan berbagi masalah yang jujur — mereka menjadi benar-benar berharga bagi pemimpin mereka."
+                  )}
+                </p>
+
+                <h3 style={{ fontFamily: CORMORANT, fontSize: "clamp(18px, 2.5vw, 22px)", fontWeight: 600, color: NAVY, margin: "28px 0 12px" }}>
+                  {t("Managing Up and the Theology of Authority", "Mengelola ke Atas dan Teologi Otoritas")}
+                </h3>
+                <p style={proseLight}>
+                  {t(
+                    "Christian leaders working in organisational contexts — mission agencies, NGOs, churches, or marketplace organisations — sometimes wrestle with the theology of authority when it comes to managing up. How much loyalty is required? When does submission become complicity? Scripture takes a nuanced position. Romans 13 and 1 Peter 2 establish the legitimacy of authority structures — not because leaders are infallible, but because order enables mission. Yet the New Testament is equally full of principled dissent, prophetic challenge, and faithful confrontation. Paul confronts Peter publicly in Galatians 2. The apostles declare they must obey God rather than human beings in Acts 5.",
+                    "Pemimpin Kristen yang bekerja dalam konteks organisasi — lembaga misi, LSM, gereja, atau organisasi pasar — terkadang bergulat dengan teologi otoritas dalam hal mengelola ke atas. Seberapa besar loyalitas yang diperlukan? Kapan ketaatan menjadi keterlibatan? Alkitab mengambil posisi yang bernuansa. Roma 13 dan 1 Petrus 2 menetapkan legitimasi struktur otoritas — bukan karena pemimpin tidak bisa salah, tetapi karena keteraturan memungkinkan misi. Namun Perjanjian Baru juga penuh dengan perbedaan pendapat yang berprinsip dan konfrontasi yang setia."
+                  )}
+                </p>
+                <p style={{ ...proseLight, marginBottom: 0 }}>
+                  {t(
+                    "Managing up, understood in this light, is not blind loyalty or strategic compliance. It is taking the authority relationship seriously enough to invest in it — honest enough to speak truth into it, courageous enough to name what needs to be named — all in service of a shared mission that is larger than either party. The discipline of managing up is, at its best, an act of faithful service.",
+                    "Mengelola ke atas, dipahami dalam cahaya ini, bukan kesetiaan buta atau kepatuhan strategis. Ini tentang menganggap hubungan otoritas cukup serius untuk berinvestasi di dalamnya — cukup jujur untuk berbicara kebenaran ke dalamnya, cukup berani untuk menyebutkan apa yang perlu disebutkan — semuanya dalam pelayanan misi bersama yang lebih besar dari kedua pihak. Disiplin mengelola ke atas, pada dasarnya, adalah tindakan pelayanan yang setia."
+                  )}
+                </p>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ══════════════════════════════════════════════════════════════
+          11. SOURCES (SourcesDropdown — LIGHT_GRAY bg via prop)
       ══════════════════════════════════════════════════════════════ */}
       <SourcesDropdown
         sources={SOURCES}

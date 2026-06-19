@@ -250,8 +250,8 @@ export const RESOURCES: Resource[] = [
     format: "Guide",
     languages: ["en", "id"],
     gated: false,
-    topics: ["leadership"],
-    keywords: ["boss", "manager", "superior", "upward communication", "influence", "relationship", "authority", "navigate", "senior leader", "mengelola atasan", "expectations", "align"],
+    topics: ["leadership", "cross-cultural"],
+    keywords: ["boss", "manager", "superior", "upward communication", "influence", "relationship", "authority", "navigate", "senior leader", "mengelola atasan", "expectations", "align", "power distance", "SCARF", "Hofstede", "upward influence", "trust", "reliability", "proactive communication", "difficult leader", "cross-cultural authority", "managing your manager"],
   },
   {
     id: "raising-next-generation",
