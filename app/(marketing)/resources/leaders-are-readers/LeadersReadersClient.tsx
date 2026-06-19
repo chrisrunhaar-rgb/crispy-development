@@ -265,6 +265,28 @@ const proseDark: React.CSSProperties = {
   marginBottom: "1.5rem",
 };
 
+const proseSubhead: React.CSSProperties = {
+  fontFamily: FONT,
+  fontSize: "0.72rem",
+  fontWeight: 700,
+  letterSpacing: "0.1em",
+  color: orange,
+  textTransform: "uppercase",
+  marginBottom: "0.5rem",
+  marginTop: "2rem",
+};
+
+const proseSubheadDark: React.CSSProperties = {
+  fontFamily: FONT,
+  fontSize: "0.72rem",
+  fontWeight: 700,
+  letterSpacing: "0.1em",
+  color: orange,
+  textTransform: "uppercase",
+  marginBottom: "0.5rem",
+  marginTop: "2rem",
+};
+
 // ─── Section label ─────────────────────────────────────────────────────────────
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
@@ -711,7 +733,7 @@ export default function LeadersReadersClient({
       >
         {/* Background image — luminosity overlay */}
         <img
-          src="/pathway-library.jpg"
+          src="/images/resources/leaders-are-readers/hero.jpg"
           alt=""
           aria-hidden="true"
           style={{
@@ -720,7 +742,7 @@ export default function LeadersReadersClient({
             width: "100%",
             height: "100%",
             objectFit: "cover",
-            opacity: 0.22,
+            opacity: 0.35,
             mixBlendMode: "luminosity",
             pointerEvents: "none",
           }}
@@ -1059,38 +1081,58 @@ export default function LeadersReadersClient({
 
           {lang === "en" ? (
             <>
+              <p style={proseSubhead}>The guilt doesn&apos;t work</p>
               <p style={prose}>
-                Most of us carry a reading guilt that functions like background noise. It is not loud enough to do anything about, but it never fully goes away either. There is a book you meant to finish six months ago. There is an author someone recommended two years back that you still haven&apos;t read. There is a version of yourself, the one who reads, who always seems to be slightly ahead of where you actually are.
+                Most of us carry a reading guilt that functions like background noise. Not loud enough to do anything about, but never fully gone either. There is a book you meant to finish six months ago. An author someone recommended two years back that you still haven&apos;t read.
               </p>
               <p style={prose}>
-                This guilt does not help. It has never helped. And one of the most honest things you can do as a leader is to stop treating guilt as a motivator and start asking what is actually going on.
+                This guilt has never helped. And one of the most honest things you can do as a leader is stop treating guilt as a motivator and ask what is actually going on.
+              </p>
+              <p style={proseSubhead}>The wrong question</p>
+              <p style={prose}>
+                &ldquo;How do I read more?&rdquo; is the wrong question. It is a question about behaviour, and behaviour follows identity.
               </p>
               <p style={prose}>
-                Here is what is actually going on. The question &ldquo;how do I read more?&rdquo; is the wrong question. It is a question about behaviour, and behaviour follows identity. The more useful question is: what kind of leader do I want to be? Because if reading is part of the answer to that question, it will happen. If it is only on the to-do list, it will keep getting bumped.
+                The more useful question is: what kind of leader do I want to be? Because if reading is part of the answer to that question, it will happen. If it is only on the to-do list, it will keep getting bumped.
+              </p>
+              <p style={proseSubhead}>Identity beats willpower every time</p>
+              <p style={prose}>
+                There is a well-established principle in behavioral science: identity-based habits stick in a way that outcome-based habits don&apos;t.
               </p>
               <p style={prose}>
-                There is a well-established principle in behavioral science that says identity-based habits stick in a way that outcome-based habits don&apos;t. Telling yourself &ldquo;I want to read 20 books this year&rdquo; is fragile. Telling yourself &ldquo;I am the kind of leader who reads&rdquo; is load-bearing. Not because the words are magic, but because identity shapes what you see as available to you and what you see as consistent with who you are. When you are a reader, 15 minutes in the morning with a book is just what you do. It doesn&apos;t require willpower. It is who you are.
+                Telling yourself &ldquo;I want to read 20 books this year&rdquo; is fragile. Telling yourself &ldquo;I am the kind of leader who reads&rdquo; is load-bearing. When you are a reader, 15 minutes in the morning with a book is just what you do. It doesn&apos;t require willpower. It is who you are.
               </p>
+              <p style={proseSubhead}>The reader is always a learner</p>
               <p style={{ ...prose, marginBottom: 0 }}>
-                The reader, almost by definition, is always a learner. And the learner is, in my experience, a better leader. Not because they know more facts, though they often do. But because they have practiced, repeatedly, the discipline of sitting with someone else&apos;s thinking and letting it work on them. That posture, curious and open and willing to be changed, is the core posture of effective leadership. Reading builds it.
+                The reader, almost by definition, is always a learner. And the learner is a better leader. Not because they know more facts. But because they have practised, repeatedly, the discipline of sitting with someone else&apos;s thinking and letting it work on them. That posture, curious and open and willing to be changed, is the core posture of effective leadership.
               </p>
             </>
           ) : (
             <>
+              <p style={proseSubhead}>Rasa bersalah tidak berhasil</p>
               <p style={prose}>
-                Kebanyakan dari kita membawa rasa bersalah soal membaca yang terasa seperti suara latar. Tidak cukup keras untuk berbuat sesuatu, tapi juga tidak pernah benar-benar hilang. Ada buku yang seharusnya kamu selesaikan enam bulan lalu. Ada penulis yang direkomendasikan seseorang dua tahun lalu yang belum juga kamu baca. Ada versi dirimu, yang suka membaca, yang selalu tampak sedikit di depan dari tempatmu benar-benar berdiri sekarang.
+                Kebanyakan dari kita membawa rasa bersalah soal membaca yang terasa seperti suara latar. Tidak cukup keras untuk berbuat sesuatu, tapi juga tidak pernah benar-benar hilang. Ada buku yang seharusnya kamu selesaikan enam bulan lalu. Ada penulis yang direkomendasikan seseorang dua tahun lalu yang belum juga kamu baca.
               </p>
               <p style={prose}>
-                Rasa bersalah ini tidak membantu. Tidak pernah membantu. Dan salah satu hal paling jujur yang bisa kamu lakukan sebagai pemimpin adalah berhenti menjadikan rasa bersalah sebagai motivator, dan mulai bertanya apa yang sebenarnya sedang terjadi.
+                Rasa bersalah ini tidak pernah membantu. Dan salah satu hal paling jujur yang bisa kamu lakukan sebagai pemimpin adalah berhenti menjadikan rasa bersalah sebagai motivator, dan mulai bertanya apa yang sebenarnya sedang terjadi.
+              </p>
+              <p style={proseSubhead}>Pertanyaan yang salah</p>
+              <p style={prose}>
+                &ldquo;Bagaimana aku bisa membaca lebih banyak?&rdquo; adalah pertanyaan yang salah. Itu pertanyaan tentang perilaku, dan perilaku mengikuti identitas.
               </p>
               <p style={prose}>
-                Ini yang sebenarnya terjadi. Pertanyaan &ldquo;bagaimana aku bisa membaca lebih banyak?&rdquo; adalah pertanyaan yang salah. Itu pertanyaan tentang perilaku, dan perilaku mengikuti identitas. Pertanyaan yang lebih berguna adalah: pemimpin seperti apa yang ingin aku jadi? Karena kalau membaca adalah bagian dari jawaban atas pertanyaan itu, itu akan terjadi. Kalau membaca hanya ada di daftar tugas, ia akan terus tergeser.
+                Pertanyaan yang lebih berguna adalah: pemimpin seperti apa yang ingin aku jadi? Karena kalau membaca adalah bagian dari jawaban atas pertanyaan itu, itu akan terjadi. Kalau membaca hanya ada di daftar tugas, ia akan terus tergeser.
+              </p>
+              <p style={proseSubhead}>Identitas mengalahkan kemauan setiap saat</p>
+              <p style={prose}>
+                Ada prinsip yang sudah lama dikenal dalam ilmu perilaku: kebiasaan yang berbasis identitas bertahan dengan cara yang tidak bisa dilakukan oleh kebiasaan berbasis hasil.
               </p>
               <p style={prose}>
-                Ada prinsip yang sudah lama dikenal dalam ilmu perilaku: kebiasaan yang berbasis identitas bertahan dengan cara yang tidak bisa dilakukan oleh kebiasaan berbasis hasil. Memberi tahu dirimu sendiri &ldquo;aku ingin membaca 20 buku tahun ini&rdquo; itu rapuh. Memberi tahu dirimu &ldquo;aku adalah tipe pemimpin yang membaca&rdquo; itu menopang. Bukan karena kata-katanya ajaib, tapi karena identitas membentuk apa yang kamu anggap tersedia bagimu dan apa yang kamu anggap konsisten dengan siapa kamu. Ketika kamu adalah seorang pembaca, 15 menit di pagi hari dengan sebuah buku sudah menjadi bagian dari dirimu. Tidak butuh kemauan keras. Itulah siapa kamu.
+                Memberi tahu dirimu &ldquo;aku ingin membaca 20 buku tahun ini&rdquo; itu rapuh. Memberi tahu dirimu &ldquo;aku adalah tipe pemimpin yang membaca&rdquo; itu menopang. Ketika kamu adalah seorang pembaca, 15 menit di pagi hari dengan sebuah buku sudah menjadi bagian dari dirimu. Tidak butuh kemauan keras. Itulah siapa kamu.
               </p>
+              <p style={proseSubhead}>Pembaca selalu menjadi pelajar</p>
               <p style={{ ...prose, marginBottom: 0 }}>
-                Pembaca, hampir secara definisi, selalu menjadi pelajar. Dan pelajar, dalam pengalamanku, adalah pemimpin yang lebih baik. Bukan karena mereka mengetahui lebih banyak fakta, meskipun sering memang begitu. Tapi karena mereka sudah berlatih, berulang kali, disiplin duduk dengan pemikiran orang lain dan membiarkannya bekerja pada mereka. Sikap itu, penasaran, terbuka, dan mau diubah, adalah sikap inti dari kepemimpinan yang efektif. Membaca membangunnya.
+                Pembaca, hampir secara definisi, selalu menjadi pelajar. Dan pelajar adalah pemimpin yang lebih baik. Bukan karena mereka mengetahui lebih banyak fakta. Tapi karena mereka sudah berlatih, berulang kali, disiplin duduk dengan pemikiran orang lain dan membiarkannya bekerja pada mereka. Sikap itu, penasaran, terbuka, dan mau diubah, adalah sikap inti dari kepemimpinan yang efektif.
               </p>
             </>
           )}
@@ -1131,20 +1173,33 @@ export default function LeadersReadersClient({
               <p style={prose}>
                 Before we go further, I want to name something directly, because it matters.
               </p>
+              <p style={proseSubhead}>Reading honours your tradition</p>
               <p style={prose}>
-                Many of the leaders Crispy works with grew up in cultures where wisdom was not primarily transmitted through books. It came through elders. Through proverb and story. Through apprenticeship alongside someone who knew things you didn&apos;t. Through song and ceremony and gathered community. These are not primitive modes of learning that you move beyond when you become modern. They are deep, sophisticated, and often more holistically formative than private reading. If that is your tradition, honour it. It is part of how God has preserved wisdom across generations.
+                Many of the leaders Crispy works with grew up in cultures where wisdom was not primarily transmitted through books. It came through elders. Through proverb and story. Through apprenticeship alongside someone who knew things you didn&apos;t.
               </p>
               <p style={prose}>
-                But here is the reframe: reading is not the replacement for oral learning. It is an extension of it. Think of it this way. There are thinkers who lived centuries before you, in countries you will never visit, in contexts that shaped them in ways completely different from your own. They have things to say to your situation that your local mentors, however wise, cannot say, because those mentors share your cultural assumptions. Reading is how you access those distant mentors. It is, in a real sense, the most democratic form of mentorship available. The book does not care about your status, your language, or your passport. You can sit with Augustine, or Chinua Achebe, or Ada Lum, for the cost of an afternoon.
+                These are not primitive modes of learning. They are deep, sophisticated, and often more holistically formative than private reading. If that is your tradition, honour it. It is part of how God has preserved wisdom across generations.
+              </p>
+              <p style={proseSubhead}>Your distant mentors are waiting</p>
+              <p style={prose}>
+                Reading is not the replacement for oral learning. It is an extension of it.
               </p>
               <p style={prose}>
-                There is a second layer to this that is particularly important for cross-cultural leaders. Most of the widely available leadership books, the ones recommended in training programs, shared at conferences, stacked in airport bookshops, were written by North American or European authors, for North American or European contexts. This is not a conspiracy. It is just publishing economics and English-language dominance. But it means that if you read only what is most available, you will be absorbing a particular cultural framework for leadership, one that prizes individual achievement, direct communication, and forward-planning, and you may not even notice that is what you are absorbing. Cross-cultural leaders need to read diversely, deliberately. Seek out writers from your own cultural tradition. Seek out writers from the majority world. Notice whose voice you have not yet heard.
+                There are thinkers who lived centuries before you, in countries you will never visit, with things to say to your situation that your local mentors cannot say. Reading is how you access those distant mentors. It is the most democratic form of mentorship available. The book does not care about your status, your language, or your passport. You can sit with Augustine, or Chinua Achebe, or Ada Lum, for the cost of an afternoon.
+              </p>
+              <p style={proseSubhead}>What you read shapes how you lead</p>
+              <p style={prose}>
+                Most widely available leadership books were written by North American or European authors, for North American or European contexts. That is just publishing economics. But if you read only what is most available, you will absorb a particular cultural framework for leadership without noticing it.
               </p>
               <p style={prose}>
-                There is one more reason reading matters specifically for the cross-cultural leader. Literary fiction, in particular, has been shown in peer-reviewed research to measurably improve the capacity to understand what is happening inside other people&apos;s minds. Researchers Emanuele Castano and David Kidd at The New School found that reading literary fiction significantly improved performance on validated tests of empathy and perspective-taking. Genre fiction and nonfiction produced no equivalent effect. The reason is that literary fiction forces you to practise exactly what cross-cultural work demands: holding uncertainty, making inferences about people who are not like you, and remaining curious rather than closing down. If you want to be better at reading rooms and reading people, one of the best tools is reading books.
+                Cross-cultural leaders need to read diversely, deliberately. Seek out writers from your own cultural tradition. Seek out writers from the majority world. Notice whose voice you have not yet heard.
+              </p>
+              <p style={proseSubhead}>Reading builds empathy — and research proves it</p>
+              <p style={prose}>
+                Literary fiction has been shown in peer-reviewed research to measurably improve the capacity to understand what is happening inside other people&apos;s minds. Researchers Emanuele Castano and David Kidd found that reading literary fiction significantly improved performance on validated tests of empathy and perspective-taking.
               </p>
               <p style={{ ...prose, marginBottom: 0 }}>
-                This reframes reading not as a Western productivity import but as a cross-cultural leadership discipline with deep biblical roots and robust practical evidence. You are not reading because you should. You are reading because it is part of how you stay formed for the work.
+                The reason? Literary fiction forces you to practise exactly what cross-cultural work demands: holding uncertainty, making inferences about people who are not like you, and staying curious rather than closing down. If you want to be better at reading rooms and reading people, one of the best tools is reading books.
               </p>
             </>
           ) : (
@@ -1152,20 +1207,33 @@ export default function LeadersReadersClient({
               <p style={prose}>
                 Sebelum kita melanjutkan, aku ingin menamai sesuatu secara langsung, karena ini penting.
               </p>
+              <p style={proseSubhead}>Membaca menghormati tradisimu</p>
               <p style={prose}>
-                Banyak pemimpin yang belajar bersama Crispy tumbuh di dalam budaya di mana kebijaksanaan tidak terutama disampaikan melalui buku. Ia datang melalui para sesepuh. Melalui pepatah dan cerita. Melalui proses magang di sisi seseorang yang tahu hal-hal yang kamu belum tahu. Melalui lagu, upacara, dan komunitas yang berkumpul. Ini bukan cara belajar yang primitif yang kamu tinggalkan begitu kamu menjadi modern. Ini adalah cara yang dalam, canggih, dan sering kali lebih utuh secara formatif daripada membaca sendirian. Kalau itu adalah tradisimu, hormatilah. Itu adalah bagian dari cara Tuhan melestarikan kebijaksanaan lintas generasi.
+                Banyak pemimpin yang belajar bersama Crispy tumbuh di dalam budaya di mana kebijaksanaan tidak terutama disampaikan melalui buku. Ia datang melalui para sesepuh. Melalui pepatah dan cerita. Melalui proses magang di sisi seseorang yang tahu hal-hal yang kamu belum tahu.
               </p>
               <p style={prose}>
-                Tapi inilah bingkai ulangnya: membaca bukan pengganti pembelajaran lisan. Ini adalah perluasannya. Pikirkan seperti ini. Ada pemikir yang hidup berabad-abad sebelummu, di negara yang tidak akan pernah kamu kunjungi, dalam konteks yang membentuk mereka dengan cara yang sangat berbeda dari konteksmu. Mereka memiliki sesuatu untuk dikatakan kepada situasimu yang tidak bisa dikatakan oleh mentor lokalmu sekalipun yang paling bijak, karena para mentor itu berbagi asumsi budayamu. Membaca adalah cara kamu mengakses para mentor yang jauh itu. Ini adalah, dalam pengertian yang nyata, bentuk pendampingan yang paling demokratis yang tersedia. Buku tidak peduli tentang statusmu, bahasamu, atau paspormu. Kamu bisa duduk bersama Agustinus, atau Chinua Achebe, atau Ada Lum, hanya dengan biaya satu sore hari.
+                Ini bukan cara belajar yang primitif. Ini adalah cara yang dalam, canggih, dan sering kali lebih utuh secara formatif daripada membaca sendirian. Kalau itu adalah tradisimu, hormatilah. Itu adalah bagian dari cara Tuhan melestarikan kebijaksanaan lintas generasi.
+              </p>
+              <p style={proseSubhead}>Mentor jauhmu sedang menunggumu</p>
+              <p style={prose}>
+                Membaca bukan pengganti pembelajaran lisan. Ini adalah perluasannya.
               </p>
               <p style={prose}>
-                Ada lapisan kedua dari ini yang sangat penting bagi pemimpin lintas budaya. Sebagian besar buku kepemimpinan yang tersedia secara luas, yang direkomendasikan dalam program pelatihan, dibagikan di konferensi, ditumpuk di toko buku bandara, ditulis oleh penulis Amerika Utara atau Eropa, untuk konteks Amerika Utara atau Eropa. Ini bukan konspirasi. Ini hanya ekonomi penerbitan dan dominasi bahasa Inggris. Tapi artinya, kalau kamu hanya membaca apa yang paling mudah didapat, kamu akan menyerap kerangka budaya tertentu untuk kepemimpinan, salah satu yang mengutamakan pencapaian individu, komunikasi langsung, dan perencanaan ke depan, dan kamu mungkin tidak menyadari bahwa itulah yang sedang kamu serap. Pemimpin lintas budaya perlu membaca secara beragam, dengan disengaja. Carilah penulis dari tradisi budayamu sendiri. Carilah penulis dari dunia mayoritas. Perhatikan suara siapa yang belum pernah kamu dengar.
+                Ada pemikir yang hidup berabad-abad sebelummu, di negara yang tidak akan pernah kamu kunjungi, dengan sesuatu untuk dikatakan kepada situasimu yang tidak bisa dikatakan oleh mentor lokalmu. Membaca adalah cara kamu mengakses para mentor yang jauh itu. Ini adalah bentuk pendampingan yang paling demokratis yang tersedia. Buku tidak peduli tentang statusmu, bahasamu, atau paspormu. Kamu bisa duduk bersama Agustinus, atau Chinua Achebe, atau Ada Lum, hanya dengan biaya satu sore hari.
+              </p>
+              <p style={proseSubhead}>Apa yang kamu baca membentuk cara kamu memimpin</p>
+              <p style={prose}>
+                Sebagian besar buku kepemimpinan yang tersedia secara luas ditulis oleh penulis Amerika Utara atau Eropa, untuk konteks Amerika Utara atau Eropa. Itu hanya soal ekonomi penerbitan. Tapi kalau kamu hanya membaca apa yang paling mudah didapat, kamu akan menyerap kerangka budaya tertentu untuk kepemimpinan tanpa menyadarinya.
               </p>
               <p style={prose}>
-                Ada satu alasan lagi mengapa membaca sangat penting bagi pemimpin lintas budaya. Fiksi sastra, khususnya, telah terbukti dalam penelitian yang ditinjau sejawat secara terukur meningkatkan kapasitas untuk memahami apa yang terjadi di dalam pikiran orang lain. Para peneliti Emanuele Castano dan David Kidd menemukan bahwa membaca fiksi sastra secara signifikan meningkatkan kinerja pada tes empati dan pengambilan perspektif yang tervalidasi. Fiksi genre dan nonfiksi tidak menghasilkan efek yang setara. Alasannya adalah fiksi sastra memaksamu untuk melatih persis apa yang dituntut oleh pekerjaan lintas budaya: memegang ketidakpastian, membuat kesimpulan tentang orang yang tidak sepertimu, dan tetap penasaran daripada menutup diri. Kalau kamu ingin lebih baik dalam membaca situasi dan membaca orang, salah satu alat terbaik adalah membaca buku.
+                Pemimpin lintas budaya perlu membaca secara beragam, dengan disengaja. Carilah penulis dari tradisi budayamu sendiri. Carilah penulis dari dunia mayoritas. Perhatikan suara siapa yang belum pernah kamu dengar.
+              </p>
+              <p style={proseSubhead}>Membaca membangun empati — dan riset membuktikannya</p>
+              <p style={prose}>
+                Fiksi sastra telah terbukti dalam penelitian yang ditinjau sejawat secara terukur meningkatkan kapasitas untuk memahami apa yang terjadi di dalam pikiran orang lain. Para peneliti Emanuele Castano dan David Kidd menemukan bahwa membaca fiksi sastra secara signifikan meningkatkan kinerja pada tes empati dan pengambilan perspektif yang tervalidasi.
               </p>
               <p style={{ ...prose, marginBottom: 0 }}>
-                Ini membingkai ulang membaca bukan sebagai impor produktivitas Barat, melainkan sebagai disiplin kepemimpinan lintas budaya dengan akar biblis yang dalam dan bukti praktis yang kuat. Kamu tidak membaca karena kamu seharusnya. Kamu membaca karena itu adalah bagian dari cara kamu tetap terbentuk untuk pekerjaan ini.
+                Alasannya? Fiksi sastra memaksamu untuk melatih persis apa yang dituntut oleh pekerjaan lintas budaya: memegang ketidakpastian, membuat kesimpulan tentang orang yang tidak sepertimu, dan tetap penasaran daripada menutup diri. Kalau kamu ingin lebih baik dalam membaca situasi dan membaca orang, salah satu alat terbaik adalah membaca buku.
               </p>
             </>
           )}
@@ -2166,14 +2234,26 @@ export default function LeadersReadersClient({
 
           {lang === "en" ? (
             <>
+              <p style={proseSubheadDark}>Wesley&apos;s instruction</p>
               <p style={proseDark}>
-                In 1760, John Wesley wrote a letter to a pastor named Samuel Premboth. The letter was brief and its instruction was direct: &ldquo;Whether you like it or no, read and pray daily. It is for your life.&rdquo; What strikes me about that sentence is that Wesley named the resistance first. He did not assume Premboth would be delighted to hear this. He assumed Premboth would find it inconvenient, or uncomfortable, or irrelevant. And he said it anyway, with pastoral weight. Read. Pray. This is for your life.
+                In 1760, John Wesley wrote a letter to a pastor named Samuel Premboth. The letter was brief and its instruction was direct: &ldquo;Whether you like it or no, read and pray daily. It is for your life.&rdquo;
               </p>
               <p style={proseDark}>
-                Wesley was writing to a pekerja lapangan in the 18th century, but he could be writing to you in 2025. The resistance has not changed. The pace of life that crowds out reading is the same resistance, just with a different shape. And the stakes are the same: a leader who stops learning, who fills every quiet moment with noise, who relies only on what they already know, is a leader who is slowly stopping. Wesley knew this. He was not recommending a self-improvement program. He was saying: this is survival for the leader who wants to keep growing.
+                What strikes me about that sentence is that Wesley named the resistance first. He did not assume Premboth would be delighted to hear this. He assumed Premboth would find it inconvenient, or uncomfortable, or irrelevant. And he said it anyway, with pastoral weight.
+              </p>
+              <p style={proseSubheadDark}>Still true today</p>
+              <p style={proseDark}>
+                Wesley was writing to a field worker in the 18th century, but he could be writing to you now. The resistance has not changed. The pace of life that crowds out reading is the same resistance, just with a different shape.
               </p>
               <p style={proseDark}>
-                Proverbs 1:5 is even more direct: &ldquo;Let the wise listen and add to their learning.&rdquo; The wise person is not the one who has finished learning. The wise person is the one who has not stopped. That is the calling this module is pointing toward. Not mastery. Not an impressive reading list. Just the continued posture of someone who knows there is more to know, and who is willing to sit with someone else&apos;s thinking long enough for it to change something.
+                A leader who stops learning, who fills every quiet moment with noise, who relies only on what they already know, is a leader who is slowly stopping. Wesley was not recommending a self-improvement program. He was saying: this is survival for the leader who wants to keep growing.
+              </p>
+              <p style={proseSubheadDark}>Not mastery. Just continued posture.</p>
+              <p style={proseDark}>
+                Proverbs 1:5 is direct: &ldquo;Let the wise listen and add to their learning.&rdquo; The wise person is not the one who has finished learning. The wise person is the one who has not stopped.
+              </p>
+              <p style={proseDark}>
+                That is the calling this module is pointing toward. Not an impressive reading list. Just the continued posture of someone who knows there is more to know, and who is willing to sit with someone else&apos;s thinking long enough for it to change something.
               </p>
               <p style={{ ...proseDark, marginBottom: 0, fontStyle: "italic" }}>
                 Who are the mentors on your shelf that you haven&apos;t met yet?
@@ -2181,14 +2261,26 @@ export default function LeadersReadersClient({
             </>
           ) : (
             <>
+              <p style={proseSubheadDark}>Instruksi Wesley</p>
               <p style={proseDark}>
-                Pada tahun 1760, John Wesley menulis surat kepada seorang pendeta bernama Samuel Premboth. Suratnya singkat dan instruksinya langsung: &ldquo;Suka atau tidak suka, bacalah dan berdoalah setiap hari. Itu demi hidupmu.&rdquo; Yang menarik bagiku dari kalimat itu adalah Wesley menamai perlawanannya terlebih dahulu. Ia tidak mengasumsikan Premboth akan senang mendengar ini. Ia mengasumsikan Premboth akan merasa ini merepotkan, atau tidak nyaman, atau tidak relevan. Dan ia mengatakannya juga, dengan bobot pastoral. Membaca. Berdoa. Ini demi hidupmu.
+                Pada tahun 1760, John Wesley menulis surat kepada seorang pendeta bernama Samuel Premboth. Suratnya singkat dan instruksinya langsung: &ldquo;Suka atau tidak suka, bacalah dan berdoalah setiap hari. Itu demi hidupmu.&rdquo;
               </p>
               <p style={proseDark}>
-                Wesley menulis kepada seorang pekerja lapangan di abad ke-18, tapi ia bisa saja menulis kepadamu di tahun 2025. Perlawanannya belum berubah. Laju kehidupan yang menyisihkan waktu membaca adalah perlawanan yang sama, hanya dengan bentuk yang berbeda. Dan taruhannya sama: pemimpin yang berhenti belajar, yang mengisi setiap momen tenang dengan kebisingan, yang hanya mengandalkan apa yang sudah mereka ketahui, adalah pemimpin yang perlahan-lahan berhenti. Wesley tahu ini. Ia tidak merekomendasikan program pengembangan diri. Ia berkata: ini adalah kelangsungan hidup bagi pemimpin yang ingin terus bertumbuh.
+                Yang menarik bagiku dari kalimat itu adalah Wesley menamai perlawanannya terlebih dahulu. Ia tidak mengasumsikan Premboth akan senang mendengar ini. Ia mengasumsikan Premboth akan merasa ini merepotkan, atau tidak nyaman, atau tidak relevan. Dan ia mengatakannya juga, dengan bobot pastoral.
+              </p>
+              <p style={proseSubheadDark}>Masih berlaku hari ini</p>
+              <p style={proseDark}>
+                Wesley menulis kepada seorang pekerja lapangan di abad ke-18, tapi ia bisa saja menulis kepadamu sekarang. Perlawanannya belum berubah. Laju kehidupan yang menyisihkan waktu membaca adalah perlawanan yang sama, hanya dengan bentuk yang berbeda.
               </p>
               <p style={proseDark}>
-                Amsal 1:5 bahkan lebih langsung: &ldquo;Biarlah orang yang bijak mendengar dan menambah ilmu.&rdquo; Orang bijak bukan orang yang sudah selesai belajar. Orang bijak adalah orang yang tidak berhenti. Itulah panggilan yang ditunjukkan modul ini. Bukan penguasaan. Bukan daftar bacaan yang mengesankan. Hanya sikap yang terus-menerus dari seseorang yang tahu masih ada lebih banyak lagi yang perlu diketahui, dan yang bersedia duduk dengan pemikiran orang lain cukup lama sampai sesuatu berubah.
+                Pemimpin yang berhenti belajar, yang mengisi setiap momen tenang dengan kebisingan, yang hanya mengandalkan apa yang sudah mereka ketahui, adalah pemimpin yang perlahan-lahan berhenti. Wesley tidak merekomendasikan program pengembangan diri. Ia berkata: ini adalah kelangsungan hidup bagi pemimpin yang ingin terus bertumbuh.
+              </p>
+              <p style={proseSubheadDark}>Bukan penguasaan. Hanya sikap yang terus-menerus.</p>
+              <p style={proseDark}>
+                Amsal 1:5 langsung: &ldquo;Biarlah orang yang bijak mendengar dan menambah ilmu.&rdquo; Orang bijak bukan orang yang sudah selesai belajar. Orang bijak adalah orang yang tidak berhenti.
+              </p>
+              <p style={proseDark}>
+                Itulah panggilan yang ditunjukkan modul ini. Bukan daftar bacaan yang mengesankan. Hanya sikap yang terus-menerus dari seseorang yang tahu masih ada lebih banyak lagi yang perlu diketahui, dan yang bersedia duduk dengan pemikiran orang lain cukup lama sampai sesuatu berubah.
               </p>
               <p style={{ ...proseDark, marginBottom: 0, fontStyle: "italic" }}>
                 Siapa saja mentor di rakmu yang belum pernah kamu temui?
