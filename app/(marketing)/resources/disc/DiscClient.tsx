@@ -1,17 +1,16 @@
-﻿"use client";
+"use client";
 
 import { useState, useTransition, useEffect } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
-import Image from "next/image";
 import { saveResourceToDashboard, saveDISCResult } from "../actions";
 import { trackAssessmentCompletion } from "@/lib/ga-events";
 import LangToggle from "@/components/LangToggle";
 import SourcesDropdown from "@/components/SourcesDropdown";
+import ModuleComments from "@/components/ModuleComments";
 
 // -- ASSESSMENT DATA -----------------------------------------------------------------
 
-// Fixed per-question shuffle orders so options are never always in D/I/S/C order
 const SHUFFLE_ORDERS: number[][] = [
   [2,0,3,1],[0,2,1,3],[3,1,0,2],[1,3,2,0],[2,1,0,3],
   [0,3,1,2],[3,0,2,1],[1,2,3,0],[2,3,1,0],[0,1,3,2],
@@ -210,6 +209,10 @@ const DISC_TYPES = [
       name: "Paul",
       text: "Paul was the prototypical D-leader. He pushed mission forward fast, planted churches across the Roman world, and was unafraid to confront — even Peter to his face. His drive launched the gospel into new cultures. His growth edge? Learning to lead without crushing his coworkers (Mark, John). Drive needs grace.",
     },
+    digDeeper: {
+      en: "In a high-context team (Indonesia, Levantine contexts, Japan), your directness can read as disrespect before you have said anything offensive. The skill is not softening your message — it is slowing your timeline. The same goal, arrived at through a longer road, often gets further faster. Watch what happens in your team when you let silence run three seconds longer than is comfortable for you.",
+      id: "Dalam tim high-context (Indonesia, konteks Levant, Jepang), ketegasanmu dapat dibaca sebagai ketidakhormatan sebelum kamu mengatakan sesuatu yang menyinggung. Keterampilannya bukan memperhalus pesanmu — melainkan memperlambat jadwalmu. Tujuan yang sama, dicapai melalui jalan yang lebih panjang, seringkali lebih jauh lebih cepat. Perhatikan apa yang terjadi dalam timmu ketika kamu membiarkan keheningan berlangsung tiga detik lebih lama dari yang nyaman bagimu.",
+    },
   },
   {
     key: "I",
@@ -251,6 +254,10 @@ const DISC_TYPES = [
       name: "Peter",
       text: "Peter is the I-leader of the early church — warm, expressive, the first to speak. His enthusiasm carried the disciples; his energy preached the first sermon at Pentecost. But his I-style also led him to bold declarations his courage could not yet match — including the night he denied Jesus. Influence needs depth.",
     },
+    digDeeper: {
+      en: "In reserved or formal cultural contexts (East Asia, Northern Europe, some Middle Eastern settings), your natural expressiveness can read as superficial or unserious. The growth move is not suppressing your energy — it is developing genuine depth in the relationship before the energy lands well. I-type leaders who master this become some of the most effective cross-cultural bridge-builders in any team.",
+      id: "Dalam konteks budaya yang tertutup atau formal (Asia Timur, Eropa Utara, beberapa lingkungan Timur Tengah), ekspresivitasmu yang alami bisa terbaca sebagai dangkal atau tidak serius. Langkah pertumbuhannya bukan menekan energimu — melainkan mengembangkan kedalaman sejati dalam hubungan sebelum energi itu diterima dengan baik. Pemimpin tipe I yang menguasai ini menjadi beberapa pembangun jembatan lintas budaya paling efektif dalam tim mana pun.",
+    },
   },
   {
     key: "S",
@@ -290,7 +297,11 @@ const DISC_TYPES = [
     },
     biblical: {
       name: "Barnabas",
-      text: "Barnabas means 'Son of Encouragement' — a pure S-leader. He vouched for Saul when no one trusted him, mentored John Mark when Paul wrote him off, and held the early team together quietly. His patience built leaders Paul could not. Steadiness is rarely loud, but the church would have fractured without him.",
+      text: "Barnabas means 'Son of Encouragement' — a pure S-leader. He vouched for Saul when no one trusted him, mentored John Mark when Paul wrote him off, and held the early team together quietly. His patience built leaders Paul could not. Steadiness is rarely loud, but the church would have fractured without him. Some traditions map Barnabas as I-type rather than S — his warmth and encouragement support either reading. What is clear: his patient loyalty held the early team together when boldness alone would have fractured it.",
+    },
+    digDeeper: {
+      en: "In Indonesian and other Southeast Asian contexts, your harmony-preservation behaviors are not a weakness label waiting to be overcome — they are culturally skilled leadership. The ability to read the room, protect relationships, and hold space for others before pushing to a conclusion reflects deep relational intelligence. The growth edge is not becoming more assertive for its own sake, but learning when speaking first protects others from carrying more than they should.",
+      id: "Dalam konteks Indonesia dan Asia Tenggara lainnya, perilaku pelestarian harmonimu bukan label kelemahan yang menunggu untuk diatasi — melainkan kepemimpinan yang terampil secara budaya. Kemampuan membaca situasi, melindungi hubungan, dan memberi ruang bagi orang lain sebelum mendorong ke kesimpulan mencerminkan kecerdasan relasional yang mendalam. Area pertumbuhannya bukan menjadi lebih asertif demi dirinya sendiri, tetapi belajar kapan berbicara lebih dulu melindungi orang lain dari membawa beban yang seharusnya tidak mereka tanggung.",
     },
   },
   {
@@ -333,6 +344,10 @@ const DISC_TYPES = [
       name: "Luke",
       text: "Luke wrote the most precise gospel — careful research, ordered chronology, named sources. His C-style preserved the historical anchor of the faith: dates, places, witnesses. Quiet, exact, unshowy. Without his rigour, the church would have lost the documentary weight of what happened. Faithful leadership sometimes looks like patient verification.",
     },
+    digDeeper: {
+      en: "In oral-preference cultures (much of sub-Saharan Africa, oral-tradition communities across Asia and the Pacific), your documentation requests can read as distrust before a single question is asked. The skill is pairing precision with warmth — making clear that your thoroughness is in service of the mission, not a judgment on people. C-type leaders who learn to communicate the 'why' behind their standards become trusted quality anchors in diverse teams.",
+      id: "Dalam budaya berbasis lisan (sebagian besar Afrika sub-Sahara, komunitas tradisi lisan di seluruh Asia dan Pasifik), permintaan dokumentasimu dapat terbaca sebagai ketidakpercayaan bahkan sebelum satu pertanyaan pun diajukan. Keterampilannya adalah memadukan ketepatan dengan kehangatan — menjelaskan bahwa ketelitianmu adalah untuk melayani misi, bukan menghakimi orang. Pemimpin tipe C yang belajar mengkomunikasikan 'mengapa' di balik standar mereka menjadi jangkar kualitas yang dipercaya dalam tim yang beragam.",
+    },
   },
 ];
 
@@ -367,97 +382,37 @@ const RESULT_PROFILES: Record<"en" | "id", Record<ResultKey, string>> = {
   },
 };
 
-// -- CROSS-CULTURAL SCENARIOS --------------------------------------------------
+// -- CROSS-CULTURAL SCENARIOS DATA (kept, not rendered) -----------------------
 
 const SCENARIOS = [
   {
     situation: "You lead a small NGO team in West Java, Indonesia. At the end of a project review, two local team members gave very vague answers when asked about their progress. They smiled, nodded, and said \"still in process.\" Three days later, you discover nothing has moved. This is the second time this has happened.",
     prompt: "What do you do?",
     options: [
-      {
-        letter: "A", style: "D",
-        action: "You call a direct team meeting, name the pattern clearly, and state that you need honest progress updates regardless of the news.",
-        outcome: "The message is clear. But the room goes cold. Your local team members feel publicly shamed. The nodding continues — what changes is that they now report less, not more.",
-        coaching: "Clarity is a virtue. In high-context cultures, the delivery channel matters as much as the content.",
-      },
-      {
-        letter: "B", style: "I",
-        action: "You create a lighter weekly check-in format — low-stakes and conversational — and build in a \"what's blocking you?\" question with a cheerful tone.",
-        outcome: "The team relaxes. A few people open up about obstacles they hadn't named. Progress picks up slightly. But the underlying discomfort around reporting bad news hasn't been named yet.",
-        coaching: "You built the bridge. Now walk across it and ask the real question.",
-      },
-      {
-        letter: "C", style: "S",
-        action: "You quietly pull each person aside individually, ask gently how things are going, and make it clear there is no judgment.",
-        outcome: "Both team members open up. You learn there were real obstacles they didn't know how to raise. Trust deepens. Progress restarts.",
-        coaching: "One-on-one care is often the most culturally safe entry point. Consider whether the team also needs to hear this permission.",
-      },
-      {
-        letter: "D", style: "C",
-        action: "You redesign the reporting process: create a structured weekly form, define what counts as \"in progress\" versus \"blocked,\" and ask everyone to submit it before the team meeting.",
-        outcome: "The form helps — it gives people a channel for reporting problems without face-to-face shame. But if it feels bureaucratic, it may just produce polished non-answers.",
-        coaching: "A good system lowers the cost of honesty. Pair it with a conversation about why you built it.",
-      },
+      { letter: "A", style: "D", action: "You call a direct team meeting, name the pattern clearly, and state that you need honest progress updates regardless of the news.", outcome: "The message is clear. But the room goes cold. Your local team members feel publicly shamed. The nodding continues — what changes is that they now report less, not more.", coaching: "Clarity is a virtue. In high-context cultures, the delivery channel matters as much as the content." },
+      { letter: "B", style: "I", action: "You create a lighter weekly check-in format — low-stakes and conversational — and build in a \"what's blocking you?\" question with a cheerful tone.", outcome: "The team relaxes. A few people open up about obstacles they hadn't named. Progress picks up slightly. But the underlying discomfort around reporting bad news hasn't been named yet.", coaching: "You built the bridge. Now walk across it and ask the real question." },
+      { letter: "C", style: "S", action: "You quietly pull each person aside individually, ask gently how things are going, and make it clear there is no judgment.", outcome: "Both team members open up. You learn there were real obstacles they didn't know how to raise. Trust deepens. Progress restarts.", coaching: "One-on-one care is often the most culturally safe entry point. Consider whether the team also needs to hear this permission." },
+      { letter: "D", style: "C", action: "You redesign the reporting process: create a structured weekly form, define what counts as \"in progress\" versus \"blocked,\" and ask everyone to submit it before the team meeting.", outcome: "The form helps — it gives people a channel for reporting problems without face-to-face shame. But if it feels bureaucratic, it may just produce polished non-answers.", coaching: "A good system lowers the cost of honesty. Pair it with a conversation about why you built it." },
     ],
   },
   {
     situation: "You are a British field worker leading a mixed team in Beirut, Lebanon. You have made a decision about a new community engagement strategy. Three weeks after communicating it, a senior Lebanese colleague says quietly over coffee: \"Some of us think the approach will not work here.\" He doesn't elaborate. He changes the subject almost immediately.",
     prompt: "What do you do?",
     options: [
-      {
-        letter: "A", style: "D",
-        action: "You follow up the same day: \"You mentioned some concerns earlier. I'd like to hear them directly. Can we sit down this afternoon?\"",
-        outcome: "He agrees to meet. But in the meeting, he hedges — says he was \"just thinking out loud.\" In honour-shame cultures, a direct request to say it face-to-face can shut the conversation down rather than open it.",
-        coaching: "You moved fast toward the truth. He moved away to protect the relationship. Only one of you adapted.",
-      },
-      {
-        letter: "B", style: "I",
-        action: "You set up a team session framed as \"let's pressure-test this strategy together\" — open, creative, no one singled out.",
-        outcome: "Your colleague contributes more than expected. Real concerns surface without anyone openly challenging you. You come out with a better strategy and a team that feels heard.",
-        coaching: "Sometimes the group protects the individual. An open room gives people permission to be honest without losing face.",
-      },
-      {
-        letter: "C", style: "S",
-        action: "You go back to him privately the next day and say simply: \"I've been thinking about what you said. I'd love to understand more if you're willing.\" You leave space.",
-        outcome: "He shares, slowly. He explains two cultural dynamics the strategy had missed. The conversation takes 45 minutes. You adjust the plan. The relationship deepens.",
-        coaching: "Patience was the leadership move. You created the conditions for truth to travel slowly but safely.",
-      },
-      {
-        letter: "D", style: "C",
-        action: "You go back to your desk, review the strategy with fresh eyes, and send the team a list of cultural assumptions you may have made: \"Tell me where I've got it wrong.\"",
-        outcome: "Your colleague replies with a thoughtful paragraph. Two others do too. You get the feedback you needed without anyone feeling exposed.",
-        coaching: "You made it safe to correct you by lowering the interpersonal cost. That is culturally intelligent leadership.",
-      },
+      { letter: "A", style: "D", action: "You follow up the same day: \"You mentioned some concerns earlier. I'd like to hear them directly. Can we sit down this afternoon?\"", outcome: "He agrees to meet. But in the meeting, he hedges — says he was \"just thinking out loud.\" In honour-shame cultures, a direct request to say it face-to-face can shut the conversation down rather than open it.", coaching: "You moved fast toward the truth. He moved away to protect the relationship. Only one of you adapted." },
+      { letter: "B", style: "I", action: "You set up a team session framed as \"let's pressure-test this strategy together\" — open, creative, no one singled out.", outcome: "Your colleague contributes more than expected. Real concerns surface without anyone openly challenging you. You come out with a better strategy and a team that feels heard.", coaching: "Sometimes the group protects the individual. An open room gives people permission to be honest without losing face." },
+      { letter: "C", style: "S", action: "You go back to him privately the next day and say simply: \"I've been thinking about what you said. I'd love to understand more if you're willing.\" You leave space.", outcome: "He shares, slowly. He explains two cultural dynamics the strategy had missed. The conversation takes 45 minutes. You adjust the plan. The relationship deepens.", coaching: "Patience was the leadership move. You created the conditions for truth to travel slowly but safely." },
+      { letter: "D", style: "C", action: "You go back to your desk, review the strategy with fresh eyes, and send the team a list of cultural assumptions you may have made: \"Tell me where I've got it wrong.\"", outcome: "Your colleague replies with a thoughtful paragraph. Two others do too. You get the feedback you needed without anyone feeling exposed.", coaching: "You made it safe to correct you by lowering the interpersonal cost. That is culturally intelligent leadership." },
     ],
   },
   {
     situation: "You are a Kenyan team leader managing a project with a German partner organisation. Your German counterpart consistently sends long, detailed critical feedback emails — tracked changes, numbered corrections. Your team members are starting to dread them. One says privately: \"He doesn't respect us.\" The German colleague believes he is being helpful.",
     prompt: "What do you do?",
     options: [
-      {
-        letter: "A", style: "D",
-        action: "You write directly to your German counterpart: \"I need to flag something. The way feedback is being delivered is landing badly with my team. Can we agree on a different approach?\"",
-        outcome: "He is surprised but responds professionally. He didn't know there was a problem. You agree on a weekly feedback call instead of multiple emails. Your team sees you advocating for them.",
-        coaching: "In low-context cultures, directness is respectful. You named the problem without drama, and it was received as professionalism.",
-      },
-      {
-        letter: "B", style: "I",
-        action: "You set up a joint \"collaboration check-in\" call and open with: \"Let's talk about what's making collaboration feel good or heavy.\"",
-        outcome: "Your German colleague raises his own efficiency concerns. Your team raises the feedback volume. Both sides get heard at the same time — and the atmosphere shifts.",
-        coaching: "A well-facilitated \"working together\" conversation can solve cultural friction without accusation. Your role is holding the frame.",
-      },
-      {
-        letter: "C", style: "S",
-        action: "You absorb most of the tension internally, continue buffering the emails before sharing them with your team, and reassure the most affected team member privately.",
-        outcome: "Short-term calm. But the pattern continues. The resentment builds slowly. And you are carrying a load that grows heavier each week.",
-        coaching: "Absorbing conflict is not the same as resolving it. At some point, the people involved need to find a way to understand each other.",
-      },
-      {
-        letter: "D", style: "C",
-        action: "You research German professional communication norms and prepare a \"working norms\" document that both teams agree to at the start of the next project phase.",
-        outcome: "Your German counterpart appreciates the structure. Your team has clarity on how to interpret the feedback. The friction doesn't disappear — but it becomes navigable.",
-        coaching: "You turned a cultural clash into a systems problem. That reframe made it solvable without anyone losing face.",
-      },
+      { letter: "A", style: "D", action: "You write directly to your German counterpart: \"I need to flag something. The way feedback is being delivered is landing badly with my team. Can we agree on a different approach?\"", outcome: "He is surprised but responds professionally. He didn't know there was a problem. You agree on a weekly feedback call instead of multiple emails. Your team sees you advocating for them.", coaching: "In low-context cultures, directness is respectful. You named the problem without drama, and it was received as professionalism." },
+      { letter: "B", style: "I", action: "You set up a joint \"collaboration check-in\" call and open with: \"Let's talk about what's making collaboration feel good or heavy.\"", outcome: "Your German colleague raises his own efficiency concerns. Your team raises the feedback volume. Both sides get heard at the same time — and the atmosphere shifts.", coaching: "A well-facilitated \"working together\" conversation can solve cultural friction without accusation. Your role is holding the frame." },
+      { letter: "C", style: "S", action: "You absorb most of the tension internally, continue buffering the emails before sharing them with your team, and reassure the most affected team member privately.", outcome: "Short-term calm. But the pattern continues. The resentment builds slowly. And you are carrying a load that grows heavier each week.", coaching: "Absorbing conflict is not the same as resolving it. At some point, the people involved need to find a way to understand each other." },
+      { letter: "D", style: "C", action: "You research German professional communication norms and prepare a \"working norms\" document that both teams agree to at the start of the next project phase.", outcome: "Your German counterpart appreciates the structure. Your team has clarity on how to interpret the feedback. The friction doesn't disappear — but it becomes navigable.", coaching: "You turned a cultural clash into a systems problem. That reframe made it solvable without anyone losing face." },
     ],
   },
 ];
@@ -480,16 +435,17 @@ function getResultKey(scores: { D: number; I: number; S: number; C: number }): R
   return top[0] as ResultKey;
 }
 
-// -- TYPES ---------------------------------------------------------------------
+
+// -- TYPE DEFINITIONS ------------------------------------------------------------------
 
 type Lang = "en" | "id";
 type ScoreKey = "D" | "I" | "S" | "C";
-type QuizState = "idle" | "active" | "done";
+type QuizState = "not-started" | "in-progress" | "done";
 
-// -- COMPONENT -----------------------------------------------------------------
+// -- COMPONENT -------------------------------------------------------------------------
 
 export default function DiscClient({
-  isSaved: isSavedProp,
+  isSaved,
   discResult,
   discScores,
 }: {
@@ -497,21 +453,20 @@ export default function DiscClient({
   discResult: string | null;
   discScores: { D: number; I: number; S: number; C: number } | null;
 }) {
-  const { lang: _ctxLang } = useLanguage();
-  const lang = (_ctxLang === "id" ? _ctxLang : "en") as Lang;
-  const [quizState, setQuizState] = useState<QuizState>(
-    discResult && discScores ? "done" : "idle"
-  );
+  const { lang } = useLanguage() as { lang: Lang };
+
+  // Quiz state
+  const [quizState, setQuizState] = useState<QuizState>("not-started");
   const [currentQ, setCurrentQ] = useState(0);
-  const [scores, setScores] = useState<Record<ScoreKey, number>>(
-    discScores ?? { D: 0, I: 0, S: 0, C: 0 }
-  );
-  const [answerHistory, setAnswerHistory] = useState<ScoreKey[]>([]);
-  const [saved, setSaved] = useState(isSavedProp);
-  const [resultSaved, setResultSaved] = useState(!!discResult);
-  const [expandedType, setExpandedType] = useState<string | null>(null);
+  const [scores, setScores] = useState<Record<ScoreKey, number>>({ D: 0, I: 0, S: 0, C: 0 });
+  const [answerHistory, setAnswerHistory] = useState<Array<{ q: number; t: string }>>([]);
+
+  // Save state
+  const [saved, setSaved] = useState(isSaved);
+  const [resultSaved, setResultSaved] = useState(false);
   const [isPending, startTransition] = useTransition();
-  const [hookSelected, setHookSelected] = useState<string | null>(null);
+
+  // UI state
   const [flippedCard, setFlippedCard] = useState<number | null>(null);
   const [currentScenario, setCurrentScenario] = useState(0);
   const [scenarioSelections, setScenarioSelections] = useState<Record<number, string | null>>({});
@@ -519,32 +474,40 @@ export default function DiscClient({
   const [noHover, setNoHover] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [bgOpen, setBgOpen] = useState(false);
+  const [activeTypeTab, setActiveTypeTab] = useState<Record<string, "communication" | "crossCultural">>({});
+  const [openAccordion, setOpenAccordion] = useState<string | null>(null);
+  const [hoveredQuadrant, setHoveredQuadrant] = useState<string | null>(null);
+
+  // Touch detection
   useEffect(() => {
-    if (!noHover) return;
-    const t = setTimeout(() => setNoHover(false), 120);
-    return () => clearTimeout(t);
-  }, [currentQ, noHover]);
+    const onTouch = () => setNoHover(true);
+    window.addEventListener("touchstart", onTouch, { once: true });
+    return () => window.removeEventListener("touchstart", onTouch);
+  }, []);
 
-  const tr = (en: string, id: string) => lang === "id" ? id : en;
+  // -- HELPERS -----------------------------------------------------------------------
 
-  // Build shuffled options for current question using fixed per-question shuffle
+  function tr<T extends { en: string; id: string }>(obj: T): string {
+    return obj[lang as keyof T] as string;
+  }
+
   function getShuffledOptions(qIndex: number) {
-    const order = SHUFFLE_ORDERS[qIndex] ?? [0, 1, 2, 3];
+    const order = SHUFFLE_ORDERS[qIndex % SHUFFLE_ORDERS.length];
     return order.map((i) => QS[qIndex].options[i]);
   }
 
+  // -- QUIZ HANDLERS -----------------------------------------------------------------
+
   function startQuiz() {
+    setQuizState("in-progress");
     setCurrentQ(0);
     setScores({ D: 0, I: 0, S: 0, C: 0 });
     setAnswerHistory([]);
-    setQuizState("active");
-    window.scrollTo({ top: document.getElementById("quiz-section")?.offsetTop ?? 0, behavior: "smooth" });
   }
 
-  function handleAnswer(t: ScoreKey) {
-    setNoHover(true);
-    const newScores = { ...scores, [t]: scores[t] + 1 };
-    const newHistory = [...answerHistory, t];
+  function handleAnswer(type: string) {
+    const newScores = { ...scores, [type]: scores[type as ScoreKey] + 1 };
+    const newHistory = [...answerHistory, { q: currentQ, t: type }];
     if (currentQ < QS.length - 1) {
       setScores(newScores);
       setAnswerHistory(newHistory);
@@ -557,1236 +520,2128 @@ export default function DiscClient({
   }
 
   function handleBack() {
-    if (currentQ === 0) return;
-    const prevType = answerHistory[answerHistory.length - 1];
+    if (currentQ === 0) {
+      setQuizState("not-started");
+      return;
+    }
+    const prev = answerHistory[answerHistory.length - 1];
+    const newScores = { ...scores, [prev.t]: scores[prev.t as ScoreKey] - 1 };
+    setScores(newScores);
     setAnswerHistory(answerHistory.slice(0, -1));
-    setScores({ ...scores, [prevType]: scores[prevType] - 1 });
     setCurrentQ(currentQ - 1);
   }
 
   function retake() {
-    setQuizState("idle");
+    setQuizState("not-started");
     setCurrentQ(0);
     setScores({ D: 0, I: 0, S: 0, C: 0 });
     setAnswerHistory([]);
     setResultSaved(false);
   }
 
+  // -- RESULT CALCULATIONS -----------------------------------------------------------
+
   const total = scores.D + scores.I + scores.S + scores.C;
-  const resultKey = total > 0 ? getResultKey(scores) : "D";
-  const resultText = RESULT_PROFILES[lang][resultKey];
+  const resultKey = quizState === "done" ? getResultKey(scores) : (discResult ?? "");
+  const displayScores = quizState === "done" ? scores : discScores ?? { D: 0, I: 0, S: 0, C: 0 };
+  const displayTotal = quizState === "done" ? total : (discScores ? discScores.D + discScores.I + discScores.S + discScores.C : 0);
 
-  const pD = total > 0 ? Math.round((scores.D / total) * 100) : 0;
-  const pI = total > 0 ? Math.round((scores.I / total) * 100) : 0;
-  const pS = total > 0 ? Math.round((scores.S / total) * 100) : 0;
-  const pC = total > 0 ? 100 - pD - pI - pS : 0;
+  const resultText = resultKey
+    ? (RESULT_PROFILES[lang as keyof typeof RESULT_PROFILES] as Record<string, string>)?.[resultKey] ?? null
+    : null;
 
-  function handleSave() {
+  const primaryType = resultKey ? resultKey[0] as ScoreKey : null;
+
+  const pD = displayTotal > 0 ? Math.round((displayScores.D / displayTotal) * 100) : 0;
+  const pI = displayTotal > 0 ? Math.round((displayScores.I / displayTotal) * 100) : 0;
+  const pS = displayTotal > 0 ? Math.round((displayScores.S / displayTotal) * 100) : 0;
+  const pC = displayTotal > 0 ? Math.round((displayScores.C / displayTotal) * 100) : 0;
+
+  // -- SAVE HANDLERS -----------------------------------------------------------------
+
+  async function handleSave() {
     startTransition(async () => {
-      const result = await saveResourceToDashboard("disc");
-      if (!result.error) setSaved(true);
+      await saveResourceToDashboard("disc");
+      setSaved(true);
     });
   }
 
-  function handleSaveResult() {
+  async function handleSaveResult() {
+    if (!resultKey) return;
     startTransition(async () => {
-      await saveDISCResult(resultKey, { D: pD, I: pI, S: pS, C: pC });
+      await saveDISCResult(resultKey, scores);
       setResultSaved(true);
-      trackAssessmentCompletion('disc');
     });
   }
 
-  // Progress bar color cycling: D?I?S?C (6 questions per color)
-  const getProgressBarColor = (questionIndex: number) => {
-    const colorIndex = Math.floor(questionIndex / 6);
-    const colors = [
-      "oklch(52% 0.20 25)",    // D-red (Q 0-5)
-      "oklch(52% 0.18 80)",    // I-yellow (Q 6-11)
-      "oklch(48% 0.18 145)",   // S-green (Q 12-17)
-      "oklch(48% 0.18 250)",   // C-blue (Q 18-23)
-    ];
-    return colors[colorIndex % 4];
-  };
+  function getProgressBarColor(qIndex: number): string {
+    const colors: Record<ScoreKey, string> = {
+      D: "oklch(52% 0.27 25)",
+      I: "oklch(62% 0.22 87)",
+      S: "oklch(52% 0.22 145)",
+      C: "oklch(50% 0.22 245)",
+    };
+    const keys: ScoreKey[] = ["D", "I", "S", "C"];
+    return colors[keys[Math.floor((qIndex / QS.length) * 4) % 4]];
+  }
 
-  const primaryType = DISC_TYPES.find(t => t.key === resultKey[0]) ?? DISC_TYPES[0];
+  // -- GA TRACKING -------------------------------------------------------------------
+
+  function trackCompletion() {
+    if (primaryType) {
+      trackAssessmentCompletion("disc");
+    }
+  }
+
+  // Track on quiz done
+  useEffect(() => {
+    if (quizState === "done" && primaryType) {
+      trackCompletion();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [quizState]);
+
+  // -- SCROLL HELPERS ----------------------------------------------------------------
+
+  function scrollToType(key: string) {
+    const el = document.getElementById(`disc-type-${key}`);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function scrollToAssessment() {
+    const el = document.getElementById("disc-assessment");
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function scrollToTypes() {
+    const el = document.getElementById("disc-types");
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  // -- MATRIX KEY HANDLER ------------------------------------------------------------
+
+  function handleMatrixKey(e: React.KeyboardEvent<SVGGElement>, key: string) {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      scrollToType(key);
+    }
+  }
+
+  // -- RENDER ------------------------------------------------------------------------
 
   return (
     <>
-      <LangToggle />
-      {/* -- HERO -- */}
-      <section style={{
-        background: "oklch(22% 0.10 260)",
-        paddingTop: "clamp(2.5rem, 4vw, 4rem)",
-        paddingBottom: "clamp(2.5rem, 4vw, 4rem)",
-        position: "relative",
-        overflow: "hidden",
-      }}>
-        <img src="/images/resources/disc/hero.jpg" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", opacity: 0.18, mixBlendMode: "luminosity", pointerEvents: "none" }} />
-        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "oklch(65% 0.15 45)" }} />
+      {/* LANG TOGGLE */}
+      <div style={{ display: "flex", justifyContent: "flex-end", padding: "0.75rem 1.5rem 0" }}>
+        <LangToggle />
+      </div>
 
-        {/* Faint background: DISC letters */}
-        <div aria-hidden="true" style={{
-          position: "absolute",
-          right: "clamp(-2rem, 2vw, 4rem)",
-          top: "50%",
-          transform: "translateY(-50%)",
-          display: "flex",
-          alignItems: "center",
-          gap: "clamp(0.5rem, 2vw, 1.5rem)",
-          opacity: 0.04,
-          pointerEvents: "none",
-          userSelect: "none",
-        }}>
-          {["D", "I", "S", "C"].map((letter, i) => {
-            const colors = [
-              "oklch(52% 0.20 25)",
-              "oklch(52% 0.18 80)",
-              "oklch(48% 0.18 145)",
-              "oklch(48% 0.18 250)",
-            ];
+      {/* ===================================================================
+          SECTION 1 — HERO
+      =================================================================== */}
+      <section
+        id="disc-hero"
+        style={{
+          background: "oklch(22% 0.10 260)",
+          position: "relative",
+          overflow: "hidden",
+          borderTop: "3px solid oklch(65% 0.15 45)",
+          padding: "clamp(3rem, 8vw, 5rem) clamp(1.25rem, 5vw, 3rem) clamp(2.5rem, 6vw, 4rem)",
+        }}
+      >
+        {/* Hero image — luminosity blend */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/hero.jpg"
+          alt=""
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            mixBlendMode: "luminosity",
+            opacity: 0.18,
+            pointerEvents: "none",
+          }}
+        />
+
+        {/* DISC watermark letters */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            top: 0,
+            right: "2rem",
+            display: "flex",
+            gap: "0.25rem",
+            lineHeight: 1,
+            pointerEvents: "none",
+          }}
+        >
+          {(["D", "I", "S", "C"] as const).map((k) => {
+            const t = DISC_TYPES.find((dt) => dt.key === k)!;
             return (
-              <span key={letter} style={{
-                fontFamily: "var(--font-montserrat)",
-                fontSize: "clamp(5rem, 12vw, 14rem)",
-                fontWeight: 900,
-                color: colors[i],
-                lineHeight: 1,
-              }}>
-                {letter}
+              <span
+                key={k}
+                style={{
+                  fontFamily: "Montserrat, sans-serif",
+                  fontWeight: 900,
+                  fontSize: "clamp(5rem, 12vw, 9rem)",
+                  color: t.color,
+                  opacity: 0.04,
+                  letterSpacing: "-0.02em",
+                }}
+              >
+                {k}
               </span>
             );
           })}
         </div>
 
-        <div className="container-wide" style={{ position: "relative" }}>
-          <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
-            {tr("Leadership — Assessment", "Kepemimpinan — Penilaian")}
+        {/* Hero content */}
+        <div style={{ position: "relative", zIndex: 1, maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
+          {/* Eyebrow */}
+          <p
+            style={{
+              fontFamily: "Montserrat, sans-serif",
+              fontWeight: 700,
+              fontSize: "0.75rem",
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+              color: "oklch(65% 0.15 45)",
+              marginBottom: "1rem",
+            }}
+          >
+            {lang === "en" ? "Crispy Leaders · Behavioural Assessment" : "Crispy Leaders · Penilaian Perilaku"}
           </p>
-          <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, lineHeight: 1.08, color: "oklch(97% 0.005 80)", marginBottom: "1.5rem", maxWidth: "18ch" }}>
-            {lang === "id"
-              ? <>DISC<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Profil Kepribadian.</span></>
-              : <>DISC<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Personality Profile.</span></>}
+
+          {/* H1 */}
+          <h1
+            style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontWeight: 600,
+              fontSize: "clamp(2.25rem, 6vw, 3.75rem)",
+              color: "oklch(96% 0.005 80)",
+              lineHeight: 1.1,
+              marginBottom: "1.5rem",
+            }}
+          >
+            {lang === "en" ? "DISC Personality Profile" : "Profil Kepribadian DISC"}
           </h1>
-          <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(16px, 2vw, 19px)", lineHeight: 1.65, color: "oklch(78% 0.04 260)", maxWidth: 580, margin: "0 0 40px" }}>
-            {tr(
-              "See how you lead across cultures — authentically.",
-              "Lihat bagaimana Anda memimpin lintas budaya — dengan autentik."
-            )}
+
+          {/* Subtitle */}
+          <p
+            style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontStyle: "italic",
+              fontWeight: 400,
+              fontSize: "clamp(1.1rem, 2.5vw, 1.35rem)",
+              color: "oklch(78% 0.04 260)",
+              lineHeight: 1.65,
+              marginBottom: "2.5rem",
+              maxWidth: 580,
+              margin: "0 auto 2.5rem",
+            }}
+          >
+            {lang === "en"
+              ? "Your behavioral style shapes how you lead, communicate, and respond under pressure. DISC gives you a language for what is already visible in your team. Start with the assessment, then go deeper into the four types."
+              : "Gaya perilakumu membentuk cara kamu memimpin, berkomunikasi, dan merespons di bawah tekanan. DISC memberimu bahasa untuk apa yang sudah terlihat dalam timmu. Mulai dengan penilaian, lalu pelajari lebih dalam keempat tipe."}
           </p>
 
-          <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", alignItems: "center", marginBottom: "3rem" }}>
-            <button onClick={startQuiz} className="btn-primary">
-              {quizState === "done"
-                ? tr("Retake Assessment", "Ulangi Assessment")
-                : tr("Discover Your Style", "Temukan Gaya Anda")}
+          {/* CTAs */}
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              gap: "0.75rem",
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: "2.5rem",
+            }}
+          >
+            {/* Primary CTA */}
+            <button
+              onClick={scrollToAssessment}
+              style={{
+                background: "oklch(65% 0.15 45)",
+                color: "oklch(96% 0.005 80)",
+                fontFamily: "Montserrat, sans-serif",
+                fontWeight: 700,
+                fontSize: "0.875rem",
+                letterSpacing: "0.06em",
+                textTransform: "uppercase",
+                padding: "0.875rem 2rem",
+                border: "none",
+                cursor: "pointer",
+                minHeight: 44,
+              }}
+            >
+              {lang === "en" ? "Discover Your Style" : "Temukan Gayamu"}
             </button>
-            <a href="#disc-types" className="btn-ghost" style={{ textDecoration: "none" }}>
-              {tr("Explore the Styles", "Jelajahi Gaya-Gaya")}
-            </a>
-            {saved ? (
-              <Link href="/dashboard" style={{
-                fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700,
-                letterSpacing: "0.06em", color: "oklch(72% 0.14 145)", textDecoration: "none",
-                display: "inline-flex", alignItems: "center", gap: "0.375rem",
-              }}>
-                ? {tr("In your dashboard", "Di dashboard Anda")}
-              </Link>
-            ) : (
-              <button onClick={handleSave} disabled={isPending} style={{
-                display: "inline-flex", alignItems: "center", gap: 8,
+
+            {/* Ghost CTA */}
+            <button
+              onClick={scrollToTypes}
+              style={{
                 background: "transparent",
-                color: "oklch(75% 0.04 260)",
-                padding: "14px 28px", borderRadius: 12, fontWeight: 600, fontSize: 14,
-                border: "1px solid oklch(42% 0.08 260)", cursor: isPending ? "wait" : "pointer",
-              }}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
-                {isPending
-                  ? tr("Saving—", "Menyimpan—")
-                  : tr("Save to Dashboard", "Simpan ke Dashboard")}
-              </button>
-            )}
-          </div>
+                color: "oklch(78% 0.04 260)",
+                fontFamily: "Montserrat, sans-serif",
+                fontWeight: 600,
+                fontSize: "0.875rem",
+                letterSpacing: "0.06em",
+                textTransform: "uppercase",
+                padding: "0.875rem 2rem",
+                border: "1.5px solid oklch(45% 0.06 260)",
+                cursor: "pointer",
+                minHeight: 44,
+              }}
+            >
+              {lang === "en" ? "Explore the Styles" : "Jelajahi Keempat Tipe"}
+            </button>
 
-        </div>
-      </section>
-
-      {/* -- SECTION 1: HOOK -- */}
-      <section style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(97% 0.005 80)" }}>
-        <div className="container-wide">
-          <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.875rem" }}>
-            {tr("Self-Awareness", "Kesadaran Diri")}
-          </p>
-          <h2 className="t-section" style={{ marginBottom: "0.75rem" }}>
-            {tr("Which leader are you when things go wrong?", "Pemimpin seperti apa Anda ketika sesuatu tidak berjalan sesuai rencana?")}
-          </h2>
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(42% 0.008 260)", maxWidth: "60ch", marginBottom: "3rem" }}>
-            {tr(
-              "A team deadline was missed. No one said anything. Four leaders in the room — all with the same faith, same goal. Each one responds differently. Which one is closest to you?",
-              "Tenggat tim terlewat. Tidak ada yang berkata apa-apa. Empat pemimpin dalam ruangan — semua dengan iman yang sama, tujuan yang sama. Masing-masing merespons secara berbeda. Yang mana paling mirip dengan Anda?",
-              "Een teamdeadline is gemist. Niemand zei iets. Vier leiders in de ruimte — allemaal met hetzelfde geloof, hetzelfde doel. Elk reageert anders. Welke staat het dichtst bij jou?"
-            )}
-          </p>
-
-          <div style={{ marginBottom: "2.5rem", overflow: "hidden" }}>
-            <Image
-              src="/disc/hook.png"
-              alt="Four diverse leaders at a meeting table, each responding differently to a missed deadline"
-              width={1280}
-              height={720}
-              style={{ width: "100%", height: "auto", display: "block" }}
-              priority
-            />
-          </div>
-
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1px", background: "oklch(88% 0.008 80)", marginBottom: hookSelected ? "2.5rem" : 0 }}>
-            {[
-              { key: "D", color: "oklch(52% 0.20 25)", action: tr("You call the team together immediately. Someone needs to own this — and you're ready to figure out who.", "Anda segera mengumpulkan tim. Seseorang harus bertanggung jawab atas ini — dan Anda siap mencari tahu siapa."), reaction: tr("When the pressure hits, you reach for control. That's not a flaw. It's a wiring.", "Ketika tekanan datang, Anda meraih kendali. Itu bukan kelemahan. Itu adalah cara Anda terhubung.") },
-              { key: "I", color: "oklch(52% 0.18 80)", action: tr("You start by rallying the group. The mood is low — you want to bring the energy back before digging into what happened.", "Anda mulai dengan menyemangati kelompok. Suasana sedang rendah — Anda ingin memulihkan energi sebelum menggali apa yang terjadi."), reaction: tr("You know that how people feel in the room matters as much as what gets decided.", "Anda tahu bahwa bagaimana perasaan orang dalam ruangan sama pentingnya dengan apa yang diputuskan.") },
-              { key: "S", color: "oklch(48% 0.18 145)", action: tr("Before anything else, you check in privately with the people who look most affected.", "Sebelum hal lain, Anda memeriksa secara pribadi orang-orang yang tampaknya paling terpengaruh."), reaction: tr("You notice who's carrying the weight. And you move toward them first.", "Anda memperhatikan siapa yang menanggung beban. Dan Anda bergerak menuju mereka terlebih dahulu.") },
-              { key: "C", color: "oklch(48% 0.18 250)", action: tr("You go quiet. You want to review the timeline and understand exactly where and why things broke down before anyone says anything.", "Anda diam. Anda ingin meninjau linimasa dan memahami dengan tepat di mana dan mengapa sesuatu gagal sebelum ada yang berkata apa pun."), reaction: tr("You believe you can't fix what you don't understand. So you go looking for the truth first.", "Anda percaya Anda tidak bisa memperbaiki apa yang tidak Anda pahami. Jadi Anda mencari kebenaran terlebih dahulu.") },
-            ].map(card => (
+            {/* Save button */}
+            {!saved ? (
               <button
-                key={card.key}
-                onClick={() => setHookSelected(hookSelected === card.key ? null : card.key)}
+                onClick={handleSave}
+                disabled={isPending}
+                aria-label={lang === "en" ? "Save to dashboard" : "Simpan ke dashboard"}
                 style={{
-                  background: hookSelected === card.key ? `oklch(52% 0.20 25 / 0.08)`.replace("52% 0.20 25", card.color.replace("oklch(", "").replace(")", "")) : "oklch(97% 0.005 80)",
-                  outline: hookSelected === card.key ? `2px solid ${card.color}` : "none",
-                  outlineOffset: "-2px",
-                  padding: "1.75rem 1.5rem",
-                  cursor: "pointer",
-                  textAlign: "left",
-                  border: "none",
-                  transition: "background 0.18s ease",
+                  background: "transparent",
+                  border: "1.5px solid oklch(45% 0.06 260)",
+                  color: "oklch(65% 0.04 260)",
+                  cursor: isPending ? "default" : "pointer",
+                  padding: "0.75rem",
+                  minHeight: 44,
+                  minWidth: 44,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
                 }}
               >
-                <div style={{
-                  width: "2rem", height: "2rem",
-                  background: `color-mix(in oklch, ${card.color} 12%, transparent)`,
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  marginBottom: "1rem",
-                }}>
-                  <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 900, fontSize: "0.875rem", color: card.color }}>{card.key}</span>
-                </div>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", color: "oklch(28% 0.008 260)", lineHeight: 1.65, marginBottom: 0 }}>
-                  {card.action}
-                </p>
-                {hookSelected === card.key && (
-                  <div style={{ overflow: "hidden", paddingTop: "0.875rem", borderTop: `1px solid ${card.color}50`, marginTop: "0.875rem" }}>
-                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", fontStyle: "italic", color: "oklch(42% 0.008 260)", lineHeight: 1.65, margin: 0 }}>
-                      {card.reaction}
-                    </p>
-                  </div>
-                )}
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+                  <polyline points="17 21 17 13 7 13 7 21" />
+                  <polyline points="7 3 7 8 15 8" />
+                </svg>
               </button>
-            ))}
+            ) : (
+              <span
+                style={{
+                  fontFamily: "Montserrat, sans-serif",
+                  fontSize: "0.8rem",
+                  color: "oklch(65% 0.15 45)",
+                  padding: "0.75rem",
+                }}
+              >
+                {lang === "en" ? "Saved" : "Tersimpan"} ✓
+              </span>
+            )}
           </div>
-
-          {hookSelected && (
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(52% 0.008 260)", marginTop: "1.5rem" }}>
-              {tr("Scroll down to read about all four styles — then take the assessment.", "Gulir ke bawah untuk membaca semua empat gaya — lalu ikuti penilaian.")}
-              {" "}<a href="#disc-types" style={{ color: "oklch(65% 0.15 45)", fontWeight: 600, textDecoration: "none" }}>?</a>
-            </p>
-          )}
         </div>
       </section>
 
-      {/* -- LEARNING OUTCOME --------------------------------------------------- */}
-      <section style={{ background: "oklch(22% 0.10 260)", padding: "clamp(48px, 7vw, 64px) 24px" }}>
+      {/* ===================================================================
+          SECTION 2 — LEARNING OUTCOMES
+      =================================================================== */}
+      <section
+        id="disc-outcomes"
+        style={{
+          background: "oklch(22% 0.10 260)",
+          padding: "clamp(2.5rem, 6vw, 4rem) clamp(1.25rem, 5vw, 3rem)",
+        }}
+      >
         <div style={{ maxWidth: 720, margin: "0 auto" }}>
-          <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: 24 }}>
-            {tr("After This Module", "Setelah Modul Ini")}
+          {/* Eyebrow */}
+          <p
+            style={{
+              fontFamily: "Montserrat, sans-serif",
+              fontWeight: 700,
+              fontSize: "0.75rem",
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+              color: "oklch(65% 0.15 45)",
+              marginBottom: "1.25rem",
+            }}
+          >
+            {lang === "en" ? "After This Module" : "Setelah Modul Ini"}
           </p>
-          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            {[
-              tr("Identify your DISC type and explain how it shapes your default leadership communication and decision style.", "Mengidentifikasi tipe DISC Anda dan menjelaskan bagaimana tipe tersebut membentuk gaya komunikasi dan pengambilan keputusan kepemimpinan default Anda."),
-              tr("Recognize how each of the four DISC types communicates, processes decisions, and responds to stress in team settings.", "Mengenali bagaimana masing-masing dari empat tipe DISC berkomunikasi, memproses keputusan, dan merespons tekanan dalam setting tim."),
-              tr("Apply DISC awareness to one specific collaboration challenge in your current multicultural or cross-cultural team.", "Menerapkan kesadaran DISC pada satu tantangan kolaborasi spesifik dalam tim multikultural atau lintas budaya Anda saat ini."),
-            ].map((item, i) => (
-              <div key={i} style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
-                <div style={{ width: 3, height: 20, background: "oklch(65% 0.15 45)", flexShrink: 0, marginTop: 3 }} />
-                <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, fontWeight: 500, color: "oklch(72% 0.04 260)", lineHeight: 1.65, margin: 0 }}>
-                  {item}
+
+          {/* Outcomes list */}
+          <ol style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+            {(lang === "en"
+              ? [
+                  "Identify your behavioral style and describe how it shapes your default communication and decision-making in cross-cultural contexts.",
+                  "Recognise the four DISC patterns and explain what each one brings to a multicultural team — and where each one creates friction.",
+                  "Apply DISC awareness to one real collaboration challenge in your current team.",
+                ]
+              : [
+                  "Mengidentifikasi gaya perilakumu dan menjelaskan bagaimana gaya tersebut membentuk komunikasi dan pengambilan keputusan defaultmu dalam konteks lintas budaya.",
+                  "Mengenali keempat pola DISC dan menjelaskan apa yang dibawa masing-masing tipe ke dalam tim multikultural, serta di mana masing-masing tipe menimbulkan gesekan.",
+                  "Menerapkan kesadaran DISC pada satu tantangan kolaborasi nyata dalam timmu saat ini.",
+                ]
+            ).map((outcome, i) => (
+              <li
+                key={i}
+                style={{
+                  display: "flex",
+                  gap: "1rem",
+                  alignItems: "flex-start",
+                }}
+              >
+                {/* Orange left tick */}
+                <span
+                  aria-hidden="true"
+                  style={{
+                    flexShrink: 0,
+                    width: 3,
+                    height: "1.5em",
+                    marginTop: "0.25em",
+                    background: "oklch(65% 0.15 45)",
+                    display: "inline-block",
+                  }}
+                />
+                <p
+                  style={{
+                    fontFamily: "Montserrat, sans-serif",
+                    fontWeight: 400,
+                    fontSize: "clamp(0.9rem, 1.8vw, 1rem)",
+                    color: "oklch(78% 0.04 260)",
+                    lineHeight: 1.75,
+                    margin: 0,
+                  }}
+                >
+                  {outcome}
                 </p>
-              </div>
+              </li>
             ))}
-          </div>
+          </ol>
         </div>
       </section>
 
-      {/* -- SECTION 2: ABOUT DISC (FLIP CARDS) -- */}
-      <section id="disc-about" style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(94% 0.006 80)" }}>
-        <div className="container-wide">
-          <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.875rem" }}>
-            {tr("A Behavioural Framework", "Kerangka Perilaku")}
+      {/* ===================================================================
+          SECTION 3 — A BEHAVIOURAL FRAMEWORK
+      =================================================================== */}
+      <section
+        id="disc-framework"
+        style={{
+          background: "oklch(22% 0.10 260)",
+          padding: "clamp(3rem, 8vw, 5rem) clamp(1.25rem, 5vw, 3rem)",
+          borderTop: "1px solid oklch(32% 0.06 260)",
+        }}
+      >
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+
+          {/* BLOCK A — ORIGIN + TIMELINE */}
+          <p
+            style={{
+              fontFamily: "Montserrat, sans-serif",
+              fontWeight: 700,
+              fontSize: "0.75rem",
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+              color: "oklch(65% 0.15 45)",
+              marginBottom: "1rem",
+            }}
+          >
+            {lang === "en" ? "A Behavioural Framework" : "Kerangka Perilaku"}
           </p>
-          <h2 className="t-section" style={{ marginBottom: "2.5rem" }}>
-            {tr("Understanding how people are wired to behave.", "Memahami bagaimana orang terkondisi untuk berperilaku.")}
+
+          <h2
+            style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontWeight: 600,
+              fontSize: "clamp(1.75rem, 4vw, 2.75rem)",
+              color: "oklch(96% 0.005 80)",
+              lineHeight: 1.2,
+              marginBottom: "2rem",
+            }}
+          >
+            {lang === "en"
+              ? "Understanding how people are wired to behave."
+              : "Memahami bagaimana orang cenderung berperilaku."}
           </h2>
 
-          <style>{`
-            .disc-flip-card { perspective: 1000px; cursor: pointer; min-height: 340px; }
-            .disc-flip-inner { position: relative; width: 100%; height: 100%; min-height: 340px; transform-style: preserve-3d; transition: transform 0.5s cubic-bezier(0.4,0,0.2,1); }
-            .disc-flip-card.flipped .disc-flip-inner { transform: rotateY(180deg); }
-            .disc-flip-front, .disc-flip-back { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; padding: 2rem; }
-            .disc-flip-front { background: oklch(97% 0.005 80); border: 1px solid oklch(88% 0.008 80); display: flex; flex-direction: column; justify-content: space-between; }
-            .disc-flip-back { transform: rotateY(180deg); background: oklch(22% 0.10 260); display: flex; flex-direction: column; justify-content: space-between; }
-            @media (prefers-reduced-motion: reduce) {
-              .disc-flip-inner { transition: none; }
-              .disc-flip-card.flipped .disc-flip-front { display: none; }
-              .disc-flip-card:not(.flipped) .disc-flip-back { display: none; }
-            }
-          `}</style>
+          {/* Timeline SVG */}
+          <div style={{ marginBottom: "2rem", overflowX: "auto" }}>
+            <svg
+              viewBox="0 0 600 80"
+              aria-hidden="true"
+              style={{ width: "100%", maxWidth: 600, display: "block", margin: "0 auto" }}
+            >
+              {/* Axis line */}
+              <line x1="40" y1="40" x2="560" y2="40" stroke="oklch(96% 0.005 80)" strokeOpacity="0.30" strokeWidth="1.5" />
+              {/* Nodes */}
+              {[
+                { x: 40, date: "c.460 BCE", label: "Hippocrates" },
+                { x: 200, date: "1928", label: "Marston" },
+                { x: 380, date: "1956", label: "Clarke / AVA" },
+                { x: 560, date: "Today", label: "Everything DiSC" },
+              ].map((node) => (
+                <g key={node.x}>
+                  <circle cx={node.x} cy={40} r={6} fill="oklch(65% 0.15 45)" />
+                  <text
+                    x={node.x}
+                    y={22}
+                    textAnchor="middle"
+                    fontFamily="Montserrat, sans-serif"
+                    fontWeight="700"
+                    fontSize="10"
+                    fill="oklch(65% 0.15 45)"
+                  >
+                    {node.date}
+                  </text>
+                  <text
+                    x={node.x}
+                    y={60}
+                    textAnchor="middle"
+                    fontFamily="Montserrat, sans-serif"
+                    fontWeight="400"
+                    fontSize="10"
+                    fill="oklch(65% 0.04 260)"
+                  >
+                    {node.label}
+                  </text>
+                </g>
+              ))}
+            </svg>
+            <figcaption
+              style={{
+                fontFamily: "Montserrat, sans-serif",
+                fontSize: "0.75rem",
+                color: "oklch(55% 0.04 260)",
+                textAlign: "center",
+                marginTop: "0.5rem",
+              }}
+            >
+              {lang === "en"
+                ? "The four-temperament tradition: Hippocrates (c.460 BCE) → Marston 1928 → Clarke / AVA 1956 → Everything DiSC today"
+                : "Tradisi empat temperamen: Hippocrates (c.460 SM) → Marston 1928 → Clarke / AVA 1956 → Everything DiSC saat ini"}
+            </figcaption>
+          </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1.5rem", marginBottom: "2rem" }}>
-            {[
-              {
-                title: tr("What DISC does", "Apa yang DISC lakukan"),
-                icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="oklch(30% 0.12 260)" strokeWidth="1.5"><rect x="3" y="3" width="8" height="8"/><rect x="13" y="3" width="8" height="8"/><rect x="3" y="13" width="8" height="8"/><rect x="13" y="13" width="8" height="8"/></svg>,
-                back: tr("DISC maps how you tend to behave — not who you are. It groups behaviour into four patterns: Dominance, Influence, Steadiness, and Conscientiousness. The framework traces to William Moulton Marston's 1928 research¹ and was later adapted into the workplace assessments widely used today.² You get a quick read on your default: how you start projects, respond to pressure, give feedback, handle conflict.", "DISC memetakan bagaimana Anda cenderung berperilaku — bukan siapa diri Anda. Ini mengelompokkan perilaku ke dalam empat pola: Dominance, Influence, Steadiness, dan Conscientiousness. Kerangka ini berakar dari penelitian William Moulton Marston tahun 1928¹ dan kemudian diadaptasi menjadi alat penilaian tempat kerja yang banyak digunakan hari ini.² Anda mendapatkan gambaran cepat tentang default Anda."),
+          {/* Teaching prose — paragraph 1 */}
+          <p
+            style={{
+              fontFamily: "Montserrat, sans-serif",
+              fontSize: "clamp(0.9rem, 1.8vw, 1rem)",
+              color: "oklch(78% 0.04 260)",
+              lineHeight: 1.75,
+              marginBottom: "1.25rem",
+            }}
+          >
+            {lang === "en" ? (
+              <>
+                DISC belongs to a 2,500-year tradition of observing four natural behavioral orientations — from Hippocrates through Galen, through medieval temperament theory, to William Moulton Marston&apos;s 1928 research and the instruments built since.
+                <span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700 }}>¹</span>{" "}
+                Marston identified four behavioral axes that recur across cultures and contexts: Dominance, Inducement, Submission, and Compliance — the original DISC categories.
+                <span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700 }}>²</span>{" "}
+                The framework is descriptively strong and empirically useful. It is not a peer-reviewed personality science. Use it as a behaviorally descriptive tool — a starting point for conversation, not a diagnostic conclusion.
+              </>
+            ) : (
+              <>
+                DISC termasuk dalam tradisi 2.500 tahun pengamatan empat orientasi perilaku alami — dari Hippocrates melalui Galen, melalui teori temperamen abad pertengahan, hingga penelitian William Moulton Marston tahun 1928 dan instrumen-instrumen yang dibangun setelahnya.
+                <span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700 }}>¹</span>{" "}
+                Marston mengidentifikasi empat sumbu perilaku yang berulang di berbagai budaya dan konteks: Dominance, Inducement, Submission, dan Compliance — kategori DISC asli.
+                <span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700 }}>²</span>{" "}
+                Kerangka ini secara deskriptif kuat dan berguna secara empiris. Ini bukan ilmu kepribadian yang ditinjau sejawat. Gunakan sebagai alat deskripsi perilaku — titik awal percakapan, bukan kesimpulan diagnostik.
+              </>
+            )}
+          </p>
+
+          {/* Teaching prose — paragraph 2 */}
+          <p
+            style={{
+              fontFamily: "Montserrat, sans-serif",
+              fontSize: "clamp(0.9rem, 1.8vw, 1rem)",
+              color: "oklch(78% 0.04 260)",
+              lineHeight: 1.75,
+              marginBottom: "1.25rem",
+            }}
+          >
+            {lang === "en"
+              ? `DISC is not a measure of intelligence, spiritual maturity, or calling. It is not a fixed identity. Your DISC result describes your behavioral tendency under typical conditions — not who you are under pressure of growth, grief, or transformation. The result shifts across cultures and contexts. Read it as a starting point. A "high D" in Sumba is not the same as a "high D" in Sydney.`
+              : `DISC bukan ukuran kecerdasan, kematangan rohani, atau panggilan. Ini bukan identitas tetap. Hasil DISC-mu menggambarkan kecenderungan perilakumu dalam kondisi biasa — bukan siapa dirimu di bawah tekanan pertumbuhan, kesedihan, atau transformasi. Hasilnya berubah di berbagai budaya dan konteks. Baca sebagai titik awal. Seorang "D tinggi" di Sumba tidak sama dengan "D tinggi" di Sydney.`}
+          </p>
+
+          {/* Teaching prose — paragraph 3 */}
+          <p
+            style={{
+              fontFamily: "Montserrat, sans-serif",
+              fontSize: "clamp(0.9rem, 1.8vw, 1rem)",
+              color: "oklch(78% 0.04 260)",
+              lineHeight: 1.75,
+              marginBottom: "2.5rem",
+            }}
+          >
+            {lang === "en" ? (
+              <>
+                The honest case for DISC in cross-cultural teams: it gives teams a shared, non-threatening vocabulary to name behavioral differences.
+                <span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700 }}>³</span>{" "}
+                In a team where one person wants a decision now and another wants a week to check every detail, having words for that difference makes the conversation less personal and more practical. The framework is most powerful not as a diagnosis but as a permission: now we have language for this.
+              </>
+            ) : (
+              <>
+                Argumen jujur untuk DISC dalam tim lintas budaya: ini memberi tim kosakata bersama yang tidak mengancam untuk menamai perbedaan perilaku.
+                <span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700 }}>³</span>{" "}
+                Dalam tim di mana satu orang menginginkan keputusan sekarang dan orang lain ingin seminggu untuk memeriksa setiap detail, memiliki kata-kata untuk perbedaan itu membuat percakapan menjadi kurang personal dan lebih praktis. Kerangka ini paling kuat bukan sebagai diagnosis tetapi sebagai izin: sekarang kita punya bahasa untuk ini.
+              </>
+            )}
+          </p>
+
+          {/* DIG DEEPER accordions */}
+          {[
+            {
+              key: "lineage",
+              heading: { en: "The Lineage Behind DISC", id: "Silsilah di Balik DISC" },
+              body: {
+                en: "The four-temperament framework traces back to Hippocrates (c.460 BCE), who identified sanguine, choleric, melancholic, and phlegmatic as distinct humoral types. Galen systematized this in the 2nd century CE. Medieval Christian scholars — including Tim LaHaye in 1966 and Florence Littauer in 1983 — applied the four-type structure to spiritual formation and ministry leadership. William Moulton Marston reframed this tradition in behavioral terms in his 1928 book Emotions of Normal People, laying the groundwork for modern DISC instruments. John Clarke (1956) and John Geier (1970s) built the first standardized assessments on Marston's model. The fact that so many traditions across history and culture have recognized a roughly four-type behavioral structure is not a scientific proof — but it does suggest the framework captures something genuinely observable about human variation.",
+                id: "Kerangka empat temperamen berakar pada Hippocrates (c.460 SM), yang mengidentifikasi sanguinis, koleris, melankolis, dan plegmatis sebagai tipe humoral yang berbeda. Galen mensistematisasikannya pada abad ke-2 M. Para sarjana Kristen abad pertengahan — termasuk Tim LaHaye pada 1966 dan Florence Littauer pada 1983 — menerapkan struktur empat tipe pada pembentukan rohani dan kepemimpinan pelayanan. William Moulton Marston merumuskan ulang tradisi ini dalam istilah perilaku dalam bukunya Emotions of Normal People tahun 1928, meletakkan dasar bagi instrumen DISC modern. John Clarke (1956) dan John Geier (1970-an) membangun penilaian terstandar pertama berdasarkan model Marston. Fakta bahwa begitu banyak tradisi sepanjang sejarah dan budaya telah mengenali struktur perilaku empat-tipe bukan merupakan bukti ilmiah — tetapi ini menunjukkan bahwa kerangka tersebut menangkap sesuatu yang benar-benar dapat diamati tentang variasi manusia.",
               },
-              {
-                title: tr("Why it helps your team", "Mengapa ini membantu tim Anda"),
-                icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="oklch(30% 0.12 260)" strokeWidth="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>,
-                back: tr("In cross-cultural teams, miscommunication is rarely about content — it is about style. DISC gives your team a shared vocabulary to name those differences without judgement. A team that knows its mix makes decisions more honestly, shares roles more wisely, and forgives each other's defaults more quickly.", "Dalam tim lintas budaya, miskomunikasi jarang tentang konten — ini tentang gaya. DISC memberi tim Anda kosakata bersama untuk menyebut perbedaan tersebut tanpa penilaian."),
+            },
+            {
+              key: "research",
+              heading: { en: "What the Research Actually Says", id: "Apa Kata Penelitian Sebenarnya" },
+              body: {
+                en: "Everything DiSC reports internal reliability data of alpha .87 and test-retest reliability of .86 — solid for a self-report behaviorally descriptive tool. These numbers indicate that the instrument measures something consistent and that results hold reasonably stable over short periods. The limitation is important: there is no cross-cultural validation study equivalent to McCrae et al. (2005), which tested the Big Five across 50 cultures and found consistent factor structure. No equivalent DISC study exists. What this means practically: DISC is reliable enough to use reflectively in team contexts. Do not use it to make hiring decisions or predict behavior. The correct claim is that DISC has adequate internal consistency as a self-report behavioral description tool. Full stop.",
+                id: "Everything DiSC melaporkan data reliabilitas internal alpha .87 dan reliabilitas tes-ulang .86 — solid untuk alat deskripsi perilaku laporan diri. Angka-angka ini menunjukkan bahwa instrumen mengukur sesuatu yang konsisten dan hasilnya cukup stabil dalam jangka pendek. Keterbatasannya penting: tidak ada studi validasi lintas budaya yang setara dengan McCrae et al. (2005), yang menguji Big Five di 50 budaya dan menemukan struktur faktor yang konsisten. Tidak ada studi DISC yang setara. Artinya secara praktis: DISC cukup andal untuk digunakan secara reflektif dalam konteks tim. Jangan gunakan untuk membuat keputusan perekrutan atau memprediksi perilaku. Klaim yang tepat adalah bahwa DISC memiliki konsistensi internal yang memadai sebagai alat deskripsi perilaku laporan diri. Titik.",
               },
-              {
-                title: tr("How to read your result", "Cara membaca hasil Anda"),
-                icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="oklch(30% 0.12 260)" strokeWidth="1.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>,
-                back: tr("Read your result as a tendency, not a verdict. You are not 'a D.' You lead with D-energy and probably balance it with another style. Look at your top one or two letters and ask: where does this style serve me? Where does it cost me — especially cross-culturally? Which opposite style do I most need to learn from?", "Baca hasil Anda sebagai kecenderungan, bukan vonis. Anda bukan 'seorang D.' Anda memimpin dengan energi D dan kemungkinan menyeimbangkannya dengan gaya lain."),
-              },
-              {
-                title: tr("Putting it to work", "Menerapkannya dalam praktik"),
-                icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="oklch(30% 0.12 260)" strokeWidth="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>,
-                back: tr("Map your team on the four-quadrant chart. Before a hard conversation, look up the other person's profile and match your message to their style. When tension rises, name your default out loud: 'My D is showing up here — give me a second to slow down.' Self-aware leadership is contagious.", "Petakan tim Anda pada grafik empat kuadran. Sebelum percakapan sulit, cari profil orang lain dan sesuaikan pesan Anda dengan gaya mereka."),
-              },
-            ].map((card, i) => (
-              <div
-                key={i}
-                className={`disc-flip-card${flippedCard === i ? " flipped" : ""}`}
-                onClick={() => setFlippedCard(flippedCard === i ? null : i)}
-                role="button"
-                tabIndex={0}
-                aria-pressed={flippedCard === i}
-                onKeyDown={e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setFlippedCard(flippedCard === i ? null : i); } }}
+            },
+          ].map((panel) => (
+            <div
+              key={panel.key}
+              style={{
+                borderTop: "1px solid oklch(32% 0.06 260)",
+                marginBottom: "0",
+              }}
+            >
+              <button
+                onClick={() => setOpenAccordion(openAccordion === panel.key ? null : panel.key)}
+                aria-expanded={openAccordion === panel.key}
+                style={{
+                  width: "100%",
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  padding: "1rem 0",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  minHeight: 44,
+                  gap: "1rem",
+                }}
               >
-                <div className="disc-flip-inner">
-                  <div className="disc-flip-front">
-                    <div>
-                      <div style={{ marginBottom: "1rem" }}>{card.icon}</div>
-                      <h3 style={{ fontFamily: "Cormorant Garamond, serif", fontWeight: 600, fontSize: "1.25rem", color: "oklch(22% 0.005 260)", lineHeight: 1.2, marginBottom: 0 }}>
-                        {card.title}
-                      </h3>
-                    </div>
-                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(68% 0.008 260)", marginBottom: 0 }}>
-                      {tr("Tap to explore", "Ketuk untuk jelajahi")}
-                    </p>
-                  </div>
-                  <div className="disc-flip-back">
-                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.75, color: "oklch(78% 0.04 260)", margin: 0 }}>
-                      {card.back}
-                    </p>
-                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginTop: "1rem", marginBottom: 0 }}>
-                      ? {tr("Tap to close", "Ketuk untuk tutup")}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Cross-cultural caveat */}
-          <div style={{
-            background: "oklch(65% 0.15 45 / 0.08)",
-            border: "1px solid oklch(65% 0.15 45 / 0.40)",
-            padding: "1.5rem 2rem",
-          }}>
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "oklch(52% 0.14 45)", marginBottom: "0.5rem" }}>
-              {tr("CULTURAL CONTEXT", "KONTEKS BUDAYA")}
-            </p>
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(32% 0.008 260)", lineHeight: 1.75, margin: 0 }}>
-              {tr(
-                "DISC was built in the United States in 1928 and reflects mainstream American behavioural norms.¹ Reliability is solid; cross-cultural validity varies — DISC has not been validated across cultures with the same rigour as the Big Five personality framework.³ A \"high D\" in Sumba is not the same person as a \"high D\" in Sydney. Use DISC to start the conversation — then let your team's actual cultures fill in the rest.",
-                "DISC dikembangkan di Amerika Serikat pada tahun 1928 dan mencerminkan norma perilaku Amerika arus utama.¹ Reliabilitas cukup kuat; validitas lintas budaya bervariasi — DISC belum divalidasi lintas budaya dengan ketelitian yang sama seperti kerangka Big Five.³ Gunakan DISC untuk memulai percakapan — lalu biarkan budaya nyata tim Anda mengisi sisanya.",
-                "DISC is ontwikkeld in de Verenigde Staten in 1928 en weerspiegelt mainstream Amerikaanse gedragsnormen.¹ Betrouwbaarheid is solide; cross-culturele validiteit varieert — DISC is niet met dezelfde nauwkeurigheid als het Big Five-persoonlijkheidsraamwerk cross-cultureel gevalideerd.³ Gebruik DISC om het gesprek te starten — laat de werkelijke culturen van je team de rest invullen."
-              )}
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* -- SECTION 4 PORTRAITS -- */}
-      <div style={{ background: "oklch(14% 0.08 260)", overflow: "hidden" }}>
-        <Image
-          src="/disc/portraits.png"
-          alt="Four DISC leader portraits: D - determined woman, I - expressive man, S - calm older woman, C - thoughtful man with glasses"
-          width={1280}
-          height={720}
-          style={{ width: "100%", height: "auto", display: "block", opacity: 0.9 }}
-        />
-      </div>
-
-      {/* -- DISC TYPE DETAIL SECTIONS -- */}
-      <div id="disc-types">
-        {DISC_TYPES.map((type) => (
-          <section key={type.key} id={`disc-${type.key}`} style={{
-            paddingBlock: "clamp(4rem, 7vw, 7rem)",
-            background: "oklch(99% 0.002 80)",
-            borderLeft: `4px solid ${type.color}`
-          }}>
-            <div className="container-wide">
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "clamp(3rem, 6vw, 5rem)", alignItems: "start" }}>
-
-                {/* Left: type identity */}
-                <div>
-                  <div style={{ display: "flex", alignItems: "center", gap: "1.25rem", marginBottom: "1.5rem" }}>
-                    <div style={{
-                      width: "4rem", height: "4rem",
-                      border: `3px solid ${type.color}`,
-                      display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
-                    }}>
-                      <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 900, fontSize: "2rem", color: type.color }}>
-                        {type.key}
-                      </span>
-                    </div>
-                    <div>
-                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: type.color, marginBottom: "0.2rem" }}>
-                        {type.label[lang]}
-                      </p>
-                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(32% 0.008 260)", fontWeight: 600 }}>
-                        {type.tagline[lang]}
-                      </p>
-                    </div>
-                  </div>
-
-                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(38% 0.008 260)", marginBottom: "2rem" }}>
-                    {type.overview[lang]}
-                  </p>
-
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.5rem" }}>
-                    <div style={{ padding: "1.25rem", background: type.colorVeryLight, borderLeft: `3px solid ${type.color}` }}>
-                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: type.color, marginBottom: "0.5rem" }}>
-                        {tr("Motivated by", "Termotivasi oleh")}
-                      </p>
-                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", lineHeight: 1.6, color: "oklch(32% 0.008 260)" }}>
-                        {type.motivation[lang]}
-                      </p>
-                    </div>
-                    <div style={{ padding: "1.25rem", background: type.colorVeryLight, borderLeft: `3px solid ${type.color}` }}>
-                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: type.color, marginBottom: "0.5rem" }}>
-                        {tr("Fears", "Ketakutan")}
-                      </p>
-                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", lineHeight: 1.6, color: "oklch(32% 0.008 260)" }}>
-                        {type.fear[lang]}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Right: strengths, blindspots, communication, cross-cultural */}
-                <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-
-                  {/* Expand/collapse toggle */}
-                  <button
-                    onClick={() => setExpandedType(expandedType === type.key ? null : type.key)}
+                <span
+                  style={{
+                    fontFamily: "Montserrat, sans-serif",
+                    fontWeight: 600,
+                    fontSize: "0.875rem",
+                    color: "oklch(78% 0.04 260)",
+                    textAlign: "left",
+                  }}
+                >
+                  {lang === "en" ? `Dig Deeper: ${panel.heading.en}` : `Lebih Dalam: ${panel.heading.id}`}
+                </span>
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  style={{
+                    flexShrink: 0,
+                    transform: openAccordion === panel.key ? "rotate(180deg)" : "rotate(0deg)",
+                    transition: "transform 0.2s ease",
+                    color: "oklch(65% 0.15 45)",
+                  }}
+                >
+                  <path d="M2 5l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+              {openAccordion === panel.key && (
+                <div style={{ paddingBottom: "1.5rem" }}>
+                  <p
                     style={{
-                      fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700,
-                      letterSpacing: "0.1em", textTransform: "uppercase",
-                      color: "white", background: type.color,
-                      border: "none",
-                      padding: "0.75rem 1.25rem", cursor: "pointer",
-                      display: "flex", justifyContent: "space-between", alignItems: "center",
-                      width: "100%",
+                      fontFamily: "Montserrat, sans-serif",
+                      fontSize: "0.9rem",
+                      color: "oklch(68% 0.04 260)",
+                      lineHeight: 1.75,
+                      margin: 0,
                     }}
                   >
-                    <span>{expandedType === type.key ? tr("Hide Details", "Sembunyikan") : tr("Show Full Profile", "Tampilkan Profil Lengkap")}</span>
-                  </button>
-
-                  {/* Always visible: strengths + blindspots */}
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
-                    <div>
-                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: type.color, marginBottom: "0.75rem" }}>
-                        {tr("Strengths", "Kekuatan")}
-                      </p>
-                      <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.4rem" }}>
-                        {type.strengths[lang].map((s, i) => (
-                          <li key={i} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(32% 0.008 260)", lineHeight: 1.5, display: "flex", alignItems: "flex-start", gap: "0.5rem" }}>
-                            <span style={{ color: type.color, flexShrink: 0, marginTop: "0.1rem" }}>+</span>
-                            {s}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div>
-                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: type.color, marginBottom: "0.75rem" }}>
-                        {tr("Blind Spots", "Titik Buta")}
-                      </p>
-                      <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.4rem" }}>
-                        {type.blindspots[lang].map((s, i) => (
-                          <li key={i} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(32% 0.008 260)", lineHeight: 1.5, display: "flex", alignItems: "flex-start", gap: "0.5rem" }}>
-                            <span style={{ color: "oklch(52% 0.18 25)", flexShrink: 0, marginTop: "0.1rem" }}>-</span>
-                            {s}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-
-                  {/* Biblical anchor */}
-                  <div style={{
-                    padding: "1.25rem 1.5rem",
-                    background: type.colorVeryLight,
-                    border: `1px solid ${type.color}50`,
-                  }}>
-                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: type.color, marginBottom: "0.5rem" }}>
-                      Biblical Example
-                    </p>
-                    <p style={{ fontFamily: "Cormorant Garamond, serif", fontWeight: 600, fontSize: "1rem", color: type.color, marginBottom: "0.375rem", lineHeight: 1.2 }}>
-                      {type.biblical.name}
-                    </p>
-                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", lineHeight: 1.7, color: "oklch(32% 0.008 260)", margin: 0 }}>
-                      {type.biblical.text}
-                    </p>
-                  </div>
-
-                  {/* Expanded: communication + cross-cultural */}
-                  {expandedType === type.key && (
-                    <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-                      <div style={{ padding: "1.25rem 1.5rem", background: type.colorVeryLight, borderTop: `2px solid ${type.color}` }}>
-                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: type.color, marginBottom: "0.625rem" }}>
-                          {tr("How to Communicate with Them", "Cara Berkomunikasi dengan Mereka")}
-                        </p>
-                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.7, color: "oklch(32% 0.008 260)" }}>
-                          {type.communication[lang]}
-                        </p>
-                      </div>
-                      <div style={{ padding: "1.25rem 1.5rem", background: type.colorVeryLight, borderTop: `2px solid ${type.color}` }}>
-                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: type.color, marginBottom: "0.625rem" }}>
-                          {tr("Cross-Cultural Leadership Note", "Catatan Kepemimpinan Lintas Budaya")}
-                        </p>
-                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.7, color: "oklch(32% 0.008 260)" }}>
-                          {type.crossCultural[lang]}
-                        </p>
-                      </div>
-                    </div>
-                  )}
+                    {panel.body[lang]}
+                  </p>
                 </div>
-              </div>
+              )}
             </div>
-          </section>
-        ))}
-      </div>
+          ))}
+        </div>
 
-      {/* -- SECTION 5: CROSS-CULTURAL SCENARIOS -- */}
-      <section style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(22% 0.10 260)" }}>
-        <div className="container-wide">
-          <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.875rem" }}>
-            Cross-Cultural Leadership
-          </p>
-          <h2 className="t-section" style={{ color: "oklch(97% 0.005 80)", marginBottom: "0.75rem" }}>
-            How would you handle this?
-          </h2>
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(68% 0.04 260)", maxWidth: "60ch", marginBottom: "3rem" }}>
-            Three real cross-cultural situations. No right answer — only honest ones. Choose what feels most like you, then read what it reveals.
+        {/* BLOCK B — WHAT DISC IS NOT */}
+        <div
+          style={{
+            background: "oklch(26% 0.09 260)",
+            borderTop: "2px solid oklch(65% 0.15 45)",
+            padding: "clamp(1.5rem, 4vw, 2.5rem) clamp(1.25rem, 5vw, 3rem)",
+            marginTop: "3rem",
+          }}
+        >
+          <div style={{ maxWidth: 720, margin: "0 auto" }}>
+            <p
+              style={{
+                fontFamily: "Montserrat, sans-serif",
+                fontWeight: 700,
+                fontSize: "0.75rem",
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                color: "oklch(65% 0.15 45)",
+                marginBottom: "1.25rem",
+              }}
+            >
+              {lang === "en" ? "Important Context" : "Konteks Penting"}
+            </p>
+            <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+              {(lang === "en"
+                ? [
+                    { label: "Not a verdict", body: "Your result is a tendency pattern, not a fixed identity. It describes your default behavior under typical conditions. It does not predict how you will act under pressure, growth, grief, or transformation." },
+                    { label: "Not a prediction", body: "DISC does not tell you what someone will do. It names behavioral tendencies. People adapt, grow, and behave differently in different cultural contexts. Your type is a starting point, not a ceiling." },
+                    { label: "Not universally calibrated", body: `DISC was developed primarily in Western, individualist research contexts. Hofstede's Indonesia data (Power Distance Index 78, Individualism 14) illustrates how far the underlying assumptions can sit from the contexts where many of us lead. S-type "weakness" labels — passivity, avoiding conflict, needing approval — may describe culturally skilled behavior in Indonesian and other Southeast Asian settings, not personal limitation.` },
+                  ]
+                : [
+                    { label: "Bukan vonis", body: "Hasilmu adalah pola kecenderungan, bukan identitas tetap. Ini menggambarkan perilaku default-mu dalam kondisi biasa. Ini tidak memprediksi bagaimana kamu akan bertindak di bawah tekanan, pertumbuhan, kesedihan, atau transformasi." },
+                    { label: "Bukan prediksi", body: "DISC tidak memberitahumu apa yang akan dilakukan seseorang. Ini menamai kecenderungan perilaku. Orang beradaptasi, tumbuh, dan berperilaku berbeda dalam konteks budaya yang berbeda. Tipe-mu adalah titik awal, bukan langit-langit." },
+                    { label: "Tidak dikalibrasi secara universal", body: `DISC dikembangkan terutama dalam konteks penelitian Barat yang individualis. Data Indonesia Hofstede (Indeks Jarak Kekuasaan 78, Individualisme 14) menggambarkan betapa jauhnya asumsi mendasar dari konteks di mana banyak dari kita memimpin. Label "kelemahan" tipe S — pasif, menghindari konflik, butuh persetujuan — mungkin menggambarkan perilaku yang terampil secara budaya dalam konteks Indonesia dan Asia Tenggara lainnya, bukan keterbatasan pribadi.` },
+                  ]
+              ).map((item) => (
+                <div key={item.label} style={{ display: "flex", gap: "1.25rem", alignItems: "flex-start" }}>
+                  <span
+                    style={{
+                      fontFamily: "Montserrat, sans-serif",
+                      fontWeight: 700,
+                      fontSize: "0.875rem",
+                      color: "oklch(65% 0.15 45)",
+                      flexShrink: 0,
+                      minWidth: 120,
+                      paddingTop: "0.1em",
+                    }}
+                  >
+                    {item.label}
+                  </span>
+                  <p
+                    style={{
+                      fontFamily: "Montserrat, sans-serif",
+                      fontWeight: 400,
+                      fontSize: "0.875rem",
+                      color: "oklch(78% 0.04 260)",
+                      lineHeight: 1.75,
+                      margin: 0,
+                    }}
+                  >
+                    {item.body}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* BLOCK C — 2x2 MATRIX SVG */}
+        <div
+          style={{
+            maxWidth: 720,
+            margin: "3rem auto 0",
+            padding: "0 clamp(1.25rem, 5vw, 3rem)",
+          }}
+        >
+          <p
+            style={{
+              fontFamily: "Montserrat, sans-serif",
+              fontSize: "0.9rem",
+              color: "oklch(68% 0.04 260)",
+              lineHeight: 1.65,
+              marginBottom: "1.5rem",
+              textAlign: "center",
+            }}
+          >
+            {lang === "en"
+              ? "The framework maps onto two axes — pace and orientation. Click any quadrant to explore that style."
+              : "Kerangka ini dipetakan pada dua sumbu — kecepatan dan orientasi. Klik salah satu kuadran untuk mengeksplorasi gaya tersebut."}
           </p>
 
-          {/* Scenario tabs */}
-          <div style={{ display: "flex", gap: "0.5rem", marginBottom: "2.5rem", flexWrap: "wrap" }}>
-            {SCENARIOS.map((_, i) => (
+          <svg
+            viewBox="0 0 640 580"
+            role="img"
+            aria-label={
+              lang === "en"
+                ? "DISC framework matrix — two axes: Task-Focused to People-Focused (horizontal), Fast/Active to Deliberate/Thoughtful (vertical). Four quadrants: D (top-left), I (top-right), S (bottom-right), C (bottom-left)."
+                : "Matriks kerangka DISC — dua sumbu: Berorientasi Tugas ke Berorientasi Orang (horizontal), Cepat/Aktif ke Bijaksana/Penuh Pertimbangan (vertikal). Empat kuadran: D (kiri atas), I (kanan atas), S (kanan bawah), C (kiri bawah)."
+            }
+            style={{ width: "100%", maxWidth: 640, display: "block", margin: "0 auto", cursor: "pointer" }}
+          >
+            {/* Axis label: TASK-FOCUSED (left) */}
+            <text
+              x="80" y="18"
+              textAnchor="middle"
+              fontFamily="Montserrat, sans-serif"
+              fontWeight="600"
+              fontSize="11"
+              letterSpacing="0.12em"
+              fill="oklch(60% 0.04 260)"
+              style={{ textTransform: "uppercase" }}
+            >
+              TASK-FOCUSED
+            </text>
+            {/* Axis label: PEOPLE-FOCUSED (right) */}
+            <text
+              x="560" y="18"
+              textAnchor="middle"
+              fontFamily="Montserrat, sans-serif"
+              fontWeight="600"
+              fontSize="11"
+              letterSpacing="0.12em"
+              fill="oklch(60% 0.04 260)"
+            >
+              PEOPLE-FOCUSED
+            </text>
+            {/* Axis label: FAST/ACTIVE (top, rotated) */}
+            <text
+              x="0" y="0"
+              fontFamily="Montserrat, sans-serif"
+              fontWeight="600"
+              fontSize="11"
+              letterSpacing="0.12em"
+              fill="oklch(60% 0.04 260)"
+              transform="translate(18,150) rotate(-90)"
+              textAnchor="middle"
+            >
+              FAST / ACTIVE
+            </text>
+            {/* Axis label: DELIBERATE/THOUGHTFUL (bottom, rotated) */}
+            <text
+              x="0" y="0"
+              fontFamily="Montserrat, sans-serif"
+              fontWeight="600"
+              fontSize="11"
+              letterSpacing="0.12em"
+              fill="oklch(60% 0.04 260)"
+              transform="translate(18,430) rotate(-90)"
+              textAnchor="middle"
+            >
+              DELIBERATE / THOUGHTFUL
+            </text>
+
+            {/* Axis lines */}
+            <line x1="320" y1="30" x2="320" y2="555" stroke="oklch(55% 0.04 260)" strokeWidth="1.5" strokeOpacity="0.5" />
+            <line x1="30" y1="290" x2="610" y2="290" stroke="oklch(55% 0.04 260)" strokeWidth="1.5" strokeOpacity="0.5" />
+
+            {/* Quadrant: D — top-left */}
+            <g
+              role="button"
+              tabIndex={0}
+              aria-label="D — Dominance. Direct. Bold. Results-driven."
+              onClick={() => scrollToType("D")}
+              onKeyDown={(e) => handleMatrixKey(e, "D")}
+              style={{ cursor: "pointer" }}
+            >
+              <rect
+                x="30" y="30" width="284" height="254"
+                fill={hoveredQuadrant === "D" ? "oklch(52% 0.20 25 / 0.25)" : "oklch(52% 0.20 25 / 0.14)"}
+                stroke={hoveredQuadrant === "D" ? "oklch(52% 0.27 25)" : "none"}
+                strokeWidth="2"
+              />
+              <text x="172" y="145" textAnchor="middle" fontFamily="Montserrat, sans-serif" fontWeight="900" fontSize="72"
+                fill="oklch(52% 0.27 25)" fillOpacity={hoveredQuadrant === "D" ? 1 : 0.85}>D</text>
+              <text x="172" y="175" textAnchor="middle" fontFamily="Montserrat, sans-serif" fontWeight="700" fontSize="11"
+                letterSpacing="0.14em" fill="oklch(52% 0.27 25)" fillOpacity="0.65">DOMINANCE</text>
+              <text x="172" y="193" textAnchor="middle" fontFamily="Montserrat, sans-serif" fontWeight="400" fontSize="10"
+                fill="oklch(65% 0.04 260)">
+                {lang === "en" ? "Direct · Bold · Results-driven" : "Langsung · Berani · Berorientasi Hasil"}
+              </text>
+              <rect
+                x="30" y="30" width="284" height="254"
+                fill="transparent"
+                onMouseEnter={() => setHoveredQuadrant("D")}
+                onMouseLeave={() => setHoveredQuadrant(null)}
+              />
+            </g>
+
+            {/* Quadrant: I — top-right */}
+            <g
+              role="button"
+              tabIndex={0}
+              aria-label="I — Influence. Enthusiastic. Persuasive. People-first."
+              onClick={() => scrollToType("I")}
+              onKeyDown={(e) => handleMatrixKey(e, "I")}
+              style={{ cursor: "pointer" }}
+            >
+              <rect
+                x="320" y="30" width="290" height="254"
+                fill={hoveredQuadrant === "I" ? "oklch(52% 0.18 80 / 0.25)" : "oklch(52% 0.18 80 / 0.14)"}
+                stroke={hoveredQuadrant === "I" ? "oklch(62% 0.22 87)" : "none"}
+                strokeWidth="2"
+              />
+              <text x="465" y="145" textAnchor="middle" fontFamily="Montserrat, sans-serif" fontWeight="900" fontSize="72"
+                fill="oklch(62% 0.22 87)" fillOpacity={hoveredQuadrant === "I" ? 1 : 0.85}>I</text>
+              <text x="465" y="175" textAnchor="middle" fontFamily="Montserrat, sans-serif" fontWeight="700" fontSize="11"
+                letterSpacing="0.14em" fill="oklch(62% 0.22 87)" fillOpacity="0.65">INFLUENCE</text>
+              <text x="465" y="193" textAnchor="middle" fontFamily="Montserrat, sans-serif" fontWeight="400" fontSize="10"
+                fill="oklch(65% 0.04 260)">
+                {lang === "en" ? "Enthusiastic · Persuasive · People-first" : "Antusias · Persuasif · Mengutamakan Orang"}
+              </text>
+              <rect
+                x="320" y="30" width="290" height="254"
+                fill="transparent"
+                onMouseEnter={() => setHoveredQuadrant("I")}
+                onMouseLeave={() => setHoveredQuadrant(null)}
+              />
+            </g>
+
+            {/* Quadrant: C — bottom-left */}
+            <g
+              role="button"
+              tabIndex={0}
+              aria-label="C — Conscientiousness. Precise. Systematic. Quality-driven."
+              onClick={() => scrollToType("C")}
+              onKeyDown={(e) => handleMatrixKey(e, "C")}
+              style={{ cursor: "pointer" }}
+            >
+              <rect
+                x="30" y="290" width="284" height="265"
+                fill={hoveredQuadrant === "C" ? "oklch(48% 0.18 250 / 0.25)" : "oklch(48% 0.18 250 / 0.14)"}
+                stroke={hoveredQuadrant === "C" ? "oklch(50% 0.22 245)" : "none"}
+                strokeWidth="2"
+              />
+              <text x="172" y="415" textAnchor="middle" fontFamily="Montserrat, sans-serif" fontWeight="900" fontSize="72"
+                fill="oklch(50% 0.22 245)" fillOpacity={hoveredQuadrant === "C" ? 1 : 0.85}>C</text>
+              <text x="172" y="445" textAnchor="middle" fontFamily="Montserrat, sans-serif" fontWeight="700" fontSize="11"
+                letterSpacing="0.14em" fill="oklch(50% 0.22 245)" fillOpacity="0.65">CONSCIENTIOUSNESS</text>
+              <text x="172" y="463" textAnchor="middle" fontFamily="Montserrat, sans-serif" fontWeight="400" fontSize="10"
+                fill="oklch(65% 0.04 260)">
+                {lang === "en" ? "Precise · Systematic · Quality-driven" : "Presisi · Sistematis · Berorientasi Kualitas"}
+              </text>
+              <rect
+                x="30" y="290" width="284" height="265"
+                fill="transparent"
+                onMouseEnter={() => setHoveredQuadrant("C")}
+                onMouseLeave={() => setHoveredQuadrant(null)}
+              />
+            </g>
+
+            {/* Quadrant: S — bottom-right */}
+            <g
+              role="button"
+              tabIndex={0}
+              aria-label="S — Steadiness. Patient. Loyal. Team-oriented."
+              onClick={() => scrollToType("S")}
+              onKeyDown={(e) => handleMatrixKey(e, "S")}
+              style={{ cursor: "pointer" }}
+            >
+              <rect
+                x="320" y="290" width="290" height="265"
+                fill={hoveredQuadrant === "S" ? "oklch(48% 0.18 145 / 0.25)" : "oklch(48% 0.18 145 / 0.14)"}
+                stroke={hoveredQuadrant === "S" ? "oklch(52% 0.22 145)" : "none"}
+                strokeWidth="2"
+              />
+              <text x="465" y="415" textAnchor="middle" fontFamily="Montserrat, sans-serif" fontWeight="900" fontSize="72"
+                fill="oklch(52% 0.22 145)" fillOpacity={hoveredQuadrant === "S" ? 1 : 0.85}>S</text>
+              <text x="465" y="445" textAnchor="middle" fontFamily="Montserrat, sans-serif" fontWeight="700" fontSize="11"
+                letterSpacing="0.14em" fill="oklch(52% 0.22 145)" fillOpacity="0.65">STEADINESS</text>
+              <text x="465" y="463" textAnchor="middle" fontFamily="Montserrat, sans-serif" fontWeight="400" fontSize="10"
+                fill="oklch(65% 0.04 260)">
+                {lang === "en" ? "Patient · Loyal · Team-oriented" : "Sabar · Setia · Berorientasi Tim"}
+              </text>
+              <rect
+                x="320" y="290" width="290" height="265"
+                fill="transparent"
+                onMouseEnter={() => setHoveredQuadrant("S")}
+                onMouseLeave={() => setHoveredQuadrant(null)}
+              />
+            </g>
+          </svg>
+
+          {/* Mobile type nav pills */}
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              gap: "0.5rem",
+              justifyContent: "center",
+              marginTop: "1.5rem",
+            }}
+          >
+            {DISC_TYPES.map((t) => (
               <button
-                key={i}
-                onClick={() => setCurrentScenario(i)}
+                key={t.key}
+                onClick={() => scrollToType(t.key)}
                 style={{
-                  fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700,
-                  letterSpacing: "0.1em", textTransform: "uppercase",
-                  padding: "0.6rem 1.25rem",
-                  background: currentScenario === i ? "oklch(65% 0.15 45)" : "transparent",
-                  color: currentScenario === i ? "oklch(14% 0.08 260)" : "oklch(55% 0.008 260)",
-                  border: currentScenario === i ? "1px solid oklch(65% 0.15 45)" : "1px solid oklch(38% 0.008 260)",
+                  background: t.color,
+                  color: "oklch(96% 0.005 80)",
+                  fontFamily: "Montserrat, sans-serif",
+                  fontWeight: 700,
+                  fontSize: "0.75rem",
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                  padding: "0.5rem 1.25rem",
+                  border: "none",
                   cursor: "pointer",
-                  display: "flex", alignItems: "center", gap: "0.5rem",
+                  minHeight: 44,
                 }}
               >
-                <span>Scenario {i + 1}</span>
-                {scenarioSelections[i] !== undefined && scenarioSelections[i] !== null && (
-                  <span style={{ opacity: 0.7 }}>?</span>
-                )}
+                {t.key} — {tr(t.label)}
               </button>
             ))}
           </div>
+        </div>
+      </section>
 
-          {/* Current scenario */}
-          {(() => {
-            const scenario = SCENARIOS[currentScenario];
-            const selected = scenarioSelections[currentScenario] ?? null;
-            return (
-              <div>
-                {/* Situation */}
-                <div style={{
-                  padding: "1.75rem 2rem",
-                  background: "oklch(28% 0.10 260)",
-                  borderLeft: "3px solid oklch(65% 0.15 45)",
+      {/* ===================================================================
+          SECTION 4 — ASSESSMENT
+      =================================================================== */}
+      <section
+        id="disc-assessment"
+        style={{
+          background: "oklch(22% 0.10 260)",
+          padding: "clamp(3rem, 8vw, 5rem) clamp(1.25rem, 5vw, 3rem)",
+          borderTop: "1px solid oklch(32% 0.06 260)",
+        }}
+      >
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+
+          {/* Section heading */}
+          <p
+            style={{
+              fontFamily: "Montserrat, sans-serif",
+              fontWeight: 700,
+              fontSize: "0.75rem",
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+              color: "oklch(65% 0.15 45)",
+              marginBottom: "1rem",
+            }}
+          >
+            {lang === "en" ? "The Assessment" : "Penilaian"}
+          </p>
+
+          <h2
+            style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontWeight: 600,
+              fontSize: "clamp(1.75rem, 4vw, 2.75rem)",
+              color: "oklch(96% 0.005 80)",
+              lineHeight: 1.2,
+              marginBottom: "1.5rem",
+            }}
+          >
+            {lang === "en" ? "Discover your behavioral style." : "Temukan gaya perilakumu."}
+          </h2>
+
+          {/* NOT-STARTED state */}
+          {quizState === "not-started" && (
+            <div>
+              <p
+                style={{
+                  fontFamily: "Montserrat, sans-serif",
+                  fontSize: "0.95rem",
+                  color: "oklch(68% 0.04 260)",
+                  lineHeight: 1.75,
                   marginBottom: "2rem",
-                }}>
-                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.75rem" }}>
-                    The Situation
-                  </p>
-                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(82% 0.04 260)", margin: 0 }}>
-                    {scenario.situation}
+                  maxWidth: 600,
+                }}
+              >
+                {lang === "en"
+                  ? "24 questions. Each presents four options — choose the one that best describes your natural tendency. There are no right or wrong answers. The whole assessment takes 6 to 8 minutes."
+                  : "24 pertanyaan. Setiap pertanyaan menyajikan empat pilihan — pilih yang paling menggambarkan kecenderungan alami kamu. Tidak ada jawaban benar atau salah. Seluruh penilaian membutuhkan 6 hingga 8 menit."}
+              </p>
+
+              {/* Show prior result if available */}
+              {discResult && (
+                <div
+                  style={{
+                    background: "oklch(26% 0.09 260)",
+                    borderTop: "2px solid oklch(65% 0.15 45)",
+                    padding: "1.25rem 1.5rem",
+                    marginBottom: "1.5rem",
+                  }}
+                >
+                  <p
+                    style={{
+                      fontFamily: "Montserrat, sans-serif",
+                      fontSize: "0.875rem",
+                      color: "oklch(68% 0.04 260)",
+                      margin: 0,
+                    }}
+                  >
+                    {lang === "en"
+                      ? `Your saved result: ${discResult}. You can retake the assessment below.`
+                      : `Hasil tersimpan kamu: ${discResult}. Kamu bisa mengulang penilaian di bawah ini.`}
                   </p>
                 </div>
+              )}
 
-                <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1rem", color: "oklch(92% 0.005 80)", marginBottom: "1.25rem" }}>
-                  {scenario.prompt}
-                </p>
+              <button
+                onClick={startQuiz}
+                style={{
+                  background: "oklch(65% 0.15 45)",
+                  color: "oklch(96% 0.005 80)",
+                  fontFamily: "Montserrat, sans-serif",
+                  fontWeight: 700,
+                  fontSize: "0.875rem",
+                  letterSpacing: "0.06em",
+                  textTransform: "uppercase",
+                  padding: "0.875rem 2rem",
+                  border: "none",
+                  cursor: "pointer",
+                  minHeight: 44,
+                }}
+              >
+                {lang === "en" ? "Start Assessment" : "Mulai Penilaian"}
+              </button>
+            </div>
+          )}
 
-                {/* Options */}
+          {/* IN-PROGRESS state */}
+          {quizState === "in-progress" && (
+            <div>
+              {/* Progress bar */}
+              <div
+                style={{
+                  background: "oklch(32% 0.06 260)",
+                  height: 4,
+                  borderRadius: 2,
+                  marginBottom: "0.5rem",
+                  overflow: "hidden",
+                }}
+              >
+                <div
+                  style={{
+                    height: "100%",
+                    width: `${((currentQ) / QS.length) * 100}%`,
+                    background: getProgressBarColor(currentQ),
+                    transition: "width 0.3s ease, background 0.5s ease",
+                  }}
+                />
+              </div>
+              <p
+                style={{
+                  fontFamily: "Montserrat, sans-serif",
+                  fontSize: "0.75rem",
+                  color: "oklch(55% 0.04 260)",
+                  marginBottom: "2rem",
+                }}
+              >
+                {lang === "en"
+                  ? `Question ${currentQ + 1} of ${QS.length}`
+                  : `Pertanyaan ${currentQ + 1} dari ${QS.length}`}
+              </p>
+
+              {/* Question */}
+              <p
+                style={{
+                  fontFamily: "'Cormorant Garamond', serif",
+                  fontWeight: 600,
+                  fontSize: "clamp(1.1rem, 2.5vw, 1.4rem)",
+                  color: "oklch(96% 0.005 80)",
+                  lineHeight: 1.4,
+                  marginBottom: "1.75rem",
+                }}
+              >
+                {QS[currentQ][lang]}
+              </p>
+
+              {/* Options */}
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", marginBottom: "1.5rem" }}>
+                {getShuffledOptions(currentQ).map((opt, i) => (
+                  <button
+                    key={i}
+                    onClick={() => handleAnswer(opt.t)}
+                    style={{
+                      background: "oklch(26% 0.09 260)",
+                      border: "1px solid oklch(35% 0.06 260)",
+                      color: "oklch(78% 0.04 260)",
+                      fontFamily: "Montserrat, sans-serif",
+                      fontWeight: 400,
+                      fontSize: "0.9rem",
+                      lineHeight: 1.6,
+                      padding: "0.875rem 1.25rem",
+                      textAlign: "left",
+                      cursor: "pointer",
+                      minHeight: 44,
+                      transition: "border-color 0.15s ease, background 0.15s ease",
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!noHover) {
+                        (e.currentTarget as HTMLButtonElement).style.borderColor = "oklch(65% 0.15 45)";
+                        (e.currentTarget as HTMLButtonElement).style.background = "oklch(28% 0.09 260)";
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      (e.currentTarget as HTMLButtonElement).style.borderColor = "oklch(35% 0.06 260)";
+                      (e.currentTarget as HTMLButtonElement).style.background = "oklch(26% 0.09 260)";
+                    }}
+                  >
+                    {opt[lang]}
+                  </button>
+                ))}
+              </div>
+
+              {/* Back button */}
+              <button
+                onClick={handleBack}
+                style={{
+                  background: "none",
+                  border: "none",
+                  color: "oklch(55% 0.04 260)",
+                  fontFamily: "Montserrat, sans-serif",
+                  fontSize: "0.8rem",
+                  cursor: "pointer",
+                  padding: "0.5rem 0",
+                  minHeight: 44,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                }}
+              >
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M9 11L5 7l4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                {lang === "en" ? "Back" : "Kembali"}
+              </button>
+            </div>
+          )}
+
+          {/* DONE state — Results */}
+          {(quizState === "done" || (discResult && quizState === "not-started")) && quizState === "done" && (
+            <div>
+              {/* Result heading */}
+              <div style={{ marginBottom: "2rem" }}>
+                {resultText && (
+                  <>
+                    <p
+                      style={{
+                        fontFamily: "Montserrat, sans-serif",
+                        fontWeight: 700,
+                        fontSize: "0.75rem",
+                        letterSpacing: "0.12em",
+                        textTransform: "uppercase",
+                        color: "oklch(65% 0.15 45)",
+                        marginBottom: "0.75rem",
+                      }}
+                    >
+                      {lang === "en" ? "Your Result" : "Hasil Kamu"}
+                    </p>
+                    <h3
+                      style={{
+                        fontFamily: "'Cormorant Garamond', serif",
+                        fontWeight: 600,
+                        fontSize: "clamp(1.5rem, 4vw, 2.25rem)",
+                        color: "oklch(96% 0.005 80)",
+                        lineHeight: 1.2,
+                        marginBottom: "1rem",
+                      }}
+                    >
+                      {resultKey}
+                    </h3>
+                    <p
+                      style={{
+                        fontFamily: "Montserrat, sans-serif",
+                        fontSize: "0.95rem",
+                        color: "oklch(68% 0.04 260)",
+                        lineHeight: 1.75,
+                        marginBottom: "2rem",
+                      }}
+                    >
+                      {resultText}
+                    </p>
+                  </>
+                )}
+
+                {/* Score bars */}
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", marginBottom: "2rem" }}>
-                  {scenario.options.map((opt) => {
-                    const isSelected = selected === opt.letter;
-                    const discType = DISC_TYPES.find(t => t.key === opt.style);
+                  {(["D", "I", "S", "C"] as ScoreKey[]).map((key) => {
+                    const t = DISC_TYPES.find((dt) => dt.key === key)!;
+                    const pct = key === "D" ? pD : key === "I" ? pI : key === "S" ? pS : pC;
                     return (
-                      <div key={opt.letter}>
-                        <button
-                          onClick={() => setScenarioSelections(prev => ({ ...prev, [currentScenario]: isSelected ? null : opt.letter }))}
+                      <div key={key}>
+                        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.25rem" }}>
+                          <span
+                            style={{
+                              fontFamily: "Montserrat, sans-serif",
+                              fontWeight: 700,
+                              fontSize: "0.8rem",
+                              color: t.color,
+                            }}
+                          >
+                            {key} — {tr(t.label)}
+                          </span>
+                          <span
+                            style={{
+                              fontFamily: "Montserrat, sans-serif",
+                              fontWeight: 600,
+                              fontSize: "0.8rem",
+                              color: "oklch(55% 0.04 260)",
+                            }}
+                          >
+                            {pct}%
+                          </span>
+                        </div>
+                        <div
                           style={{
-                            width: "100%", textAlign: "left",
-                            fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", lineHeight: 1.6,
-                            padding: "1rem 1.25rem",
-                            background: isSelected ? `${discType?.color ?? "oklch(65% 0.15 45)"}15` : "oklch(97% 0.005 80 / 0.04)",
-                            border: isSelected ? `1px solid ${discType?.color ?? "oklch(65% 0.15 45)"}` : "1px solid oklch(97% 0.005 80 / 0.1)",
-                            color: "oklch(78% 0.04 260)",
-                            cursor: "pointer",
-                            display: "flex", gap: "1rem", alignItems: "flex-start",
-                            transition: "background 0.15s, border-color 0.15s",
+                            background: "oklch(32% 0.06 260)",
+                            height: 6,
+                            borderRadius: 3,
+                            overflow: "hidden",
                           }}
                         >
-                          <span style={{
-                            fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.65rem",
-                            letterSpacing: "0.1em",
-                            color: isSelected ? (discType?.colorLight ?? "oklch(65% 0.15 45)") : "oklch(55% 0.008 260)",
-                            flexShrink: 0, marginTop: "0.15rem",
-                          }}>
-                            {opt.letter}
-                          </span>
-                          {opt.action}
-                        </button>
-
-                        {isSelected && (
-                          <div style={{
-                            padding: "1.25rem 1.5rem",
-                            background: "oklch(28% 0.10 260)",
-                            borderLeft: `3px solid ${discType?.color ?? "oklch(65% 0.15 45)"}`,
-                            borderBottom: `1px solid ${discType?.color ?? "oklch(65% 0.15 45)"}30`,
-                          }}>
-                            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", lineHeight: 1.7, color: "oklch(78% 0.04 260)", marginBottom: "0.875rem" }}>
-                              <strong style={{ color: "oklch(62% 0.14 145)" }}>What happened:</strong> {opt.outcome}
-                            </p>
-                            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", lineHeight: 1.7, color: "oklch(68% 0.04 260)", margin: 0, fontStyle: "italic" }}>
-                              <strong style={{ color: "oklch(65% 0.15 45)", fontStyle: "normal" }}>Coaching note:</strong> {opt.coaching}
-                            </p>
-                          </div>
-                        )}
+                          <div
+                            style={{
+                              height: "100%",
+                              width: `${pct}%`,
+                              background: t.color,
+                              borderRadius: 3,
+                            }}
+                          />
+                        </div>
                       </div>
                     );
                   })}
                 </div>
 
-                {/* Navigation */}
-                <div style={{ display: "flex", gap: "0.75rem" }}>
-                  {currentScenario > 0 && (
-                    <button
-                      onClick={() => setCurrentScenario(currentScenario - 1)}
-                      style={{
-                        fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700,
-                        letterSpacing: "0.08em", textTransform: "uppercase",
-                        color: "oklch(55% 0.008 260)", background: "none",
-                        border: "1px solid oklch(38% 0.008 260)",
-                        padding: "0.625rem 1.25rem", cursor: "pointer",
-                      }}
-                    >
-                      ? Previous
-                    </button>
-                  )}
-                  {currentScenario < SCENARIOS.length - 1 && (
-                    <button
-                      onClick={() => setCurrentScenario(currentScenario + 1)}
-                      style={{
-                        fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700,
-                        letterSpacing: "0.08em", textTransform: "uppercase",
-                        color: "oklch(65% 0.15 45)", background: "none",
-                        border: "1px solid oklch(65% 0.15 45 / 0.5)",
-                        padding: "0.625rem 1.25rem", cursor: "pointer",
-                      }}
-                    >
-                      Next Scenario ?
-                    </button>
-                  )}
+                {/* Jump to type */}
+                {primaryType && (
+                  <button
+                    onClick={() => scrollToType(primaryType)}
+                    style={{
+                      background: "transparent",
+                      border: "1.5px solid oklch(65% 0.15 45)",
+                      color: "oklch(65% 0.15 45)",
+                      fontFamily: "Montserrat, sans-serif",
+                      fontWeight: 600,
+                      fontSize: "0.875rem",
+                      letterSpacing: "0.06em",
+                      textTransform: "uppercase",
+                      padding: "0.75rem 1.5rem",
+                      cursor: "pointer",
+                      minHeight: 44,
+                      marginBottom: "1rem",
+                      marginRight: "0.75rem",
+                    }}
+                  >
+                    {lang === "en" ? `Explore Your ${primaryType} Type` : `Jelajahi Tipe ${primaryType} Kamu`}
+                  </button>
+                )}
+
+                {/* Save result */}
+                {!resultSaved ? (
+                  <button
+                    onClick={handleSaveResult}
+                    disabled={isPending}
+                    style={{
+                      background: "oklch(65% 0.15 45)",
+                      color: "oklch(96% 0.005 80)",
+                      fontFamily: "Montserrat, sans-serif",
+                      fontWeight: 700,
+                      fontSize: "0.875rem",
+                      letterSpacing: "0.06em",
+                      textTransform: "uppercase",
+                      padding: "0.75rem 1.5rem",
+                      border: "none",
+                      cursor: isPending ? "default" : "pointer",
+                      minHeight: 44,
+                      marginBottom: "1rem",
+                    }}
+                  >
+                    {lang === "en" ? "Save Result" : "Simpan Hasil"}
+                  </button>
+                ) : (
+                  <span
+                    style={{
+                      fontFamily: "Montserrat, sans-serif",
+                      fontSize: "0.875rem",
+                      color: "oklch(65% 0.15 45)",
+                    }}
+                  >
+                    {lang === "en" ? "Result saved" : "Hasil tersimpan"} ✓
+                  </span>
+                )}
+
+                {/* Retake */}
+                <div style={{ marginTop: "1rem" }}>
+                  <button
+                    onClick={retake}
+                    style={{
+                      background: "none",
+                      border: "none",
+                      color: "oklch(55% 0.04 260)",
+                      fontFamily: "Montserrat, sans-serif",
+                      fontSize: "0.8rem",
+                      cursor: "pointer",
+                      padding: "0.5rem 0",
+                      minHeight: 44,
+                      textDecoration: "underline",
+                    }}
+                  >
+                    {lang === "en" ? "Retake assessment" : "Ulangi penilaian"}
+                  </button>
                 </div>
               </div>
-            );
-          })()}
+            </div>
+          )}
         </div>
       </section>
 
-      {/* -- ASSESSMENT -- */}
-      <section id="quiz-section" style={{
-        paddingBlock: "clamp(4rem, 7vw, 7rem)",
-        background: "oklch(97% 0.005 80)",
-        position: "relative",
-        borderTop: "4px solid transparent",
-        backgroundImage: `linear-gradient(to right, oklch(97% 0.005 80), oklch(97% 0.005 80)), linear-gradient(90deg, oklch(52% 0.20 25) 0%, oklch(52% 0.18 80) 33%, oklch(48% 0.18 145) 66%, oklch(48% 0.18 250) 100%)`,
-        backgroundClip: "padding-box, border-box",
-        backgroundOrigin: "padding-box, border-box"
-      }}>
-        <div className="container-wide">
-          <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.875rem", fontSize: "0.62rem" }}>
-            {tr("Self-Assessment", "Penilaian Diri")}
-          </p>
-          <h2 className="t-section" style={{ color: "oklch(22% 0.005 260)", marginBottom: "0.75rem" }}>
-            {tr("Discover your DISC style.", "Temukan gaya DISC Anda.")}
-          </h2>
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", color: "oklch(65% 0.04 260)", marginBottom: "3rem", maxWidth: "52ch" }}>
-            {tr(
-              "24 questions. Choose what feels most natural — not what you think you should do. Your result shows a score breakdown across all four styles.",
-              "24 pertanyaan. Pilih yang paling alami — bukan apa yang Anda pikir seharusnya Anda lakukan. Hasilnya menunjukkan skor dari keempat gaya perilaku.",
-              "24 vragen. Kies wat het meest natuurlijk voelt — niet wat je denkt dat je zou moeten doen. Je resultaat toont een scoreverdeling over alle vier de stijlen."
-            )}
-          </p>
+      {/* ===================================================================
+          SECTION 5 — THE FOUR TYPES
+      =================================================================== */}
+      <div id="disc-types">
+        {DISC_TYPES.map((type) => {
+          const activeTab = activeTypeTab[type.key] ?? "communication";
+          const accentColor = type.color;
 
-          <div style={{ maxWidth: "680px", background: "oklch(30% 0.12 260)", overflow: "hidden" }}>
-            <div style={{ height: "3px", background: `linear-gradient(90deg, oklch(52% 0.20 25), oklch(52% 0.18 80), oklch(48% 0.18 145), oklch(48% 0.18 250))` }} />
-            <div style={{ padding: "clamp(2rem, 4vw, 3.5rem)" }}>
+          return (
+            <section
+              key={type.key}
+              id={`disc-type-${type.key}`}
+              style={{
+                background: "oklch(96% 0.005 80)",
+                borderTop: `3px solid ${accentColor}`,
+                position: "relative",
+                overflow: "hidden",
+                padding: "clamp(2.5rem, 6vw, 4rem) clamp(1.25rem, 5vw, 3rem)",
+              }}
+            >
+              {/* Watermark letter */}
+              <div
+                aria-hidden="true"
+                style={{
+                  position: "absolute",
+                  top: "-1rem",
+                  right: "1rem",
+                  fontFamily: "Montserrat, sans-serif",
+                  fontWeight: 900,
+                  fontSize: "clamp(8rem, 20vw, 14rem)",
+                  color: accentColor,
+                  opacity: 0.06,
+                  lineHeight: 1,
+                  pointerEvents: "none",
+                  userSelect: "none",
+                }}
+              >
+                {type.key}
+              </div>
 
-              {quizState === "idle" && (
-                <div>
-                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", color: "oklch(65% 0.04 260)", lineHeight: 1.75, marginBottom: "2.5rem" }}>
-                    {tr(
-                      "Each scenario has four options. There are no right or wrong answers. Choose the response that feels most like you — not what you think you should do.",
-                      "Setiap skenario memiliki empat pilihan. Tidak ada jawaban yang benar atau salah. Pilih respons yang paling mencerminkan diri Anda — bukan apa yang Anda pikir seharusnya Anda lakukan.",
-                      "Elk scenario heeft vier opties. Er zijn geen goede of foute antwoorden. Kies het antwoord dat het meest op jou lijkt — niet wat je denkt dat je zou moeten doen."
-                    )}
-                  </p>
-                  <button onClick={startQuiz} className="btn-primary">
-                    {tr("Start Assessment", "Mulai Tes")}
-                  </button>
-                </div>
-              )}
+              <div style={{ maxWidth: 720, margin: "0 auto", position: "relative", zIndex: 1 }}>
 
-              {quizState === "active" && (
-                <div>
-                  {/* Progress bar with color cycling */}
-                  <div style={{ marginBottom: "2rem" }}>
-                    <div style={{ height: "2px", background: "oklch(97% 0.005 80 / 0.08)", marginBottom: "0.625rem" }}>
-                      <div style={{
-                        height: "100%",
-                        background: getProgressBarColor(currentQ),
-                        width: `${((currentQ + 1) / QS.length) * 100}%`,
-                        transition: "width 0.4s ease, background 0.3s ease"
-                      }} />
-                    </div>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: getProgressBarColor(currentQ), margin: 0 }}>
-                        {tr("Question", "Pertanyaan")} {currentQ + 1} {tr("of", "dari")} {QS.length}
-                      </p>
-                      {currentQ < QS.length - 1 && (
-                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "oklch(45% 0.008 260)", margin: 0 }}>
-                          ~{Math.max(1, Math.ceil((QS.length - currentQ - 1) * 0.5))} min left
-                        </p>
-                      )}
-                    </div>
+                {/* Eyebrow pill */}
+                <span
+                  style={{
+                    display: "inline-block",
+                    background: accentColor,
+                    color: "oklch(96% 0.005 80)",
+                    fontFamily: "Montserrat, sans-serif",
+                    fontWeight: 700,
+                    fontSize: "0.75rem",
+                    letterSpacing: "0.12em",
+                    textTransform: "uppercase",
+                    padding: "0.35rem 1rem",
+                    marginBottom: "1.25rem",
+                  }}
+                >
+                  {type.key} — {tr(type.label)}
+                </span>
+
+                {/* Type tagline as H2 */}
+                <h2
+                  style={{
+                    fontFamily: "'Cormorant Garamond', serif",
+                    fontWeight: 600,
+                    fontSize: "clamp(1.75rem, 4vw, 2.5rem)",
+                    color: "oklch(22% 0.10 260)",
+                    lineHeight: 1.2,
+                    marginBottom: "1.25rem",
+                  }}
+                >
+                  {tr(type.tagline)}
+                </h2>
+
+                {/* Block 1 — Overview */}
+                <p
+                  style={{
+                    fontFamily: "Montserrat, sans-serif",
+                    fontSize: "clamp(0.9rem, 1.8vw, 1rem)",
+                    color: "oklch(35% 0.04 260)",
+                    lineHeight: 1.75,
+                    marginBottom: "2rem",
+                  }}
+                >
+                  {tr(type.overview)}
+                </p>
+
+                {/* Block 2 — Strengths + Blind Spots grid */}
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+                    gap: "1.5rem",
+                    marginBottom: "2rem",
+                  }}
+                >
+                  {/* Strengths */}
+                  <div>
+                    <p
+                      style={{
+                        fontFamily: "Montserrat, sans-serif",
+                        fontWeight: 700,
+                        fontSize: "0.75rem",
+                        letterSpacing: "0.12em",
+                        textTransform: "uppercase",
+                        color: accentColor,
+                        marginBottom: "0.75rem",
+                      }}
+                    >
+                      {lang === "en" ? "Strengths" : "Kekuatan"}
+                    </p>
+                    <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                      {type.strengths[lang].map((s, i) => (
+                        <li
+                          key={i}
+                          style={{
+                            fontFamily: "Montserrat, sans-serif",
+                            fontWeight: 500,
+                            fontSize: "0.875rem",
+                            color: "oklch(30% 0.05 260)",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "0.5rem",
+                          }}
+                        >
+                          <span style={{ color: accentColor, fontWeight: 700, fontSize: "1rem", lineHeight: 1 }}>+</span>
+                          {s}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
 
-                  {/* Question */}
-                  <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "1.0625rem", color: "oklch(97% 0.005 80)", lineHeight: 1.5, marginBottom: "1.75rem" }}>
-                    {QS[currentQ][lang]}
-                  </p>
+                  {/* Blind Spots */}
+                  <div>
+                    <p
+                      style={{
+                        fontFamily: "Montserrat, sans-serif",
+                        fontWeight: 700,
+                        fontSize: "0.75rem",
+                        letterSpacing: "0.12em",
+                        textTransform: "uppercase",
+                        color: "oklch(55% 0.04 260)",
+                        marginBottom: "0.75rem",
+                      }}
+                    >
+                      {lang === "en" ? "Blind Spots" : "Titik Buta"}
+                    </p>
+                    <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                      {type.blindspots[lang].map((b, i) => (
+                        <li
+                          key={i}
+                          style={{
+                            fontFamily: "Montserrat, sans-serif",
+                            fontWeight: 400,
+                            fontStyle: "italic",
+                            fontSize: "0.875rem",
+                            color: "oklch(50% 0.04 260)",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "0.5rem",
+                          }}
+                        >
+                          <span style={{ color: "oklch(65% 0.03 80)", fontWeight: 700, fontSize: "1rem", lineHeight: 1 }}>-</span>
+                          {b}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
 
-                  {/* Options */}
-                  <style>{`
-                    .disc-opt { background: oklch(97% 0.005 80 / 0.04); border: 1px solid oklch(97% 0.005 80 / 0.1); color: oklch(78% 0.04 260); }
-                    @media (hover: hover) { .disc-opt:hover { background: oklch(97% 0.005 80 / 0.08) !important; border-color: oklch(97% 0.005 80 / 0.2) !important; color: oklch(97% 0.005 80) !important; } }
-                    .disc-opt:focus-visible { outline: 2px solid oklch(65% 0.15 45); outline-offset: 2px; }
-                  `}</style>
-                  <div style={{ display: "flex", flexDirection: "column", gap: "0.625rem", pointerEvents: noHover ? "none" : "auto" }}>
-                    {getShuffledOptions(currentQ).map((opt, i) => (
+                {/* Block 3 — Motivation + Fear row */}
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+                    border: "1px solid oklch(88% 0.008 80)",
+                    background: "oklch(88% 0.008 80)",
+                    gap: "1px",
+                    overflow: "hidden",
+                    marginBottom: "2rem",
+                  }}
+                >
+                  <div style={{ padding: "1.25rem 1.5rem", background: "oklch(96% 0.005 80)" }}>
+                    <p
+                      style={{
+                        fontFamily: "Montserrat, sans-serif",
+                        fontWeight: 700,
+                        fontSize: "0.7rem",
+                        letterSpacing: "0.12em",
+                        textTransform: "uppercase",
+                        color: accentColor,
+                        marginBottom: "0.5rem",
+                      }}
+                    >
+                      {lang === "en" ? "Motivated by" : "Termotivasi oleh"}
+                    </p>
+                    <p
+                      style={{
+                        fontFamily: "Montserrat, sans-serif",
+                        fontWeight: 400,
+                        fontSize: "0.875rem",
+                        color: "oklch(35% 0.04 260)",
+                        lineHeight: 1.65,
+                        margin: 0,
+                      }}
+                    >
+                      {tr(type.motivation)}
+                    </p>
+                  </div>
+                  <div
+                    style={{
+                      padding: "1.25rem 1.5rem",
+                      background: "oklch(96% 0.005 80)",
+                    }}
+                  >
+                    <p
+                      style={{
+                        fontFamily: "Montserrat, sans-serif",
+                        fontWeight: 700,
+                        fontSize: "0.7rem",
+                        letterSpacing: "0.12em",
+                        textTransform: "uppercase",
+                        color: accentColor,
+                        marginBottom: "0.5rem",
+                      }}
+                    >
+                      {lang === "en" ? "Fears" : "Ditakuti"}
+                    </p>
+                    <p
+                      style={{
+                        fontFamily: "Montserrat, sans-serif",
+                        fontWeight: 400,
+                        fontSize: "0.875rem",
+                        color: "oklch(35% 0.04 260)",
+                        lineHeight: 1.65,
+                        margin: 0,
+                      }}
+                    >
+                      {tr(type.fear)}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Block 4 — Tab pair: Communication Style | Cross-Cultural Note */}
+                <div style={{ marginBottom: "2rem" }}>
+                  {/* Tab strip */}
+                  <div style={{ display: "flex", gap: "0", borderBottom: "1px solid oklch(88% 0.008 80)", marginBottom: "1.25rem" }}>
+                    {(["communication", "crossCultural"] as const).map((tab) => (
                       <button
-                        key={i}
-                        className="disc-opt"
-                        onClick={() => handleAnswer(opt.t as ScoreKey)}
+                        key={tab}
+                        onClick={() => setActiveTypeTab((prev) => ({ ...prev, [type.key]: tab }))}
                         style={{
-                          fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", lineHeight: 1.5,
-                          padding: "1rem 1.25rem", textAlign: "left", cursor: "pointer",
-                          transition: "background 0.15s, border-color 0.15s, color 0.15s",
-                          display: "flex", gap: "1rem", alignItems: "flex-start",
-                          WebkitTapHighlightColor: "transparent",
+                          background: "none",
+                          border: "none",
+                          borderBottom: activeTab === tab ? `2px solid ${accentColor}` : "2px solid transparent",
+                          marginBottom: "-1px",
+                          cursor: "pointer",
+                          padding: "0.5rem 1rem 0.625rem",
+                          fontFamily: "Montserrat, sans-serif",
+                          fontWeight: 600,
+                          fontSize: "0.8rem",
+                          color: activeTab === tab ? "oklch(22% 0.10 260)" : "oklch(55% 0.04 260)",
+                          minHeight: 44,
+                          whiteSpace: "nowrap",
                         }}
                       >
-                        <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.65rem", letterSpacing: "0.1em", color: "oklch(55% 0.008 260)", flexShrink: 0, marginTop: "0.15rem" }}>
-                          {["A", "B", "C", "D"][i]}
-                        </span>
-                        {opt[lang]}
+                        {tab === "communication"
+                          ? (lang === "en" ? "Communication Style" : "Gaya Komunikasi")
+                          : (lang === "en" ? "Cross-Cultural Note" : "Catatan Lintas Budaya")}
                       </button>
                     ))}
                   </div>
 
-                  {/* Back button */}
-                  {currentQ > 0 && (
+                  {/* Tab content */}
+                  <p
+                    style={{
+                      fontFamily: "Montserrat, sans-serif",
+                      fontWeight: 400,
+                      fontSize: "0.9rem",
+                      color: "oklch(35% 0.04 260)",
+                      lineHeight: 1.75,
+                      margin: 0,
+                    }}
+                  >
+                    {activeTab === "communication" ? tr(type.communication) : tr(type.crossCultural)}
+                  </p>
+                </div>
+
+                {/* Block 5 — Biblical Example card */}
+                <div
+                  style={{
+                    background: "oklch(97% 0.010 50)",
+                    border: "1px solid oklch(88% 0.030 50)",
+                    padding: "1.5rem",
+                    marginBottom: "1.5rem",
+                  }}
+                >
+                  <p
+                    style={{
+                      fontFamily: "Montserrat, sans-serif",
+                      fontWeight: 700,
+                      fontSize: "0.7rem",
+                      letterSpacing: "0.12em",
+                      textTransform: "uppercase",
+                      color: "oklch(65% 0.15 45)",
+                      marginBottom: "0.5rem",
+                    }}
+                  >
+                    {lang === "en" ? "Biblical Example" : "Contoh Alkitabiah"}
+                  </p>
+                  <h3
+                    style={{
+                      fontFamily: "'Cormorant Garamond', serif",
+                      fontWeight: 600,
+                      fontSize: "1.25rem",
+                      color: "oklch(22% 0.10 260)",
+                      marginBottom: "0.75rem",
+                    }}
+                  >
+                    {type.biblical.name}
+                  </h3>
+                  <p
+                    style={{
+                      fontFamily: "Montserrat, sans-serif",
+                      fontWeight: 400,
+                      fontSize: "0.875rem",
+                      color: "oklch(35% 0.04 260)",
+                      lineHeight: 1.75,
+                      margin: 0,
+                    }}
+                  >
+                    {type.biblical.text}
+                  </p>
+                </div>
+
+                {/* Dig Deeper accordion per type */}
+                {type.digDeeper && (
+                  <div style={{ borderTop: "1px solid oklch(88% 0.008 80)" }}>
                     <button
-                      onClick={handleBack}
+                      onClick={() => setOpenFaq(openFaq === DISC_TYPES.indexOf(type) ? null : DISC_TYPES.indexOf(type))}
+                      aria-expanded={openFaq === DISC_TYPES.indexOf(type)}
                       style={{
-                        marginTop: "1.25rem",
-                        fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700,
-                        letterSpacing: "0.08em", textTransform: "uppercase",
-                        color: "oklch(55% 0.008 260)", background: "none",
-                        border: "1px solid oklch(42% 0.008 260 / 0.5)",
-                        padding: "0.625rem 1.25rem", cursor: "pointer",
-                        alignSelf: "flex-start",
+                        width: "100%",
+                        background: "none",
+                        border: "none",
+                        cursor: "pointer",
+                        padding: "1rem 0",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        minHeight: 44,
                       }}
                     >
-                      ? {tr("Go Back", "Kembali")}
+                      <span
+                        style={{
+                          fontFamily: "Montserrat, sans-serif",
+                          fontWeight: 600,
+                          fontSize: "0.875rem",
+                          color: "oklch(40% 0.05 260)",
+                          textAlign: "left",
+                        }}
+                      >
+                        {lang === "en" ? `Dig Deeper: ${type.key}-type in Cross-Cultural Contexts` : `Lebih Dalam: Tipe ${type.key} dalam Konteks Lintas Budaya`}
+                      </span>
+                      <svg
+                        width="16" height="16" viewBox="0 0 16 16" fill="none"
+                        style={{
+                          flexShrink: 0,
+                          transform: openFaq === DISC_TYPES.indexOf(type) ? "rotate(180deg)" : "rotate(0deg)",
+                          transition: "transform 0.2s ease",
+                          color: "oklch(65% 0.15 45)",
+                        }}
+                      >
+                        <path d="M2 5l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
                     </button>
-                  )}
-                </div>
-              )}
-
-              {quizState === "done" && (
-                <div>
-                  <p className="t-label" style={{ color: primaryType.colorLight, marginBottom: "1.25rem", fontSize: "0.62rem", letterSpacing: "0.14em" }}>
-                    {tr("Your DISC Profile", "Profil DISC Anda")}
-                  </p>
-
-                  {/* Identity block — type badge + name + tagline + score bars unified */}
-                  <div style={{
-                    borderLeft: `3px solid ${primaryType.color}`,
-                    paddingLeft: "1.25rem",
-                    marginBottom: "2rem",
-                  }}>
-                    {/* Type letter + name row */}
-                    <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1rem" }}>
-                      <div style={{
-                        width: "3rem", height: "3rem", flexShrink: 0,
-                        background: `${primaryType.color}18`,
-                        border: `2px solid ${primaryType.color}`,
-                        display: "flex", alignItems: "center", justifyContent: "center",
-                      }}>
-                        <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 900, fontSize: "1.5rem", color: primaryType.colorLight, lineHeight: 1 }}>
-                          {resultKey[0]}
-                        </span>
-                      </div>
-                      <div>
-                        <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.25rem", color: "oklch(97% 0.005 80)", lineHeight: 1.15, marginBottom: "0.2rem" }}>
-                          {primaryType.label[lang]}
-                          {resultKey.length === 2 && (
-                            <span style={{ color: primaryType.colorLight, fontSize: "0.9rem", fontWeight: 600, marginLeft: "0.5rem", opacity: 0.8 }}>
-                              / {DISC_TYPES.find(t => t.key === resultKey[1])?.label[lang]}
-                            </span>
-                          )}
-                        </p>
-                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: primaryType.colorLight, fontWeight: 600, letterSpacing: "0.02em" }}>
-                          {primaryType.tagline[lang]}
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Score bars — tighter, mobile-safe */}
-                    <div style={{ display: "flex", flexDirection: "column", gap: "0.625rem" }}>
-                      {[
-                        { key: "D", label: "D", fullLabel: tr("Dominance", "Dominance"), pct: pD, color: "oklch(52% 0.27 25)", light: "oklch(62% 0.22 25)" },
-                        { key: "I", label: "I", fullLabel: tr("Influence", "Influence"), pct: pI, color: "oklch(62% 0.22 87)", light: "oklch(72% 0.18 87)" },
-                        { key: "S", label: "S", fullLabel: tr("Steadiness", "Steadiness"), pct: pS, color: "oklch(52% 0.22 145)", light: "oklch(62% 0.18 145)" },
-                        { key: "C", label: "C", fullLabel: tr("Conscientiousness", "Conscientiousness"), pct: pC, color: "oklch(50% 0.22 245)", light: "oklch(60% 0.18 245)" },
-                      ].map(bar => {
-                        const isPrimary = bar.key === resultKey[0];
-                        return (
-                          <div key={bar.key} style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-                            <span style={{
-                              fontFamily: "var(--font-montserrat)", fontWeight: 900, fontSize: "0.65rem",
-                              color: isPrimary ? bar.light : bar.color,
-                              width: "0.75rem", flexShrink: 0, textAlign: "center",
-                              opacity: isPrimary ? 1 : 0.7,
-                            }}>
-                              {bar.key}
-                            </span>
-                            <div style={{ flex: 1, height: isPrimary ? "7px" : "4px", background: "oklch(97% 0.005 80 / 0.07)", overflow: "hidden" }}>
-                              <div style={{ height: "100%", width: `${bar.pct}%`, background: isPrimary ? bar.light : bar.color, opacity: isPrimary ? 1 : 0.55, transition: "width 1s ease" }} />
-                            </div>
-                            <span style={{
-                              fontFamily: "var(--font-montserrat)", fontSize: isPrimary ? "0.85rem" : "0.75rem",
-                              fontWeight: isPrimary ? 800 : 600,
-                              color: isPrimary ? "oklch(92% 0.005 80)" : "oklch(58% 0.04 260)",
-                              width: "2.5rem", textAlign: "right", flexShrink: 0,
-                            }}>
-                              {bar.pct}%
-                            </span>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-
-                  {/* Result profile text — personal insight moment */}
-                  <p style={{
-                    fontFamily: "var(--font-montserrat)", fontSize: "1rem", lineHeight: 1.75,
-                    color: "oklch(82% 0.03 260)", marginBottom: "2.5rem",
-                    paddingBottom: "2rem",
-                    borderBottom: "1px solid oklch(97% 0.005 80 / 0.07)",
-                  }}>
-                    {resultText}
-                  </p>
-
-                  {/* Save to dashboard — soft, non-intrusive */}
-                  <div style={{ marginBottom: "1.75rem" }}>
-                    {resultSaved ? (
-                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", fontWeight: 700, color: "oklch(60% 0.14 145)", letterSpacing: "0.04em" }}>
-                        ? {tr("Result saved to your dashboard", "Hasil tersimpan ke dashboard Anda")}
-                      </p>
-                    ) : (
-                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "1rem", flexWrap: "wrap" }}>
-                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(58% 0.04 260)", lineHeight: 1.5 }}>
-                          {tr("Keep this result — save it to your dashboard.", "Simpan hasil ini ke dashboard Anda.")}
-                        </p>
-                        <button
-                          onClick={handleSaveResult}
-                          disabled={isPending}
+                    {openFaq === DISC_TYPES.indexOf(type) && (
+                      <div style={{ paddingBottom: "1.5rem" }}>
+                        <p
                           style={{
-                            fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.75rem",
-                            letterSpacing: "0.07em", textTransform: "uppercase",
-                            background: "oklch(65% 0.15 45)", color: "oklch(14% 0.08 260)",
-                            border: "none", padding: "0.6rem 1.375rem", cursor: isPending ? "wait" : "pointer",
-                            whiteSpace: "nowrap", flexShrink: 0,
+                            fontFamily: "Montserrat, sans-serif",
+                            fontSize: "0.875rem",
+                            color: "oklch(45% 0.04 260)",
+                            lineHeight: 1.75,
+                            margin: 0,
                           }}
                         >
-                          {isPending ? tr("Saving—", "Menyimpan—") : tr("Save My Result", "Simpan Hasilku")}
-                        </button>
+                          {type.digDeeper[lang]}
+                        </p>
                       </div>
                     )}
                   </div>
-
-                  {/* Retake + dashboard */}
-                  <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
-                    <button onClick={retake} style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.75rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(58% 0.04 260)", background: "none", border: "1px solid oklch(38% 0.008 260)", padding: "0.7rem 1.375rem", cursor: "pointer" }}>
-                      {tr("Retake Assessment", "Ulangi Assessment")}
-                    </button>
-                    <Link href="/dashboard" className="btn-primary" style={{ textDecoration: "none" }}>
-                      {tr("Go to Dashboard", "Ke Dashboard")}
-                    </Link>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* -- SECTION 6: RESOURCES & NEXT STEPS -- */}
-      <section style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(97% 0.005 80)" }}>
-        <div className="container-wide">
-          <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.875rem" }}>
-            {tr("Next Steps", "Langkah Selanjutnya")}
-          </p>
-          <h2 className="t-section" style={{ marginBottom: "0.75rem" }}>
-            {tr("Put your profile to work.", "Terapkan profil Anda.")}
-          </h2>
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(42% 0.008 260)", maxWidth: "58ch", marginBottom: "3.5rem" }}>
-            {tr(
-              "Knowing your DISC type is only the beginning. Here is how to go deeper — in your own leadership and with your team.",
-              "Mengetahui tipe DISC Anda hanyalah permulaan. Berikut cara untuk mendalaminya — dalam kepemimpinan Anda sendiri dan bersama tim Anda.",
-              "Je DISC-type kennen is slechts het begin. Zo ga je dieper — in je eigen leiderschap en met je team."
-            )}
-          </p>
-
-          {/* Three application cards */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1.5rem", marginBottom: "3.5rem" }}>
-            {[
-              {
-                step: "01",
-                title: tr("Reflect on your default", "Renungkan default Anda"),
-                body: tr(
-                  "Take one situation from last week where things felt tense. Which part of your DISC profile showed up — your strength or your blind spot? Write it down. Growth starts with honest observation.",
-                  "Ambil satu situasi dari minggu lalu di mana sesuatu terasa tegang. Bagian mana dari profil DISC Anda yang muncul — kekuatan atau titik buta Anda? Tuliskan. Pertumbuhan dimulai dengan pengamatan yang jujur.",
-                  "Neem een situatie van vorige week waarin iets gespannen aanvoelde. Welk deel van je DISC-profiel toonde zich — je kracht of je blinde vlek? Schrijf het op. Groei begint met eerlijk waarnemen."
-                ),
-                color: "oklch(52% 0.20 25)",
-              },
-              {
-                step: "02",
-                title: tr("Map your team", "Petakan tim Anda"),
-                body: tr(
-                  "Ask your team to take the assessment and share their results. Then map the four types on a whiteboard. Where is your team heavy? Where is there a gap? That gap often explains recurring friction.",
-                  "Minta tim Anda untuk mengikuti assessment dan berbagi hasilnya. Kemudian petakan keempat tipe di papan tulis. Di mana tim Anda berat? Di mana ada kesenjangan? Kesenjangan itu sering menjelaskan gesekan yang berulang.",
-                  "Vraag je team de assessment te doen en hun resultaten te delen. Breng de vier typen dan in kaart op een whiteboard. Waar is je team zwaar? Waar is een gat? Dat gat verklaart vaak terugkerende wrijving."
-                ),
-                color: "oklch(52% 0.18 80)",
-              },
-              {
-                step: "03",
-                title: tr("Adapt your communication", "Sesuaikan komunikasi Anda"),
-                body: tr(
-                  "Before your next difficult conversation, identify the other person's likely DISC style and adjust your approach. A D needs directness. An S needs gentleness and time. A C needs evidence. An I needs enthusiasm and connection.",
-                  "Sebelum percakapan sulit berikutnya, identifikasi gaya DISC orang lain yang mungkin dan sesuaikan pendekatan Anda. D membutuhkan ketegasan. S membutuhkan kelembutan dan waktu. C membutuhkan bukti. I membutuhkan antusiasme dan koneksi.",
-                  "Identificeer voor je volgende moeilijke gesprek de waarschijnlijke DISC-stijl van de ander en pas je aanpak aan. Een D heeft directheid nodig. Een S heeft zachtheid en tijd nodig. Een C heeft bewijs nodig. Een I heeft enthousiasme en verbinding nodig."
-                ),
-                color: "oklch(48% 0.18 145)",
-              },
-            ].map(card => (
-              <div key={card.step} style={{
-                padding: "2rem",
-                background: "oklch(94% 0.006 80)",
-                borderTop: `3px solid ${card.color}`,
-              }}>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 900, fontSize: "0.65rem", letterSpacing: "0.16em", color: card.color, marginBottom: "0.875rem" }}>
-                  {card.step}
-                </p>
-                <h3 style={{ fontFamily: "Cormorant Garamond, serif", fontWeight: 600, fontSize: "1.25rem", color: "oklch(22% 0.005 260)", lineHeight: 1.2, marginBottom: "0.875rem" }}>
-                  {card.title}
-                </h3>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", lineHeight: 1.75, color: "oklch(42% 0.008 260)", margin: 0 }}>
-                  {card.body}
-                </p>
-              </div>
-            ))}
-          </div>
-
-          {/* Watch — YouTube videos */}
-          <div style={{ marginBottom: "3.5rem" }}>
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.5rem" }}>
-              Watch
-            </p>
-            <p style={{ fontFamily: "Cormorant Garamond, serif", fontWeight: 600, fontSize: "1.25rem", color: "oklch(22% 0.005 260)", marginBottom: "1.75rem" }}>
-              Recommended viewing
-            </p>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1.5rem" }}>
-              {[
-                {
-                  id: "YMyofREc5Jk",
-                  title: "Cross-Cultural Communication",
-                  description: "Pellegrino Riccardi at TEDxBergen. The best short talk on why the same behaviour lands differently across cultures — anchors the cross-cultural caveat in DISC.",
-                  duration: "TEDx",
-                },
-                {
-                  id: "Hm31Ju8heEY",
-                  title: "DISC Leadership Styles Explained",
-                  description: "A 20-minute deep dive into all four DISC types — how they lead, communicate, and conflict. Good starting point for team conversations.",
-                  duration: "20 min",
-                },
-              ].map(video => (
-                <div key={video.id} style={{ background: "oklch(94% 0.006 80)", overflow: "hidden" }}>
-                  {playingVideo === video.id ? (
-                    <div style={{ position: "relative", paddingBottom: "56.25%", height: 0 }}>
-                      <iframe
-                        src={`https://www.youtube.com/embed/${video.id}?autoplay=1&rel=0`}
-                        title={video.title}
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                        style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", border: "none" }}
-                      />
-                    </div>
-                  ) : (
-                    <button
-                      onClick={() => setPlayingVideo(video.id)}
-                      style={{ display: "block", width: "100%", border: "none", padding: 0, background: "none", cursor: "pointer", position: "relative" }}
-                      aria-label={`Play ${video.title}`}
-                    >
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`}
-                        alt={video.title}
-                        style={{ display: "block", width: "100%", aspectRatio: "16/9", objectFit: "cover" }}
-                      />
-                      <div style={{
-                        position: "absolute", inset: 0,
-                        display: "flex", alignItems: "center", justifyContent: "center",
-                        background: "oklch(0% 0 0 / 0.28)",
-                      }}>
-                        <div style={{
-                          width: "3.5rem", height: "3.5rem", borderRadius: "50%",
-                          background: "oklch(100% 0 0 / 0.92)",
-                          display: "flex", alignItems: "center", justifyContent: "center",
-                        }}>
-                          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                            <polygon points="5,3 15,9 5,15" fill="oklch(22% 0.10 260)" />
-                          </svg>
-                        </div>
-                      </div>
-                      <div style={{ position: "absolute", top: "0.625rem", right: "0.625rem", background: "oklch(0% 0 0 / 0.62)", padding: "0.2rem 0.5rem" }}>
-                        <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6875rem", fontWeight: 600, color: "oklch(97% 0 0)", letterSpacing: "0.04em" }}>{video.duration}</span>
-                      </div>
-                    </button>
-                  )}
-                  <div style={{ padding: "1.25rem 1.5rem" }}>
-                    <h3 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.875rem", color: "oklch(22% 0.005 260)", marginBottom: "0.5rem", lineHeight: 1.35 }}>
-                      {video.title}
-                    </h3>
-                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", lineHeight: 1.7, color: "oklch(42% 0.008 260)", margin: 0 }}>
-                      {video.description}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Go deeper */}
-          <div style={{
-            padding: "2rem 2.5rem",
-            background: "oklch(22% 0.10 260)",
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-            gap: "2rem",
-            alignItems: "center",
-          }}>
-            <div>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.625rem" }}>
-                {tr("Go Deeper", "Pelajari Lebih Lanjut")}
-              </p>
-              <p style={{ fontFamily: "Cormorant Garamond, serif", fontWeight: 600, fontSize: "1.5rem", color: "oklch(97% 0.005 80)", lineHeight: 1.2, margin: 0 }}>
-                {tr("Explore more cross-cultural leadership training modules.", "Jelajahi lebih banyak modul pelatihan kepemimpinan lintas budaya.")}
-              </p>
-            </div>
-            <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-              <Link href="/resources" className="btn-primary" style={{ textDecoration: "none" }}>
-                {tr("Browse the Library", "Telusuri Perpustakaan")}
-              </Link>
-              <a href="#quiz-section" className="btn-ghost" style={{ textDecoration: "none" }}>
-                {tr("Retake Assessment", "Ulangi Assessment")}
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* -- FAQ -- */}
-      <section style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(99% 0.002 80)", borderTop: "1px solid oklch(90% 0.005 80)" }}>
-        <div className="container-wide" style={{ maxWidth: "820px" }}>
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.875rem" }}>
-            FAQ
-          </p>
-          <h2 style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 600, fontSize: "clamp(2rem, 4vw, 3rem)", color: "oklch(22% 0.005 260)", lineHeight: 1.1, marginBottom: "3rem" }}>
-            Common questions about DISC
-          </h2>
-
-          <div style={{ display: "flex", flexDirection: "column", gap: "0" }}>
-            {[
-              {
-                q: "What is the DISC personality assessment?",
-                a: "DISC is a behavioural assessment tool that categorises leadership and communication styles into four types: Dominance (D), Influence (I), Steadiness (S), and Conscientiousness (C). The model traces to William Moulton Marston's 1928 theory of emotions and behaviour.¹ Modern workplace assessments were developed by Walter V. Clarke and later John Geier.² DISC helps leaders understand how they naturally approach tasks, relationships, and decision-making — and how their default style lands with others.",
-              },
-              {
-                q: "How long does the DISC assessment take?",
-                a: "The DISC assessment takes about 10—12 minutes. You'll answer 24 scenario-based questions and receive a personalised result showing your score breakdown across all four DISC styles — plus a combined profile if two styles are closely matched.",
-              },
-              {
-                q: "What do the four DISC types mean?",
-                a: "D (Dominance) types are direct, results-driven, and decisive — they push for progress and act fast. I (Influence) types are enthusiastic, relational, and persuasive — they energise teams and build connections. S (Steadiness) types are patient, loyal, and supportive — they create stability and ensure no one is left behind. C (Conscientiousness) types are analytical, precise, and quality-focused — they catch what others miss. Most people lead with one primary style and balance it with a secondary.",
-              },
-              {
-                q: "Is DISC accurate for cross-cultural leadership?",
-                a: "DISC is a useful starting point, but it was developed in the United States in 1928 and reflects mainstream American behavioural norms.¹ Cross-cultural validity varies significantly — DISC has not been validated across cultures with the rigour of the Big Five personality framework,³ and a high-D leader in one cultural context may behave very differently from a high-D leader in another. Use DISC to start team conversations, then let your team's actual cultural backgrounds fill in the nuance.",
-              },
-              {
-                q: "Can I use DISC with my team?",
-                a: "Yes — DISC is most powerful as a shared team vocabulary. When a whole team knows their styles, communication improves, roles can be assigned more intentionally, and conflicts are easier to name without personal judgement. The resources on this page include specific guidance on using DISC in cross-cultural team settings.",
-              },
-              {
-                q: "What is the difference between DISC and Myers-Briggs (MBTI)?",
-                a: "DISC focuses on observable behaviour — how you act in specific workplace situations. Myers-Briggs (MBTI) focuses on personality preferences — how you think and perceive the world. DISC is more directly actionable for communication and leadership dynamics; MBTI goes deeper into how people process information. Both offer value, and neither is a complete picture of a person. Of the major personality frameworks, the Big Five (OCEAN) has the strongest empirical support for cross-cultural applications.³",
-              },
-            ].map((faq, i) => (
-              <div
-                key={i}
-                style={{
-                  borderTop: i === 0 ? "1px solid oklch(85% 0.005 80)" : "none",
-                  borderBottom: "1px solid oklch(85% 0.005 80)",
-                }}
-              >
-                <button
-                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  style={{
-                    width: "100%", textAlign: "left", background: "none", border: "none",
-                    padding: "1.5rem 0", cursor: "pointer",
-                    display: "flex", justifyContent: "space-between", alignItems: "flex-start",
-                    gap: "1.5rem",
-                  }}
-                  aria-expanded={openFaq === i}
-                >
-                  <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9375rem", color: "oklch(22% 0.005 260)", lineHeight: 1.5 }}>
-                    {faq.q}
-                  </span>
-                  <span style={{
-                    flexShrink: 0, width: "1.25rem", height: "1.25rem",
-                    border: "1.5px solid oklch(65% 0.15 45)", borderRadius: "50%",
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    color: "oklch(65% 0.15 45)", fontSize: "1rem", lineHeight: 1,
-                    transform: openFaq === i ? "rotate(45deg)" : "rotate(0deg)",
-                    transition: "transform 0.2s ease",
-                    marginTop: "0.125rem",
-                  }}>
-                    +
-                  </span>
-                </button>
-                {openFaq === i && (
-                  <p style={{
-                    fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.8,
-                    color: "oklch(38% 0.008 260)", paddingBottom: "1.75rem", margin: 0, maxWidth: "66ch",
-                  }}>
-                    {faq.a}
-                  </p>
                 )}
               </div>
-            ))}
-          </div>
+            </section>
+          );
+        })}
+      </div>
+
+      {/* ===================================================================
+          SECTION 6 — FAITH ANCHOR
+      =================================================================== */}
+      <section
+        id="disc-faith"
+        style={{
+          background: "oklch(22% 0.10 260)",
+          padding: "clamp(3rem, 8vw, 5rem) clamp(1.25rem, 5vw, 3rem)",
+          borderTop: "1px solid oklch(32% 0.06 260)",
+        }}
+      >
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+          {/* Eyebrow */}
+          <p
+            style={{
+              fontFamily: "Montserrat, sans-serif",
+              fontWeight: 700,
+              fontSize: "0.75rem",
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+              color: "oklch(65% 0.15 45)",
+              marginBottom: "1.25rem",
+            }}
+          >
+            {lang === "en" ? "Faith Anchor" : "Jangkar Iman"}
+          </p>
+
+          {/* Heading */}
+          <h2
+            style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontWeight: 600,
+              fontSize: "clamp(1.75rem, 4vw, 2.75rem)",
+              color: "oklch(96% 0.005 80)",
+              lineHeight: 1.2,
+              marginBottom: "1.75rem",
+            }}
+          >
+            {lang === "en"
+              ? "Designed diversity is not a management problem."
+              : "Keragaman yang dirancang bukan masalah manajemen."}
+          </h2>
+
+          {/* Scripture pull-quote */}
+          <blockquote
+            style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontStyle: "italic",
+              fontWeight: 600,
+              fontSize: "clamp(1.1rem, 2.5vw, 1.35rem)",
+              color: "oklch(78% 0.04 260)",
+              lineHeight: 1.65,
+              borderLeft: "none",
+              padding: 0,
+              margin: "0 0 2rem 0",
+              maxWidth: 600,
+            }}
+          >
+            {lang === "en"
+              ? `"For just as the body is one and has many members, and all the members of the body, though many, are one body, so it is with Christ... God arranged the members in the body, each one of them, as he chose. If all were a single member, where would the body be? As it is, there are many parts, yet one body." — 1 Corinthians 12:12-20 (ESV)`
+              : `"Karena sama seperti tubuh itu satu dan anggota-anggotanya banyak, dan semua anggota itu, sekalipun banyak, merupakan satu tubuh, demikian pula Kristus... Allah telah menempatkan anggota-anggota, masing-masing secara khusus, di dalam tubuh, seperti yang dikehendaki-Nya. Andaikata semuanya satu anggota, di manakah tubuh? Memang ada banyak anggota, tetapi hanya satu tubuh." — 1 Korintus 12:12-20 (TB)`}
+          </blockquote>
+
+          {/* Faith prose — 3 paragraphs */}
+          <p
+            style={{
+              fontFamily: "Montserrat, sans-serif",
+              fontSize: "clamp(0.9rem, 1.8vw, 1rem)",
+              color: "oklch(68% 0.04 260)",
+              lineHeight: 1.75,
+              marginBottom: "1.25rem",
+            }}
+          >
+            {lang === "en"
+              ? "The standard leadership response to behavioral diversity is: how do we align everyone? The New Testament's response is different. Paul's argument in 1 Corinthians 12 is not that we should tolerate difference but that difference was placed in the body intentionally. The weaker parts are not liabilities to be trained out. They are essential. No single behavioral style contains all that God designed leadership to require."
+              : "Respons kepemimpinan standar terhadap keragaman perilaku adalah: bagaimana kita menyelaraskan semua orang? Respons Perjanjian Baru berbeda. Argumen Paulus dalam 1 Korintus 12 bukan bahwa kita harus mentolerir perbedaan tetapi bahwa perbedaan itu ditempatkan dalam tubuh dengan sengaja. Bagian yang lemah bukan beban yang perlu dilatih keluar. Mereka penting. Tidak ada satu gaya perilaku pun yang mengandung semua yang dirancang Allah untuk diperlukan kepemimpinan."}
+          </p>
+
+          <p
+            style={{
+              fontFamily: "Montserrat, sans-serif",
+              fontSize: "clamp(0.9rem, 1.8vw, 1rem)",
+              color: "oklch(68% 0.04 260)",
+              lineHeight: 1.75,
+              marginBottom: "1.25rem",
+            }}
+          >
+            {lang === "en"
+              ? "This reframes DISC entirely. The D-type leader is not the ideal that S and C types should aspire toward. The S-type's patience is not a weakness waiting to be fixed. Each orientation reflects something of the image of God in how human beings were made — rational, relational, creative, precise, bold, steadfast. 1 Corinthians 12 says you need all four around the table. Behavioral diversity is one expression of the reality that no single person fully images God — the community together carries what the individual cannot."
+              : "Ini membingkai ulang DISC sepenuhnya. Pemimpin tipe D bukan ideal yang seharusnya dicapai oleh tipe S dan C. Kesabaran tipe S bukan kelemahan yang menunggu untuk diperbaiki. Setiap orientasi mencerminkan sesuatu dari gambar Allah dalam cara manusia diciptakan — rasional, relasional, kreatif, presisi, berani, teguh. 1 Korintus 12 mengatakan kamu membutuhkan keempat tipe di sekitar meja. Keragaman perilaku adalah salah satu ungkapan dari kenyataan bahwa tidak ada satu orang pun yang sepenuhnya mencerminkan Allah — komunitas bersama-sama membawa apa yang tidak dapat dibawa oleh individu."}
+          </p>
+
+          <p
+            style={{
+              fontFamily: "Montserrat, sans-serif",
+              fontSize: "clamp(0.9rem, 1.8vw, 1rem)",
+              color: "oklch(68% 0.04 260)",
+              lineHeight: 1.75,
+              marginBottom: "2rem",
+            }}
+          >
+            {lang === "en"
+              ? "In global teams, the tendency is to code one behavioral style as professional and the others as deficits. D-style directness gets coded as competent leadership. S-style harmony gets coded as passivity. C-style precision gets coded as over-engineering. I-style relational energy gets coded as insufficiently serious. 1 Corinthians 12 subverts all of this. The body does not get to decide which members are necessary."
+              : "Dalam tim global, kecenderungannya adalah mengkode satu gaya perilaku sebagai profesional dan yang lain sebagai kekurangan. Kecenderungan langsung tipe D dikode sebagai kepemimpinan yang kompeten. Keharmonisan tipe S dikode sebagai kepasifan. Ketepatan tipe C dikode sebagai terlalu berlebihan. Energi relasional tipe I dikode sebagai kurang serius. 1 Korintus 12 menumbangkan semua ini. Tubuh tidak berhak memutuskan anggota mana yang diperlukan."}
+          </p>
+
+          {/* Reflection question */}
+          <p
+            style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontStyle: "italic",
+              fontWeight: 600,
+              fontSize: "clamp(1.05rem, 2.2vw, 1.25rem)",
+              color: "oklch(78% 0.04 260)",
+              lineHeight: 1.65,
+              borderTop: "1px solid oklch(32% 0.06 260)",
+              paddingTop: "1.5rem",
+            }}
+          >
+            {lang === "en"
+              ? "Which type in your team carries what you cannot see on your own?"
+              : "Tipe apa dalam timmu yang membawa apa yang tidak bisa kamu lihat sendiri?"}
+          </p>
         </div>
       </section>
 
-      {/* ════════════════════════════════════════════════════════════
-          LONG-FORM SEO BACKGROUND
-      ════════════════════════════════════════════════════════════ */}
-      <div style={{ background: "oklch(88% 0.008 80)", padding: "80px 24px" }}>
-        <div style={{ maxWidth: 780, margin: "0 auto" }}>
-          <p style={{ color: "oklch(65% 0.15 45)", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" as const, marginBottom: 12 }}>
-            Background
-          </p>
-          <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: "oklch(22% 0.10 260)", marginBottom: 32, lineHeight: 1.2 }}>
-            DISC in Context: What the Research Says About Personality, Behaviour, and Cross-Cultural Leadership
-          </h2>
-          <button
-            onClick={() => setBgOpen(!bgOpen)}
+      {/* ===================================================================
+          SECTION 7 — KEY TAKEAWAYS
+      =================================================================== */}
+      <section
+        id="disc-takeaways"
+        style={{
+          background: "oklch(88% 0.008 80)",
+          padding: "clamp(3rem, 8vw, 5rem) clamp(1.25rem, 5vw, 3rem)",
+        }}
+      >
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+          {/* Eyebrow */}
+          <p
             style={{
-              display: "inline-flex", alignItems: "center", gap: 6,
-              marginTop: 20, marginBottom: 24, padding: "10px 20px",
-              background: "transparent", border: "1.5px solid oklch(65% 0.15 45)",
-              color: "oklch(65% 0.15 45)", borderRadius: 12,
-              fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, fontWeight: 700,
-              cursor: "pointer", letterSpacing: "0.04em",
+              fontFamily: "Montserrat, sans-serif",
+              fontWeight: 700,
+              fontSize: "0.75rem",
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+              color: "oklch(65% 0.15 45)",
+              marginBottom: "1rem",
             }}
           >
-            {bgOpen ? "Close ↑" : "Read the research →"}
-          </button>
-          {bgOpen && [
-            "DISC traces its origins to William Moulton Marston's 1928 work Emotions of Normal People — a book with a deliberately ordinary title that reflects its central concern: not pathology, but the observable behaviour of people functioning within normal range.¹ Marston was a psychologist interested in how people respond to their environment, particularly how they relate to power and to favorable or antagonistic conditions. His four-dimensional model — Dominance, Inducement, Submission, Compliance — described behavioural responses rather than fixed traits, and this distinction has remained important to how DISC practitioners frame the framework.",
-            "The scientific validity question matters and deserves honest engagement. The Big Five personality model (OCEAN: Openness, Conscientiousness, Extraversion, Agreeableness, Neuroticism) is the most extensively validated personality framework in academic psychology. Meta-analyses spanning decades and replication studies across 56 countries have established its predictive validity for a wide range of life outcomes. DISC lacks equivalent peer-reviewed validation in the academic literature.³ What it offers instead is strong practical utility — a vocabulary for workplace behaviour conversations that is accessible, non-pathologising, and action-oriented. The responsible practitioner holds both truths: DISC is useful, and its scientific limitations are real.",
-            "The distinction between behavioural and trait models is conceptually important and practically useful. The Big Five describes relatively stable personality traits — enduring dispositions that show up consistently across contexts. DISC, as Marston originally conceived it, describes observable behavioural patterns that can and do shift depending on the environment. This contextual flexibility is precisely what makes DISC attractive for team communication work: the goal is not to define who someone fundamentally is, but to create useful language for how they tend to behave and how they might flex that behaviour for more effective collaboration.",
-            "Research on personality and leadership effectiveness via meta-analysis consistently identifies conscientiousness and openness to experience as the two strongest Big Five predictors of leadership performance across contexts.³ Conscientiousness — reliability, follow-through, attention to quality — maps loosely to DISC's C and S types. Openness — intellectual curiosity, comfort with ambiguity, receptivity to new ideas — has no clean DISC equivalent. The mapping between frameworks is imperfect and should not be over-extended, but the general finding that reliable follow-through and intellectual flexibility predict leadership effectiveness is compatible with what DISC practitioners observe in high-performing leaders.",
-            "Cross-cultural validity is where personality frameworks face their most significant challenge, and DISC is no exception. The concept of WEIRD sampling — Western, Educated, Industrialised, Rich, Democratic — names the bias embedded in most foundational psychology research. Studies by Gurven and colleagues in non-WEIRD populations have found significant variation in Big Five profiles across cultures, casting doubt on universality claims. For DISC, which has been applied globally but validated primarily in Western organisational contexts, cross-cultural caution is even more warranted. The framework describes behaviour patterns observed within a particular cultural tradition — applying it across cultures requires both transparency about its origins and sensitivity to where its categories may not map cleanly.",
-            "D-type directness — the preference for decisive, rapid, results-oriented communication — is deeply consonant with low-context, individualist culture norms. In these settings, directness reads as confidence and competence. In high-context, high-power-distance cultures, which include most of Southeast Asia, the Arab world, and much of Africa and Latin America, the same directness reads as aggression, disrespect, or social immaturity. The D-type leader working cross-culturally is not wrong to be direct — but they need to understand that their natural pace and communication style create relational friction in the majority of the world's cultural contexts, and that adaptation is not inauthenticity but skill.",
-            "I-type expressiveness — enthusiasm, spontaneity, verbal fluency, personal visibility — reflects the ideals of individualist, extravert-valorising cultures in which self-expression is a social virtue. In more collectivist cultural contexts, the same expressiveness can feel disruptive, self-centred, or status-claiming. The social function of exuberant positivity differs across cultures: in some contexts it builds connection; in others it creates discomfort by violating norms of group-centred modesty and social restraint. I-types working cross-culturally gain significant advantage by developing contextual reading — understanding when their natural energy is an asset and when it needs to be modulated.",
-            "S-type steadiness — loyalty, consistency, collaborative orientation, preference for stable relational environments — is highly valued across many non-Western cultural contexts, particularly those shaped by long-term relationship investment and communal interdependence. The S-type's natural orientation toward group harmony and patient trust-building is genuinely cross-cultural in its appeal. The liability emerges from the same source: S-types' conflict avoidance and reluctance to deliver direct negative assessment can become a significant barrier in contexts that require clear disagreement, honest feedback, or rapid course correction.",
-            "C-type conscientiousness — detail orientation, systematic analysis, preference for accuracy over speed, discomfort with ambiguity — maps interestingly onto Hofstede's uncertainty avoidance dimension. Cultures with high uncertainty avoidance tend to invest heavily in rules, procedures, and documentation as adaptive strategies for managing unpredictable environments. This cultural conditioning can reinforce C-type tendencies in ways that make the framework feel intuitive in those contexts while potentially masking the difference between cultural adaptation and innate behavioural preference. The C-type's strengths — rigour, quality, analytical depth — are genuine assets in data-heavy, compliance-driven, or technically complex environments across cultures.",
-            "Using DISC well cross-culturally requires holding the framework loosely: as a starting point for curiosity, not a final label. The most effective cross-cultural leaders use DISC to understand their own default behavioural style, recognise the gap between their instinct and their counterpart's cultural context, and flex deliberately — not to abandon who they are, but to expand their range. The research base beneath DISC is thinner than the Big Five, but the practical value of a shared vocabulary for behaviour — used with appropriate humility and cross-cultural awareness — is real and well-documented in organisational development practice.¹",
-          ].map((para, i) => (
-            <p key={i} style={{ fontSize: 16, color: "oklch(38% 0.05 260)", lineHeight: 1.85, marginBottom: 20 }}>
-              {para}
-            </p>
-          ))}
-        </div>
-      </div>
+            {lang === "en" ? "Key Takeaways" : "Poin Utama"}
+          </p>
 
-      {/* -- SOURCES -- */}
-      <SourcesDropdown sources={[
-        "William Moulton Marston — Emotions of Normal People (Kegan Paul, 1928). The theoretical foundation for DISC — Marston proposed four primary emotional types: Dominance, Inducement, Submission, Compliance.",
-        "John Geier — Personal Profile System (Performax Systems International, 1977); Walter V. Clarke — Activity Vector Analysis (Clarke, 1956). Clarke first adapted Marston's theory for workplace assessment; Geier developed the instrument that became today's widely used DISC tools.",
-        "Arthur E. Poropat — 'A meta-analysis of the five-factor model of personality and academic performance' (Psychological Bulletin, 2009); Paul T. Costa Jr. & Robert R. McCrae — NEO Personality Inventory (PAR, 1985). The Big Five framework has the strongest cross-cultural empirical support among personality models; DISC is a practitioner tool with substantial application history but more limited peer-reviewed validation.",
-      ]} lang={lang} />
+          <h2
+            style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontWeight: 600,
+              fontSize: "clamp(1.75rem, 4vw, 2.75rem)",
+              color: "oklch(22% 0.10 260)",
+              lineHeight: 1.2,
+              marginBottom: "2rem",
+            }}
+          >
+            {lang === "en" ? "What to carry forward." : "Apa yang perlu dibawa ke depan."}
+          </h2>
+
+          <ol style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+            {(lang === "en"
+              ? [
+                  "DISC describes behavioral tendencies, not fixed identity. Read your result as your default setting, not your ceiling.",
+                  "Every type brings a strength the other three need. The question is not which type is best — it is how your team covers the full picture together.",
+                  "Your type lands differently across cultures. A D-style in Jakarta operates differently than a D-style in Amsterdam. The label is a starting point, not a conclusion.",
+                  "Behavioral awareness is not enough on its own. What it enables is a shared vocabulary — which makes hard conversations less threatening.",
+                  "Your type can grow. The history of biblical leadership is full of leaders whose style deepened and widened through friction, failure, and time.",
+                ]
+              : [
+                  "DISC menggambarkan kecenderungan perilaku, bukan identitas tetap. Baca hasilmu sebagai pengaturan default-mu, bukan batas kemampuanmu.",
+                  "Setiap tipe membawa kekuatan yang dibutuhkan tiga tipe lainnya. Pertanyaannya bukan tipe mana yang terbaik — melainkan bagaimana timmu mencakup gambaran lengkap bersama.",
+                  "Tipe-mu mendarat secara berbeda di berbagai budaya. Gaya D di Jakarta beroperasi secara berbeda dari gaya D di Amsterdam. Labelnya adalah titik awal, bukan kesimpulan.",
+                  "Kesadaran perilaku saja tidak cukup. Yang memungkinkannya adalah kosakata bersama — yang membuat percakapan sulit menjadi kurang mengancam.",
+                  "Tipe-mu bisa bertumbuh. Sejarah kepemimpinan Alkitabiah penuh dengan pemimpin yang gayanya semakin dalam dan melebar melalui gesekan, kegagalan, dan waktu.",
+                ]
+            ).map((item, i) => (
+              <li key={i} style={{ display: "flex", gap: "1.25rem", alignItems: "flex-start" }}>
+                <span
+                  style={{
+                    fontFamily: "'Cormorant Garamond', serif",
+                    fontWeight: 600,
+                    fontSize: "2rem",
+                    color: "oklch(65% 0.15 45)",
+                    lineHeight: 1,
+                    flexShrink: 0,
+                    minWidth: "2rem",
+                    textAlign: "center",
+                  }}
+                >
+                  {i + 1}
+                </span>
+                <p
+                  style={{
+                    fontFamily: "Montserrat, sans-serif",
+                    fontWeight: 400,
+                    fontSize: "clamp(0.9rem, 1.8vw, 1rem)",
+                    color: "oklch(30% 0.05 260)",
+                    lineHeight: 1.75,
+                    margin: 0,
+                  }}
+                >
+                  {item}
+                </p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      {/* ===================================================================
+          SECTION 8 — FROM THE FIELD (shared component)
+      =================================================================== */}
+      <ModuleComments slug="disc" />
+
+      {/* ===================================================================
+          SOURCES DROPDOWN + SEO BACKGROUND
+      =================================================================== */}
+      <section
+        style={{
+          background: "oklch(96% 0.005 80)",
+          padding: "2rem clamp(1.25rem, 5vw, 3rem)",
+          borderTop: "1px solid oklch(88% 0.008 80)",
+        }}
+      >
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+          <SourcesDropdown
+            sources={[
+              "Voges, Ken — Understanding How Others Misunderstand You (Moody Press, 1990) — https://www.amazon.com/Understanding-How-Others-Misunderstand-You/dp/B01K2WKWAS",
+              "Voges, Ken & Kempainen, Mike — DISCovering the Leadership Styles of Jesus (In His Grace Publishing, 2014) — https://www.amazon.com/DISCovering-Leadership-Styles-Jesus-Voges/dp/0970380895",
+              "Littauer, Florence — Personality Plus (Baker Books, 1983) — https://bakerpublishinggroup.com/products/9780800754457_personality-plus",
+              "Blanchard, Ken & Hodges, Phil — Lead Like Jesus (Thomas Nelson, 2005) — https://www.kenblanchardbooks.com/book/lead-like-jesus/",
+              "LaHaye, Tim — Spirit-Controlled Temperament (Tyndale House, 1966)",
+              "Church Consultant — Christian DISC Personality Types Expanded (2023) — https://churchconsultant.org/christian-disc-personality-types-expanded/",
+              "Lead Like Jesus — Biblical DISC Practitioner Virtual Certification (2022) — https://leadlikejesus.com/courses/biblical-disc-virtual-certification/",
+              "Houston Christian University — Interview with Ken Voges (2016) — https://hc.edu/center-for-christianity-in-business/2016/11/18/god-picks-right-people-right-roles-interview-w-ken-voges-creator-biblical-personal-profile/",
+              "Scripture Insight — 1 Corinthians 12: Unity in Diversity — https://scriptureinsight.org/study/1corinthians/12",
+              "Enduringword.com — 1 Corinthians 12 Commentary — https://enduringword.com/bible-commentary/1-corinthians-12/",
+              "Logos — Paul: A Multicultural Leader — https://www.logos.com/grow/paul-a-multicultural-leader/",
+              "Regent University — Spiropoulos, D. — Paul's Leadership Style (Journal of Biblical Perspectives in Leadership, 2019) — https://www.regent.edu/journal/journal-of-biblical-perspectives-in-leadership/pauls-leadership-style-cultural-confluence-in-christian-community/",
+              "Mufanebadza, N. — Imago Dei (HTS Teologiese Studies, 2022) — https://hts.org.za/index.php/hts/article/view/10719/29183",
+              "Lemke, S. — The Meaning of the Imago Dei for Theological Anthropology (NOBTS) — https://nobts.edu/about/institutional-effectiveness1/LemkeSW-files/LemkeSW-files/PersonhoodETSpaper.pdf",
+              "Biblical Archaeology Society — Barnabas: An Encouraging Early Church Leader (2021) — https://www.biblicalarchaeology.org/daily/people-cultures-in-the-bible/people-in-the-bible/barnabas-an-encouraging-early-church-leader/",
+              "Bible Study Toolbox — Barnabas: Son of Encouragement and Mission — https://biblestudytoolbox.com/bible-studies/bible-characters/barnabas/",
+              "Goserv Global — Luke the Beloved Physician (2021) — https://goservglobal.org/2021/10/18/luke-the-beloved-physician-colossians-414/",
+              "Marston, William Moulton — Emotions of Normal People (Harcourt, Brace and Company, 1928) — https://www.goodreads.com/book/show/6827443-emotions-of-normal-people",
+              "McCrae et al. — Personality Profiles of Cultures (Journal of Personality and Social Psychology, 2005) — https://socialsci.libretexts.org/Bookshelves/Psychology/Culture_and_Community/Personality_Theory_in_a_Cultural_Context_(Kelland)/10:_Trait_Theories_of_Personality/10.07:_Paul_Costa_and_Robert_McCrae_and_the_Five-Factor_Model_of_Personality",
+              "Schmitt et al. — Geographic Distribution of Big Five (Journal of Cross-Cultural Psychology, 2007) — https://www.toddkshackelford.com/downloads/Schmitt-JCCP-2007.pdf",
+              "PMC — Understanding and assessing personality across cultures: A scoping review (2024-2025) — https://pmc.ncbi.nlm.nih.gov/articles/PMC12758732/",
+              "Wikipedia — DISC Assessment — https://en.wikipedia.org/wiki/DISC_assessment",
+              "Wikipedia — Four Temperaments — https://en.wikipedia.org/wiki/Four_temperaments",
+              "Hofstede, G. — Indonesia Country Data — https://internationalbusinesscenter.org/geert-hofstede/hofstede_indonesia.shtml",
+              "Training Indonesia — Cultural Leadership in Indonesia — https://training-indonesia.org/news/cultural-leadership-in-indonesia-managing-power-distance-collectivism-for-effective-leadership",
+              "discprofile.com (Wiley) — Science Behind DiSC — https://www.discprofile.com/what-is-disc/research-reliability-and-validity",
+              "discprofile.com (Wiley) — History of DiSC — https://www.discprofile.com/what-is-disc/history-of-disc",
+              "International DISC Institute — Marston's Theoretical Work — https://interdisc.org/marstons-theoretical-work/",
+              "The Practical Psych — The DISC Personality Assessment: Worthwhile Investment or Con? (2023) — https://thepracticalpsych.com/blog/disc-personality-types",
+              "Internal Change — Common Misuses of the DiSC Personality Assessment — https://internalchange.com/common-misuses-of-the-disc-personality-assessment/",
+              "cogn-iq.org — DISC vs Big Five: Which Personality Framework Has Better Research? (2024) — https://www.cogn-iq.org/blog/disc-vs-big-five/",
+              "CatholicMatch — History of the Four Temperaments — https://www.catholicmatch.com/blog/temperaments/history-of-the-four-temperaments/",
+            ]}
+            lang={lang}
+            markerStyle="superscript"
+            background="oklch(96% 0.005 80)"
+          />
+
+          {/* SEO Background — collapsible */}
+          <div style={{ marginTop: "1.5rem", borderTop: "1px solid oklch(88% 0.008 80)", paddingTop: "1rem" }}>
+            <button
+              onClick={() => setBgOpen(!bgOpen)}
+              aria-expanded={bgOpen}
+              style={{
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+                padding: "0.5rem 0",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                width: "100%",
+                minHeight: 44,
+              }}
+            >
+              <span
+                style={{
+                  fontFamily: "Montserrat, sans-serif",
+                  fontWeight: 600,
+                  fontSize: "0.8rem",
+                  color: "oklch(45% 0.04 260)",
+                }}
+              >
+                {lang === "en" ? "Background Reading" : "Bacaan Latar Belakang"}
+              </span>
+              <svg
+                width="14" height="14" viewBox="0 0 14 14" fill="none"
+                style={{
+                  transform: bgOpen ? "rotate(180deg)" : "rotate(0deg)",
+                  transition: "transform 0.2s ease",
+                  color: "oklch(55% 0.04 260)",
+                }}
+              >
+                <path d="M2 5l5 5 5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </button>
+
+            {bgOpen && (
+              <div style={{ paddingTop: "1rem" }}>
+                {lang === "en" ? (
+                  <>
+                    <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.875rem", color: "oklch(40% 0.04 260)", lineHeight: 1.75, marginBottom: "1rem" }}>
+                      The DISC personality profile is one of the most widely used behavioral frameworks in leadership development, team-building, and cross-cultural communication training. Based on William Moulton Marston&apos;s 1928 research, DISC identifies four behavioral tendencies — Dominance, Influence, Steadiness, and Conscientiousness — that describe how people tend to approach tasks, relationships, and challenges.
+                    </p>
+                    <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.875rem", color: "oklch(40% 0.04 260)", lineHeight: 1.75, marginBottom: "1rem" }}>
+                      Unlike fixed personality type systems, DISC focuses on observable behavior rather than underlying traits. This makes it particularly useful in cross-cultural leadership contexts, where behavioral patterns are more immediately visible and negotiable than deep-seated personality structures. Research supports DISC&apos;s internal consistency (Cronbach&apos;s alpha .87), though it lacks the cross-cultural validation studies that characterize the Big Five personality model.
+                    </p>
+                    <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.875rem", color: "oklch(40% 0.04 260)", lineHeight: 1.75, marginBottom: "1rem" }}>
+                      Christian applications of DISC have been developed since Florence Littauer&apos;s Personality Plus (1983) and Ken Voges&apos; Understanding How Others Misunderstand You (1990). These works connect the four behavioral orientations to Scripture, particularly to Paul&apos;s body-of-Christ metaphor in 1 Corinthians 12, which frames behavioral diversity as intentional divine design rather than a leadership problem to be solved.
+                    </p>
+                    <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.875rem", color: "oklch(40% 0.04 260)", lineHeight: 1.75, marginBottom: "1rem" }}>
+                      For cross-cultural leaders, DISC provides a shared vocabulary for naming behavioral differences without attributing blame or pathology. In multicultural teams — particularly in Indonesian and Southeast Asian contexts — understanding that S-type harmony-preservation behaviors reflect cultural competence rather than personal weakness, and that C-type documentation requests may read as distrust in oral-preference cultures, transforms how teams navigate conflict and collaboration.
+                    </p>
+                    <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.875rem", color: "oklch(40% 0.04 260)", lineHeight: 1.75, marginBottom: "0" }}>
+                      The four DISC types — D (Dominance), I (Influence), S (Steadiness), C (Conscientiousness) — are not boxes but behavioral tendencies. Every leader carries all four orientations in varying degrees. The assessment identifies which orientation is most natural under typical conditions. Growth in cross-cultural leadership involves expanding your behavioral range — not abandoning your primary style, but developing fluency in the other three.
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.875rem", color: "oklch(40% 0.04 260)", lineHeight: 1.75, marginBottom: "1rem" }}>
+                      Profil kepribadian DISC adalah salah satu kerangka perilaku yang paling banyak digunakan dalam pengembangan kepemimpinan, pembangunan tim, dan pelatihan komunikasi lintas budaya. Berdasarkan penelitian William Moulton Marston tahun 1928, DISC mengidentifikasi empat kecenderungan perilaku — Dominance, Influence, Steadiness, dan Conscientiousness — yang menggambarkan bagaimana orang cenderung mendekati tugas, hubungan, dan tantangan.
+                    </p>
+                    <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.875rem", color: "oklch(40% 0.04 260)", lineHeight: 1.75, marginBottom: "1rem" }}>
+                      Tidak seperti sistem tipe kepribadian yang tetap, DISC berfokus pada perilaku yang dapat diamati daripada sifat-sifat yang mendasarinya. Hal ini membuatnya sangat berguna dalam konteks kepemimpinan lintas budaya, di mana pola perilaku lebih segera terlihat dan dapat dinegosiasikan daripada struktur kepribadian yang mendalam. Penelitian mendukung konsistensi internal DISC (alpha Cronbach .87), meskipun kurang memiliki studi validasi lintas budaya yang menjadi ciri model kepribadian Big Five.
+                    </p>
+                    <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.875rem", color: "oklch(40% 0.04 260)", lineHeight: 1.75, marginBottom: "1rem" }}>
+                      Aplikasi Kristen dari DISC telah dikembangkan sejak Personality Plus karya Florence Littauer (1983) dan Understanding How Others Misunderstand You karya Ken Voges (1990). Karya-karya ini menghubungkan empat orientasi perilaku dengan Kitab Suci, khususnya dengan metafora tubuh Kristus Paulus dalam 1 Korintus 12, yang membingkai keragaman perilaku sebagai desain ilahi yang disengaja daripada masalah kepemimpinan yang harus diselesaikan.
+                    </p>
+                    <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.875rem", color: "oklch(40% 0.04 260)", lineHeight: 1.75, marginBottom: "1rem" }}>
+                      Bagi pemimpin lintas budaya, DISC memberikan kosakata bersama untuk menamai perbedaan perilaku tanpa mengatribusikan kesalahan atau patologi. Dalam tim multikultural — khususnya dalam konteks Indonesia dan Asia Tenggara — memahami bahwa perilaku pelestarian harmoni tipe S mencerminkan kompetensi budaya daripada kelemahan pribadi, dan bahwa permintaan dokumentasi tipe C mungkin terbaca sebagai ketidakpercayaan dalam budaya preferensi lisan, mengubah cara tim menavigasi konflik dan kolaborasi.
+                    </p>
+                    <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.875rem", color: "oklch(40% 0.04 260)", lineHeight: 1.75, marginBottom: "0" }}>
+                      Keempat tipe DISC — D (Dominance), I (Influence), S (Steadiness), C (Conscientiousness) — bukan kotak tetapi kecenderungan perilaku. Setiap pemimpin membawa keempat orientasi dalam tingkat yang bervariasi. Penilaian mengidentifikasi orientasi mana yang paling alami dalam kondisi biasa. Pertumbuhan dalam kepemimpinan lintas budaya melibatkan perluasan rentang perilakumu — bukan meninggalkan gaya utamamu, tetapi mengembangkan kelancaran dalam tiga lainnya.
+                    </p>
+                  </>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
     </>
   );
 }
