@@ -172,7 +172,7 @@ export const resourceMetadata: Record<string, { title: string; description: stri
   },
   "leaders-are-readers": {
     title: "Leaders Are Readers — Crispy Development",
-    description: "Develop through reading. Build a leadership library and integrate learning into your development.",
+    description: "Great leaders are committed learners. Discover why reading is a cornerstone of effective leadership and how to build a sustainable reading habit that transforms your practice.",
   },
   "attention-retention": {
     title: "Attention and Retention in Learning — Crispy Development",
