@@ -424,8 +424,8 @@ export default function UnderstandingBurnoutClient({
             }}
           >
             {t(
-              "Burnout builds slowly and rarely announces itself. This module helps you name the type you are carrying, understand how it works, and find the path back to working from identity rather than from pressure.",
-              "Kelelahan berkembang perlahan dan jarang mengumumkan dirinya sendiri. Modul ini membantu Anda menamai jenis kelelahan yang Anda bawa, memahami cara kerjanya, dan menemukan jalan kembali untuk bekerja dari identitas, bukan dari tekanan.",
+              "Burnout among cross-cultural workers and the organizations that send and support them is on the rise. The loss of a leader from the field carries a real financial cost, but the deeper costs fall on teams, families, marriages, and the communities they serve.",
+              "Kelelahan di kalangan pekerja lintas budaya dan organisasi yang mengutus serta mendukung mereka terus meningkat. Kehilangan seorang pemimpin dari lapangan memiliki biaya finansial yang nyata, tetapi biaya yang lebih dalam jatuh pada tim, keluarga, pernikahan, dan komunitas yang mereka layani.",
               lang
             )}
           </p>
@@ -446,28 +446,6 @@ export default function UnderstandingBurnoutClient({
             </svg>
             {t(saved ? "Saved" : "Save to Dashboard", saved ? "Tersimpan" : "Simpan ke Dasbor", lang)}
           </button>
-        </div>
-      </section>
-
-      {/* ============================================================
-          INTRO CONTEXT — Opening paragraph from Lausanne
-          ============================================================ */}
-      <section style={{ background: navy, padding: "4rem 1.5rem" }}>
-        <div style={{ maxWidth: "860px", margin: "0 auto" }}>
-          <p style={{
-            fontFamily: "'Cormorant Garamond', Georgia, serif",
-            fontStyle: "italic",
-            fontSize: "clamp(18px, 2.5vw, 24px)",
-            lineHeight: 1.75,
-            color: offWhite,
-            margin: 0,
-          }}>
-            {t(
-              "Burnout among cross-cultural workers and the organizations that send and support them is on the rise. The loss of a leader from the field carries a real financial cost, but the deeper costs fall on teams, families, marriages, and the communities they serve — and on the Kingdom witness those leaders were called to build. The systemic conditions that drive burnout need to change, and so does the way burnout is perceived by workers and leaders alike. With honest attention to policies, structures, and the cultures inside our organizations, those who lead cross-cultural workers can create environments where people genuinely thrive.⁹",
-              "Kelelahan di kalangan pekerja lintas budaya dan organisasi yang mengutus serta mendukung mereka terus meningkat. Kehilangan seorang pemimpin dari lapangan memiliki biaya finansial yang nyata, tetapi biaya yang lebih dalam jatuh pada tim, keluarga, pernikahan, dan komunitas yang mereka layani — serta pada kesaksian Kerajaan Allah yang dipanggil untuk dibangun oleh pemimpin-pemimpin tersebut. Kondisi sistemik yang mendorong kelelahan perlu berubah, begitu pula cara kelelahan dipandang oleh pekerja dan pemimpin. Dengan perhatian yang jujur terhadap kebijakan, struktur, dan budaya di dalam organisasi kita, mereka yang memimpin pekerja lintas budaya dapat menciptakan lingkungan di mana orang-orang benar-benar berkembang.⁹",
-              lang
-            )}
-          </p>
         </div>
       </section>
 
