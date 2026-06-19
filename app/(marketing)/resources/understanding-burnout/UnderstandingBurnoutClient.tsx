@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import React, { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
@@ -17,6 +17,20 @@ const offWhite  = "oklch(96% 0.005 80)";
 const lightGray = "oklch(88% 0.008 80)";
 const charcoal  = "oklch(18% 0.000 0)";
 const bodyText  = "oklch(38% 0.05 260)";
+
+// Wraps superscript unicode chars in orange for citation display
+function cite(text: string): React.ReactNode {
+  const parts = text.split(/([¹²³⁴⁵⁶⁷⁸⁹]+)/);
+  return (
+    <>
+      {parts.map((p, i) =>
+        /^[¹²³⁴⁵⁶⁷⁸⁹]+$/.test(p)
+          ? <span key={i} style={{ color: orange }}>{p}</span>
+          : p
+      )}
+    </>
+  );
+}
 
 // -- RISK SPECTRUM DIAGRAM -----------------------------------------------------
 function RiskSpectrumDiagram({ lang }: { lang: Lang }) {
@@ -65,38 +79,59 @@ function RiskSpectrumDiagram({ lang }: { lang: Lang }) {
 
       {/* Subtype spans — show where each subtype sits on the spectrum */}
       <div style={{ position: "relative", height: 100, marginTop: 10 }}>
-        {/* Frenetic: drifting and at-risk (25%–75%) */}
+        {/* 1 — Underchallenged: drifting only (25%–50%) */}
         <div
           style={{
-            position: "absolute", top: 0, left: "25%", right: "25%", height: 28,
-            background: "hsl(42,75%,52%)", borderRadius: 4,
-            display: "flex", alignItems: "center", justifyContent: "center",
+            position: "absolute", top: 0, left: "25%", width: "25%", height: 28,
+            background: "oklch(35% 0.09 260)", borderRadius: 4,
+            display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
           }}
         >
+          <span style={{
+            width: 18, height: 18, borderRadius: "50%",
+            background: "rgba(255,255,255,0.25)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            fontFamily: "Montserrat, sans-serif", fontSize: 10, fontWeight: 800, color: "white",
+            flexShrink: 0,
+          }}>1</span>
+          <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(9px, 1.2vw, 12px)", fontWeight: 700, color: "white", textAlign: "center", padding: "0 4px 0 0", lineHeight: 1.2 }}>
+            {en ? "Underchallenged" : "Underchallenged"}
+          </span>
+        </div>
+        {/* 2 — Frenetic: drifting and at-risk (25%–75%) */}
+        <div
+          style={{
+            position: "absolute", top: 36, left: "25%", right: "25%", height: 28,
+            background: "oklch(65% 0.15 45)", borderRadius: 4,
+            display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
+          }}
+        >
+          <span style={{
+            width: 18, height: 18, borderRadius: "50%",
+            background: "rgba(255,255,255,0.25)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            fontFamily: "Montserrat, sans-serif", fontSize: 10, fontWeight: 800, color: "white",
+            flexShrink: 0,
+          }}>2</span>
           <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(10px, 1.4vw, 12px)", fontWeight: 700, color: "white" }}>
             {en ? "Frenetic" : "Frenetic"}
           </span>
         </div>
-        {/* Underchallenged: drifting only (25%–50%) */}
-        <div
-          style={{
-            position: "absolute", top: 36, left: "25%", width: "25%", height: 28,
-            background: "hsl(185,45%,38%)", borderRadius: 4,
-            display: "flex", alignItems: "center", justifyContent: "center",
-          }}
-        >
-          <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(9px, 1.2vw, 12px)", fontWeight: 700, color: "white", textAlign: "center", padding: "0 4px", lineHeight: 1.2 }}>
-            {en ? "Underchallenged" : "Underchallenged"}
-          </span>
-        </div>
-        {/* Worn-out: at-risk and burning (50%–100%) */}
+        {/* 3 — Worn-out: at-risk and burning (50%–100%) */}
         <div
           style={{
             position: "absolute", top: 72, left: "50%", right: 0, height: 28,
-            background: "hsl(345,55%,32%)", borderRadius: 4,
-            display: "flex", alignItems: "center", justifyContent: "center",
+            background: "oklch(22% 0.10 260)", borderRadius: 4,
+            display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
           }}
         >
+          <span style={{
+            width: 18, height: 18, borderRadius: "50%",
+            background: "rgba(255,255,255,0.25)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            fontFamily: "Montserrat, sans-serif", fontSize: 10, fontWeight: 800, color: "white",
+            flexShrink: 0,
+          }}>3</span>
           <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(10px, 1.4vw, 12px)", fontWeight: 700, color: "white" }}>
             {en ? "Worn-out" : "Worn-out"}
           </span>
@@ -104,9 +139,9 @@ function RiskSpectrumDiagram({ lang }: { lang: Lang }) {
       </div>
 
       <figcaption style={{ fontSize: "0.8rem", color: bodyText, marginTop: "0.5rem", fontFamily: "Montserrat, sans-serif" }}>
-        {en
+        {cite(en
           ? "Burnout risk spectrum based on Montero-Marín et al.³ Each subtype maps to a different risk zone."
-          : "Spektrum risiko kelelahan berdasarkan model Montero-Marín dkk.³ Setiap subtipe memetakan ke zona risiko berbeda."}
+          : "Spektrum risiko kelelahan berdasarkan model Montero-Marín dkk.³ Setiap subtipe memetakan ke zona risiko berbeda.")}
       </figcaption>
     </figure>
   );
@@ -119,112 +154,203 @@ function BurnoutCausesSpoke({ lang }: { lang: Lang }) {
   const _offWhite  = "oklch(96% 0.005 80)";
   const _bodyText  = "oklch(38% 0.05 260)";
 
+  const [selected, setSelected] = useState<number | null>(null);
+
   const en = lang === "en";
   const nodes = [
-    { label: en ? "Work\nOverload" : "Beban Kerja\nBerlebih",       angle: -90 },
-    { label: en ? "Lack of\nControl" : "Kurangnya\nKendali",        angle: -30 },
-    { label: en ? "Lack of\nReward" : "Kurangnya\nPenghargaan",     angle: 30 },
-    { label: en ? "Lack of\nCommunity" : "Kurangnya\nKomunitas",    angle: 90 },
-    { label: en ? "Lack of\nFairness" : "Kurangnya\nKeadilan",      angle: 150 },
-    { label: en ? "Values\nMismatch" : "Ketidaksesuaian\nNilai",    angle: 210 },
+    {
+      label: en ? "Work\nOverload" : "Beban Kerja\nBerlebih", angle: -90,
+      title: en ? "Work Overload" : "Beban Kerja Berlebih",
+      desc: en
+        ? "When demands exceed capacity — in hours, responsibilities, or emotional weight — the system breaks down. Cross-cultural workers carry the normal load of leadership plus the daily energy cost of operating across cultural distance. That double load rarely shows up on a job description."
+        : "Ketika tuntutan melebihi kapasitas — dalam jam kerja, tanggung jawab, atau beban emosional — sistem akan runtuh. Pekerja lintas budaya menanggung beban normal kepemimpinan ditambah biaya energi harian dalam beroperasi melintasi jarak budaya. Beban ganda itu jarang tercantum dalam deskripsi pekerjaan.",
+    },
+    {
+      label: en ? "Lack of\nControl" : "Kurangnya\nKendali", angle: -30,
+      title: en ? "Lack of Control" : "Kurangnya Kendali",
+      desc: en
+        ? "When leaders cannot influence the decisions that shape their work, learned helplessness follows. For field workers, this often means policies decided by sending organisations with no field input, or local authorities overriding team decisions without explanation — leaving leaders unable to lead."
+        : "Ketika pemimpin tidak dapat mempengaruhi keputusan yang membentuk pekerjaan mereka, ketidakberdayaan yang dipelajari akan muncul. Bagi pekerja lapangan, ini sering berarti kebijakan yang dibuat oleh organisasi pengirim tanpa masukan lapangan, atau otoritas lokal yang mengesampingkan keputusan tim tanpa penjelasan.",
+    },
+    {
+      label: en ? "Lack of\nReward" : "Kurangnya\nPenghargaan", angle: 30,
+      title: en ? "Lack of Reward" : "Kurangnya Penghargaan",
+      desc: en
+        ? "Reward is not only financial. It includes recognition, meaning, and the sense that effort is seen. When workers feel invisible to their organisation — or when financial strain is chronic — the emotional reserve depletes faster than it can be refilled. Sacrifice without acknowledgement becomes resentment."
+        : "Penghargaan tidak hanya finansial. Ini mencakup pengakuan, makna, dan perasaan bahwa upaya diperhatikan. Ketika pekerja merasa tidak terlihat oleh organisasi mereka — atau ketika tekanan finansial berlangsung terus-menerus — cadangan emosional terkuras lebih cepat dari yang bisa diisi kembali.",
+    },
+    {
+      label: en ? "Lack of\nCommunity" : "Kurangnya\nKomunitas", angle: 90,
+      title: en ? "Lack of Community" : "Kurangnya Komunitas",
+      desc: en
+        ? "Human beings are not built for isolation. Cross-cultural workers often fall between two worlds — not fully at home in the host culture, and increasingly disconnected from the one they left. Without real community, resilience has no supply chain. Competence alone cannot carry what belonging was designed to hold."
+        : "Manusia tidak dirancang untuk isolasi. Pekerja lintas budaya sering jatuh di antara dua dunia — tidak sepenuhnya merasa di rumah dalam budaya tuan rumah, dan semakin terputus dari yang mereka tinggalkan. Tanpa komunitas nyata, ketahanan tidak memiliki rantai pasokan.",
+    },
+    {
+      label: en ? "Lack of\nFairness" : "Kurangnya\nKeadilan", angle: 150,
+      title: en ? "Lack of Fairness" : "Kurangnya Keadilan",
+      desc: en
+        ? "Perceived inequity — in resources, decisions, or recognition — erodes trust faster than almost anything else. When workers believe the system is biased, they stop investing in it. The sense of injustice compounds every other stressor, and once lost, trust is extraordinarily slow to rebuild."
+        : "Ketidakadilan yang dirasakan — dalam sumber daya, keputusan, atau pengakuan — mengikis kepercayaan lebih cepat dari hampir apa pun. Ketika pekerja percaya sistem tidak adil, mereka berhenti berinvestasi di dalamnya. Rasa ketidakadilan memperburuk setiap stressor lainnya.",
+    },
+    {
+      label: en ? "Values\nMismatch" : "Ketidaksesuaian\nNilai", angle: 210,
+      title: en ? "Values Mismatch" : "Ketidaksesuaian Nilai",
+      desc: en
+        ? "When what the organisation asks and what the worker believes are in tension, every task carries a hidden cost. For cross-cultural workers, this surfaces as pressure to meet metrics that feel disconnected from Kingdom purpose, or directives that conflict with the local cultural wisdom they have spent years learning to read."
+        : "Ketika apa yang diminta organisasi dan apa yang dipercaya pekerja berada dalam ketegangan, setiap tugas membawa biaya tersembunyi. Bagi pekerja lintas budaya, ini muncul sebagai tekanan untuk memenuhi metrik yang terasa terputus dari tujuan Kerajaan, atau arahan yang bertentangan dengan kearifan budaya lokal.",
+    },
   ];
 
-  const cx = 250, cy = 250, r = 155, nodeW = 90, nodeH = 48;
+  const cx = 250, cy = 270, r = 155, nodeW = 90, nodeH = 48;
 
   return (
-    <figure style={{ margin: "2rem 0", textAlign: "center" as const }}>
-      <svg
-        viewBox="0 0 500 500"
-        style={{ width: "100%", maxWidth: 480, height: "auto" }}
-        aria-hidden="true"
-        role="img"
-      >
-        <defs>
-          <radialGradient id="bcs-center-grad" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="oklch(30% 0.12 260)" />
-            <stop offset="100%" stopColor="oklch(22% 0.10 260)" />
-          </radialGradient>
-          <filter id="bcs-node-shadow" x="-20%" y="-20%" width="140%" height="140%">
-            <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="rgba(0,0,0,0.25)" />
-          </filter>
-        </defs>
+    <figure style={{ margin: "2rem 0" }}>
+      <div style={{ display: "flex", gap: "1.5rem", alignItems: "flex-start", flexWrap: "wrap" as const }}>
 
-        {/* Spokes */}
-        {nodes.map((node, i) => {
-          const rad = (node.angle * Math.PI) / 180;
-          const x2 = cx + r * Math.cos(rad);
-          const y2 = cy + r * Math.sin(rad);
-          return (
-            <line
-              key={i}
-              x1={cx} y1={cy} x2={x2} y2={y2}
-              stroke="oklch(65% 0.15 45)"
-              strokeWidth="2"
-              strokeOpacity="0.7"
-            />
-          );
-        })}
+        {/* SVG */}
+        <div style={{ flex: "0 0 auto", width: "min(100%, 480px)" }}>
+          <svg viewBox="0 0 500 560" style={{ width: "100%", height: "auto" }}>
+            <defs>
+              <radialGradient id="bcs-center-grad" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stopColor="oklch(30% 0.12 260)" />
+                <stop offset="100%" stopColor="oklch(22% 0.10 260)" />
+              </radialGradient>
+              <filter id="bcs-node-shadow" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="rgba(0,0,0,0.25)" />
+              </filter>
+              <marker id="bcs-arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                <polygon points="0 0, 8 3, 0 6" fill="oklch(65% 0.15 45)" />
+              </marker>
+            </defs>
 
-        {/* Center circle */}
-        <circle cx={cx} cy={cy} r={52} fill="url(#bcs-center-grad)" />
-        <circle cx={cx} cy={cy} r={52} fill="none" stroke="oklch(65% 0.15 45)" strokeWidth="1.5" />
-        <text x={cx} y={cy - 8} textAnchor="middle" fill="oklch(96% 0.005 80)"
-          fontFamily="Montserrat, sans-serif" fontSize="11" fontWeight="700" letterSpacing="0.5">
-          {en ? "6 MAIN" : "6 FAKTOR"}
-        </text>
-        <text x={cx} y={cy + 7} textAnchor="middle" fill="oklch(96% 0.005 80)"
-          fontFamily="Montserrat, sans-serif" fontSize="11" fontWeight="700" letterSpacing="0.5">
-          {en ? "CAUSES" : "UTAMA"}
-        </text>
-        <text x={cx} y={cy + 22} textAnchor="middle" fill="oklch(65% 0.15 45)"
-          fontFamily="Montserrat, sans-serif" fontSize="9" fontWeight="600" letterSpacing="0.3">
-          {en ? "OF BURNOUT" : "KELELAHAN"}
-        </text>
+            {/* Title */}
+            <text x={250} y={24} textAnchor="middle" fill={_navy}
+              fontFamily="Montserrat, sans-serif" fontSize="13" fontWeight="800" letterSpacing="1">
+              {en ? "6 MAIN CAUSES OF BURNOUT" : "6 FAKTOR UTAMA KELELAHAN"}
+            </text>
 
-        {/* Nodes */}
-        {nodes.map((node, i) => {
-          const rad = (node.angle * Math.PI) / 180;
-          const nx = cx + r * Math.cos(rad);
-          const ny = cy + r * Math.sin(rad);
-          const lines = node.label.split("\n");
-          return (
-            <g key={i} filter="url(#bcs-node-shadow)">
-              <ellipse
-                cx={nx} cy={ny}
-                rx={nodeW / 2} ry={nodeH / 2}
-                fill="oklch(96% 0.005 80)"
-                stroke="oklch(65% 0.15 45)"
-                strokeWidth="1.2"
-              />
-              {lines.map((line, li) => (
-                <text
-                  key={li}
-                  x={nx}
-                  y={ny + (li - (lines.length - 1) / 2) * 13}
-                  textAnchor="middle"
-                  dominantBaseline="middle"
-                  fill="oklch(22% 0.10 260)"
-                  fontFamily="Montserrat, sans-serif"
-                  fontSize="10"
-                  fontWeight="700"
+            {/* Hint */}
+            <text x={250} y={44} textAnchor="middle" fill={_orange}
+              fontFamily="Montserrat, sans-serif" fontSize="9.5" fontWeight="600" letterSpacing="0.3">
+              {en ? "Tap each to learn more" : "Ketuk untuk selengkapnya"}
+            </text>
+
+            {/* Arrows — from node toward center */}
+            {nodes.map((node, i) => {
+              const rad = (node.angle * Math.PI) / 180;
+              const nx = cx + r * Math.cos(rad);
+              const ny = cy + r * Math.sin(rad);
+              const x1 = nx - (nodeW / 2 + 4) * Math.cos(rad);
+              const y1 = ny - (nodeH / 2 + 4) * Math.sin(rad);
+              const x2 = cx + 60 * Math.cos(rad);
+              const y2 = cy + 60 * Math.sin(rad);
+              return (
+                <line key={i} x1={x1} y1={y1} x2={x2} y2={y2}
+                  stroke={_orange} strokeWidth="1.8" strokeOpacity="0.7"
+                  markerEnd="url(#bcs-arrow)" />
+              );
+            })}
+
+            {/* Center circle */}
+            <circle cx={cx} cy={cy} r={52} fill="url(#bcs-center-grad)" />
+            <circle cx={cx} cy={cy} r={52} fill="none" stroke={_orange} strokeWidth="1.5" />
+            <text x={cx} y={cy - 5} textAnchor="middle" dominantBaseline="middle"
+              fill={_offWhite} fontFamily="Montserrat, sans-serif" fontSize="15" fontWeight="800" letterSpacing="1.5">
+              {en ? "BURN" : "KELE"}
+            </text>
+            <text x={cx} y={cy + 14} textAnchor="middle" dominantBaseline="middle"
+              fill={_offWhite} fontFamily="Montserrat, sans-serif" fontSize="15" fontWeight="800" letterSpacing="1.5">
+              {en ? "OUT" : "LAHAN"}
+            </text>
+
+            {/* Nodes — clickable */}
+            {nodes.map((node, i) => {
+              const rad = (node.angle * Math.PI) / 180;
+              const nx = cx + r * Math.cos(rad);
+              const ny = cy + r * Math.sin(rad);
+              const lines = node.label.split("\n");
+              const isSelected = selected === i;
+              return (
+                <g key={i} filter="url(#bcs-node-shadow)"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => setSelected(isSelected ? null : i)}
+                  tabIndex={0}
+                  role="button"
+                  aria-label={node.title}
+                  onKeyDown={(e) => e.key === "Enter" && setSelected(isSelected ? null : i)}
                 >
-                  {line}
-                </text>
-              ))}
-            </g>
-          );
-        })}
-      </svg>
+                  <ellipse cx={nx} cy={ny} rx={nodeW / 2} ry={nodeH / 2}
+                    fill={isSelected ? _orange : _offWhite}
+                    stroke={_orange}
+                    strokeWidth={isSelected ? "2.5" : "1.2"}
+                  />
+                  {lines.map((line, li) => (
+                    <text key={li}
+                      x={nx} y={ny + (li - (lines.length - 1) / 2) * 13}
+                      textAnchor="middle" dominantBaseline="middle"
+                      fill={isSelected ? _offWhite : _navy}
+                      fontFamily="Montserrat, sans-serif" fontSize="10" fontWeight="700"
+                    >
+                      {line}
+                    </text>
+                  ))}
+                </g>
+              );
+            })}
+          </svg>
+        </div>
+
+        {/* Detail panel */}
+        {selected !== null && (
+          <div style={{
+            flex: "1 1 260px",
+            background: _offWhite,
+            borderRadius: 10,
+            padding: "1.5rem",
+            border: "1px solid oklch(82% 0.015 80)",
+            borderLeft: `4px solid ${_orange}`,
+            alignSelf: "center",
+          }}>
+            <p style={{
+              fontFamily: "Montserrat, sans-serif", fontSize: "0.7rem", fontWeight: 700,
+              color: _orange, letterSpacing: "0.08em", textTransform: "uppercase" as const,
+              margin: "0 0 0.4rem",
+            }}>
+              {en ? "Cause" : "Faktor"}
+            </p>
+            <h4 style={{
+              fontFamily: "Montserrat, sans-serif", fontSize: "clamp(15px, 1.8vw, 18px)",
+              fontWeight: 800, color: _navy, margin: "0 0 0.75rem", lineHeight: 1.2,
+            }}>
+              {nodes[selected].title}
+            </h4>
+            <p style={{
+              fontFamily: "Georgia, 'Times New Roman', serif",
+              fontSize: "clamp(14px, 1.6vw, 16px)",
+              color: _bodyText, lineHeight: 1.75, margin: 0,
+            }}>
+              {nodes[selected].desc}
+            </p>
+            <button onClick={() => setSelected(null)} style={{
+              marginTop: "1.25rem", background: "none", border: "none",
+              color: _orange, fontFamily: "Montserrat, sans-serif",
+              fontSize: "0.72rem", fontWeight: 700, cursor: "pointer",
+              padding: 0, letterSpacing: "0.06em",
+            }}>
+              {en ? "← CLOSE" : "← TUTUP"}
+            </button>
+          </div>
+        )}
+      </div>
+
       <figcaption style={{
-        fontFamily: "Montserrat, sans-serif",
-        fontSize: "0.75rem",
-        color: _bodyText,
-        marginTop: "0.5rem",
-        opacity: 0.7,
+        fontFamily: "Montserrat, sans-serif", fontSize: "0.75rem",
+        color: _bodyText, marginTop: "0.5rem", opacity: 0.7,
       }}>
-        {en
+        {cite(en
           ? "Six Areas of Work–Life Mismatch (Maslach & Leiter²)"
-          : "Enam Area Ketidaksesuaian Pekerjaan–Kehidupan (Maslach & Leiter²)"}
+          : "Enam Area Ketidaksesuaian Pekerjaan–Kehidupan (Maslach & Leiter²)")}
       </figcaption>
     </figure>
   );
@@ -424,8 +550,8 @@ export default function UnderstandingBurnoutClient({
             }}
           >
             {t(
-              "Burnout among cross-cultural workers and the organizations that send and support them is on the rise. The loss of a leader from the field carries a real financial cost, but the deeper costs fall on teams, families, marriages, and the communities they serve.",
-              "Kelelahan di kalangan pekerja lintas budaya dan organisasi yang mengutus serta mendukung mereka terus meningkat. Kehilangan seorang pemimpin dari lapangan memiliki biaya finansial yang nyata, tetapi biaya yang lebih dalam jatuh pada tim, keluarga, pernikahan, dan komunitas yang mereka layani.",
+              "Burnout among cross-cultural leaders is rising — and it rarely looks the way people expect. This module gives you the research, the self-assessment tools, and the practical frameworks to understand what is happening, catch it early, and build conditions where lasting resilience is possible.",
+              "Kelelahan di kalangan pemimpin lintas budaya terus meningkat — dan jarang terlihat seperti yang dibayangkan orang. Modul ini memberikan penelitian, alat penilaian diri, dan kerangka praktis untuk memahami apa yang sedang terjadi, mengenalinya lebih awal, dan membangun kondisi di mana ketahanan yang berkelanjutan menjadi mungkin.",
               lang
             )}
           </p>
@@ -477,11 +603,11 @@ export default function UnderstandingBurnoutClient({
             {t("What Burnout Actually Is", "Apa Sebenarnya Kelelahan Itu", lang)}
           </h2>
           <p style={bodyStyle()}>
-            {t(
+            {cite(t(
               "Burnout is not a personality weakness, a faith failure, or simply working too hard. According to the World Health Organization¹, burnout is a syndrome resulting from chronic, unmanaged workplace stress. It is characterized by three main manifestations:",
               "Kelelahan bukan kelemahan kepribadian, kegagalan iman, atau sekadar terlalu banyak bekerja. Menurut Organisasi Kesehatan Dunia¹, kelelahan adalah sebuah sindrom yang diakibatkan oleh stres kerja kronis yang tidak berhasil dikelola. Sindrom ini dicirikan oleh tiga manifestasi utama:",
               lang
-            )}
+            ))}
           </p>
           <ul style={{
             listStyle: "none", padding: 0, margin: "1.5rem 0 2rem",
@@ -538,6 +664,15 @@ export default function UnderstandingBurnoutClient({
             ))}
           </ul>
 
+          {/* Intro before Warning Signs table */}
+          <p style={{ ...bodyStyle(), marginTop: "2.5rem" }}>
+            {cite(t(
+              "Burnout rarely announces itself. Paula Davis — whose own experience of burnout as a practicing attorney led her to spend more than a decade researching resilience — maps the warning signals that typically surface weeks or months before collapse arrives.⁸ They fall across three domains: physical, psychological, and behavioural. Recognising them early is the difference between a course correction and a crisis.",
+              "Kelelahan jarang mengumumkan dirinya sendiri. Paula Davis — yang pengalaman pribadinya mengalami kelelahan sebagai pengacara yang berpraktik mendorongnya menghabiskan lebih dari satu dekade meneliti ketahanan — memetakan sinyal peringatan yang biasanya muncul berminggu-minggu atau berbulan-bulan sebelum krisis tiba.⁸ Sinyal-sinyal ini terbagi dalam tiga domain: fisik, psikologis, dan perilaku. Mengenalinya lebih awal adalah perbedaan antara koreksi arah dan krisis.",
+              lang
+            ))}
+          </p>
+
           {/* Warning Signs of Burnout — Paula Davis */}
           <div style={{ margin: "2.5rem 0" }}>
             <h3 style={{
@@ -550,7 +685,7 @@ export default function UnderstandingBurnoutClient({
               marginBottom: "1rem",
               marginTop: 0,
             }}>
-              {t("Warning Signs of Burnout", "Tanda-Tanda Peringatan Kelelahan", lang)}⁸
+              {t("Warning Signs of Burnout", "Tanda-Tanda Peringatan Kelelahan", lang)}<span style={{ color: orange }}>⁸</span>
             </h3>
 
             {/* Desktop table — hidden on mobile */}
@@ -618,6 +753,21 @@ export default function UnderstandingBurnoutClient({
                   t("Feeling trapped", "Merasa terjebak", lang),
                   t("Taking longer to complete tasks", "Butuh waktu lebih lama untuk menyelesaikan tugas", lang),
                 ],
+                [
+                  t("Restlessness", "Kegelisahan", lang),
+                  t("Panic attacks", "Serangan panik", lang),
+                  t("Consistent tardiness", "Sering terlambat", lang),
+                ],
+                [
+                  t("Heart palpitations", "Jantung berdebar", lang),
+                  t("Helplessness", "Rasa tidak berdaya", lang),
+                  t("Poor team player", "Kurang berkontribusi dalam tim", lang),
+                ],
+                [
+                  t("Digestive issues", "Masalah pencernaan", lang),
+                  t("Frustration", "Frustrasi", lang),
+                  t("Job dissatisfaction", "Ketidakpuasan kerja", lang),
+                ],
               ].map((row, ri) =>
                 row.map((cell, ci) => (
                   <div key={`${ri}-${ci}`} style={{
@@ -646,6 +796,9 @@ export default function UnderstandingBurnoutClient({
                     t("Physical pain", "Nyeri fisik", lang),
                     t("Loss of appetite", "Kehilangan nafsu makan", lang),
                     t("Dizziness / headaches", "Pusing / sakit kepala", lang),
+                    t("Restlessness", "Kegelisahan", lang),
+                    t("Heart palpitations", "Jantung berdebar", lang),
+                    t("Digestive issues", "Masalah pencernaan", lang),
                   ],
                 },
                 {
@@ -657,6 +810,9 @@ export default function UnderstandingBurnoutClient({
                     t("Loss of enjoyment", "Kehilangan kesenangan", lang),
                     t("Pessimism", "Pesimisme", lang),
                     t("Feeling trapped", "Merasa terjebak", lang),
+                    t("Panic attacks", "Serangan panik", lang),
+                    t("Helplessness", "Rasa tidak berdaya", lang),
+                    t("Frustration", "Frustrasi", lang),
                   ],
                 },
                 {
@@ -668,6 +824,9 @@ export default function UnderstandingBurnoutClient({
                     t("Social withdrawal", "Menarik diri dari lingkungan sosial", lang),
                     t("Increased substance use", "Peningkatan penggunaan zat", lang),
                     t("Taking longer to complete tasks", "Butuh waktu lebih lama untuk menyelesaikan tugas", lang),
+                    t("Consistent tardiness", "Sering terlambat", lang),
+                    t("Poor team player", "Kurang berkontribusi dalam tim", lang),
+                    t("Job dissatisfaction", "Ketidakpuasan kerja", lang),
                   ],
                 },
               ].map(({ cat, items }) => (
@@ -696,6 +855,15 @@ export default function UnderstandingBurnoutClient({
               ))}
             </div>
           </div>
+
+          {/* Intro before subtype cards */}
+          <p style={{ ...bodyStyle(), marginTop: "2.5rem" }}>
+            {cite(t(
+              "In 2011, researchers at the University of Zaragoza identified something important: burnout is not one experience.³ Jesús Montero-Marín and colleagues validated three distinct clinical subtypes — each with its own driver, its own warning pattern, and its own required response. Knowing which pattern you are in changes what you need to do about it.",
+              "Pada tahun 2011, peneliti di Universitas Zaragoza menemukan sesuatu yang penting: kelelahan bukan satu pengalaman yang sama.³ Jesús Montero-Marín dan rekan-rekannya memvalidasi tiga subtipe klinis yang berbeda — masing-masing dengan pendorongnya sendiri, pola peringatannya sendiri, dan respons yang diperlukan. Mengetahui pola mana yang Anda alami mengubah apa yang perlu Anda lakukan.",
+              lang
+            ))}
+          </p>
 
           {/* Concept Cards -- 3 subtypes */}
           <div
@@ -889,11 +1057,11 @@ export default function UnderstandingBurnoutClient({
                     {t("The Job Demands-Resources Model", "Model Tuntutan Pekerjaan-Sumber Daya", lang)}
                   </p>
                   <p style={{ ...bodyStyle(), marginBottom: "1rem" }}>
-                    {t(
+                    {cite(t(
                       "The Job Demands-Resources (JD-R) model⁴ offers a structural explanation for burnout. Burnout occurs when job demands (workload, emotional demands, role ambiguity, interpersonal conflict) consistently outpace the resources available to meet them: autonomy, feedback, supervisory support, skill match, relationship quality. The model explains why two workers in identical roles can have completely different experiences: the ratio of demands to resources differs. Burnout is therefore not simply a willpower or character problem. It is a structural diagnosis that calls for a structural response.",
                       "Model Tuntutan Pekerjaan-Sumber Daya (JD-R)⁴ menawarkan penjelasan struktural untuk kelelahan. Kelelahan terjadi ketika tuntutan pekerjaan (beban kerja, tuntutan emosional, ambiguitas peran, konflik interpersonal) secara konsisten melebihi sumber daya yang tersedia untuk memenuhinya: otonomi, umpan balik, dukungan pengawasan, kecocokan keterampilan, kualitas hubungan. Model ini menjelaskan mengapa dua pekerja dalam peran yang identik dapat memiliki pengalaman yang sepenuhnya berbeda: rasio tuntutan terhadap sumber daya berbeda. Kelelahan oleh karena itu bukan sekadar masalah kemauan atau karakter. Ini adalah diagnosis struktural yang membutuhkan respons struktural.",
                       lang
-                    )}
+                    ))}
                   </p>
                   <p
                     style={{
@@ -907,11 +1075,11 @@ export default function UnderstandingBurnoutClient({
                     {t("The Neuroscience of Chronic Stress", "Neurosains Stres Kronis", lang)}
                   </p>
                   <p style={{ ...bodyStyle(), marginBottom: 0 }}>
-                    {t(
+                    {cite(t(
                       "Prolonged exposure to elevated cortisol⁵ (the hormone released under chronic stress) progressively impairs the prefrontal cortex, the region responsible for complex thinking, empathy, and long-range planning. At the same time, the amygdala (the threat-detection centre) becomes hypersensitive. The result is a person who is increasingly reactive, less able to think clearly, less able to feel connected, and often unaware that this is happening because the very capacity for self-assessment has been compromised. This is why self-report about burnout is notoriously unreliable: the instrument measuring the problem is itself affected by the problem.",
                       "Paparan berkepanjangan terhadap kortisol⁵ yang meningkat (hormon yang dilepaskan di bawah stres kronis) secara progresif merusak korteks prefrontal, wilayah yang bertanggung jawab untuk pemikiran kompleks, empati, dan perencanaan jangka panjang. Pada saat yang sama, amigdala (pusat deteksi ancaman) menjadi hipersensitif. Hasilnya adalah seseorang yang semakin reaktif, kurang mampu berpikir jernih, kurang mampu merasa terhubung, dan sering tidak menyadari bahwa ini terjadi karena kapasitas penilaian diri itu sendiri telah terganggu. Inilah mengapa laporan diri tentang kelelahan terkenal tidak dapat diandalkan: instrumen yang mengukur masalah itu sendiri dipengaruhi oleh masalah.",
                       lang
-                    )}
+                    ))}
                   </p>
                 </div>
               </div>
@@ -956,11 +1124,11 @@ export default function UnderstandingBurnoutClient({
             marginBottom: "2.5rem",
             marginTop: 0,
           }}>
-            {t(
+            {cite(t(
               "Burnout is rarely just a personal failure. Research consistently points to organizational and systemic conditions as primary drivers. Christina Maslach and Michael Leiter² identify six areas where mismatches between a person and their work environment create the conditions for burnout — regardless of the individual's resilience, character, or faith.",
               "Kelelahan jarang hanya merupakan kegagalan pribadi. Penelitian secara konsisten menunjuk pada kondisi organisasi dan sistem sebagai pendorong utama. Christina Maslach dan Michael Leiter² mengidentifikasi enam area di mana ketidaksesuaian antara seseorang dan lingkungan kerjanya menciptakan kondisi untuk kelelahan — terlepas dari ketahanan, karakter, atau iman individu tersebut.",
               lang
-            )}
+            ))}
           </p>
 
           {/* Hub-and-spoke SVG diagram */}
@@ -1381,7 +1549,7 @@ export default function UnderstandingBurnoutClient({
               lang
             )}
           </p>
-          <p style={bodyStyle(true)}>
+          <p id="mc-elijah" style={bodyStyle(true)}>
             {t(
               "In 1 Kings 19, Elijah collapses under a broom tree after his greatest public victory. An angel arrives. Not with a word of correction or a theological challenge. With food and water, twice. 'The journey is too great for you.' God's first response to burnout is physical. Rest before duty. Body before soul. No rebuke. When Elijah finally speaks, God listens. When Elijah finally walks again, God meets him not in the fire or the earthquake or the wind, but in the still small voice. Recovery from burnout is not spectacular. It is slow, quiet, and arrives in the spaces where noise has finally stopped.",
               "Dalam 1 Raja-raja 19, Elia runtuh di bawah pohon aras setelah kemenangan publik terbesarnya. Seorang malaikat datang. Bukan dengan kata-kata koreksi atau tantangan teologis. Dengan makanan dan air, dua kali. 'Perjalanan ini terlalu berat bagimu.' Respons pertama Allah terhadap kelelahan bersifat fisik. Istirahat sebelum kewajiban. Tubuh sebelum jiwa. Tidak ada teguran. Ketika Elia akhirnya berbicara, Allah mendengarkan. Ketika Elia akhirnya berjalan lagi, Allah menemuinya bukan dalam api atau gempa bumi atau angin, tetapi dalam suara yang sunyi dan lembut. Pemulihan dari kelelahan bukanlah hal yang spektakuler. Ini lambat, tenang, dan tiba di ruang di mana kebisingan akhirnya berhenti.",
@@ -1477,11 +1645,11 @@ export default function UnderstandingBurnoutClient({
             {
               key: "frenetic",
               title: t("If you tend toward frenetic: build in permission to stop", "Jika Anda cenderung frenetic: bangun izin untuk berhenti", lang),
-              body: t(
+              body: cite(t(
                 "The earliest intervention for this pattern — before depletion sets in — is identity-based permission to stop: not efficiency advice or better time management. Build non-negotiable recovery anchors into the week as structural commitments, not suggestions. Identify one person who has explicit permission to name the warning signs when they appear. Return now to the question of whether the work is held as servant or master of your calling. Walter Brueggemann's⁷ observation applies directly here: in a culture that treats availability as virtue and busyness as faithfulness, choosing to stop is a theological statement. The fourth commandment was not a productivity recommendation. It was a declaration of freedom.",
                 "Intervensi paling awal untuk pola ini — sebelum kelelahan benar-benar melanda — adalah izin berbasis identitas untuk berhenti: bukan saran efisiensi atau manajemen waktu yang lebih baik. Bangun jangkar pemulihan yang tidak bisa dinegosiasikan ke dalam minggu sebagai komitmen struktural, bukan sekadar saran. Identifikasi satu orang yang memiliki izin eksplisit untuk menamai tanda-tanda peringatan ketika mereka muncul. Kembalilah sekarang ke pertanyaan apakah pekerjaan dipegang sebagai pelayan atau tuan dari panggilan Anda. Pengamatan Walter Brueggemann⁷ berlaku langsung di sini: dalam budaya yang memperlakukan ketersediaan sebagai kebajikan dan kesibukan sebagai kesetiaan, memilih untuk berhenti adalah pernyataan teologis. Perintah keempat bukanlah rekomendasi produktivitas. Itu adalah deklarasi kebebasan.",
                 lang
-              ),
+              )),
             },
             {
               key: "underchallenged",
@@ -2023,7 +2191,7 @@ export default function UnderstandingBurnoutClient({
                   paddingLeft: "0.25rem",
                 }}
               >
-                {item}
+                {cite(item)}
               </li>
             ))}
           </ol>
@@ -2222,7 +2390,7 @@ export default function UnderstandingBurnoutClient({
             "The most protective factors against burnout are not primarily individual practices — though those matter — but organisational and relational conditions that leaders can actively build.² Autonomy: the experience of meaningful control over one's work. Genuine recognition: reward that is proportionate to contribution and sincerely given. Real community: relationships characterised by mutual support and honest communication, not performative collegiality. Workload equity: distribution of demands that does not consistently overload some members while underloading others. Values alignment: the experience that the work being asked for is consistent with what one believes matters. Leaders who build these conditions are doing burnout prevention work — and modelling, in their leadership, the very quality of engagement that makes long-term, sustainable, faithful contribution possible.²",
           ].map((para, i) => (
             <p key={i} style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 20 }}>
-              {para}
+              {cite(para)}
             </p>
           ))}
         </div>

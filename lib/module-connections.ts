@@ -175,6 +175,20 @@ export const MODULE_CONNECTIONS: ModuleConnection[] = [
     angle_id: "alasan teologis dan praktis untuk membangun istirahat dalam ritme Anda sebagai pemimpin",
   },
 
+  // Understanding Burnout → Sabbath Leadership
+  // (1 Kings 19 Elijah section: "God's first response to burnout is physical. Rest before duty.")
+  {
+    sourceSlug: "understanding-burnout",
+    sourceSectionId: "mc-elijah",
+    targetSlug: "sabbath-leadership",
+    targetTitle: "Sabbath Leadership",
+    targetTitle_id: "Kepemimpinan Sabat",
+    topic: "rest as God's first response to burnout",
+    topic_id: "istirahat sebagai respons pertama Tuhan terhadap kelelahan",
+    angle: "the theological and practical case for building Sabbath rest into your leadership rhythm",
+    angle_id: "alasan teologis dan praktis untuk membangun istirahat Sabat dalam ritme kepemimpinan Anda",
+  },
+
   // Johari Window → Power Distance
   // (Long-form section explicitly discusses Hofstede power distance research on upward feedback norms)
   {
