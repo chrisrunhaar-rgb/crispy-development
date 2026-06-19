@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useLanguage } from "@/lib/LanguageContext";
 import LangToggle from "@/components/LangToggle";
 import { saveResourceToDashboard } from "../actions";
+import SourcesDropdown from "@/components/SourcesDropdown";
 
 type Lang = "en" | "id";
 
@@ -766,7 +767,7 @@ export default function LeadersReadersClient({
               </p>
               <p style={proseSubhead}>Identity beats willpower every time</p>
               <p style={prose}>
-                There is a well-established principle in behavioral science: identity-based habits stick in a way that outcome-based habits don&apos;t.
+                There is a well-established principle in behavioral science: identity-based habits stick in a way that outcome-based habits don&apos;t.¹
               </p>
               <p style={prose}>
                 Telling yourself &ldquo;I want to read 20 books this year&rdquo; is fragile. Telling yourself &ldquo;I am the kind of leader who reads&rdquo; is load-bearing. When you are a reader, 15 minutes in the morning with a book is just what you do. It doesn&apos;t require willpower. It is who you are.
@@ -812,7 +813,7 @@ export default function LeadersReadersClient({
               </p>
               <p style={proseSubhead}>Identitas mengalahkan kemauan setiap saat</p>
               <p style={prose}>
-                Ada prinsip yang sudah lama dikenal dalam ilmu perilaku: kebiasaan yang berbasis identitas bertahan dengan cara yang tidak bisa dilakukan oleh kebiasaan berbasis hasil.
+                Ada prinsip yang sudah lama dikenal dalam ilmu perilaku: kebiasaan yang berbasis identitas bertahan dengan cara yang tidak bisa dilakukan oleh kebiasaan berbasis hasil.¹
               </p>
               <p style={prose}>
                 Memberi tahu dirimu &ldquo;aku ingin membaca 20 buku tahun ini&rdquo; itu rapuh. Memberi tahu dirimu &ldquo;aku adalah tipe pemimpin yang membaca&rdquo; itu menopang. Ketika kamu adalah seorang pembaca, 15 menit di pagi hari dengan sebuah buku sudah menjadi bagian dari dirimu. Tidak butuh kemauan keras. Itulah siapa kamu.
@@ -895,7 +896,7 @@ export default function LeadersReadersClient({
               </p>
               <p style={proseSubhead}>Reading builds empathy — and research proves it</p>
               <p style={prose}>
-                Literary fiction has been shown in peer-reviewed research to measurably improve the capacity to understand what is happening inside other people&apos;s minds. Researchers Emanuele Castano and David Kidd found that reading literary fiction significantly improved performance on validated tests of empathy and perspective-taking.
+                Literary fiction has been shown in peer-reviewed research to measurably improve the capacity to understand what is happening inside other people&apos;s minds. Researchers Emanuele Castano and David Kidd found that reading literary fiction significantly improved performance on validated tests of empathy and perspective-taking.²
               </p>
               <p style={{ ...prose, marginBottom: 0 }}>
                 The reason? Literary fiction forces you to practise exactly what cross-cultural work demands: holding uncertainty, making inferences about people who are not like you, and staying curious rather than closing down. If you want to be better at reading rooms and reading people, one of the best tools is reading books.
@@ -934,7 +935,7 @@ export default function LeadersReadersClient({
               </p>
               <p style={proseSubhead}>Membaca membangun empati — dan riset membuktikannya</p>
               <p style={prose}>
-                Fiksi sastra telah terbukti dalam penelitian yang ditinjau sejawat secara terukur meningkatkan kapasitas untuk memahami apa yang terjadi di dalam pikiran orang lain. Para peneliti Emanuele Castano dan David Kidd menemukan bahwa membaca fiksi sastra secara signifikan meningkatkan kinerja pada tes empati dan pengambilan perspektif yang tervalidasi.
+                Fiksi sastra telah terbukti dalam penelitian yang ditinjau sejawat secara terukur meningkatkan kapasitas untuk memahami apa yang terjadi di dalam pikiran orang lain. Para peneliti Emanuele Castano dan David Kidd menemukan bahwa membaca fiksi sastra secara signifikan meningkatkan kinerja pada tes empati dan pengambilan perspektif yang tervalidasi.²
               </p>
               <p style={{ ...prose, marginBottom: 0 }}>
                 Alasannya? Fiksi sastra memaksamu untuk melatih persis apa yang dituntut oleh pekerjaan lintas budaya: memegang ketidakpastian, membuat kesimpulan tentang orang yang tidak sepertimu, dan tetap penasaran daripada menutup diri. Kalau kamu ingin lebih baik dalam membaca situasi dan membaca orang, salah satu alat terbaik adalah membaca buku.
@@ -1712,6 +1713,15 @@ export default function LeadersReadersClient({
           </div>
         </div>
       </section>
+
+      {/* ── SOURCES ──────────────────────────────────────────────────────────── */}
+      <SourcesDropdown
+        lang={lang}
+        sources={[
+          "James Clear — Atomic Habits (Avery, 2018). Chapter 2: How Your Habits Shape Your Identity (and Vice Versa).",
+          "Kidd, D.C. & Castano, E. — \"Reading Literary Fiction Improves Theory of Mind\" (Science, 342:6156, 377–380, 2013). https://doi.org/10.1126/science.1239918",
+        ]}
+      />
 
       {/* ══════════════════════════════════════════════════════
           FROM THE FIELD
