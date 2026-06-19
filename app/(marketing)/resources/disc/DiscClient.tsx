@@ -7,7 +7,6 @@ import { saveResourceToDashboard, saveDISCResult } from "../actions";
 import { trackAssessmentCompletion } from "@/lib/ga-events";
 import LangToggle from "@/components/LangToggle";
 import SourcesDropdown from "@/components/SourcesDropdown";
-import ModuleComments from "@/components/ModuleComments";
 
 // -- ASSESSMENT DATA -----------------------------------------------------------------
 
@@ -2502,11 +2501,6 @@ export default function DiscClient({
           </ol>
         </div>
       </section>
-
-      {/* ===================================================================
-          SECTION 8 — FROM THE FIELD (shared component)
-      =================================================================== */}
-      <ModuleComments slug="disc" />
 
       {/* ===================================================================
           SOURCES DROPDOWN + SEO BACKGROUND
