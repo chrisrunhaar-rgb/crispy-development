@@ -112,6 +112,124 @@ function RiskSpectrumDiagram({ lang }: { lang: Lang }) {
   );
 }
 
+// -- BURNOUT CAUSES SPOKE DIAGRAM -----------------------------------------------
+function BurnoutCausesSpoke({ lang }: { lang: Lang }) {
+  const _navy      = "oklch(22% 0.10 260)";
+  const _orange    = "oklch(65% 0.15 45)";
+  const _offWhite  = "oklch(96% 0.005 80)";
+  const _bodyText  = "oklch(38% 0.05 260)";
+
+  const en = lang === "en";
+  const nodes = [
+    { label: en ? "Work\nOverload" : "Beban Kerja\nBerlebih",       angle: -90 },
+    { label: en ? "Lack of\nControl" : "Kurangnya\nKendali",        angle: -30 },
+    { label: en ? "Lack of\nReward" : "Kurangnya\nPenghargaan",     angle: 30 },
+    { label: en ? "Lack of\nCommunity" : "Kurangnya\nKomunitas",    angle: 90 },
+    { label: en ? "Lack of\nFairness" : "Kurangnya\nKeadilan",      angle: 150 },
+    { label: en ? "Values\nMismatch" : "Ketidaksesuaian\nNilai",    angle: 210 },
+  ];
+
+  const cx = 250, cy = 250, r = 155, nodeW = 90, nodeH = 48;
+
+  return (
+    <figure style={{ margin: "2rem 0", textAlign: "center" as const }}>
+      <svg
+        viewBox="0 0 500 500"
+        style={{ width: "100%", maxWidth: 480, height: "auto" }}
+        aria-hidden="true"
+        role="img"
+      >
+        <defs>
+          <radialGradient id="bcs-center-grad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="oklch(30% 0.12 260)" />
+            <stop offset="100%" stopColor="oklch(22% 0.10 260)" />
+          </radialGradient>
+          <filter id="bcs-node-shadow" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="rgba(0,0,0,0.25)" />
+          </filter>
+        </defs>
+
+        {/* Spokes */}
+        {nodes.map((node, i) => {
+          const rad = (node.angle * Math.PI) / 180;
+          const x2 = cx + r * Math.cos(rad);
+          const y2 = cy + r * Math.sin(rad);
+          return (
+            <line
+              key={i}
+              x1={cx} y1={cy} x2={x2} y2={y2}
+              stroke="oklch(65% 0.15 45)"
+              strokeWidth="2"
+              strokeOpacity="0.7"
+            />
+          );
+        })}
+
+        {/* Center circle */}
+        <circle cx={cx} cy={cy} r={52} fill="url(#bcs-center-grad)" />
+        <circle cx={cx} cy={cy} r={52} fill="none" stroke="oklch(65% 0.15 45)" strokeWidth="1.5" />
+        <text x={cx} y={cy - 8} textAnchor="middle" fill="oklch(96% 0.005 80)"
+          fontFamily="Montserrat, sans-serif" fontSize="11" fontWeight="700" letterSpacing="0.5">
+          {en ? "6 MAIN" : "6 FAKTOR"}
+        </text>
+        <text x={cx} y={cy + 7} textAnchor="middle" fill="oklch(96% 0.005 80)"
+          fontFamily="Montserrat, sans-serif" fontSize="11" fontWeight="700" letterSpacing="0.5">
+          {en ? "CAUSES" : "UTAMA"}
+        </text>
+        <text x={cx} y={cy + 22} textAnchor="middle" fill="oklch(65% 0.15 45)"
+          fontFamily="Montserrat, sans-serif" fontSize="9" fontWeight="600" letterSpacing="0.3">
+          {en ? "OF BURNOUT" : "KELELAHAN"}
+        </text>
+
+        {/* Nodes */}
+        {nodes.map((node, i) => {
+          const rad = (node.angle * Math.PI) / 180;
+          const nx = cx + r * Math.cos(rad);
+          const ny = cy + r * Math.sin(rad);
+          const lines = node.label.split("\n");
+          return (
+            <g key={i} filter="url(#bcs-node-shadow)">
+              <ellipse
+                cx={nx} cy={ny}
+                rx={nodeW / 2} ry={nodeH / 2}
+                fill="oklch(96% 0.005 80)"
+                stroke="oklch(65% 0.15 45)"
+                strokeWidth="1.2"
+              />
+              {lines.map((line, li) => (
+                <text
+                  key={li}
+                  x={nx}
+                  y={ny + (li - (lines.length - 1) / 2) * 13}
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                  fill="oklch(22% 0.10 260)"
+                  fontFamily="Montserrat, sans-serif"
+                  fontSize="10"
+                  fontWeight="700"
+                >
+                  {line}
+                </text>
+              ))}
+            </g>
+          );
+        })}
+      </svg>
+      <figcaption style={{
+        fontFamily: "Montserrat, sans-serif",
+        fontSize: "0.75rem",
+        color: _bodyText,
+        marginTop: "0.5rem",
+        opacity: 0.7,
+      }}>
+        {en
+          ? "Six Areas of Work–Life Mismatch (Maslach & Leiter²)"
+          : "Enam Area Ketidaksesuaian Pekerjaan–Kehidupan (Maslach & Leiter²)"}
+      </figcaption>
+    </figure>
+  );
+}
+
 // -- MAIN COMPONENT -------------------------------------------------------------
 export default function UnderstandingBurnoutClient({
   isSaved,
@@ -266,7 +384,7 @@ export default function UnderstandingBurnoutClient({
         }}
       >
         <img
-          src="/images/resources/understanding-burnout/hero-nest.jpg"
+          src="/images/resources/understanding-burnout/hero-burnout-generated.jpg"
           alt=""
           aria-hidden="true"
           style={{
@@ -332,15 +450,34 @@ export default function UnderstandingBurnoutClient({
       </section>
 
       {/* ============================================================
+          INTRO CONTEXT — Opening paragraph from Lausanne
+          ============================================================ */}
+      <section style={{ background: navy, padding: "4rem 1.5rem" }}>
+        <div style={{ maxWidth: "860px", margin: "0 auto" }}>
+          <p style={{
+            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontStyle: "italic",
+            fontSize: "clamp(18px, 2.5vw, 24px)",
+            lineHeight: 1.75,
+            color: offWhite,
+            margin: 0,
+          }}>
+            {t(
+              "Burnout among cross-cultural workers and the organizations that send and support them is on the rise. The loss of a leader from the field carries a real financial cost, but the deeper costs fall on teams, families, marriages, and the communities they serve — and on the Kingdom witness those leaders were called to build. The systemic conditions that drive burnout need to change, and so does the way burnout is perceived by workers and leaders alike. With honest attention to policies, structures, and the cultures inside our organizations, those who lead cross-cultural workers can create environments where people genuinely thrive.⁹",
+              "Kelelahan di kalangan pekerja lintas budaya dan organisasi yang mengutus serta mendukung mereka terus meningkat. Kehilangan seorang pemimpin dari lapangan memiliki biaya finansial yang nyata, tetapi biaya yang lebih dalam jatuh pada tim, keluarga, pernikahan, dan komunitas yang mereka layani — serta pada kesaksian Kerajaan Allah yang dipanggil untuk dibangun oleh pemimpin-pemimpin tersebut. Kondisi sistemik yang mendorong kelelahan perlu berubah, begitu pula cara kelelahan dipandang oleh pekerja dan pemimpin. Dengan perhatian yang jujur terhadap kebijakan, struktur, dan budaya di dalam organisasi kita, mereka yang memimpin pekerja lintas budaya dapat menciptakan lingkungan di mana orang-orang benar-benar berkembang.⁹",
+              lang
+            )}
+          </p>
+        </div>
+      </section>
+
+      {/* ============================================================
           SECTION 1 -- The Call That Broke Me
           ============================================================ */}
       <section style={{ background: offWhite, ...sectionPadding }}>
         <div style={containerStyle}>
-          <p style={eyebrowStyle}>
-            {t("THE COST NOBODY NAMES", "HARGA YANG TIDAK PERNAH DIUCAPKAN", lang)}
-          </p>
           <h2 style={h2Style()}>
-            {t("The Call That Broke Me", "Panggilan yang Menghancurkan Saya", lang)}
+            {t("Nobody saw it coming.", "Tidak ada yang menduga.", lang)}
           </h2>
           <p style={bodyStyle()}>
             {t(
@@ -348,20 +485,6 @@ export default function UnderstandingBurnoutClient({
               "Lima tahun dalam pelayanan lintas budaya, di sebuah kota jauh dari rumah, seorang pemimpin menghasilkan buah yang nyata. Tim bertumbuh. Program berjalan. Berdasarkan ukuran eksternal mana pun, pekerjaan itu berhasil. Yang tidak terlihat siapa pun (termasuk pemimpin itu sendiri) adalah biaya yang menumpuk di balik permukaan. Jam-jam dini hari yang dulunya terasa seperti persekutuan mulai terasa seperti mengejar ketertinggalan. Orang-orang yang dilayani mulai terasa seperti beban. Ketika keruntuhan itu tiba, tidak ada seorang pun, termasuk pemimpin itu sendiri, yang melihatnya datang.",
               lang
             )}
-          </p>
-          <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.78rem", color: bodyText, lineHeight: 1.5, marginTop: "-0.75rem", marginBottom: "1.25rem" }}>
-            <a
-              href="https://www.frontiersin.org/journals/public-health/articles/10.3389/fpubh.2024.1326227/full"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: navy, textDecoration: "underline", textUnderlineOffset: "2px" }}
-            >
-              {t(
-                "⁶ Abdul Aziz & Ong, \"Prevalence and associated factors of burnout among working adults in Southeast Asia,\" Frontiers in Public Health, 2024",
-                "⁶ Abdul Aziz & Ong, \"Prevalensi dan faktor terkait kelelahan pada pekerja dewasa di Asia Tenggara,\" Frontiers in Public Health, 2024",
-                lang
-              )}
-            </a>
           </p>
         </div>
       </section>
@@ -377,11 +500,224 @@ export default function UnderstandingBurnoutClient({
           </h2>
           <p style={bodyStyle()}>
             {t(
-              "Burnout is not a personality weakness, a faith failure, or simply working too hard. The World Health Organization¹ classifies it as an occupational phenomenon: a syndrome resulting from chronic workplace stress that has not been successfully managed. Three dimensions define it: exhaustion (energy depletion), cynicism (growing distance and negativism toward the work and people in it), and reduced efficacy² (loss of confidence in one's own competence and impact). These three dimensions can operate independently. A leader can be exhausted but still engaged, or disengaged without being physically depleted.",
-              "Kelelahan bukan kelemahan kepribadian, kegagalan iman, atau sekadar terlalu banyak bekerja. Organisasi Kesehatan Dunia¹ mengklasifikasikannya sebagai fenomena pekerjaan: sebuah sindrom yang diakibatkan oleh stres kerja kronis yang tidak berhasil dikelola. Tiga dimensi mendefinisikannya: kelelahan (penipisan energi), sinisme (jarak dan negativisme yang berkembang terhadap pekerjaan dan orang-orang di dalamnya), dan berkurangnya efikasi² (hilangnya kepercayaan pada kompetensi dan dampak diri sendiri). Ketiga dimensi ini dapat beroperasi secara independen. Seorang pemimpin bisa kelelahan tetapi tetap terlibat, atau tidak terlibat tanpa fisik yang terkuras.",
+              "Burnout is not a personality weakness, a faith failure, or simply working too hard. According to the World Health Organization¹, burnout is a syndrome resulting from chronic, unmanaged workplace stress. It is characterized by three main manifestations:",
+              "Kelelahan bukan kelemahan kepribadian, kegagalan iman, atau sekadar terlalu banyak bekerja. Menurut Organisasi Kesehatan Dunia¹, kelelahan adalah sebuah sindrom yang diakibatkan oleh stres kerja kronis yang tidak berhasil dikelola. Sindrom ini dicirikan oleh tiga manifestasi utama:",
               lang
             )}
           </p>
+          <ul style={{
+            listStyle: "none", padding: 0, margin: "1.5rem 0 2rem",
+            display: "flex", flexDirection: "column" as const, gap: "1rem",
+          }}>
+            {[
+              {
+                label: t("Exhaustion", "Kelelahan", lang),
+                body: t(
+                  "occurs when physical, emotional, mental, or relational resources are depleted. It is the experience of having nothing left to give — not just tiredness, but depletion at the level of identity and capacity.",
+                  "terjadi ketika sumber daya fisik, emosional, mental, atau relasional habis terkuras. Ini adalah pengalaman tidak memiliki apa-apa lagi untuk diberikan — bukan sekadar kelelahan, melainkan penipisan pada tingkat identitas dan kapasitas.",
+                  lang
+                ),
+              },
+              {
+                label: t("Cynicism", "Sinisme", lang),
+                body: t(
+                  "emerges when emotions begin to take over, producing increased negativity toward the work, the people in it, and the leader's own calling. It is a defensive response to sustained depletion — and one that is difficult to reverse once established.",
+                  "muncul ketika emosi mulai mengambil alih, menghasilkan negativitas yang semakin meningkat terhadap pekerjaan, orang-orang di dalamnya, dan panggilan pemimpin itu sendiri. Ini adalah respons defensif terhadap penipisan yang berkelanjutan — dan sulit untuk dibalik begitu sudah terjadi.",
+                  lang
+                ),
+              },
+              {
+                label: t("Reduced Professional Efficacy", "Berkurangnya Efikasi Profesional", lang),
+                body: t(
+                  "develops as a growing sense of ineffectiveness sets in. Leaders in this phase continue to work — sometimes intensively — while becoming increasingly convinced that their effort is making no meaningful difference. This conviction feels like realism, which is what makes it so difficult to counter.",
+                  "berkembang seiring dengan munculnya rasa tidak efektif yang semakin besar. Pemimpin dalam fase ini terus bekerja — terkadang dengan intensif — sambil semakin yakin bahwa upaya mereka tidak membuat perbedaan yang berarti. Keyakinan ini terasa seperti realisme, itulah yang membuatnya sangat sulit untuk dilawan.",
+                  lang
+                ),
+              },
+            ].map(({ label, body }) => (
+              <li key={label} style={{
+                display: "flex", gap: "1rem", alignItems: "flex-start",
+                padding: "1rem 1.25rem",
+                background: "#fff",
+                borderRadius: 8,
+                borderLeft: `3px solid ${orange}`,
+              }}>
+                <div>
+                  <span style={{
+                    fontFamily: "Montserrat, sans-serif", fontSize: "0.85rem",
+                    fontWeight: 700, color: navy, display: "block", marginBottom: 4,
+                  }}>
+                    {label}
+                  </span>
+                  <span style={{
+                    fontFamily: "Montserrat, sans-serif", fontSize: "0.9rem",
+                    lineHeight: 1.7, color: bodyText,
+                  }}>
+                    {body}
+                  </span>
+                </div>
+              </li>
+            ))}
+          </ul>
+
+          {/* Warning Signs of Burnout — Paula Davis */}
+          <div style={{ margin: "2.5rem 0" }}>
+            <h3 style={{
+              fontFamily: "Montserrat, sans-serif",
+              fontSize: "clamp(14px, 1.8vw, 17px)",
+              fontWeight: 700,
+              color: navy,
+              letterSpacing: "0.04em",
+              textTransform: "uppercase" as const,
+              marginBottom: "1rem",
+              marginTop: 0,
+            }}>
+              {t("Warning Signs of Burnout", "Tanda-Tanda Peringatan Kelelahan", lang)}⁸
+            </h3>
+
+            {/* Desktop table — hidden on mobile */}
+            <style>{`
+              .wst-table { display: grid; }
+              .wst-stacked { display: none; }
+              @media (max-width: 639px) {
+                .wst-table { display: none; }
+                .wst-stacked { display: flex; }
+              }
+            `}</style>
+
+            <div className="wst-table" style={{
+              gridTemplateColumns: "1fr 1fr 1fr",
+              borderRadius: 8, overflow: "hidden",
+              border: `1px solid ${lightGray}`,
+              fontSize: "clamp(12px, 1.5vw, 14px)",
+              fontFamily: "Montserrat, sans-serif",
+            }}>
+              {/* Header row */}
+              {[
+                t("Physical", "Fisik", lang),
+                t("Psychological", "Psikologis", lang),
+                t("Behavioral", "Perilaku", lang),
+              ].map((header, i) => (
+                <div key={i} style={{
+                  background: navy, color: offWhite,
+                  fontWeight: 700, letterSpacing: "0.06em",
+                  textTransform: "uppercase" as const,
+                  padding: "10px 14px",
+                  borderRight: i < 2 ? `1px solid rgba(255,255,255,0.12)` : undefined,
+                }}>
+                  {header}
+                </div>
+              ))}
+              {/* Data rows */}
+              {[
+                [
+                  t("Chronic fatigue", "Kelelahan kronis", lang),
+                  t("Anxiety", "Kecemasan", lang),
+                  t("Productivity decline", "Penurunan produktivitas", lang),
+                ],
+                [
+                  t("Insomnia", "Insomnia", lang),
+                  t("Depression", "Depresi", lang),
+                  t("Absenteeism", "Absenteisme", lang),
+                ],
+                [
+                  t("Frequent illness", "Sering sakit", lang),
+                  t("Anger/irritability", "Marah/mudah tersinggung", lang),
+                  t("Neglecting responsibilities", "Mengabaikan tanggung jawab", lang),
+                ],
+                [
+                  t("Physical pain", "Nyeri fisik", lang),
+                  t("Loss of enjoyment", "Kehilangan kesenangan", lang),
+                  t("Social withdrawal", "Menarik diri dari lingkungan sosial", lang),
+                ],
+                [
+                  t("Loss of appetite", "Kehilangan nafsu makan", lang),
+                  t("Pessimism", "Pesimisme", lang),
+                  t("Increased substance use", "Peningkatan penggunaan zat", lang),
+                ],
+                [
+                  t("Dizziness / headaches", "Pusing / sakit kepala", lang),
+                  t("Feeling trapped", "Merasa terjebak", lang),
+                  t("Taking longer to complete tasks", "Butuh waktu lebih lama untuk menyelesaikan tugas", lang),
+                ],
+              ].map((row, ri) =>
+                row.map((cell, ci) => (
+                  <div key={`${ri}-${ci}`} style={{
+                    padding: "9px 14px",
+                    background: ri % 2 === 0 ? "#fff" : "oklch(96% 0.005 80)",
+                    borderTop: `1px solid ${lightGray}`,
+                    borderRight: ci < 2 ? `1px solid ${lightGray}` : undefined,
+                    color: bodyText,
+                    lineHeight: 1.4,
+                  }}>
+                    {cell}
+                  </div>
+                ))
+              )}
+            </div>
+
+            {/* Mobile stacked list */}
+            <div className="wst-stacked" style={{ flexDirection: "column" as const, gap: "1rem" }}>
+              {[
+                {
+                  cat: t("Physical", "Fisik", lang),
+                  items: [
+                    t("Chronic fatigue", "Kelelahan kronis", lang),
+                    t("Insomnia", "Insomnia", lang),
+                    t("Frequent illness", "Sering sakit", lang),
+                    t("Physical pain", "Nyeri fisik", lang),
+                    t("Loss of appetite", "Kehilangan nafsu makan", lang),
+                    t("Dizziness / headaches", "Pusing / sakit kepala", lang),
+                  ],
+                },
+                {
+                  cat: t("Psychological", "Psikologis", lang),
+                  items: [
+                    t("Anxiety", "Kecemasan", lang),
+                    t("Depression", "Depresi", lang),
+                    t("Anger/irritability", "Marah/mudah tersinggung", lang),
+                    t("Loss of enjoyment", "Kehilangan kesenangan", lang),
+                    t("Pessimism", "Pesimisme", lang),
+                    t("Feeling trapped", "Merasa terjebak", lang),
+                  ],
+                },
+                {
+                  cat: t("Behavioral", "Perilaku", lang),
+                  items: [
+                    t("Productivity decline", "Penurunan produktivitas", lang),
+                    t("Absenteeism", "Absenteisme", lang),
+                    t("Neglecting responsibilities", "Mengabaikan tanggung jawab", lang),
+                    t("Social withdrawal", "Menarik diri dari lingkungan sosial", lang),
+                    t("Increased substance use", "Peningkatan penggunaan zat", lang),
+                    t("Taking longer to complete tasks", "Butuh waktu lebih lama untuk menyelesaikan tugas", lang),
+                  ],
+                },
+              ].map(({ cat, items }) => (
+                <div key={cat} style={{ borderRadius: 8, overflow: "hidden", border: `1px solid ${lightGray}` }}>
+                  <div style={{
+                    background: navy, color: offWhite, fontWeight: 700,
+                    fontSize: 12, letterSpacing: "0.08em",
+                    textTransform: "uppercase" as const,
+                    padding: "8px 14px",
+                    fontFamily: "Montserrat, sans-serif",
+                  }}>
+                    {cat}
+                  </div>
+                  <ul style={{ margin: 0, padding: "8px 14px 12px", listStyle: "disc", paddingLeft: 30 }}>
+                    {items.map((item) => (
+                      <li key={item} style={{
+                        fontFamily: "Montserrat, sans-serif",
+                        fontSize: 13, color: bodyText,
+                        lineHeight: 1.5, marginBottom: 4,
+                      }}>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
 
           {/* Concept Cards -- 3 subtypes */}
           <div
@@ -602,6 +938,145 @@ export default function UnderstandingBurnoutClient({
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================
+          SECTION — Systemic Causes of Burnout
+          ============================================================ */}
+      <section style={{ background: offWhite, padding: "5rem 1.5rem" }}>
+        <div style={{ maxWidth: "860px", margin: "0 auto" }}>
+          <p style={{
+            fontFamily: "Montserrat, sans-serif",
+            fontSize: "0.75rem",
+            fontWeight: 700,
+            letterSpacing: "0.12em",
+            textTransform: "uppercase" as const,
+            color: orange,
+            marginBottom: "0.5rem",
+            marginTop: 0,
+          }}>
+            {t("WHAT THE RESEARCH SHOWS", "APA YANG DITUNJUKKAN PENELITIAN", lang)}
+          </p>
+          <h2 style={{
+            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontSize: "clamp(30px, 4.5vw, 52px)",
+            fontWeight: 600,
+            lineHeight: 1.1,
+            color: navy,
+            marginBottom: "1.5rem",
+            marginTop: 0,
+          }}>
+            {t("When the System Is Part of the Problem", "Ketika Sistemlah yang Menjadi Bagian dari Masalah", lang)}
+          </h2>
+          <p style={{
+            fontFamily: "Montserrat, sans-serif",
+            fontSize: "clamp(15px, 1.8vw, 17px)",
+            lineHeight: 1.8,
+            color: bodyText,
+            marginBottom: "2.5rem",
+            marginTop: 0,
+          }}>
+            {t(
+              "Burnout is rarely just a personal failure. Research consistently points to organizational and systemic conditions as primary drivers. Christina Maslach and Michael Leiter² identify six areas where mismatches between a person and their work environment create the conditions for burnout — regardless of the individual's resilience, character, or faith.",
+              "Kelelahan jarang hanya merupakan kegagalan pribadi. Penelitian secara konsisten menunjuk pada kondisi organisasi dan sistem sebagai pendorong utama. Christina Maslach dan Michael Leiter² mengidentifikasi enam area di mana ketidaksesuaian antara seseorang dan lingkungan kerjanya menciptakan kondisi untuk kelelahan — terlepas dari ketahanan, karakter, atau iman individu tersebut.",
+              lang
+            )}
+          </p>
+
+          {/* Hub-and-spoke SVG diagram */}
+          <BurnoutCausesSpoke lang={lang} />
+
+          {/* 6 systemic cause cards */}
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+            gap: "1.25rem",
+            marginTop: "2.5rem",
+          }}>
+            {[
+              {
+                title: t("Lack of Control", "Kurangnya Kendali", lang),
+                body: t(
+                  "When leaders have little say over the decisions, resources, or pace that affect their work, the result is a chronic sense of helplessness. The work continues, but the ability to shape it diminishes. Over time, this erodes agency — and without agency, sustained engagement becomes impossible.",
+                  "Ketika para pemimpin memiliki sedikit kendali atas keputusan, sumber daya, atau tempo yang mempengaruhi pekerjaan mereka, hasilnya adalah rasa tidak berdaya yang kronis. Pekerjaan terus berlanjut, tetapi kemampuan untuk membentuknya berkurang. Seiring waktu, ini mengikis agensi — dan tanpa agensi, keterlibatan yang berkelanjutan menjadi tidak mungkin.",
+                  lang
+                ),
+              },
+              {
+                title: t("Lack of Reward", "Kurangnya Penghargaan", lang),
+                body: t(
+                  "Reward is not only financial. When contribution goes unacknowledged — by supervisors, teams, or the broader community — the intrinsic motivation that sustains cross-cultural workers begins to erode. The question 'does my work matter?' starts to go unanswered, and the silence becomes its own kind of weight.",
+                  "Penghargaan bukan hanya soal finansial. Ketika kontribusi tidak diakui — oleh atasan, tim, atau komunitas yang lebih luas — motivasi intrinsik yang menopang para pekerja lintas budaya mulai terkikis. Pertanyaan 'apakah pekerjaan saya berarti?' mulai tidak terjawab, dan keheningan itu menjadi bebannya sendiri.",
+                  lang
+                ),
+              },
+              {
+                title: t("Values Mismatch", "Ketidaksesuaian Nilai", lang),
+                body: t(
+                  "When the organization asks for things that conflict with what the leader believes matters — whether in ethics, priorities, or methodology — the dissonance is not abstract. It is felt in every decision, every meeting, every report. Over time, the cost of maintaining integrity in a misaligned system is one of the most consistent predictors of burnout.",
+                  "Ketika organisasi meminta hal-hal yang bertentangan dengan apa yang diyakini pemimpin sebagai penting — baik dalam etika, prioritas, maupun metodologi — disonans ini bukan sesuatu yang abstrak. Ini dirasakan dalam setiap keputusan, setiap pertemuan, setiap laporan. Seiring waktu, biaya mempertahankan integritas dalam sistem yang tidak selaras adalah salah satu prediktor kelelahan yang paling konsisten.",
+                  lang
+                ),
+              },
+              {
+                title: t("Work Overload", "Beban Kerja Berlebih", lang),
+                body: t(
+                  "Sustained overload — not temporary intensity — is the most direct path to exhaustion. In cross-cultural contexts, role boundaries are frequently unclear, reporting lines often span time zones, and the sense of responsibility to the work rarely turns off. The result is not just busyness: it is the slow depletion of the very resources needed to sustain the work.",
+                  "Beban berlebih yang berkelanjutan — bukan intensitas sementara — adalah jalur paling langsung menuju kelelahan. Dalam konteks lintas budaya, batas peran sering kali tidak jelas, jalur pelaporan seringkali merentang lintas zona waktu, dan rasa tanggung jawab terhadap pekerjaan jarang mati. Hasilnya bukan sekadar kesibukan: melainkan penipisan perlahan dari sumber daya yang justru dibutuhkan untuk mempertahankan pekerjaan.",
+                  lang
+                ),
+              },
+              {
+                title: t("Lack of Community", "Kurangnya Komunitas", lang),
+                body: t(
+                  "Cross-cultural workers are uniquely vulnerable to isolation — geographically, culturally, and relationally. When genuine community is absent, there is no one to name the warning signs, no one to carry part of the weight, no one to reflect back what is being lost. The research is consistent: social support is not a comfort, it is a structural protection against burnout.",
+                  "Pekerja lintas budaya sangat rentan terhadap isolasi — secara geografis, budaya, dan relasional. Ketika komunitas yang sejati tidak ada, tidak ada yang bisa menyebutkan tanda-tanda peringatan, tidak ada yang bisa menanggung sebagian beban, tidak ada yang bisa mencerminkan kembali apa yang sedang hilang. Penelitian ini konsisten: dukungan sosial bukan sekadar kenyamanan, melainkan perlindungan struktural terhadap kelelahan.",
+                  lang
+                ),
+              },
+              {
+                title: t("Lack of Fairness", "Kurangnya Keadilan", lang),
+                body: t(
+                  "When leaders observe inconsistency in how decisions are made — who receives support, who carries the heaviest loads, whose concerns are heard and whose are dismissed — the cumulative effect is a loss of trust in the system itself. This erosion of trust is one of the more insidious burnout drivers because it is relational and often unspoken.",
+                  "Ketika pemimpin mengamati inkonsistensi dalam cara keputusan dibuat — siapa yang mendapat dukungan, siapa yang menanggung beban paling berat, siapa yang keprihatinannya didengar dan siapa yang diabaikan — efek kumulatifnya adalah hilangnya kepercayaan pada sistem itu sendiri. Erosi kepercayaan ini adalah salah satu pendorong kelelahan yang lebih berbahaya karena bersifat relasional dan sering kali tidak terucapkan.",
+                  lang
+                ),
+              },
+            ].map(({ title, body }) => (
+              <div
+                key={title}
+                style={{
+                  background: navy,
+                  borderRadius: 10,
+                  padding: "1.5rem",
+                  display: "flex",
+                  flexDirection: "column" as const,
+                  gap: "0.75rem",
+                }}
+              >
+                <h3 style={{
+                  fontFamily: "Montserrat, sans-serif",
+                  fontSize: "0.95rem",
+                  fontWeight: 700,
+                  color: orange,
+                  margin: 0,
+                  letterSpacing: "0.02em",
+                }}>
+                  {title}
+                </h3>
+                <p style={{
+                  fontFamily: "Montserrat, sans-serif",
+                  fontSize: "0.88rem",
+                  lineHeight: 1.75,
+                  color: "oklch(82% 0.03 260)",
+                  margin: 0,
+                }}>
+                  {body}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -1003,18 +1478,18 @@ export default function UnderstandingBurnoutClient({
       </section>
 
       {/* ============================================================
-          SECTION 5 -- The Three Paths Out
+          SECTION 5 -- Prevention: Three Patterns That Lead to Burnout
           ============================================================ */}
       <section style={{ background: offWhite, ...sectionPadding }}>
         <div style={containerStyle}>
-          <p style={eyebrowStyle}>{t("THE RESPONSE", "RESPONSNYA", lang)}</p>
+          <p style={eyebrowStyle}>{t("PREVENTION", "PENCEGAHAN", lang)}</p>
           <h2 style={h2Style()}>
-            {t("The Three Paths Out", "Tiga Jalan Keluar", lang)}
+            {t("Three Patterns That Lead to Burnout", "Tiga Pola yang Menuju Kelelahan", lang)}
           </h2>
           <p style={bodyStyle()}>
             {t(
-              "The right response to burnout depends on which pattern you are in. A frenetic worker needs something different from an underchallenged worker, and both need something different from a worn-out worker. What follows are three targeted pathways, one for each subtype. Find the one that matches your assessment result.",
-              "Respons yang tepat terhadap kelelahan tergantung pada pola mana yang Anda alami. Pekerja frenetic membutuhkan sesuatu yang berbeda dari pekerja underchallenged, dan keduanya membutuhkan sesuatu yang berbeda dari pekerja worn-out. Berikut adalah tiga jalur yang ditargetkan, satu untuk setiap subtipe. Temukan yang sesuai dengan hasil penilaian Anda.",
+              "Burnout doesn't announce itself. Each of the three subtypes has a distinctive pattern — a set of habits, pressures, and responses that, if left unchecked, deepen into the full syndrome. The goal here is not recovery from burnout already established. It is recognition and early action: seeing the path you are on, and choosing to turn while there is still room to turn.",
+              "Kelelahan tidak mengumumkan dirinya sendiri. Setiap dari tiga subtipe memiliki pola tersendiri — serangkaian kebiasaan, tekanan, dan respons yang, jika tidak ditangani, akan semakin dalam menjadi sindrom penuh. Tujuan di sini bukan pemulihan dari kelelahan yang sudah terjadi. Ini adalah pengenalan dan tindakan dini: melihat jalur yang Anda tempuh, dan memilih untuk berbalik selagi masih ada ruang untuk berbalik.",
               lang
             )}
           </p>
@@ -1023,16 +1498,16 @@ export default function UnderstandingBurnoutClient({
           {[
             {
               key: "frenetic",
-              title: t("If you are frenetic: permission to stop", "Jika Anda frenetic: izin untuk berhenti", lang),
+              title: t("If you tend toward frenetic: build in permission to stop", "Jika Anda cenderung frenetic: bangun izin untuk berhenti", lang),
               body: t(
-                "The primary intervention is identity-based permission to stop: not efficiency advice or better time management. Build non-negotiable recovery anchors into the week as structural commitments, not suggestions. Identify one person who has explicit permission to name the warning signs when they appear. Return to the question of whether the work is held as servant or master of your calling. Walter Brueggemann's⁷ observation applies directly here: in a culture that treats availability as virtue and busyness as faithfulness, choosing to stop is a theological statement. The fourth commandment was not a productivity recommendation. It was a declaration of freedom.",
-                "Intervensi utama adalah izin berbasis identitas untuk berhenti: bukan saran efisiensi atau manajemen waktu yang lebih baik. Bangun jangkar pemulihan yang tidak bisa dinegosiasikan ke dalam minggu sebagai komitmen struktural, bukan saran. Identifikasi satu orang yang memiliki izin eksplisit untuk menamai tanda-tanda peringatan ketika mereka muncul. Kembalilah ke pertanyaan apakah pekerjaan dipegang sebagai pelayan atau tuan dari panggilan Anda. Pengamatan Walter Brueggemann⁷ berlaku langsung di sini: dalam budaya yang memperlakukan ketersediaan sebagai kebajikan dan kesibukan sebagai kesetiaan, memilih untuk berhenti adalah pernyataan teologis. Perintah keempat bukanlah rekomendasi produktivitas. Itu adalah deklarasi kebebasan.",
+                "The earliest intervention for this pattern — before depletion sets in — is identity-based permission to stop: not efficiency advice or better time management. Build non-negotiable recovery anchors into the week as structural commitments, not suggestions. Identify one person who has explicit permission to name the warning signs when they appear. Return now to the question of whether the work is held as servant or master of your calling. Walter Brueggemann's⁷ observation applies directly here: in a culture that treats availability as virtue and busyness as faithfulness, choosing to stop is a theological statement. The fourth commandment was not a productivity recommendation. It was a declaration of freedom.",
+                "Intervensi paling awal untuk pola ini — sebelum kelelahan benar-benar melanda — adalah izin berbasis identitas untuk berhenti: bukan saran efisiensi atau manajemen waktu yang lebih baik. Bangun jangkar pemulihan yang tidak bisa dinegosiasikan ke dalam minggu sebagai komitmen struktural, bukan sekadar saran. Identifikasi satu orang yang memiliki izin eksplisit untuk menamai tanda-tanda peringatan ketika mereka muncul. Kembalilah sekarang ke pertanyaan apakah pekerjaan dipegang sebagai pelayan atau tuan dari panggilan Anda. Pengamatan Walter Brueggemann⁷ berlaku langsung di sini: dalam budaya yang memperlakukan ketersediaan sebagai kebajikan dan kesibukan sebagai kesetiaan, memilih untuk berhenti adalah pernyataan teologis. Perintah keempat bukanlah rekomendasi produktivitas. Itu adalah deklarasi kebebasan.",
                 lang
               ),
             },
             {
               key: "underchallenged",
-              title: t("If you are underchallenged: renewed purpose", "Jika Anda underchallenged: tujuan yang diperbarui", lang),
+              title: t("If you tend toward underchallenged: pursue renewed purpose now", "Jika Anda cenderung underchallenged: temukan tujuan yang diperbarui sekarang", lang),
               body: t(
                 "The intervention here is renewed purpose and craft challenge, not more rest. Have an honest conversation with leadership about role fit, skill match, and how your best contribution is actually being used. Build peer relationships with people doing substantive work in your field. Ask the specific question beneath the general one: not just 'am I called to this kind of work?' but 'what is the particular thing I am made to do, and is there room for it here?' The Jethro model from Exodus 18 is relevant: Jethro did not tell Moses to pray more or manage his stress better. He looked at the structure and said it was not good, and then he changed the structure.",
                 "Intervensi di sini adalah tujuan yang diperbarui dan tantangan kerajinan, bukan lebih banyak istirahat. Lakukan percakapan jujur dengan kepemimpinan tentang kesesuaian peran, kecocokan keterampilan, dan bagaimana kontribusi terbaik Anda sebenarnya digunakan. Bangun hubungan rekan dengan orang-orang yang melakukan pekerjaan substantif di bidang Anda. Ajukan pertanyaan spesifik di balik pertanyaan umum: bukan hanya 'apakah saya dipanggil untuk jenis pekerjaan ini?' tetapi 'apa hal khusus yang saya diciptakan untuk lakukan, dan apakah ada ruang untuk itu di sini?' Model Yitro dari Keluaran 18 relevan: Yitro tidak memberitahu Musa untuk lebih berdoa atau mengelola stresnya dengan lebih baik. Ia melihat strukturnya dan berkata itu tidak baik, dan kemudian ia mengubah strukturnya.",
@@ -1041,10 +1516,10 @@ export default function UnderstandingBurnoutClient({
             },
             {
               key: "worn-out",
-              title: t("If you are worn-out: honest assessment", "Jika Anda worn-out: penilaian yang jujur", lang),
+              title: t("If you see worn-out signs: seek honest assessment today", "Jika Anda melihat tanda-tanda worn-out: cari penilaian jujur sekarang", lang),
               body: t(
-                "This pattern is the most serious and requires honest assessment of whether recovery is possible within the current system without structural change, or whether a period of leave, clinical support, or a role change is needed. Worn-out burnout does not respond well to individual practices alone: the structural and relational drivers need to change. This module can offer a framework and a starting point. It cannot replace a trusted counsellor, a wise supervisor, a doctor, or a member care worker. If you scored in this range, the most important next step is not to read more content. It is to tell one person the truth about where you actually are today.",
-                "Pola ini adalah yang paling serius dan memerlukan penilaian jujur apakah pemulihan mungkin dalam sistem saat ini tanpa perubahan struktural, atau apakah diperlukan periode cuti, dukungan klinis, atau perubahan peran. Kelelahan worn-out tidak merespons dengan baik terhadap praktik individu saja: pendorong struktural dan relasional perlu berubah. Modul ini dapat menawarkan kerangka kerja dan titik awal. Ini tidak dapat menggantikan konselor yang dipercaya, pengawas yang bijak, dokter, atau pekerja perawatan anggota. Jika Anda mendapat skor dalam rentang ini, langkah terpenting selanjutnya bukanlah membaca lebih banyak konten. Melainkan menceritakan kebenaran kepada satu orang tentang posisi Anda sebenarnya hari ini.",
+                "This is the pattern where the window to act is narrowing. When worn-out signs appear — apathy, detachment, the sense that effort no longer matters — the most important move is honest assessment before the trajectory tips further. The question is not whether you can push through. It is whether you can see clearly enough to act now. The structural and relational drivers that produce this pattern need to change, not just individual coping strategies. This module can offer a framework and a starting point. It cannot replace a trusted counsellor, a wise supervisor, a doctor, or a member care worker. If you are showing signs in this range, the most important next step is not more content. It is to tell one person the truth about where you actually are today.",
+                "Ini adalah pola di mana jendela untuk bertindak semakin menyempit. Ketika tanda-tanda worn-out muncul — apatis, terlepas, perasaan bahwa upaya tidak lagi berarti — langkah terpenting adalah penilaian jujur sebelum lintasan semakin dalam. Pertanyaannya bukan apakah Anda bisa terus bertahan. Melainkan apakah Anda bisa melihat dengan cukup jelas untuk bertindak sekarang. Pendorong struktural dan relasional yang menghasilkan pola ini perlu berubah, bukan hanya strategi koping individu. Modul ini dapat menawarkan kerangka kerja dan titik awal. Ini tidak dapat menggantikan konselor yang dipercaya, pengawas yang bijak, dokter, atau pekerja perawatan anggota. Jika Anda menunjukkan tanda-tanda dalam rentang ini, langkah terpenting selanjutnya bukan lebih banyak konten. Melainkan menceritakan kebenaran kepada satu orang tentang posisi Anda sebenarnya hari ini.",
                 lang
               ),
             },
@@ -1724,6 +2199,38 @@ export default function UnderstandingBurnoutClient({
           >
             {bgOpen ? "Close ↑" : "Read the research →"}
           </button>
+
+          {/* Lausanne connection card */}
+          <a
+            href="https://lausanne.org/global-analysis/burnout-among-missionaries"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: "flex", alignItems: "center", gap: 14,
+              background: navy, borderRadius: 12, padding: "14px 18px",
+              textDecoration: "none", marginBottom: 24,
+              border: `1px solid rgba(255,255,255,0.1)`,
+              transition: "opacity 0.2s",
+            }}
+            onMouseOver={e => (e.currentTarget.style.opacity = "0.85")}
+            onMouseOut={e => (e.currentTarget.style.opacity = "1")}
+          >
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0 }}>
+              <circle cx="7" cy="12" r="4.5" stroke={orange} strokeWidth="1.8" />
+              <circle cx="17" cy="12" r="4.5" stroke={offWhite} strokeWidth="1.8" />
+              <line x1="11.2" y1="9.5" x2="12.8" y2="14.5" stroke="rgba(255,255,255,0.35)" strokeWidth="1.2" />
+            </svg>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <p style={{ margin: "0 0 3px", fontFamily: "Montserrat, sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: orange }}>
+                {t("Lausanne Movement", "Gerakan Lausanne", lang)}
+              </p>
+              <p style={{ margin: 0, fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 600, color: offWhite, lineHeight: 1.35 }}>
+                {t("Burnout Among Missionaries", "Burnout di Kalangan Misionaris", lang)}
+              </p>
+            </div>
+            <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: orange, flexShrink: 0 }}>↗</span>
+          </a>
+
           {bgOpen && [
             "Christina Maslach's burnout model remains the most rigorously validated framework in the field after more than four decades of research.² Her three-dimensional model — emotional exhaustion, depersonalisation (or cynicism), and reduced sense of personal efficacy — identifies not a single symptom but a progressive syndrome that develops in stages. The Maslach Burnout Inventory, developed from her framework, has been administered in hundreds of studies across dozens of countries and remains the gold standard instrument for measuring burnout in research and clinical contexts. Understanding burnout begins with understanding that it is not a single event but a trajectory.",
             "The distinction between stress and burnout matters clinically and practically, and the confusion between them is one of the most common reasons early burnout goes unaddressed.² Stress is characterised by overengagement: too many demands, too much urgency, too much emotional activation. Burnout is characterised by disengagement: emotional numbness, loss of meaning, withdrawal from connection. Stress says everything matters too much; burnout says nothing matters enough. A leader attempting to recover from burnout by applying stress-management techniques — working harder, pushing through, maintaining high output — is accelerating the syndrome, not reversing it.",
@@ -1752,6 +2259,8 @@ export default function UnderstandingBurnoutClient({
         "⁵ Bruce S. McEwen — \"Stressed or stressed out: What is the difference?\" (Journal of Psychiatry & Neuroscience, 2005) — Documents how chronic cortisol elevation impairs prefrontal cortex function and sensitises the amygdala, underpinning the neuroscience section.",
         "⁶ Abdul Aziz & Ong — \"Prevalence and associated factors of burnout among working adults in Southeast Asia\" (Frontiers in Public Health, 2024) — Regional prevalence data providing context for cross-cultural ministry leaders in Southeast Asia.",
         "⁷ Walter Brueggemann — Sabbath as Resistance: Saying No to the Culture of Now (Westminster John Knox Press, 2014) — Theological framing of Sabbath rest as a counter-cultural act of freedom, cited in the frenetic pathway.",
+        "⁸ Paula Davis — Beating Burnout at Work: Why Teams Hold the Secret to Well-Being and Resilience (Wharton School Press, University of Pennsylvania, 2021), pp.10–11 — Source for the Warning Signs of Burnout table (physical, psychological, and behavioral indicators).",
+        "⁹ Lausanne Movement — \"Burnout Among Missionaries\" (Lausanne Global Analysis, 2024) — Source for the systemic conditions framework and the opening paragraph on organizational drivers of burnout. https://lausanne.org/global-analysis/burnout-among-missionaries",
       ]} lang={lang} />
 
       {/* Fade-in keyframe for emotion reflection */}
