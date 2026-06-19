@@ -857,26 +857,6 @@ export default function LeadersReadersClient({
             </div>
           )}
 
-          {/* Metadata pill */}
-          <span
-            style={{
-              display: "inline-block",
-              fontFamily: FONT,
-              fontSize: "0.72rem",
-              fontWeight: 600,
-              color: "oklch(65% 0.04 260)",
-              border: "1px solid oklch(38% 0.08 260)",
-              borderRadius: 100,
-              padding: "5px 14px",
-              letterSpacing: "0.04em",
-            }}
-          >
-            {t(
-              "12 min read · Personal Growth",
-              "12 menit baca · Pengembangan Pribadi",
-              lang
-            )}
-          </span>
         </div>
       </section>
 
