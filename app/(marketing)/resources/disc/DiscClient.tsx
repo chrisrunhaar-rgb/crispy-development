@@ -646,7 +646,6 @@ export default function DiscClient({
                 </svg>
                 {lang === "en" ? "All Types" : "Semua Tipe"}
               </button>
-              <LangToggle />
             </div>
 
             {/* Modal content */}
@@ -670,7 +669,7 @@ export default function DiscClient({
                 color: "oklch(96% 0.005 80)", fontFamily: "Montserrat, sans-serif",
                 fontWeight: 700, fontSize: "0.75rem", letterSpacing: "0.12em",
                 textTransform: "uppercase", padding: "0.35rem 1rem", marginBottom: "1.25rem",
-                borderRadius: "9999px",
+                borderRadius: "12px",
               }}>
                 {type.key} — {tr(type.label)}
               </span>
@@ -984,12 +983,14 @@ export default function DiscClient({
                 textTransform: "uppercase",
                 padding: "0.875rem 2rem",
                 border: "none",
-                borderRadius: "9999px",
+                borderRadius: "12px",
                 cursor: "pointer",
                 minHeight: 44,
               }}
             >
-              {lang === "en" ? "Discover Your Style" : "Temukan Gayamu"}
+              {lang === "en"
+                ? (discResult ? "Redo the Test" : "Take the Test")
+                : (discResult ? "Ulangi Tes" : "Mulai Tes")}
             </button>
 
             {/* Ghost CTA */}
@@ -1005,7 +1006,7 @@ export default function DiscClient({
                 textTransform: "uppercase",
                 padding: "0.875rem 2rem",
                 border: "1.5px solid oklch(45% 0.06 260)",
-                borderRadius: "9999px",
+                borderRadius: "12px",
                 cursor: "pointer",
                 minHeight: 44,
               }}
@@ -1013,31 +1014,28 @@ export default function DiscClient({
               {lang === "en" ? "Explore the Styles" : "Jelajahi Keempat Tipe"}
             </button>
 
-            {/* Save button */}
+            {/* Save to dashboard — transparent text */}
             {!saved ? (
               <button
                 onClick={handleSave}
                 disabled={isPending}
-                aria-label={lang === "en" ? "Save to dashboard" : "Simpan ke dashboard"}
                 style={{
                   background: "transparent",
-                  border: "1.5px solid oklch(45% 0.06 260)",
-                  borderRadius: "9999px",
-                  color: "oklch(65% 0.04 260)",
+                  border: "none",
+                  color: "oklch(62% 0.04 260)",
+                  fontFamily: "Montserrat, sans-serif",
+                  fontWeight: 600,
+                  fontSize: "0.8rem",
+                  letterSpacing: "0.06em",
+                  textTransform: "uppercase",
                   cursor: isPending ? "default" : "pointer",
-                  padding: "0.75rem",
+                  padding: "0.75rem 0.5rem",
                   minHeight: 44,
-                  minWidth: 44,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
+                  textDecoration: "underline",
+                  textUnderlineOffset: "3px",
                 }}
               >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
-                  <polyline points="17 21 17 13 7 13 7 21" />
-                  <polyline points="7 3 7 8 15 8" />
-                </svg>
+                {lang === "en" ? "Save to dashboard" : "Simpan ke dashboard"}
               </button>
             ) : (
               <span
@@ -1045,10 +1043,10 @@ export default function DiscClient({
                   fontFamily: "Montserrat, sans-serif",
                   fontSize: "0.8rem",
                   color: "oklch(65% 0.15 45)",
-                  padding: "0.75rem",
+                  padding: "0.75rem 0.5rem",
                 }}
               >
-                {lang === "en" ? "Saved" : "Tersimpan"} ✓
+                {lang === "en" ? "Saved ✓" : "Tersimpan ✓"}
               </span>
             )}
           </div>
@@ -1414,7 +1412,7 @@ export default function DiscClient({
             >
               {lang === "en" ? "Important Context" : "Konteks Penting"}
             </p>
-            <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
               {(lang === "en"
                 ? [
                     { label: "Not a verdict", body: "Your result is a tendency pattern, not a fixed identity. It describes your default behavior under typical conditions. It does not predict how you will act under pressure, growth, grief, or transformation." },
@@ -1427,20 +1425,26 @@ export default function DiscClient({
                     { label: "Tidak dikalibrasi secara universal", body: `DISC dikembangkan terutama dalam konteks penelitian Barat yang individualis. Data Indonesia Hofstede (Indeks Jarak Kekuasaan 78, Individualisme 14) menggambarkan betapa jauhnya asumsi mendasar dari konteks di mana banyak dari kita memimpin. Label "kelemahan" tipe S — pasif, menghindari konflik, butuh persetujuan — mungkin menggambarkan perilaku yang terampil secara budaya dalam konteks Indonesia dan Asia Tenggara lainnya, bukan keterbatasan pribadi.` },
                   ]
               ).map((item) => (
-                <div key={item.label} style={{ display: "flex", gap: "1.25rem", alignItems: "flex-start" }}>
-                  <span
+                <div
+                  key={item.label}
+                  style={{
+                    borderTop: "1px solid oklch(35% 0.06 260)",
+                    paddingTop: "1rem",
+                  }}
+                >
+                  <p
                     style={{
                       fontFamily: "Montserrat, sans-serif",
                       fontWeight: 700,
-                      fontSize: "0.875rem",
+                      fontSize: "0.75rem",
+                      letterSpacing: "0.1em",
+                      textTransform: "uppercase",
                       color: "oklch(65% 0.15 45)",
-                      flexShrink: 0,
-                      minWidth: 120,
-                      paddingTop: "0.1em",
+                      marginBottom: "0.5rem",
                     }}
                   >
                     {item.label}
-                  </span>
+                  </p>
                   <p
                     style={{
                       fontFamily: "Montserrat, sans-serif",
@@ -1782,7 +1786,7 @@ export default function DiscClient({
                   textTransform: "uppercase",
                   padding: "0.875rem 2rem",
                   border: "none",
-                  borderRadius: "9999px",
+                  borderRadius: "12px",
                   cursor: "pointer",
                   minHeight: 44,
                 }}
@@ -2014,7 +2018,7 @@ export default function DiscClient({
                       letterSpacing: "0.06em",
                       textTransform: "uppercase",
                       padding: "0.75rem 1.5rem",
-                      borderRadius: "9999px",
+                      borderRadius: "12px",
                       cursor: "pointer",
                       minHeight: 44,
                       marginBottom: "1rem",
@@ -2040,7 +2044,7 @@ export default function DiscClient({
                       textTransform: "uppercase",
                       padding: "0.75rem 1.5rem",
                       border: "none",
-                      borderRadius: "9999px",
+                      borderRadius: "12px",
                       cursor: isPending ? "default" : "pointer",
                       minHeight: 44,
                       marginBottom: "1rem",
