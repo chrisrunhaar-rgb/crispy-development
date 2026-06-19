@@ -311,6 +311,7 @@ export default function ResourcesContent({
           res.description,
           res.titleId ?? "",
           res.descriptionId ?? "",
+          ...(res.keywords ?? []),
         ].join(" ").toLowerCase();
         return haystack.includes(trimmedQuery);
       })

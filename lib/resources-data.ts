@@ -13,6 +13,7 @@ export type Resource = {
   languages: Lang[];
   gated: boolean;
   topics: string[];
+  keywords?: string[];
 };
 
 export type Topic = {
@@ -185,6 +186,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: true,
     topics: ["self-care", "personal-development", "cross-cultural"],
+    keywords: ["reentry", "re-entry", "reverse culture shock", "furlough", "home assignment", "going home", "grief", "loss", "transition", "readjust", "debrief"],
   },
   // ── LEADERSHIP ─────────────────────────────────────────────────────────────
   {
@@ -448,6 +450,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: true,
     topics: ["personal-development"],
+    keywords: ["reading", "books", "study", "library", "intellectual", "book list", "knowledge", "habits", "learning habit"],
   },
   {
     id: "identity-under-pressure",
@@ -461,6 +464,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: true,
     topics: ["faith-calling", "personal-development"],
+    keywords: ["identity", "self-worth", "who am I", "belonging", "calling", "purpose", "self", "security", "rootedness", "worth", "value"],
   },
   {
     id: "four-stages-competence",
@@ -514,6 +518,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: false,
     topics: ["leadership", "cross-cultural", "personal-development"],
+    keywords: ["personality", "dominant", "influencing", "steadiness", "compliance", "introvert", "extrovert", "behavior style", "temperament"],
   },
   {
     id: "5languages",
@@ -553,6 +558,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: false,
     topics: ["personal-development", "leadership", "cross-cultural"],
+    keywords: ["personality", "openness", "conscientiousness", "extraversion", "agreeableness", "neuroticism", "introvert", "extrovert", "temperament", "traits"],
   },
 
   // ── FAITH & CALLING ────────────────────────────────────────────────────────
@@ -568,6 +574,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: true,
     topics: ["leadership", "self-care", "faith-calling"],
+    keywords: ["rest", "sabbath rest", "rhythm", "restoration", "renewal", "ceasing", "pause", "stop", "sleep", "istirahat"],
   },
   {
     id: "leading-without-losing-faith",
@@ -581,6 +588,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: true,
     topics: ["faith-calling"],
+    keywords: ["faith", "God", "spiritual", "belief", "doubt", "prayer", "calling", "disillusionment", "spiritual dryness", "iman"],
   },
   // ── RESILIENCE & MENTAL HEALTH ─────────────────────────────────────────────
   {
@@ -595,6 +603,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: true,
     topics: ["personal-development", "faith-calling", "self-care"],
+    keywords: ["stress", "exhaustion", "tired", "fatigue", "depletion", "overwork", "wellbeing", "Elijah", "recovery", "rest", "kelelahan", "frenetic", "worn out"],
   },
   {
     id: "relational-longevity",
@@ -608,6 +617,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: true,
     topics: ["team-facilitation", "personal-development", "self-care"],
+    keywords: ["relationships", "friendship", "trust", "connection", "loyalty", "attrition", "retention", "departure", "interpersonal", "relasi"],
   },
   {
     id: "emotional-safety-families",
@@ -621,6 +631,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: true,
     topics: ["self-care", "personal-development", "faith-calling"],
+    keywords: ["parenting", "children", "kids", "marriage", "home", "family stress", "spouse", "third culture kids", "TCK", "MK", "missionary kid", "family health"],
   },
   {
     id: "healthy-transitions",
@@ -634,6 +645,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: true,
     topics: ["self-care", "personal-development", "cross-cultural"],
+    keywords: ["change", "grief", "loss", "leaving", "moving", "goodbye", "furlough", "endings", "RAFT model", "role change", "reentry"],
   },
   {
     id: "psychological-first-aid",
@@ -647,6 +659,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: true,
     topics: ["team-facilitation", "personal-development", "self-care"],
+    keywords: ["trauma", "mental health", "anxiety", "depression", "crisis", "emergency", "support", "stress", "incident", "debriefing", "care"],
   },
   {
     id: "sustainable-pace",
@@ -688,6 +701,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: false,
     topics: ["personal-development", "leadership", "cross-cultural"],
+    keywords: ["personality", "nine types", "wing", "tritype", "ego fixation", "self-awareness", "temperament"],
   },
   {
     id: "16-personalities",
@@ -701,6 +715,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: false,
     topics: ["personal-development", "leadership"],
+    keywords: ["mbti", "myers briggs", "myers-briggs", "introvert", "extrovert", "personality type", "infj", "infp", "intj", "intp", "enfj", "enfp", "entj", "entp", "istj", "isfj", "istp", "isfp", "estj", "esfj", "estp", "esfp", "temperament"],
   },
   {
     id: "wheel-of-life",
@@ -714,6 +729,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: false,
     topics: ["personal-development", "self-care", "faith-calling"],
+    keywords: ["balance", "holistic", "wellbeing", "life areas", "health", "rest", "burnout prevention", "whole person", "life review", "fulfillment"],
   },
   {
     id: "karunia-rohani",
@@ -727,6 +743,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: false,
     topics: ["faith-calling"],
+    keywords: ["spiritual gifts", "gifting", "charism", "talents", "gift assessment", "gifts test", "charisma", "abilities", "God-given", "anointing"],
   },
   {
     id: "leaders-inner-life",
@@ -740,6 +757,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: true,
     topics: ["faith-calling", "personal-development"],
+    keywords: ["prayer", "soul", "spiritual formation", "interior life", "devotional", "quiet time", "solitude", "spiritual health", "contemplation", "heart"],
   },
   {
     id: "called-without-the-map",
@@ -753,6 +771,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: true,
     topics: ["faith-calling"],
+    keywords: ["calling", "vocation", "purpose", "direction", "uncertainty", "faith", "trust", "plan", "future", "Abraham", "discernment"],
   },
   {
     id: "discipline-of-silence",
@@ -766,6 +785,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: true,
     topics: ["faith-calling", "self-care", "leadership"],
+    keywords: ["quiet", "prayer", "contemplation", "solitude", "stillness", "meditation", "listening", "rest", "noise", "pace", "retreat", "hening"],
   },
   {
     id: "calling-is-never-solo",
@@ -779,6 +799,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: true,
     topics: ["faith-calling", "leadership"],
+    keywords: ["community", "together", "partnership", "team ministry", "calling", "body of Christ", "collaboration", "isolation", "alone"],
   },
 ];
 
