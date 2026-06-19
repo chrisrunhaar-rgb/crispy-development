@@ -37,6 +37,7 @@ type Book = {
 };
 
 const BOOKS: Book[] = [
+  // ── Habit ─────────────────────────────────────────────────────────────────
   {
     id: "limitless",
     title: "Limitless",
@@ -44,7 +45,7 @@ const BOOKS: Book[] = [
     author: "Jim Kwik",
     coverUrl: "https://covers.openlibrary.org/b/isbn/1401960529-L.jpg",
     descriptionEn:
-      "Jim Kwik's Limitless provides a practical system for upgrading your mental performance — showing that the real limits on learning are not innate but learned, and can be unlearned. For leaders who feel they are not natural readers, this book reframes the story.",
+      "Jim Kwik's Limitless provides a practical system for upgrading your mental performance, showing that the real limits on learning are not innate but learned, and can be unlearned. For leaders who feel they are not natural readers, this book reframes the story.",
     descriptionId:
       "Limitless karya Jim Kwik memberikan sistem praktis untuk meningkatkan performa mentalmu, menunjukkan bahwa batasan belajar yang sesungguhnya bukan bawaan lahir, melainkan dipelajari, dan bisa diubah. Bagi pemimpin yang merasa bukan pembaca alami, buku ini membingkai ulang ceritanya.",
     whyReadEn:
@@ -53,20 +54,198 @@ const BOOKS: Book[] = [
       "Mulailah dari sini jika kamu percaya membaca adalah sesuatu yang lebih dikuasai orang lain. Kwik membongkar cerita itu secara langsung.",
     category: "habit",
     buyUrl:
-      "https://www.amazon.com/Limitless-Upgrade-Motivation-Performance-Superhumans/dp/1401960529",
+      "https://www.amazon.com/dp/1401960529",
   },
-  ...Array.from({ length: 11 }, (_, i) => ({
-    id: `coming-soon-${i + 1}`,
-    title: "Coming Soon",
-    titleId: "Segera Hadir",
-    author: "",
-    coverUrl: "",
-    descriptionEn: "",
-    descriptionId: "",
-    whyReadEn: "",
-    whyReadId: "",
-    category: "coming-soon" as BookCategory,
-  })),
+  {
+    id: "atomic-habits",
+    title: "Atomic Habits",
+    titleId: "Atomic Habits",
+    author: "James Clear",
+    coverUrl: "https://covers.openlibrary.org/b/isbn/9780735211292-L.jpg",
+    descriptionEn:
+      "James Clear makes the case that tiny, consistent changes compound into remarkable results over time. Clear shows that reading is not about willpower but about building a system that makes the habit almost inevitable. One of the most practical books on behaviour change published in the last decade.",
+    descriptionId:
+      "James Clear berargumen bahwa perubahan kecil yang konsisten akan berlipat ganda menjadi hasil luar biasa seiring waktu. Clear menunjukkan bahwa membaca bukan soal tekad, melainkan membangun sistem yang membuat kebiasaan itu hampir tak terelakkan.",
+    whyReadEn:
+      "If you want to build a consistent reading habit, this is the manual. Clear's system for habit stacking and environment design is directly applicable.",
+    whyReadId:
+      "Jika kamu ingin membangun kebiasaan membaca yang konsisten, ini adalah panduannya. Sistem Clear untuk menumpuk kebiasaan dan merancang lingkungan bisa langsung diterapkan.",
+    category: "habit",
+    buyUrl: "https://www.amazon.com/dp/0735211299",
+  },
+  {
+    id: "deep-work",
+    title: "Deep Work",
+    titleId: "Deep Work",
+    author: "Cal Newport",
+    coverUrl: "https://covers.openlibrary.org/b/isbn/9781455586691-L.jpg",
+    descriptionEn:
+      "Cal Newport argues that the ability to focus without distraction is becoming both increasingly rare and increasingly valuable. For leaders trying to grow through reading, his rules for cultivating depth apply directly to the reading habit.",
+    descriptionId:
+      "Cal Newport berargumen bahwa kemampuan untuk fokus tanpa gangguan semakin langka sekaligus semakin berharga. Bagi pemimpin yang ingin bertumbuh melalui membaca, aturannya untuk menumbuhkan kedalaman langsung bisa diterapkan pada kebiasaan membaca.",
+    whyReadEn:
+      "Read this to understand why your environment may be working against your reading habit, and what to do about it.",
+    whyReadId:
+      "Bacalah ini untuk memahami mengapa lingkunganmu mungkin berjalan berlawanan dengan kebiasaan membacamu, dan apa yang bisa dilakukan.",
+    category: "habit",
+    buyUrl: "https://www.amazon.com/dp/1455586692",
+  },
+  // ── Cross-Cultural ────────────────────────────────────────────────────────
+  {
+    id: "culture-map",
+    title: "The Culture Map",
+    titleId: "The Culture Map",
+    author: "Erin Meyer",
+    coverUrl: "https://covers.openlibrary.org/b/isbn/9781610392501-L.jpg",
+    descriptionEn:
+      "Erin Meyer maps eight scales of cultural difference, from communication styles to how trust is built, giving leaders a practical framework for reading any international context. Grounded in research and filled with real examples from global teams.",
+    descriptionId:
+      "Erin Meyer memetakan delapan skala perbedaan budaya, mulai dari gaya komunikasi hingga cara membangun kepercayaan, memberikan pemimpin kerangka praktis untuk membaca konteks internasional apa pun. Berdasarkan penelitian dan dipenuhi contoh nyata dari tim global.",
+    whyReadEn:
+      "If you lead across cultures and sometimes feel like you are speaking different languages even in the same language, this book names what is actually happening.",
+    whyReadId:
+      "Jika kamu memimpin lintas budaya dan kadang merasa berbicara bahasa yang berbeda meskipun menggunakan bahasa yang sama, buku ini menamai apa yang sebenarnya terjadi.",
+    category: "cross-cultural",
+    buyUrl: "https://www.amazon.com/dp/1610392507",
+  },
+  {
+    id: "foreign-to-familiar",
+    title: "Foreign to Familiar",
+    titleId: "Foreign to Familiar",
+    author: "Sarah Lanier",
+    coverUrl: "https://covers.openlibrary.org/b/isbn/9781882655366-L.jpg",
+    descriptionEn:
+      "Sarah Lanier offers one of the clearest introductions to hot-climate and cold-climate cultures, high-context and low-context communication, and what it actually feels like to move between them. Short, readable, and deeply practical for cross-cultural workers.",
+    descriptionId:
+      "Sarah Lanier menawarkan salah satu pengantar terjelas tentang budaya iklim panas dan dingin, komunikasi konteks tinggi dan rendah, serta rasanya berpindah di antara keduanya. Singkat, mudah dibaca, dan sangat praktis bagi pekerja lintas budaya.",
+    whyReadEn:
+      "A short read that carries a long impact. Many cross-cultural workers say this is the first book that finally made sense of their own confusion.",
+    whyReadId:
+      "Bacaan singkat yang berdampak panjang. Banyak pekerja lintas budaya mengatakan ini adalah buku pertama yang akhirnya menjelaskan kebingungan mereka sendiri.",
+    category: "cross-cultural",
+    buyUrl: "https://www.amazon.com/dp/1882655362",
+  },
+  {
+    id: "when-helping-hurts",
+    title: "When Helping Hurts",
+    titleId: "When Helping Hurts",
+    author: "Steve Corbett & Brian Fikkert",
+    coverUrl: "https://covers.openlibrary.org/b/isbn/9780802409980-L.jpg",
+    descriptionEn:
+      "Corbett and Fikkert challenge the assumptions behind how wealthier Christians engage with poverty and show that many well-intentioned interventions do more harm than good. A necessary correction for any leader working in international development or community transformation.",
+    descriptionId:
+      "Corbett dan Fikkert menantang asumsi di balik cara orang Kristen yang lebih berada berinteraksi dengan kemiskinan, dan menunjukkan bahwa banyak intervensi dengan niat baik justru lebih banyak merugikan daripada membantu. Koreksi penting bagi pemimpin di bidang pembangunan internasional atau transformasi masyarakat.",
+    whyReadEn:
+      "Required reading before entering any development or relief context. The title alone tells you what this book does.",
+    whyReadId:
+      "Bacaan wajib sebelum memasuki konteks pembangunan atau bantuan apa pun. Judulnya sendiri sudah memberi tahu apa yang dilakukan buku ini.",
+    category: "cross-cultural",
+    buyUrl: "https://www.amazon.com/dp/0802409989",
+  },
+  // ── Faith ─────────────────────────────────────────────────────────────────
+  {
+    id: "spiritual-leadership",
+    title: "Spiritual Leadership",
+    titleId: "Spiritual Leadership",
+    author: "J. Oswald Sanders",
+    coverUrl: "https://covers.openlibrary.org/b/isbn/9780802430175-L.jpg",
+    descriptionEn:
+      "First published in 1967 and never outdated, Sanders lays out what it means to lead under God's authority rather than by personal ambition. One of the most widely assigned books in leadership formation programs for Christian workers around the world.",
+    descriptionId:
+      "Pertama diterbitkan tahun 1967 dan tidak pernah usang, Sanders memaparkan apa artinya memimpin di bawah otoritas Allah daripada ambisi pribadi. Salah satu buku yang paling banyak ditugaskan dalam program pembentukan kepemimpinan bagi pekerja Kristen di seluruh dunia.",
+    whyReadEn:
+      "If you have been in leadership for years and have never read this, it will stop you in your tracks. Read it slowly.",
+    whyReadId:
+      "Jika kamu sudah bertahun-tahun dalam kepemimpinan dan belum pernah membaca ini, buku ini akan membuatmu berhenti sejenak. Bacalah perlahan.",
+    category: "faith",
+    buyUrl: "https://www.amazon.com/dp/0802430171",
+  },
+  {
+    id: "making-of-a-leader",
+    title: "The Making of a Leader",
+    titleId: "The Making of a Leader",
+    author: "Robert Clinton",
+    coverUrl: "https://covers.openlibrary.org/b/isbn/9780891091837-L.jpg",
+    descriptionEn:
+      "Robert Clinton spent decades studying the life patterns of Christian leaders and found that the most significant growth usually comes through trial, not success. This book gives you a map of leadership development stages and helps you locate yourself on it.",
+    descriptionId:
+      "Robert Clinton menghabiskan beberapa dekade mempelajari pola kehidupan para pemimpin Kristen dan menemukan bahwa pertumbuhan paling signifikan biasanya datang melalui ujian, bukan kesuksesan. Buku ini memberimu peta tahapan pengembangan kepemimpinan.",
+    whyReadEn:
+      "Essential for anyone navigating a difficult or uncertain season. Clinton helps you see the bigger arc of what God may be doing in your leadership journey.",
+    whyReadId:
+      "Penting bagi siapa pun yang menavigasi musim yang sulit atau tidak pasti. Clinton membantumu melihat busur lebih besar dari apa yang mungkin sedang Allah kerjakan dalam perjalanan kepemimpinanmu.",
+    category: "faith",
+    buyUrl: "https://www.amazon.com/dp/0891091831",
+  },
+  // ── Leadership ────────────────────────────────────────────────────────────
+  {
+    id: "leaders-eat-last",
+    title: "Leaders Eat Last",
+    titleId: "Leaders Eat Last",
+    author: "Simon Sinek",
+    coverUrl: "https://covers.openlibrary.org/b/isbn/9781591845324-L.jpg",
+    descriptionEn:
+      "Drawing on military and organizational research, Sinek shows why the best leaders create environments of safety, trust, and belonging, and what happens to teams when leaders put their own interests first. Deeply human and practically grounded.",
+    descriptionId:
+      "Berdasarkan penelitian militer dan organisasi, Sinek menunjukkan mengapa pemimpin terbaik menciptakan lingkungan keamanan, kepercayaan, dan rasa memiliki, serta apa yang terjadi pada tim ketika pemimpin mendahulukan kepentingan pribadi.",
+    whyReadEn:
+      "A leadership book that takes seriously the cost of self-serving leadership on real people. The servant leadership angle resonates deeply with faith-rooted leaders.",
+    whyReadId:
+      "Sebuah buku kepemimpinan yang serius memandang dampak kepemimpinan yang mementingkan diri sendiri. Sudut pandang kepemimpinan hamba sangat beresonansi dengan pemimpin yang berakar pada iman.",
+    category: "leadership",
+    buyUrl: "https://www.amazon.com/dp/1591845327",
+  },
+  {
+    id: "multipliers",
+    title: "Multipliers",
+    titleId: "Multipliers",
+    author: "Liz Wiseman",
+    coverUrl: "https://covers.openlibrary.org/b/isbn/9780062663078-L.jpg",
+    descriptionEn:
+      "Wiseman's research shows that some leaders amplify the intelligence around them while others diminish it, often without realising it. She names the patterns of both and gives leaders practical tools to become the kind of leader who makes everyone on the team smarter.",
+    descriptionId:
+      "Penelitian Wiseman menunjukkan bahwa beberapa pemimpin memperkuat kecerdasan di sekitar mereka sementara yang lain justru memperlemahnya, seringkali tanpa disadari. Ia menamai pola keduanya dan memberi alat praktis untuk menjadi pemimpin yang membuat semua orang di tim lebih cerdas.",
+    whyReadEn:
+      "If you ever wonder whether you are unleashing or inadvertently limiting the people around you, this book gives you the language and the tools to find out.",
+    whyReadId:
+      "Jika kamu pernah bertanya-tanya apakah kamu sedang membebaskan atau justru tanpa sengaja membatasi orang-orang di sekitarmu, buku ini memberimu bahasa dan alat untuk mengetahuinya.",
+    category: "leadership",
+    buyUrl: "https://www.amazon.com/dp/006266307X",
+  },
+  {
+    id: "good-to-great",
+    title: "Good to Great",
+    titleId: "Good to Great",
+    author: "Jim Collins",
+    coverUrl: "https://covers.openlibrary.org/b/isbn/9780066620992-L.jpg",
+    descriptionEn:
+      "Collins and his research team studied what separates organisations that made a leap to greatness from those that remained merely good. What they found was counterintuitive: the best leaders were humble and fiercely determined, not celebrity visionaries.",
+    descriptionId:
+      "Collins dan tim penelitiannya mempelajari apa yang membedakan organisasi yang melompat menuju keunggulan dari yang tetap biasa-biasa saja. Yang mereka temukan berlawanan intuisi: pemimpin terbaik adalah orang yang rendah hati dan sangat tekad, bukan visioner selebritas.",
+    whyReadEn:
+      "The Level 5 Leadership chapter alone is worth the read. Collins found with data what Scripture has always said about humility.",
+    whyReadId:
+      "Bab Level 5 Leadership saja sudah layak dibaca. Collins menemukan dengan data apa yang selalu dikatakan Alkitab tentang kerendahan hati.",
+    category: "leadership",
+    buyUrl: "https://www.amazon.com/dp/0066620996",
+  },
+  {
+    id: "21-laws",
+    title: "The 21 Irrefutable Laws of Leadership",
+    titleId: "21 Hukum Kepemimpinan yang Tak Terbantahkan",
+    author: "John Maxwell",
+    coverUrl: "https://covers.openlibrary.org/b/isbn/9780785289357-L.jpg",
+    descriptionEn:
+      "Maxwell distils decades of leadership experience into 21 principles that hold across contexts, cultures, and sectors. More accessible than academic leadership texts, this has become one of the most widely read leadership books among global Christian leaders.",
+    descriptionId:
+      "Maxwell menyuling pengalaman kepemimpinan selama beberapa dekade menjadi 21 prinsip yang berlaku di berbagai konteks, budaya, dan sektor. Lebih mudah diakses daripada teks kepemimpinan akademis, ini menjadi salah satu buku kepemimpinan yang paling banyak dibaca di kalangan pemimpin Kristen global.",
+    whyReadEn:
+      "A useful reference to return to across different seasons of leadership. Some laws will hit harder depending on where you are right now.",
+    whyReadId:
+      "Referensi yang berguna untuk kembali dibaca di berbagai musim kepemimpinan. Beberapa hukum akan terasa lebih kuat tergantung di mana kamu berada saat ini.",
+    category: "leadership",
+    buyUrl: "https://www.amazon.com/dp/0785289356",
+  },
 ];
 
 // ─── Prose style helper ────────────────────────────────────────────────────────
@@ -334,6 +513,7 @@ export default function LeadersReadersClient({
   const [saved, setSaved] = useState(isSaved);
   const [isPending, startTransition] = useTransition();
   const [selectedBook, setSelectedBook] = useState<Book | null>(null);
+  const [bookCategoryFilter, setBookCategoryFilter] = useState<BookCategory | "all">("all");
 
   // Reading plan state
   const [readingPlan, setReadingPlan] = useState({
@@ -1182,16 +1362,62 @@ export default function LeadersReadersClient({
             )}
           </SectionH2>
 
+          {/* Category filter tabs */}
+          <div
+            style={{
+              display: "flex",
+              gap: "0.5rem",
+              flexWrap: "wrap" as const,
+              marginTop: "1.75rem",
+              marginBottom: "0.25rem",
+            }}
+          >
+            {(
+              [
+                { key: "all", en: "All", id: "Semua" },
+                { key: "faith", en: "Faith", id: "Iman" },
+                { key: "leadership", en: "Leadership", id: "Kepemimpinan" },
+                { key: "cross-cultural", en: "Cross-Cultural", id: "Lintas Budaya" },
+                { key: "habit", en: "Habit", id: "Kebiasaan" },
+              ] as { key: BookCategory | "all"; en: string; id: string }[]
+            ).map(({ key, en, id }) => {
+              const active = bookCategoryFilter === key;
+              return (
+                <button
+                  key={key}
+                  onClick={() => setBookCategoryFilter(key)}
+                  style={{
+                    fontFamily: FONT,
+                    fontSize: "0.72rem",
+                    fontWeight: active ? 700 : 500,
+                    letterSpacing: "0.04em",
+                    padding: "0.4rem 0.9rem",
+                    borderRadius: 20,
+                    border: `1.5px solid ${active ? navy : lightGray}`,
+                    background: active ? navy : "white",
+                    color: active ? "white" : bodyText,
+                    cursor: "pointer",
+                    transition: "all 0.15s ease",
+                  }}
+                >
+                  {lang === "en" ? en : id}
+                </button>
+              );
+            })}
+          </div>
+
           <div
             style={{
               display: "grid",
               gridTemplateColumns:
                 "repeat(auto-fill, minmax(160px, 1fr))",
               gap: "1.25rem",
-              marginTop: "2rem",
+              marginTop: "1.5rem",
             }}
           >
-            {BOOKS.map((book) => {
+            {BOOKS.filter(
+              (b) => bookCategoryFilter === "all" || b.category === bookCategoryFilter
+            ).map((book) => {
               const isLive = book.category !== "coming-soon";
               return (
                 <div
