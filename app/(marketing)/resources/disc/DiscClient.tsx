@@ -441,7 +441,6 @@ export default function DiscClient({
   const [noHover, setNoHover] = useState(false);
   const [bgOpen, setBgOpen] = useState(false);
   const [activeTypeTab, setActiveTypeTab] = useState<Record<string, "communication" | "crossCultural">>({});
-  const [openAccordion, setOpenAccordion] = useState<string | null>(null);
   const [hoveredQuadrant, setHoveredQuadrant] = useState<string | null>(null);
   const [selectedType, setSelectedType] = useState<"D" | "I" | "S" | "C" | null>(null);
 
@@ -1295,91 +1294,6 @@ export default function DiscClient({
             )}
           </p>
 
-          {/* DIG DEEPER accordions */}
-          {[
-            {
-              key: "lineage",
-              heading: { en: "The Lineage Behind DISC", id: "Silsilah di Balik DISC" },
-              body: {
-                en: "The four-temperament framework traces back to Hippocrates (c.460 BCE), who identified sanguine, choleric, melancholic, and phlegmatic as distinct humoral types. Galen systematized this in the 2nd century CE. Medieval Christian scholars — including Tim LaHaye in 1966 and Florence Littauer in 1983 — applied the four-type structure to spiritual formation and ministry leadership. William Moulton Marston reframed this tradition in behavioral terms in his 1928 book Emotions of Normal People, laying the groundwork for modern DISC instruments. John Clarke (1956) and John Geier (1970s) built the first standardized assessments on Marston's model. The fact that so many traditions across history and culture have recognized a roughly four-type behavioral structure is not a scientific proof — but it does suggest the framework captures something genuinely observable about human variation.",
-                id: "Kerangka empat temperamen berakar pada Hippocrates (c.460 SM), yang mengidentifikasi sanguinis, koleris, melankolis, dan plegmatis sebagai tipe humoral yang berbeda. Galen mensistematisasikannya pada abad ke-2 M. Para sarjana Kristen abad pertengahan — termasuk Tim LaHaye pada 1966 dan Florence Littauer pada 1983 — menerapkan struktur empat tipe pada pembentukan rohani dan kepemimpinan pelayanan. William Moulton Marston merumuskan ulang tradisi ini dalam istilah perilaku dalam bukunya Emotions of Normal People tahun 1928, meletakkan dasar bagi instrumen DISC modern. John Clarke (1956) dan John Geier (1970-an) membangun penilaian terstandar pertama berdasarkan model Marston. Fakta bahwa begitu banyak tradisi sepanjang sejarah dan budaya telah mengenali struktur perilaku empat-tipe bukan merupakan bukti ilmiah — tetapi ini menunjukkan bahwa kerangka tersebut menangkap sesuatu yang benar-benar dapat diamati tentang variasi manusia.",
-              },
-            },
-            {
-              key: "research",
-              heading: { en: "What the Research Actually Says", id: "Apa Kata Penelitian Sebenarnya" },
-              body: {
-                en: "Everything DiSC reports internal reliability data of alpha .87 and test-retest reliability of .86 — solid for a self-report behaviorally descriptive tool. These numbers indicate that the instrument measures something consistent and that results hold reasonably stable over short periods. The limitation is important: there is no cross-cultural validation study equivalent to McCrae et al. (2005), which tested the Big Five across 50 cultures and found consistent factor structure. No equivalent DISC study exists. What this means practically: DISC is reliable enough to use reflectively in team contexts. Do not use it to make hiring decisions or predict behavior. The correct claim is that DISC has adequate internal consistency as a self-report behavioral description tool. Full stop.",
-                id: "Everything DiSC melaporkan data reliabilitas internal alpha .87 dan reliabilitas tes-ulang .86 — solid untuk alat deskripsi perilaku laporan diri. Angka-angka ini menunjukkan bahwa instrumen mengukur sesuatu yang konsisten dan hasilnya cukup stabil dalam jangka pendek. Keterbatasannya penting: tidak ada studi validasi lintas budaya yang setara dengan McCrae et al. (2005), yang menguji Big Five di 50 budaya dan menemukan struktur faktor yang konsisten. Tidak ada studi DISC yang setara. Artinya secara praktis: DISC cukup andal untuk digunakan secara reflektif dalam konteks tim. Jangan gunakan untuk membuat keputusan perekrutan atau memprediksi perilaku. Klaim yang tepat adalah bahwa DISC memiliki konsistensi internal yang memadai sebagai alat deskripsi perilaku laporan diri. Titik.",
-              },
-            },
-          ].map((panel) => (
-            <div
-              key={panel.key}
-              style={{
-                borderTop: "1px solid oklch(32% 0.06 260)",
-                marginBottom: "0",
-              }}
-            >
-              <button
-                onClick={() => setOpenAccordion(openAccordion === panel.key ? null : panel.key)}
-                aria-expanded={openAccordion === panel.key}
-                style={{
-                  width: "100%",
-                  background: "none",
-                  border: "none",
-                  cursor: "pointer",
-                  padding: "1rem 0",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  minHeight: 44,
-                  gap: "1rem",
-                }}
-              >
-                <span
-                  style={{
-                    fontFamily: "Montserrat, sans-serif",
-                    fontWeight: 600,
-                    fontSize: "0.875rem",
-                    color: "oklch(78% 0.04 260)",
-                    textAlign: "left",
-                  }}
-                >
-                  {lang === "en" ? `Dig Deeper: ${panel.heading.en}` : `Lebih Dalam: ${panel.heading.id}`}
-                </span>
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  style={{
-                    flexShrink: 0,
-                    transform: openAccordion === panel.key ? "rotate(180deg)" : "rotate(0deg)",
-                    transition: "transform 0.2s ease",
-                    color: "oklch(65% 0.15 45)",
-                  }}
-                >
-                  <path d="M2 5l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </button>
-              {openAccordion === panel.key && (
-                <div style={{ paddingBottom: "1.5rem" }}>
-                  <p
-                    style={{
-                      fontFamily: "Montserrat, sans-serif",
-                      fontSize: "0.9rem",
-                      color: "oklch(68% 0.04 260)",
-                      lineHeight: 1.75,
-                      margin: 0,
-                    }}
-                  >
-                    {panel.body[lang]}
-                  </p>
-                </div>
-              )}
-            </div>
-          ))}
         </div>
 
         {/* BLOCK B — WHAT DISC IS NOT */}
