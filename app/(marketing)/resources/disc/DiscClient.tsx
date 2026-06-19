@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useTransition, useEffect } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
@@ -381,41 +381,6 @@ const RESULT_PROFILES: Record<"en" | "id", Record<ResultKey, string>> = {
   },
 };
 
-// -- CROSS-CULTURAL SCENARIOS DATA (kept, not rendered) -----------------------
-
-const SCENARIOS = [
-  {
-    situation: "You lead a small NGO team in West Java, Indonesia. At the end of a project review, two local team members gave very vague answers when asked about their progress. They smiled, nodded, and said \"still in process.\" Three days later, you discover nothing has moved. This is the second time this has happened.",
-    prompt: "What do you do?",
-    options: [
-      { letter: "A", style: "D", action: "You call a direct team meeting, name the pattern clearly, and state that you need honest progress updates regardless of the news.", outcome: "The message is clear. But the room goes cold. Your local team members feel publicly shamed. The nodding continues — what changes is that they now report less, not more.", coaching: "Clarity is a virtue. In high-context cultures, the delivery channel matters as much as the content." },
-      { letter: "B", style: "I", action: "You create a lighter weekly check-in format — low-stakes and conversational — and build in a \"what's blocking you?\" question with a cheerful tone.", outcome: "The team relaxes. A few people open up about obstacles they hadn't named. Progress picks up slightly. But the underlying discomfort around reporting bad news hasn't been named yet.", coaching: "You built the bridge. Now walk across it and ask the real question." },
-      { letter: "C", style: "S", action: "You quietly pull each person aside individually, ask gently how things are going, and make it clear there is no judgment.", outcome: "Both team members open up. You learn there were real obstacles they didn't know how to raise. Trust deepens. Progress restarts.", coaching: "One-on-one care is often the most culturally safe entry point. Consider whether the team also needs to hear this permission." },
-      { letter: "D", style: "C", action: "You redesign the reporting process: create a structured weekly form, define what counts as \"in progress\" versus \"blocked,\" and ask everyone to submit it before the team meeting.", outcome: "The form helps — it gives people a channel for reporting problems without face-to-face shame. But if it feels bureaucratic, it may just produce polished non-answers.", coaching: "A good system lowers the cost of honesty. Pair it with a conversation about why you built it." },
-    ],
-  },
-  {
-    situation: "You are a British field worker leading a mixed team in Beirut, Lebanon. You have made a decision about a new community engagement strategy. Three weeks after communicating it, a senior Lebanese colleague says quietly over coffee: \"Some of us think the approach will not work here.\" He doesn't elaborate. He changes the subject almost immediately.",
-    prompt: "What do you do?",
-    options: [
-      { letter: "A", style: "D", action: "You follow up the same day: \"You mentioned some concerns earlier. I'd like to hear them directly. Can we sit down this afternoon?\"", outcome: "He agrees to meet. But in the meeting, he hedges — says he was \"just thinking out loud.\" In honour-shame cultures, a direct request to say it face-to-face can shut the conversation down rather than open it.", coaching: "You moved fast toward the truth. He moved away to protect the relationship. Only one of you adapted." },
-      { letter: "B", style: "I", action: "You set up a team session framed as \"let's pressure-test this strategy together\" — open, creative, no one singled out.", outcome: "Your colleague contributes more than expected. Real concerns surface without anyone openly challenging you. You come out with a better strategy and a team that feels heard.", coaching: "Sometimes the group protects the individual. An open room gives people permission to be honest without losing face." },
-      { letter: "C", style: "S", action: "You go back to him privately the next day and say simply: \"I've been thinking about what you said. I'd love to understand more if you're willing.\" You leave space.", outcome: "He shares, slowly. He explains two cultural dynamics the strategy had missed. The conversation takes 45 minutes. You adjust the plan. The relationship deepens.", coaching: "Patience was the leadership move. You created the conditions for truth to travel slowly but safely." },
-      { letter: "D", style: "C", action: "You go back to your desk, review the strategy with fresh eyes, and send the team a list of cultural assumptions you may have made: \"Tell me where I've got it wrong.\"", outcome: "Your colleague replies with a thoughtful paragraph. Two others do too. You get the feedback you needed without anyone feeling exposed.", coaching: "You made it safe to correct you by lowering the interpersonal cost. That is culturally intelligent leadership." },
-    ],
-  },
-  {
-    situation: "You are a Kenyan team leader managing a project with a German partner organisation. Your German counterpart consistently sends long, detailed critical feedback emails — tracked changes, numbered corrections. Your team members are starting to dread them. One says privately: \"He doesn't respect us.\" The German colleague believes he is being helpful.",
-    prompt: "What do you do?",
-    options: [
-      { letter: "A", style: "D", action: "You write directly to your German counterpart: \"I need to flag something. The way feedback is being delivered is landing badly with my team. Can we agree on a different approach?\"", outcome: "He is surprised but responds professionally. He didn't know there was a problem. You agree on a weekly feedback call instead of multiple emails. Your team sees you advocating for them.", coaching: "In low-context cultures, directness is respectful. You named the problem without drama, and it was received as professionalism." },
-      { letter: "B", style: "I", action: "You set up a joint \"collaboration check-in\" call and open with: \"Let's talk about what's making collaboration feel good or heavy.\"", outcome: "Your German colleague raises his own efficiency concerns. Your team raises the feedback volume. Both sides get heard at the same time — and the atmosphere shifts.", coaching: "A well-facilitated \"working together\" conversation can solve cultural friction without accusation. Your role is holding the frame." },
-      { letter: "C", style: "S", action: "You absorb most of the tension internally, continue buffering the emails before sharing them with your team, and reassure the most affected team member privately.", outcome: "Short-term calm. But the pattern continues. The resentment builds slowly. And you are carrying a load that grows heavier each week.", coaching: "Absorbing conflict is not the same as resolving it. At some point, the people involved need to find a way to understand each other." },
-      { letter: "D", style: "C", action: "You research German professional communication norms and prepare a \"working norms\" document that both teams agree to at the start of the next project phase.", outcome: "Your German counterpart appreciates the structure. Your team has clarity on how to interpret the feedback. The friction doesn't disappear — but it becomes navigable.", coaching: "You turned a cultural clash into a systems problem. That reframe made it solvable without anyone losing face." },
-    ],
-  },
-];
-
 // -- SCORE CALCULATION ---------------------------------------------------------
 
 function getResultKey(scores: { D: number; I: number; S: number; C: number }): ResultKey {
@@ -466,12 +431,7 @@ export default function DiscClient({
   const [isPending, startTransition] = useTransition();
 
   // UI state
-  const [flippedCard, setFlippedCard] = useState<number | null>(null);
-  const [currentScenario, setCurrentScenario] = useState(0);
-  const [scenarioSelections, setScenarioSelections] = useState<Record<number, string | null>>({});
-  const [playingVideo, setPlayingVideo] = useState<string | null>(null);
   const [noHover, setNoHover] = useState(false);
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [bgOpen, setBgOpen] = useState(false);
   const [activeTypeTab, setActiveTypeTab] = useState<Record<string, "communication" | "crossCultural">>({});
   const [openAccordion, setOpenAccordion] = useState<string | null>(null);
@@ -1822,6 +1782,7 @@ export default function DiscClient({
                   textTransform: "uppercase",
                   padding: "0.875rem 2rem",
                   border: "none",
+                  borderRadius: "9999px",
                   cursor: "pointer",
                   minHeight: 44,
                 }}
@@ -1896,6 +1857,7 @@ export default function DiscClient({
                       lineHeight: 1.6,
                       padding: "0.875rem 1.25rem",
                       textAlign: "left",
+                      borderRadius: "8px",
                       cursor: "pointer",
                       minHeight: 44,
                       transition: "border-color 0.15s ease, background 0.15s ease",
@@ -2052,6 +2014,7 @@ export default function DiscClient({
                       letterSpacing: "0.06em",
                       textTransform: "uppercase",
                       padding: "0.75rem 1.5rem",
+                      borderRadius: "9999px",
                       cursor: "pointer",
                       minHeight: 44,
                       marginBottom: "1rem",
@@ -2077,6 +2040,7 @@ export default function DiscClient({
                       textTransform: "uppercase",
                       padding: "0.75rem 1.5rem",
                       border: "none",
+                      borderRadius: "9999px",
                       cursor: isPending ? "default" : "pointer",
                       minHeight: 44,
                       marginBottom: "1rem",
