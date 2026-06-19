@@ -166,7 +166,7 @@ const BOOKS: Book[] = [
     title: "The Making of a Leader",
     titleId: "The Making of a Leader",
     author: "Robert Clinton",
-    coverUrl: "https://covers.openlibrary.org/b/id/14326841-L.jpg",
+    coverUrl: "https://covers.openlibrary.org/b/id/688500-L.jpg",
     descriptionEn:
       "Robert Clinton spent decades studying the life patterns of Christian leaders and found that the most significant growth usually comes through trial, not success. This book gives you a map of leadership development stages and helps you locate yourself on it.",
     descriptionId:
@@ -554,6 +554,7 @@ export default function LeadersReadersClient({
   const [isPending, startTransition] = useTransition();
   const [selectedBook, setSelectedBook] = useState<Book | null>(null);
   const [bookCategoryFilter, setBookCategoryFilter] = useState<BookCategory | "all">("all");
+  const [bgOpen, setBgOpen] = useState(false);
 
   function handleSave() {
     if (saved) return;
@@ -770,7 +771,7 @@ export default function LeadersReadersClient({
               </p>
               <p style={proseSubhead}>Identity beats willpower every time</p>
               <p style={prose}>
-                There is a well-established principle in behavioral science: identity-based habits stick in a way that outcome-based habits don&apos;t.¹
+                There is a well-established principle in behavioral science: identity-based habits stick in a way that outcome-based habits don&apos;t.<span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700 }}>¹</span>
               </p>
               <p style={prose}>
                 Telling yourself &ldquo;I want to read 20 books this year&rdquo; is fragile. Telling yourself &ldquo;I am the kind of leader who reads&rdquo; is load-bearing. When you are a reader, 15 minutes in the morning with a book is just what you do. It doesn&apos;t require willpower. It is who you are.
@@ -816,7 +817,7 @@ export default function LeadersReadersClient({
               </p>
               <p style={proseSubhead}>Identitas mengalahkan kemauan setiap saat</p>
               <p style={prose}>
-                Ada prinsip yang sudah lama dikenal dalam ilmu perilaku: kebiasaan yang berbasis identitas bertahan dengan cara yang tidak bisa dilakukan oleh kebiasaan berbasis hasil.¹
+                Ada prinsip yang sudah lama dikenal dalam ilmu perilaku: kebiasaan yang berbasis identitas bertahan dengan cara yang tidak bisa dilakukan oleh kebiasaan berbasis hasil.<span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700 }}>¹</span>
               </p>
               <p style={prose}>
                 Memberi tahu dirimu &ldquo;aku ingin membaca 20 buku tahun ini&rdquo; itu rapuh. Memberi tahu dirimu &ldquo;aku adalah tipe pemimpin yang membaca&rdquo; itu menopang. Ketika kamu adalah seorang pembaca, 15 menit di pagi hari dengan sebuah buku sudah menjadi bagian dari dirimu. Tidak butuh kemauan keras. Itulah siapa kamu.
@@ -899,7 +900,7 @@ export default function LeadersReadersClient({
               </p>
               <p style={proseSubhead}>Reading builds empathy — and research proves it</p>
               <p style={prose}>
-                Literary fiction has been shown in peer-reviewed research to measurably improve the capacity to understand what is happening inside other people&apos;s minds. Researchers Emanuele Castano and David Kidd found evidence that reading literary fiction can improve performance on validated tests of empathy and perspective-taking — a finding that has generated substantial scholarly discussion and further research.²
+                Literary fiction has been shown in peer-reviewed research to measurably improve the capacity to understand what is happening inside other people&apos;s minds. Researchers Emanuele Castano and David Kidd found evidence that reading literary fiction can improve performance on validated tests of empathy and perspective-taking — a finding that has generated substantial scholarly discussion and further research.<span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700 }}>²</span>
               </p>
               <p style={{ ...prose, marginBottom: 0 }}>
                 The reason? Literary fiction forces you to practise exactly what cross-cultural work demands: holding uncertainty, making inferences about people who are not like you, and staying curious rather than closing down. If you want to be better at reading rooms and reading people, one of the best tools is reading books.
@@ -938,7 +939,7 @@ export default function LeadersReadersClient({
               </p>
               <p style={proseSubhead}>Membaca membangun empati — dan riset membuktikannya</p>
               <p style={prose}>
-                Fiksi sastra telah terbukti dalam penelitian yang ditinjau sejawat secara terukur meningkatkan kapasitas untuk memahami apa yang terjadi di dalam pikiran orang lain. Para peneliti Emanuele Castano dan David Kidd menemukan bukti bahwa membaca fiksi sastra dapat meningkatkan kinerja pada tes empati dan pengambilan perspektif yang tervalidasi — sebuah temuan yang telah menghasilkan diskusi ilmiah yang substansial dan penelitian lebih lanjut.²
+                Fiksi sastra telah terbukti dalam penelitian yang ditinjau sejawat secara terukur meningkatkan kapasitas untuk memahami apa yang terjadi di dalam pikiran orang lain. Para peneliti Emanuele Castano dan David Kidd menemukan bukti bahwa membaca fiksi sastra dapat meningkatkan kinerja pada tes empati dan pengambilan perspektif yang tervalidasi — sebuah temuan yang telah menghasilkan diskusi ilmiah yang substansial dan penelitian lebih lanjut.<span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700 }}>²</span>
               </p>
               <p style={{ ...prose, marginBottom: 0 }}>
                 Alasannya? Fiksi sastra memaksamu untuk melatih persis apa yang dituntut oleh pekerjaan lintas budaya: memegang ketidakpastian, membuat kesimpulan tentang orang yang tidak sepertimu, dan tetap penasaran daripada menutup diri. Kalau kamu ingin lebih baik dalam membaca situasi dan membaca orang, salah satu alat terbaik adalah membaca buku.
@@ -1725,6 +1726,58 @@ export default function LeadersReadersClient({
           "Kidd, D.C. & Castano, E. — \"Reading Literary Fiction Improves Theory of Mind\" (Science, 342:6156, 377–380, 2013). https://doi.org/10.1126/science.1239918",
         ]}
       />
+
+      {/* ── LONG-FORM SEO SECTION ────────────────────────────────────────────── */}
+      <section style={{ background: "oklch(95% 0.008 80)", paddingBlock: "clamp(3rem, 5vw, 5rem)" }}>
+        <div className="container-wide" style={{ maxWidth: 760 }}>
+          <SectionLabel>Background</SectionLabel>
+          <SectionH2>The Case for Reading as a Leadership Practice</SectionH2>
+          <button
+            onClick={() => setBgOpen(!bgOpen)}
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 6,
+              marginTop: 20, marginBottom: 24, padding: "10px 20px",
+              background: "transparent", border: "1.5px solid oklch(65% 0.15 45)",
+              color: "oklch(65% 0.15 45)", borderRadius: 12,
+              fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+              fontSize: 13, fontWeight: 700, cursor: "pointer", letterSpacing: "0.04em",
+            }}
+          >
+            {bgOpen ? "Close ↑" : lang === "id" ? "Baca penelitiannya →" : "Read the research →"}
+          </button>
+          {bgOpen && (
+            <div style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 16, lineHeight: 1.85, color: "oklch(38% 0.05 260)" }}>
+              <p style={{ marginBottom: "1.5rem" }}>
+                Most cross-cultural leaders are not short on desire; they are short on time. The to-do list is real: language study, team meetings, relationship building, pastoral care, logistical demands that never quite end. Against that backdrop, sitting down with a book can feel indulgent, even irresponsible. There is always something more urgent. And so the book gets moved to the nightstand, the nightstand becomes a holding area, and somewhere along the way the reading habit quietly disappears. This is not a character failure. It is a predictable outcome of a high-demand life. But it is worth pausing to ask what gets lost when it happens.
+              </p>
+              <p style={{ marginBottom: "1.5rem" }}>
+                The evidence connecting sustained reading to leadership effectiveness is not overwhelming in volume, but it is consistent in direction. Studies on high-performing leaders suggest that regular reading correlates with stronger analytical thinking, clearer communication, and a greater capacity to understand how other people think and feel. A 2013 series of experiments by researchers Emanuele Castano and David Kidd at the New School for Social Research explored whether reading literary fiction improved what psychologists call &ldquo;theory of mind&rdquo; (the ability to accurately infer what another person is thinking or feeling). The initial findings attracted significant interest and subsequent scrutiny, with replication studies producing more varied results, so any strong causal claim should be held loosely. What the conversation points to, though, is a plausible and intuitively credible link: spending concentrated time inhabiting another consciousness on the page does something to how we engage with other people. For leaders whose work depends precisely on that ability, that is worth taking seriously.
+              </p>
+              <p style={{ marginBottom: "1.5rem" }}>
+                Robert Clinton&apos;s decades of research into how Christian leaders finish well adds a different kind of evidence. Clinton found that the leaders who remained fruitful and faithful to the end shared certain patterns. One of those patterns was a commitment to lifelong learning; not formal education necessarily, but a sustained posture of receiving input from outside themselves. The leaders who stopped learning, who relied on what they already knew, who led from accumulated capital rather than ongoing formation, were the ones most likely to narrow, drift, or plateau. Reading is not the only form that learning takes, but it is one of the most accessible and most portable ones available. James Clear&apos;s framework from Atomic Habits is useful here not for its mechanics but for its diagnosis: the problem with most reading habits is not motivation, it is identity. People who read consistently have come to see themselves as the kind of person who reads. The shift from &ldquo;I should read more&rdquo; to &ldquo;I am the kind of leader who reads&rdquo; is not trivial; it changes what feels natural. Developing a{" "}<a href="/resources/fixed-growth-mindset" style={{ color: "oklch(65% 0.15 45)", fontWeight: 600 }}>Fixed vs Growth Mindset</a>{" "}is foundational to this shift, because the leader who believes their capacity can grow is the one who keeps investing in it.
+              </p>
+              <p style={{ marginBottom: "1.5rem" }}>
+                For cross-cultural workers specifically, reading carries a particular weight. The daily reality of operating across cultural distance is that your instincts are often wrong. The assumptions you formed growing up, about how meetings work, how decisions get made, what silence means, how disagreement is expressed, what counts as respect, do not automatically transfer. Experience teaches some of this, mentors teach some of it, and community teaches some of it. But books offer something the other channels cannot: concentrated access to voices you would never otherwise encounter. A leader working in Southeast Asia who reads theology written by Indonesian scholars, or fiction by Kenyan novelists, or history by Latin American historians, is building a kind of cognitive breadth that makes them less likely to misread the room and more likely to ask the right questions. This is the heart of what{" "}<a href="/resources/cultural-intelligence" style={{ color: "oklch(65% 0.15 45)", fontWeight: 600 }}>Cultural Intelligence (CQ)</a>{" "}actually looks like in practice: not a score on an assessment, but a posture of genuine curiosity about how other people see the world, sustained over years.
+              </p>
+              <p style={{ marginBottom: "1.5rem" }}>
+                There is a tension worth naming honestly here, because it matters for this audience. In many cultures across the Global South, knowledge has always traveled through story, song, proverb, and mentorship rather than through private written texts. Oral tradition is not a lesser form of learning; it is ancient, sophisticated, and still very much alive in communities where some of your most effective leaders have been formed. A leader who comes from that tradition and is now being encouraged to build a reading habit may find the practice feels foreign, even mildly isolating. That feeling deserves respect, not dismissal. But books offer something oral tradition cannot easily replicate: access to mentors you can never meet in person, from centuries and continents you could never visit. Wesley in the eighteenth century. Keller in the twenty-first. An African theologian writing for Langham Literature. A novelist from the culture you serve in, writing from the inside. Reading is not a replacement for relational formation; it is an extension of it.
+              </p>
+              <p style={{ marginBottom: "1.5rem" }}>
+                The Christian intellectual tradition has never been ambiguous about this. Proverbs 1:5 frames ongoing learning as a mark of wisdom, not a sign of insecurity: &ldquo;Let the wise hear and increase in learning, and the one who understands obtain guidance.&rdquo; The entire book of Proverbs is an argument that leadership is cultivated through instruction, not simply bestowed. The apostle Paul, writing to Timothy from prison and with his death approaching, included a request that might easily be overlooked: &ldquo;Bring the cloak that I left with Carpus at Troas, also the books, and above all the parchments&rdquo; (2 Timothy 4:13). At the end of his life, in those circumstances, Paul wanted his books. The intellectual tradition of Christianity, from the early church fathers to the Reformation to the modern missionary movement, has consistently held that loving God with your mind is a command, not an option. John Wesley pressed this home with characteristic directness. Writing to a minister whose preaching had stagnated, he was blunt: &ldquo;Reading only can supply this, with meditation and daily prayer. You can never be a deep preacher without it, any more than a thorough Christian. Whether you like it or no, read and pray daily. It is for your life.&rdquo;
+              </p>
+              <p style={{ marginBottom: "1.5rem" }}>
+                What happens when leaders stop reading is less dramatic than a sudden failure and more like a slow drift. The frame of reference stops expanding. The mental vocabulary stays the same. The leader begins to rely on what they already know, which was formed in a particular time, place, and context, and applies it to situations that may have changed significantly. Groupthink becomes harder to resist when you are only in conversation with people who share your background and experience. Perspectives that challenge your assumptions stop reaching you. The leader is still working hard, still sincere, still serving faithfully, but leading from yesterday&apos;s map in today&apos;s terrain. The consequences are rarely catastrophic all at once. They accumulate quietly, over years, in decisions made without enough information and opportunities missed because the frame was too narrow to see them.
+              </p>
+              <p style={{ marginBottom: "1.5rem" }}>
+                The practical case for building a reading habit does not require dramatic volume. Twenty pages a day, taken consistently rather than heroically, adds up to roughly eighteen to twenty books a year. That number is less important than the posture behind it. The most useful reframe is to think of reading not primarily as information intake but as formation. The question to bring to a book is not &ldquo;what can I extract from this?&rdquo; but &ldquo;what is this doing to how I see?&rdquo; That shift changes what you read, how you read it, and what you do with it afterward. It also makes it easier to read across categories without guilt: fiction, biography, theology, cultural history, even poetry, because the goal is not expertise in a subject but the kind of expanded seeing that makes you a better leader, a better listener, and a more faithful presence in the places you serve.
+              </p>
+              <p style={{ marginBottom: 0 }}>
+                If reading has slipped in your life, you are in good company. The pressures that pushed it out are real. But so is what you lose without it. Wesley&apos;s challenge was not issued to people with plenty of leisure time; he wrote it to a minister buried in pastoral demands. The invitation stands: pick up something that stretches you. Read it slowly enough to notice what it is doing to you. Let it push back on something you assumed. That is formation. That is what the best leaders, and the most faithful ones, have always been doing.
+              </p>
+            </div>
+          )}
+        </div>
+      </section>
 
       {/* ══════════════════════════════════════════════════════
           FROM THE FIELD
