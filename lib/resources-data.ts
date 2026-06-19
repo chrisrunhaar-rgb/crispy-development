@@ -82,6 +82,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: false,
     topics: ["cross-cultural"],
+    keywords: ["CQ", "cultural awareness", "cross-cultural competence", "adaptability", "global mindset", "cultural agility", "intercultural", "kecerdasan budaya"],
   },
   {
     id: "power-distance",
@@ -95,6 +96,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: false,
     topics: ["cross-cultural", "leadership"],
+    keywords: ["Hofstede", "PDI", "hierarchy", "boss", "status", "boss-subordinate", "obedience", "deference", "senior", "jarak kekuasaan"],
   },
   {
     id: "intercultural-communication",
@@ -108,6 +110,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: false,
     topics: ["cross-cultural"],
+    keywords: ["communication styles", "misunderstanding", "non-verbal", "silence", "indirect", "face", "honor", "shame", "explicit", "implicit", "komunikasi"],
   },
   {
     id: "time-and-culture",
@@ -121,6 +124,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: true,
     topics: ["cross-cultural", "team-facilitation"],
+    keywords: ["monochronic", "polychronic", "deadlines", "punctuality", "meeting", "schedule", "time management", "waktu", "flexible time", "elastic time", "relationship time", "clock time"],
   },
   {
     id: "building-trust-cultures",
@@ -134,6 +138,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: true,
     topics: ["cross-cultural"],
+    keywords: ["trust building", "rapport", "relationship", "reliability", "credibility", "cognitive trust", "affective trust", "kepercayaan", "trustworthy", "earn trust", "loyalty"],
   },
   {
     id: "giving-feedback-across-cultures",
@@ -147,6 +152,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: false,
     topics: ["cross-cultural", "team-facilitation"],
+    keywords: ["feedback", "criticism", "constructive criticism", "face saving", "honor", "shame", "indirect feedback", "correction", "critique", "performance review", "umpan balik"],
   },
   {
     id: "ladder-of-inference",
@@ -160,6 +166,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: true,
     topics: ["thinking-tools", "cross-cultural"],
+    keywords: ["Argyris", "assumptions", "mental models", "beliefs", "jumping to conclusions", "inference", "bias", "perception", "critical thinking", "tangga inferensi", "data", "interpret"],
   },
   {
     id: "understanding-high-context",
@@ -173,6 +180,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: true,
     topics: ["cross-cultural"],
+    keywords: ["Edward Hall", "low-context", "high context", "indirect communication", "reading between lines", "implicit", "collectivist", "relationship-first", "face", "unspoken", "konteks tinggi"],
   },
   {
     id: "returning-well",
@@ -201,6 +209,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: false,
     topics: ["leadership"],
+    keywords: ["levels", "perspective", "strategic", "micromanagement", "delegation", "big picture", "zooming out", "organizational", "altitude", "macro", "micro", "scope", "elevation"],
   },
   {
     id: "servant-leadership",
@@ -214,6 +223,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: false,
     topics: ["leadership", "faith-calling"],
+    keywords: ["Greenleaf", "Jesus", "serve", "service", "humility", "sacrificial", "kepemimpinan hamba", "bottom-up", "others-first", "biblical leadership", "washing feet", "empowerment"],
   },
   {
     id: "vision-casting",
@@ -227,6 +237,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: false,
     topics: ["leadership"],
+    keywords: ["vision statement", "mission", "direction", "inspire", "motivate", "clarity", "future", "purpose", "communicate vision", "visi", "narrative", "cast vision", "rally"],
   },
   {
     id: "managing-up",
@@ -240,6 +251,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: false,
     topics: ["leadership"],
+    keywords: ["boss", "manager", "superior", "upward communication", "influence", "relationship", "authority", "navigate", "senior leader", "mengelola atasan", "expectations", "align"],
   },
   {
     id: "raising-next-generation",
@@ -253,6 +265,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: false,
     topics: ["leadership", "faith-calling"],
+    keywords: ["mentoring", "discipleship", "succession", "multiplication", "invest", "Paul Timothy", "legacy", "coaching", "develop leaders", "generation", "generasi", "reproduce"],
   },
   {
     id: "storytelling-leadership",
@@ -266,6 +279,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: false,
     topics: ["leadership"],
+    keywords: ["story", "narrative", "communicate", "persuade", "inspire", "anecdote", "illustration", "hook", "public speaking", "presentation", "bercerita", "storytelling"],
   },
   // ── TEAM & FACILITATION ────────────────────────────────────────────────────
   {
@@ -280,6 +294,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: false,
     topics: ["team-facilitation"],
+    keywords: ["Lencioni", "dysfunction", "morale", "culture", "toxic", "assessment", "diagnosis", "healthy team", "team dynamics", "collaboration", "trust", "accountability"],
   },
   {
     id: "six-thinking-hats",
@@ -293,6 +308,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: false,
     topics: ["team-facilitation", "thinking-tools"],
+    keywords: ["de Bono", "parallel thinking", "white hat", "red hat", "black hat", "yellow hat", "green hat", "blue hat", "brainstorming", "creativity", "meeting facilitation"],
   },
   {
     id: "red-light-green-light",
@@ -306,6 +322,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: true,
     topics: ["team-facilitation", "thinking-tools"],
+    keywords: ["brainstorming", "ideation", "creative thinking", "critical thinking", "evaluation", "divergent", "convergent", "facilitation", "ideas", "workshop", "generate ideas"],
   },
   {
     id: "conflict-resolution-multicultural",
@@ -319,6 +336,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: true,
     topics: ["team-facilitation", "cross-cultural"],
+    keywords: ["conflict", "resolution", "mediation", "disagreement", "confrontation", "harmony", "face", "peacemaking", "tension", "difficult conversations", "resolusi konflik", "argument"],
   },
   {
     id: "attention-retention",
@@ -332,6 +350,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: true,
     topics: ["team-facilitation"],
+    keywords: ["learning", "training", "adult learning", "teaching", "facilitation", "memory", "retention", "spaced repetition", "engagement", "education", "andragogy", "design training"],
   },
   {
     id: "debriefing-reflection",
@@ -345,6 +364,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: false,
     topics: ["team-facilitation", "personal-development"],
+    keywords: ["review", "after action", "learning", "reflection", "journal", "process", "evaluate", "Kolb", "experiential learning", "debrief", "retrospective", "refleksi"],
   },
   {
     id: "above-below-the-line",
@@ -358,6 +378,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: true,
     topics: ["team-facilitation", "personal-development"],
+    keywords: ["accountability", "ownership", "responsibility", "blame", "victim", "victor", "excuse", "denial", "reactive", "proactive", "OAR", "response-ability", "choice"],
   },
   // ── PERSONAL DEVELOPMENT ───────────────────────────────────────────────────
   {
@@ -372,6 +393,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: false,
     topics: ["personal-development"],
+    keywords: ["zone", "growth", "fear", "challenge", "stretch", "risk", "change", "courage", "step out", "safe", "uncomfortable", "zona nyaman", "dare"],
   },
   {
     id: "fixed-growth-mindset",
@@ -385,6 +407,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: true,
     topics: ["personal-development"],
+    keywords: ["Dweck", "mindset", "effort", "failure", "talent", "ability", "learn", "challenge", "resilience", "brain", "neuroplasticity", "mentalitas", "potential"],
   },
   {
     id: "smart-goals",
@@ -398,6 +421,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: true,
     topics: ["personal-development"],
+    keywords: ["goals", "objective", "target", "planning", "motivation", "measurable", "specific", "achievable", "relevant", "time-bound", "tujuan", "goal setting", "action plan"],
   },
   {
     id: "overcoming-procrastination",
@@ -411,6 +435,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: true,
     topics: ["personal-development"],
+    keywords: ["delay", "avoidance", "lazy", "motivation", "productivity", "stuck", "paralyzed", "perfectionism", "overwhelm", "start", "momentum", "penundaan", "distraction"],
   },
   {
     id: "emotional-intelligence",
@@ -424,6 +449,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: false,
     topics: ["personal-development", "leadership"],
+    keywords: ["Goleman", "EQ", "emotions", "self-awareness", "empathy", "social skills", "emotional regulation", "feelings", "self-management", "kecerdasan emosional", "regulate"],
   },
   {
     id: "johari-window",
@@ -437,6 +463,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: false,
     topics: ["personal-development"],
+    keywords: ["Luft", "Ingham", "self-awareness", "blind spot", "feedback", "disclosure", "transparency", "trust", "open area", "hidden self", "jendela johari", "unknown"],
   },
   {
     id: "leaders-are-readers",
@@ -478,6 +505,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: true,
     topics: ["personal-development"],
+    keywords: ["unconscious incompetence", "conscious incompetence", "conscious competence", "unconscious competence", "learning", "mastery", "skill", "expertise", "beginner", "novice", "competency"],
   },
   // ── THINKING TOOLS ─────────────────────────────────────────────────────────
   {
@@ -492,6 +520,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: false,
     topics: ["thinking-tools", "leadership"],
+    keywords: ["decisions", "choice", "ambiguity", "options", "risk", "uncertainty", "analysis", "wisdom", "discernment", "intuition", "data", "framework", "keputusan"],
   },
   {
     id: "cognitive-biases",
@@ -505,6 +534,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: false,
     topics: ["thinking-tools"],
+    keywords: ["bias", "heuristic", "blind spot", "confirmation bias", "anchoring", "availability bias", "sunk cost", "groupthink", "perception", "thinking error", "logical fallacy", "cognitive error"],
   },
   {
     id: "disc",
@@ -532,6 +562,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: false,
     topics: ["leadership", "team-facilitation", "cross-cultural"],
+    keywords: ["appreciation", "recognition", "love languages", "Gary Chapman", "motivation", "team morale", "affirmation", "acknowledgment", "reward", "penghargaan", "care", "words of affirmation"],
   },
   {
     id: "three-thinking-styles",
@@ -545,6 +576,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: false,
     topics: ["thinking-tools"],
+    keywords: ["thinking", "conceptual", "holistic", "intuition", "cognitive style", "how you think", "reasoning", "analytical", "creative", "systematic", "gaya berpikir", "problem solving"],
   },
   {
     id: "big-five",
@@ -673,6 +705,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: true,
     topics: ["self-care", "personal-development", "faith-calling"],
+    keywords: ["rest", "rhythm", "sabbath", "sustainable", "slow down", "pace", "resilience", "longevity", "wellbeing", "burnout prevention", "stamina", "tempo", "margin", "istirahat"],
   },
   // ── TEAM & FACILITATION (continued) ───────────────────────────────────────
   {
@@ -687,6 +720,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: false,
     topics: ["team-facilitation", "cross-cultural"],
+    keywords: ["conflict", "disagreement", "productive conflict", "healthy tension", "debate", "friction", "difficult conversations", "brave", "avoid conflict", "confrontation", "konflik", "safe space"],
   },
   // ── ASSESSMENTS (added) ──────────────────────────────────────────────────────
   {
