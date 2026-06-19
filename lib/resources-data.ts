@@ -477,7 +477,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: true,
     topics: ["personal-development"],
-    keywords: ["reading", "books", "study", "library", "intellectual", "book list", "knowledge", "habits", "learning habit"],
+    keywords: ["atomic habits", "james clear", "jim kwik", "robert clinton", "mortimer adler", "identity", "formation", "lifelong learner", "book recommendations", "membaca", "kebiasaan membaca", "pembaca", "literary fiction", "curiosity", "study"],
   },
   {
     id: "identity-under-pressure",
