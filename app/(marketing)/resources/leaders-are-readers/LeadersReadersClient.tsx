@@ -276,16 +276,6 @@ const proseSubhead: React.CSSProperties = {
   marginTop: "2rem",
 };
 
-const proseSubheadDark: React.CSSProperties = {
-  fontFamily: FONT,
-  fontSize: "0.72rem",
-  fontWeight: 700,
-  letterSpacing: "0.1em",
-  color: orange,
-  textTransform: "uppercase",
-  marginBottom: "0.5rem",
-  marginTop: "2rem",
-};
 
 // ─── Section label ─────────────────────────────────────────────────────────────
 function SectionLabel({ children }: { children: React.ReactNode }) {
@@ -696,6 +686,7 @@ export default function LeadersReadersClient({
                     color: "oklch(72% 0.14 145)",
                     textDecoration: "none",
                     padding: "12px 0",
+                    minHeight: 44,
                   }}
                 >
                   <svg
@@ -811,9 +802,9 @@ export default function LeadersReadersClient({
                   <p style={{ fontFamily: FONT, fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.12em", color: "oklch(60% 0.008 260)", textTransform: "uppercase" as const, marginBottom: "0.75rem", marginTop: 0 }}>Before</p>
                   <p style={{ fontFamily: CORMORANT, fontStyle: "italic", fontSize: "1rem", color: bodyText, lineHeight: 1.55, margin: 0 }}>&ldquo;I&apos;m the kind of leader who never has time to read.&rdquo;</p>
                 </div>
-                <div style={{ background: navy, borderRadius: 8, padding: "1.25rem 1.5rem" }}>
+                <div style={{ background: "oklch(97% 0.012 50)", border: "1px solid oklch(82% 0.040 50)", borderRadius: 8, padding: "1.25rem 1.5rem" }}>
                   <p style={{ fontFamily: FONT, fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.12em", color: orange, textTransform: "uppercase" as const, marginBottom: "0.75rem", marginTop: 0 }}>After</p>
-                  <p style={{ fontFamily: CORMORANT, fontStyle: "italic", fontSize: "1rem", color: offWhite, lineHeight: 1.55, margin: 0 }}>&ldquo;I read because it keeps me teachable, and that changes everything.&rdquo;</p>
+                  <p style={{ fontFamily: CORMORANT, fontStyle: "italic", fontSize: "1rem", color: bodyText, lineHeight: 1.55, margin: 0 }}>&ldquo;I read because it keeps me teachable, and that changes everything.&rdquo;</p>
                 </div>
               </div>
 
@@ -857,9 +848,9 @@ export default function LeadersReadersClient({
                   <p style={{ fontFamily: FONT, fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.12em", color: "oklch(60% 0.008 260)", textTransform: "uppercase" as const, marginBottom: "0.75rem", marginTop: 0 }}>Sebelum</p>
                   <p style={{ fontFamily: CORMORANT, fontStyle: "italic", fontSize: "1rem", color: bodyText, lineHeight: 1.55, margin: 0 }}>&ldquo;Aku adalah tipe pemimpin yang tidak pernah punya waktu untuk membaca.&rdquo;</p>
                 </div>
-                <div style={{ background: navy, borderRadius: 8, padding: "1.25rem 1.5rem" }}>
+                <div style={{ background: "oklch(97% 0.012 50)", border: "1px solid oklch(82% 0.040 50)", borderRadius: 8, padding: "1.25rem 1.5rem" }}>
                   <p style={{ fontFamily: FONT, fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.12em", color: orange, textTransform: "uppercase" as const, marginBottom: "0.75rem", marginTop: 0 }}>Sesudah</p>
-                  <p style={{ fontFamily: CORMORANT, fontStyle: "italic", fontSize: "1rem", color: offWhite, lineHeight: 1.55, margin: 0 }}>&ldquo;Aku membaca karena itu membuatku tetap bisa diajar, dan itu mengubah segalanya.&rdquo;</p>
+                  <p style={{ fontFamily: CORMORANT, fontStyle: "italic", fontSize: "1rem", color: bodyText, lineHeight: 1.55, margin: 0 }}>&ldquo;Aku membaca karena itu membuatku tetap bisa diajar, dan itu mengubah segalanya.&rdquo;</p>
                 </div>
               </div>
 
@@ -1144,7 +1135,7 @@ export default function LeadersReadersClient({
           <div
             style={{
               background: "oklch(26% 0.09 260)",
-              borderLeft: `3px solid ${orange}`,
+              borderTop: `2px solid ${orange}`,
               borderRadius: 4,
               padding: "1.25rem 1.5rem",
               maxWidth: 640,
@@ -1241,6 +1232,7 @@ export default function LeadersReadersClient({
                     color: active ? "white" : bodyText,
                     cursor: "pointer",
                     transition: "all 0.15s ease",
+                    minHeight: 44,
                   }}
                 >
                   {lang === "en" ? en : id}
@@ -1556,21 +1548,21 @@ export default function LeadersReadersClient({
 
           {lang === "en" ? (
             <>
-              <p style={proseSubheadDark}>Wesley&apos;s instruction</p>
+              <p style={proseSubhead}>Wesley&apos;s instruction</p>
               <p style={proseDark}>
                 In 1760, John Wesley wrote a letter to a pastor named Samuel Premboth. The letter was brief and its instruction was direct: &ldquo;Whether you like it or no, read and pray daily. It is for your life.&rdquo;
               </p>
               <p style={proseDark}>
                 What strikes me about that sentence is that Wesley named the resistance first. He did not assume Premboth would be delighted to hear this. He assumed Premboth would find it inconvenient, or uncomfortable, or irrelevant. And he said it anyway, with pastoral weight.
               </p>
-              <p style={proseSubheadDark}>Still true today</p>
+              <p style={proseSubhead}>Still true today</p>
               <p style={proseDark}>
                 Wesley was writing to a field worker in the 18th century, but he could be writing to you now. The resistance has not changed. The pace of life that crowds out reading is the same resistance, just with a different shape.
               </p>
               <p style={proseDark}>
                 A leader who stops learning, who fills every quiet moment with noise, who relies only on what they already know, is a leader who is slowly stopping. Wesley was not recommending a self-improvement program. He was saying: this is survival for the leader who wants to keep growing.
               </p>
-              <p style={proseSubheadDark}>Not mastery. Just continued posture.</p>
+              <p style={proseSubhead}>Not mastery. Just continued posture.</p>
               <p style={proseDark}>
                 Proverbs 1:5 is direct: &ldquo;Let the wise listen and add to their learning.&rdquo; The wise person is not the one who has finished learning. The wise person is the one who has not stopped.
               </p>
@@ -1590,21 +1582,21 @@ export default function LeadersReadersClient({
             </>
           ) : (
             <>
-              <p style={proseSubheadDark}>Instruksi Wesley</p>
+              <p style={proseSubhead}>Instruksi Wesley</p>
               <p style={proseDark}>
                 Pada tahun 1760, John Wesley menulis surat kepada seorang pendeta bernama Samuel Premboth. Suratnya singkat dan instruksinya langsung: &ldquo;Suka atau tidak suka, bacalah dan berdoalah setiap hari. Itu demi hidupmu.&rdquo;
               </p>
               <p style={proseDark}>
                 Yang menarik bagiku dari kalimat itu adalah Wesley menamai perlawanannya terlebih dahulu. Ia tidak mengasumsikan Premboth akan senang mendengar ini. Ia mengasumsikan Premboth akan merasa ini merepotkan, atau tidak nyaman, atau tidak relevan. Dan ia mengatakannya juga, dengan bobot pastoral.
               </p>
-              <p style={proseSubheadDark}>Masih berlaku hari ini</p>
+              <p style={proseSubhead}>Masih berlaku hari ini</p>
               <p style={proseDark}>
                 Wesley menulis kepada seorang pekerja lapangan di abad ke-18, tapi ia bisa saja menulis kepadamu sekarang. Perlawanannya belum berubah. Laju kehidupan yang menyisihkan waktu membaca adalah perlawanan yang sama, hanya dengan bentuk yang berbeda.
               </p>
               <p style={proseDark}>
                 Pemimpin yang berhenti belajar, yang mengisi setiap momen tenang dengan kebisingan, yang hanya mengandalkan apa yang sudah mereka ketahui, adalah pemimpin yang perlahan-lahan berhenti. Wesley tidak merekomendasikan program pengembangan diri. Ia berkata: ini adalah kelangsungan hidup bagi pemimpin yang ingin terus bertumbuh.
               </p>
-              <p style={proseSubheadDark}>Bukan penguasaan. Hanya sikap yang terus-menerus.</p>
+              <p style={proseSubhead}>Bukan penguasaan. Hanya sikap yang terus-menerus.</p>
               <p style={proseDark}>
                 Amsal 1:5 langsung: &ldquo;Biarlah orang yang bijak mendengar dan menambah ilmu.&rdquo; Orang bijak bukan orang yang sudah selesai belajar. Orang bijak adalah orang yang tidak berhenti.
               </p>
