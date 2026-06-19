@@ -399,6 +399,13 @@ function getResultKey(scores: { D: number; I: number; S: number; C: number }): R
   return top[0] as ResultKey;
 }
 
+// Normalize raw DB result to DISC order (e.g. "CS" → "SC", "ID" → "DI")
+function normalizeResult(raw: string | null): string | null {
+  if (!raw) return null;
+  const discOrder = ["D", "I", "S", "C"];
+  return raw.split("").sort((a, b) => discOrder.indexOf(a) - discOrder.indexOf(b)).join("");
+}
+
 
 // -- TYPE DEFINITIONS ------------------------------------------------------------------
 
@@ -502,7 +509,8 @@ export default function DiscClient({
   // -- RESULT CALCULATIONS -----------------------------------------------------------
 
   const total = scores.D + scores.I + scores.S + scores.C;
-  const resultKey = quizState === "done" ? getResultKey(scores) : (discResult ?? "");
+  const normalizedDiscResult = normalizeResult(discResult);
+  const resultKey = quizState === "done" ? getResultKey(scores) : (normalizedDiscResult ?? "");
   const displayScores = quizState === "done" ? scores : discScores ?? { D: 0, I: 0, S: 0, C: 0 };
   const displayTotal = quizState === "done" ? total : (discScores ? discScores.D + discScores.I + discScores.S + discScores.C : 0);
 
@@ -1768,8 +1776,8 @@ export default function DiscClient({
                     }}
                   >
                     {lang === "en"
-                      ? `Your saved result: ${discResult}. You can retake the assessment below.`
-                      : `Hasil tersimpan kamu: ${discResult}. Kamu bisa mengulang penilaian di bawah ini.`}
+                      ? `Your saved result: ${normalizedDiscResult}. You can retake the assessment below.`
+                      : `Hasil tersimpan kamu: ${normalizedDiscResult}. Kamu bisa mengulang penilaian di bawah ini.`}
                   </p>
                 </div>
               )}
@@ -2094,7 +2102,6 @@ export default function DiscClient({
       =================================================================== */}
       <div id="disc-types">
         {DISC_TYPES.map((type) => {
-          const activeTab = activeTypeTab[type.key] ?? "communication";
           const accentColor = type.color;
 
           return (
@@ -2149,7 +2156,7 @@ export default function DiscClient({
                   {type.key} — {tr(type.label)}
                 </span>
 
-                {/* Type tagline as H2 */}
+                {/* Type tagline */}
                 <h2
                   style={{
                     fontFamily: "'Cormorant Garamond', serif",
@@ -2163,7 +2170,7 @@ export default function DiscClient({
                   {tr(type.tagline)}
                 </h2>
 
-                {/* Block 1 — Overview */}
+                {/* Overview */}
                 <p
                   style={{
                     fontFamily: "Montserrat, sans-serif",
@@ -2176,279 +2183,26 @@ export default function DiscClient({
                   {tr(type.overview)}
                 </p>
 
-                {/* Block 2 — Strengths + Blind Spots grid */}
-                <div
+                {/* Explore CTA */}
+                <button
+                  onClick={() => scrollToType(type.key)}
                   style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-                    gap: "1.5rem",
-                    marginBottom: "2rem",
+                    background: "transparent",
+                    border: `1.5px solid ${accentColor}`,
+                    color: accentColor,
+                    fontFamily: "Montserrat, sans-serif",
+                    fontWeight: 700,
+                    fontSize: "0.8rem",
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    padding: "0.75rem 1.75rem",
+                    borderRadius: "12px",
+                    cursor: "pointer",
+                    minHeight: 44,
                   }}
                 >
-                  {/* Strengths */}
-                  <div>
-                    <p
-                      style={{
-                        fontFamily: "Montserrat, sans-serif",
-                        fontWeight: 700,
-                        fontSize: "0.75rem",
-                        letterSpacing: "0.12em",
-                        textTransform: "uppercase",
-                        color: accentColor,
-                        marginBottom: "0.75rem",
-                      }}
-                    >
-                      {lang === "en" ? "Strengths" : "Kekuatan"}
-                    </p>
-                    <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                      {type.strengths[lang].map((s, i) => (
-                        <li
-                          key={i}
-                          style={{
-                            fontFamily: "Montserrat, sans-serif",
-                            fontWeight: 500,
-                            fontSize: "0.875rem",
-                            color: "oklch(30% 0.05 260)",
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "0.5rem",
-                          }}
-                        >
-                          <span style={{ color: accentColor, fontWeight: 700, fontSize: "1rem", lineHeight: 1 }}>+</span>
-                          {s}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Blind Spots */}
-                  <div>
-                    <p
-                      style={{
-                        fontFamily: "Montserrat, sans-serif",
-                        fontWeight: 700,
-                        fontSize: "0.75rem",
-                        letterSpacing: "0.12em",
-                        textTransform: "uppercase",
-                        color: "oklch(55% 0.04 260)",
-                        marginBottom: "0.75rem",
-                      }}
-                    >
-                      {lang === "en" ? "Blind Spots" : "Titik Buta"}
-                    </p>
-                    <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                      {type.blindspots[lang].map((b, i) => (
-                        <li
-                          key={i}
-                          style={{
-                            fontFamily: "Montserrat, sans-serif",
-                            fontWeight: 400,
-                            fontStyle: "italic",
-                            fontSize: "0.875rem",
-                            color: "oklch(50% 0.04 260)",
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "0.5rem",
-                          }}
-                        >
-                          <span style={{ color: "oklch(65% 0.03 80)", fontWeight: 700, fontSize: "1rem", lineHeight: 1 }}>-</span>
-                          {b}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-
-                {/* Block 3 — Motivation + Fear row */}
-                <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-                    border: "1px solid oklch(88% 0.008 80)",
-                    background: "oklch(88% 0.008 80)",
-                    gap: "1px",
-                    overflow: "hidden",
-                    marginBottom: "2rem",
-                  }}
-                >
-                  <div style={{ padding: "1.25rem 1.5rem", background: "oklch(96% 0.005 80)" }}>
-                    <p
-                      style={{
-                        fontFamily: "Montserrat, sans-serif",
-                        fontWeight: 700,
-                        fontSize: "0.7rem",
-                        letterSpacing: "0.12em",
-                        textTransform: "uppercase",
-                        color: accentColor,
-                        marginBottom: "0.5rem",
-                      }}
-                    >
-                      {lang === "en" ? "Motivated by" : "Termotivasi oleh"}
-                    </p>
-                    <p
-                      style={{
-                        fontFamily: "Montserrat, sans-serif",
-                        fontWeight: 400,
-                        fontSize: "0.875rem",
-                        color: "oklch(35% 0.04 260)",
-                        lineHeight: 1.65,
-                        margin: 0,
-                      }}
-                    >
-                      {tr(type.motivation)}
-                    </p>
-                  </div>
-                  <div
-                    style={{
-                      padding: "1.25rem 1.5rem",
-                      background: "oklch(96% 0.005 80)",
-                    }}
-                  >
-                    <p
-                      style={{
-                        fontFamily: "Montserrat, sans-serif",
-                        fontWeight: 700,
-                        fontSize: "0.7rem",
-                        letterSpacing: "0.12em",
-                        textTransform: "uppercase",
-                        color: accentColor,
-                        marginBottom: "0.5rem",
-                      }}
-                    >
-                      {lang === "en" ? "Fears" : "Ditakuti"}
-                    </p>
-                    <p
-                      style={{
-                        fontFamily: "Montserrat, sans-serif",
-                        fontWeight: 400,
-                        fontSize: "0.875rem",
-                        color: "oklch(35% 0.04 260)",
-                        lineHeight: 1.65,
-                        margin: 0,
-                      }}
-                    >
-                      {tr(type.fear)}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Block 4 — Tab pair: Communication Style | Cross-Cultural Note */}
-                <div style={{ marginBottom: "2rem" }}>
-                  {/* Tab strip */}
-                  <div style={{ display: "flex", gap: "0", borderBottom: "1px solid oklch(88% 0.008 80)", marginBottom: "1.25rem" }}>
-                    {(["communication", "crossCultural"] as const).map((tab) => (
-                      <button
-                        key={tab}
-                        onClick={() => setActiveTypeTab((prev) => ({ ...prev, [type.key]: tab }))}
-                        style={{
-                          background: "none",
-                          border: "none",
-                          borderBottom: activeTab === tab ? `2px solid ${accentColor}` : "2px solid transparent",
-                          marginBottom: "-1px",
-                          cursor: "pointer",
-                          padding: "0.5rem 1rem 0.625rem",
-                          fontFamily: "Montserrat, sans-serif",
-                          fontWeight: 600,
-                          fontSize: "0.8rem",
-                          color: activeTab === tab ? "oklch(22% 0.10 260)" : "oklch(55% 0.04 260)",
-                          minHeight: 44,
-                          whiteSpace: "nowrap",
-                        }}
-                      >
-                        {tab === "communication"
-                          ? (lang === "en" ? "Communication Style" : "Gaya Komunikasi")
-                          : (lang === "en" ? "Cross-Cultural Note" : "Catatan Lintas Budaya")}
-                      </button>
-                    ))}
-                  </div>
-
-                  {/* Tab content */}
-                  <p
-                    style={{
-                      fontFamily: "Montserrat, sans-serif",
-                      fontWeight: 400,
-                      fontSize: "0.9rem",
-                      color: "oklch(35% 0.04 260)",
-                      lineHeight: 1.75,
-                      margin: 0,
-                    }}
-                  >
-                    {activeTab === "communication" ? tr(type.communication) : tr(type.crossCultural)}
-                  </p>
-                </div>
-
-                {/* Block 5 — Biblical Example card */}
-                <div
-                  style={{
-                    background: "oklch(97% 0.010 50)",
-                    border: "1px solid oklch(88% 0.030 50)",
-                    padding: "1.5rem",
-                    marginBottom: "1.5rem",
-                  }}
-                >
-                  <p
-                    style={{
-                      fontFamily: "Montserrat, sans-serif",
-                      fontWeight: 700,
-                      fontSize: "0.7rem",
-                      letterSpacing: "0.12em",
-                      textTransform: "uppercase",
-                      color: "oklch(65% 0.15 45)",
-                      marginBottom: "0.5rem",
-                    }}
-                  >
-                    {lang === "en" ? "Biblical Example" : "Contoh Alkitabiah"}
-                  </p>
-                  <h3
-                    style={{
-                      fontFamily: "'Cormorant Garamond', serif",
-                      fontWeight: 600,
-                      fontSize: "1.25rem",
-                      color: "oklch(22% 0.10 260)",
-                      marginBottom: "0.75rem",
-                    }}
-                  >
-                    {type.biblical.name}
-                  </h3>
-                  <p
-                    style={{
-                      fontFamily: "Montserrat, sans-serif",
-                      fontWeight: 400,
-                      fontSize: "0.875rem",
-                      color: "oklch(35% 0.04 260)",
-                      lineHeight: 1.75,
-                      margin: 0,
-                    }}
-                  >
-                    {type.biblical.text}
-                  </p>
-                </div>
-
-                {/* Cross-cultural context — inline */}
-                {type.digDeeper && (
-                  <div style={{ marginTop: "1.5rem", borderTop: "1px solid oklch(88% 0.008 80)", paddingTop: "1.25rem" }}>
-                    <p style={{
-                      fontFamily: "Montserrat, sans-serif",
-                      fontWeight: 700,
-                      fontSize: "0.7rem",
-                      letterSpacing: "0.12em",
-                      textTransform: "uppercase",
-                      color: accentColor,
-                      marginBottom: "0.75rem",
-                    }}>
-                      {lang === "en" ? `${type.key}-type in Cross-Cultural Contexts` : `Tipe ${type.key} dalam Konteks Lintas Budaya`}
-                    </p>
-                    <p style={{
-                      fontFamily: "Montserrat, sans-serif",
-                      fontSize: "0.875rem",
-                      color: "oklch(40% 0.05 260)",
-                      lineHeight: 1.75,
-                      margin: 0,
-                    }}>
-                      {type.digDeeper[lang]}
-                    </p>
-                  </div>
-                )}
+                  {lang === "en" ? `Explore ${tr(type.label)} Type` : `Jelajahi Tipe ${tr(type.label)}`}
+                </button>
               </div>
             </section>
           );
