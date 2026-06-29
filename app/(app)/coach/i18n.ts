@@ -85,6 +85,14 @@ const strings = {
     resume: "Resume",
     pause: "Pause",
     endSession: "End Session",
+
+    // Manual mode (item 6)
+    manualToggleOff: "Auto — coach responds when you pause",
+    manualToggleOn: "Manual — I'll tap when I'm done",
+    manualHelper: "Turn this on if you like to think out loud, pause, and gather your thoughts. The coach will wait until you tap “I'm done”.",
+    imDone: "I'm done",
+    manualActiveHint: "Take your time — tap “I'm done” when you've finished.",
+    manualActiveWaiting: "Thank you — your coach is responding…",
     backToWayPoint: "Back to WayPoint",
     tryAgain: "Try Again",
     notesWillAppear: "Your notes will appear here as the conversation unfolds.",
@@ -190,6 +198,14 @@ const strings = {
     resume: "Lanjutkan",
     pause: "Jeda",
     endSession: "Akhiri Sesi",
+
+    // Manual mode (item 6)
+    manualToggleOff: "Otomatis — coach merespons saat Anda berhenti",
+    manualToggleOn: "Manual — saya akan ketuk saat selesai",
+    manualHelper: "Aktifkan ini jika Anda suka berpikir sambil bicara, berhenti sejenak, dan menyusun pikiran. Coach akan menunggu sampai Anda mengetuk “Saya selesai”.",
+    imDone: "Saya selesai",
+    manualActiveHint: "Tidak perlu terburu-buru — ketuk “Saya selesai” saat Anda selesai.",
+    manualActiveWaiting: "Terima kasih — coach Anda sedang merespons…",
     backToWayPoint: "Kembali ke WayPoint",
     tryAgain: "Coba Lagi",
     notesWillAppear: "Catatan Anda akan muncul di sini seiring percakapan berlangsung.",

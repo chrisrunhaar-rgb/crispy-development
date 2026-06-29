@@ -36,6 +36,38 @@ const PHASE_MIN_SECONDS_DEEP: Partial<Record<Phase, number>> = {
   CARRY: 180,
 };
 
+// Nominal session budgets (spec §6 / §5). No booked-length field is confirmed on wp_sessions
+// (spec OPEN item), so total_minutes derives from sessionType only: quick = 10, deep = 45.
+const NOMINAL_TOTAL_MINUTES: Record<"quick" | "deep", number> = { quick: 10, deep: 45 };
+
+// Deep-session phase bands by elapsed % (spec §3 table). Quick uses stage bands instead.
+function deepPhaseHint(pct: number): string {
+  if (pct < 10) return "OPEN";
+  if (pct < 35) return "EXPLORE";
+  if (pct < 60) return "DEEPEN";
+  if (pct < 75) return "SHIFT";
+  if (pct < 90) return "COMMIT";
+  return "CLOSE";
+}
+
+// Quick-session stage bands by elapsed % (spec §6 table).
+function quickStageHint(pct: number): string {
+  if (pct < 40) return "opening";
+  if (pct < 80) return "deepening";
+  return "closing";
+}
+
+// Build the private "[time note]" line injected before a model turn (spec §6). Never shown to user.
+function buildTimeNote(elapsedSec: number, sessionType: "quick" | "deep"): string {
+  const total = NOMINAL_TOTAL_MINUTES[sessionType];
+  const elapsedMin = elapsedSec / 60;
+  const remaining = Math.max(0, Math.round(total - elapsedMin));
+  const pct = Math.min(100, Math.max(0, (elapsedMin / total) * 100));
+  return sessionType === "quick"
+    ? `[time note] About ${remaining} min left of a ${total}-min session. Stage: ${quickStageHint(pct)}.`
+    : `[time note] About ${remaining} min left of a ${total}-min session. phase: ${deepPhaseHint(pct)}.`;
+}
+
 const PHASE_MIN_SECONDS_QUICK: Partial<Record<Phase, number>> = {
   LAND: 60,
   EXPLORE: 300,  // 5 min minimum — quick session core work
@@ -67,7 +99,15 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
 
+  // MANUAL MODE (item 6): off by default. When on, the user controls turn-taking by tapping
+  // "I'm done" — the coach waits fully and only responds after the manual activity-end signal.
+  const [manualMode, setManualMode] = useState(false);
+  const manualModeRef = useRef(false);
+  // True briefly after the user taps "I'm done" until the coach starts replying — drives button state.
+  const [awaitingCoach, setAwaitingCoach] = useState(false);
+
   const isMutedRef = useRef(false);
+  const elapsedSecondsRef = useRef(0);
   const isAiSpeakingRef = useRef(false);
   const phaseRef = useRef<Phase>("LAND");
   const whiteboardRef = useRef<WhiteboardState>({ focus_today: null, key_insights: [], values_named: [], action_steps: [], carrying_forward: null });
@@ -87,6 +127,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const phaseStartTimeRef = useRef<number>(Date.now());
 
+  const lastTimeNoteAtRef = useRef<number>(-999);
   const transcriptRef = useRef<string[]>([]);
   const aiRef = useRef<GoogleGenAI | null>(null);
   const systemPromptRef = useRef<string>("");
@@ -174,20 +215,31 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
     };
   }
 
-  const buildLiveConfig = useCallback((systemPrompt: string, voice: string): LiveConnectConfig => ({
+  const buildLiveConfig = useCallback((systemPrompt: string, voice: string, manual: boolean): LiveConnectConfig => ({
     responseModalities: [Modality.AUDIO],
     speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: voice } } },
     systemInstruction: systemPrompt,
     generationConfig: { thinkingConfig: { thinkingLevel: ThinkingLevel.MINIMAL } },
-    realtimeInputConfig: {
-      automaticActivityDetection: {
-        disabled: false,
-        startOfSpeechSensitivity: StartSensitivity.START_SENSITIVITY_HIGH,
-        endOfSpeechSensitivity: EndSensitivity.END_SENSITIVITY_HIGH,
-        prefixPaddingMs: 20,
-        silenceDurationMs: 500,
-      },
-    },
+    realtimeInputConfig: manual
+      ? {
+          // MANUAL MODE (item 6): automatic turn detection is OFF. Turn-taking is driven by the
+          // user tapping "I'm done", which fires sendRealtimeInput({ activityEnd: {} }). The coach
+          // only responds after that signal — it never fills the silence or cuts the person off.
+          automaticActivityDetection: { disabled: true },
+        }
+      : {
+          // AUTOMATIC MODE (item 5, default for everyone): calmer turn-taking so the coach waits
+          // longer before replying and is less likely to interrupt. silenceDurationMs raised from
+          // 500 → 1800ms and endOfSpeechSensitivity lowered to LOW. This gives reflective coachees
+          // room to pause mid-thought without being cut off.
+          automaticActivityDetection: {
+            disabled: false,
+            startOfSpeechSensitivity: StartSensitivity.START_SENSITIVITY_HIGH,
+            endOfSpeechSensitivity: EndSensitivity.END_SENSITIVITY_LOW,
+            prefixPaddingMs: 20,
+            silenceDurationMs: 1800,
+          },
+        },
     tools: [{
       functionDeclarations: [
         {
@@ -217,6 +269,17 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
     }],
   }), []);
 
+  // When manual mode is on, append an instruction so the coach waits fully and never fills silence.
+  // Localised for ID users so the coach doesn't code-switch to English (TALI's open item).
+  const manualModeInstruction = lang === "id"
+    ? `\n\n## MODE MANUAL AKTIF\nOrang ini mengendalikan giliran bicara sendiri. Tunggu sepenuhnya sampai mereka selesai — jangan pernah mengisi keheningan, jangan memotong, jangan mendorong mereka untuk berbicara. Kamu hanya akan merespons setelah mereka memberi sinyal bahwa mereka selesai. Saat merespons, pertimbangkan keseluruhan yang mereka bagikan, bukan hanya kalimat terakhir.`
+    : `\n\n## MANUAL MODE ACTIVE\nThis person controls their own turn-taking. Wait fully until they are finished — never fill the silence, never interrupt, never prompt them to keep talking. You will only respond after they signal they are done. When you do respond, reflect on the whole of what they shared, not just their last sentence.`;
+
+  const effectiveSystemPrompt = useCallback(
+    (basePrompt: string, manual: boolean) => manual ? basePrompt + manualModeInstruction : basePrompt,
+    [manualModeInstruction],
+  );
+
   const handleMessage = useCallback((message: LiveServerMessage) => {
     if (message.serverContent?.modelTurn?.parts) {
       for (const part of message.serverContent.modelTurn.parts) {
@@ -225,6 +288,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
         if (inlineData?.data) {
           isAiSpeakingRef.current = true;
           setIsAiSpeaking(true);
+          setAwaitingCoach(false);
           playPcmChunk(inlineData.data as string);
         }
         if (part.text) transcriptRef.current.push(part.text);
@@ -238,6 +302,14 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
     if (message.serverContent?.turnComplete) {
       isAiSpeakingRef.current = false;
       setIsAiSpeaking(false);
+      // TIME-NOTE INJECTION (item 3 / spec §6). The coach just finished a turn; inject a private
+      // time note so it sits in context before the model's next completion. Throttled to once per
+      // ~25s of elapsed time to avoid spamming on rapid back-and-forth. Never shown to the user.
+      const nowSec = elapsedSecondsRef.current;
+      if (!sessionClosedRef.current && nowSec - lastTimeNoteAtRef.current >= 25) {
+        lastTimeNoteAtRef.current = nowSec;
+        sessionRef.current?.sendRealtimeInput({ text: buildTimeNote(nowSec, sessionType) });
+      }
     }
     if (message.toolCall?.functionCalls) {
       const responses = message.toolCall.functionCalls.map(call => {
@@ -298,9 +370,10 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
       const ai = aiRef.current;
       if (!ai || sessionClosedRef.current) return;
       try {
+        const manual = manualModeRef.current;
         const ws = await ai.live.connect({
           model: GEMINI_MODEL,
-          config: buildLiveConfig(systemPromptRef.current, coachVoice),
+          config: buildLiveConfig(effectiveSystemPrompt(systemPromptRef.current, manual), coachVoice, manual),
           callbacks: {
             onopen: () => {},
             onmessage: handleMessage,
@@ -311,7 +384,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
         warmupSessionRef.current = ws;
       } catch { /* silent */ }
     }, WARMUP_AT_SECONDS * 1000);
-  }, [buildLiveConfig, handleMessage, coachVoice]);
+  }, [buildLiveConfig, handleMessage, coachVoice, effectiveSystemPrompt]);
 
   const switchToWarmup = useCallback(() => {
     const ws = warmupSessionRef.current;
@@ -385,9 +458,10 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
       playContextRef.current = playCtx;
       playTimeRef.current = 0;
 
+      const manual = manualModeRef.current;
       const geminiSession = await ai.live.connect({
         model: GEMINI_MODEL,
-        config: buildLiveConfig(systemPrompt, coachVoice),
+        config: buildLiveConfig(effectiveSystemPrompt(systemPrompt, manual), coachVoice, manual),
         callbacks: {
           onopen: () => {
             setStatus("active");
@@ -395,7 +469,10 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
               startTimeRef.current = Date.now();
               phaseStartTimeRef.current = Date.now();
               timerRef.current = setInterval(() => {
-                if (!isMutedRef.current) setElapsedSeconds(s => s + 1);
+                if (!isMutedRef.current) {
+                  elapsedSecondsRef.current += 1;
+                  setElapsedSeconds(elapsedSecondsRef.current);
+                }
               }, 1000);
             }
             scheduleWarmup();
@@ -473,7 +550,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
       setErrorMsg(err instanceof Error ? err.message : "Something went wrong");
       stopAudio();
     }
-  }, [buildLiveConfig, handleMessage, scheduleWarmup, switchToWarmup, coachName, coachVoice]);
+  }, [buildLiveConfig, handleMessage, scheduleWarmup, switchToWarmup, coachName, coachVoice, effectiveSystemPrompt]);
 
   const toggleMute = useCallback(() => {
     if (!streamRef.current) return;
@@ -487,6 +564,25 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
     sessionRef.current?.sendRealtimeInput({ text: "Let's close the session now." });
     setTimeout(() => handleSessionComplete(), 3000);
   }, [handleSessionComplete]);
+
+  // MANUAL MODE: user taps "I'm done" → send manual activity-end signal so the coach responds
+  // only after the tap (spec item 6). @google/genai exposes activityEnd on sendRealtimeInput.
+  const signalDone = useCallback(() => {
+    if (!sessionRef.current || sessionClosedRef.current) return;
+    sessionRef.current.sendRealtimeInput({ activityEnd: {} });
+    setAwaitingCoach(true);
+    // Clear the awaiting state once the coach starts speaking (or after a short timeout fallback).
+    setTimeout(() => setAwaitingCoach(false), 4000);
+  }, []);
+
+  // Toggle manual mode (only meaningful before the session starts — locked once active).
+  const toggleManualMode = useCallback(() => {
+    setManualMode(prev => {
+      const next = !prev;
+      manualModeRef.current = next;
+      return next;
+    });
+  }, []);
 
   useEffect(() => {
     return () => {
@@ -634,6 +730,35 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
               <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "1.05rem", fontStyle: "italic", color: "rgba(255,255,255,0.75)", margin: 0 }}>
                 {lang === "id" ? "Siap saat Anda siap." : "Ready when you are."}
               </p>
+
+              {/* MANUAL MODE TOGGLE (item 6) — off by default, locked once the session starts */}
+              <button
+                type="button"
+                onClick={toggleManualMode}
+                aria-pressed={manualMode}
+                style={{
+                  marginTop: "0.5rem",
+                  display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem",
+                  background: "transparent", border: "none", cursor: "pointer", padding: "0.25rem",
+                  fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", color: "rgba(255,255,255,0.7)",
+                }}
+              >
+                <span style={{
+                  width: "34px", height: "20px", borderRadius: "10px", flexShrink: 0,
+                  background: manualMode ? "oklch(65% 0.15 45)" : "rgba(255,255,255,0.2)",
+                  position: "relative", transition: "background 0.2s ease",
+                }}>
+                  <span style={{
+                    position: "absolute", top: "2px", left: manualMode ? "16px" : "2px",
+                    width: "16px", height: "16px", borderRadius: "50%", background: "white",
+                    transition: "left 0.2s ease",
+                  }} />
+                </span>
+                <span>{manualMode ? s.manualToggleOn : s.manualToggleOff}</span>
+              </button>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", color: "rgba(255,255,255,0.42)", margin: "0.1rem 0 0", lineHeight: 1.45, maxWidth: "260px" }}>
+                {s.manualHelper}
+              </p>
             </div>
           ) : (
             <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "1.1rem", fontStyle: "italic", color: "rgba(255,255,255,0.75)", textAlign: "center", maxWidth: "240px" }}>
@@ -646,12 +771,22 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
 
           {status === "active" && (
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: "rgba(255,255,255,0.32)", textAlign: "center" }}>
-              {isMuted ? s.tapResume : s.speakNaturally}
+              {isMuted ? s.tapResume : manualMode ? (awaitingCoach ? s.manualActiveWaiting : s.manualActiveHint) : s.speakNaturally}
             </p>
           )}
 
           {/* Controls */}
-          <div style={{ display: "flex", gap: "0.875rem" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", alignItems: "center" }}>
+            {status === "active" && manualMode && (
+              <button
+                onClick={signalDone}
+                disabled={awaitingCoach}
+                style={{ ...btnStyle("primary"), opacity: awaitingCoach ? 0.55 : 1, cursor: awaitingCoach ? "default" : "pointer" }}
+              >
+                {s.imDone}
+              </button>
+            )}
+            <div style={{ display: "flex", gap: "0.875rem" }}>
             {status === "idle" && <button onClick={startSession} style={btnStyle("primary")}>{s.startSessionBtn}</button>}
             {status === "active" && (
               <>
@@ -661,6 +796,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
             )}
             {status === "complete" && <a href={`/coach/session/${sessionId}/complete`} style={{ ...btnStyle("primary"), textDecoration: "none" }}>{s.backToWayPoint}</a>}
             {status === "error" && <button onClick={startSession} style={btnStyle("primary")}>{s.tryAgain}</button>}
+            </div>
           </div>
 
           {status === "error" && errorMsg && (

@@ -91,5 +91,7 @@ export default async function GeminiCoachPage({
   const coachName = profile.selected_coach ?? "Tara";
   const coachVoice = COACH_VOICES[coachName] ?? "Kore";
 
-  return <GeminiSessionClient sessionId={session.id} coachName={coachName} coachVoice={coachVoice} sessionType={sessionType} />;
+  const lang: "en" | "id" = user.user_metadata?.language_preference === "id" ? "id" : "en";
+
+  return <GeminiSessionClient sessionId={session.id} coachName={coachName} coachVoice={coachVoice} sessionType={sessionType} lang={lang} />;
 }
