@@ -409,10 +409,19 @@ Name: ${name}${profile ? [
     profile.family_situation ? `\nFamily situation: ${profile.family_situation}` : "",
     profile.notes ? `\nContext notes: ${profile.notes}` : "",
   ].join("") : ""}
-${recentSessions.length > 0
-    ? `\n## PREVIOUS SESSION CONTEXT\n${recentSessions.map(s => {
+${(() => {
+    // Only surface sessions that actually have recorded notes. A completed session with an empty
+    // whiteboard carries no real continuity — listing it as a bare "Session N" stub makes the coach
+    // believe a past conversation happened and invent what was discussed (e.g. claiming "last time we
+    // talked about scheduling" when nothing was recorded). So filter to sessions with real content.
+    const withContent = recentSessions
+      .map(s => {
         const wb = Array.isArray(s.wp_whiteboards) ? s.wp_whiteboards[0] : s.wp_whiteboards;
         if (!wb) return "";
+        const hasContent = wb.focus_today
+          || (wb.action_steps && wb.action_steps.length > 0)
+          || wb.carrying_forward;
+        if (!hasContent) return "";
         const date = new Date(s.started_at).toLocaleDateString("en-GB", { day: "numeric", month: "short" });
         return [
           `\nSession ${s.session_number ?? "?"} (${date})`,
@@ -420,8 +429,12 @@ ${recentSessions.length > 0
           wb.action_steps && wb.action_steps.length > 0 ? `\n- Committed to: ${wb.action_steps.join("; ")}` : "",
           wb.carrying_forward ? `\n- Carried forward: ${wb.carrying_forward}` : "",
         ].join("");
-      }).join("")}`
-    : `\nNo previous sessions on record. This is ${name}'s first session — do the verbal profile gathering during opening.`}`;
+      })
+      .filter(Boolean);
+    return withContent.length > 0
+      ? `\n## PREVIOUS SESSION CONTEXT\nThese notes are the ONLY record you have of past sessions. Reference only what is written here. If a topic is not in these notes, you have no memory of it — never claim to recall or invent what was discussed before.${withContent.join("")}`
+      : `\nNo recorded notes from previous sessions. Do NOT claim to remember or reference any earlier conversation — you have no record of one. Treat this as a fresh start and gather context verbally during the opening.`;
+  })()}`;
 
   return context;
 }
