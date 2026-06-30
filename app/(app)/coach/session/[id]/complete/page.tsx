@@ -63,7 +63,7 @@ export default async function SessionCompletePage({
         borderBottom: "1px solid oklch(14% 0.06 260)",
       }}>
         <div className="container-wide">
-          <Image src="/images/waypoint/waypoint-banner-blue.png" alt="WayPoint" height={28} width={0} style={{ width: "auto", height: "28px", marginBottom: "0.75rem" }} />
+          <Image src="/images/waypoint/waypoint-logo-circle.png" alt="WayPoint" height={44} width={44} style={{ width: "44px", height: "44px", marginBottom: "0.75rem" }} />
           <h1 style={{
             fontFamily: "var(--font-cormorant)",
             fontStyle: "italic",

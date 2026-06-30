@@ -332,7 +332,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
       // the coach speak before the person has tapped "I'm done". So skip the auto time-note here in
       // manual mode; it is instead bundled into signalDone() just before activityEnd.
       const nowSec = elapsedSecondsRef.current;
-      if (!sessionClosedRef.current && !manualModeRef.current && nowSec - lastTimeNoteAtRef.current >= 25) {
+      if (!sessionClosedRef.current && !closingRef.current && !manualModeRef.current && nowSec - lastTimeNoteAtRef.current >= 25) {
         lastTimeNoteAtRef.current = nowSec;
         sessionRef.current?.sendRealtimeInput({ text: buildTimeNote(nowSec, sessionType) });
       }
@@ -569,7 +569,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
           isAiSpeakingRef.current = false;
           setIsAiSpeaking(false);
         }
-        if (isMutedRef.current || isAiSpeakingRef.current) return;
+        if (isMutedRef.current || isAiSpeakingRef.current || closingRef.current || sessionClosedRef.current) return;
         const int16 = new Int16Array(e.data);
         const uint8 = new Uint8Array(int16.buffer);
         let binary = "";
@@ -599,6 +599,14 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
     closingRef.current = true;
     closingSpokeRef.current = false;
     setIsClosing(true);
+
+    // CRITICAL: kill the mic the instant closing begins. stopAudio() tears down only the mic capture
+    // chain (worklet + stream + 16k AudioContext) — the 24k playback AudioContext is separate and keeps
+    // playing the closing. Without this, in auto mode the mic resumes streaming the moment the closing
+    // turn's turnComplete flips isAiSpeaking false; the VAD then picks up ambient sound and triggers a
+    // SECOND coach turn (a second closing story), which handleSessionComplete later cuts mid-sentence.
+    // No mic input → exactly one closing turn → clean drain. (Root cause of the double-closing bug.)
+    stopAudio();
 
     // Ask the coach for a PROPER spoken closing: a short summary of what surfaced, a reminder that the
     // session notes are saved and reviewable, then a warm goodbye. No new questions, no new topics.
