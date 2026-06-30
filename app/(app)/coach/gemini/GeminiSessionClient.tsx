@@ -106,6 +106,17 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
   // True briefly after the user taps "I'm done" until the coach starts replying — drives button state.
   const [awaitingCoach, setAwaitingCoach] = useState(false);
 
+  // CLOSING SEQUENCE (msg 12991): when the user ends the session, we ask the coach to give a proper
+  // spoken closing (short summary + notes-are-saved + warm goodbye) and wait for it to finish — instead
+  // of hard-cutting after a fixed 3s. isClosing also hides the other controls so nothing overlaps.
+  const [isClosing, setIsClosing] = useState(false);
+  // Confirm tap before ending (extra #1) — stops accidental ends. Tapping End Session arms this; the
+  // user then confirms ("End session") or cancels ("Keep going").
+  const [confirmEnd, setConfirmEnd] = useState(false);
+  const closingRef = useRef(false);          // closing sequence has begun
+  const closingSpokeRef = useRef(false);     // coach has produced closing audio (guards premature complete)
+  const closingFallbackRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   const isMutedRef = useRef(false);
   const elapsedSecondsRef = useRef(0);
   const isAiSpeakingRef = useRef(false);
@@ -177,6 +188,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
     setStatus("complete");
     if (timerRef.current) clearInterval(timerRef.current);
     if (warmupTimerRef.current) clearTimeout(warmupTimerRef.current);
+    if (closingFallbackRef.current) clearTimeout(closingFallbackRef.current);
     sessionRef.current?.close();
     warmupSessionRef.current?.close();
     stopAudio();
@@ -289,6 +301,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
           isAiSpeakingRef.current = true;
           setIsAiSpeaking(true);
           setAwaitingCoach(false);
+          if (closingRef.current) closingSpokeRef.current = true;
           playPcmChunk(inlineData.data as string);
         }
         if (part.text) transcriptRef.current.push(part.text);
@@ -302,6 +315,16 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
     if (message.serverContent?.turnComplete) {
       isAiSpeakingRef.current = false;
       setIsAiSpeaking(false);
+      // CLOSING SEQUENCE: the coach has just finished its closing turn. Let the final audio drain from
+      // the play buffer, then complete the session. Guarded by closingSpokeRef so a stray turnComplete
+      // before the coach actually speaks the closing can't cut it off. A hard fallback (set in
+      // endSession) still completes the session if no closing audio ever arrives.
+      if (closingRef.current && closingSpokeRef.current && !sessionClosedRef.current) {
+        const playCtx = playContextRef.current;
+        const drainMs = playCtx ? Math.max(0, (playTimeRef.current - playCtx.currentTime) * 1000) : 0;
+        setTimeout(() => handleSessionComplete(), drainMs + 1200);
+        return;
+      }
       // TIME-NOTE INJECTION (item 3 / spec §6). The coach just finished a turn; inject a private
       // time note so it sits in context before the model's next completion. Throttled to once per
       // ~25s of elapsed time to avoid spamming on rapid back-and-forth. Never shown to the user.
@@ -317,7 +340,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
       // streamed mic audio is bracketed activityStart…activityEnd. Auto turn-detection is disabled in
       // manual mode, so without this open bracket the "I'm done" tap (activityEnd) has no real turn to
       // close and the coach's turn-taking is undefined.
-      if (!sessionClosedRef.current && manualModeRef.current) {
+      if (!sessionClosedRef.current && manualModeRef.current && !closingRef.current) {
         sessionRef.current?.sendRealtimeInput({ activityStart: {} });
       }
     }
@@ -571,9 +594,29 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
   }, []);
 
   const endSession = useCallback(() => {
-    sessionRef.current?.sendRealtimeInput({ text: "Let's close the session now." });
-    setTimeout(() => handleSessionComplete(), 3000);
-  }, [handleSessionComplete]);
+    if (sessionClosedRef.current || closingRef.current) return;
+    if (!sessionRef.current) { handleSessionComplete(); return; }
+    closingRef.current = true;
+    closingSpokeRef.current = false;
+    setIsClosing(true);
+
+    // Ask the coach for a PROPER spoken closing: a short summary of what surfaced, a reminder that the
+    // session notes are saved and reviewable, then a warm goodbye. No new questions, no new topics.
+    const closeInstruction = lang === "id"
+      ? `[catatan teknis — bukan untuk diucapkan kata demi kata] Sesi berakhir sekarang karena orang ini menekan "Akhiri Sesi". Berikan penutupan yang singkat dan hangat — jangan memulai topik baru dan jangan bertanya apa pun. Dalam dua sampai tiga kalimat: sebutkan hal utama yang muncul hari ini dan apa yang mereka bawa ke depan, ingatkan bahwa catatan sesi mereka sudah tersimpan dan bisa dilihat kapan saja, lalu ucapkan selamat tinggal yang tulus dan menguatkan.`
+      : `[technical note — do not read aloud] The session is ending now because this person tapped "End Session". Give a brief, warm closing — do not open any new topic and do not ask any questions. In two or three sentences: name the main thing that surfaced today and what they are carrying forward, remind them their session notes are saved and they can review them any time, then give a genuine, encouraging goodbye.`;
+
+    sessionRef.current.sendRealtimeInput({ text: closeInstruction });
+    // In manual mode automatic turn-detection is off, so the close text alone would never trigger a
+    // reply — close the turn explicitly so the coach speaks its closing.
+    if (manualModeRef.current) {
+      sessionRef.current.sendRealtimeInput({ activityEnd: {} });
+    }
+
+    // Hard fallback: if no closing audio ever arrives, complete anyway after 22s so the user is never
+    // stuck on the closing screen. The normal path completes earlier, right after the coach finishes.
+    closingFallbackRef.current = setTimeout(() => handleSessionComplete(), 22000);
+  }, [handleSessionComplete, lang]);
 
   // MANUAL MODE: user taps "I'm done" → send manual activity-end signal so the coach responds
   // only after the tap (spec item 6). @google/genai exposes activityEnd on sendRealtimeInput.
@@ -780,21 +823,33 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
           ) : (
             <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "1.1rem", fontStyle: "italic", color: "rgba(255,255,255,0.75)", textAlign: "center", maxWidth: "240px" }}>
               {status === "connecting" && (errorMsg ?? s.connecting)}
-              {status === "active" && (isAiSpeaking ? s.aiSpeaking(coachName) : isMuted ? s.micPaused : s.listening)}
+              {status === "active" && (isClosing ? s.closing : confirmEnd ? s.endConfirmPrompt : isAiSpeaking ? s.aiSpeaking(coachName) : isMuted ? s.micPaused : s.listening)}
               {status === "complete" && s.sessionComplete}
               {status === "error" && s.connectionFailed}
             </p>
           )}
 
-          {status === "active" && (
+          {status === "active" && !isClosing && !confirmEnd && (
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: "rgba(255,255,255,0.32)", textAlign: "center" }}>
               {isMuted ? s.tapResume : manualMode ? (awaitingCoach ? s.manualActiveWaiting : s.manualActiveHint) : s.speakNaturally}
             </p>
           )}
 
+          {/* Complete screen — reassure notes saved + minutes used (extras #2, #3) */}
+          {status === "complete" && (
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem", alignItems: "center" }}>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "rgba(255,255,255,0.6)", textAlign: "center" }}>
+                {s.minutesThisSession(Math.max(1, Math.round(elapsedSeconds / 60)))}
+              </p>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", color: "rgba(255,255,255,0.42)", textAlign: "center", maxWidth: "260px" }}>
+                {s.notesSavedReassure}
+              </p>
+            </div>
+          )}
+
           {/* Controls */}
           <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", alignItems: "center" }}>
-            {status === "active" && manualMode && (
+            {status === "active" && manualMode && !isClosing && !confirmEnd && (
               <button
                 onClick={signalDone}
                 disabled={awaitingCoach}
@@ -805,13 +860,19 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
             )}
             <div style={{ display: "flex", gap: "0.875rem" }}>
             {status === "idle" && <button onClick={startSession} style={btnStyle("primary")}>{s.startSessionBtn}</button>}
-            {status === "active" && (
+            {status === "active" && !isClosing && !confirmEnd && (
               <>
                 <button onClick={toggleMute} style={btnStyle(isMuted ? "primary" : "ghost")}>{isMuted ? s.resume : s.pause}</button>
-                <button onClick={endSession} style={btnStyle("secondary")}>{s.endSession}</button>
+                <button onClick={() => setConfirmEnd(true)} style={btnStyle("secondary")}>{s.endSession}</button>
               </>
             )}
-            {status === "complete" && <a href={`/coach/session/${sessionId}/complete`} style={{ ...btnStyle("primary"), textDecoration: "none" }}>{s.backToWayPoint}</a>}
+            {status === "active" && !isClosing && confirmEnd && (
+              <>
+                <button onClick={() => setConfirmEnd(false)} style={btnStyle("primary")}>{s.endConfirmNo}</button>
+                <button onClick={() => { setConfirmEnd(false); endSession(); }} style={btnStyle("secondary")}>{s.endConfirmYes}</button>
+              </>
+            )}
+            {status === "complete" && <a href={`/coach/session/${sessionId}/complete`} style={{ ...btnStyle("primary"), textDecoration: "none" }}>{s.reviewNotes}</a>}
             {status === "error" && <button onClick={startSession} style={btnStyle("primary")}>{s.tryAgain}</button>}
             </div>
           </div>
