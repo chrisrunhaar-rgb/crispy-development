@@ -608,11 +608,28 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
     // No mic input → exactly one closing turn → clean drain. (Root cause of the double-closing bug.)
     stopAudio();
 
-    // Ask the coach for a PROPER spoken closing: a short summary of what surfaced, a reminder that the
-    // session notes are saved and reviewable, then a warm goodbye. No new questions, no new topics.
-    const closeInstruction = lang === "id"
-      ? `[catatan teknis — bukan untuk diucapkan kata demi kata] Sesi berakhir sekarang karena orang ini menekan "Akhiri Sesi". Berikan penutupan yang singkat dan hangat — jangan memulai topik baru dan jangan bertanya apa pun. Dalam dua sampai tiga kalimat: sebutkan hal utama yang muncul hari ini dan apa yang mereka bawa ke depan, ingatkan bahwa catatan sesi mereka sudah tersimpan dan bisa dilihat kapan saja, lalu ucapkan selamat tinggal yang tulus dan menguatkan.`
-      : `[technical note — do not read aloud] The session is ending now because this person tapped "End Session". Give a brief, warm closing — do not open any new topic and do not ask any questions. In two or three sentences: name the main thing that surfaced today and what they are carrying forward, remind them their session notes are saved and they can review them any time, then give a genuine, encouraging goodbye.`;
+    // Ask the coach for a PROPER spoken closing. CRITICAL: the closing must reflect ONLY what actually
+    // happened. The whiteboard is the record of what surfaced — the coach fills it via update_whiteboard
+    // as the person speaks. If it is empty, nothing was discussed (e.g. the person said nothing and
+    // tapped End), so a summary closing would FABRICATE content ("you wanted to focus on admin" when no
+    // such thing was ever said). Pick the closing variant by whether the whiteboard holds real content,
+    // and forbid invention either way.
+    const wb = whiteboardRef.current;
+    const hasContent = !!(
+      wb.focus_today ||
+      wb.key_insights.length ||
+      wb.values_named.length ||
+      wb.action_steps.length ||
+      wb.carrying_forward
+    );
+
+    const closeInstruction = hasContent
+      ? (lang === "id"
+        ? `[catatan teknis — bukan untuk diucapkan kata demi kata] Sesi berakhir sekarang karena orang ini menekan "Akhiri Sesi". Berikan penutupan yang singkat dan hangat — jangan memulai topik baru dan jangan bertanya apa pun. Dalam dua sampai tiga kalimat: sebutkan hal utama yang BENAR-BENAR mereka katakan hari ini dan apa yang mereka bawa ke depan, ingatkan bahwa catatan sesi mereka sudah tersimpan dan bisa dilihat kapan saja, lalu ucapkan selamat tinggal yang tulus dan menguatkan. PENTING: rujuk hanya pada apa yang benar-benar dibicarakan. Jangan pernah mengarang atau menebak topik, fokus, atau keputusan yang tidak mereka sebutkan.`
+        : `[technical note — do not read aloud] The session is ending now because this person tapped "End Session". Give a brief, warm closing — do not open any new topic and do not ask any questions. In two or three sentences: name the main thing they ACTUALLY said today and what they are carrying forward, remind them their session notes are saved and they can review them any time, then give a genuine, encouraging goodbye. IMPORTANT: reference only what was actually discussed. Never invent or guess a topic, focus, or decision they did not raise.`)
+      : (lang === "id"
+        ? `[catatan teknis — bukan untuk diucapkan kata demi kata] Sesi berakhir sekarang karena orang ini menekan "Akhiri Sesi", dan belum ada yang benar-benar dibicarakan dalam sesi ini. JANGAN merangkum, JANGAN menyebutkan topik, fokus, atau keputusan apa pun — tidak ada yang dibagikan, jadi mengarang apa pun akan salah. Cukup ucapkan selamat tinggal yang hangat dan singkat dalam satu atau dua kalimat, sampaikan bahwa mereka bisa kembali kapan saja saat siap untuk berbicara, dan tidak perlu lebih dari itu.`
+        : `[technical note — do not read aloud] The session is ending now because this person tapped "End Session", and nothing was actually discussed in this session. Do NOT summarise, and do NOT mention any topic, focus, or decision — nothing was shared, so inventing anything would be wrong. Simply give a warm, brief goodbye in one or two sentences, let them know they can come back any time they are ready to talk, and leave it at that.`);
 
     sessionRef.current.sendRealtimeInput({ text: closeInstruction });
     // In manual mode automatic turn-detection is off, so the close text alone would never trigger a
