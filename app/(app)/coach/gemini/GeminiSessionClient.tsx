@@ -305,10 +305,20 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
       // TIME-NOTE INJECTION (item 3 / spec §6). The coach just finished a turn; inject a private
       // time note so it sits in context before the model's next completion. Throttled to once per
       // ~25s of elapsed time to avoid spamming on rapid back-and-forth. Never shown to the user.
+      // In MANUAL MODE, any realtimeInput — even a private text note — counts as a turn and makes
+      // the coach speak before the person has tapped "I'm done". So skip the auto time-note here in
+      // manual mode; it is instead bundled into signalDone() just before activityEnd.
       const nowSec = elapsedSecondsRef.current;
-      if (!sessionClosedRef.current && nowSec - lastTimeNoteAtRef.current >= 25) {
+      if (!sessionClosedRef.current && !manualModeRef.current && nowSec - lastTimeNoteAtRef.current >= 25) {
         lastTimeNoteAtRef.current = nowSec;
         sessionRef.current?.sendRealtimeInput({ text: buildTimeNote(nowSec, sessionType) });
+      }
+      // MANUAL MODE: the coach has just finished its turn. Open the person's turn explicitly so their
+      // streamed mic audio is bracketed activityStart…activityEnd. Auto turn-detection is disabled in
+      // manual mode, so without this open bracket the "I'm done" tap (activityEnd) has no real turn to
+      // close and the coach's turn-taking is undefined.
+      if (!sessionClosedRef.current && manualModeRef.current) {
+        sessionRef.current?.sendRealtimeInput({ activityStart: {} });
       }
     }
     if (message.toolCall?.functionCalls) {
@@ -569,11 +579,18 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
   // only after the tap (spec item 6). @google/genai exposes activityEnd on sendRealtimeInput.
   const signalDone = useCallback(() => {
     if (!sessionRef.current || sessionClosedRef.current) return;
+    // Manual mode skips the auto time-note (it would trigger a turn), so fold it in here as context
+    // for the upcoming reply — text first, then activityEnd closes the turn so the coach responds once.
+    const nowSec = elapsedSecondsRef.current;
+    if (nowSec - lastTimeNoteAtRef.current >= 25) {
+      lastTimeNoteAtRef.current = nowSec;
+      sessionRef.current.sendRealtimeInput({ text: buildTimeNote(nowSec, sessionType) });
+    }
     sessionRef.current.sendRealtimeInput({ activityEnd: {} });
     setAwaitingCoach(true);
     // Clear the awaiting state once the coach starts speaking (or after a short timeout fallback).
     setTimeout(() => setAwaitingCoach(false), 4000);
-  }, []);
+  }, [sessionType]);
 
   // Toggle manual mode (only meaningful before the session starts — locked once active).
   const toggleManualMode = useCallback(() => {

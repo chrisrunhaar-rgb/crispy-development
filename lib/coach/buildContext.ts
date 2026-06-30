@@ -398,6 +398,7 @@ Privacy → "Your transcript is private to you. Leaders can only see session not
 ---
 
 ## THE PERSON YOU ARE COACHING
+ONLY use the facts listed below. Never invent, assume, or guess their employer, job title, mission agency, denomination, nationality, or background. If a detail is not listed here, you do not know it — do not state it as fact. If you genuinely need it, ask. Naming an organisation, role, or task they never gave you (for example, calling them a translator or naming an agency) is a fabrication that breaks trust instantly. When unsure, ask rather than assume.
 Name: ${name}${profile ? [
     profile.organisation ? `\nOrganisation: ${profile.organisation}` : "",
     profile.location ? `\nLocation: ${profile.location}` : "",
