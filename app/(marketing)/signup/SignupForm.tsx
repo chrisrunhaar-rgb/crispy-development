@@ -126,11 +126,11 @@ export default function SignupForm({ defaultPathway = "personal", inviteToken = 
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
                 <div className="form-field">
                   <label className="form-label" htmlFor="firstName">{s.firstName}</label>
-                  <input className="form-input" type="text" id="firstName" name="firstName" placeholder="Chris" autoComplete="given-name" required />
+                  <input className="form-input" type="text" id="firstName" name="firstName" autoComplete="given-name" required />
                 </div>
                 <div className="form-field">
                   <label className="form-label" htmlFor="lastName">{s.lastName}</label>
-                  <input className="form-input" type="text" id="lastName" name="lastName" placeholder="Runhaar" autoComplete="family-name" required />
+                  <input className="form-input" type="text" id="lastName" name="lastName" autoComplete="family-name" required />
                 </div>
               </div>
 
