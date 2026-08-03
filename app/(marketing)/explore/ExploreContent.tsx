@@ -29,85 +29,64 @@ const SECTION_META: Omit<ExploreSection, "items">[] = [
     label: "Assessments",
     labelId: "Asesmen",
     hue: 45,
-    hookEn:
-      "Self-awareness is the one advantage no framework, strategy, or technique can substitute for. You can learn every leadership model available and still lead poorly if you don't understand your own default patterns: how you're wired to think, what motivates you, where your blind spots sit, and what you actually need from the people around you. This section is a set of structured assessments, not personality trivia, that give you a clear, honest picture of yourself as a leader: your behavioral style, your thinking style, your time orientation, your spiritual gifts, your rhythms of rest. None of these are a verdict on who you are. They're a starting point, a way of naming what's true so you can lead from clarity instead of guesswork. Take them seriously enough to be honest, and use what you find to lead the people around you a little better than you did before.",
-    // TODO: LINGO copy — no Indonesian translation of CLEO's theme hook exists yet; placeholder retained
-    hookId: "Teks placeholder untuk Asesmen. Teks tema dari CLEO akan menggantikan baris ini.",
+    hookEn: "See your default patterns clearly, then lead from clarity instead of guesswork.",
+    hookId: "Kenali pola dasarmu dengan jelas, lalu pimpin dari kejelasan, bukan tebakan.",
   },
   {
     key: "cross-cultural",
     label: "Cross-Cultural",
     labelId: "Lintas Budaya",
     hue: 85,
-    hookEn:
-      "You can misread a room in your own culture. Cross an ocean and the odds get worse. A pause that reads as agreement might be a form of respect. Silence in a meeting might be someone thinking, not someone checking out. Directness that feels honest in one office reads as an insult in another. None of this makes you a bad leader. It makes you a leader who is missing a layer of information everyone around you can already see. Cultural intelligence is not about memorizing a list of dos and don'ts for forty countries. It is a way of paying attention, testing your assumptions, and staying curious instead of certain. The best cross-cultural leaders in history, starting with Jesus meeting a Samaritan woman at a well, didn't just tolerate difference. They read it, respected it, and let it shape how they served. This section gives you the same practical skill.",
-    // TODO: LINGO copy — no Indonesian translation of CLEO's theme hook exists yet; placeholder retained
-    hookId: "Teks placeholder untuk Lintas Budaya. Teks contoh CLEO akan menggantikan baris ini.",
+    hookEn: "The room reads differently across cultures. Learn to read it right.",
+    hookId: "Setiap budaya punya cara membaca ruang yang berbeda. Pelajari cara membacanya dengan tepat.",
   },
   {
     key: "leadership",
     label: "Leadership",
     labelId: "Kepemimpinan",
     hue: 125,
-    hookEn:
-      "Leadership training tends to hand you a title and a technique, then leave you to work out everything else on your own. What nobody prepares you for is how much leadership actually depends on things that were never on the org chart: how to read the room above you, how to cast a vision people can actually see, how to hand real responsibility to someone younger before you feel ready to let go. Add a cross-cultural layer and the stakes go up again, because the tools that worked in your last context might not translate at all. This section is built around what actually changes people's behavior, not just their thinking: perspective on where you sit in the bigger picture, models for serving instead of just directing, and the discipline of raising up leaders who will eventually lead better than you did. Leadership here means responsibility carried well, for the people in front of you and the ones coming after.",
-    // TODO: LINGO copy — no Indonesian translation of CLEO's theme hook exists yet; placeholder retained
-    hookId: "Teks placeholder untuk Kepemimpinan. Teks tema dari CLEO akan menggantikan baris ini.",
+    hookEn: "What the org chart never taught you about actually leading people.",
+    hookId: "Hal-hal yang tidak diajarkan struktur organisasi tentang benar-benar memimpin orang.",
   },
   {
     key: "team-facilitation",
     label: "Team & Facilitation",
     labelId: "Tim & Fasilitasi",
     hue: 165,
-    hookEn:
-      "Most team problems never look like team problems until it's too late. A pattern of unfinished meetings. A conflict that gets smoothed over instead of resolved. A training session everyone nods through and nobody remembers a week later. The skill most leaders are missing isn't more meetings. It's better ones: a way to separate ideas from evaluation, disagreement from disrespect, reflection from just moving on to the next thing. Facilitating well across a multicultural team raises the difficulty further, because the same silence that signals disengagement in one culture might signal careful thought in another, and conflict that looks healthy in one room can feel like a threat in the next. This section gives you concrete tools, not vague advice, for running better meetings, working through conflict productively, and building the kind of team health that survives contact with real pressure and real difference.",
-    // TODO: LINGO copy — no Indonesian translation of CLEO's theme hook exists yet; placeholder retained
-    hookId: "Teks placeholder untuk Tim & Fasilitasi. Teks tema dari CLEO akan menggantikan baris ini.",
+    hookEn: "Better meetings, real conflict resolved, teams that hold up under pressure.",
+    hookId: "Rapat yang lebih baik, konflik yang benar-benar selesai, tim yang tahan tekanan.",
   },
   {
     key: "personal-development",
     label: "Personal Development",
     labelId: "Pengembangan Diri",
     hue: 205,
-    hookEn:
-      "Growth doesn't happen because you decided to try harder. It happens because you built something, a habit, a mindset, a way of seeing yourself, that holds up under pressure. Most of what keeps leaders stuck isn't a lack of information. It's an unexamined mindset, a goal with no structure behind it, procrastination that gets mistaken for laziness when it's really fear in disguise. This section is a set of practical tools for the inner work leadership actually requires: understanding how mindset shapes your response to failure, learning to set goals that survive contact with a busy week, recognizing blind spots before someone else has to point them out, and building the kind of self-awareness that makes you easier to lead and easier to be led by. None of it is complicated. Most of it is a matter of naming what's actually happening and choosing, deliberately, what to do next.",
-    // TODO: LINGO copy — no Indonesian translation of CLEO's theme hook exists yet; placeholder retained
-    hookId: "Teks placeholder untuk Pengembangan Diri. Teks tema dari CLEO akan menggantikan baris ini.",
+    hookEn: "Habits and mindsets that hold up under a busy week, not just good intentions.",
+    hookId: "Kebiasaan dan pola pikir yang bertahan di tengah minggu yang sibuk, bukan sekadar niat baik.",
   },
   {
     key: "thinking-tools",
     label: "Thinking Tools",
     labelId: "Alat Berpikir",
     hue: 245,
-    hookEn:
-      "Every decision you make runs through a mind that is faster than it is accurate. It fills in gaps with assumptions, jumps to conclusions from partial data, and defends its first impression long after the evidence has changed. This isn't a character flaw. It's how every human brain is built, and the leaders who lead best aren't the ones with fewer blind spots. They're the ones who've learned to catch their own thinking in the act. This section is a small toolkit for exactly that: tracing your reasoning back to the facts that actually started it, naming the biases that quietly distort your judgment, and making better decisions when you don't have all the information you'd like. In cross-cultural leadership, where the data you're reading often comes filtered through an unfamiliar context, this kind of clear thinking isn't optional. It's the difference between leading from evidence and leading from assumption.",
-    // TODO: LINGO copy — no Indonesian translation of CLEO's theme hook exists yet; placeholder retained
-    hookId: "Teks placeholder untuk Alat Berpikir. Teks tema dari CLEO akan menggantikan baris ini.",
-    // Small topic — gets a pull-quote alongside the single column list.
-    pullQuoteEn:
-      "Your first read of a situation is rarely your best one. Good thinking means waiting for the second.",
-    pullQuoteId:
-      "Kesan pertamamu tentang sebuah situasi jarang menjadi yang terbaik. Berpikir jernih berarti mau menunggu kesan berikutnya.",
+    hookEn: "Your first read of a situation is rarely your best one.",
+    hookId: "Kesan pertamamu jarang menjadi yang terbaik.",
   },
   {
     key: "faith-calling",
     label: "Faith & Calling",
     labelId: "Iman & Panggilan",
     hue: 285,
-    hookEn:
-      "Somewhere between the call you said yes to and the life you're actually living, most leaders hit a gap they didn't expect. The plan isn't as clear as it felt at the start. The pace is higher than the soul can sustain. The identity you built your calling on gets tested the moment it stops being convenient. This section isn't about performing more faith or trying harder to feel something you don't. It's about the actual practices that keep leaders rooted when the ground moves: silence instead of constant noise, community instead of isolation, and a theology of calling that has room for uncertainty without falling apart. The leaders in scripture who lasted, Daniel, Esther, Nehemiah, rarely had the full plan before they took the next step. What they had was a rootedness that didn't depend on always knowing what came next. That is what this section is built to help you build too.",
-    // TODO: LINGO copy — no Indonesian translation of CLEO's theme hook exists yet; placeholder retained
-    hookId: "Teks placeholder untuk Iman & Panggilan. Teks tema dari CLEO akan menggantikan baris ini.",
+    hookEn: "Rootedness that doesn't depend on always knowing what happens next.",
+    hookId: "Keteguhan yang tidak bergantung pada selalu tahu apa yang akan terjadi.",
   },
   {
     key: "self-care",
     label: "Self-Care & Resilience",
     labelId: "Perawatan Diri & Ketahanan",
     hue: 325,
-    hookEn:
-      "Nobody plans to burn out. It happens gradually, one skipped rest day and one ignored warning sign at a time, until the person who used to have capacity for everyone else has none left for themselves. Self-care gets dismissed as indulgence by leaders who were taught that sacrifice is the whole job. But a leader who cannot sustain their own health cannot sustain anyone else's either, and the cost of that shows up in families, teams, and the work itself. This section covers the practical architecture of a sustainable life: transitions handled well instead of just survived, families protected from the pressure a leader absorbs, and rhythms of rest that are less about escaping the work and more about being able to keep doing it for decades, not just years. Longevity was never a personality trait some leaders have and others don't. It's built, deliberately, the same way everything else worth having is built.",
-    // TODO: LINGO copy — no Indonesian translation of CLEO's theme hook exists yet; placeholder retained
-    hookId: "Teks placeholder untuk Perawatan Diri & Ketahanan. Teks tema dari CLEO akan menggantikan baris ini.",
+    hookEn: "Sustainable rhythms for a leader who plans to last decades, not years.",
+    hookId: "Ritme berkelanjutan untuk pemimpin yang ingin bertahan puluhan tahun, bukan hanya beberapa tahun.",
   },
 ];
 

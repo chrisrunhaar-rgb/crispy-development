@@ -6,6 +6,11 @@ export type Resource = {
   slug: string | null;
   title: string;
   titleId?: string;
+  // Optional short label for narrow vertical rendering (e.g. a 3D book spine).
+  // Only set on titles too long to read cleanly at spine width — everything else
+  // falls back to `title`/`titleId`, which are already short enough to use as-is.
+  spineLabel?: string;
+  spineLabelId?: string;
   description: string;
   descriptionId?: string;
   time: string;
@@ -136,6 +141,8 @@ export const RESOURCES: Resource[] = [
     slug: "building-trust-across-cultures",
     title: "Building Trust Across Cultures",
     titleId: "Membangun Kepercayaan Lintas Budaya",
+    spineLabel: "Building Trust",
+    spineLabelId: "Membangun Kepercayaan",
     description: "How trust is formed, earned, and lost differently in high- and low-context cultures.",
     descriptionId: "Bagaimana kepercayaan dibentuk, diperoleh, dan hilang secara berbeda dalam budaya konteks tinggi dan rendah.",
     time: "25 min",
@@ -151,6 +158,8 @@ export const RESOURCES: Resource[] = [
     slug: "giving-feedback-across-cultures",
     title: "Giving Feedback Across Cultures",
     titleId: "Memberikan Umpan Balik Lintas Budaya",
+    spineLabel: "Giving Feedback",
+    spineLabelId: "Umpan Balik Lintas Budaya",
     description: "Why feedback lands so differently depending on cultural context — and a framework for giving honest, constructive feedback across high- and low-context cultures.",
     descriptionId: "Mengapa umpan balik diterima sangat berbeda tergantung konteks budaya — dan kerangka untuk memberikan umpan balik yang jujur dan konstruktif.",
     time: "40 min",
@@ -181,6 +190,8 @@ export const RESOURCES: Resource[] = [
     slug: "understanding-high-context",
     title: "Understanding High-Context Cultures",
     titleId: "Memahami Budaya Konteks Tinggi",
+    spineLabel: "High-Context Cultures",
+    spineLabelId: "Budaya Konteks Tinggi",
     description: "How communication styles shape relationships — and what that means for cross-cultural teams.",
     descriptionId: "Bagaimana gaya komunikasi membentuk hubungan — dan apa artinya bagi tim lintas budaya.",
     time: "20 min",
@@ -196,6 +207,8 @@ export const RESOURCES: Resource[] = [
     slug: "returning-well",
     title: "Returning Well: Life After Cross-Cultural Work",
     titleId: "Kembali dengan Baik: Kehidupan Setelah Pelayanan Lintas Budaya",
+    spineLabel: "Returning Well",
+    spineLabelId: "Kembali dengan Baik",
     description: "Processing the transition back to your home culture after long-term cross-cultural service.",
     descriptionId: "Memproses transisi kembali ke budaya asal Anda setelah pelayanan lintas budaya jangka panjang.",
     time: "30 min",
@@ -272,6 +285,8 @@ export const RESOURCES: Resource[] = [
     slug: "raising-next-generation",
     title: "Raising Up the Next Generation",
     titleId: "Membesarkan Generasi Berikutnya",
+    spineLabel: "Raising Up Leaders",
+    spineLabelId: "Membesarkan Pemimpin",
     description: "The multiplication principle: how to identify, invest in, and release the next generation of leaders — drawn from the Paul-Timothy model and real-world practice.",
     descriptionId: "Prinsip multiplikasi: cara mengidentifikasi, berinvestasi, dan melepaskan generasi pemimpin berikutnya — berdasarkan model Paulus-Timotius dan praktik nyata.",
     time: "15 min",
@@ -333,6 +348,8 @@ export const RESOURCES: Resource[] = [
     slug: "red-light-green-light",
     title: "Red Light & Green Light Thinking",
     titleId: "Pemikiran Lampu Merah & Lampu Hijau",
+    spineLabel: "Red Light, Green Light",
+    spineLabelId: "Lampu Merah, Lampu Hijau",
     description: "A facilitation framework for separating creative idea generation (Green Light) from critical evaluation and decision-making (Red Light) — helping teams think more freely and decide more clearly.",
     descriptionId: "Kerangka fasilitasi untuk memisahkan generasi ide kreatif (Lampu Hijau) dari evaluasi kritis dan pengambilan keputusan (Lampu Merah) — membantu tim berpikir lebih bebas dan memutuskan lebih jelas.",
     time: "15 min",
@@ -348,6 +365,8 @@ export const RESOURCES: Resource[] = [
     slug: "conflict-resolution",
     title: "Conflict Resolution in Multicultural Teams",
     titleId: "Resolusi Konflik dalam Tim Multikultural",
+    spineLabel: "Conflict Resolution",
+    spineLabelId: "Resolusi Konflik",
     description: "Why conflict looks different across cultures — and how to navigate it constructively.",
     descriptionId: "Mengapa konflik terlihat berbeda lintas budaya — dan cara menavigasinya secara konstruktif.",
     time: "15 min",
@@ -545,6 +564,8 @@ export const RESOURCES: Resource[] = [
     slug: "decision-making",
     title: "Decision Making Under Uncertainty",
     titleId: "Pengambilan Keputusan dalam Ketidakpastian",
+    spineLabel: "Decision Making",
+    spineLabelId: "Pengambilan Keputusan",
     description: "Frameworks for making wise decisions when you don't have all the information — especially in ambiguous, cross-cultural leadership contexts.",
     descriptionId: "Kerangka untuk membuat keputusan bijak ketika Anda tidak memiliki semua informasi — terutama dalam konteks kepemimpinan lintas budaya yang ambigu.",
     time: "15 min",
@@ -560,6 +581,8 @@ export const RESOURCES: Resource[] = [
     slug: "cognitive-biases",
     title: "Cognitive Biases in Leadership",
     titleId: "Bias Kognitif dalam Kepemimpinan",
+    spineLabel: "Cognitive Biases",
+    spineLabelId: "Bias Kognitif",
     description: "The mental shortcuts and blind spots that distort how every leader thinks — mapped and explained. Awareness is the first step toward clearer, more honest leadership.",
     descriptionId: "Jalan pintas mental dan titik buta yang mendistorsi cara setiap pemimpin berpikir — dipetakan dan dijelaskan. Kesadaran adalah langkah pertama menuju kepemimpinan yang lebih jelas dan jujur.",
     time: "15 min",
@@ -652,6 +675,8 @@ export const RESOURCES: Resource[] = [
     slug: "leading-without-losing-faith",
     title: "Leading Without Losing Your Faith",
     titleId: "Memimpin Tanpa Kehilangan Imanmu",
+    spineLabel: "Leading Without Losing Faith",
+    spineLabelId: "Memimpin Tanpa Kehilangan Iman",
     description: "Maintaining spiritual rootedness when leadership demands are high and cultural confusion is real.",
     descriptionId: "Mempertahankan keberakaran rohani ketika tuntutan kepemimpinan tinggi dan kebingungan budaya nyata adanya.",
     time: "15 min",
