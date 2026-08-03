@@ -1811,3 +1811,207 @@ a:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   .explore-tile { transition: none; }
 }
+
+/* ==================================================================
+   /explore — 3D bookshelf room
+   ================================================================== */
+
+.bookshelf-root {
+  background: var(--color-navy-deep, oklch(22% 0.10 260));
+  color: var(--color-off-white, oklch(97% 0.005 80));
+}
+
+.bookshelf-scroll {
+  position: relative;
+  width: 100%;
+}
+
+.bookshelf-sticky {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  width: 100%;
+  overflow: hidden;
+}
+
+.bookshelf-canvas {
+  position: absolute;
+  inset: 0;
+  touch-action: pan-y;
+}
+
+.bookshelf-loading {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-montserrat);
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.55;
+}
+
+.bookshelf-topic {
+  position: absolute;
+  left: 50%;
+  top: 12%;
+  transform: translateX(-50%);
+  width: min(90vw, 46rem);
+  text-align: center;
+  pointer-events: none;
+  will-change: opacity, transform;
+}
+
+.bookshelf-topic-index {
+  display: block;
+  font-family: var(--font-montserrat);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  opacity: 0.5;
+  margin-bottom: 0.5rem;
+}
+
+.bookshelf-topic h2 {
+  font-family: var(--font-cormorant);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(2.4rem, 7vw, 5rem);
+  line-height: 1.05;
+  margin: 0;
+  text-shadow: 0 0.15em 1.2em oklch(15% 0.04 262 / 0.75);
+}
+
+.bookshelf-dots {
+  position: absolute;
+  right: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  pointer-events: none;
+}
+
+.bookshelf-dots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: oklch(97% 0.005 80 / 0.28);
+  transition: background 0.4s ease, height 0.4s ease;
+}
+
+.bookshelf-dots span.is-active {
+  background: var(--dot, oklch(65% 0.15 45));
+  height: 20px;
+}
+
+.bookshelf-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 2.2rem;
+  transform: translateX(-50%);
+  margin: 0;
+  font-family: var(--font-montserrat);
+  font-size: 0.68rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.bookshelf-escape {
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  background: oklch(22% 0.10 260 / 0.7);
+  border: 1px solid oklch(97% 0.005 80 / 0.18);
+  color: inherit;
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+  font-family: var(--font-montserrat);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  opacity: 0.45;
+  transition: opacity 0.25s ease;
+}
+
+.bookshelf-escape:hover,
+.bookshelf-escape:focus-visible {
+  opacity: 1;
+}
+
+/* Screen-reader / keyboard route to every module. Hidden visually until a link
+   inside it takes focus, then it surfaces as a real panel. */
+.bookshelf-sr {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.bookshelf-sr:focus-within {
+  width: min(92vw, 26rem);
+  height: auto;
+  max-height: 80svh;
+  overflow-y: auto;
+  clip-path: none;
+  white-space: normal;
+  background: oklch(22% 0.10 260 / 0.97);
+  border: 1px solid oklch(97% 0.005 80 / 0.2);
+  border-radius: 0.75rem;
+  padding: 1rem 1.25rem;
+  z-index: 40;
+}
+
+.bookshelf-sr h3 {
+  font-family: var(--font-montserrat);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  margin: 0.9rem 0 0.35rem;
+}
+
+.bookshelf-sr ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.bookshelf-sr a {
+  display: block;
+  padding: 0.2rem 0;
+  font-size: 0.9rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.bookshelf-sr a:hover,
+.bookshelf-sr a:focus-visible {
+  text-decoration: underline;
+}
+
+.bookshelf-outro {
+  position: relative;
+  z-index: 1;
+  background: var(--color-navy-deep, oklch(22% 0.10 260));
+  text-align: center;
+  padding: 5rem 1.5rem 7rem;
+}
+
+.bookshelf-outro p {
+  font-family: var(--font-cormorant);
+  font-size: clamp(1.25rem, 3vw, 1.9rem);
+  line-height: 1.5;
+  max-width: 34rem;
+  margin: 0 auto 2rem;
+  opacity: 0.9;
+}

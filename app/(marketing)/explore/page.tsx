@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import ExploreContent from "./ExploreContent";
+import ExploreShell from "./ExploreShell";
 
 export const dynamic = "force-dynamic";
 
@@ -16,10 +16,24 @@ export default async function ExplorePage() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const admin = createAdminClient();
-  const { data: statusRows } = await admin
-    .from("module_status")
-    .select("slug, status, library_category, module_formats");
+  // Local dev boxes often have no service-role key. Rather than 500 the whole
+  // page, fall back to the anon client and let getModuleAccess use its defaults.
+  let statusRows: {
+    slug: string;
+    status: string;
+    library_category: string | null;
+    module_formats: string[] | null;
+  }[] | null = null;
+  try {
+    const admin = createAdminClient();
+    ({ data: statusRows } = await admin
+      .from("module_status")
+      .select("slug, status, library_category, module_formats"));
+  } catch {
+    ({ data: statusRows } = await supabase
+      .from("module_status")
+      .select("slug, status, library_category, module_formats"));
+  }
 
   const moduleStatuses: Record<string, string> = {};
   const moduleCategories: Record<string, string> = {};
@@ -33,7 +47,7 @@ export default async function ExplorePage() {
   }
 
   return (
-    <ExploreContent
+    <ExploreShell
       userId={user?.id ?? null}
       moduleStatuses={moduleStatuses}
       moduleCategories={moduleCategories}
