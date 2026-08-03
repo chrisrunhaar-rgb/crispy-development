@@ -14,6 +14,7 @@ export type Resource = {
   gated: boolean;
   topics: string[];
   keywords?: string[];
+  outcomes?: string[];
 };
 
 export type Topic = {
@@ -83,6 +84,7 @@ export const RESOURCES: Resource[] = [
     gated: false,
     topics: ["cross-cultural"],
     keywords: ["CQ", "cultural awareness", "cross-cultural competence", "adaptability", "global mindset", "cultural agility", "intercultural", "kecerdasan budaya"],
+    outcomes: ["You will be able to name the four dimensions of Cultural Intelligence, motivational, cognitive, metacognitive, and behavioral, and recognize which one is your weakest link when you're operating outside your home culture.", "You'll walk away with a working model for reading an unfamiliar context instead of guessing at it, and a clearer sense of what it looks like to adapt without losing who you are."],
   },
   {
     id: "power-distance",
@@ -97,6 +99,7 @@ export const RESOURCES: Resource[] = [
     gated: false,
     topics: ["cross-cultural", "leadership"],
     keywords: ["Hofstede", "PDI", "hierarchy", "boss", "status", "boss-subordinate", "obedience", "deference", "senior", "jarak kekuasaan"],
+    outcomes: ["You will understand why the same instruction, question, or piece of feedback can land as respectful in one culture and insubordinate in another, using the Power Distance Index as your lens.", "You'll leave able to read the hierarchy signals in a room you're not from, and adjust how you communicate and make decisions so authority works for you instead of against you."],
   },
   {
     id: "intercultural-communication",
@@ -111,6 +114,7 @@ export const RESOURCES: Resource[] = [
     gated: false,
     topics: ["cross-cultural"],
     keywords: ["communication styles", "misunderstanding", "non-verbal", "silence", "indirect", "face", "honor", "shame", "explicit", "implicit", "komunikasi"],
+    outcomes: ["You will be able to identify whether the people you lead communicate in high-context or low-context, direct or indirect styles, and stop mistaking a communication difference for a character flaw.", "You'll walk away with practical adjustments for how you speak, listen, and interpret silence so fewer messages get lost in translation."],
   },
   {
     id: "time-and-culture",
@@ -125,6 +129,7 @@ export const RESOURCES: Resource[] = [
     gated: true,
     topics: ["cross-cultural", "team-facilitation"],
     keywords: ["monochronic", "polychronic", "deadlines", "punctuality", "meeting", "schedule", "time management", "waktu", "flexible time", "elastic time", "relationship time", "clock time"],
+    outcomes: ["You will discover your own time orientation and be able to name which of four cultural logics governs how you and the people you lead treat deadlines and meetings.", "You'll leave able to compare your logic directly against the culture you work with most, turning a source of quiet friction into something you can actually name and navigate."],
   },
   {
     id: "building-trust-cultures",
@@ -139,6 +144,7 @@ export const RESOURCES: Resource[] = [
     gated: true,
     topics: ["cross-cultural"],
     keywords: ["trust building", "rapport", "relationship", "reliability", "credibility", "cognitive trust", "affective trust", "kepercayaan", "trustworthy", "earn trust", "loyalty"],
+    outcomes: ["You will understand the difference between cognitive trust, built on competence, and affective trust, built on relationship, and know which one your context weighs more heavily.", "You'll leave with concrete steps for earning trust faster in a culture not your own, and for recognizing the early signs that trust is being lost before it's too late to repair."],
   },
   {
     id: "giving-feedback-across-cultures",
@@ -153,6 +159,7 @@ export const RESOURCES: Resource[] = [
     gated: false,
     topics: ["cross-cultural", "team-facilitation"],
     keywords: ["feedback", "criticism", "constructive criticism", "face saving", "honor", "shame", "indirect feedback", "correction", "critique", "performance review", "umpan balik"],
+    outcomes: ["You will understand why honest feedback that works in one culture can cause real damage in another, and be able to name which of four feedback contexts, honor and face, community, personal relationship, or direct low-context, you're operating in.", "You'll leave with a framework for giving feedback that is both truthful and culturally intelligent, so people can actually hear what you're saying."],
   },
   {
     id: "ladder-of-inference",
@@ -167,6 +174,7 @@ export const RESOURCES: Resource[] = [
     gated: true,
     topics: ["thinking-tools", "cross-cultural"],
     keywords: ["Argyris", "assumptions", "mental models", "beliefs", "jumping to conclusions", "inference", "bias", "perception", "critical thinking", "tangga inferensi", "data", "interpret"],
+    outcomes: ["You will understand how most conflicts and misunderstandings start at the top of the Ladder of Inference, where we act on beliefs built from incomplete data.", "You'll walk away able to trace your own thinking back down to the facts that actually started it, catching a false assumption before it turns into a real conflict."],
   },
   {
     id: "understanding-high-context",
@@ -181,6 +189,7 @@ export const RESOURCES: Resource[] = [
     gated: true,
     topics: ["cross-cultural"],
     keywords: ["Edward Hall", "low-context", "high context", "indirect communication", "reading between lines", "implicit", "collectivist", "relationship-first", "face", "unspoken", "konteks tinggi"],
+    outcomes: ["You will be able to recognize the markers of a high-context culture, where meaning lives in relationship, tone, and what's left unsaid rather than in the words themselves.", "You'll walk away better equipped to read between the lines on your team, instead of taking silence or indirectness as agreement or disengagement."],
   },
   {
     id: "returning-well",
@@ -195,6 +204,7 @@ export const RESOURCES: Resource[] = [
     gated: true,
     topics: ["self-care", "personal-development", "cross-cultural"],
     keywords: ["reentry", "re-entry", "reverse culture shock", "furlough", "home assignment", "going home", "grief", "loss", "transition", "readjust", "debrief"],
+    outcomes: ["You will understand the real emotional weight of transitioning back to your home culture after long-term cross-cultural work, including the grief and reverse culture shock that often catch people off guard.", "You'll leave with a practical process for debriefing that transition well instead of just pushing through it silently."],
   },
   // ── LEADERSHIP ─────────────────────────────────────────────────────────────
   {
@@ -210,6 +220,7 @@ export const RESOURCES: Resource[] = [
     gated: false,
     topics: ["leadership"],
     keywords: ["levels", "perspective", "strategic", "micromanagement", "delegation", "big picture", "zooming out", "organizational", "altitude", "macro", "micro", "scope", "elevation"],
+    outcomes: ["You will be able to identify which of the five leadership altitudes you're currently operating at, from Team Member to International Organization, and recognize when you're leading at the wrong altitude for your role.", "You'll leave with practical steps for zooming out to strategic clarity without losing touch with the people doing the work in front of you."],
   },
   {
     id: "servant-leadership",
@@ -224,6 +235,7 @@ export const RESOURCES: Resource[] = [
     gated: false,
     topics: ["leadership", "faith-calling"],
     keywords: ["Greenleaf", "Jesus", "serve", "service", "humility", "sacrificial", "kepemimpinan hamba", "bottom-up", "others-first", "biblical leadership", "washing feet", "empowerment"],
+    outcomes: ["You will understand the biblical model of leading from below, and be able to name concrete ways it differs from leading by position or authority.", "You'll walk away with a clearer picture of what servant leadership actually looks like inside cross-cultural teams and organizations, not just as an ideal but as a daily practice."],
   },
   {
     id: "vision-casting",
@@ -238,6 +250,7 @@ export const RESOURCES: Resource[] = [
     gated: false,
     topics: ["leadership"],
     keywords: ["vision statement", "mission", "direction", "inspire", "motivate", "clarity", "future", "purpose", "communicate vision", "visi", "narrative", "cast vision", "rally"],
+    outcomes: ["You will be able to distinguish a vision statement people nod at from one that actually moves them to act, and know what separates the two.", "You'll leave with a practical structure for communicating direction clearly across cultural lines, so people don't just understand where you're headed, they move toward it with you."],
   },
   {
     id: "managing-up",
@@ -252,6 +265,7 @@ export const RESOURCES: Resource[] = [
     gated: false,
     topics: ["leadership", "cross-cultural"],
     keywords: ["boss", "manager", "superior", "upward communication", "influence", "relationship", "authority", "navigate", "senior leader", "mengelola atasan", "expectations", "align", "power distance", "SCARF", "Hofstede", "upward influence", "trust", "reliability", "proactive communication", "difficult leader", "cross-cultural authority", "managing your manager"],
+    outcomes: ["You will understand what your leader actually needs from you, clarity, reliability, initiative, and alignment, and how to deliver all four without becoming someone you're not.", "You'll walk away with specific communication habits that build the kind of upward trust that creates room for your own leadership to grow, even when your leader comes from a different cultural background than you do."],
   },
   {
     id: "raising-next-generation",
@@ -266,6 +280,7 @@ export const RESOURCES: Resource[] = [
     gated: false,
     topics: ["leadership", "faith-calling"],
     keywords: ["mentoring", "discipleship", "succession", "multiplication", "invest", "Paul Timothy", "legacy", "coaching", "develop leaders", "generation", "generasi", "reproduce"],
+    outcomes: ["You will understand the multiplication principle behind the Paul-Timothy model, and be able to identify who around you is actually ready to be invested in.", "You'll leave with a practical process for identifying, developing, and releasing the next generation of leaders, instead of quietly holding on to responsibility because it feels safer than letting go."],
   },
   {
     id: "storytelling-leadership",
@@ -280,6 +295,7 @@ export const RESOURCES: Resource[] = [
     gated: false,
     topics: ["leadership"],
     keywords: ["story", "narrative", "communicate", "persuade", "inspire", "anecdote", "illustration", "hook", "public speaking", "presentation", "bercerita", "storytelling"],
+    outcomes: ["You will understand the structural difference between data that informs and story that moves people to act, and know the basic shape a compelling leadership story follows.", "You'll walk away able to use narrative to cast vision, build culture, and connect with people across cultural lines, where a well-told story often travels further than a well-reasoned argument."],
   },
   // ── TEAM & FACILITATION ────────────────────────────────────────────────────
   {
@@ -295,6 +311,7 @@ export const RESOURCES: Resource[] = [
     gated: false,
     topics: ["team-facilitation"],
     keywords: ["Lencioni", "dysfunction", "morale", "culture", "toxic", "assessment", "diagnosis", "healthy team", "team dynamics", "collaboration", "trust", "accountability"],
+    outcomes: ["You will be able to recognize the early markers of team dysfunction, before they turn into a crisis you can't quietly manage anymore.", "You'll leave with a practical way to diagnose where your team actually stands and specific next steps toward a healthier team culture."],
   },
   {
     id: "six-thinking-hats",
@@ -309,6 +326,7 @@ export const RESOURCES: Resource[] = [
     gated: false,
     topics: ["team-facilitation", "thinking-tools"],
     keywords: ["de Bono", "parallel thinking", "white hat", "red hat", "black hat", "yellow hat", "green hat", "blue hat", "brainstorming", "creativity", "meeting facilitation"],
+    outcomes: ["You will understand Edward de Bono's six hats and be able to use them to separate facts, feelings, caution, optimism, creativity, and process during a team discussion.", "You'll walk away with a facilitation tool that lets your team think together in parallel instead of arguing past each other in the same conversation."],
   },
   {
     id: "red-light-green-light",
@@ -323,6 +341,7 @@ export const RESOURCES: Resource[] = [
     gated: true,
     topics: ["team-facilitation", "thinking-tools"],
     keywords: ["brainstorming", "ideation", "creative thinking", "critical thinking", "evaluation", "divergent", "convergent", "facilitation", "ideas", "workshop", "generate ideas"],
+    outcomes: ["You will be able to separate creative idea generation from critical evaluation, and know exactly when to switch a group from one mode to the other.", "You'll leave with a simple facilitation framework that helps teams generate more honest ideas and make clearer decisions, instead of critiquing every idea the moment it's spoken."],
   },
   {
     id: "conflict-resolution-multicultural",
@@ -337,6 +356,7 @@ export const RESOURCES: Resource[] = [
     gated: true,
     topics: ["team-facilitation", "cross-cultural"],
     keywords: ["conflict", "resolution", "mediation", "disagreement", "confrontation", "harmony", "face", "peacemaking", "tension", "difficult conversations", "resolusi konflik", "argument"],
+    outcomes: ["You will understand why conflict looks and sounds different depending on cultural background, and recognize the version of conflict avoidance or confrontation that's most natural to you.", "You'll walk away with practical steps for navigating disagreement constructively across a multicultural team, instead of letting it fester or blow up."],
   },
   {
     id: "attention-retention",
@@ -351,6 +371,7 @@ export const RESOURCES: Resource[] = [
     gated: true,
     topics: ["team-facilitation"],
     keywords: ["learning", "training", "adult learning", "teaching", "facilitation", "memory", "retention", "spaced repetition", "engagement", "education", "andragogy", "design training"],
+    outcomes: ["You will understand the evidence-based principles behind how adults actually pay attention and retain what they learn, across any cultural context.", "You'll leave able to design training and teaching sessions that people remember weeks later, not just nod through in the room."],
   },
   {
     id: "debriefing-reflection",
@@ -365,6 +386,7 @@ export const RESOURCES: Resource[] = [
     gated: false,
     topics: ["team-facilitation", "personal-development"],
     keywords: ["review", "after action", "learning", "reflection", "journal", "process", "evaluate", "Kolb", "experiential learning", "debrief", "retrospective", "refleksi"],
+    outcomes: ["You will understand why leaders who don't reflect end up repeating the same mistakes, and have a structured approach for debriefing experiences, both your own and your team's.", "You'll walk away with a repeatable process that turns a hard season into something you actually learned from, instead of something you just survived."],
   },
   {
     id: "above-below-the-line",
@@ -379,6 +401,7 @@ export const RESOURCES: Resource[] = [
     gated: true,
     topics: ["team-facilitation", "personal-development"],
     keywords: ["accountability", "ownership", "responsibility", "blame", "victim", "victor", "excuse", "denial", "reactive", "proactive", "OAR", "response-ability", "choice"],
+    outcomes: ["You will be able to recognize reactive patterns, blame, excuse, and denial, in yourself before they show up in how you lead.", "You'll leave with a practical framework for choosing ownership and accountability instead, and a clearer sense of which line you're actually operating from on a hard day."],
   },
   // ── PERSONAL DEVELOPMENT ───────────────────────────────────────────────────
   {
@@ -394,6 +417,7 @@ export const RESOURCES: Resource[] = [
     gated: false,
     topics: ["personal-development"],
     keywords: ["zone", "growth", "fear", "challenge", "stretch", "risk", "change", "courage", "step out", "safe", "uncomfortable", "zona nyaman", "dare"],
+    outcomes: ["You will be able to identify which of the four zones, Comfort, Fear, Learning, or Growth, you're currently standing in, and recognize where your comfort zone actually ends.", "You'll leave with concrete next steps toward the kind of meaningful change that only happens outside it."],
   },
   {
     id: "fixed-growth-mindset",
@@ -408,6 +432,7 @@ export const RESOURCES: Resource[] = [
     gated: true,
     topics: ["personal-development"],
     keywords: ["Dweck", "mindset", "effort", "failure", "talent", "ability", "learn", "challenge", "resilience", "brain", "neuroplasticity", "mentalitas", "potential"],
+    outcomes: ["You will understand Carol Dweck's research on fixed and growth mindsets, and be able to spot which one is driving your response the next time you face a setback.", "You'll walk away with practical steps for shifting toward a growth mindset in how you handle challenge, effort, and the success of the people around you."],
   },
   {
     id: "smart-goals",
@@ -422,6 +447,7 @@ export const RESOURCES: Resource[] = [
     gated: true,
     topics: ["personal-development"],
     keywords: ["goals", "objective", "target", "planning", "motivation", "measurable", "specific", "achievable", "relevant", "time-bound", "tujuan", "goal setting", "action plan"],
+    outcomes: ["You will be able to set goals using a five-part framework, Specific, Motivated, Achievable, Relevant, and Trackable, built to actually get done, not just written down.", "You'll leave with three corrective moves, Clarify, Reframe, or Negotiate, for when a goal starts slipping instead of quietly abandoning it."],
   },
   {
     id: "overcoming-procrastination",
@@ -436,6 +462,7 @@ export const RESOURCES: Resource[] = [
     gated: true,
     topics: ["personal-development"],
     keywords: ["delay", "avoidance", "lazy", "motivation", "productivity", "stuck", "paralyzed", "perfectionism", "overwhelm", "start", "momentum", "penundaan", "distraction"],
+    outcomes: ["You will understand that procrastination is usually fear, perfectionism, or overwhelm wearing a disguise rather than laziness, and be able to name which one is driving yours.", "You'll walk away with a five-step framework for identifying your specific triggers, uncovering the root cause, and building momentum on the thing you've been avoiding."],
   },
   {
     id: "emotional-intelligence",
@@ -450,6 +477,7 @@ export const RESOURCES: Resource[] = [
     gated: false,
     topics: ["personal-development", "leadership"],
     keywords: ["Goleman", "EQ", "emotions", "self-awareness", "empathy", "social skills", "emotional regulation", "feelings", "self-management", "kecerdasan emosional", "regulate"],
+    outcomes: ["You will understand Daniel Goleman's five components of EQ, self-awareness, self-regulation, motivation, empathy, and social skills, and be able to identify which one needs the most work in your own leadership.", "You'll leave with a clearer sense of why EQ, not just competence, determines how effective you actually are as a leader."],
   },
   {
     id: "johari-window",
@@ -464,6 +492,7 @@ export const RESOURCES: Resource[] = [
     gated: false,
     topics: ["personal-development"],
     keywords: ["Luft", "Ingham", "self-awareness", "blind spot", "feedback", "disclosure", "transparency", "trust", "open area", "hidden self", "jendela johari", "unknown"],
+    outcomes: ["You will be able to map your Open, Blind, Hidden, and Unknown zones using the Johari Window, and see clearly where your self-awareness has gaps.", "You'll walk away with a practical way to grow through feedback and appropriate disclosure, shrinking your blind spots and building real trust with the people around you."],
   },
   {
     id: "leaders-are-readers",
@@ -478,6 +507,7 @@ export const RESOURCES: Resource[] = [
     gated: true,
     topics: ["personal-development", "leadership", "faith-calling"],
     keywords: ["atomic habits", "james clear", "jim kwik", "robert clinton", "mortimer adler", "identity", "formation", "lifelong learner", "book recommendations", "membaca", "kebiasaan membaca", "pembaca", "literary fiction", "curiosity", "study"],
+    outcomes: ["You will understand why continuous learning through reading is a cornerstone of effective leadership, not a luxury for people with more free time.", "You'll leave with a practical, sustainable approach to building a reading habit that actually survives a demanding leadership schedule."],
   },
   {
     id: "identity-under-pressure",
@@ -492,6 +522,7 @@ export const RESOURCES: Resource[] = [
     gated: true,
     topics: ["faith-calling", "personal-development"],
     keywords: ["identity", "self-worth", "who am I", "belonging", "calling", "purpose", "self", "security", "rootedness", "worth", "value"],
+    outcomes: ["You will understand what it takes to maintain a grounded sense of self while living and leading between two cultural worlds.", "You'll leave with practical anchors for your identity that don't depend on either culture fully understanding or accepting you."],
   },
   {
     id: "four-stages-competence",
@@ -506,6 +537,7 @@ export const RESOURCES: Resource[] = [
     gated: true,
     topics: ["personal-development"],
     keywords: ["unconscious incompetence", "conscious incompetence", "conscious competence", "unconscious competence", "learning", "mastery", "skill", "expertise", "beginner", "novice", "competency"],
+    outcomes: ["You will be able to place yourself accurately on the Conscious Competence Model, from not knowing what you don't know to mastery so deep you no longer have to think about it.", "You'll walk away understanding why each stage feels the way it does, including why competence without awareness can quietly become a blind spot of its own."],
   },
   // ── THINKING TOOLS ─────────────────────────────────────────────────────────
   {
@@ -521,6 +553,7 @@ export const RESOURCES: Resource[] = [
     gated: false,
     topics: ["thinking-tools", "leadership"],
     keywords: ["decisions", "choice", "ambiguity", "options", "risk", "uncertainty", "analysis", "wisdom", "discernment", "intuition", "data", "framework", "keputusan"],
+    outcomes: ["You will have a set of practical frameworks for making wise decisions when you don't have all the information you'd like, especially in ambiguous cross-cultural situations.", "You'll leave better equipped to weigh risk, use discernment, and act with appropriate confidence instead of stalling out waiting for certainty that isn't coming."],
   },
   {
     id: "cognitive-biases",
@@ -535,6 +568,7 @@ export const RESOURCES: Resource[] = [
     gated: false,
     topics: ["thinking-tools"],
     keywords: ["bias", "heuristic", "blind spot", "confirmation bias", "anchoring", "availability bias", "sunk cost", "groupthink", "perception", "thinking error", "logical fallacy", "cognitive error"],
+    outcomes: ["You will be able to name several of the mental shortcuts and blind spots, like confirmation bias, anchoring, and groupthink, that quietly distort how every leader thinks, including you.", "You'll walk away with the awareness needed to catch your own biased thinking in the moment, which is the first real step toward clearer, more honest leadership."],
   },
   {
     id: "disc",
@@ -549,6 +583,7 @@ export const RESOURCES: Resource[] = [
     gated: false,
     topics: ["leadership", "cross-cultural", "personal-development"],
     keywords: ["personality", "dominant", "influencing", "steadiness", "compliance", "introvert", "extrovert", "behavior style", "temperament"],
+    outcomes: ["You will discover your behavioral style across the DISC framework, Dominance, Influence, Steadiness, and Compliance, and understand how it shapes the way you lead and communicate.", "You'll walk away with specific insight into the cross-cultural blind spots common to your type, so you can adjust before a misunderstanding happens rather than after."],
   },
   {
     id: "5languages",
@@ -563,6 +598,7 @@ export const RESOURCES: Resource[] = [
     gated: false,
     topics: ["leadership", "team-facilitation", "cross-cultural"],
     keywords: ["appreciation", "recognition", "love languages", "Gary Chapman", "motivation", "team morale", "affirmation", "acknowledgment", "reward", "penghargaan", "care", "words of affirmation"],
+    outcomes: ["You will complete two parallel assessments revealing both how you prefer to receive appreciation and how you naturally give it, and see the gap between the two clearly.", "You'll leave with practical ways to close that gap on your team, so the care you're already giving actually lands the way you intend it to."],
   },
   {
     id: "three-thinking-styles",
@@ -577,6 +613,7 @@ export const RESOURCES: Resource[] = [
     gated: false,
     topics: ["thinking-tools"],
     keywords: ["thinking", "conceptual", "holistic", "intuition", "cognitive style", "how you think", "reasoning", "analytical", "creative", "systematic", "gaya berpikir", "problem solving"],
+    outcomes: ["You will discover whether you lead primarily with Conceptual, Holistic, or Intuitional thinking, and recognize how that shapes the way you approach problems.", "You'll walk away better equipped to work across all three styles, instead of assuming everyone processes a decision the same way you do."],
   },
   {
     id: "big-five",
@@ -591,6 +628,7 @@ export const RESOURCES: Resource[] = [
     gated: false,
     topics: ["personal-development", "leadership", "cross-cultural"],
     keywords: ["personality", "openness", "conscientiousness", "extraversion", "agreeableness", "neuroticism", "introvert", "extrovert", "temperament", "traits"],
+    outcomes: ["You will be assessed across the five OCEAN dimensions, openness, conscientiousness, extraversion, agreeableness, and neuroticism, using the most scientifically validated personality framework available.", "You'll leave with a clearer, evidence-based picture of how you tend to lead, collaborate, adapt, and grow across different cultural contexts."],
   },
 
   // ── FAITH & CALLING ────────────────────────────────────────────────────────
@@ -607,6 +645,7 @@ export const RESOURCES: Resource[] = [
     gated: true,
     topics: ["leadership", "self-care", "faith-calling"],
     keywords: ["rest", "sabbath rest", "rhythm", "restoration", "renewal", "ceasing", "pause", "stop", "sleep", "istirahat"],
+    outcomes: ["You will assess your current rhythms of rest and understand why sustainable leaders build Sabbath into their week rather than treating it as optional.", "You'll walk away with a practical way to practice Sabbath even inside a high-demand cross-cultural role that never fully stops asking for more."],
   },
   {
     id: "leading-without-losing-faith",
@@ -621,6 +660,7 @@ export const RESOURCES: Resource[] = [
     gated: true,
     topics: ["faith-calling"],
     keywords: ["faith", "God", "spiritual", "belief", "doubt", "prayer", "calling", "disillusionment", "spiritual dryness", "iman"],
+    outcomes: ["You will recognize the specific pressures, high leadership demands and real cultural confusion, that quietly erode spiritual rootedness over time.", "You'll walk away with practical ways to stay spiritually grounded even when the demands on you don't slow down."],
   },
   // ── RESILIENCE & MENTAL HEALTH ─────────────────────────────────────────────
   {
@@ -636,6 +676,7 @@ export const RESOURCES: Resource[] = [
     gated: true,
     topics: ["personal-development", "faith-calling", "self-care"],
     keywords: ["stress", "exhaustion", "tired", "fatigue", "depletion", "overwork", "wellbeing", "Elijah", "recovery", "rest", "kelelahan", "frenetic", "worn out"],
+    outcomes: ["You will be able to identify which of the three types of burnout, overload, underchallenge, or neglect, you're actually facing, since each one needs a different response.", "You'll leave with a practical understanding of the people, practices, and sense of purpose that prevent burnout before it takes hold, not just how to recover once it already has."],
   },
   {
     id: "relational-longevity",
@@ -650,6 +691,7 @@ export const RESOURCES: Resource[] = [
     gated: true,
     topics: ["team-facilitation", "personal-development", "self-care"],
     keywords: ["relationships", "friendship", "trust", "connection", "loyalty", "attrition", "retention", "departure", "interpersonal", "relasi"],
+    outcomes: ["You will understand why relational breakdown, not burnout or funding, is the leading cause of leaders and teammates leaving too soon.", "You'll walk away with concrete interpersonal skills for building the kind of relationships that keep a team together well past the point where most fall apart."],
   },
   {
     id: "emotional-safety-families",
@@ -664,6 +706,7 @@ export const RESOURCES: Resource[] = [
     gated: true,
     topics: ["self-care", "personal-development", "faith-calling"],
     keywords: ["parenting", "children", "kids", "marriage", "home", "family stress", "spouse", "third culture kids", "TCK", "MK", "missionary kid", "family health"],
+    outcomes: ["You will understand how directly your own stress as a leader shapes your children's sense of safety and wellbeing at home.", "You'll walk away with practical ways to build emotional safety in your family and model humility through relational repair when things go wrong, which they will."],
   },
   {
     id: "healthy-transitions",
@@ -678,6 +721,7 @@ export const RESOURCES: Resource[] = [
     gated: true,
     topics: ["self-care", "personal-development", "cross-cultural"],
     keywords: ["change", "grief", "loss", "leaving", "moving", "goodbye", "furlough", "endings", "RAFT model", "role change", "reentry"],
+    outcomes: ["You will learn the RAFT model, Reconciliation, Affirmation, Farewells, and Think Ahead, for navigating re-entry, role change, or any major life transition well.", "You'll leave with a concrete process for closing one season properly before stepping into the next, instead of carrying unfinished business forward without realizing it."],
   },
   {
     id: "psychological-first-aid",
@@ -692,6 +736,7 @@ export const RESOURCES: Resource[] = [
     gated: true,
     topics: ["team-facilitation", "personal-development", "self-care"],
     keywords: ["trauma", "mental health", "anxiety", "depression", "crisis", "emergency", "support", "stress", "incident", "debriefing", "care"],
+    outcomes: ["You will understand the RAPID model for immediate, compassionate support when a teammate is in crisis, and know the first moves to make before anything else.", "You'll leave equipped to respond to trauma or emergency in the field with genuine care, instead of freezing or making things worse through good intentions and bad timing."],
   },
   {
     id: "sustainable-pace",
@@ -706,6 +751,7 @@ export const RESOURCES: Resource[] = [
     gated: true,
     topics: ["self-care", "personal-development", "faith-calling"],
     keywords: ["rest", "rhythm", "sabbath", "sustainable", "slow down", "pace", "resilience", "longevity", "wellbeing", "burnout prevention", "stamina", "tempo", "margin", "istirahat"],
+    outcomes: ["You will understand the theology of rest behind Sabbath rhythms, and why sustainable leadership is architecture you build, not a personality trait some people happen to have.", "You'll walk away with practical resilience habits designed to keep you leading well for decades, not just through the next hard season."],
   },
   // ── TEAM & FACILITATION (continued) ───────────────────────────────────────
   {
@@ -721,6 +767,7 @@ export const RESOURCES: Resource[] = [
     gated: false,
     topics: ["team-facilitation", "cross-cultural"],
     keywords: ["conflict", "disagreement", "productive conflict", "healthy tension", "debate", "friction", "difficult conversations", "brave", "avoid conflict", "confrontation", "konflik", "safe space"],
+    outcomes: ["You will understand why conflict avoidance, not conflict itself, is usually the real problem on multicultural teams.", "You'll walk away with practical steps for creating the conditions where disagreement becomes productive and trust-building instead of something everyone quietly works around."],
   },
   // ── ASSESSMENTS (added) ──────────────────────────────────────────────────────
   {
@@ -736,6 +783,7 @@ export const RESOURCES: Resource[] = [
     gated: false,
     topics: ["personal-development", "leadership", "cross-cultural"],
     keywords: ["personality", "nine types", "wing", "tritype", "ego fixation", "self-awareness", "temperament"],
+    outcomes: ["You will discover your Enneagram type among the nine, along with its distinct motivations, fears, and growth path.", "You'll leave understanding how that type shapes the way you lead, relate to others, and grow, and where your specific blind spots tend to show up under stress."],
   },
   {
     id: "16-personalities",
@@ -750,6 +798,7 @@ export const RESOURCES: Resource[] = [
     gated: false,
     topics: ["personal-development", "leadership"],
     keywords: ["mbti", "myers briggs", "myers-briggs", "introvert", "extrovert", "personality type", "infj", "infp", "intj", "intp", "enfj", "enfp", "entj", "entp", "istj", "isfj", "istp", "isfp", "estj", "esfj", "estp", "esfp", "temperament"],
+    outcomes: ["You will identify your personality type across four dimensions based on Jungian typology, and see the underlying preferences behind it, not just a four-letter label.", "You'll walk away understanding how those preferences shape your leadership style, your relationships, and the way you tend to make decisions."],
   },
   {
     id: "wheel-of-life",
@@ -764,6 +813,7 @@ export const RESOURCES: Resource[] = [
     gated: false,
     topics: ["personal-development", "self-care", "faith-calling"],
     keywords: ["balance", "holistic", "wellbeing", "life areas", "health", "rest", "burnout prevention", "whole person", "life review", "fulfillment"],
+    outcomes: ["You will assess your current balance across eight life domains, family, finance, health, ministry, spiritual, community, learning, and relaxation.", "You'll leave with a clear, honest picture of where you're actually thriving and where growth is genuinely needed, instead of a vague sense that something's off."],
   },
   {
     id: "karunia-rohani",
@@ -778,6 +828,7 @@ export const RESOURCES: Resource[] = [
     gated: false,
     topics: ["faith-calling"],
     keywords: ["spiritual gifts", "gifting", "charism", "talents", "gift assessment", "gifts test", "charisma", "abilities", "God-given", "anointing"],
+    outcomes: ["You will identify your spiritual gifts and understand how these God-given abilities are meant to function inside community, not in isolation.", "You'll walk away with a clearer sense of how your specific gifting contributes to ministry and Kingdom work around you."],
   },
   {
     id: "leaders-inner-life",
@@ -792,6 +843,7 @@ export const RESOURCES: Resource[] = [
     gated: true,
     topics: ["faith-calling", "personal-development"],
     keywords: ["prayer", "soul", "spiritual formation", "interior life", "devotional", "quiet time", "solitude", "spiritual health", "contemplation", "heart"],
+    outcomes: ["You will understand why interior formation has to come before outward effectiveness, not the other way around, however tempting it is to reverse the order.", "You'll leave with concrete practices for tending the part of yourself that sustains everything else you do as a leader."],
   },
   {
     id: "called-without-the-map",
@@ -806,6 +858,7 @@ export const RESOURCES: Resource[] = [
     gated: true,
     topics: ["faith-calling"],
     keywords: ["calling", "vocation", "purpose", "direction", "uncertainty", "faith", "trust", "plan", "future", "Abraham", "discernment"],
+    outcomes: ["You will understand how God works through calling without revealing the full plan, and why stepping forward before you have full clarity is often how that clarity actually comes.", "You'll walk away with a different, more sustainable relationship to uncertainty in your own calling, one where the next faithful step matters more than having the whole map before you take it."],
   },
   {
     id: "discipline-of-silence",
@@ -820,6 +873,7 @@ export const RESOURCES: Resource[] = [
     gated: true,
     topics: ["faith-calling", "self-care", "leadership"],
     keywords: ["quiet", "prayer", "contemplation", "solitude", "stillness", "meditation", "listening", "rest", "noise", "pace", "retreat", "hening"],
+    outcomes: ["You will understand why intentional silence has become one of the rarest leadership disciplines in a world that is never quiet, and why that scarcity has a real spiritual cost.", "You'll leave with a practical way to build the discipline of silence into your own life and into how your team operates."],
   },
   {
     id: "calling-is-never-solo",
@@ -834,6 +888,7 @@ export const RESOURCES: Resource[] = [
     gated: true,
     topics: ["faith-calling", "leadership"],
     keywords: ["community", "together", "partnership", "team ministry", "calling", "body of Christ", "collaboration", "isolation", "alone"],
+    outcomes: ["You will understand your calling as one thread in a much larger tapestry that God builds through communities, teams, and generations, not a solo assignment you carry alone.", "You'll walk away with a clearer sense of what it means to steward your specific piece of that tapestry well, and why isolation is a distortion of calling, not a feature of it."],
   },
 ];
 
