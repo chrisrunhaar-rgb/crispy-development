@@ -42,7 +42,20 @@ export async function GET(request: Request) {
       const gaSuffix = type === "signup" ? (next.includes("?") ? "&ga=signup" : "?ga=signup") : "";
       return NextResponse.redirect(`${origin}${next}${gaSuffix}`);
     }
+
+    console.error("[auth/callback] exchangeCodeForSession failed", {
+      message: error.message,
+      status: error.status,
+      code,
+      invite,
+      memberInvite,
+    });
   }
 
-  return NextResponse.redirect(`${origin}/login?error=confirmation_failed`);
+  // Exchange failed or no code (e.g. an email link scanner already consumed the
+  // single-use code before the user clicked it). Send the user to log in normally
+  // instead of dead-ending — carry the invite token through so it still gets applied.
+  const inviteParam = invite ? `&invite=${invite}` : "";
+  const memberInviteParam = memberInvite ? `&member_invite=${memberInvite}` : "";
+  return NextResponse.redirect(`${origin}/login?error=confirmation_failed${inviteParam}${memberInviteParam}`);
 }
