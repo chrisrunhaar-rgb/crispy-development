@@ -270,9 +270,10 @@ export async function acceptInvite(token: string, userId: string): Promise<{ err
     .update({ used_at: new Date().toISOString(), used_by: userId })
     .eq("id", invite.id);
 
-  // Grant member access
+  // Grant member access (merge — updateUserById REPLACES user_metadata, doesn't merge)
+  const { data: existingUser } = await admin.auth.admin.getUserById(userId);
   await admin.auth.admin.updateUserById(userId, {
-    user_metadata: { is_member: true },
+    user_metadata: { ...existingUser?.user?.user_metadata, is_member: true },
   });
 
   return { error: null };
@@ -319,8 +320,9 @@ export async function acceptMemberInvite(token: string, userId: string): Promise
   if (invite.used_at) return { error: "This invite link has already been used." };
   if (new Date(invite.expires_at) < new Date()) return { error: "This invite link has expired." };
 
+  const { data: existingUser } = await admin.auth.admin.getUserById(userId);
   await admin.auth.admin.updateUserById(userId, {
-    user_metadata: { is_member: true, pathway: invite.pathway ?? "personal" },
+    user_metadata: { ...existingUser?.user?.user_metadata, is_member: true, pathway: invite.pathway ?? "personal" },
   });
 
   await admin
