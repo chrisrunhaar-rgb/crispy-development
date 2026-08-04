@@ -54,10 +54,10 @@ export default async function ChapterPage({
 }) {
   const { slug, "chapter-slug": chapterSlug } = await params;
   const { lang } = await searchParams;
-  const profileLang = user?.user_metadata?.language_preference as string | undefined;
-  const isId = (lang ?? profileLang ?? "en") === "id";
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
+  const profileLang = user?.user_metadata?.language_preference as string | undefined;
+  const isId = (lang ?? profileLang ?? "en") === "id";
 
   // Fetch all chapters for this course (to build prev/next)
   const { data: courseData } = await supabase
