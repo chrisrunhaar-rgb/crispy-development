@@ -150,13 +150,17 @@ const strings = {
     coachingIntensityGentle: "Gentle — go easy",
     coachingIntensityHelper: "Independent of coaching style above — you can combine either with either. You can change this anytime.",
 
-    // Post-session check-in (item 2)
-    checkinHeading: "Before you go — how clear do you feel?",
+    // Post-session check-in (item 2) — 3-question modal
+    checkinHeading: "Before you see your notes",
+    checkinQ1: "How clear do you feel about your next step?",
+    checkinQ2: "How understood did you feel by your coach?",
+    checkinQ3: "How valuable was this session?",
     checkinSkip: "Skip",
-    checkinNotePlaceholder: "One line, optional…",
-    checkinSubmit: "Done",
-    checkinNotClear: "Not clear",
-    checkinVeryClear: "Very clear",
+    checkinClose: "Close",
+    checkinNotePlaceholder: "Anything else, optional…",
+    checkinSubmit: "Done — show my notes",
+    checkinLow: "Not really",
+    checkinHigh: "Very much",
   },
 
   id: {
@@ -295,13 +299,17 @@ const strings = {
     coachingIntensityGentle: "Lembut — pelan-pelan saja",
     coachingIntensityHelper: "Terpisah dari gaya coaching di atas — bisa dikombinasikan bebas. Bisa diubah kapan saja.",
 
-    // Post-session check-in (item 2)
-    checkinHeading: "Sebelum Anda pergi — seberapa jelas perasaan Anda?",
+    // Post-session check-in (item 2) — 3-question modal
+    checkinHeading: "Sebelum Anda melihat catatan Anda",
+    checkinQ1: "Seberapa jelas langkah berikutnya bagi Anda?",
+    checkinQ2: "Seberapa dipahami perasaan Anda oleh coach?",
+    checkinQ3: "Seberapa berharga sesi ini bagi Anda?",
     checkinSkip: "Lewati",
-    checkinNotePlaceholder: "Satu baris, opsional…",
-    checkinSubmit: "Selesai",
-    checkinNotClear: "Belum jelas",
-    checkinVeryClear: "Sangat jelas",
+    checkinClose: "Tutup",
+    checkinNotePlaceholder: "Hal lain, opsional…",
+    checkinSubmit: "Selesai — tampilkan catatan saya",
+    checkinLow: "Kurang begitu",
+    checkinHigh: "Sangat",
   },
 } as const;
 

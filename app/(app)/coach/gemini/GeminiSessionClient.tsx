@@ -120,6 +120,10 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
   const closingRef = useRef(false);          // closing sequence has begun
   const closingSpokeRef = useRef(false);     // coach has produced closing audio (guards premature complete)
   const closingFallbackRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // CARRY-phase silent auto-finish: coach sometimes speaks its own goodbye without calling
+  // advance_phase(COMPLETE). Left alone the session sits open until the user taps End Session,
+  // which replays the whole closing flow and produces a jarring SECOND goodbye. Guards against that.
+  const carrySilenceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const isMutedRef = useRef(false);
   const elapsedSecondsRef = useRef(0);
@@ -196,6 +200,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
     if (timerRef.current) clearInterval(timerRef.current);
     if (warmupTimerRef.current) clearTimeout(warmupTimerRef.current);
     if (closingFallbackRef.current) clearTimeout(closingFallbackRef.current);
+    if (carrySilenceRef.current) clearTimeout(carrySilenceRef.current);
     sessionRef.current?.close();
     warmupSessionRef.current?.close();
     stopAudio();
@@ -279,12 +284,12 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
       functionDeclarations: [
         {
           name: "update_whiteboard",
-          description: "Update the coaching whiteboard. Call throughout the session whenever something meaningful surfaces.",
+          description: "Update the coaching whiteboard. Call throughout the session whenever something meaningful surfaces. Log only what the coachee actually said — never invent, guess, embellish, or infer a topic, insight, value, action, or takeaway they did not themselves raise. If unsure whether something was actually said, do not log it.",
           parameters: {
             type: Type.OBJECT,
             properties: {
               section: { type: Type.STRING, enum: ["focus_today", "key_insight", "value_named", "action_step", "carrying_forward"] },
-              content: { type: Type.STRING, description: "Concise text — one sentence max." },
+              content: { type: Type.STRING, description: "Concise text — one sentence max. Must restate something the coachee actually said, in their own terms. Never invented or paraphrased beyond recognition." },
             },
             required: ["section", "content"],
           },
@@ -340,6 +345,8 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
           setIsAiSpeaking(true);
           setAwaitingCoach(false);
           if (closingRef.current) closingSpokeRef.current = true;
+          // New coach activity — cancel any pending CARRY silent auto-finish, it's no longer quiet.
+          if (carrySilenceRef.current) { clearTimeout(carrySilenceRef.current); carrySilenceRef.current = null; }
           playPcmChunk(inlineData.data as string);
         }
         if (part.text) transcriptRef.current.push(part.text);
@@ -366,6 +373,20 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
         setTimeout(() => handleSessionComplete(), drainMs + 1200);
         return;
       }
+      // AUTO-FINISH ON CARRY SILENCE (double-closing fix): if the coach has reached CARRY and just
+      // finished a turn without the user having tapped End Session (closingRef still false), it may
+      // have just spoken its own natural goodbye without calling advance_phase(COMPLETE). Wait ~15s —
+      // if nothing else happens (no reply, no phase advance), finish the session silently rather than
+      // leaving it open for the user to tap End Session and trigger a second, jarring spoken closing.
+      if (!sessionClosedRef.current && !closingRef.current && phaseRef.current === "CARRY") {
+        if (carrySilenceRef.current) clearTimeout(carrySilenceRef.current);
+        carrySilenceRef.current = setTimeout(() => {
+          carrySilenceRef.current = null;
+          if (!sessionClosedRef.current && !closingRef.current && phaseRef.current === "CARRY") {
+            handleSessionComplete();
+          }
+        }, 15000);
+      }
       // TIME-NOTE INJECTION (item 3 / spec §6). The coach just finished a turn; inject a private
       // time note so it sits in context before the model's next completion. Throttled to once per
       // ~25s of elapsed time to avoid spamming on rapid back-and-forth. Never shown to the user.
@@ -373,7 +394,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
       // the coach speak before the person has tapped "I'm done". So skip the auto time-note here in
       // manual mode; it is instead bundled into signalDone() just before activityEnd.
       const nowSec = elapsedSecondsRef.current;
-      if (!sessionClosedRef.current && !closingRef.current && !manualModeRef.current && nowSec - lastTimeNoteAtRef.current >= 25) {
+      if (!sessionClosedRef.current && !closingRef.current && !manualModeRef.current && !isMutedRef.current && nowSec - lastTimeNoteAtRef.current >= 25) {
         lastTimeNoteAtRef.current = nowSec;
         sessionRef.current?.sendRealtimeInput({ text: buildTimeNote(nowSec, sessionType) });
       }
@@ -676,10 +697,15 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
 
   const endSession = useCallback(() => {
     if (sessionClosedRef.current || closingRef.current) return;
+    if (carrySilenceRef.current) { clearTimeout(carrySilenceRef.current); carrySilenceRef.current = null; }
     if (!sessionRef.current) { handleSessionComplete(); return; }
     closingRef.current = true;
     closingSpokeRef.current = false;
     setIsClosing(true);
+    // Closing is CARRY-phase work even if the model never called advance_phase to get there
+    // (e.g. user tapped End Session mid-EXPLORE/COMMIT) — force the indicator so it doesn't
+    // stay stuck on whatever phase was last explicitly advanced to.
+    setPhase("CARRY");
 
     // CRITICAL: kill the mic the instant closing begins. stopAudio() tears down only the mic capture
     // chain (worklet + stream + 16k AudioContext) — the 24k playback AudioContext is separate and keeps
@@ -758,6 +784,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
       if (warmupTimerRef.current) clearTimeout(warmupTimerRef.current);
+      if (carrySilenceRef.current) clearTimeout(carrySilenceRef.current);
       sessionRef.current?.close();
       warmupSessionRef.current?.close();
       stopAudio();

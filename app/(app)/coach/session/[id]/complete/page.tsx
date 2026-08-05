@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
 import { useT } from "../../../i18n";
-import CheckinCard from "./CheckinCard";
+import CheckinGate from "./CheckinCard";
 
 export const metadata = {
   title: "Session Complete — WayPoint",
@@ -90,8 +90,7 @@ export default async function SessionCompletePage({
       <div className="container-wide" style={{ paddingBlock: "3rem" }}>
         <div style={{ maxWidth: "680px", margin: "0 auto" }}>
 
-          <CheckinCard sessionId={id} lang={lang} />
-
+          <CheckinGate sessionId={id} lang={lang}>
           {!hasWhiteboardContent ? (
             <p style={{
               fontFamily: "var(--font-cormorant)",
@@ -186,6 +185,7 @@ export default async function SessionCompletePage({
 
             </div>
           )}
+          </CheckinGate>
 
           {/* CTAs */}
           <div style={{
