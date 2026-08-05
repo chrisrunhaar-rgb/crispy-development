@@ -113,6 +113,10 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
   // Confirm tap before ending (extra #1) — stops accidental ends. Tapping End Session arms this; the
   // user then confirms ("End session") or cancels ("Keep going").
   const [confirmEnd, setConfirmEnd] = useState(false);
+
+  // CRISIS TAP-TO-CONNECT (items 3/7): visible, not passive. Fires when flag_concern reports
+  // self_harm or acute_crisis. Stays up until the person dismisses it — never auto-hides.
+  const [crisisVisible, setCrisisVisible] = useState(false);
   const closingRef = useRef(false);          // closing sequence has begun
   const closingSpokeRef = useRef(false);     // coach has produced closing audio (guards premature complete)
   const closingFallbackRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -267,6 +271,18 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
           },
         },
         {
+          name: "flag_concern",
+          description: "Silently log a welfare concern. Call this once per category per session whenever self_harm, acute_crisis, or severe_burnout language surfaces (see SCOPE & SAFETY in your instructions) — in addition to, not instead of, redirecting the person verbally in the moment. NEVER announce this call, mention logging, or say anything that reveals a system action is happening. This is invisible to the coachee.",
+          parameters: {
+            type: Type.OBJECT,
+            properties: {
+              category: { type: Type.STRING, enum: ["self_harm", "acute_crisis", "severe_burnout"] },
+              note: { type: Type.STRING, description: "One factual sentence, no diagnosis, for QA follow-up only." },
+            },
+            required: ["category", "note"],
+          },
+        },
+        {
           name: "advance_phase",
           description: "Signal the session is moving to the next phase. Only call this when the phase work is genuinely done — not after a set time, but after the work is done. LAND: only advance after listening fully and reflecting what you heard. SEEK: only advance after completing FIRE (Focus + Importance + Result questions — all three). EXPLORE: only advance after asking 'What else?' at least twice AND exploring at least two Q360 angles AND a meaningful insight has surfaced. COMMIT: only advance after asking three times for the coachee's own ideas AND at least one concrete action step is on the whiteboard. CARRY: only advance to COMPLETE after the coachee has named their own takeaway (update_whiteboard carrying_forward must be called first). A fast, deep conversation is fine — but skipping the work is not.",
           parameters: {
@@ -350,6 +366,23 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
 
         if (call.name === "update_whiteboard") {
           updateWhiteboardLocal(args.section, args.content);
+        }
+
+        if (call.name === "flag_concern") {
+          // Fire-and-forget — never blocks the live session, never surfaces to the model as anything
+          // other than "ok". Welfare escalation (item 3): logs to wp_concern_flags (service-role only,
+          // QA use only — never wired to analytics) and emails Chris via /api/coach/flag.
+          fetch("/api/coach/flag", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ session_id: sessionId, category: args.category, note: args.note }),
+          }).catch(() => {});
+          // Tap-to-connect UI (item 7, EDEN condition a): visible, not passive, for the two categories
+          // where immediate human help matters most. severe_burnout is a refer-not-coach case handled
+          // verbally by the model — it does not need the crisis card.
+          if (args.category === "self_harm" || args.category === "acute_crisis") {
+            setCrisisVisible(true);
+          }
         }
 
         if (call.name === "advance_phase") {
@@ -1001,6 +1034,52 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
         </div>
 
       </div>
+
+      {/* Crisis card — tap-to-connect welfare overlay. Fires on self_harm/acute_crisis flag_concern
+          calls. Stays up until the person dismisses it — never auto-hides (EDEN condition a). */}
+      {crisisVisible && (
+        <div style={{
+          position: "fixed", inset: 0, zIndex: 999,
+          background: "rgba(10,14,25,0.82)", backdropFilter: "blur(4px)",
+          display: "flex", alignItems: "center", justifyContent: "center", padding: "1.5rem",
+        }}>
+          <div style={{
+            width: "100%", maxWidth: "380px",
+            background: "#fdfaf3",
+            borderRadius: "6px",
+            padding: "1.75rem 1.5rem",
+            boxShadow: "0 20px 60px rgba(0,0,0,0.5)",
+            textAlign: "center",
+          }}>
+            <p style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontSize: "1.35rem", color: "oklch(40% 0.1 30)", margin: "0 0 0.75rem" }}>
+              {s.crisisTitle}
+            </p>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", lineHeight: 1.6, color: "rgba(40,35,28,0.82)", margin: "0 0 1.5rem" }}>
+              {s.crisisBody}
+            </p>
+            <a href={s.crisisPrimaryUrl} target="_blank" rel="noopener noreferrer" style={{
+              display: "block", fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", fontWeight: 700,
+              color: "#fff", background: "oklch(65% 0.15 45)", textDecoration: "none",
+              borderRadius: "4px", padding: "0.7rem 1rem", marginBottom: "0.6rem",
+            }}>
+              {s.crisisPrimaryLabel}
+            </a>
+            <a href={s.crisisBackupUrl} target="_blank" rel="noopener noreferrer" style={{
+              display: "block", fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 600,
+              color: "oklch(40% 0.1 30)", textDecoration: "none",
+              border: "1px solid rgba(40,35,28,0.2)", borderRadius: "4px", padding: "0.65rem 1rem", marginBottom: "1rem",
+            }}>
+              {s.crisisBackupLabel}
+            </a>
+            <button onClick={() => setCrisisVisible(false)} style={{
+              fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", color: "rgba(40,35,28,0.5)",
+              background: "none", border: "none", cursor: "pointer", textDecoration: "underline",
+            }}>
+              {s.crisisDismiss}
+            </button>
+          </div>
+        </div>
+      )}
 
       <style>{`
         @keyframes pulse {

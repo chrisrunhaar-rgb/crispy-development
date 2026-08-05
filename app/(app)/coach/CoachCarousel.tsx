@@ -3,7 +3,7 @@
 import { useRef, useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { switchCoach } from "./actions";
+import { switchCoach, setCoachingStyle } from "./actions";
 import SessionTypeSelector from "./SessionTypeSelector";
 import type { NotebookSession } from "./SessionNotebook";
 import { useT, type CoachLang } from "./i18n";
@@ -82,6 +82,7 @@ export type CoachCarouselProps = {
   profile: ProfileData;
   currency: "idr" | "usd";
   lang: CoachLang;
+  coachingStyle: "direct" | "relational";
 };
 
 // ── Helpers ──────────────────────────────────────────────────────
@@ -465,6 +466,7 @@ export default function CoachCarousel({
   profile,
   currency,
   lang,
+  coachingStyle: initialCoachingStyle,
 }: CoachCarouselProps) {
   const s = useT(lang);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -473,6 +475,8 @@ export default function CoachCarousel({
   const [coachName, setCoachName] = useState(initialCoachName);
   const [coachImage, setCoachImage] = useState(initialCoachImage);
   const [switching, setSwitching] = useState(false);
+  const [coachingStyle, setCoachingStyleState] = useState(initialCoachingStyle);
+  const [savingStyle, setSavingStyle] = useState(false);
   const teleportRef = useRef(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -541,6 +545,13 @@ export default function CoachCarousel({
     setCoachImage(c.image);
     setShowSwitcher(false);
     try { await switchCoach(c.name); } finally { setSwitching(false); }
+  }
+
+  async function handleStyleChange(style: "direct" | "relational") {
+    if (style === coachingStyle) return;
+    setCoachingStyleState(style);
+    setSavingStyle(true);
+    try { await setCoachingStyle(style); } finally { setSavingStyle(false); }
   }
 
   const [rightTab, setRightTab] = useState<"notes" | "background">("notes");
@@ -948,6 +959,36 @@ export default function CoachCarousel({
                     )}
                   </button>
                 ))}
+              </div>
+
+              {/* Coaching style toggle (item 4/7) — direct vs relational baseline */}
+              <div style={{ marginTop: "1.5rem", paddingTop: "1.25rem", borderTop: "1px solid oklch(28% 0.07 260)" }}>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, marginBottom: "0.5rem" }}>
+                  {s.coachingStyleLabel}
+                </p>
+                <div style={{ display: "flex", gap: "0.6rem", marginBottom: "0.5rem" }}>
+                  {(["relational", "direct"] as const).map(style => (
+                    <button
+                      key={style}
+                      onClick={() => handleStyleChange(style)}
+                      disabled={savingStyle}
+                      style={{
+                        flex: 1, padding: "0.6rem 0.75rem",
+                        background: coachingStyle === style ? "oklch(25% 0.10 260)" : NAVY_SUBTLE,
+                        border: `1.5px solid ${coachingStyle === style ? ORANGE : "oklch(28% 0.07 260)"}`,
+                        borderRadius: "5px",
+                        cursor: savingStyle ? "wait" : "pointer",
+                        fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 600,
+                        color: coachingStyle === style ? WHITE : MUTED,
+                      }}
+                    >
+                      {style === "direct" ? s.coachingStyleDirect : s.coachingStyleRelational}
+                    </button>
+                  ))}
+                </div>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", color: MUTED, lineHeight: 1.5 }}>
+                  {s.coachingStyleHelper}
+                </p>
               </div>
             </div>
           </>

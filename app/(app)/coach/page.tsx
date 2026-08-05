@@ -89,6 +89,7 @@ export default async function CoachPage({
       sessions={completedSessions}
       currency={currency}
       lang={lang}
+      coachingStyle={profile.coaching_style === "direct" ? "direct" : "relational"}
       profile={{
         name: profile.name,
         role: profile.role,
