@@ -137,6 +137,9 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
   const streamRef = useRef<MediaStream | null>(null);
   const workletRef = useRef<AudioWorkletNode | null>(null);
   const playTimeRef = useRef<number>(0);
+  // Tracks every AudioBufferSourceNode currently scheduled/playing so playback can actually be
+  // stopped (not just have its clock reset) on pause (item 6a) and interrupt/End Session (item 9).
+  const activeAudioSourcesRef = useRef<AudioBufferSourceNode[]>([]);
 
   const startTimeRef = useRef<number | null>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -223,12 +226,28 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
     const startAt = Math.max(now, playTimeRef.current);
     src.start(startAt);
     playTimeRef.current = startAt + buffer.duration;
+    activeAudioSourcesRef.current.push(src);
     src.onended = () => {
+      activeAudioSourcesRef.current = activeAudioSourcesRef.current.filter(s => s !== src);
       if (playTimeRef.current <= playCtx.currentTime + 0.15) {
         isAiSpeakingRef.current = false;
         setIsAiSpeaking(false);
       }
     };
+  }
+
+  // Stop and clear all queued/playing coach audio right now. AudioBufferSourceNode has no pause —
+  // once scheduled, only .stop() actually silences it. Used on pause (item 6a, so the coach doesn't
+  // keep talking after "Pause" is tapped) and on interrupt / End Session (item 9, so the tail of a
+  // cut-off sentence can't keep playing underneath the next turn's audio).
+  function stopCoachAudio() {
+    const sources = activeAudioSourcesRef.current;
+    activeAudioSourcesRef.current = [];
+    for (const src of sources) {
+      src.onended = null;
+      try { src.stop(); } catch { /* already stopped or never started */ }
+    }
+    playTimeRef.current = playContextRef.current?.currentTime ?? 0;
   }
 
   const buildLiveConfig = useCallback((systemPrompt: string, voice: string, manual: boolean): LiveConnectConfig => ({
@@ -313,7 +332,10 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
       for (const part of message.serverContent.modelTurn.parts) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const inlineData = (part as any).inlineData;
-        if (inlineData?.data) {
+        if (inlineData?.data && !isMutedRef.current) {
+          // While paused, drop incoming audio for the in-flight turn instead of queuing it — the
+          // model may keep streaming server-side, but nothing should play locally until resumed
+          // (item 6a). Muted-but-received chunks are simply discarded, not buffered for later.
           isAiSpeakingRef.current = true;
           setIsAiSpeaking(true);
           setAwaitingCoach(false);
@@ -324,7 +346,10 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
       }
     }
     if (message.serverContent?.interrupted) {
-      playTimeRef.current = 0;
+      // Interrupt (including a forced-close from End Session mid-speech) must actually stop and
+      // clear whatever coach audio is queued/playing, not just reset the scheduling clock — otherwise
+      // the tail of the cut-off sentence keeps playing underneath the next turn's audio (item 9).
+      stopCoachAudio();
       isAiSpeakingRef.current = false;
       setIsAiSpeaking(false);
     }
@@ -419,6 +444,20 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ session_id: sessionId, phase: newPhase }),
           }).catch(() => {});
+
+          // PHASE-GATED CONTEXT (item 7): the WIN check-in (return sessions) happens before this
+          // transition, while PREVIOUS SESSION CONTEXT is still fully live in the system prompt.
+          // Once the coachee actually moves from LAND into SEEK, that check-in is done — fire a
+          // one-time steering note right at this phase boundary so the model commits to whatever
+          // NEW focus gets named instead of drifting back into old notes. This is enforced at the
+          // exact phase transition in code, not left to prompt wording alone.
+          if (currentPhase === "LAND" && newPhase === "SEEK") {
+            const steeringNote = lang === "id"
+              ? `[catatan teknis — jangan dibacakan] Check-in WIN (jika ada) sudah selesai. Mulai sekarang, jangan mengangkat atau merujuk catatan maupun topik dari sesi sebelumnya kecuali orang ini sendiri yang membawanya kembali. Fokus penuh pada apa yang mereka katakan ingin mereka bahas hari ini — sekalipun itu topik baru yang berbeda dari sebelumnya.`
+              : `[technical note — do not read aloud] The WIN check-in (if any) is done. From this point forward, do not bring up or reference previous session notes or past topics unless the coachee themselves raises them again. Commit fully to whatever focus they name today, even if it differs from before.`;
+            sessionRef.current?.sendRealtimeInput({ text: steeringNote });
+          }
+
           if (newPhase === "COMPLETE") handleSessionComplete();
         }
 
@@ -428,7 +467,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
         sessionRef.current?.sendToolResponse({ functionResponses: responses });
       }
     }
-  }, [sessionId, sessionType, updateWhiteboardLocal, handleSessionComplete]);
+  }, [sessionId, sessionType, updateWhiteboardLocal, handleSessionComplete, lang]);
 
   const scheduleWarmup = useCallback(() => {
     if (warmupTimerRef.current) clearTimeout(warmupTimerRef.current);
@@ -551,37 +590,38 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
             setErrorMsg("Connection lost. Please try again.");
           },
           onclose: (e: CloseEvent) => {
+            // sessionClosedRef is only ever set true by OUR OWN intentional closes (handleSessionComplete,
+            // the terminal-error branch below). So any close that reaches this point was NOT something we
+            // asked for — it's unexpected, whether that's GoAway (max session length, reason contains
+            // "GoAway"/"session durat"), an idle/silence timeout (a different reason/code Gemini Live
+            // sends — the exact string isn't documented reliably enough to match on), or a network drop.
+            // Reconnect for all of them rather than only GoAway-labeled closes, so an idle session
+            // doesn't just die with no recovery (item 6b). This is still a single bounded retry: if the
+            // reconnect attempt itself fails, startSession()'s own catch surfaces a real error.
             if (sessionClosedRef.current) return;
-            const isGoAway = e.reason.includes("GoAway") || e.reason.includes("session durat");
-            if (isGoAway) {
-              if (switchToWarmup()) {
-                setErrorMsg(null);
-              } else {
-                const wb = whiteboardRef.current;
-                const currentPhase = phaseRef.current;
-                const recentTranscript = transcriptRef.current.slice(-20).join(" ... ");
-                reconnectContextRef.current = [
-                  `TECHNICAL NOTE (not for the coachee): The connection was briefly interrupted and has resumed. Do NOT say "Welcome back", "I'm back", "we got disconnected", or any phrase that acknowledges a break. Do NOT greet. Simply continue the conversation mid-thought as if nothing happened.`,
-                  `Current phase: ${currentPhase}.`,
-                  wb.focus_today ? `Focus today: ${wb.focus_today}.` : "",
-                  wb.key_insights.length ? `Key insights so far: ${wb.key_insights.join("; ")}.` : "",
-                  wb.values_named.length ? `Values named: ${wb.values_named.join("; ")}.` : "",
-                  wb.action_steps.length ? `Action steps so far: ${wb.action_steps.join("; ")}.` : "",
-                  recentTranscript ? `Recent conversation: ${recentTranscript}` : "",
-                  `Pick up naturally from the ${currentPhase} phase — no acknowledgement of any break.`,
-                ].filter(Boolean).join(" ");
-                setStatus("connecting");
-                setErrorMsg("Reconnecting…");
-                stopAudio();
-                playContextRef.current?.close().catch(() => {});
-                playContextRef.current = null;
-                sessionRef.current = null;
-                setTimeout(() => startSession(), 1000);
-              }
+            if (switchToWarmup()) {
+              setErrorMsg(null);
             } else {
-              sessionClosedRef.current = true;
-              setStatus("error");
-              setErrorMsg(`Connection closed (code ${e.code}${e.reason ? `: ${e.reason}` : ""}).`);
+              const wb = whiteboardRef.current;
+              const currentPhase = phaseRef.current;
+              const recentTranscript = transcriptRef.current.slice(-20).join(" ... ");
+              reconnectContextRef.current = [
+                `TECHNICAL NOTE (not for the coachee): The connection was briefly interrupted and has resumed. Do NOT say "Welcome back", "I'm back", "we got disconnected", or any phrase that acknowledges a break. Do NOT greet. Simply continue the conversation mid-thought as if nothing happened.`,
+                `Current phase: ${currentPhase}.`,
+                wb.focus_today ? `Focus today: ${wb.focus_today}.` : "",
+                wb.key_insights.length ? `Key insights so far: ${wb.key_insights.join("; ")}.` : "",
+                wb.values_named.length ? `Values named: ${wb.values_named.join("; ")}.` : "",
+                wb.action_steps.length ? `Action steps so far: ${wb.action_steps.join("; ")}.` : "",
+                recentTranscript ? `Recent conversation: ${recentTranscript}` : "",
+                `Pick up naturally from the ${currentPhase} phase — no acknowledgement of any break.`,
+              ].filter(Boolean).join(" ");
+              setStatus("connecting");
+              setErrorMsg("Reconnecting…");
+              stopAudio();
+              playContextRef.current?.close().catch(() => {});
+              playContextRef.current = null;
+              sessionRef.current = null;
+              setTimeout(() => startSession(), 1000);
             }
           },
         },
@@ -623,6 +663,14 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
     const newMuted = !isMutedRef.current;
     isMutedRef.current = newMuted;
     streamRef.current.getAudioTracks().forEach(t => { t.enabled = !newMuted; });
+    if (newMuted) {
+      // Pause must stop the coach's own audio too, not just the mic (item 6a) — without this the
+      // coach keeps talking into a "paused" session. Any further chunks for this turn are dropped
+      // above in handleMessage until resumed.
+      stopCoachAudio();
+      isAiSpeakingRef.current = false;
+      setIsAiSpeaking(false);
+    }
     setIsMuted(newMuted);
   }, []);
 
@@ -640,6 +688,10 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
     // SECOND coach turn (a second closing story), which handleSessionComplete later cuts mid-sentence.
     // No mic input → exactly one closing turn → clean drain. (Root cause of the double-closing bug.)
     stopAudio();
+    // Also stop any coach audio still queued/playing from the turn that was just cut off — otherwise
+    // its tail can play underneath the closing audio that's about to start (item 9). The "interrupted"
+    // server message usually does this too, but End Session shouldn't depend on that message arriving.
+    stopCoachAudio();
 
     // Ask the coach for a PROPER spoken closing. CRITICAL: the closing must reflect ONLY what actually
     // happened. The whiteboard is the record of what surfaced — the coach fills it via update_whiteboard
