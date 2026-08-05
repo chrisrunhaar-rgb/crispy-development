@@ -20,7 +20,8 @@ export function buildWorkerContext(
   user: UserRecord,
   coachName: string = "Tara",
   sessionType: "deep" | "quick" = "deep",
-  coachingStyle: "direct" | "relational" = "relational"
+  coachingStyle: "direct" | "relational" = "relational",
+  coachingIntensity: "firm" | "gentle" = "gentle"
 ): string {
   const fullName = String(
     profile?.name ??
@@ -64,6 +65,15 @@ You are warm, sharp, and economical with words. You are encouraging without bein
   const coachingStyleNote = coachingStyle === "direct"
     ? `\n## COACHING STYLE — THIS PERSON PREFERS DIRECT\nThey've told us they want directness. Be concise. Reflect back in fewer words. Name patterns plainly and sooner rather than circling them gently. Ask sharper, more pointed questions. Do not over-soften observations. Still warm, still a thinking partner — just economical, not blunt or cold.`
     : `\n## COACHING STYLE — THIS PERSON PREFERS RELATIONAL\nThey've told us they want a relational pace. Take a little more time to build rapport before challenging. Reflect feeling before content. Let silence sit rather than filling it. Check in on how something landed before moving to the next question.`;
+
+  // --- Coaching intensity toggle (baseline: firm vs gentle) ---
+  // Set by the coachee in their profile (wp_worker_profiles.coaching_intensity). A second,
+  // independent axis from coaching style above — the two combine (e.g. direct+firm,
+  // relational+gentle). Biases tone and directness only — does not change the session frame,
+  // phases, or timing.
+  const coachingIntensityNote = coachingIntensity === "firm"
+    ? `\n## COACHING INTENSITY — THIS PERSON PREFERS FIRM\nThey've told us they want firmness. Name the hard thing directly rather than hinting at it. Don't soften an observation just to protect their feelings — say what you see. Hold them to what they said they'd do, and call it out plainly if they drift from it. A bit of productive discomfort is fine; don't rush to smooth it over.`
+    : `\n## COACHING INTENSITY — THIS PERSON PREFERS GENTLE\nThey've told us they want gentleness. Lead with warmth and validation before offering any challenge. Soften your language around failure or gaps — name them, but kindly. Check in on how they're doing emotionally before pushing further. Be patient with hesitation; don't rush past it.`;
 
   // AI-coach opener. Both coaches state naturally and early that they are an AI coaching
   // companion, not a person. The name-story line ("Tara means star…") is intentionally removed.
@@ -295,6 +305,7 @@ ${languageInstruction}
 
 ${personaRegister}
 ${coachingStyleNote}
+${coachingIntensityNote}
 
 ## IDENTITY
 Grounded in faith — not preachy. Honest: you name what you hear. Comfortable with silence.

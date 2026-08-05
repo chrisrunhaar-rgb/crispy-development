@@ -23,3 +23,15 @@ export async function setCoachingStyle(style: "direct" | "relational") {
     .update({ coaching_style: style })
     .eq("user_id", user.id);
 }
+
+// Coaching intensity toggle — firm vs gentle, a second and independent axis alongside
+// coaching style (direct/relational). Set in the same modal as coach persona selection.
+export async function setCoachingIntensity(intensity: "firm" | "gentle") {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) throw new Error("Unauthorized");
+  await supabase
+    .from("wp_worker_profiles")
+    .update({ coaching_intensity: intensity })
+    .eq("user_id", user.id);
+}

@@ -48,7 +48,8 @@ export async function POST(req: Request) {
     if (sessionsError) console.error("Sessions fetch error:", sessionsError);
 
     const coachingStyle = profile?.coaching_style === "direct" ? "direct" as const : "relational" as const;
-    const systemPrompt = buildWorkerContext(profile, recentSessions ?? [], user, coachName, sessionType, coachingStyle);
+    const coachingIntensity = profile?.coaching_intensity === "firm" ? "firm" as const : "gentle" as const;
+    const systemPrompt = buildWorkerContext(profile, recentSessions ?? [], user, coachName, sessionType, coachingStyle, coachingIntensity);
 
     // Create short-lived ephemeral token — never expose raw API key to browser
     const serverAi = new GoogleGenAI({ apiKey, httpOptions: { apiVersion: "v1alpha" } });

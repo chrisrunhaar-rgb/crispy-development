@@ -144,6 +144,12 @@ const strings = {
     coachingStyleRelational: "Relational — take your time",
     coachingStyleHelper: "Changes how your coach paces and phrases things. You can change this anytime.",
 
+    // Coaching intensity toggle — second, independent axis alongside coaching style
+    coachingIntensityLabel: "Coaching intensity",
+    coachingIntensityFirm: "Firm — challenge me",
+    coachingIntensityGentle: "Gentle — go easy",
+    coachingIntensityHelper: "Independent of coaching style above — you can combine either with either. You can change this anytime.",
+
     // Post-session check-in (item 2)
     checkinHeading: "Before you go — how clear do you feel?",
     checkinSkip: "Skip",
@@ -282,6 +288,12 @@ const strings = {
     coachingStyleDirect: "Langsung — ke intinya",
     coachingStyleRelational: "Relasional — santai saja",
     coachingStyleHelper: "Mengubah cara coach Anda mengatur ritme dan menyampaikan sesuatu. Bisa diubah kapan saja.",
+
+    // Coaching intensity toggle — second, independent axis alongside coaching style
+    coachingIntensityLabel: "Intensitas coaching",
+    coachingIntensityFirm: "Tegas — tantang saya",
+    coachingIntensityGentle: "Lembut — pelan-pelan saja",
+    coachingIntensityHelper: "Terpisah dari gaya coaching di atas — bisa dikombinasikan bebas. Bisa diubah kapan saja.",
 
     // Post-session check-in (item 2)
     checkinHeading: "Sebelum Anda pergi — seberapa jelas perasaan Anda?",
