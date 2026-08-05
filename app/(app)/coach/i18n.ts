@@ -128,6 +128,29 @@ const strings = {
     // Action Steps label in complete page
     actionSteps: "Action Steps",
     carryingForwardFull: "Carrying Forward",
+
+    // Crisis tap-to-connect card (welfare escalation, item 3/7)
+    crisisTitle: "Talk to someone today",
+    crisisBody: "What you shared matters more than this conversation can hold. These are real, vetted directories — not a bot — that connect you to a person now.",
+    crisisPrimaryLabel: "Find a local helpline",
+    crisisPrimaryUrl: "https://findahelpline.com",
+    crisisBackupLabel: "Befrienders Worldwide (alternative)",
+    crisisBackupUrl: "https://befrienders.org",
+    crisisDismiss: "I'm okay for now, close this",
+
+    // Coaching style toggle (item 4) — same modal as coach persona selection
+    coachingStyleLabel: "Coaching style",
+    coachingStyleDirect: "Direct — get to the point",
+    coachingStyleRelational: "Relational — take your time",
+    coachingStyleHelper: "Changes how your coach paces and phrases things. You can change this anytime.",
+
+    // Post-session check-in (item 2)
+    checkinHeading: "Before you go — how clear do you feel?",
+    checkinSkip: "Skip",
+    checkinNotePlaceholder: "One line, optional…",
+    checkinSubmit: "Done",
+    checkinNotClear: "Not clear",
+    checkinVeryClear: "Very clear",
   },
 
   id: {
@@ -244,6 +267,29 @@ const strings = {
 
     actionSteps: "Langkah Aksi",
     carryingForwardFull: "Dibawa ke Depan",
+
+    // Crisis tap-to-connect card (welfare escalation, item 3/7)
+    crisisTitle: "Bicaralah dengan seseorang hari ini",
+    crisisBody: "Apa yang Anda bagikan lebih penting daripada percakapan ini bisa tangani. Ini adalah direktori nyata dan terverifikasi — bukan bot — yang menghubungkan Anda dengan orang sungguhan sekarang.",
+    crisisPrimaryLabel: "Temukan helpline lokal",
+    crisisPrimaryUrl: "https://findahelpline.com",
+    crisisBackupLabel: "Befrienders Worldwide (alternatif)",
+    crisisBackupUrl: "https://befrienders.org",
+    crisisDismiss: "Saya baik-baik saja untuk saat ini, tutup ini",
+
+    // Coaching style toggle (item 4)
+    coachingStyleLabel: "Gaya coaching",
+    coachingStyleDirect: "Langsung — ke intinya",
+    coachingStyleRelational: "Relasional — santai saja",
+    coachingStyleHelper: "Mengubah cara coach Anda mengatur ritme dan menyampaikan sesuatu. Bisa diubah kapan saja.",
+
+    // Post-session check-in (item 2)
+    checkinHeading: "Sebelum Anda pergi — seberapa jelas perasaan Anda?",
+    checkinSkip: "Lewati",
+    checkinNotePlaceholder: "Satu baris, opsional…",
+    checkinSubmit: "Selesai",
+    checkinNotClear: "Belum jelas",
+    checkinVeryClear: "Sangat jelas",
   },
 } as const;
 
