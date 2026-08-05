@@ -47,7 +47,7 @@ export default function CoachPrivacyPage() {
           </Section>
 
           <Section label="When we might be required to act.">
-            <Body>WayPoint is not a crisis service. If you share something that suggests immediate danger to yourself or others, we strongly encourage you to contact a trusted person, your pastor, or a crisis helpline in your country. In rare situations, we may be legally compelled by a court order to disclose data.</Body>
+            <Body>WayPoint is not a crisis service and no one is monitoring your session in real time. If something you share suggests you may be in danger, the coach will name it in the moment, point you to a person, and show a resource card linking to a helpline you can reach right away (findahelpline.com or befrienders.org). We also quietly log that a safety signal occurred, for internal quality review only — this log is never used to contact you, is not reviewed case-by-case, and does not trigger any follow-up from us. If you are in immediate danger, please reach out to a trusted person, your pastor, or a local emergency service. In rare situations, we may be legally compelled by a court order to disclose data.</Body>
           </Section>
 
           <Section label="This is not a substitute for professional support.">
