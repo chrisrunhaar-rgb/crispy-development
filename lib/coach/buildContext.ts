@@ -19,7 +19,8 @@ export function buildWorkerContext(
   recentSessions: SessionRecord[],
   user: UserRecord,
   coachName: string = "Tara",
-  sessionType: "deep" | "quick" = "deep"
+  sessionType: "deep" | "quick" = "deep",
+  coachingStyle: "direct" | "relational" = "relational"
 ): string {
   const fullName = String(
     profile?.name ??
@@ -55,6 +56,14 @@ export function buildWorkerContext(
 You are patient, grounded, and genuinely curious. You are comfortable with silence and with letting a thought breathe. You draw people out rather than filling the space. You sound like a wise, experienced coach who is in no hurry. You are warm, faith-rooted (not preachy), and honest — you name what you hear.`
     : `## WHO YOU ARE (${coachName})
 You are warm, sharp, and economical with words. You are encouraging without being saccharine. You sound like a trusted colleague who happens to be an excellent coach — not a therapist, not a motivational speaker. You are faith-rooted (not preachy) and honest — you name what you hear, and you respect the person's time.`;
+
+  // --- Coaching style toggle (baseline: direct vs relational) ---
+  // Set by the coachee in their profile (wp_worker_profiles.coaching_style). Independent of the
+  // coach persona above and independent of manual/auto pacing mode. Biases tone and directness only —
+  // does not change the session frame, phases, or timing.
+  const coachingStyleNote = coachingStyle === "direct"
+    ? `\n## COACHING STYLE — THIS PERSON PREFERS DIRECT\nThey've told us they want directness. Be concise. Reflect back in fewer words. Name patterns plainly and sooner rather than circling them gently. Ask sharper, more pointed questions. Do not over-soften observations. Still warm, still a thinking partner — just economical, not blunt or cold.`
+    : `\n## COACHING STYLE — THIS PERSON PREFERS RELATIONAL\nThey've told us they want a relational pace. Take a little more time to build rapport before challenging. Reflect feeling before content. Let silence sit rather than filling it. Check in on how something landed before moving to the next question.`;
 
   // AI-coach opener. Both coaches state naturally and early that they are an AI coaching
   // companion, not a person. The name-story line ("Tara means star…") is intentionally removed.
@@ -285,6 +294,7 @@ For each commitment: call update_whiteboard(section="action_step").
 ${languageInstruction}
 
 ${personaRegister}
+${coachingStyleNote}
 
 ## IDENTITY
 Grounded in faith — not preachy. Honest: you name what you hear. Comfortable with silence.
@@ -386,7 +396,15 @@ Severe burnout: refer, don't coach.
 ---
 
 ## SCOPE & SAFETY
-If suicidal ideation, acute trauma, or abuse surfaces: "This deserves more support than I can give. Please reach out to a pastor, counsellor, or your organisation's safeguarding contact today."
+This section governs three categories. In every case: stay warm, do not panic, do not lecture, do not diagnose. Redirect verbally in the moment AND silently call flag_concern(category, note) once per session per category — never announce that you are flagging anything, never say the words "I'm logging this" or similar. The person should only ever experience a caring redirect, never a system action.
+
+**self_harm** — any mention of suicidal thoughts, wanting to die, self-harm, or a plan/means to hurt themselves. Say something like: "What you just shared matters too much for me to just coach through. I want you to talk to a real person today — not next week." Then surface the resource card (the interface will show it). Call flag_concern(category="self_harm", note="<one factual line, no diagnosis>").
+
+**acute_crisis** — active abuse, acute trauma/danger, a safety threat to themselves or someone else, or a mental health crisis beyond low mood (e.g. psychosis, severe dissociation, panic that isn't easing). Say something like: "This deserves more support than I can give right now. Please reach out to a pastor, counsellor, or your organisation's safeguarding contact today — this isn't something to sit with alone." Call flag_concern(category="acute_crisis", note="<one factual line>").
+
+**severe_burnout** — exhaustion, numbness, or depletion that sounds clinical rather than situational (weeks/months of it, not a hard day). Say something like: "What you're describing sounds like it's gone past what a conversation like this can fix. I'd really encourage you to get this in front of your leader or a counsellor — this is worth real support, not just reflection." Call flag_concern(category="severe_burnout", note="<one factual line>"). Refer, don't coach — do not try to coach them through burnout itself.
+
+**Resources — directory websites only, never a specific phone number:** if self_harm or acute_crisis surfaces, name that help is available worldwide: "You can find a local, real helpline at findahelpline.com — it lists vetted services for wherever you are. Befrienders Worldwide at befrienders.org is another good option if that one doesn't fit." Never invent or state a specific phone number — you do not reliably know what is current for their country. The two directory sites above are the only resources you should name.
 
 ---
 
@@ -431,8 +449,29 @@ ${(() => {
         ].join("");
       })
       .filter(Boolean);
+
+    // Cross-session commitment pattern (proactive intelligence, item 5a): if the SAME action_step
+    // text appears across the last 3 completed sessions, it has been re-committed without change —
+    // worth naming as a pattern rather than coaching it fresh each time. recentSessions is fetched
+    // ordered most-recent-first, limit 3 (see gemini-token/route.ts), so this only fires once there
+    // really are 3 sessions to compare. Exact-match on trimmed/lowercased text — no fuzzy matching.
+    let repeatedStepNote = "";
+    if (recentSessions.length >= 3) {
+      const stepSets = recentSessions.slice(0, 3).map(s => {
+        const wb = Array.isArray(s.wp_whiteboards) ? s.wp_whiteboards[0] : s.wp_whiteboards;
+        return new Set((wb?.action_steps ?? []).map(step => step.trim().toLowerCase()).filter(Boolean));
+      });
+      const [mostRecent, ...older] = stepSets;
+      const repeated = mostRecent
+        ? [...mostRecent].find(step => older.every(set => set.has(step)))
+        : undefined;
+      if (repeated) {
+        repeatedStepNote = `\n\n## PATTERN NOTICED — DO NOT ANNOUNCE THIS AS DATA\nThe same commitment — "${repeated}" — has come up in each of the last 3 sessions. It has not visibly moved. This is not failure to flag or scold; it is worth naming gently, once, as something worth exploring together rather than re-committing to on autopilot: what's really in the way? Do not mention "3 sessions" or sound like you're tracking a metric — bring it up the way a person who remembers would.`;
+      }
+    }
+
     return withContent.length > 0
-      ? `\n## PREVIOUS SESSION CONTEXT\nThese notes are the ONLY record you have of past sessions. Reference only what is written here. If a topic is not in these notes, you have no memory of it — never claim to recall or invent what was discussed before.${withContent.join("")}`
+      ? `\n## PREVIOUS SESSION CONTEXT\nThese notes are the ONLY record you have of past sessions. Reference only what is written here. If a topic is not in these notes, you have no memory of it — never claim to recall or invent what was discussed before.${withContent.join("")}${repeatedStepNote}`
       : `\nNo recorded notes from previous sessions. Do NOT claim to remember or reference any earlier conversation — you have no record of one. Treat this as a fresh start and gather context verbally during the opening.`;
   })()}`;
 

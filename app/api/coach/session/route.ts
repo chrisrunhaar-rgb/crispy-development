@@ -74,7 +74,7 @@ export async function PATCH(req: NextRequest) {
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const body = await req.json();
-  const { session_id, phase, transcript_entry, complete, duration_seconds } = body;
+  const { session_id, phase, transcript_entry, complete, duration_seconds, clarity_score, checkin_note } = body;
 
   if (!session_id) return NextResponse.json({ error: "session_id required" }, { status: 400 });
 
@@ -99,6 +99,12 @@ export async function PATCH(req: NextRequest) {
     const existing = (session.transcript as unknown[]) ?? [];
     updates.transcript = [...existing, transcript_entry];
   }
+  // Post-session check-in (item 2/7) — 1-tap clarity slider + optional note.
+  if (clarity_score !== undefined && clarity_score !== null) {
+    const score = Number(clarity_score);
+    if (Number.isInteger(score) && score >= 1 && score <= 5) updates.clarity_score = score;
+  }
+  if (typeof checkin_note === "string") updates.checkin_note = checkin_note.slice(0, 280) || null;
 
   const { error } = await supabase
     .from("wp_sessions")
