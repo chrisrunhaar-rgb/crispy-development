@@ -197,7 +197,7 @@ function ScaleQuestion({
           </button>
         ))}
       </div>
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", width: "202px" }}>
         <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", color: "oklch(55% 0.008 260)" }}>{lowLabel}</span>
         <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", color: "oklch(55% 0.008 260)" }}>{highLabel}</span>
       </div>

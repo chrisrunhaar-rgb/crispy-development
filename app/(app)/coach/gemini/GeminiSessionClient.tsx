@@ -20,6 +20,12 @@ type Phase = "LAND" | "SEEK" | "EXPLORE" | "COMMIT" | "CARRY" | "COMPLETE";
 
 const PHASE_ORDER: Phase[] = ["LAND", "SEEK", "EXPLORE", "COMMIT", "CARRY", "COMPLETE"];
 
+// Quick sessions skip SEEK entirely (see quickSessionFrame in buildContext.ts, which instructs
+// LAND -> EXPLORE -> COMMIT -> CARRY). advance_phase's adjacency check must use this order for
+// quick sessions, or the model's correct LAND->EXPLORE call gets rejected as "skipping" SEEK —
+// permanently stuck in LAND for the rest of the session.
+const PHASE_ORDER_QUICK: Phase[] = ["LAND", "EXPLORE", "COMMIT", "CARRY", "COMPLETE"];
+
 const GEMINI_MODEL = "gemini-3.1-flash-live-preview";
 const WARMUP_AT_SECONDS = 780;
 
@@ -434,11 +440,12 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
         if (call.name === "advance_phase") {
           const newPhase = args.phase as Phase;
           const currentPhase = phaseRef.current;
-          const currentIndex = PHASE_ORDER.indexOf(currentPhase);
-          const requestedIndex = PHASE_ORDER.indexOf(newPhase);
+          const phaseOrder = sessionType === "quick" ? PHASE_ORDER_QUICK : PHASE_ORDER;
+          const currentIndex = phaseOrder.indexOf(currentPhase);
+          const requestedIndex = phaseOrder.indexOf(newPhase);
 
           if (requestedIndex !== currentIndex + 1) {
-            const nextPhase = PHASE_ORDER[currentIndex + 1];
+            const nextPhase = phaseOrder[currentIndex + 1];
             return {
               id: call.id ?? "", name: call.name ?? "",
               response: { result: "invalid", message: `Cannot skip phases. Next phase is ${nextPhase}. Complete ${currentPhase} first.` },
@@ -691,6 +698,12 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
       stopCoachAudio();
       isAiSpeakingRef.current = false;
       setIsAiSpeaking(false);
+      // Tell Gemini the input stream is ending (mic turned off), per the SDK's own doc comment on
+      // audioStreamEnd: "e.g. because the microphone was turned off... client can reopen the stream
+      // by sending an audio message." Without this, the mic worklet's mute gate just stops calling
+      // sendRealtimeInput entirely — an undeclared gap in the audio stream instead of a clean close —
+      // which is why the coach stayed silent after resume even mid-sentence (item 5).
+      sessionRef.current?.sendRealtimeInput({ audioStreamEnd: true });
     }
     setIsMuted(newMuted);
   }, []);
