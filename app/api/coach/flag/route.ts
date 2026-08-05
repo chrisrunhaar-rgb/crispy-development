@@ -39,25 +39,5 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Failed to log flag." }, { status: 500 });
   }
 
-  // Notify Chris — fire and forget, never blocks the coach session.
-  const resendKey = process.env.RESEND_API_KEY;
-  if (resendKey) {
-    const CATEGORY_LABEL: Record<string, string> = {
-      self_harm: "Self-harm risk",
-      acute_crisis: "Acute crisis",
-      severe_burnout: "Severe burnout",
-    };
-    fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: { "Authorization": `Bearer ${resendKey}`, "Content-Type": "application/json" },
-      body: JSON.stringify({
-        from: "WayPoint Coach <noreply@crispyleaders.com>",
-        to: "chris.runhaar@gmail.com",
-        subject: `WayPoint welfare flag — ${CATEGORY_LABEL[category] ?? category}`,
-        html: `<p>A coaching session flagged a welfare concern.</p><p><strong>Category:</strong> ${CATEGORY_LABEL[category] ?? category}</p><p><strong>User:</strong> ${user.email ?? user.id}</p><p><strong>Session:</strong> ${session_id}</p><p><strong>Note:</strong> ${(note ?? "").toString().slice(0, 500) || "(none)"}</p><p>This is a QA/pastoral-care log entry only — see wp_concern_flags for the record.</p>`,
-      }),
-    }).catch(() => {});
-  }
-
   return NextResponse.json({ ok: true });
 }
