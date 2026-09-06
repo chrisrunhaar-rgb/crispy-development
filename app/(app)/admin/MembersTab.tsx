@@ -37,6 +37,7 @@ interface Member {
   status: 'active' | 'inactive' | 'pending';
   pathway?: 'free' | 'personal' | 'team' | 'peer';
   completedModules?: number;
+  moduleTitles?: string[];
   team?: boolean;
   peer?: boolean;
   tests?: number;
@@ -47,7 +48,7 @@ interface Member {
 
 interface MembersTabProps {
   users: UserData[];
-  progressCounts: Map<string, number>;
+  moduleData: Map<string, { count: number; titles: string[] }>;
   membersList: Array<{ id: string; name: string; email: string }>;
   coachData: Map<string, { coach_access: boolean; coach_minutes_granted: number; subscription_active: boolean }>;
   teamSeatsMap: Map<string, { filled: number; max: number }>;
@@ -55,7 +56,7 @@ interface MembersTabProps {
 
 export default function MembersTab({
   users,
-  progressCounts,
+  moduleData,
   membersList,
   coachData,
   teamSeatsMap,
@@ -80,7 +81,8 @@ export default function MembersTab({
         last_sign_in_at: u.last_sign_in_at,
         status: 'active' as const,
         pathway: pathway as 'free' | 'personal' | 'team' | 'peer',
-        completedModules: progressCounts.get(u.id) ?? 0,
+        completedModules: moduleData.get(u.id)?.count ?? 0,
+        moduleTitles: moduleData.get(u.id)?.titles ?? [],
         teamSeats,
         tests: testsDone,
         timezone: u.user_metadata?.timezone as string | null ?? null,

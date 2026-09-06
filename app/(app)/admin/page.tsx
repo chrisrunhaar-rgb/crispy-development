@@ -30,6 +30,13 @@ const ASSESSMENT_KEYS = [
   "personalities16_completed_at",
 ];
 
+// Title lookup for resources saved to a member's own dashboard ("My Personal
+// Development Journey"). Mirrors RESOURCE_META in app/(app)/dashboard/page.tsx
+// so the admin "Modules" count always matches what the member themselves sees.
+const RESOURCE_TITLE_BY_SLUG: Record<string, string> = Object.fromEntries(
+  RESOURCES.filter(r => r.slug).map(r => [r.slug as string, r.title])
+);
+
 
 export default async function AdminPage({
   searchParams,
@@ -64,19 +71,31 @@ export default async function AdminPage({
   ).length;
 
   // â"€â"€ Members tab â"€â"€
-  let progressCounts = new Map<string, number>();
+  // "Modules" count = resources currently saved to the member's own dashboard
+  // (user_metadata.saved_resources, filtered to slugs that still resolve to a
+  // published resource) — NOT the legacy user_progress/markModuleComplete
+  // table, which is orphaned dead code from a retired "modules" architecture
+  // (no current UI calls it; frozen at 4 rows since April 2026). Left the
+  // table and action untouched, just stopped reading from it here.
+  let moduleData = new Map<string, { count: number; titles: string[] }>();
   type CoachEntry = { coach_access: boolean; coach_minutes_granted: number; subscription_active: boolean };
   let coachData = new Map<string, CoachEntry>();
   let teamSeatsMap = new Map<string, { filled: number; max: number }>();
 
   if (activeTab === "members") {
-    const [progressResult, membershipResult, teamsResult] = await Promise.all([
-      admin.from("user_progress").select("user_id").eq("status", "completed"),
+    const [membershipResult, teamsResult] = await Promise.all([
       admin.from("memberships").select("user_id, coach_access, coach_minutes_granted, subscription_active"),
       admin.from("teams").select("leader_user_id, max_seats, team_members(count)"),
     ]);
-    (progressResult.data ?? []).forEach((r: { user_id: string }) => {
-      progressCounts.set(r.user_id, (progressCounts.get(r.user_id) ?? 0) + 1);
+    allUsers.forEach(u => {
+      const saved = u.user_metadata?.saved_resources;
+      const savedItems = Array.isArray(saved)
+        ? (saved as string[]).filter(slug => RESOURCE_TITLE_BY_SLUG[slug])
+        : [];
+      moduleData.set(u.id, {
+        count: savedItems.length,
+        titles: savedItems.map(slug => RESOURCE_TITLE_BY_SLUG[slug]),
+      });
     });
     (membershipResult.data ?? []).forEach((m: { user_id: string; coach_access: boolean; coach_minutes_granted: number; subscription_active: boolean }) => {
       coachData.set(m.user_id, { coach_access: m.coach_access, coach_minutes_granted: m.coach_minutes_granted, subscription_active: m.subscription_active ?? false });
@@ -343,7 +362,7 @@ export default async function AdminPage({
         {activeTab === "members" && (
           <MembersTab
             users={allUsers}
-            progressCounts={progressCounts}
+            moduleData={moduleData}
             membersList={membersList}
             coachData={coachData}
             teamSeatsMap={teamSeatsMap}

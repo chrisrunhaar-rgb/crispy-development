@@ -14,6 +14,7 @@ interface Member {
   status: 'active' | 'inactive' | 'pending';
   pathway?: 'free' | 'personal' | 'team' | 'peer';
   completedModules?: number;
+  moduleTitles?: string[];
   teamSeats?: string | null;
   tests?: number;
   timezone?: string | null;
@@ -733,7 +734,14 @@ export default function AdminMembersTable({
                       </span>
                     </td>
                     <td data-label="Modules" style={{ textAlign: 'center' }}>
-                      <span style={{ fontWeight: '500', color: (member.completedModules ?? 0) > 0 ? '#1F2937' : '#9CA3AF' }}>
+                      <span
+                        title={member.moduleTitles && member.moduleTitles.length > 0 ? member.moduleTitles.join('\n') : undefined}
+                        style={{
+                          fontWeight: '500',
+                          color: (member.completedModules ?? 0) > 0 ? '#1F2937' : '#9CA3AF',
+                          cursor: member.moduleTitles && member.moduleTitles.length > 0 ? 'help' : 'default',
+                        }}
+                      >
                         {member.completedModules ?? 0}
                       </span>
                     </td>
