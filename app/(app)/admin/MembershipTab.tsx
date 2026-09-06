@@ -204,7 +204,7 @@ export default function MembershipTab({
   const [invitePathway, setInvitePathway] = useState<"personal" | "team">("personal");
   const [inviteLanguage, setInviteLanguage] = useState<"en" | "id">("en");
   const [inviteCoachAccess, setInviteCoachAccess] = useState(true);
-  const [inviteCoachMinutes, setInviteCoachMinutes] = useState(120);
+  const [inviteCoachMinutes, setInviteCoachMinutes] = useState(0);
   const [generatedUrl, setGeneratedUrl] = useState<string | null>(null);
   const [inviteEmailSent, setInviteEmailSent] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -351,10 +351,10 @@ export default function MembershipTab({
                 <div style={{ display: "flex", alignItems: "center", gap: "0.375rem", marginLeft: "0.25rem" }}>
                   <input
                     type="number"
-                    min={1}
+                    min={0}
                     max={9999}
                     value={inviteCoachMinutes}
-                    onChange={e => setInviteCoachMinutes(Math.max(1, parseInt(e.target.value) || 120))}
+                    onChange={e => setInviteCoachMinutes(Math.max(0, parseInt(e.target.value) || 0))}
                     style={{ ...inputStyle, width: "80px", padding: "0.4rem 0.5rem" }}
                   />
                   <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "oklch(52% 0.008 260)" }}>min</span>

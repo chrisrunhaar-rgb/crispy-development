@@ -401,7 +401,7 @@ export async function generateMemberInvite(formData: FormData): Promise<{ error?
   const recipientName = (formData.get("recipientName") as string | null)?.trim() ?? "";
   const pathway = (formData.get("pathway") as string | null) === "team" ? "team" : "personal";
   const coachAccess = (formData.get("coachAccess") as string | null) !== "false";
-  const coachMinutes = Math.max(1, parseInt((formData.get("coachMinutes") as string | null) ?? "120", 10) || 120);
+  const coachMinutes = Math.max(0, parseInt((formData.get("coachMinutes") as string | null) ?? "0", 10) || 0);
   const explicitLanguage = (formData.get("language") as string | null)?.trim().toLowerCase();
   const language = explicitLanguage === "id" ? "id" : "en";
 

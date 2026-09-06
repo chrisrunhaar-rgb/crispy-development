@@ -194,7 +194,7 @@ function WaypointCell({
             lineHeight: 1,
           }}
         >
-          {saved ? '✓' : '+ Add minutes'}
+          {saved ? '✓' : '+ mins'}
         </button>
       )}
     </div>
