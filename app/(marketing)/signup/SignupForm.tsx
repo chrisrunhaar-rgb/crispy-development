@@ -155,10 +155,10 @@ export default function SignupForm({ defaultPathway = "personal", inviteToken = 
                   style={{ marginTop: "0.2rem", flexShrink: 0, accentColor: "oklch(30% 0.12 260)", width: "16px", height: "16px" }}
                 />
                 <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(48% 0.008 260)", lineHeight: 1.5 }}>
-                  I have read and agree to the{" "}
-                  <Link href="/terms" style={{ color: "oklch(30% 0.12 260)", fontWeight: 600, textDecoration: "none" }}>Terms of Service</Link>
-                  {" "}and{" "}
-                  <Link href="/privacy" style={{ color: "oklch(30% 0.12 260)", fontWeight: 600, textDecoration: "none" }}>Privacy Policy</Link>. *
+                  {s.tosAccepted}{" "}
+                  <Link href="/terms" style={{ color: "oklch(30% 0.12 260)", fontWeight: 600, textDecoration: "none" }}>{s.termsLink}</Link>
+                  {" "}{s.and}{" "}
+                  <Link href="/privacy" style={{ color: "oklch(30% 0.12 260)", fontWeight: 600, textDecoration: "none" }}>{s.privacyLink}</Link>. *
                 </span>
               </label>
 

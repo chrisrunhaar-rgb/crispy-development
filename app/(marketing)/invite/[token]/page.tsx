@@ -9,6 +9,32 @@ export const dynamic = "force-dynamic";
 
 type Lang = "en" | "id";
 
+const INVITE_ERRORS: Record<Lang, { invalid: string; used: string; expired: string }> = {
+  en: {
+    invalid: "This invite link is invalid or has been revoked.",
+    used: "This invite link has already been used.",
+    expired: "This invite link has expired. Ask your team leader to generate a new one.",
+  },
+  id: {
+    invalid: "Tautan undangan ini tidak valid atau telah dicabut.",
+    used: "Tautan undangan ini sudah pernah digunakan.",
+    expired: "Tautan undangan ini sudah kedaluwarsa. Minta pemimpin tim Anda membuat tautan baru.",
+  },
+};
+
+const ERROR_PAGE_COPY: Record<Lang, { eyebrow: string; heading: string; back: string }> = {
+  en: {
+    eyebrow: "Invite Link",
+    heading: "This link isn't valid.",
+    back: "← Back to home",
+  },
+  id: {
+    eyebrow: "Tautan Undangan",
+    heading: "Tautan ini tidak valid.",
+    back: "← Kembali ke beranda",
+  },
+};
+
 const COPY: Record<Lang, {
   heading: (leaderName: string | null, teamName: string) => string;
   subtext: (leaderName: string | null, teamName: string) => string;
@@ -53,13 +79,7 @@ export default async function InviteLandingPage({
     .maybeSingle();
 
   if (!invite) {
-    return <InviteError message="This invite link is invalid or has been revoked." />;
-  }
-  if (invite.used_at) {
-    return <InviteError message="This invite link has already been used." />;
-  }
-  if (new Date(invite.expires_at) < new Date()) {
-    return <InviteError message="This invite link has expired. Ask your team leader to generate a new one." />;
+    return <InviteError lang="en" message={INVITE_ERRORS.en.invalid} />;
   }
 
   // invite.team_id = leader's auth user ID — look up team by leader_user_id
@@ -71,6 +91,13 @@ export default async function InviteLandingPage({
 
   const teamName = team?.name ?? "your team";
   const lang: Lang = (team?.language as Lang) ?? "en";
+
+  if (invite.used_at) {
+    return <InviteError lang={lang} message={INVITE_ERRORS[lang].used} />;
+  }
+  if (new Date(invite.expires_at) < new Date()) {
+    return <InviteError lang={lang} message={INVITE_ERRORS[lang].expired} />;
+  }
 
   // Look up the leader's name from auth metadata
   const { data: { user: leaderUser } } = await admin.auth.admin.getUserById(invite.team_id);
@@ -88,7 +115,7 @@ export default async function InviteLandingPage({
   if (user) {
     const result = await acceptInvite(token, user.id);
     if (result.error) {
-      return <InviteError message={result.error} />;
+      return <InviteError lang={lang} message={result.error} />;
     }
     redirect("/dashboard?joined=1");
   }
@@ -193,7 +220,8 @@ export default async function InviteLandingPage({
   );
 }
 
-function InviteError({ message }: { message: string }) {
+function InviteError({ message, lang = "en" }: { message: string; lang?: Lang }) {
+  const copy = ERROR_PAGE_COPY[lang];
   return (
     <div style={{
       minHeight: "calc(100dvh - 120px)",
@@ -206,16 +234,16 @@ function InviteError({ message }: { message: string }) {
     }}>
       <div style={{ width: "100%", maxWidth: "480px" }}>
         <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.75rem", fontSize: "0.62rem" }}>
-          Invite Link
+          {copy.eyebrow}
         </p>
         <h1 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.5rem", color: "oklch(22% 0.005 260)", marginBottom: "0.875rem" }}>
-          This link isn&apos;t valid.
+          {copy.heading}
         </h1>
         <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.7, color: "oklch(48% 0.008 260)", marginBottom: "2rem" }}>
           {message}
         </p>
         <Link href="/" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.85rem", fontWeight: 600, color: "oklch(30% 0.12 260)", textDecoration: "none" }}>
-          ← Back to home
+          {copy.back}
         </Link>
       </div>
     </div>
