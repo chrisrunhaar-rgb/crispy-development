@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { updateMemberCoachAccess } from "./actions";
+import { addMemberCoachMinutes } from "./actions";
 
 const navy = "oklch(30% 0.12 260)";
 const orange = "oklch(65% 0.15 45)";
@@ -24,7 +24,7 @@ function CoachRow({ member }: { member: MemberCoachRow }) {
 
   function handleSave() {
     startTransition(async () => {
-      await updateMemberCoachAccess(member.id, access, minutes);
+      await addMemberCoachMinutes(member.id, member.coach_minutes_granted, minutes);
       setSaved(true);
       setTimeout(() => setSaved(false), 2000);
     });

@@ -31,15 +31,16 @@ export default async function GeminiCoachPage({
 
   const admin = createAdminClient();
 
+  // Access is minutes-only (coach_access boolean gate removed 2026-09-06 —
+  // see admin WaypointCell). No membership row, or 0 minutes granted, means
+  // 0 minutes remaining, which the check below sends to the exhausted state.
   const { data: membership } = await admin
     .from("memberships")
-    .select("coach_access, coach_minutes_granted")
+    .select("coach_minutes_granted")
     .eq("user_id", user.id)
-    .single();
+    .maybeSingle();
 
-  if (!membership?.coach_access) redirect("/dashboard");
-
-  const trialLimitSeconds = (membership.coach_minutes_granted ?? 120) * 60;
+  const grantedMinutes = membership?.coach_minutes_granted ?? 0;
 
   // Mark stale in_progress sessions (older than 3 hours) as abandoned
   await admin
@@ -60,8 +61,10 @@ export default async function GeminiCoachPage({
     (sum, s) => sum + ((s.duration_seconds as number | null) ?? 0),
     0
   );
+  const usedMinutes = Math.round(totalUsedSeconds / 60);
+  const remainingMinutes = Math.max(0, grantedMinutes - usedMinutes);
 
-  if (totalUsedSeconds >= trialLimitSeconds) redirect("/coach?trial=exhausted");
+  if (remainingMinutes <= 0) redirect("/coach?trial=exhausted");
 
   const { count } = await admin
     .from("wp_sessions")

@@ -373,17 +373,21 @@ export async function updateMemberSubscription(
   return {};
 }
 
-export async function updateMemberCoachAccess(
+export async function addMemberCoachMinutes(
   userId: string,
-  coachAccess: boolean,
-  minutes: number
+  currentGranted: number,
+  delta: number
 ): Promise<{ error?: string }> {
   await assertAdmin();
+  if (!Number.isFinite(delta) || delta <= 0) return { error: "Invalid minutes." };
   const adminClient = createAdminClient();
+  // Additive upsert: client passes the granted total it last saw, we add the
+  // delta on top. If no membership row exists yet, this inserts one with the
+  // delta as the starting total (access is minutes-only — see WaypointCell).
   const { error } = await adminClient
     .from("memberships")
     .upsert(
-      { user_id: userId, coach_access: coachAccess, coach_minutes_granted: minutes },
+      { user_id: userId, coach_minutes_granted: Math.max(0, currentGranted) + delta },
       { onConflict: "user_id" }
     );
   if (error) return { error: error.message };

@@ -6,7 +6,7 @@ import AdminBroadcastForm from './AdminBroadcastForm';
 import { ToastContainer } from '@/components/Toast';
 import { useToast } from '@/hooks/useToast';
 import { exportMembersAsCSV } from '@/lib/admin-export';
-import { adminBulkDeleteMembers, updateMemberCoachAccess, updateMemberSubscription } from './actions';
+import { adminBulkDeleteMembers, addMemberCoachMinutes, updateMemberSubscription } from './actions';
 
 const ASSESSMENT_KEYS = [
   'disc_completed_at',
@@ -42,15 +42,16 @@ interface Member {
   peer?: boolean;
   tests?: number;
   timezone?: string | null;
-  coach_access?: boolean;
   coach_minutes_granted?: number;
+  coachMinutesUsed?: number;
 }
 
 interface MembersTabProps {
   users: UserData[];
   moduleData: Map<string, { count: number; titles: string[] }>;
   membersList: Array<{ id: string; name: string; email: string }>;
-  coachData: Map<string, { coach_access: boolean; coach_minutes_granted: number; subscription_active: boolean }>;
+  coachData: Map<string, { coach_minutes_granted: number; subscription_active: boolean }>;
+  coachMinutesUsedMap: Map<string, number>;
   teamSeatsMap: Map<string, { filled: number; max: number }>;
 }
 
@@ -59,6 +60,7 @@ export default function MembersTab({
   moduleData,
   membersList,
   coachData,
+  coachMinutesUsedMap,
   teamSeatsMap,
 }: MembersTabProps) {
   const { toasts, dismissToast, success, error } = useToast();
@@ -86,8 +88,8 @@ export default function MembersTab({
         teamSeats,
         tests: testsDone,
         timezone: u.user_metadata?.timezone as string | null ?? null,
-        coach_access: cd?.coach_access ?? false,
-        coach_minutes_granted: cd?.coach_minutes_granted ?? 120,
+        coach_minutes_granted: cd?.coach_minutes_granted ?? 0,
+        coachMinutesUsed: coachMinutesUsedMap.get(u.id) ?? 0,
         subscription_active: cd?.subscription_active ?? false,
       };
     });
@@ -112,13 +114,13 @@ export default function MembersTab({
     success(`Exported ${members.length} member(s) to CSV`);
   };
 
-  const handleCoachAccessChange = async (memberId: string, access: boolean, minutes: number) => {
-    const result = await updateMemberCoachAccess(memberId, access, minutes);
+  const handleAddCoachMinutes = async (memberId: string, currentGranted: number, delta: number) => {
+    const result = await addMemberCoachMinutes(memberId, currentGranted, delta);
     if (result.error) {
       error(result.error);
     } else {
       setTableMembers(prev =>
-        prev.map(m => m.id === memberId ? { ...m, coach_access: access, coach_minutes_granted: minutes } : m)
+        prev.map(m => m.id === memberId ? { ...m, coach_minutes_granted: currentGranted + delta } : m)
       );
     }
   };
@@ -156,7 +158,7 @@ export default function MembersTab({
           members={tableMembers}
           onDeleteMultiple={handleDeleteMultiple}
           onExport={handleExport}
-          onCoachAccessChange={handleCoachAccessChange}
+          onAddCoachMinutes={handleAddCoachMinutes}
           onSubscriptionChange={handleSubscriptionChange}
           showSearch={true}
           showFilters={true}

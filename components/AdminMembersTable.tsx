@@ -18,8 +18,8 @@ interface Member {
   teamSeats?: string | null;
   tests?: number;
   timezone?: string | null;
-  coach_access?: boolean;
   coach_minutes_granted?: number;
+  coachMinutesUsed?: number;
   subscription_active?: boolean;
 }
 
@@ -32,7 +32,7 @@ interface AdminMembersTableProps {
   onDelete?: (memberId: string) => void;
   onDeleteMultiple?: (memberIds: string[]) => Promise<void>;
   onExport?: (members: Member[]) => void;
-  onCoachAccessChange?: (memberId: string, access: boolean, minutes: number) => Promise<void>;
+  onAddCoachMinutes?: (memberId: string, currentGranted: number, delta: number) => Promise<void>;
   onSubscriptionChange?: (memberId: string, subscriptionActive: boolean, pathway: string) => Promise<void>;
   showSearch?: boolean;
   showFilters?: boolean;
@@ -110,26 +110,27 @@ function formatDate(iso: string | null | undefined): string {
 
 function WaypointCell({
   memberId,
-  initialAccess,
-  initialMinutes,
-  onSave,
+  minutesGranted,
+  minutesUsed,
+  onAddMinutes,
 }: {
   memberId: string;
-  initialAccess: boolean;
-  initialMinutes: number;
-  onSave?: (memberId: string, access: boolean, minutes: number) => Promise<void>;
+  minutesGranted: number;
+  minutesUsed: number;
+  onAddMinutes?: (memberId: string, currentGranted: number, delta: number) => Promise<void>;
 }) {
-  const [access, setAccess] = useState(initialAccess);
-  const [minutes, setMinutes] = useState(initialMinutes);
+  const [delta, setDelta] = useState<number>(0);
   const [saved, setSaved] = useState(false);
   const [, startTransition] = useTransition();
 
-  const isDirty = access !== initialAccess || minutes !== initialMinutes;
+  const remainingMinutes = Math.max(0, minutesGranted - minutesUsed);
+  const isDirty = delta > 0;
 
-  function handleSave() {
-    if (!onSave) return;
+  function handleAdd() {
+    if (!onAddMinutes || delta <= 0) return;
     startTransition(async () => {
-      await onSave(memberId, access, minutes);
+      await onAddMinutes(memberId, minutesGranted, delta);
+      setDelta(0);
       setSaved(true);
       setTimeout(() => setSaved(false), 2000);
     });
@@ -139,56 +140,46 @@ function WaypointCell({
 
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', flexWrap: 'nowrap' }}>
-      {/* ON/OFF toggles */}
-      <div style={{ display: 'flex', gap: '2px', flexShrink: 0 }}>
-        {([true, false] as const).map(val => (
-          <button
-            key={String(val)}
-            type="button"
-            onClick={() => setAccess(val)}
-            style={{
-              fontFamily: 'var(--font-montserrat)',
-              fontSize: '0.6rem',
-              fontWeight: 700,
-              padding: '0.2rem 0.45rem',
-              border: `1px solid ${access === val ? (val ? 'oklch(52% 0.14 150)' : 'oklch(58% 0.008 260)') : 'oklch(82% 0.008 80)'}`,
-              background: access === val ? (val ? 'oklch(52% 0.14 150)' : 'oklch(55% 0.008 260)') : 'transparent',
-              color: access === val ? 'white' : 'oklch(55% 0.008 260)',
-              cursor: 'pointer',
-              lineHeight: 1,
-            }}
-          >
-            {val ? 'ON' : 'OFF'}
-          </button>
-        ))}
-      </div>
+      {/* Remaining minutes — always shown, including 0 */}
+      <span
+        style={{
+          fontFamily: 'var(--font-montserrat)',
+          fontWeight: 500,
+          fontSize: '0.8rem',
+          color: remainingMinutes > 0 ? '#10B981' : '#9CA3AF',
+          flexShrink: 0,
+          whiteSpace: 'nowrap',
+        }}
+        title={`${minutesUsed} min used of ${minutesGranted} min granted`}
+      >
+        {remainingMinutes} min left
+      </span>
 
-      {/* Minutes input — only when ON */}
-      {access && (
-        <input
-          type="number"
-          min={1}
-          max={9999}
-          value={minutes}
-          onChange={e => setMinutes(Math.max(1, parseInt(e.target.value) || 120))}
-          style={{
-            fontFamily: 'var(--font-montserrat)',
-            fontSize: '0.75rem',
-            width: '52px',
-            border: '1px solid oklch(82% 0.008 80)',
-            padding: '0.2rem 0.35rem',
-            background: 'white',
-            color: navy,
-          }}
-          title="Minutes granted"
-        />
-      )}
+      {/* Add minutes input */}
+      <input
+        type="number"
+        min={0}
+        max={9999}
+        value={delta === 0 ? '' : delta}
+        placeholder="0"
+        onChange={e => setDelta(Math.max(0, parseInt(e.target.value) || 0))}
+        style={{
+          fontFamily: 'var(--font-montserrat)',
+          fontSize: '0.75rem',
+          width: '48px',
+          border: '1px solid oklch(82% 0.008 80)',
+          padding: '0.2rem 0.35rem',
+          background: 'white',
+          color: navy,
+        }}
+        title="Minutes to add"
+      />
 
-      {/* Save button */}
-      {onSave && (
+      {/* Add button */}
+      {onAddMinutes && (
         <button
           type="button"
-          onClick={handleSave}
+          onClick={handleAdd}
           disabled={!isDirty && !saved}
           style={{
             fontFamily: 'var(--font-montserrat)',
@@ -203,7 +194,7 @@ function WaypointCell({
             lineHeight: 1,
           }}
         >
-          {saved ? '✓' : 'Save'}
+          {saved ? '✓' : '+ Add minutes'}
         </button>
       )}
     </div>
@@ -308,7 +299,7 @@ export default function AdminMembersTable({
   onDelete,
   onDeleteMultiple,
   onExport,
-  onCoachAccessChange,
+  onAddCoachMinutes,
   onSubscriptionChange,
   showSearch = true,
   showFilters = true,
@@ -763,9 +754,9 @@ export default function AdminMembersTable({
                     <td data-label="WayPoint" style={{ verticalAlign: 'middle' }}>
                       <WaypointCell
                         memberId={member.id}
-                        initialAccess={member.coach_access ?? false}
-                        initialMinutes={member.coach_minutes_granted ?? 120}
-                        onSave={onCoachAccessChange}
+                        minutesGranted={member.coach_minutes_granted ?? 0}
+                        minutesUsed={member.coachMinutesUsed ?? 0}
+                        onAddMinutes={onAddCoachMinutes}
                       />
                     </td>
                     <td style={{ width: '8%', textAlign: 'center' }}>

@@ -78,14 +78,18 @@ export default async function AdminPage({
   // (no current UI calls it; frozen at 4 rows since April 2026). Left the
   // table and action untouched, just stopped reading from it here.
   let moduleData = new Map<string, { count: number; titles: string[] }>();
-  type CoachEntry = { coach_access: boolean; coach_minutes_granted: number; subscription_active: boolean };
+  type CoachEntry = { coach_minutes_granted: number; subscription_active: boolean };
   let coachData = new Map<string, CoachEntry>();
+  // Used minutes per member for the WayPoint column — summed from completed
+  // wp_sessions, same Promise.all + Map-threading pattern as moduleData above.
+  let coachMinutesUsedMap = new Map<string, number>();
   let teamSeatsMap = new Map<string, { filled: number; max: number }>();
 
   if (activeTab === "members") {
-    const [membershipResult, teamsResult] = await Promise.all([
-      admin.from("memberships").select("user_id, coach_access, coach_minutes_granted, subscription_active"),
+    const [membershipResult, teamsResult, coachSessionsResult] = await Promise.all([
+      admin.from("memberships").select("user_id, coach_minutes_granted, subscription_active"),
       admin.from("teams").select("leader_user_id, max_seats, team_members(count)"),
+      admin.from("wp_sessions").select("user_id, duration_seconds").eq("status", "completed"),
     ]);
     allUsers.forEach(u => {
       const saved = u.user_metadata?.saved_resources;
@@ -97,8 +101,15 @@ export default async function AdminPage({
         titles: savedItems.map(slug => RESOURCE_TITLE_BY_SLUG[slug]),
       });
     });
-    (membershipResult.data ?? []).forEach((m: { user_id: string; coach_access: boolean; coach_minutes_granted: number; subscription_active: boolean }) => {
-      coachData.set(m.user_id, { coach_access: m.coach_access, coach_minutes_granted: m.coach_minutes_granted, subscription_active: m.subscription_active ?? false });
+    (membershipResult.data ?? []).forEach((m: { user_id: string; coach_minutes_granted: number; subscription_active: boolean }) => {
+      coachData.set(m.user_id, { coach_minutes_granted: m.coach_minutes_granted, subscription_active: m.subscription_active ?? false });
+    });
+    const coachSecondsUsedMap = new Map<string, number>();
+    (coachSessionsResult.data ?? []).forEach((s: { user_id: string; duration_seconds: number | null }) => {
+      coachSecondsUsedMap.set(s.user_id, (coachSecondsUsedMap.get(s.user_id) ?? 0) + (s.duration_seconds ?? 0));
+    });
+    coachSecondsUsedMap.forEach((seconds, userId) => {
+      coachMinutesUsedMap.set(userId, Math.round(seconds / 60));
     });
     (teamsResult.data ?? []).forEach((t: { leader_user_id: string; max_seats: number | null; team_members: { count: number }[] }) => {
       const filled = t.team_members?.[0]?.count ?? 0;
@@ -365,6 +376,7 @@ export default async function AdminPage({
             moduleData={moduleData}
             membersList={membersList}
             coachData={coachData}
+            coachMinutesUsedMap={coachMinutesUsedMap}
             teamSeatsMap={teamSeatsMap}
           />
         )}
