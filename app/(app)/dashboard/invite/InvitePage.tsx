@@ -16,10 +16,12 @@ export default function InvitePage({
   team,
   invites,
   siteUrl,
+  teamLanguage = "en",
 }: {
   team: { id: string; name: string };
   invites: Invite[];
   siteUrl: string;
+  teamLanguage?: "en" | "id";
 }) {
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [generateState, generateAction, generatePending] = useActionState(
@@ -113,6 +115,19 @@ export default function InvitePage({
                   required
                   style={{ flex: "2 1 200px" }}
                 />
+              </div>
+              <div className="form-field">
+                <label className="form-label" htmlFor="invite-language">Invitee&apos;s Language</label>
+                <select
+                  className="form-input"
+                  id="invite-language"
+                  name="language"
+                  defaultValue={teamLanguage}
+                  style={{ maxWidth: "220px" }}
+                >
+                  <option value="en">English</option>
+                  <option value="id">Indonesian</option>
+                </select>
               </div>
               <button
                 type="submit"

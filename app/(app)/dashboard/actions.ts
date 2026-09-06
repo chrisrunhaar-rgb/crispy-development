@@ -163,7 +163,7 @@ export async function sendEmailInvite(formData: FormData): Promise<{ error?: str
 
   const { data: team } = await admin
     .from("teams")
-    .select("id, name")
+    .select("id, name, language")
     .eq("leader_user_id", user.id)
     .maybeSingle();
   if (!team) return { error: "No team found." };
@@ -171,9 +171,16 @@ export async function sendEmailInvite(formData: FormData): Promise<{ error?: str
   const token = crypto.randomUUID();
   const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
 
+  // Explicit per-invite language selector (admin form) takes priority over the
+  // team's default language if/when it's present; otherwise fall back to team.language.
+  const explicitLanguage = (formData.get("language") as string | null)?.trim().toLowerCase();
+  const language = explicitLanguage === "en" || explicitLanguage === "id"
+    ? explicitLanguage
+    : (team.language === "id" ? "id" : "en");
+
   const { error: insertError } = await admin
     .from("team_invites")
-    .insert({ team_id: user.id, token, expires_at: expiresAt });
+    .insert({ team_id: user.id, token, expires_at: expiresAt, language });
   if (insertError) return { error: "Failed to create invite." };
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.crispyleaders.com";
@@ -184,8 +191,18 @@ export async function sendEmailInvite(formData: FormData): Promise<{ error?: str
   const resendKey = process.env.RESEND_API_KEY;
   if (!resendKey) return { error: "Email service not configured." };
 
-  const greeting = recipientName ? `Hi ${recipientName},` : "Hi there,";
-  const html = `<div style="font-family:Arial,sans-serif;max-width:520px;margin:0 auto;padding:40px 24px;background:#ffffff;"><div style="width:3px;height:36px;background:#E07540;margin-bottom:24px;"></div><p style="font-size:10px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#E07540;margin:0 0 12px 0;">Team Invitation</p><h1 style="font-size:24px;font-weight:800;color:#1B3A6B;line-height:1.15;margin:0 0 16px 0;">${leaderName} invites you to join ${teamName}.</h1><p style="font-size:15px;line-height:1.75;color:#555555;margin:0 0 8px 0;">${greeting}</p><p style="font-size:15px;line-height:1.75;color:#555555;margin:0 0 32px 0;">You have been invited to join a cross-cultural leadership team on Crispy Leaders. Click the button below to create your account and join the team.</p><a href="${inviteUrl}" style="display:inline-block;background:#1B3A6B;color:#ffffff;font-size:14px;font-weight:700;letter-spacing:0.04em;text-decoration:none;padding:14px 28px;margin-bottom:32px;">Accept Invitation &rarr;</a><p style="font-size:12px;line-height:1.6;color:#9b9b9b;margin:0 0 24px 0;">This invitation expires in 7 days. If you were not expecting this, you can safely ignore it.</p><p style="font-size:12px;color:#9b9b9b;margin:0 0 20px 0;">With you on the journey,<br/><strong style="color:#1B3A6B;">The Crispy Leaders Team</strong></p><div style="border-top:1px solid #e8e4df;padding-top:24px;margin-top:8px;"><img src="https://www.crispyleaders.com/logo-icon-dark-badge.png" alt="Crispy Leaders" width="48" height="48" style="display:block;margin-bottom:8px;" /><p style="font-size:12px;color:#9b9b9b;margin:0;">crispyleaders.com</p></div></div>`;
+  let subject: string;
+  let html: string;
+
+  if (language === "id") {
+    const greeting = recipientName ? `Hai ${recipientName},` : "Halo,";
+    subject = `${leaderName} mengundang Anda bergabung dengan ${teamName} di Crispy Leaders`;
+    html = `<div style="font-family:Arial,sans-serif;max-width:520px;margin:0 auto;padding:40px 24px;background:#ffffff;"><div style="width:3px;height:36px;background:#E07540;margin-bottom:24px;"></div><p style="font-size:10px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#E07540;margin:0 0 12px 0;">Undangan Tim</p><h1 style="font-size:24px;font-weight:800;color:#1B3A6B;line-height:1.15;margin:0 0 16px 0;">${leaderName} mengundang Anda bergabung dengan ${teamName}.</h1><p style="font-size:15px;line-height:1.75;color:#555555;margin:0 0 8px 0;">${greeting}</p><p style="font-size:15px;line-height:1.75;color:#555555;margin:0 0 32px 0;">Anda diundang untuk bergabung dengan tim kepemimpinan lintas budaya di Crispy Leaders. Klik tombol di bawah untuk membuat akun dan bergabung dengan tim.</p><a href="${inviteUrl}" style="display:inline-block;background:#1B3A6B;color:#ffffff;font-size:14px;font-weight:700;letter-spacing:0.04em;text-decoration:none;padding:14px 28px;margin-bottom:32px;">Terima Undangan &rarr;</a><p style="font-size:12px;line-height:1.6;color:#9b9b9b;margin:0 0 24px 0;">Undangan ini berlaku selama 7 hari. Jika Anda tidak menduga akan menerima email ini, abaikan saja.</p><p style="font-size:12px;color:#9b9b9b;margin:0 0 20px 0;">Bersama Anda di jalur ini,<br/><strong style="color:#1B3A6B;">Tim Crispy Leaders</strong></p><div style="border-top:1px solid #e8e4df;padding-top:24px;margin-top:8px;"><img src="https://www.crispyleaders.com/logo-icon-dark-badge.png" alt="Crispy Leaders" width="48" height="48" style="display:block;margin-bottom:8px;" /><p style="font-size:12px;color:#9b9b9b;margin:0;">crispyleaders.com</p></div></div>`;
+  } else {
+    const greeting = recipientName ? `Hi ${recipientName},` : "Hi there,";
+    subject = `${leaderName} invites you to join ${teamName} on Crispy Leaders`;
+    html = `<div style="font-family:Arial,sans-serif;max-width:520px;margin:0 auto;padding:40px 24px;background:#ffffff;"><div style="width:3px;height:36px;background:#E07540;margin-bottom:24px;"></div><p style="font-size:10px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#E07540;margin:0 0 12px 0;">Team Invitation</p><h1 style="font-size:24px;font-weight:800;color:#1B3A6B;line-height:1.15;margin:0 0 16px 0;">${leaderName} invites you to join ${teamName}.</h1><p style="font-size:15px;line-height:1.75;color:#555555;margin:0 0 8px 0;">${greeting}</p><p style="font-size:15px;line-height:1.75;color:#555555;margin:0 0 32px 0;">You have been invited to join a cross-cultural leadership team on Crispy Leaders. Click the button below to create your account and join the team.</p><a href="${inviteUrl}" style="display:inline-block;background:#1B3A6B;color:#ffffff;font-size:14px;font-weight:700;letter-spacing:0.04em;text-decoration:none;padding:14px 28px;margin-bottom:32px;">Accept Invitation &rarr;</a><p style="font-size:12px;line-height:1.6;color:#9b9b9b;margin:0 0 24px 0;">This invitation expires in 7 days. If you were not expecting this, you can safely ignore it.</p><p style="font-size:12px;color:#9b9b9b;margin:0 0 20px 0;">With you on the journey,<br/><strong style="color:#1B3A6B;">The Crispy Leaders Team</strong></p><div style="border-top:1px solid #e8e4df;padding-top:24px;margin-top:8px;"><img src="https://www.crispyleaders.com/logo-icon-dark-badge.png" alt="Crispy Leaders" width="48" height="48" style="display:block;margin-bottom:8px;" /><p style="font-size:12px;color:#9b9b9b;margin:0;">crispyleaders.com</p></div></div>`;
+  }
 
   const res = await fetch("https://api.resend.com/emails", {
     method: "POST",
@@ -193,7 +210,7 @@ export async function sendEmailInvite(formData: FormData): Promise<{ error?: str
     body: JSON.stringify({
       from: "Crispy Leaders <noreply@crispyleaders.com>",
       to: recipientEmail,
-      subject: `${leaderName} invites you to join ${teamName} on Crispy Leaders`,
+      subject,
       html,
     }),
   });
@@ -232,7 +249,7 @@ export async function acceptInvite(token: string, userId: string): Promise<{ err
   // Look up invite
   const { data: invite } = await admin
     .from("team_invites")
-    .select("id, team_id, expires_at, used_at")
+    .select("id, team_id, expires_at, used_at, language")
     .eq("token", token)
     .maybeSingle();
 
@@ -243,7 +260,7 @@ export async function acceptInvite(token: string, userId: string): Promise<{ err
   // invite.team_id = leader's auth user ID — look up the actual teams row
   const { data: team } = await admin
     .from("teams")
-    .select("id, max_seats")
+    .select("id, max_seats, language")
     .eq("leader_user_id", invite.team_id)
     .maybeSingle();
 
@@ -270,11 +287,22 @@ export async function acceptInvite(token: string, userId: string): Promise<{ err
     .update({ used_at: new Date().toISOString(), used_by: userId })
     .eq("id", invite.id);
 
+  // Seed the new member's language from the invite (if the leader picked one at send time),
+  // falling back to the team's own default language, then "en".
+  const effectiveLanguage = invite.language === "en" || invite.language === "id"
+    ? invite.language
+    : (team.language === "id" ? "id" : "en");
+
   // Grant member access (merge — updateUserById REPLACES user_metadata, doesn't merge)
   const { data: existingUser } = await admin.auth.admin.getUserById(userId);
   await admin.auth.admin.updateUserById(userId, {
-    user_metadata: { ...existingUser?.user?.user_metadata, is_member: true },
+    user_metadata: { ...existingUser?.user?.user_metadata, is_member: true, language_preference: effectiveLanguage },
   });
+
+  // Keep the marketing-side language cookie in sync — LanguageContext reads crispy-lang,
+  // while server pages read user_metadata. Both must agree (see setPersonalLanguage).
+  const cookieStore = await cookies();
+  cookieStore.set("crispy-lang", effectiveLanguage, { path: "/", maxAge: 31536000, sameSite: "lax" });
 
   return { error: null };
 }

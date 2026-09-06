@@ -24,7 +24,7 @@ export default async function DashboardInvitePage({
   // Use admin client to bypass RLS — same pattern as dashboard
   const { data: team } = await admin
     .from("teams")
-    .select("id, name")
+    .select("id, name, language")
     .eq("leader_user_id", user.id)
     .maybeSingle();
 
@@ -45,6 +45,7 @@ export default async function DashboardInvitePage({
       team={team}
       invites={invites ?? []}
       siteUrl={siteUrl}
+      teamLanguage={team.language === "id" ? "id" : "en"}
     />
   );
 }

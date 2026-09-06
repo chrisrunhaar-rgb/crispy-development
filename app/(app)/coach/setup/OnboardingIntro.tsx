@@ -3,13 +3,16 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useT, type CoachLang } from "../i18n";
 
 type Props = {
   userId: string;
+  lang: CoachLang;
   onComplete: () => void;
 };
 
-export default function OnboardingIntro({ userId, onComplete }: Props) {
+export default function OnboardingIntro({ userId, lang, onComplete }: Props) {
+  const t = useT(lang);
   const [agreed, setAgreed] = useState(false);
   const [saving, setSaving] = useState(false);
 
@@ -56,7 +59,7 @@ export default function OnboardingIntro({ userId, onComplete }: Props) {
             color: "white",
             lineHeight: 1.15,
           }}>
-            Welcome to WayPoint.
+            {t.onboardingWelcome}
           </h1>
         </div>
       </div>
@@ -67,9 +70,9 @@ export default function OnboardingIntro({ userId, onComplete }: Props) {
 
           {/* Section 1 — What is WayPoint? */}
           <section>
-            <SectionLabel>What is WayPoint?</SectionLabel>
+            <SectionLabel>{t.onboardingWhatIsLabel}</SectionLabel>
             <p style={bodyText}>
-              WayPoint is a private coaching space — available whenever you need it. Your coach is an AI companion trained in professional coaching methods for people navigating cross-cultural life and work. It&rsquo;s not a chatbot. It listens, asks good questions, and helps you find your own clarity.
+              {t.onboardingWhatIsBody}
             </p>
           </section>
 
@@ -85,15 +88,15 @@ export default function OnboardingIntro({ userId, onComplete }: Props) {
               style={{ width: "64px", height: "64px" }}
             />
             <div style={{ maxWidth: "400px" }}>
-              <SectionLabel>The mark</SectionLabel>
+              <SectionLabel>{t.onboardingMarkLabel}</SectionLabel>
               <p style={{ ...bodyText, marginBottom: "0.5rem" }}>
-                The compass rose: orientation. Finding your footing in unfamiliar terrain.
+                {t.onboardingMarkCompass}
               </p>
               <p style={{ ...bodyText, marginBottom: "0.75rem" }}>
-                The location pin: destination. Knowing where you&rsquo;re headed.
+                {t.onboardingMarkPin}
               </p>
               <p style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 600, fontSize: "1.1rem", color: "oklch(30% 0.12 260)", margin: 0 }}>
-                WayPoint helps you find both.
+                {t.onboardingMarkTagline}
               </p>
             </div>
           </section>
@@ -102,9 +105,9 @@ export default function OnboardingIntro({ userId, onComplete }: Props) {
 
           {/* Section 2 — What happens in a session? */}
           <section>
-            <SectionLabel>What happens in a session?</SectionLabel>
+            <SectionLabel>{t.onboardingSessionLabel}</SectionLabel>
             <p style={bodyText}>
-              Sessions are voice-based — you speak, your coach responds. As you talk, notes build automatically: your focus, insights, values, and action steps. After each session, your notes are saved and your coach remembers them next time.
+              {t.onboardingSessionBody}
             </p>
           </section>
 
@@ -112,9 +115,9 @@ export default function OnboardingIntro({ userId, onComplete }: Props) {
 
           {/* Section 3 — What WayPoint is not */}
           <section>
-            <SectionLabel>What WayPoint is not</SectionLabel>
+            <SectionLabel>{t.onboardingNotLabel}</SectionLabel>
             <p style={bodyText}>
-              WayPoint is not therapy, counselling, or a substitute for a pastor, friend, or mental health professional. If you are in crisis, please reach out to a real person you trust.
+              {t.onboardingNotBody}
             </p>
           </section>
 
@@ -122,9 +125,9 @@ export default function OnboardingIntro({ userId, onComplete }: Props) {
 
           {/* Section 4 — Your privacy */}
           <section>
-            <SectionLabel>Your privacy</SectionLabel>
+            <SectionLabel>{t.onboardingPrivacyLabel}</SectionLabel>
             <p style={bodyText}>
-              Your session transcripts and notes are private to you. They are never shared with your organisation or anyone else. You are always in control.
+              {t.onboardingPrivacyBody}
             </p>
           </section>
 
@@ -159,7 +162,7 @@ export default function OnboardingIntro({ userId, onComplete }: Props) {
                 color: "oklch(30% 0.008 260)",
                 lineHeight: 1.7,
               }}>
-                I understand that WayPoint is a coaching tool, not a mental health service, and I agree to the{" "}
+                {t.onboardingConsentPart1}{" "}
                 <Link
                   href="/coach/terms"
                   target="_blank"
@@ -170,9 +173,9 @@ export default function OnboardingIntro({ userId, onComplete }: Props) {
                     textUnderlineOffset: "2px",
                   }}
                 >
-                  terms of use
+                  {t.onboardingTermsOfUseLabel}
                 </Link>
-                {" "}and{" "}
+                {" "}{t.onboardingConsentPart2}{" "}
                 <Link
                   href="/coach/privacy"
                   target="_blank"
@@ -183,9 +186,9 @@ export default function OnboardingIntro({ userId, onComplete }: Props) {
                     textUnderlineOffset: "2px",
                   }}
                 >
-                  confidentiality policy
+                  {t.onboardingConfidentialityLabel}
                 </Link>
-                . I agree that my voice will be processed by Google&rsquo;s AI to enable the coaching experience.
+                {t.onboardingConsentPart3}
               </span>
             </label>
           </div>
@@ -210,7 +213,7 @@ export default function OnboardingIntro({ userId, onComplete }: Props) {
               transition: "background 0.2s",
             }}
           >
-            {saving ? "Saving…" : "Begin my first session →"}
+            {saving ? t.onboardingSaving : t.onboardingBeginBtn}
           </button>
 
         </div>

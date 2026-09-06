@@ -46,9 +46,11 @@ export async function approveApplication(formData: FormData) {
     await adminClient.from("teams").insert({ leader_user_id: userId, name: teamName, language: "en" });
   }
 
-  // Update user metadata to grant team leader access
+  // Update user metadata to grant team leader access (merge — updateUserById REPLACES
+  // user_metadata, doesn't merge — always fetch existing metadata first)
+  const { data: existingApprovedUser } = await adminClient.auth.admin.getUserById(userId);
   await adminClient.auth.admin.updateUserById(userId, {
-    user_metadata: { pathway: "team" },
+    user_metadata: { ...existingApprovedUser?.user?.user_metadata, pathway: "team", is_leader: true },
   });
 
   // Send approval notification email
@@ -343,8 +345,15 @@ export async function updateMemberSubscription(
     );
   if (membershipError) return { error: membershipError.message };
 
+  // Merge — updateUserById REPLACES user_metadata, doesn't merge — always fetch existing
+  // metadata first. Reuse this fetch below instead of calling getUserById a second time.
+  const { data: existingSubUser } = await adminClient.auth.admin.getUserById(userId);
   await adminClient.auth.admin.updateUserById(userId, {
-    user_metadata: { pathway },
+    user_metadata: {
+      ...existingSubUser?.user?.user_metadata,
+      pathway,
+      ...(pathway === "team" ? { is_leader: true } : {}),
+    },
   });
 
   if (pathway === "team") {
@@ -354,8 +363,7 @@ export async function updateMemberSubscription(
       .eq("leader_user_id", userId)
       .maybeSingle();
     if (!existingTeam) {
-      const { data: u } = await adminClient.auth.admin.getUserById(userId);
-      const firstName = u?.user?.user_metadata?.first_name as string | undefined;
+      const firstName = existingSubUser?.user?.user_metadata?.first_name as string | undefined;
       const name = firstName ? `${firstName}'s Team` : "My Team";
       await adminClient.from("teams").insert({ leader_user_id: userId, name, language: "en" });
     }
