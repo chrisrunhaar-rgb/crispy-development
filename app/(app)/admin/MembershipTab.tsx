@@ -55,6 +55,7 @@ function ApplicationRow({ app, siteUrl }: { app: Application; siteUrl: string })
   const [, startTransition] = useTransition();
   const [copied, setCopied] = useState(false);
   const [pathway, setPathway] = useState<"personal" | "team">("personal");
+  const [language, setLanguage] = useState<"en" | "id">("en");
 
   function handleApprove(formData: FormData) {
     startTransition(async () => { await approveMembershipApplication(formData); });
@@ -69,6 +70,7 @@ function ApplicationRow({ app, siteUrl }: { app: Application; siteUrl: string })
     fd.append("email", app.email);
     fd.append("recipientName", app.name.split(" ")[0]);
     fd.append("pathway", pathway);
+    fd.append("language", language);
     const result = await generateMemberInvite(fd);
     if (result.url) {
       await navigator.clipboard.writeText(result.url);
@@ -164,6 +166,14 @@ function ApplicationRow({ app, siteUrl }: { app: Application; siteUrl: string })
                   <option value="personal">Personal access</option>
                   <option value="team">Team Leader access</option>
                 </select>
+                <select
+                  value={language}
+                  onChange={e => setLanguage(e.target.value as "en" | "id")}
+                  style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", border: "1px solid oklch(82% 0.008 80)", padding: "0.4rem 0.625rem", background: "white", color: navy }}
+                >
+                  <option value="en">English</option>
+                  <option value="id">Indonesian</option>
+                </select>
                 <button
                   type="button"
                   onClick={handleGenerateAndCopy}
@@ -192,6 +202,7 @@ export default function MembershipTab({
   const [inviteName, setInviteName] = useState("");
   const [inviteEmail, setInviteEmail] = useState("");
   const [invitePathway, setInvitePathway] = useState<"personal" | "team">("personal");
+  const [inviteLanguage, setInviteLanguage] = useState<"en" | "id">("en");
   const [inviteCoachAccess, setInviteCoachAccess] = useState(true);
   const [inviteCoachMinutes, setInviteCoachMinutes] = useState(120);
   const [generatedUrl, setGeneratedUrl] = useState<string | null>(null);
@@ -215,6 +226,7 @@ export default function MembershipTab({
     fd.append("recipientName", inviteName);
     fd.append("email", inviteEmail);
     fd.append("pathway", invitePathway);
+    fd.append("language", inviteLanguage);
     fd.append("coachAccess", String(inviteCoachAccess));
     fd.append("coachMinutes", String(inviteCoachMinutes));
     const result = await generateMemberInvite(fd);
@@ -301,6 +313,17 @@ export default function MembershipTab({
                 </button>
               ))}
             </div>
+          </div>
+          <div style={{ marginBottom: "1.25rem" }}>
+            <label style={labelStyle}>Invitee&apos;s language</label>
+            <select
+              value={inviteLanguage}
+              onChange={e => setInviteLanguage(e.target.value as "en" | "id")}
+              style={{ ...inputStyle, maxWidth: "220px" }}
+            >
+              <option value="en">English</option>
+              <option value="id">Indonesian</option>
+            </select>
           </div>
           <div style={{ marginBottom: "1.25rem" }}>
             <label style={labelStyle}>WayPoint coaching access</label>

@@ -2,6 +2,7 @@
 
 import { useActionState, useState } from "react";
 import Link from "next/link";
+import { Eye, EyeOff } from "lucide-react";
 import { signUp } from "@/app/auth/actions";
 import { useLanguage } from "@/lib/LanguageContext";
 import { trackPathwayStarted } from "@/lib/ga-events";
@@ -11,6 +12,7 @@ const initialState = { error: "" };
 
 export default function SignupForm({ defaultPathway = "personal", inviteToken = "", memberInviteToken = "" }: { defaultPathway?: Pathway; inviteToken?: string; memberInviteToken?: string }) {
   const [pathway, setPathway] = useState<Pathway>(defaultPathway);
+  const [showPassword, setShowPassword] = useState(false);
   const { t } = useLanguage();
   const s = t.signup;
   const [state, formAction, pending] = useActionState(
@@ -132,7 +134,7 @@ export default function SignupForm({ defaultPathway = "personal", inviteToken = 
                 </div>
                 <div className="form-field">
                   <label className="form-label" htmlFor="lastName">{s.lastName}</label>
-                  <input className="form-input" type="text" id="lastName" name="lastName" autoComplete="family-name" required />
+                  <input className="form-input" type="text" id="lastName" name="lastName" autoComplete="family-name" />
                 </div>
               </div>
 
@@ -143,7 +145,39 @@ export default function SignupForm({ defaultPathway = "personal", inviteToken = 
 
               <div className="form-field">
                 <label className="form-label" htmlFor="password">{s.password}</label>
-                <input className="form-input" type="password" id="password" name="password" placeholder={s.passwordPlaceholder} autoComplete="new-password" minLength={8} required />
+                <div style={{ position: "relative" }}>
+                  <input
+                    className="form-input"
+                    type={showPassword ? "text" : "password"}
+                    id="password"
+                    name="password"
+                    placeholder={s.passwordPlaceholder}
+                    autoComplete="new-password"
+                    minLength={8}
+                    required
+                    style={{ paddingRight: "2.75rem" }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(v => !v)}
+                    aria-label={showPassword ? "Hide password" : "Show password"}
+                    style={{
+                      position: "absolute",
+                      top: "50%",
+                      right: "0.75rem",
+                      transform: "translateY(-50%)",
+                      background: "none",
+                      border: "none",
+                      padding: "0.25rem",
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      color: "oklch(52% 0.008 260)",
+                    }}
+                  >
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </div>
               </div>
 
               {/* ToS acceptance — required, affirmative consent */}

@@ -340,7 +340,7 @@ export async function acceptMemberInvite(token: string, userId: string): Promise
 
   const { data: invite } = await admin
     .from("member_invites")
-    .select("id, expires_at, used_at, pathway, coach_access, coach_minutes, email")
+    .select("id, expires_at, used_at, pathway, coach_access, coach_minutes, email, language")
     .eq("token", token)
     .maybeSingle();
 
@@ -348,10 +348,18 @@ export async function acceptMemberInvite(token: string, userId: string): Promise
   if (invite.used_at) return { error: "This invite link has already been used." };
   if (new Date(invite.expires_at) < new Date()) return { error: "This invite link has expired." };
 
+  // Seed the new member's language from the invite (set by the admin at send time), falling back to "en".
+  const effectiveLanguage = invite.language === "id" ? "id" : "en";
+
   const { data: existingUser } = await admin.auth.admin.getUserById(userId);
   await admin.auth.admin.updateUserById(userId, {
-    user_metadata: { ...existingUser?.user?.user_metadata, is_member: true, pathway: invite.pathway ?? "personal" },
+    user_metadata: { ...existingUser?.user?.user_metadata, is_member: true, pathway: invite.pathway ?? "personal", language_preference: effectiveLanguage },
   });
+
+  // Keep the marketing-side language cookie in sync — LanguageContext reads crispy-lang,
+  // while server pages read user_metadata. Both must agree (see setPersonalLanguage/acceptInvite).
+  const cookieStore = await cookies();
+  cookieStore.set("crispy-lang", effectiveLanguage, { path: "/", maxAge: 31536000, sameSite: "lax" });
 
   await admin
     .from("member_invites")
