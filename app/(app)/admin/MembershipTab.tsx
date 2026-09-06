@@ -203,7 +203,6 @@ export default function MembershipTab({
   const [inviteEmail, setInviteEmail] = useState("");
   const [invitePathway, setInvitePathway] = useState<"personal" | "team">("personal");
   const [inviteLanguage, setInviteLanguage] = useState<"en" | "id">("en");
-  const [inviteCoachAccess, setInviteCoachAccess] = useState(true);
   const [inviteCoachMinutes, setInviteCoachMinutes] = useState(0);
   const [generatedUrl, setGeneratedUrl] = useState<string | null>(null);
   const [inviteEmailSent, setInviteEmailSent] = useState(false);
@@ -227,7 +226,6 @@ export default function MembershipTab({
     fd.append("email", inviteEmail);
     fd.append("pathway", invitePathway);
     fd.append("language", inviteLanguage);
-    fd.append("coachAccess", String(inviteCoachAccess));
     fd.append("coachMinutes", String(inviteCoachMinutes));
     const result = await generateMemberInvite(fd);
     setGenerating(false);
@@ -326,40 +324,17 @@ export default function MembershipTab({
             </select>
           </div>
           <div style={{ marginBottom: "1.25rem" }}>
-            <label style={labelStyle}>WayPoint coaching access</label>
-            <div style={{ display: "flex", gap: "0.5rem", alignItems: "center", flexWrap: "wrap" }}>
-              {([true, false] as const).map(val => (
-                <button
-                  key={String(val)}
-                  type="button"
-                  onClick={() => setInviteCoachAccess(val)}
-                  style={{
-                    fontFamily: "var(--font-montserrat)",
-                    fontSize: "0.75rem",
-                    fontWeight: 700,
-                    padding: "0.4rem 0.875rem",
-                    border: `1px solid ${inviteCoachAccess === val ? navy : "oklch(82% 0.008 80)"}`,
-                    background: inviteCoachAccess === val ? navy : "transparent",
-                    color: inviteCoachAccess === val ? "white" : "oklch(52% 0.008 260)",
-                    cursor: "pointer",
-                  }}
-                >
-                  {val ? "Grant access" : "No access"}
-                </button>
-              ))}
-              {inviteCoachAccess && (
-                <div style={{ display: "flex", alignItems: "center", gap: "0.375rem", marginLeft: "0.25rem" }}>
-                  <input
-                    type="number"
-                    min={0}
-                    max={9999}
-                    value={inviteCoachMinutes}
-                    onChange={e => setInviteCoachMinutes(Math.max(0, parseInt(e.target.value) || 0))}
-                    style={{ ...inputStyle, width: "80px", padding: "0.4rem 0.5rem" }}
-                  />
-                  <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "oklch(52% 0.008 260)" }}>min</span>
-                </div>
-              )}
+            <label style={labelStyle}>WayPoint coaching minutes</label>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.375rem" }}>
+              <input
+                type="number"
+                min={0}
+                max={9999}
+                value={inviteCoachMinutes}
+                onChange={e => setInviteCoachMinutes(Math.max(0, parseInt(e.target.value) || 0))}
+                style={{ ...inputStyle, width: "80px", padding: "0.4rem 0.5rem" }}
+              />
+              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "oklch(52% 0.008 260)" }}>min</span>
             </div>
           </div>
           <button

@@ -400,7 +400,9 @@ export async function generateMemberInvite(formData: FormData): Promise<{ error?
   const email = (formData.get("email") as string | null)?.trim() ?? "";
   const recipientName = (formData.get("recipientName") as string | null)?.trim() ?? "";
   const pathway = (formData.get("pathway") as string | null) === "team" ? "team" : "personal";
-  const coachAccess = (formData.get("coachAccess") as string | null) !== "false";
+  // Access is unconditional for every invite now — WayPoint coach_minutes_granted (default 0)
+  // is what actually gates usage, not this boolean. See theo_memory.md 2026-09-07.
+  const coachAccess = true;
   const coachMinutes = Math.max(0, parseInt((formData.get("coachMinutes") as string | null) ?? "0", 10) || 0);
   const explicitLanguage = (formData.get("language") as string | null)?.trim().toLowerCase();
   const language = explicitLanguage === "id" ? "id" : "en";
