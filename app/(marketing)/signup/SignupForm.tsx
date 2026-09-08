@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
 import { signUp } from "@/app/auth/actions";
@@ -10,11 +10,21 @@ import { trackPathwayStarted } from "@/lib/ga-events";
 type Pathway = "personal" | "team";
 const initialState = { error: "" };
 
-export default function SignupForm({ defaultPathway = "personal", inviteToken = "", memberInviteToken = "" }: { defaultPathway?: Pathway; inviteToken?: string; memberInviteToken?: string }) {
+export default function SignupForm({ defaultPathway = "personal", inviteToken = "", memberInviteToken = "", initialLanguage }: { defaultPathway?: Pathway; inviteToken?: string; memberInviteToken?: string; initialLanguage?: "en" | "id" }) {
   const [pathway, setPathway] = useState<Pathway>(defaultPathway);
   const [showPassword, setShowPassword] = useState(false);
-  const { t } = useLanguage();
+  const { t, lang, setLang } = useLanguage();
   const s = t.signup;
+
+  // Force the UI into the invite's own language the instant it's known — an invite
+  // sent in Indonesian must land on an Indonesian signup screen, not whatever the
+  // visitor's browser/cookie happened to have.
+  useEffect(() => {
+    if (initialLanguage && initialLanguage !== lang) setLang(initialLanguage);
+    // Only run when the resolved initialLanguage changes — not on every `lang` change,
+    // otherwise this would fight the user's own manual language toggle.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialLanguage]);
   const [state, formAction, pending] = useActionState(
     async (_prev: typeof initialState, formData: FormData) => {
       const result = await signUp(formData);
@@ -76,43 +86,49 @@ export default function SignupForm({ defaultPathway = "personal", inviteToken = 
               </p>
             </div>
 
-            {/* Pathway selection */}
-            <div style={{ marginBottom: "2rem" }}>
-              <p className="form-label" style={{ marginBottom: "0.75rem" }}>{s.choosePathway}</p>
-              <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-                {(["personal", "team"] as const).map((p) => (
-                  <label
-                    key={p}
-                    className={`pathway-option${pathway === p ? " selected" : ""}`}
-                    style={{ cursor: "pointer" }}
-                    onClick={() => { setPathway(p); trackPathwayStarted(p); }}
-                  >
-                    <input
-                      type="radio"
-                      name="pathway-visual"
-                      value={p}
-                      checked={pathway === p}
-                      onChange={() => setPathway(p)}
-                      style={{ marginTop: "0.125rem", accentColor: "oklch(30% 0.12 260)", flexShrink: 0 }}
-                    />
-                    <div>
-                      <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.9375rem", color: "oklch(22% 0.005 260)", marginBottom: "0.25rem" }}>
-                        {p === "personal" ? s.personalTitle : s.teamTitle}
-                      </p>
-                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(52% 0.008 260)", lineHeight: 1.5 }}>
-                        {p === "personal" ? s.personalDesc : s.teamDesc}
-                      </p>
-                    </div>
-                  </label>
-                ))}
+            {/* Pathway selection — only for the Influential Leadership Challenge's own
+                team-invite flow. A general admin invite to the personal dashboard already
+                carries its own fixed pathway (set when the invite was created) and has no
+                business asking the invitee to choose personal vs. team. */}
+            {inviteToken && (
+              <div style={{ marginBottom: "2rem" }}>
+                <p className="form-label" style={{ marginBottom: "0.75rem" }}>{s.choosePathway}</p>
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+                  {(["personal", "team"] as const).map((p) => (
+                    <label
+                      key={p}
+                      className={`pathway-option${pathway === p ? " selected" : ""}`}
+                      style={{ cursor: "pointer" }}
+                      onClick={() => { setPathway(p); trackPathwayStarted(p); }}
+                    >
+                      <input
+                        type="radio"
+                        name="pathway-visual"
+                        value={p}
+                        checked={pathway === p}
+                        onChange={() => setPathway(p)}
+                        style={{ marginTop: "0.125rem", accentColor: "oklch(30% 0.12 260)", flexShrink: 0 }}
+                      />
+                      <div>
+                        <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.9375rem", color: "oklch(22% 0.005 260)", marginBottom: "0.25rem" }}>
+                          {p === "personal" ? s.personalTitle : s.teamTitle}
+                        </p>
+                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(52% 0.008 260)", lineHeight: 1.5 }}>
+                          {p === "personal" ? s.personalDesc : s.teamDesc}
+                        </p>
+                      </div>
+                    </label>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Form */}
             <form action={formAction} style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
               <input type="hidden" name="pathway" value={pathway} />
               <input type="hidden" name="inviteToken" value={inviteToken} />
               <input type="hidden" name="memberInviteToken" value={memberInviteToken} />
+              <input type="hidden" name="language" value={lang} />
 
               {state.error && (
                 <div style={{

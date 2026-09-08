@@ -59,14 +59,25 @@ export async function approveApplication(formData: FormData) {
   if (userEmail && resendKey) {
     const firstName = app?.first_name ?? "there";
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.crispyleaders.com";
-    const html = `<div style="font-family:Arial,sans-serif;max-width:520px;margin:0 auto;padding:40px 24px;background:#ffffff;"><div style="width:3px;height:36px;background:#E07540;margin-bottom:24px;"></div><p style="font-size:10px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#E07540;margin:0 0 12px 0;">Application Approved</p><h1 style="font-size:24px;font-weight:800;color:#1B3A6B;line-height:1.15;margin:0 0 16px 0;">Welcome to Crispy Leaders, ${firstName}.</h1><p style="font-size:15px;line-height:1.75;color:#555555;margin:0 0 8px 0;">Hi ${firstName},</p><p style="font-size:15px;line-height:1.75;color:#555555;margin:0 0 32px 0;">Your application to join Crispy Leaders as a team leader has been approved. Log in to your dashboard to get started — your team is ready and waiting.</p><a href="${siteUrl}/dashboard" style="display:inline-block;background:#1B3A6B;color:#ffffff;font-size:14px;font-weight:700;letter-spacing:0.04em;text-decoration:none;padding:14px 28px;margin-bottom:32px;">Go to Your Dashboard &rarr;</a><p style="font-size:12px;color:#9b9b9b;margin:0 0 20px 0;">With you on the journey,<br/><strong style="color:#1B3A6B;">The Crispy Leaders Team</strong></p><div style="border-top:1px solid #e8e4df;padding-top:24px;margin-top:8px;"><img src="https://www.crispyleaders.com/logo-icon-dark-badge.png" alt="Crispy Leaders" width="48" height="48" style="display:block;margin-bottom:8px;" /><p style="font-size:12px;color:#9b9b9b;margin:0;">crispyleaders.com</p></div></div>`;
+    const language = existingApprovedUser?.user?.user_metadata?.language_preference === "id" ? "id" : "en";
+
+    let subject: string;
+    let html: string;
+    if (language === "id") {
+      subject = "Anda disetujui — selamat datang di Crispy Leaders";
+      html = `<div style="font-family:Arial,sans-serif;max-width:520px;margin:0 auto;padding:40px 24px;background:#ffffff;"><div style="width:3px;height:36px;background:#E07540;margin-bottom:24px;"></div><p style="font-size:10px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#E07540;margin:0 0 12px 0;">Pendaftaran Disetujui</p><h1 style="font-size:24px;font-weight:800;color:#1B3A6B;line-height:1.15;margin:0 0 16px 0;">Selamat datang di Crispy Leaders, ${firstName}.</h1><p style="font-size:15px;line-height:1.75;color:#555555;margin:0 0 8px 0;">Hai ${firstName},</p><p style="font-size:15px;line-height:1.75;color:#555555;margin:0 0 32px 0;">Pendaftaran Anda untuk bergabung dengan Crispy Leaders sebagai pemimpin tim telah disetujui. Masuk ke dasbor Anda untuk memulai — tim Anda sudah siap menunggu.</p><a href="${siteUrl}/dashboard" style="display:inline-block;background:#1B3A6B;color:#ffffff;font-size:14px;font-weight:700;letter-spacing:0.04em;text-decoration:none;padding:14px 28px;margin-bottom:32px;">Buka Dasbor Anda &rarr;</a><p style="font-size:12px;color:#9b9b9b;margin:0 0 20px 0;">Bersama Anda dalam perjalanan ini,<br/><strong style="color:#1B3A6B;">Tim Crispy Leaders</strong></p><div style="border-top:1px solid #e8e4df;padding-top:24px;margin-top:8px;"><img src="https://www.crispyleaders.com/logo-icon-dark-badge.png" alt="Crispy Leaders" width="48" height="48" style="display:block;margin-bottom:8px;" /><p style="font-size:12px;color:#9b9b9b;margin:0;">crispyleaders.com</p></div></div>`;
+    } else {
+      subject = "You're approved — welcome to Crispy Leaders";
+      html = `<div style="font-family:Arial,sans-serif;max-width:520px;margin:0 auto;padding:40px 24px;background:#ffffff;"><div style="width:3px;height:36px;background:#E07540;margin-bottom:24px;"></div><p style="font-size:10px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#E07540;margin:0 0 12px 0;">Application Approved</p><h1 style="font-size:24px;font-weight:800;color:#1B3A6B;line-height:1.15;margin:0 0 16px 0;">Welcome to Crispy Leaders, ${firstName}.</h1><p style="font-size:15px;line-height:1.75;color:#555555;margin:0 0 8px 0;">Hi ${firstName},</p><p style="font-size:15px;line-height:1.75;color:#555555;margin:0 0 32px 0;">Your application to join Crispy Leaders as a team leader has been approved. Log in to your dashboard to get started — your team is ready and waiting.</p><a href="${siteUrl}/dashboard" style="display:inline-block;background:#1B3A6B;color:#ffffff;font-size:14px;font-weight:700;letter-spacing:0.04em;text-decoration:none;padding:14px 28px;margin-bottom:32px;">Go to Your Dashboard &rarr;</a><p style="font-size:12px;color:#9b9b9b;margin:0 0 20px 0;">With you on the journey,<br/><strong style="color:#1B3A6B;">The Crispy Leaders Team</strong></p><div style="border-top:1px solid #e8e4df;padding-top:24px;margin-top:8px;"><img src="https://www.crispyleaders.com/logo-icon-dark-badge.png" alt="Crispy Leaders" width="48" height="48" style="display:block;margin-bottom:8px;" /><p style="font-size:12px;color:#9b9b9b;margin:0;">crispyleaders.com</p></div></div>`;
+    }
+
     await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: { "Authorization": `Bearer ${resendKey}`, "Content-Type": "application/json" },
       body: JSON.stringify({
         from: "Crispy Leaders <noreply@crispyleaders.com>",
         to: userEmail,
-        subject: "You're approved — welcome to Crispy Leaders",
+        subject,
         html,
       }),
     });
@@ -134,9 +145,11 @@ export async function approvePeerApplication(formData: FormData) {
       .insert({ group_id: newGroup.id, user_id: userId });
   }
 
-  // Update user metadata
+  // Update user metadata (merge — updateUserById REPLACES user_metadata, doesn't
+  // merge — always fetch existing metadata first)
+  const { data: existingApprovedUser } = await adminClient.auth.admin.getUserById(userId);
   await adminClient.auth.admin.updateUserById(userId, {
-    user_metadata: { pathway: "peer", peer_group_id: newGroup?.id ?? null },
+    user_metadata: { ...existingApprovedUser?.user?.user_metadata, pathway: "peer", peer_group_id: newGroup?.id ?? null },
   });
 
   // Send approval notification email
@@ -145,14 +158,25 @@ export async function approvePeerApplication(formData: FormData) {
   if (userEmail && resendKey) {
     const firstName = app?.first_name ?? "there";
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.crispyleaders.com";
-    const html = `<div style="font-family:Arial,sans-serif;max-width:520px;margin:0 auto;padding:40px 24px;background:#ffffff;"><div style="width:3px;height:36px;background:#E07540;margin-bottom:24px;"></div><p style="font-size:10px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#E07540;margin:0 0 12px 0;">Application Approved</p><h1 style="font-size:24px;font-weight:800;color:#1B3A6B;line-height:1.15;margin:0 0 16px 0;">Your peer group is ready, ${firstName}.</h1><p style="font-size:15px;line-height:1.75;color:#555555;margin:0 0 8px 0;">Hi ${firstName},</p><p style="font-size:15px;line-height:1.75;color:#555555;margin:0 0 32px 0;">Your peer group application has been approved and your group has been created. Log in to your dashboard to get started and invite others to join.</p><a href="${siteUrl}/dashboard" style="display:inline-block;background:#1B3A6B;color:#ffffff;font-size:14px;font-weight:700;letter-spacing:0.04em;text-decoration:none;padding:14px 28px;margin-bottom:32px;">Go to Your Dashboard &rarr;</a><p style="font-size:12px;color:#9b9b9b;margin:0 0 20px 0;">With you on the journey,<br/><strong style="color:#1B3A6B;">The Crispy Leaders Team</strong></p><div style="border-top:1px solid #e8e4df;padding-top:24px;margin-top:8px;"><img src="https://www.crispyleaders.com/logo-icon-dark-badge.png" alt="Crispy Leaders" width="48" height="48" style="display:block;margin-bottom:8px;" /><p style="font-size:12px;color:#9b9b9b;margin:0;">crispyleaders.com</p></div></div>`;
+    const language = existingApprovedUser?.user?.user_metadata?.language_preference === "id" ? "id" : "en";
+
+    let subject: string;
+    let html: string;
+    if (language === "id") {
+      subject = "Grup rekan Anda telah disetujui — Crispy Leaders";
+      html = `<div style="font-family:Arial,sans-serif;max-width:520px;margin:0 auto;padding:40px 24px;background:#ffffff;"><div style="width:3px;height:36px;background:#E07540;margin-bottom:24px;"></div><p style="font-size:10px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#E07540;margin:0 0 12px 0;">Pendaftaran Disetujui</p><h1 style="font-size:24px;font-weight:800;color:#1B3A6B;line-height:1.15;margin:0 0 16px 0;">Grup rekan Anda sudah siap, ${firstName}.</h1><p style="font-size:15px;line-height:1.75;color:#555555;margin:0 0 8px 0;">Hai ${firstName},</p><p style="font-size:15px;line-height:1.75;color:#555555;margin:0 0 32px 0;">Pendaftaran grup rekan Anda telah disetujui dan grup Anda telah dibuat. Masuk ke dasbor Anda untuk memulai dan mengundang orang lain untuk bergabung.</p><a href="${siteUrl}/dashboard" style="display:inline-block;background:#1B3A6B;color:#ffffff;font-size:14px;font-weight:700;letter-spacing:0.04em;text-decoration:none;padding:14px 28px;margin-bottom:32px;">Buka Dasbor Anda &rarr;</a><p style="font-size:12px;color:#9b9b9b;margin:0 0 20px 0;">Bersama Anda dalam perjalanan ini,<br/><strong style="color:#1B3A6B;">Tim Crispy Leaders</strong></p><div style="border-top:1px solid #e8e4df;padding-top:24px;margin-top:8px;"><img src="https://www.crispyleaders.com/logo-icon-dark-badge.png" alt="Crispy Leaders" width="48" height="48" style="display:block;margin-bottom:8px;" /><p style="font-size:12px;color:#9b9b9b;margin:0;">crispyleaders.com</p></div></div>`;
+    } else {
+      subject = "Your peer group has been approved — Crispy Leaders";
+      html = `<div style="font-family:Arial,sans-serif;max-width:520px;margin:0 auto;padding:40px 24px;background:#ffffff;"><div style="width:3px;height:36px;background:#E07540;margin-bottom:24px;"></div><p style="font-size:10px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#E07540;margin:0 0 12px 0;">Application Approved</p><h1 style="font-size:24px;font-weight:800;color:#1B3A6B;line-height:1.15;margin:0 0 16px 0;">Your peer group is ready, ${firstName}.</h1><p style="font-size:15px;line-height:1.75;color:#555555;margin:0 0 8px 0;">Hi ${firstName},</p><p style="font-size:15px;line-height:1.75;color:#555555;margin:0 0 32px 0;">Your peer group application has been approved and your group has been created. Log in to your dashboard to get started and invite others to join.</p><a href="${siteUrl}/dashboard" style="display:inline-block;background:#1B3A6B;color:#ffffff;font-size:14px;font-weight:700;letter-spacing:0.04em;text-decoration:none;padding:14px 28px;margin-bottom:32px;">Go to Your Dashboard &rarr;</a><p style="font-size:12px;color:#9b9b9b;margin:0 0 20px 0;">With you on the journey,<br/><strong style="color:#1B3A6B;">The Crispy Leaders Team</strong></p><div style="border-top:1px solid #e8e4df;padding-top:24px;margin-top:8px;"><img src="https://www.crispyleaders.com/logo-icon-dark-badge.png" alt="Crispy Leaders" width="48" height="48" style="display:block;margin-bottom:8px;" /><p style="font-size:12px;color:#9b9b9b;margin:0;">crispyleaders.com</p></div></div>`;
+    }
+
     await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: { "Authorization": `Bearer ${resendKey}`, "Content-Type": "application/json" },
       body: JSON.stringify({
         from: "Crispy Leaders <noreply@crispyleaders.com>",
         to: userEmail,
-        subject: "Your peer group has been approved — Crispy Leaders",
+        subject,
         html,
       }),
     });

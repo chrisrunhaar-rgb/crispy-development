@@ -7,6 +7,60 @@ import { acceptMemberInvite } from "@/app/(app)/dashboard/actions";
 
 export const dynamic = "force-dynamic";
 
+type Lang = "en" | "id";
+
+const INVITE_ERRORS: Record<Lang, { invalid: string; used: string; expired: string }> = {
+  en: {
+    invalid: "This invite link is invalid or has been revoked.",
+    used: "This invite link has already been used.",
+    expired: "This invite link has expired. Ask Chris for a new one.",
+  },
+  id: {
+    invalid: "Tautan undangan ini tidak valid atau telah dicabut.",
+    used: "Tautan undangan ini sudah pernah digunakan.",
+    expired: "Tautan undangan ini sudah kedaluwarsa. Minta Chris untuk membuat tautan baru.",
+  },
+};
+
+const ERROR_PAGE_COPY: Record<Lang, { eyebrow: string; heading: string; back: string }> = {
+  en: {
+    eyebrow: "Invite Link",
+    heading: "This link isn't valid.",
+    back: "← Back to home",
+  },
+  id: {
+    eyebrow: "Tautan Undangan",
+    heading: "Tautan ini tidak valid.",
+    back: "← Kembali ke beranda",
+  },
+};
+
+const COPY: Record<Lang, {
+  eyebrow: string;
+  heading: string;
+  body: string;
+  cta: string;
+  login: string;
+  expiry: (days: number) => string;
+}> = {
+  en: {
+    eyebrow: "You're invited",
+    heading: "Welcome to Crispy Leaders.",
+    body: "You have been personally invited to join this platform for Christian cross-cultural leaders. Create your account to access all 53 training modules and your personal dashboard.",
+    cta: "Create Account & Get Access →",
+    login: "Already have an account? Log in →",
+    expiry: (days) => `This link expires in ${days} day${days !== 1 ? "s" : ""}.`,
+  },
+  id: {
+    eyebrow: "Anda diundang",
+    heading: "Selamat datang di Crispy Leaders.",
+    body: "Anda telah diundang secara pribadi untuk bergabung dengan platform ini bagi para pemimpin lintas budaya Kristen. Buat akun Anda untuk mengakses ke-53 modul pelatihan dan dasbor pribadi Anda.",
+    cta: "Buat Akun & Dapatkan Akses →",
+    login: "Sudah punya akun? Masuk →",
+    expiry: (days) => `Link ini berlaku ${days} hari lagi.`,
+  },
+};
+
 export default async function MemberInvitePage({
   params,
 }: {
@@ -17,24 +71,28 @@ export default async function MemberInvitePage({
 
   const { data: invite } = await admin
     .from("member_invites")
-    .select("id, expires_at, used_at, email, personal_note")
+    .select("id, expires_at, used_at, email, personal_note, language")
     .eq("token", token)
     .maybeSingle();
 
-  if (!invite) return <InviteError message="This invite link is invalid or has been revoked." />;
-  if (invite.used_at) return <InviteError message="This invite link has already been used." />;
-  if (new Date(invite.expires_at) < new Date()) return <InviteError message="This invite link has expired. Ask Chris for a new one." />;
+  if (!invite) return <InviteError lang="en" message={INVITE_ERRORS.en.invalid} />;
+
+  const lang: Lang = invite.language === "id" ? "id" : "en";
+
+  if (invite.used_at) return <InviteError lang={lang} message={INVITE_ERRORS[lang].used} />;
+  if (new Date(invite.expires_at) < new Date()) return <InviteError lang={lang} message={INVITE_ERRORS[lang].expired} />;
 
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
   if (user) {
     const result = await acceptMemberInvite(token, user.id);
-    if (result.error) return <InviteError message={result.error} />;
+    if (result.error) return <InviteError lang={lang} message={result.error} />;
     redirect("/dashboard?joined=1");
   }
 
   const daysLeft = Math.max(1, Math.ceil((new Date(invite.expires_at).getTime() - Date.now()) / (1000 * 60 * 60 * 24)));
+  const copy = COPY[lang];
 
   return (
     <div style={{
@@ -62,7 +120,7 @@ export default async function MemberInvitePage({
           color: "oklch(65% 0.15 45)",
           marginBottom: "0.875rem",
         }}>
-          You&apos;re invited
+          {copy.eyebrow}
         </p>
 
         <h1 style={{
@@ -73,7 +131,7 @@ export default async function MemberInvitePage({
           lineHeight: 1.1,
           marginBottom: "1.25rem",
         }}>
-          Welcome to Crispy Leaders.
+          {copy.heading}
         </h1>
 
         <p style={{
@@ -84,8 +142,7 @@ export default async function MemberInvitePage({
           marginBottom: invite.personal_note ? "1.25rem" : "2.5rem",
           maxWidth: "42ch",
         }}>
-          You have been personally invited to join this platform for Christian cross-cultural leaders.
-          Create your account to access all 53 training modules and your personal dashboard.
+          {copy.body}
         </p>
 
         {invite.personal_note && (
@@ -108,7 +165,7 @@ export default async function MemberInvitePage({
             className="btn-primary"
             style={{ textAlign: "center", justifyContent: "center" }}
           >
-            Create Account & Get Access →
+            {copy.cta}
           </Link>
           <Link
             href={`/login?member_invite=${token}`}
@@ -124,7 +181,7 @@ export default async function MemberInvitePage({
               display: "block",
             }}
           >
-            Already have an account? Log in →
+            {copy.login}
           </Link>
         </div>
 
@@ -135,14 +192,15 @@ export default async function MemberInvitePage({
           marginTop: "2rem",
           textAlign: "center",
         }}>
-          This link expires in {daysLeft} day{daysLeft !== 1 ? "s" : ""}.
+          {copy.expiry(daysLeft)}
         </p>
       </div>
     </div>
   );
 }
 
-function InviteError({ message }: { message: string }) {
+function InviteError({ message, lang = "en" }: { message: string; lang?: Lang }) {
+  const copy = ERROR_PAGE_COPY[lang];
   return (
     <div style={{
       minHeight: "calc(100dvh - 120px)",
@@ -154,15 +212,15 @@ function InviteError({ message }: { message: string }) {
       paddingInline: "1.5rem",
     }}>
       <div style={{ width: "100%", maxWidth: "480px" }}>
-        <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.75rem", fontSize: "0.62rem" }}>Invite Link</p>
+        <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.75rem", fontSize: "0.62rem" }}>{copy.eyebrow}</p>
         <h1 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.5rem", color: "oklch(22% 0.005 260)", marginBottom: "0.875rem" }}>
-          This link isn&apos;t valid.
+          {copy.heading}
         </h1>
         <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.7, color: "oklch(48% 0.008 260)", marginBottom: "2rem" }}>
           {message}
         </p>
         <Link href="/" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.85rem", fontWeight: 600, color: "oklch(30% 0.12 260)", textDecoration: "none" }}>
-          ← Back to home
+          {copy.back}
         </Link>
       </div>
     </div>

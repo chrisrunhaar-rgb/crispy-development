@@ -18,10 +18,12 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // Update Supabase user metadata
+    // Update Supabase user metadata (merge — updateUserById REPLACES user_metadata,
+    // doesn't merge — always fetch existing metadata first)
     const admin = createAdminClient();
+    const { data: existingUser } = await admin.auth.admin.getUserById(user.id);
     await admin.auth.admin.updateUserById(user.id, {
-      user_metadata: { language_preference: lang },
+      user_metadata: { ...existingUser?.user?.user_metadata, language_preference: lang },
     });
 
     // Set the cookie on the response

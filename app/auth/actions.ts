@@ -40,6 +40,7 @@ export async function signUp(formData: FormData) {
   const inviteToken = (formData.get("inviteToken") as string | null) ?? "";
   const memberInviteToken = (formData.get("memberInviteToken") as string | null) ?? "";
   const marketingConsent = formData.get("marketingConsent") === "true";
+  const language = (formData.get("language") as string | null) === "id" ? "id" : "en";
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://crispyleaders.com";
   const callbackExtra = inviteToken ? `?invite=${inviteToken}` : memberInviteToken ? `?member_invite=${memberInviteToken}` : "";
@@ -52,7 +53,7 @@ export async function signUp(formData: FormData) {
     password,
     options: {
       emailRedirectTo: emailCallback,
-      data: { first_name: firstName, last_name: lastName, pathway, marketing_consent: marketingConsent },
+      data: { first_name: firstName, last_name: lastName, pathway, marketing_consent: marketingConsent, language_preference: language },
     },
   });
 

@@ -15,8 +15,11 @@ export async function setPersonalLanguage(formData: FormData) {
   if (!["en", "id"].includes(language)) throw new Error("Invalid language");
 
   const admin = createAdminClient();
+  // Merge — updateUserById REPLACES user_metadata, doesn't merge — always fetch
+  // existing metadata first.
+  const { data: existingUser } = await admin.auth.admin.getUserById(user.id);
   await admin.auth.admin.updateUserById(user.id, {
-    user_metadata: { language_preference: language },
+    user_metadata: { ...existingUser?.user?.user_metadata, language_preference: language },
   });
   // Keep the marketing-side language cookie in sync — LanguageContext reads
   // crispy-lang, while server pages read user_metadata. Both must agree.
