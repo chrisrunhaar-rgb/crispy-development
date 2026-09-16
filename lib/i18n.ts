@@ -386,6 +386,7 @@ export const translations = {
       companyInfo: "Info Perusahaan",
       privacy: "Kebijakan Privasi",
       terms: "Syarat Layanan",
+      cookies: "Kebijakan Cookie",
       contact: "Kontak",
       copyright: "Crispy Development Ltd. Seluruh hak cipta dilindungi.",
       rightsReserved: "Seluruh hak cipta dilindungi.",
