@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { companyInfo } from "@/lib/company-info";
 
 export const metadata = {
   title: "Terms of Use — WayPoint",
@@ -27,7 +28,7 @@ export default function CoachTermsPage() {
         <div style={{ maxWidth: "680px", margin: "0 auto", display: "flex", flexDirection: "column", gap: "2rem" }}>
 
           <Section label="Who operates WayPoint">
-            <Body>WayPoint is operated by Crispy Development. By using WayPoint, you agree to these terms. If you do not agree, please do not use the service. Questions or concerns: hello@crispyleaders.com</Body>
+            <Body>WayPoint is operated by {companyInfo.legalName}, a {companyInfo.structure} registered in {companyInfo.jurisdiction} (company number {companyInfo.companyNumber}), registered office {companyInfo.registeredOffice}. By using WayPoint, you agree to these terms. If you do not agree, please do not use the service. Questions or concerns: hello@crispyleaders.com</Body>
           </Section>
 
           <Section label="What WayPoint is">
@@ -47,11 +48,11 @@ export default function CoachTermsPage() {
           </Section>
 
           <Section label="Trial and access">
-            <Body>New users receive a free trial of 120 minutes of coaching time. Access beyond the trial may require a subscription or organisational arrangement. Crispy Development reserves the right to change access terms with reasonable notice. Your coaching history remains accessible to you even if your trial expires.</Body>
+            <Body>New users receive a free trial of 120 minutes of coaching time. Access beyond the trial may require a subscription or organisational arrangement. {companyInfo.legalName} reserves the right to change access terms with reasonable notice. Your coaching history remains accessible to you even if your trial expires.</Body>
           </Section>
 
           <Section label="Limitation of liability">
-            <Body>WayPoint is provided as-is. Crispy Development makes no guarantee that the service will be available at all times or that AI responses will be accurate, complete, or appropriate for your situation. Crispy Development is not liable for any decisions you make based on a coaching session, or for any loss arising from use of the service.</Body>
+            <Body>WayPoint is provided as-is. {companyInfo.legalName} makes no guarantee that the service will be available at all times or that AI responses will be accurate, complete, or appropriate for your situation. {companyInfo.legalName} is not liable for any decisions you make based on a coaching session, or for any loss arising from use of the service.</Body>
           </Section>
 
           <Section label="Changes to these terms">
@@ -59,7 +60,7 @@ export default function CoachTermsPage() {
           </Section>
 
           <Section label="Governing law">
-            <Body>These terms are governed by Dutch law. Any disputes are subject to the jurisdiction of the courts of the Netherlands. Last updated: May 2026. Operated by Crispy Development.</Body>
+            <Body>These terms are governed by the laws of England and Wales. Any disputes are subject to the exclusive jurisdiction of the courts of England and Wales. Last updated: September 2026. Operated by {companyInfo.legalName}, company number {companyInfo.companyNumber}.</Body>
           </Section>
 
           <div style={{ paddingTop: "1rem" }}>

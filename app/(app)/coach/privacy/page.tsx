@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { companyInfo } from "@/lib/company-info";
 
 export const metadata = {
   title: "Privacy — WayPoint",
@@ -27,7 +28,7 @@ export default function CoachPrivacyPage() {
         <div style={{ maxWidth: "680px", margin: "0 auto", display: "flex", flexDirection: "column", gap: "2rem" }}>
 
           <Section label="Your session transcripts are fully private.">
-            <Body>Everything you say during a coaching session is captured as a live transcript. That transcript is never shared with your organisation or anyone else — including us (Crispy Development). We do not read your session content.</Body>
+            <Body>Everything you say during a coaching session is captured as a live transcript. That transcript is never shared with your organisation or anyone else — including us ({companyInfo.legalName}). We do not read your session content.</Body>
           </Section>
 
           <Section label="Your session notes belong to you.">
@@ -38,7 +39,7 @@ export default function CoachPrivacyPage() {
             <Body>WayPoint uses Google&apos;s Gemini Live API to power the voice coaching experience. This means your voice input is transmitted to and processed by Google&apos;s servers. Google processes this data in line with their API terms. We do not store your raw audio. The text transcript generated from your session is stored in our secure database, hosted in a trusted cloud environment.</Body>
           </Section>
 
-          <Section label="Crispy Development does not read your sessions.">
+          <Section label={`${companyInfo.legalName} does not read your sessions.`}>
             <Body>We are the operator of WayPoint. We store your session notes and account data to make the product work. We do not access, review, or analyse your individual session content. We may review anonymised, aggregated data (e.g. how many sessions happened this week) for product development only.</Body>
           </Section>
 
@@ -55,7 +56,7 @@ export default function CoachPrivacyPage() {
           </Section>
 
           <Section label="Governing law.">
-            <Body>This policy is governed by Dutch law and the General Data Protection Regulation (GDPR). If you have a complaint, you have the right to contact the Dutch Data Protection Authority (Autoriteit Persoonsgegevens) at autoriteitpersoonsgegevens.nl. Last updated: May 2026. Operated by Crispy Development.</Body>
+            <Body>This policy is governed by the laws of England and Wales and UK GDPR. If you have a complaint, you have the right to contact the Information Commissioner&apos;s Office (ICO) at ico.org.uk. Last updated: September 2026. Operated by {companyInfo.legalName}, company number {companyInfo.companyNumber}, registered office {companyInfo.registeredOffice}.</Body>
           </Section>
 
           <div style={{ paddingTop: "1rem" }}>
