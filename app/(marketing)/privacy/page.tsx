@@ -1,3 +1,5 @@
+import { companyInfo } from "@/lib/company-info";
+
 export const metadata = { title: "Privacy Policy — Crispy Leaders" };
 
 export default function PrivacyPage() {
@@ -15,8 +17,8 @@ export default function PrivacyPage() {
         <LegalSection heading="1. Who We Are and How to Contact Us">
           <p>Crispy Development Ltd is the data controller for personal data collected through the Crispy Leaders platform.</p>
           <ul style={{ marginTop: "1rem" }}>
-            <li>Company number: <em style={{ color: "oklch(62% 0.006 260)" }}>[Company Number]</em></li>
-            <li>Registered address: <em style={{ color: "oklch(62% 0.006 260)" }}>[Registered Address]</em></li>
+            <li>Company number: {companyInfo.companyNumber}</li>
+            <li>Registered address: {companyInfo.registeredOffice}</li>
             <li>Contact: <a href="mailto:hello@crispyleaders.com" style={{ color: "oklch(30% 0.12 260)" }}>hello@crispyleaders.com</a></li>
           </ul>
           <p style={{ marginTop: "1rem" }}>The supervisory authority in the UK is the Information Commissioner's Office (ICO), Wycliffe House, Water Lane, Wilmslow, Cheshire SK9 5AF. <a href="https://ico.org.uk" style={{ color: "oklch(30% 0.12 260)" }}>ico.org.uk</a> · 0303 123 1113</p>
@@ -195,9 +197,9 @@ export default function PrivacyPage() {
         <LegalSection heading="12. Contact" last>
           <p>Data protection queries: <a href="mailto:hello@crispyleaders.com" style={{ color: "oklch(30% 0.12 260)" }}>hello@crispyleaders.com</a></p>
           <p style={{ marginTop: "1rem" }}>
-            Crispy Development Ltd<br />
-            <em style={{ color: "oklch(62% 0.006 260)" }}>[Registered Address]</em><br />
-            Company number: <em style={{ color: "oklch(62% 0.006 260)" }}>[Company Number]</em>
+            {companyInfo.legalName}<br />
+            {companyInfo.registeredOffice}<br />
+            Company number: {companyInfo.companyNumber}
           </p>
           <p style={{ marginTop: "1rem" }}>Supervisory authority: Information Commissioner's Office (ICO) · <a href="https://ico.org.uk" style={{ color: "oklch(30% 0.12 260)" }}>ico.org.uk</a></p>
         </LegalSection>

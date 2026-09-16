@@ -1,3 +1,5 @@
+import { companyInfo } from "@/lib/company-info";
+
 export const metadata = { title: "Terms of Service — Crispy Leaders" };
 
 export default function TermsPage() {
@@ -13,7 +15,7 @@ export default function TermsPage() {
         </LegalSection>
 
         <LegalSection heading="1. Who We Are">
-          <p>Crispy Leaders is operated by Crispy Development Ltd, a company incorporated in England and Wales (company number: <em style={{ color: "oklch(62% 0.006 260)" }}>[Company Number]</em>), with its registered office at <em style={{ color: "oklch(62% 0.006 260)" }}>[Registered Address]</em>.</p>
+          <p>Crispy Leaders is operated by {companyInfo.legalName}, a company incorporated in {companyInfo.jurisdiction} (company number: {companyInfo.companyNumber}), with its registered office at {companyInfo.registeredOffice}.</p>
           <p style={{ marginTop: "1rem" }}>You can contact us at <a href="mailto:hello@crispyleaders.com" style={{ color: "oklch(30% 0.12 260)" }}>hello@crispyleaders.com</a>.</p>
           <p style={{ marginTop: "1rem" }}>References to "we", "us", or "our" mean Crispy Development Ltd. References to "you" or "your" mean the individual creating an account and using the platform.</p>
         </LegalSection>
@@ -126,9 +128,9 @@ export default function TermsPage() {
         <LegalSection heading="12. Contact" last>
           <p>Questions about these Terms? Contact us at <a href="mailto:hello@crispyleaders.com" style={{ color: "oklch(30% 0.12 260)" }}>hello@crispyleaders.com</a>.</p>
           <p style={{ marginTop: "1rem" }}>
-            Crispy Development Ltd<br />
-            <em style={{ color: "oklch(62% 0.006 260)" }}>[Registered Address]</em><br />
-            Company number: <em style={{ color: "oklch(62% 0.006 260)" }}>[Company Number]</em>
+            {companyInfo.legalName}<br />
+            {companyInfo.registeredOffice}<br />
+            Company number: {companyInfo.companyNumber}
           </p>
         </LegalSection>
       </div>

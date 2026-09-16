@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useLanguage } from "@/lib/LanguageContext";
+import { copyrightLine } from "@/lib/company-info";
 
 function IgIcon() {
   return (
@@ -87,6 +88,7 @@ export default function Footer() {
               <Link href="/privacy" className="footer-link">{t.footer.privacy}</Link>
               <Link href="/terms" className="footer-link">{t.footer.terms}</Link>
               <Link href="/cookies" className="footer-link">{t.footer.cookies}</Link>
+              <Link href="/legal" className="footer-link">{t.footer.companyInfo}</Link>
               <Link href="/contact" className="footer-link footer-legal-contact">{t.footer.contact}</Link>
             </div>
           </div>
@@ -95,7 +97,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div style={{ borderTop: "1px solid oklch(88% 0.008 80)", paddingTop: "1.5rem", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "0.75rem" }}>
           <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(62% 0.006 260)" }}>
-            © {new Date().getFullYear()} {t.footer.copyright}
+            {copyrightLine()} {t.footer.rightsReserved}
           </span>
           <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "oklch(65% 0.006 260)", textAlign: "center" }}>
             Crispy Leaders is a platform of Crispy Development
