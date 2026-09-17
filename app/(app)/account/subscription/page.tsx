@@ -101,7 +101,7 @@ export default async function SubscriptionPage({
             <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.25rem", color: navy }}>
               {pathwayLabel}
             </span>
-            <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", padding: "0.2rem 0.6rem", background: isActive ? "oklch(65% 0.15 45 / 0.12)" : "oklch(88% 0.008 80)", color: isActive ? orange : "oklch(52% 0.008 260)", border: `1px solid ${isActive ? "oklch(65% 0.15 45 / 0.3)" : "oklch(80% 0.008 80)"}` }}>
+            <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", padding: "0.2rem 0.6rem", background: isActive ? "oklch(60% 0.15 150 / 0.12)" : "oklch(88% 0.008 80)", color: isActive ? "oklch(45% 0.15 150)" : "oklch(52% 0.008 260)", border: `1px solid ${isActive ? "oklch(60% 0.15 150 / 0.3)" : "oklch(80% 0.008 80)"}` }}>
               {isActive ? "Active" : "Free"}
             </span>
           </div>
