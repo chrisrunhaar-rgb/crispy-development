@@ -143,13 +143,25 @@ async function handleCheckoutCompleted(admin: AdminClient, session: Stripe.Check
 
     // Coach minutes live per-user on `memberships`, not pooled on `teams` — the
     // leader needs their own row same as any member. Team Annual grants 30 min
-    // to the leader at subscription time; Team Monthly grants none.
+    // to the leader at subscription time; Team Monthly grants none. Minutes are
+    // ADDED via increment_coach_minutes, never set with a plain upsert — a flat
+    // upsert would overwrite (wipe out) any minutes the leader separately
+    // bought via a one-off pack. Bug found + fixed 2026-09-17 (Chris, Telegram).
     const leaderMembershipPatch: Record<string, unknown> = {
       user_id: userId,
       coach_access: billingPeriod === "annual",
-      coach_minutes_granted: billingPeriod === "annual" ? 30 : 0,
     };
     await admin.from("memberships").upsert(leaderMembershipPatch, { onConflict: "user_id" });
+    if (billingPeriod === "annual") {
+      const { error: leaderMinutesError } = await admin.rpc("increment_coach_minutes", {
+        p_user_id: userId,
+        p_minutes: 30,
+      });
+      if (leaderMinutesError) {
+        console.error("increment_coach_minutes failed (team leader annual)", userId, leaderMinutesError);
+        throw leaderMinutesError;
+      }
+    }
 
     // Mirror updateMemberSubscription()'s metadata convention so the team
     // leader is recognized as a leader across the rest of the app.
@@ -159,9 +171,12 @@ async function handleCheckoutCompleted(admin: AdminClient, session: Stripe.Check
     });
   } else {
     // Personal plan. Mirrors acceptMemberInvite()'s upsert shape.
-    // Personal Monthly = 0 coaching minutes, Personal Annual = 60, per pricing copy —
-    // always set explicitly so a bare upsert never falls through to the memberships
-    // table's stale legacy DEFAULT on coach_minutes_granted.
+    // Personal Monthly = 0 coaching minutes, Personal Annual = 60, per pricing copy.
+    // Minutes are ADDED via increment_coach_minutes, never set with a plain
+    // upsert — a flat upsert would overwrite (wipe out) any minutes the user
+    // separately bought via a one-off pack. Bug found + fixed 2026-09-17
+    // (Chris, Telegram): his $10/60-min pack purchase was at risk of being
+    // erased by a subsequent subscription checkout under the old logic.
     const membershipPatch: Record<string, unknown> = {
       user_id: userId,
       subscription_active: true,
@@ -169,9 +184,18 @@ async function handleCheckoutCompleted(admin: AdminClient, session: Stripe.Check
       stripe_subscription_id: subscriptionId,
       billing_country: billingCountry,
       coach_access: billingPeriod === "annual",
-      coach_minutes_granted: billingPeriod === "annual" ? 60 : 0,
     };
     await admin.from("memberships").upsert(membershipPatch, { onConflict: "user_id" });
+    if (billingPeriod === "annual") {
+      const { error: minutesError } = await admin.rpc("increment_coach_minutes", {
+        p_user_id: userId,
+        p_minutes: 60,
+      });
+      if (minutesError) {
+        console.error("increment_coach_minutes failed (personal annual)", userId, minutesError);
+        throw minutesError;
+      }
+    }
 
     const { data: existingUser } = await admin.auth.admin.getUserById(userId);
     await admin.auth.admin.updateUserById(userId, {
