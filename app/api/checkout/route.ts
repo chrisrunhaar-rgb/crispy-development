@@ -89,6 +89,10 @@ export async function POST(req: NextRequest) {
     client_reference_id: user.id,
     line_items: [{ price: priceId, quantity: 1 }],
     billing_address_collection: "required", // needed for UK VAT country tagging (step 7)
+    // Managed Payments is on by default for this account and requires every
+    // Product to carry a Stripe tax_code — ours don't, so it 400s on every
+    // session create. Disable it per-session rather than editing the catalog.
+    managed_payments: { enabled: false },
     success_url: `${siteUrl}/account/subscription?checkout=success`,
     cancel_url: `${siteUrl}/pricing?checkout=cancelled`,
     metadata: { user_id: user.id, plan, billing_period: billingPeriod },

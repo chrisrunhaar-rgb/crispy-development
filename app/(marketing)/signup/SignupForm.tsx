@@ -10,6 +10,33 @@ import { trackPathwayStarted } from "@/lib/ga-events";
 type Pathway = "personal" | "team";
 const initialState = { error: "" };
 
+// Hand-drawn pathway icons — matched to the project's existing lucide-react stroke
+// aesthetic (24x24 viewBox, currentColor, strokeWidth 1.75, round caps/joins) but
+// authored as plain SVG so the imagery can be brand-specific rather than a generic
+// icon-library glyph. Both share one visual grammar — a node riding a path — so the
+// pairing reads as a matched set: Personal is a single node on its own ascending
+// path; Team is three nodes converging up two paths to one apex, i.e. people
+// coming together toward a shared summit. Deliberately not multi-person clipart.
+function PersonalPathIcon({ size = 22 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M4.5 18.5c1.8-.3 3.4-1.1 4.6-2.3 1.2-1.2 2-2.8 2.3-4.6" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="12.5" cy="10.5" r="2.25" fill="currentColor" />
+    </svg>
+  );
+}
+
+function TeamPathIcon({ size = 22 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M6 17.5 12 9.5 18 17.5" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="6" cy="17.5" r="1.6" fill="currentColor" />
+      <circle cx="18" cy="17.5" r="1.6" fill="currentColor" />
+      <circle cx="12" cy="9.5" r="1.6" fill="currentColor" />
+    </svg>
+  );
+}
+
 export default function SignupForm({ defaultPathway = "personal", inviteToken = "", memberInviteToken = "", initialLanguage, redirectTo = "" }: { defaultPathway?: Pathway; inviteToken?: string; memberInviteToken?: string; initialLanguage?: "en" | "id"; redirectTo?: string }) {
   const [pathway, setPathway] = useState<Pathway>(defaultPathway);
   const [showPassword, setShowPassword] = useState(false);
@@ -67,22 +94,26 @@ export default function SignupForm({ defaultPathway = "personal", inviteToken = 
             {!memberInviteToken && (
               <div style={{ marginBottom: "2rem" }}>
                 <p className="form-label" style={{ marginBottom: "0.75rem" }}>{s.choosePathway}</p>
-                <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+                <div className="pathway-grid">
                   {(["personal", "team"] as const).map((p) => (
                     <label
                       key={p}
                       className={`pathway-option${pathway === p ? " selected" : ""}`}
-                      style={{ cursor: "pointer" }}
                       onClick={() => { setPathway(p); trackPathwayStarted(p); }}
                     >
-                      <input
-                        type="radio"
-                        name="pathway-visual"
-                        value={p}
-                        checked={pathway === p}
-                        onChange={() => setPathway(p)}
-                        style={{ marginTop: "0.125rem", accentColor: "oklch(30% 0.12 260)", flexShrink: 0 }}
-                      />
+                      <div className="pathway-option-top">
+                        <span className="pathway-icon">
+                          {p === "personal" ? <PersonalPathIcon /> : <TeamPathIcon />}
+                        </span>
+                        <input
+                          type="radio"
+                          name="pathway-visual"
+                          value={p}
+                          checked={pathway === p}
+                          onChange={() => setPathway(p)}
+                          style={{ accentColor: "oklch(30% 0.12 260)", flexShrink: 0 }}
+                        />
+                      </div>
                       <div>
                         <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.9375rem", color: "oklch(22% 0.005 260)", marginBottom: "0.25rem" }}>
                           {p === "personal" ? s.personalTitle : s.teamTitle}

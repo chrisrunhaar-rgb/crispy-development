@@ -40,6 +40,13 @@ export async function GET(request: Request) {
         return NextResponse.redirect(`${origin}/dashboard?joined=1${gaSignup}`);
       }
       const gaSuffix = type === "signup" ? (next.includes("?") ? "&ga=signup" : "?ga=signup") : "";
+      // Confirming a brand-new signup that started on /pricing shouldn't dump the
+      // visitor back on the plan-selection screen they already got through — carry
+      // their chosen pathway so the page can continue straight into checkout.
+      if (type === "signup" && next === "/pricing" && data.user) {
+        const pathway = data.user.user_metadata?.pathway === "team" ? "team" : "personal";
+        return NextResponse.redirect(`${origin}/pricing?autocheckout=${pathway}&ga=signup`);
+      }
       return NextResponse.redirect(`${origin}${next}${gaSuffix}`);
     }
 

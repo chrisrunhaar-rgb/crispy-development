@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/lib/LanguageContext";
 import { createClient } from "@/lib/supabase/client";
@@ -17,21 +17,34 @@ function CheckoutButton({
   isIndonesia,
   variant,
   billingPeriod,
+  autoTrigger,
 }: {
   plan: "personal" | "team";
   isIndonesia: boolean;
   variant: "orange" | "navy";
   billingPeriod: BillingPeriod;
+  autoTrigger?: boolean;
 }) {
   const { lang } = useLanguage();
   const [status, setStatus] = useState<"idle" | "loading" | "unavailable">("idle");
   const [hovered, setHovered] = useState(false);
   const [signedIn, setSignedIn] = useState<boolean | null>(null);
+  const autoFired = useRef(false);
 
   useEffect(() => {
     const supabase = createClient();
     supabase.auth.getUser().then(({ data }) => setSignedIn(!!data.user));
   }, []);
+
+  // Just confirmed their email after starting checkout from this plan's button —
+  // continue them straight into Stripe instead of making them click again.
+  useEffect(() => {
+    if (autoTrigger && signedIn === true && !autoFired.current) {
+      autoFired.current = true;
+      go();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autoTrigger, signedIn]);
 
   async function go() {
     // Logged-out visitor: account comes first, then payment — send them to
@@ -297,6 +310,14 @@ export default function PricingContent({ isIndonesia }: Props) {
   const id = lang === "id";
   const [billing, setBilling] = useState<BillingPeriod>("monthly");
   const annual = billing === "annual";
+
+  // Landed here right after confirming a signup that started on this page —
+  // continue that plan's checkout automatically (see app/auth/callback/route.ts).
+  const [autoPlan, setAutoPlan] = useState<"personal" | "team" | null>(null);
+  useEffect(() => {
+    const auto = new URLSearchParams(window.location.search).get("autocheckout");
+    if (auto === "personal" || auto === "team") setAutoPlan(auto);
+  }, []);
 
   // ── Copy ────────────────────────────────────────────────────────────────
   const copy = {
@@ -748,6 +769,7 @@ export default function PricingContent({ isIndonesia }: Props) {
                 isIndonesia={isIndonesia}
                 variant="orange"
                 billingPeriod={billing}
+                autoTrigger={autoPlan === "personal"}
               />
             </div>
 
@@ -853,6 +875,7 @@ export default function PricingContent({ isIndonesia }: Props) {
                 isIndonesia={isIndonesia}
                 variant="navy"
                 billingPeriod={billing}
+                autoTrigger={autoPlan === "team"}
               />
             </div>
           </div>
