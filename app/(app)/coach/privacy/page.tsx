@@ -13,7 +13,8 @@ export default function CoachPrivacyPage() {
       <div style={{ background: "oklch(30% 0.12 260)", paddingBlock: "2rem", borderBottom: "1px solid oklch(22% 0.10 260)" }}>
         <div className="container-wide" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem" }}>
           <div>
-            <Image src="/images/waypoint/waypoint-banner-blue.png" alt="WayPoint" height={28} width={0} style={{ width: "auto", height: "28px", marginBottom: "0.5rem" }} />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/waypoint/waypoint-banner-blue.png" alt="WayPoint" style={{ height: "44px", width: "auto", marginBottom: "0.5rem" }} />
             <h1 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.375rem", color: "oklch(97% 0.005 80)" }}>
               What stays private in WayPoint
             </h1>

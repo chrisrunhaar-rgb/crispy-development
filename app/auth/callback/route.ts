@@ -61,8 +61,12 @@ export async function GET(request: Request) {
 
   // Exchange failed or no code (e.g. an email link scanner already consumed the
   // single-use code before the user clicked it). Send the user to log in normally
-  // instead of dead-ending — carry the invite token through so it still gets applied.
+  // instead of dead-ending — carry the invite token through so it still gets applied,
+  // and carry the intended destination through as `redirectTo` (LoginForm's param
+  // name) so a manual login still lands on /pricing etc. instead of defaulting to
+  // /dashboard.
   const inviteParam = invite ? `&invite=${invite}` : "";
   const memberInviteParam = memberInvite ? `&member_invite=${memberInvite}` : "";
-  return NextResponse.redirect(`${origin}/login?error=confirmation_failed${inviteParam}${memberInviteParam}`);
+  const redirectToParam = next && next !== "/dashboard" ? `&redirectTo=${encodeURIComponent(next)}` : "";
+  return NextResponse.redirect(`${origin}/login?error=confirmation_failed${inviteParam}${memberInviteParam}${redirectToParam}`);
 }
