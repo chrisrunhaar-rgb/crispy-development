@@ -863,7 +863,7 @@ export default function CoachCarousel({
               </svg>
               <div>
                 <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: MUTED, marginBottom: "0.15rem" }}>
-                  {grantedMinutes === 0 ? "" : s.freeTrial}
+                  {grantedMinutes === 0 ? "" : s.minutesLabel}
                 </p>
                 <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", fontWeight: 700, color: (trialExhausted || grantedMinutes === 0) ? "oklch(55% 0.15 30)" : WHITE }}>
                   {grantedMinutes === 0 ? s.noCredit : trialExhausted ? s.trialComplete : s.minRemaining(trialRemainingMinutes)}
