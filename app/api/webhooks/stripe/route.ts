@@ -76,6 +76,27 @@ type AdminClient = ReturnType<typeof createAdminClient>;
 
 async function handleCheckoutCompleted(admin: AdminClient, session: Stripe.Checkout.Session) {
   const userId = session.client_reference_id ?? session.metadata?.user_id;
+
+  // One-off coaching-minute pack purchase — separate from the subscription
+  // flow below. Must ADD to coach_minutes_granted, never overwrite it, or a
+  // later subscription-renewal event would wipe out a purchased top-up.
+  if (session.mode === "payment" && session.metadata?.minute_pack === "true") {
+    const minutes = Number(session.metadata?.minutes ?? 0);
+    if (!userId || !minutes) {
+      console.error("checkout.session.completed minute_pack missing user_id/minutes metadata", session.id);
+      return;
+    }
+    const { error } = await admin.rpc("increment_coach_minutes", {
+      p_user_id: userId,
+      p_minutes: minutes,
+    });
+    if (error) {
+      console.error("increment_coach_minutes failed", session.id, error);
+      throw error; // let Stripe retry rather than silently dropping the purchase
+    }
+    return;
+  }
+
   const plan = session.metadata?.plan;
   const billingPeriod = session.metadata?.billing_period;
 

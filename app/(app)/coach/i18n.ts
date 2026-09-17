@@ -34,7 +34,9 @@ const strings = {
     minutesUsed: (used: number, granted: number) => `${used} of ${granted} minutes used`,
     addCoachingTime: "Add Coaching Time",
     bestValue: "Best Value",
-    purchasesSoon: "Purchases available soon",
+    buyMoreMinutes: "Buy more minutes",
+    processing: "Processing…",
+    purchaseError: "Something went wrong — please try again.",
 
     // Carousel — header / misc
     backToCrispy: "← Crispy Leaders",
@@ -213,7 +215,9 @@ const strings = {
     minutesUsed: (used: number, granted: number) => `${used} dari ${granted} menit terpakai`,
     addCoachingTime: "Tambah Waktu Coaching",
     bestValue: "Terbaik",
-    purchasesSoon: "Pembelian segera tersedia",
+    buyMoreMinutes: "Beli lebih banyak menit",
+    processing: "Memproses…",
+    purchaseError: "Terjadi kesalahan — silakan coba lagi.",
 
     backToCrispy: "← Crispy Leaders",
     beta: "BETA",

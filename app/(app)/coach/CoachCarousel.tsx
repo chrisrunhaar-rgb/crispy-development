@@ -37,11 +37,31 @@ const COACHES = [
   { name: "Ethan", image: "/images/coaches/ethan-portrait.jpg", descriptor: "Direct · Strategic · Action-oriented" },
 ];
 
-const ADDONS = [
-  { label: "1 Hour", minutes: 60, idr: "Rp 150,000", usd: "$10", bestValue: false },
-  { label: "3 Hours", minutes: 180, idr: "Rp 399,000", usd: "$25", bestValue: false },
-  { label: "5 Hours", minutes: 300, idr: "Rp 599,000", usd: "$37", bestValue: true },
+type MinutePackId = "1hr" | "3hr" | "5hr";
+
+const ADDONS: { label: string; minutes: number; usd: string; bestValue: boolean; packId: MinutePackId }[] = [
+  { label: "1 Hour", minutes: 60, usd: "$10", bestValue: false, packId: "1hr" },
+  { label: "3 Hours", minutes: 180, usd: "$25", bestValue: false, packId: "3hr" },
+  { label: "5 Hours", minutes: 300, usd: "$37", bestValue: true, packId: "5hr" },
 ];
+
+// Minute packs are USD-only (see app/api/checkout/route.ts) — Chris confirmed
+// IDR/Indonesia checkout is dropped entirely, so always charge and display USD
+// here regardless of the viewer's stored `currency`, rather than showing an
+// IDR price that the actual Stripe Checkout session won't honor.
+async function purchaseMinutePack(packId: MinutePackId) {
+  const res = await fetch("/api/checkout", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ type: "minute_pack", packId }),
+  });
+  const data = await res.json();
+  if (data.checkoutUrl) {
+    window.location.href = data.checkoutUrl;
+  } else {
+    throw new Error(data.error ?? "checkout_failed");
+  }
+}
 
 // ── SVG ring constants ───────────────────────────────────────────
 const RING_R = 85;
@@ -274,12 +294,27 @@ function CoachPanel({
 
 // ── Panel: Minutes ───────────────────────────────────────────────
 function MinutesPanel({
-  trialPct, trialExhausted, trialRemainingMinutes, trialUsedMinutes, grantedMinutes, currency, lang,
+  trialPct, trialExhausted, trialRemainingMinutes, trialUsedMinutes, grantedMinutes, lang,
 }: {
   trialPct: number; trialExhausted: boolean; trialRemainingMinutes: number;
   trialUsedMinutes: number; grantedMinutes: number; currency: "idr" | "usd"; lang: CoachLang;
 }) {
   const s = useT(lang);
+  const [pendingPack, setPendingPack] = useState<MinutePackId | null>(null);
+  const [purchaseError, setPurchaseError] = useState(false);
+
+  async function handleBuy(packId: MinutePackId) {
+    if (pendingPack) return;
+    setPurchaseError(false);
+    setPendingPack(packId);
+    try {
+      await purchaseMinutePack(packId);
+    } catch {
+      setPurchaseError(true);
+      setPendingPack(null);
+    }
+  }
+
   const used = RING_C * (trialPct / 100);
   const ringColor = trialExhausted ? "oklch(55% 0.15 30)" : ORANGE;
   const size = RING_R * 2 + 20;
@@ -324,45 +359,60 @@ function MinutesPanel({
           {s.addCoachingTime}
         </p>
         <div style={{ display: "flex", flexDirection: "column", gap: "0.625rem" }}>
-          {ADDONS.map(pkg => (
-            <div key={pkg.label} style={{
-              display: "flex", alignItems: "center", justifyContent: "space-between",
-              padding: "0.875rem 1rem",
-              background: pkg.bestValue ? "oklch(20% 0.10 260)" : NAVY_SUBTLE,
-              border: `1px solid ${pkg.bestValue ? "oklch(36% 0.12 260)" : "oklch(28% 0.07 260)"}`,
-              position: "relative",
-            }}>
-              {/* Best Value badge */}
-              {pkg.bestValue && (
-                <span style={{
-                  position: "absolute", top: "-1px", right: "0.75rem",
-                  background: ORANGE, color: "white",
-                  fontFamily: "var(--font-montserrat)", fontSize: "0.48rem", fontWeight: 700, letterSpacing: "0.1em",
-                  padding: "0.15rem 0.5rem",
-                  textTransform: "uppercase",
-                }}>
-                  {s.bestValue}
-                </span>
-              )}
-              <div>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: LIGHT, marginBottom: "0.15rem", marginTop: pkg.bestValue ? "0.4rem" : 0 }}>
-                  {lang === "id"
-                    ? pkg.minutes === 60 ? "1 Jam" : pkg.minutes === 180 ? "3 Jam" : "5 Jam"
-                    : pkg.label}
+          {ADDONS.map(pkg => {
+            const isPending = pendingPack === pkg.packId;
+            const disabled = pendingPack !== null;
+            return (
+              <button
+                key={pkg.label}
+                onClick={() => handleBuy(pkg.packId)}
+                disabled={disabled}
+                style={{
+                  display: "flex", alignItems: "center", justifyContent: "space-between",
+                  width: "100%", textAlign: "left",
+                  padding: "0.875rem 1rem",
+                  background: pkg.bestValue ? "oklch(20% 0.10 260)" : NAVY_SUBTLE,
+                  border: `1px solid ${pkg.bestValue ? "oklch(36% 0.12 260)" : "oklch(28% 0.07 260)"}`,
+                  borderRadius: 0,
+                  position: "relative",
+                  cursor: disabled ? "default" : "pointer",
+                  opacity: disabled && !isPending ? 0.5 : 1,
+                }}
+              >
+                {/* Best Value badge */}
+                {pkg.bestValue && (
+                  <span style={{
+                    position: "absolute", top: "-1px", right: "0.75rem",
+                    background: ORANGE, color: "white",
+                    fontFamily: "var(--font-montserrat)", fontSize: "0.48rem", fontWeight: 700, letterSpacing: "0.1em",
+                    padding: "0.15rem 0.5rem",
+                    textTransform: "uppercase",
+                  }}>
+                    {s.bestValue}
+                  </span>
+                )}
+                <div>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: LIGHT, marginBottom: "0.15rem", marginTop: pkg.bestValue ? "0.4rem" : 0 }}>
+                    {lang === "id"
+                      ? pkg.minutes === 60 ? "1 Jam" : pkg.minutes === 180 ? "3 Jam" : "5 Jam"
+                      : pkg.label}
+                  </p>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", color: MUTED }}>
+                    {isPending ? s.processing : `${pkg.minutes} ${lang === "id" ? "menit" : "minutes"}`}
+                  </p>
+                </div>
+                <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "1.5rem", fontStyle: "italic", color: WHITE }}>
+                  {pkg.usd}
                 </p>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", color: MUTED }}>
-                  {pkg.minutes} {lang === "id" ? "menit" : "minutes"}
-                </p>
-              </div>
-              <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "1.5rem", fontStyle: "italic", color: WHITE }}>
-                {currency === "idr" ? pkg.idr : pkg.usd}
-              </p>
-            </div>
-          ))}
+              </button>
+            );
+          })}
         </div>
-        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", color: MUTED, textAlign: "center", marginTop: "0.25rem" }}>
-          {s.purchasesSoon}
-        </p>
+        {purchaseError && (
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", color: "oklch(70% 0.18 30)", textAlign: "center", marginTop: "0.5rem" }}>
+            {s.purchaseError}
+          </p>
+        )}
       </div>
     </div>
   );
@@ -566,6 +616,20 @@ export default function CoachCarousel({
   }
 
   const [rightTab, setRightTab] = useState<"notes" | "background">("notes");
+  const [desktopPendingPack, setDesktopPendingPack] = useState<MinutePackId | null>(null);
+  const [desktopPurchaseError, setDesktopPurchaseError] = useState(false);
+
+  async function handleDesktopBuy(packId: MinutePackId) {
+    if (desktopPendingPack) return;
+    setDesktopPurchaseError(false);
+    setDesktopPendingPack(packId);
+    try {
+      await purchaseMinutePack(packId);
+    } catch {
+      setDesktopPurchaseError(true);
+      setDesktopPendingPack(null);
+    }
+  }
 
   const minutesProps = { trialPct, trialExhausted, trialRemainingMinutes, trialUsedMinutes, grantedMinutes, currency, lang };
   const ringColor = trialExhausted ? "oklch(55% 0.15 30)" : ORANGE;
@@ -812,23 +876,29 @@ export default function CoachCarousel({
               </div>
               <div style={{ marginLeft: "auto", display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "0.375rem" }}>
                 <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", justifyContent: "flex-end" }}>
-                  {ADDONS.map(pkg => (
-                    <div key={pkg.label} style={{
-                      fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.05em",
-                      padding: "0.5rem 0.75rem",
-                      background: pkg.bestValue ? "oklch(20% 0.10 260)" : "oklch(24% 0.07 260)", color: MUTED,
-                      border: `1px solid ${pkg.bestValue ? ORANGE : "oklch(28% 0.07 260)"}`,
-                      whiteSpace: "nowrap", position: "relative",
-                    }}>
-                      {pkg.bestValue && <span style={{ color: ORANGE, marginRight: "0.3rem" }}>★</span>}
-                      {lang === "id"
-                        ? pkg.minutes === 60 ? "1 Jam" : pkg.minutes === 180 ? "3 Jam" : "5 Jam"
-                        : pkg.label} {currency === "idr" ? pkg.idr : pkg.usd}
-                    </div>
-                  ))}
+                  {ADDONS.map(pkg => {
+                    const isPending = desktopPendingPack === pkg.packId;
+                    const disabled = desktopPendingPack !== null;
+                    return (
+                      <button key={pkg.label} onClick={() => handleDesktopBuy(pkg.packId)} disabled={disabled} style={{
+                        fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.05em",
+                        padding: "0.5rem 0.75rem",
+                        background: pkg.bestValue ? "oklch(20% 0.10 260)" : "oklch(24% 0.07 260)", color: MUTED,
+                        border: `1px solid ${pkg.bestValue ? ORANGE : "oklch(28% 0.07 260)"}`,
+                        whiteSpace: "nowrap", position: "relative",
+                        cursor: disabled ? "default" : "pointer",
+                        opacity: disabled && !isPending ? 0.5 : 1,
+                      }}>
+                        {pkg.bestValue && <span style={{ color: ORANGE, marginRight: "0.3rem" }}>★</span>}
+                        {lang === "id"
+                          ? pkg.minutes === 60 ? "1 Jam" : pkg.minutes === 180 ? "3 Jam" : "5 Jam"
+                          : pkg.label} {isPending ? s.processing : pkg.usd}
+                      </button>
+                    );
+                  })}
                 </div>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.52rem", color: "oklch(40% 0.007 260)", letterSpacing: "0.04em" }}>
-                  {s.purchasesSoon}
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.52rem", color: desktopPurchaseError ? "oklch(70% 0.18 30)" : "oklch(40% 0.007 260)", letterSpacing: "0.04em" }}>
+                  {desktopPurchaseError ? s.purchaseError : s.buyMoreMinutes}
                 </p>
               </div>
             </div>
