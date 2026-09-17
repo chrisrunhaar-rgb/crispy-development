@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { createPortalSession } from "./actions";
+import { createPortalSession, submitSubscriptionQuestion } from "./actions";
 
 export const metadata = { title: "Subscription — Crispy Development" };
 
@@ -57,6 +57,8 @@ export default async function SubscriptionPage({
 
   const portalUnavailable = params?.portal === "unavailable";
   const checkoutSuccess = params?.checkout === "success";
+  const questionSent = params?.question === "sent";
+  const questionEmpty = params?.question === "empty";
 
   return (
     <div style={{ background: "oklch(97% 0.005 80)", minHeight: "calc(100dvh - 140px)", paddingBlock: "clamp(2rem, 4vw, 4rem)" }}>
@@ -80,6 +82,22 @@ export default async function SubscriptionPage({
           <div style={{ background: "oklch(65% 0.15 45 / 0.1)", border: "1px solid oklch(65% 0.15 45 / 0.3)", padding: "1rem 1.25rem", marginBottom: "1.5rem" }}>
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: navy, margin: 0 }}>
               Thanks — your subscription is being set up. This page will reflect it shortly.
+            </p>
+          </div>
+        )}
+
+        {questionSent && (
+          <div style={{ background: "oklch(65% 0.15 45 / 0.1)", border: "1px solid oklch(65% 0.15 45 / 0.3)", padding: "1rem 1.25rem", marginBottom: "1.5rem" }}>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: navy, margin: 0 }}>
+              Thanks — your question has been sent. We&apos;ll get back to you by email shortly.
+            </p>
+          </div>
+        )}
+
+        {questionEmpty && (
+          <div style={{ background: "oklch(60% 0.18 25 / 0.08)", border: "1px solid oklch(60% 0.18 25 / 0.3)", padding: "1rem 1.25rem", marginBottom: "1.5rem" }}>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(40% 0.18 25)", margin: 0 }}>
+              Please enter your question before sending.
             </p>
           </div>
         )}
@@ -152,6 +170,49 @@ export default async function SubscriptionPage({
             </p>
           </div>
         ) : null}
+
+        {/* Ask a question */}
+        <div style={{ background: "oklch(100% 0 0)", border: "1px solid oklch(88% 0.008 80)", padding: "1.5rem", marginTop: "1.5rem" }}>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(52% 0.008 260)", marginBottom: "0.75rem" }}>
+            Questions about your subscription?
+          </p>
+          <form action={submitSubscriptionQuestion}>
+            <textarea
+              name="message"
+              required
+              rows={4}
+              placeholder="Ask us anything about your plan, billing, or invoices..."
+              style={{
+                width: "100%",
+                fontFamily: "var(--font-montserrat)",
+                fontSize: "0.85rem",
+                color: navy,
+                border: "1px solid oklch(85% 0.008 80)",
+                padding: "0.75rem",
+                resize: "vertical",
+                marginBottom: "0.75rem",
+                boxSizing: "border-box",
+              }}
+            />
+            <button
+              type="submit"
+              style={{
+                width: "100%",
+                fontFamily: "var(--font-montserrat)",
+                fontWeight: 700,
+                fontSize: "0.85rem",
+                letterSpacing: "0.02em",
+                color: navy,
+                background: "#fff",
+                border: `1px solid ${navy}`,
+                padding: "0.8rem 1.5rem",
+                cursor: "pointer",
+              }}
+            >
+              Send question
+            </button>
+          </form>
+        </div>
 
       </div>
     </div>

@@ -36,3 +36,34 @@ export async function createPortalSession() {
 
   redirect(session.url);
 }
+
+// Sends a subscriber's billing/subscription question to the Crispy inbox via
+// Resend — same pattern as app/api/contact/route.ts (hello@crispyleaders.com).
+export async function submitSubscriptionQuestion(formData: FormData) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) redirect("/login");
+
+  const message = (formData.get("message") as string | null)?.trim();
+  if (!message) redirect("/account/subscription?question=empty");
+
+  const resendKey = process.env.RESEND_API_KEY;
+  if (resendKey) {
+    await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${resendKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: "Crispy Leaders <noreply@crispyleaders.com>",
+        to: "hello@crispyleaders.com",
+        reply_to: user.email,
+        subject: `Subscription question from ${user.email}`,
+        html: `<p><strong>From:</strong> ${user.email}</p><p><strong>User ID:</strong> ${user.id}</p><p><strong>Question:</strong></p><p>${message.replace(/\n/g, "<br>")}</p>`,
+      }),
+    });
+  }
+
+  redirect("/account/subscription?question=sent");
+}
