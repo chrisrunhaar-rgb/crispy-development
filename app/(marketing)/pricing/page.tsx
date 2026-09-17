@@ -1,4 +1,3 @@
-import { headers } from "next/headers";
 import PricingContent from "./PricingContent";
 
 export const metadata = {
@@ -7,15 +6,8 @@ export const metadata = {
     "Monthly or annual access to all Crispy Leaders resources, pathways, and AI coaching.",
 };
 
-export default async function PricingPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ preview?: string }>;
-}) {
-  const h = await headers();
-  const country = h.get("x-vercel-ip-country") ?? "";
-  const params = await searchParams;
-  const isIndonesia = country === "ID" || params.preview === "ID";
-
-  return <PricingContent isIndonesia={isIndonesia} />;
+export default async function PricingPage() {
+  // IDR pricing paused 2026-09-17 (Chris: Xendit ruled out, no other Indonesia
+  // payment rail confirmed) — show USD pricing to all visitors for now.
+  return <PricingContent isIndonesia={false} />;
 }
