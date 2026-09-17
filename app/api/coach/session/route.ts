@@ -1,11 +1,41 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 
 // POST — create new session
 export async function POST() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  // Gate: block session creation once the user has no coaching minutes left.
+  // Mirrors the trialExhausted calculation in app/(app)/coach/page.tsx, which
+  // already hides the "start session" option in the UI at this same
+  // threshold — this is the server-side enforcement of that same limit, so a
+  // direct API call can't bypass it. Added 2026-09-17 (Chris, Telegram).
+  const admin = createAdminClient();
+  const { data: membership } = await admin
+    .from("memberships")
+    .select("coach_minutes_granted")
+    .eq("user_id", user.id)
+    .maybeSingle();
+
+  const coachLimitSeconds = (membership?.coach_minutes_granted ?? 0) * 60;
+
+  const { data: usageRows } = await supabase
+    .from("wp_sessions")
+    .select("duration_seconds")
+    .eq("user_id", user.id)
+    .eq("status", "completed");
+
+  const totalUsedSeconds = (usageRows ?? []).reduce(
+    (sum, s) => sum + ((s.duration_seconds as number | null) ?? 0),
+    0
+  );
+
+  if (coachLimitSeconds <= 0 || totalUsedSeconds >= coachLimitSeconds) {
+    return NextResponse.json({ error: "no_minutes_remaining" }, { status: 403 });
+  }
 
   // Get next session number
   const { count } = await supabase

@@ -49,7 +49,7 @@ export default function CoachTermsPage() {
           </Section>
 
           <Section label="Trial and access">
-            <Body>New users receive a free trial of 120 minutes of coaching time. Access beyond the trial may require a subscription or organisational arrangement. {companyInfo.legalName} reserves the right to change access terms with reasonable notice. Your coaching history remains accessible to you even if your trial expires.</Body>
+            <Body>Coaching time is provided through a subscription or a one-off minutes pack. {companyInfo.legalName} reserves the right to change access terms with reasonable notice. Your coaching history remains accessible to you even if your access expires.</Body>
           </Section>
 
           <Section label="Limitation of liability">
