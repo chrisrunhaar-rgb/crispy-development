@@ -10,7 +10,7 @@ import { trackPathwayStarted } from "@/lib/ga-events";
 type Pathway = "personal" | "team";
 const initialState = { error: "" };
 
-export default function SignupForm({ defaultPathway = "personal", inviteToken = "", memberInviteToken = "", initialLanguage }: { defaultPathway?: Pathway; inviteToken?: string; memberInviteToken?: string; initialLanguage?: "en" | "id" }) {
+export default function SignupForm({ defaultPathway = "personal", inviteToken = "", memberInviteToken = "", initialLanguage, redirectTo = "" }: { defaultPathway?: Pathway; inviteToken?: string; memberInviteToken?: string; initialLanguage?: "en" | "id"; redirectTo?: string }) {
   const [pathway, setPathway] = useState<Pathway>(defaultPathway);
   const [showPassword, setShowPassword] = useState(false);
   const { t, lang, setLang } = useLanguage();
@@ -45,33 +45,8 @@ export default function SignupForm({ defaultPathway = "personal", inviteToken = 
     }}>
       <div style={{ width: "100%", maxWidth: "520px" }}>
 
-        {/* ── COMING SOON BANNER ── only shown when there is NO invite token ── */}
-        {!(inviteToken || memberInviteToken) && (
-          <div style={{ marginBottom: 0, background: "oklch(22% 0.10 260)", padding: "clamp(1.75rem, 4vw, 2.5rem)", position: "relative", overflow: "hidden" }}>
-            <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "oklch(65% 0.15 45)" }} />
-            <div style={{ position: "absolute", bottom: "-40px", right: "-40px", width: "160px", height: "160px", borderRadius: "50%", border: "1px solid oklch(97% 0.005 80 / 0.05)", pointerEvents: "none" }}>
-              <div style={{ position: "absolute", top: "30px", left: "30px", right: "30px", bottom: "30px", borderRadius: "50%", border: "1px solid oklch(65% 0.15 45 / 0.1)" }} />
-            </div>
-            <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", background: "oklch(65% 0.15 45 / 0.15)", border: "1px solid oklch(65% 0.15 45 / 0.4)", padding: "0.25rem 0.75rem", marginBottom: "1rem" }}>
-              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)" }}>
-                Coming Soon
-              </span>
-            </div>
-            <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "clamp(1.25rem, 3vw, 1.625rem)", color: "oklch(97% 0.005 80)", lineHeight: 1.2, marginBottom: "0.75rem" }}>
-              Registration opens soon
-            </h2>
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(72% 0.04 260)", lineHeight: 1.65, marginBottom: "1.25rem", maxWidth: "38ch" }}>
-              We&apos;re finalising membership plans. In the meantime, explore the 4 free modules — no account needed.
-            </p>
-            <Link href="/resources" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "oklch(97% 0.005 80)", textDecoration: "none", border: "1px solid oklch(55% 0.008 260)", borderRadius: 12, padding: "0.5rem 1rem", display: "inline-block" }}>
-              Browse free resources →
-            </Link>
-          </div>
-        )}
-
-        {/* ── FORM — only shown when a valid invite token is present ── */}
-        {(inviteToken || memberInviteToken) && (
-          <>
+        {/* ── FORM — public self-serve signup, invite tokens still supported for the challenge/team flows ── */}
+        <>
             {/* Header */}
             <div style={{ marginBottom: "2.5rem" }}>
               <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.75rem" }}>{s.label}</p>
@@ -86,11 +61,10 @@ export default function SignupForm({ defaultPathway = "personal", inviteToken = 
               </p>
             </div>
 
-            {/* Pathway selection — only for the Influential Leadership Challenge's own
-                team-invite flow. A general admin invite to the personal dashboard already
-                carries its own fixed pathway (set when the invite was created) and has no
-                business asking the invitee to choose personal vs. team. */}
-            {inviteToken && (
+            {/* Pathway selection — shown for public signup and the Influential Leadership
+                Challenge's team-invite flow. A member invite already carries its own fixed
+                pathway (set when the invite was created), so it's hidden there. */}
+            {!memberInviteToken && (
               <div style={{ marginBottom: "2rem" }}>
                 <p className="form-label" style={{ marginBottom: "0.75rem" }}>{s.choosePathway}</p>
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
@@ -129,6 +103,7 @@ export default function SignupForm({ defaultPathway = "personal", inviteToken = 
               <input type="hidden" name="inviteToken" value={inviteToken} />
               <input type="hidden" name="memberInviteToken" value={memberInviteToken} />
               <input type="hidden" name="language" value={lang} />
+              <input type="hidden" name="redirectTo" value={redirectTo} />
 
               {state.error && (
                 <div style={{
@@ -235,7 +210,6 @@ export default function SignupForm({ defaultPathway = "personal", inviteToken = 
               </button>
             </form>
           </>
-        )}
 
       </div>
     </div>

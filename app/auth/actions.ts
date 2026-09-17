@@ -41,12 +41,17 @@ export async function signUp(formData: FormData) {
   const memberInviteToken = (formData.get("memberInviteToken") as string | null) ?? "";
   const marketingConsent = formData.get("marketingConsent") === "true";
   const language = (formData.get("language") as string | null) === "id" ? "id" : "en";
+  const redirectTo = (formData.get("redirectTo") as string | null) || "/dashboard";
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://crispyleaders.com";
   const callbackExtra = inviteToken ? `?invite=${inviteToken}` : memberInviteToken ? `?member_invite=${memberInviteToken}` : "";
+  // No invite/member-invite — the redirect target belongs on the callback URL
+  // itself so a brand-new self-serve signup lands back where they started
+  // (e.g. pricing) once they confirm their email, not always the dashboard.
+  const nextParam = !inviteToken && !memberInviteToken ? `next=${encodeURIComponent(redirectTo)}&` : "";
   const emailCallback = callbackExtra
     ? `${siteUrl}/auth/callback${callbackExtra}&type=signup`
-    : `${siteUrl}/auth/callback?type=signup`;
+    : `${siteUrl}/auth/callback?${nextParam}type=signup`;
 
   const { data, error } = await supabase.auth.signUp({
     email,
@@ -74,7 +79,8 @@ export async function signUp(formData: FormData) {
   }
 
   revalidatePath("/", "layout");
-  redirect("/dashboard?ga=signup");
+  const signupDest = inviteToken || memberInviteToken ? "/dashboard?joined=1" : redirectTo;
+  redirect(signupDest.includes("?") ? `${signupDest}&ga=signup` : `${signupDest}?ga=signup`);
 }
 
 export async function signOut() {

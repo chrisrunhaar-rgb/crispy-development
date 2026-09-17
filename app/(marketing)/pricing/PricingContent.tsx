@@ -34,6 +34,12 @@ function CheckoutButton({
   }, []);
 
   async function go() {
+    // Logged-out visitor: account comes first, then payment — send them to
+    // signup with the pathway pre-selected and a way back to finish checkout.
+    if (signedIn === false) {
+      window.location.href = `/signup?pathway=${plan}&redirectTo=${encodeURIComponent("/pricing")}`;
+      return;
+    }
     setStatus("loading");
     try {
       const res = await fetch("/api/checkout", {
@@ -45,6 +51,11 @@ function CheckoutButton({
           billingPeriod,
         }),
       });
+      if (res.status === 401) {
+        // signedIn hadn't resolved yet when they clicked — same redirect.
+        window.location.href = `/signup?pathway=${plan}&redirectTo=${encodeURIComponent("/pricing")}`;
+        return;
+      }
       const data = await res.json();
       if (data.checkoutUrl) {
         window.location.href = data.checkoutUrl;
@@ -140,7 +151,7 @@ function CheckoutButton({
         >
           {lang === "id" ? "Sudah punya akun? " : "Already have an account? "}
           <Link
-            href="/login?redirect=/pricing"
+            href="/login?redirectTo=/pricing"
             style={{
               color: variant === "orange" ? "oklch(82% 0.06 260)" : "oklch(32% 0.10 260)",
               fontWeight: 700,
@@ -149,7 +160,6 @@ function CheckoutButton({
           >
             {lang === "id" ? "Masuk terlebih dahulu" : "Sign in first"}
           </Link>
-          {" "}{lang === "id" ? "untuk melanjutkan ke jalur tim." : "to extend to team pathway."}
         </p>
       )}
     </div>
