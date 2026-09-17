@@ -102,6 +102,7 @@ async function handleCheckoutCompleted(admin: AdminClient, session: Stripe.Check
       stripe_customer_id: customerId,
       stripe_subscription_id: subscriptionId,
       billing_country: billingCountry,
+      billing_period: billingPeriod ?? null,
     };
 
     if (existingTeam) {
@@ -119,6 +120,16 @@ async function handleCheckoutCompleted(admin: AdminClient, session: Stripe.Check
       });
     }
 
+    // Coach minutes live per-user on `memberships`, not pooled on `teams` — the
+    // leader needs their own row same as any member. Team Annual grants 30 min
+    // to the leader at subscription time; Team Monthly grants none.
+    const leaderMembershipPatch: Record<string, unknown> = {
+      user_id: userId,
+      coach_access: billingPeriod === "annual",
+      coach_minutes_granted: billingPeriod === "annual" ? 30 : 0,
+    };
+    await admin.from("memberships").upsert(leaderMembershipPatch, { onConflict: "user_id" });
+
     // Mirror updateMemberSubscription()'s metadata convention so the team
     // leader is recognized as a leader across the rest of the app.
     const { data: existingUser } = await admin.auth.admin.getUserById(userId);
@@ -127,18 +138,18 @@ async function handleCheckoutCompleted(admin: AdminClient, session: Stripe.Check
     });
   } else {
     // Personal plan. Mirrors acceptMemberInvite()'s upsert shape.
+    // Personal Monthly = 0 coaching minutes, Personal Annual = 60, per pricing copy —
+    // always set explicitly so a bare upsert never falls through to the memberships
+    // table's stale legacy DEFAULT on coach_minutes_granted.
     const membershipPatch: Record<string, unknown> = {
       user_id: userId,
       subscription_active: true,
       stripe_customer_id: customerId,
       stripe_subscription_id: subscriptionId,
       billing_country: billingCountry,
+      coach_access: billingPeriod === "annual",
+      coach_minutes_granted: billingPeriod === "annual" ? 60 : 0,
     };
-    if (billingPeriod === "annual") {
-      // Annual Personal plan includes 60 min WayPoint AI coaching per pricing copy.
-      membershipPatch.coach_access = true;
-      membershipPatch.coach_minutes_granted = 60;
-    }
     await admin.from("memberships").upsert(membershipPatch, { onConflict: "user_id" });
 
     const { data: existingUser } = await admin.auth.admin.getUserById(userId);

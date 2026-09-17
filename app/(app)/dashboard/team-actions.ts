@@ -148,7 +148,7 @@ export async function addTeamMemberByEmail(
 
   const { data: team } = await admin
     .from("teams")
-    .select("id, leader_user_id")
+    .select("id, leader_user_id, billing_period")
     .eq("id", teamId)
     .maybeSingle();
   if (!team || team.leader_user_id !== user.id) return { error: "Not authorized" };
@@ -174,6 +174,17 @@ export async function addTeamMemberByEmail(
     .from("team_members")
     .insert({ team_id: teamId, user_id: profile.id });
   if (error) return { error: error.message };
+
+  // Coach minutes are a per-user `memberships` row, not team-pooled — Team Annual
+  // grants 30 min to every member added, Team Monthly grants none.
+  await admin.from("memberships").upsert(
+    {
+      user_id: profile.id,
+      coach_access: team.billing_period === "annual",
+      coach_minutes_granted: team.billing_period === "annual" ? 30 : 0,
+    },
+    { onConflict: "user_id" }
+  );
 
   revalidatePath("/dashboard");
   return { error: null };
