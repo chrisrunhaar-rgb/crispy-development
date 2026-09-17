@@ -72,6 +72,11 @@ export async function POST(req: NextRequest) {
       line_items: [{ price: priceId, quantity: 1 }],
       billing_address_collection: "required",
       managed_payments: { enabled: false },
+      // Generates a real Stripe Invoice for this one-off purchase (not just a
+      // charge receipt), so it shows up in the Stripe Customer Portal's
+      // "Invoice History" alongside subscription invoices — same list, same
+      // format. Chris requested this 2026-09-17 (Telegram msg 15620).
+      invoice_creation: { enabled: true },
       success_url: `${siteUrl}/coach?checkout=success`,
       cancel_url: `${siteUrl}/coach?checkout=cancelled`,
       metadata: { user_id: user.id, minute_pack: "true", pack_id: packId, minutes: String(minutes) },

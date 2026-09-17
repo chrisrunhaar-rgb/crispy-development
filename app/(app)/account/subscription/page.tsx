@@ -10,57 +10,6 @@ export const metadata = { title: "Subscription — Crispy Development" };
 const navy = "oklch(30% 0.12 260)";
 const orange = "oklch(65% 0.15 45)";
 
-type BillingHistoryItem = {
-  id: string;
-  date: number;
-  description: string;
-  amountLabel: string;
-  url: string | null;
-};
-
-// Pulls every completed Checkout Session for this customer — covers both
-// recurring subscription charges (invoice, hosted_invoice_url) and one-off
-// minute-pack purchases (payment_intent, receipt_url) in one unified list,
-// so Chris's $7.99 subscription and $10 minute pack both show up together.
-async function getBillingHistory(stripe: Stripe, customerId: string): Promise<BillingHistoryItem[]> {
-  const sessions = await stripe.checkout.sessions.list({
-    customer: customerId,
-    status: "complete",
-    limit: 20,
-    expand: ["data.invoice", "data.payment_intent.latest_charge"],
-  });
-
-  return sessions.data
-    .map((session) => {
-      const currency = (session.currency ?? "usd").toUpperCase();
-      const amount = session.amount_total ?? 0;
-      const amountLabel = `${currency} ${(amount / 100).toFixed(2)}`;
-
-      let description = "Purchase";
-      if (session.metadata?.minute_pack === "true") {
-        const minutes = session.metadata?.minutes;
-        description = minutes ? `Coaching minutes (${minutes} min)` : "Coaching minutes pack";
-      } else if (session.metadata?.plan) {
-        const plan = session.metadata.plan === "team" ? "Team" : "Personal";
-        const period = session.metadata.billing_period === "annual" ? "Annual" : "Monthly";
-        description = `${plan} ${period}`;
-      }
-
-      let url: string | null = null;
-      if (session.mode === "subscription" && session.invoice && typeof session.invoice !== "string") {
-        url = session.invoice.hosted_invoice_url ?? null;
-      } else if (session.payment_intent && typeof session.payment_intent !== "string") {
-        const charge = session.payment_intent.latest_charge;
-        if (charge && typeof charge !== "string") {
-          url = charge.receipt_url ?? null;
-        }
-      }
-
-      return { id: session.id, date: session.created, description, amountLabel, url };
-    })
-    .sort((a, b) => b.date - a.date);
-}
-
 export default async function SubscriptionPage({
   searchParams,
 }: {
@@ -93,14 +42,12 @@ export default async function SubscriptionPage({
   let canManage = false;
   let managedByLeaderNote = false;
   let subscriptionId: string | null = null;
-  let customerId: string | null = null;
 
   if (leaderTeam) {
     pathwayLabel = "Team (Leader)";
     isActive = leaderTeam.subscription_active === true;
     canManage = !!leaderTeam.stripe_customer_id;
     subscriptionId = leaderTeam.stripe_subscription_id ?? null;
-    customerId = leaderTeam.stripe_customer_id ?? null;
   } else if (memberOfTeam) {
     pathwayLabel = "Team (Member)";
     isActive = memberOfTeam.subscription_active === true;
@@ -110,7 +57,6 @@ export default async function SubscriptionPage({
     isActive = membership.subscription_active === true;
     canManage = !!membership.stripe_customer_id;
     subscriptionId = membership.stripe_subscription_id ?? null;
-    customerId = membership.stripe_customer_id ?? null;
   }
 
   // Stripe portal cancellations only take effect at period end — status stays
@@ -118,7 +64,6 @@ export default async function SubscriptionPage({
   // way to know a cancellation is pending is to ask Stripe directly here.
   let cancelAtPeriodEnd = false;
   let periodEndLabel: string | null = null;
-  let billingHistory: BillingHistoryItem[] = [];
   const restrictedKey = process.env.STRIPE_RESTRICTED_KEY;
   const stripe = restrictedKey ? new Stripe(restrictedKey, { apiVersion: "2026-08-26.dahlia" }) : null;
 
@@ -139,14 +84,6 @@ export default async function SubscriptionPage({
       }
     } catch (err) {
       console.error("Failed to fetch live Stripe subscription status:", err);
-    }
-  }
-
-  if (customerId && stripe) {
-    try {
-      billingHistory = await getBillingHistory(stripe, customerId);
-    } catch (err) {
-      console.error("Failed to fetch Stripe billing history:", err);
     }
   }
 
@@ -270,49 +207,6 @@ export default async function SubscriptionPage({
             </p>
           </div>
         ) : null}
-
-        {/* Billing history */}
-        {billingHistory.length > 0 && (
-          <div style={{ background: "oklch(100% 0 0)", border: "1px solid oklch(88% 0.008 80)", padding: "1.5rem", marginTop: "1.5rem" }}>
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(52% 0.008 260)", marginBottom: "0.75rem" }}>
-              Billing History
-            </p>
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.9rem" }}>
-              {billingHistory.map((item, i) => (
-                <div
-                  key={item.id}
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    gap: "0.75rem",
-                    paddingBottom: i === billingHistory.length - 1 ? 0 : "0.9rem",
-                    borderBottom: i === billingHistory.length - 1 ? "none" : "1px solid oklch(92% 0.005 80)",
-                  }}
-                >
-                  <div>
-                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.85rem", fontWeight: 700, color: navy, margin: 0 }}>
-                      {item.description}
-                    </p>
-                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "oklch(52% 0.008 260)", margin: "0.15rem 0 0" }}>
-                      {new Date(item.date * 1000).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })} · {item.amountLabel}
-                    </p>
-                  </div>
-                  {item.url ? (
-                    <a
-                      href={item.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: orange, textDecoration: "none", whiteSpace: "nowrap" }}
-                    >
-                      View receipt →
-                    </a>
-                  ) : null}
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
 
         {/* Ask a question */}
         <div style={{ background: "oklch(100% 0 0)", border: "1px solid oklch(88% 0.008 80)", padding: "1.5rem", marginTop: "1.5rem" }}>
