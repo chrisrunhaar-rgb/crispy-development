@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import Stripe from "stripe";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createPortalSession, submitSubscriptionQuestion } from "./actions";
@@ -21,8 +22,8 @@ export default async function SubscriptionPage({
 
   const admin = createAdminClient();
   const [{ data: membership }, { data: leaderTeam }, { data: memberRow }] = await Promise.all([
-    admin.from("memberships").select("subscription_active, stripe_customer_id").eq("user_id", user.id).maybeSingle(),
-    admin.from("teams").select("subscription_active, stripe_customer_id, name").eq("leader_user_id", user.id).maybeSingle(),
+    admin.from("memberships").select("subscription_active, stripe_customer_id, stripe_subscription_id").eq("user_id", user.id).maybeSingle(),
+    admin.from("teams").select("subscription_active, stripe_customer_id, stripe_subscription_id, name").eq("leader_user_id", user.id).maybeSingle(),
     admin.from("team_members").select("team_id").eq("user_id", user.id).maybeSingle(),
   ]);
 
@@ -40,11 +41,13 @@ export default async function SubscriptionPage({
   let isActive = false;
   let canManage = false;
   let managedByLeaderNote = false;
+  let subscriptionId: string | null = null;
 
   if (leaderTeam) {
     pathwayLabel = "Team (Leader)";
     isActive = leaderTeam.subscription_active === true;
     canManage = !!leaderTeam.stripe_customer_id;
+    subscriptionId = leaderTeam.stripe_subscription_id ?? null;
   } else if (memberOfTeam) {
     pathwayLabel = "Team (Member)";
     isActive = memberOfTeam.subscription_active === true;
@@ -53,6 +56,34 @@ export default async function SubscriptionPage({
     pathwayLabel = "Personal";
     isActive = membership.subscription_active === true;
     canManage = !!membership.stripe_customer_id;
+    subscriptionId = membership.stripe_subscription_id ?? null;
+  }
+
+  // Stripe portal cancellations only take effect at period end — status stays
+  // "active" and our webhook has no handler for that transition, so the only
+  // way to know a cancellation is pending is to ask Stripe directly here.
+  let cancelAtPeriodEnd = false;
+  let periodEndLabel: string | null = null;
+  const restrictedKey = process.env.STRIPE_RESTRICTED_KEY;
+  if (isActive && subscriptionId && restrictedKey) {
+    try {
+      const stripe = new Stripe(restrictedKey, { apiVersion: "2026-08-26.dahlia" });
+      const sub = await stripe.subscriptions.retrieve(subscriptionId);
+      // Stripe sets EITHER cancel_at_period_end (boolean) OR cancel_at (a specific
+      // timestamp) depending on how the cancellation was requested — the billing
+      // portal used here sets cancel_at, so both must be checked.
+      cancelAtPeriodEnd = sub.cancel_at_period_end === true || sub.cancel_at != null;
+      const periodEnd = sub.cancel_at ?? sub.items.data[0]?.current_period_end;
+      if (cancelAtPeriodEnd && periodEnd) {
+        periodEndLabel = new Date(periodEnd * 1000).toLocaleDateString("en-GB", {
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+        });
+      }
+    } catch (err) {
+      console.error("Failed to fetch live Stripe subscription status:", err);
+    }
   }
 
   const portalUnavailable = params?.portal === "unavailable";
@@ -119,13 +150,18 @@ export default async function SubscriptionPage({
             <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.25rem", color: navy }}>
               {pathwayLabel}
             </span>
-            <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", padding: "0.2rem 0.6rem", background: isActive ? "oklch(60% 0.15 150 / 0.12)" : "oklch(88% 0.008 80)", color: isActive ? "oklch(45% 0.15 150)" : "oklch(52% 0.008 260)", border: `1px solid ${isActive ? "oklch(60% 0.15 150 / 0.3)" : "oklch(80% 0.008 80)"}` }}>
-              {isActive ? "Active" : "Free"}
+            <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", padding: "0.2rem 0.6rem", background: !isActive ? "oklch(88% 0.008 80)" : cancelAtPeriodEnd ? "oklch(65% 0.15 45 / 0.12)" : "oklch(60% 0.15 150 / 0.12)", color: !isActive ? "oklch(52% 0.008 260)" : cancelAtPeriodEnd ? "oklch(50% 0.15 45)" : "oklch(45% 0.15 150)", border: `1px solid ${!isActive ? "oklch(80% 0.008 80)" : cancelAtPeriodEnd ? "oklch(65% 0.15 45 / 0.35)" : "oklch(60% 0.15 150 / 0.3)"}` }}>
+              {isActive ? (cancelAtPeriodEnd && periodEndLabel ? `Active until ${periodEndLabel}` : "Active") : "Free"}
             </span>
           </div>
           {pathwayLabel === "Free" && (
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(52% 0.008 260)", marginTop: "0.5rem", lineHeight: 1.6 }}>
               You have access to free resources and the Influential Leadership challenge.
+            </p>
+          )}
+          {cancelAtPeriodEnd && periodEndLabel && (
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(52% 0.008 260)", marginTop: "0.5rem", lineHeight: 1.6 }}>
+              Your subscription is cancelled and will not renew. You&apos;ll keep full access until {periodEndLabel}.
             </p>
           )}
           {managedByLeaderNote && (
