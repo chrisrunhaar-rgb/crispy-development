@@ -335,13 +335,13 @@ export default function PricingContent({ isIndonesia }: Props) {
       ? [
           "50+ modul pelatihan dengan dasbor kemajuan",
           "Dasbor pribadi + pelacakan kemajuan",
-          "Asesmen Kepribadian\nDISC\nEnneagram\n5 Bahasa Cinta\nRoda Kehidupan\nGaya Berpikir\nKarunia Rohani\nBig Five\n16 Kepribadian",
+          "Asesmen Kepribadian\nDISC - Enneagram - 5 Bahasa Cinta - Roda Kehidupan - Gaya Berpikir - Karunia Rohani - Big Five - 16 Kepribadian",
           "Konten baru saat diluncurkan",
         ]
       : [
           "50+ training modules on Cross-Cultural Leadership",
           "Personal dashboard + progress tracking",
-          "8 Personality Assessments\nDISC\nEnneagram\n5 Love Languages\nWheel of Life\nThinking Styles\nSpiritual Gifts\nBig Five\n16 Personalities",
+          "8 Personality Assessments\nDISC - Enneagram - 5 Love Languages - Wheel of Life - Thinking Styles - Spiritual Gifts - Big Five - 16 Personalities",
           "Direct access to new content as it launches",
         ],
 
@@ -371,14 +371,12 @@ export default function PricingContent({ isIndonesia }: Props) {
           "Jalur personal untuk semua 8 anggota",
           "Wawasan atas hasil tes kepribadian seluruh anggota tim Anda",
           "Dasbor tim + kontrol pemimpin",
-          "Alat kepemimpinan lintas budaya",
         ]
       : [
-          "Full personal pathway access for all 8 members of your team",
+          "Full personal pathway access for all 8 team members",
           "Insight into all team members' personality test results",
           "Unique team development journey",
           "Team dashboard + leader controls",
-          "Cross-cultural tools",
         ],
 
     teamAnnualPrice: isIndonesia ? "RP 2.990.000" : "$299",
