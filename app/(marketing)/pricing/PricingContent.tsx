@@ -89,7 +89,7 @@ function CheckoutButton({
       contact: "",
     },
     id: {
-      personal: "Mulai sekarang →",
+      personal: "MULAI SEKARANG →",
       team: "Bangun tim Anda →",
       loading: "Memuat…",
       unavailable: "Pembayaran sedang disiapkan.",
@@ -259,6 +259,7 @@ function Feature({ text, light }: { text: string; light?: boolean }) {
         fontFamily: "var(--font-montserrat)",
         fontSize: "0.875rem",
         lineHeight: 1.55,
+        whiteSpace: "pre-line",
         color: light ? "oklch(82% 0.025 260)" : "oklch(38% 0.008 260)",
       }}
     >
@@ -321,12 +322,6 @@ export default function PricingContent({ isIndonesia }: Props) {
 
   // ── Copy ────────────────────────────────────────────────────────────────
   const copy = {
-    eyebrow: id ? "Akses · Harga" : "Access · Pricing",
-    h1: id ? "Pelatihan. Coaching. Komunitas." : "Training. Coaching. Community.",
-    tagline: id
-      ? "Pelatihan, jalur, dan coaching AI untuk pemimpin lintas budaya. Siapa pun bisa bergabung."
-      : "Training, pathways, and AI coaching for cross-cultural leaders. Open to all.",
-
     toggleMonthly: id ? "Bulanan" : "Monthly",
     toggleAnnual: id ? "Tahunan" : "Annual",
 
@@ -338,16 +333,16 @@ export default function PricingContent({ isIndonesia }: Props) {
     personalMonthlyNote: id ? "Tanpa WayPoint · perpanjangan otomatis" : "No WayPoint · auto-renews",
     personalMonthlyFeatures: id
       ? [
-          "53 modul pelatihan dengan dasbor kemajuan",
+          "50+ modul pelatihan dengan dasbor kemajuan",
           "Dasbor pribadi + pelacakan kemajuan",
-          "8 asesmen personal (DISC · Enneagram · 5 Bahasa Cinta · Roda Kehidupan · Gaya Berpikir · Karunia Rohani · Big Five · 16 Kepribadian)",
+          "Asesmen Kepribadian\nDISC\nEnneagram\n5 Bahasa Cinta\nRoda Kehidupan\nGaya Berpikir\nKarunia Rohani\nBig Five\n16 Kepribadian",
           "Konten baru saat diluncurkan",
         ]
       : [
-          "53 training modules with progress dashboard",
+          "50+ training modules on Cross-Cultural Leadership",
           "Personal dashboard + progress tracking",
-          "8 personal assessments (DISC · Enneagram · 5 Love Languages · Wheel of Life · Thinking Styles · Spiritual Gifts · Big Five · 16 Personalities)",
-          "New content as it launches",
+          "8 Personality Assessments\nDISC\nEnneagram\n5 Love Languages\nWheel of Life\nThinking Styles\nSpiritual Gifts\nBig Five\n16 Personalities",
+          "Direct access to new content as it launches",
         ],
 
     personalAnnualPrice: isIndonesia ? "RP 749.000" : "$59",
@@ -374,12 +369,14 @@ export default function PricingContent({ isIndonesia }: Props) {
       ? [
           "Perjalanan pengembangan tim yang unik",
           "Jalur personal untuk semua 8 anggota",
+          "Wawasan atas hasil tes kepribadian seluruh anggota tim Anda",
           "Dasbor tim + kontrol pemimpin",
           "Alat kepemimpinan lintas budaya",
         ]
       : [
+          "Full personal pathway access for all 8 members of your team",
+          "Insight into all team members' personality test results",
           "Unique team development journey",
-          "Personal pathway for all 8 members",
           "Team dashboard + leader controls",
           "Cross-cultural tools",
         ],
@@ -437,7 +434,7 @@ export default function PricingContent({ isIndonesia }: Props) {
           },
           {
             q: "What's the difference between Monthly and Annual?",
-            a: "Monthly gives you full access to all 53 training modules without WayPoint coaching. Annual includes WayPoint AI coaching minutes and better overall value.",
+            a: "Monthly gives you full access to all 50+ training modules without WayPoint coaching. Annual includes WayPoint AI coaching minutes and better overall value.",
           },
           {
             q: "What's included in WayPoint AI coaching?",
@@ -502,93 +499,6 @@ export default function PricingContent({ isIndonesia }: Props) {
           color: oklch(22% 0.10 260);
         }
       `}} />
-
-      {/* ── HERO ──────────────────────────────────────────────────────────── */}
-      <section
-        style={{
-          background: "oklch(22% 0.10 260)",
-          paddingTop: "clamp(5rem, 9vw, 9rem)",
-          paddingBottom: "clamp(4rem, 7vw, 7rem)",
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            height: "3px",
-            background: "oklch(65% 0.15 45)",
-          }}
-        />
-        <div className="container-wide" style={{ position: "relative" }}>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "0.875rem",
-              marginBottom: "1.5rem",
-            }}
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/logo-icon-dark-badge.png"
-              alt="Crispy Development"
-              width={24}
-              height={24}
-              style={{ flexShrink: 0 }}
-            />
-            <p
-              style={{
-                fontFamily: "var(--font-montserrat)",
-                fontSize: "0.7rem",
-                fontWeight: 700,
-                letterSpacing: "0.2em",
-                textTransform: "uppercase",
-                color: "oklch(65% 0.15 45)",
-                margin: 0,
-              }}
-            >
-              {copy.eyebrow}
-            </p>
-          </div>
-          <div
-            style={{
-              width: "48px",
-              height: "2px",
-              background: "oklch(65% 0.15 45)",
-              marginBottom: "1.75rem",
-            }}
-          />
-          <h1
-            style={{
-              fontFamily: "var(--font-cormorant)",
-              fontStyle: "italic",
-              fontWeight: 600,
-              fontSize: "clamp(2rem, 4vw, 3.5rem)",
-              lineHeight: 1.1,
-              color: "oklch(97% 0.005 80)",
-              margin: "0 0 1.75rem",
-            }}
-          >
-            {copy.h1}
-          </h1>
-          <p
-            style={{
-              fontFamily: "var(--font-montserrat)",
-              fontSize: "0.9375rem",
-              lineHeight: 1.75,
-              color: "oklch(68% 0.035 260)",
-              maxWidth: "50ch",
-              margin: 0,
-            }}
-          >
-            {copy.tagline}
-          </p>
-        </div>
-      </section>
 
       {/* ── PRICING CARDS ─────────────────────────────────────────────────── */}
       <section
