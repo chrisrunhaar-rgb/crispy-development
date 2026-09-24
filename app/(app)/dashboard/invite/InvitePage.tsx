@@ -84,11 +84,11 @@ export default function InvitePage({
               Team Pathway · {team.name}
             </p>
             <h1 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.375rem", color: "oklch(97% 0.005 80)" }}>
-              Invite Members
+              {ui.invitePageTitle}
             </h1>
           </div>
           <Link href="/dashboard" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, letterSpacing: "0.06em", color: "oklch(72% 0.04 260)", textDecoration: "none" }}>
-            ← Back to Dashboard
+            {ui.backToDashboard}
           </Link>
         </div>
       </div>
@@ -111,11 +111,11 @@ export default function InvitePage({
         {/* Email invite */}
         <div style={{ marginBottom: "3rem" }}>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(52% 0.008 260)", marginBottom: "1rem" }}>
-            Send Invite by Email
+            {ui.sendInviteByEmail}
           </p>
           {emailState.sent ? (
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(40% 0.12 145)", padding: "1rem", background: "oklch(95% 0.03 145)", border: "1px solid oklch(80% 0.06 145)" }}>
-              Invitation sent successfully.
+              {ui.invitationSentSuccess}
             </p>
           ) : (
             <form action={emailAction} style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
@@ -124,7 +124,7 @@ export default function InvitePage({
                   className="form-input"
                   type="text"
                   name="recipientName"
-                  placeholder="First name"
+                  placeholder={ui.firstNamePlaceholder}
                   style={{ flex: "1 1 140px" }}
                 />
                 <input
@@ -137,7 +137,7 @@ export default function InvitePage({
                 />
               </div>
               <div className="form-field">
-                <label className="form-label" htmlFor="invite-language">Invitee&apos;s Language</label>
+                <label className="form-label" htmlFor="invite-language">{ui.inviteeLanguageLabel}</label>
                 <select
                   className="form-input"
                   id="invite-language"
@@ -155,7 +155,7 @@ export default function InvitePage({
                 disabled={emailPending}
                 style={{ fontSize: "0.85rem", opacity: emailPending ? 0.7 : 1, alignSelf: "flex-start" }}
               >
-                {emailPending ? "Sending…" : "Send Invite →"}
+                {emailPending ? ui.sendingInvite : ui.sendInviteButton}
               </button>
               {emailState.error && (
                 <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(45% 0.12 25)", margin: 0 }}>
@@ -172,7 +172,7 @@ export default function InvitePage({
         {/* Explanation */}
         <div style={{ marginBottom: "2.5rem" }}>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.7, color: "oklch(42% 0.008 260)", maxWidth: "52ch" }}>
-            Or generate a link and share it yourself. Each link is valid for 7 days and can only be used once.
+            {ui.generateLinkExplainer}
           </p>
         </div>
 
@@ -184,7 +184,7 @@ export default function InvitePage({
             disabled={generatePending}
             style={{ fontSize: "0.85rem", opacity: generatePending ? 0.7 : 1 }}
           >
-            {generatePending ? "Generating…" : "+ Generate New Invite Link"}
+            {generatePending ? ui.generating : ui.generateNewLink}
           </button>
           {generateState.error && (
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(45% 0.12 25)", marginTop: "0.75rem" }}>
@@ -197,7 +197,7 @@ export default function InvitePage({
         {activeInvites.length > 0 && (
           <div style={{ marginBottom: "3rem" }}>
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(52% 0.008 260)", marginBottom: "1rem" }}>
-              Active Links ({activeInvites.length})
+              {ui.activeLinksCount(activeInvites.length)}
             </p>
             <div style={{ display: "flex", flexDirection: "column", gap: "1px", background: "oklch(88% 0.008 80)" }}>
               {activeInvites.map(invite => {
@@ -213,7 +213,7 @@ export default function InvitePage({
                         {inviteUrl(invite.token)}
                       </code>
                       <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "oklch(58% 0.008 260)", whiteSpace: "nowrap", flexShrink: 0 }}>
-                        {daysLeft}d left
+                        {ui.daysLeftSuffix(daysLeft)}
                       </span>
                     </div>
 
@@ -230,7 +230,7 @@ export default function InvitePage({
                           padding: "0.45rem 0.875rem", cursor: "pointer", whiteSpace: "nowrap",
                         }}
                       >
-                        {isCopied ? "✓ Copied!" : "Share Link"}
+                        {isCopied ? ui.copiedShort : ui.shareLinkBtn}
                       </button>
                       <form action={deleteInviteLink} style={{ marginLeft: "auto" }}>
                         <input type="hidden" name="inviteId" value={invite.id} />
@@ -242,7 +242,7 @@ export default function InvitePage({
                             color: "oklch(58% 0.008 260)", padding: "0.45rem 0.5rem",
                           }}
                         >
-                          Revoke
+                          {ui.revoke}
                         </button>
                       </form>
                     </div>
@@ -257,13 +257,13 @@ export default function InvitePage({
         {usedInvites.length > 0 && (
           <div style={{ marginBottom: "2rem" }}>
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(52% 0.008 260)", marginBottom: "1rem" }}>
-              Used ({usedInvites.length})
+              {ui.usedCount(usedInvites.length)}
             </p>
             <div style={{ display: "flex", flexDirection: "column", gap: "1px", background: "oklch(88% 0.008 80)" }}>
               {usedInvites.map(invite => (
                 <div key={invite.id} style={{ background: "oklch(99% 0.002 80)", padding: "1rem 1.5rem", display: "flex", alignItems: "center", gap: "1rem", opacity: 0.6 }}>
                   <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "oklch(52% 0.008 260)" }}>
-                    Used on {new Date(invite.used_at!).toLocaleDateString()}
+                    {ui.usedOnDate(new Date(invite.used_at!).toLocaleDateString())}
                   </span>
                   <code style={{ fontFamily: "monospace", fontSize: "0.72rem", color: "oklch(62% 0.006 260)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                     …{invite.token.slice(-12)}
@@ -278,7 +278,7 @@ export default function InvitePage({
         {invites.length === 0 && (
           <div style={{ paddingBlock: "3rem", textAlign: "center" }}>
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", color: "oklch(55% 0.008 260)", lineHeight: 1.6, maxWidth: "36ch", margin: "0 auto" }}>
-              No invite links yet. Generate one above and share it with your team.
+              {ui.noInviteLinksYet}
             </p>
           </div>
         )}
