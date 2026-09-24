@@ -11,9 +11,11 @@ interface Props {
   email: string;
   currentLanguage?: "en" | "id";
   pathway?: string;
+  /** Set when the menu sits on a light background (site nav) instead of the navy dashboard header. */
+  onLight?: boolean;
 }
 
-export default function AccountMenu({ firstName, lastName, email, currentLanguage = "en", pathway }: Props) {
+export default function AccountMenu({ firstName, lastName, email, currentLanguage = "en", pathway, onLight = false }: Props) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -32,12 +34,16 @@ export default function AccountMenu({ firstName, lastName, email, currentLanguag
     <div ref={ref} style={{ position: "relative" }}>
       <button
         onClick={() => setOpen(o => !o)}
-        style={{ display: "flex", alignItems: "center", background: "none", border: "none", cursor: "pointer", padding: 0 }}
+        style={{ display: "flex", alignItems: "center", gap: "0.5rem", background: onLight ? "oklch(30% 0.12 260 / 0.06)" : "oklch(97% 0.005 80 / 0.08)", border: onLight ? "1px solid oklch(30% 0.12 260 / 0.2)" : "1px solid oklch(97% 0.005 80 / 0.18)", borderRadius: "999px", cursor: "pointer", padding: "3px 0.875rem 3px 3px" }}
         aria-label="Profile menu"
+        aria-expanded={open}
       >
-        <div style={{ width: "36px", height: "36px", borderRadius: "50%", background: "oklch(65% 0.15 45)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+        <div style={{ width: "30px", height: "30px", borderRadius: "50%", background: "oklch(65% 0.15 45)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
           <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "0.65rem", color: "oklch(97% 0.005 80)", letterSpacing: "0.02em" }}>{initials}</span>
         </div>
+        <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.72rem", letterSpacing: "0.04em", color: onLight ? "oklch(30% 0.12 260)" : "oklch(97% 0.005 80)", whiteSpace: "nowrap" }}>
+          {currentLanguage === "id" ? "Profil Saya" : "My Profile"} <span aria-hidden style={{ fontSize: "0.6rem", opacity: 0.7 }}>▾</span>
+        </span>
       </button>
 
       {open && (

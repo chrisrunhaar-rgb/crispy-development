@@ -174,7 +174,7 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
 
                 {/* Profile avatar with dropdown */}
                 <div className="hidden-mobile">
-                  <AccountMenu firstName={firstName!} lastName={lastName ?? undefined} email={email} currentLanguage={contentLang} />
+                  <AccountMenu firstName={firstName!} lastName={lastName ?? undefined} email={email} currentLanguage={contentLang} onLight />
                 </div>
               </>
             ) : (
