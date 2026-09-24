@@ -5,7 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createPortalSession, submitSubscriptionQuestion } from "./actions";
 
-export const metadata = { title: "Subscription — Crispy Development" };
+export const metadata = { title: "Plan & Billing — Crispy Development" };
 
 const navy = "oklch(30% 0.12 260)";
 const orange = "oklch(65% 0.15 45)";
@@ -42,12 +42,14 @@ export default async function SubscriptionPage({
   let canManage = false;
   let managedByLeaderNote = false;
   let subscriptionId: string | null = null;
+  let stripeCustomerId: string | null = null;
 
   if (leaderTeam) {
     pathwayLabel = "Team (Leader)";
     isActive = leaderTeam.subscription_active === true;
     canManage = !!leaderTeam.stripe_customer_id;
     subscriptionId = leaderTeam.stripe_subscription_id ?? null;
+    stripeCustomerId = leaderTeam.stripe_customer_id ?? null;
   } else if (memberOfTeam) {
     pathwayLabel = "Team (Member)";
     isActive = memberOfTeam.subscription_active === true;
@@ -57,7 +59,13 @@ export default async function SubscriptionPage({
     isActive = membership.subscription_active === true;
     canManage = !!membership.stripe_customer_id;
     subscriptionId = membership.stripe_subscription_id ?? null;
+    stripeCustomerId = membership.stripe_customer_id ?? null;
   }
+
+  // A lifetime purchase creates a Stripe customer (for the invoice) but never
+  // a subscription — that's the one reliable way to tell it apart here from
+  // a legacy Monthly/Annual subscriber, who still has a stripe_subscription_id.
+  const isLifetime = isActive && !!stripeCustomerId && !subscriptionId;
 
   // Stripe portal cancellations only take effect at period end — status stays
   // "active" and our webhook has no handler for that transition, so the only
@@ -87,6 +95,30 @@ export default async function SubscriptionPage({
     }
   }
 
+  // Lifetime purchases have no subscription to manage, but `invoice_creation`
+  // was enabled at checkout, so the receipt lives on a Stripe invoice tied to
+  // the customer — fetch it to show directly on the page instead of sending
+  // the user into the (subscription-oriented) Billing Portal.
+  let invoice: { hostedUrl: string | null; pdfUrl: string | null; date: string | null; amount: string | null } | null = null;
+  if (isLifetime && stripeCustomerId && stripe) {
+    try {
+      const invoices = await stripe.invoices.list({ customer: stripeCustomerId, limit: 1 });
+      const inv = invoices.data[0];
+      if (inv) {
+        invoice = {
+          hostedUrl: inv.hosted_invoice_url ?? null,
+          pdfUrl: inv.invoice_pdf ?? null,
+          date: inv.created
+            ? new Date(inv.created * 1000).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })
+            : null,
+          amount: inv.total != null ? `${(inv.total / 100).toFixed(2)} ${inv.currency?.toUpperCase() ?? ""}`.trim() : null,
+        };
+      }
+    } catch (err) {
+      console.error("Failed to fetch lifetime purchase invoice:", err);
+    }
+  }
+
   const portalUnavailable = params?.portal === "unavailable";
   const checkoutSuccess = params?.checkout === "success";
   const questionSent = params?.question === "sent";
@@ -104,7 +136,7 @@ export default async function SubscriptionPage({
         </Link>
 
         <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: orange, marginBottom: "0.5rem" }}>
-          My Subscription
+          {isLifetime ? "My Purchase" : "My Subscription"}
         </p>
         <h1 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.75rem", color: navy, marginBottom: "2rem", lineHeight: 1.2 }}>
           Plan & Billing
@@ -113,7 +145,9 @@ export default async function SubscriptionPage({
         {checkoutSuccess && (
           <div style={{ background: "oklch(65% 0.15 45 / 0.1)", border: "1px solid oklch(65% 0.15 45 / 0.3)", padding: "1rem 1.25rem", marginBottom: "1.5rem" }}>
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: navy, margin: 0 }}>
-              Thanks — your subscription is being set up. This page will reflect it shortly.
+              {isLifetime
+                ? "Thanks — your purchase is complete. You have permanent access."
+                : "Thanks — your purchase is being set up. This page will reflect it shortly."}
             </p>
           </div>
         )}
@@ -172,8 +206,46 @@ export default async function SubscriptionPage({
           )}
         </div>
 
-        {/* Manage / cancel */}
-        {canManage ? (
+        {/* Purchase receipt (lifetime) / manage-and-cancel (legacy subscription) */}
+        {isLifetime ? (
+          <div style={{ background: "oklch(100% 0 0)", border: "1px solid oklch(88% 0.008 80)", padding: "1.5rem" }}>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(52% 0.008 260)", marginBottom: "0.75rem" }}>
+              Your Invoice
+            </p>
+            {invoice ? (
+              <>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.85rem", color: navy, margin: 0 }}>
+                  {invoice.amount ? `${invoice.amount} — one-time purchase` : "One-time purchase"}
+                  {invoice.date ? `, ${invoice.date}` : ""}
+                </p>
+                <div style={{ display: "flex", gap: "0.75rem", marginTop: "1rem" }}>
+                  <a
+                    href={invoice.hostedUrl ?? invoice.pdfUrl ?? "#"}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ flex: 1, textAlign: "center", fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.85rem", color: "#fff", background: navy, padding: "0.9rem 1.5rem", textDecoration: "none" }}
+                  >
+                    View invoice
+                  </a>
+                  {invoice.pdfUrl && (
+                    <a
+                      href={invoice.pdfUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ flex: 1, textAlign: "center", fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.85rem", color: navy, background: "#fff", border: `1px solid ${navy}`, padding: "0.9rem 1.5rem", textDecoration: "none" }}
+                    >
+                      Download PDF
+                    </a>
+                  )}
+                </div>
+              </>
+            ) : (
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(52% 0.008 260)", margin: 0, lineHeight: 1.6 }}>
+                Your invoice will appear here shortly. If it doesn&apos;t show up within a day, ask us below.
+              </p>
+            )}
+          </div>
+        ) : canManage ? (
           <form action={createPortalSession}>
             <button
               type="submit"
@@ -211,7 +283,7 @@ export default async function SubscriptionPage({
         {/* Ask a question */}
         <div style={{ background: "oklch(100% 0 0)", border: "1px solid oklch(88% 0.008 80)", padding: "1.5rem", marginTop: "1.5rem" }}>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(52% 0.008 260)", marginBottom: "0.75rem" }}>
-            Questions about your subscription?
+            {isLifetime ? "Questions about your purchase?" : "Questions about your subscription?"}
           </p>
           <form action={submitSubscriptionQuestion}>
             <textarea
