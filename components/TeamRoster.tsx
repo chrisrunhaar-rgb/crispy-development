@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import Link from "next/link";
 import {
   updateTeamMemberProfile,
   removeTeamMember,
@@ -20,17 +21,27 @@ export type RosterMember = {
 type Lang = "en" | "id";
 function r(lang: Lang): TeamLang { return lang === "id" ? "id" : "en"; }
 
-const SHARE_COPY: Record<Lang, (teamName: string, url: string) => { title: string; text: string; whatsapp: string }> = {
-  en: (teamName, url) => ({
-    title: `Join ${teamName} on Crispy Development`,
-    text: `Your leader has a seat for you.\n\n${teamName} is building something — Crispy Development is where cross-cultural leaders grow. Your team is ready and waiting.\n\n👉 ${url}`,
-    whatsapp: encodeURIComponent(`Your leader has a seat for you.\n\n${teamName} is building something — Crispy Development is where cross-cultural leaders grow. Your team is ready and waiting.\n\n👉 ${url}`),
-  }),
-  id: (teamName, url) => ({
-    title: `Bergabunglah dengan ${teamName} di Crispy Development`,
-    text: `Pemimpinmu sudah menyiapkan tempat untukmu.\n\n${teamName} sedang membangun sesuatu — Crispy Development adalah tempat pemimpin lintas budaya bertumbuh. Timmu sudah menunggu.\n\n👉 ${url}`,
-    whatsapp: encodeURIComponent(`Pemimpinmu sudah menyiapkan tempat untukmu.\n\n${teamName} sedang membangun sesuatu — Crispy Development adalah tempat pemimpin lintas budaya bertumbuh. Timmu sudah menunggu.\n\n👉 ${url}`),
-  }),
+// leaderName falls back to "[LEADER_NAME]" if missing, so a bad data state is
+// obvious rather than silently reading as generic.
+const SHARE_COPY: Record<Lang, (leaderName: string | undefined, teamName: string, url: string) => { title: string; text: string; whatsapp: string }> = {
+  en: (leaderName, teamName, url) => {
+    const leader = leaderName?.trim() || "[LEADER_NAME]";
+    const body = `${leader} invited you to join ${teamName} on Crispy Development, where cross-cultural leaders grow together. Your seat is ready.\n\n👉 ${url}`;
+    return {
+      title: `Join ${teamName} on Crispy Development`,
+      text: body,
+      whatsapp: encodeURIComponent(body),
+    };
+  },
+  id: (leaderName, teamName, url) => {
+    const leader = leaderName?.trim() || "[LEADER_NAME]";
+    const body = `${leader} mengundang Anda untuk bergabung dengan ${teamName} di Crispy Development, tempat para pemimpin lintas budaya bertumbuh bersama. Tempat Anda sudah siap.\n\n👉 ${url}`;
+    return {
+      title: `Bergabunglah dengan ${teamName} di Crispy Development`,
+      text: body,
+      whatsapp: encodeURIComponent(body),
+    };
+  },
 };
 
 export default function TeamRoster({
@@ -92,7 +103,7 @@ export default function TeamRoster({
       alert(error ?? "Could not generate invite link.");
       return;
     }
-    const copy = SHARE_COPY[language](teamName, url);
+    const copy = SHARE_COPY[language](leaderName, teamName, url);
 
     if (typeof navigator !== "undefined" && navigator.share && navigator.canShare?.({ title: copy.title, text: copy.text, url })) {
       try {
@@ -249,6 +260,14 @@ export default function TeamRoster({
                   ))}
                 </div>
               </div>
+            )}
+            {isLeader && (
+              <Link
+                href="/dashboard/invite"
+                style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(66% 0.04 260)", textDecoration: "underline", textUnderlineOffset: "2px", whiteSpace: "nowrap" }}
+              >
+                {TEAM_UI[r(language)].manageInvites}
+              </Link>
             )}
             {isLeader && (
               isFull ? (

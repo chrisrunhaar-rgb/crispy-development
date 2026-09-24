@@ -136,60 +136,6 @@ export async function updateTeamAssessments(
   return { error: null };
 }
 
-export async function addTeamMemberByEmail(
-  teamId: string,
-  email: string
-): Promise<{ error: string | null }> {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return { error: "Not authenticated" };
-
-  const admin = createAdminClient();
-
-  const { data: team } = await admin
-    .from("teams")
-    .select("id, leader_user_id, billing_period")
-    .eq("id", teamId)
-    .maybeSingle();
-  if (!team || team.leader_user_id !== user.id) return { error: "Not authorized" };
-
-  // Look up user by email in profiles
-  const { data: profile } = await admin
-    .from("profiles")
-    .select("id")
-    .eq("email", email.trim().toLowerCase())
-    .maybeSingle();
-  if (!profile) return { error: "No account found with that email. They must sign up first." };
-
-  // Check not already a member
-  const { data: existing } = await admin
-    .from("team_members")
-    .select("user_id")
-    .eq("team_id", teamId)
-    .eq("user_id", profile.id)
-    .maybeSingle();
-  if (existing) return { error: "This person is already in the team." };
-
-  const { error } = await admin
-    .from("team_members")
-    .insert({ team_id: teamId, user_id: profile.id });
-  if (error) return { error: error.message };
-
-  // Coach minutes are a per-user `memberships` row, not team-pooled — Team Annual
-  // grants 30 min to every member added, Team Monthly grants none.
-  await admin.from("memberships").upsert(
-    {
-      user_id: profile.id,
-      coach_access: team.billing_period === "annual",
-      coach_minutes_granted: team.billing_period === "annual" ? 30 : 0,
-    },
-    { onConflict: "user_id" }
-  );
-
-  revalidatePath("/dashboard");
-  return { error: null };
-}
-
 export async function removeTeamMember(
   teamId: string,
   memberId: string

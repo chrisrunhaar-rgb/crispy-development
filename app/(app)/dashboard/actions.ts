@@ -97,6 +97,28 @@ export async function removeTeamContent(formData: FormData) {
 
 // ── Team Invite Actions ────────────────────────────────────────────────────
 
+// Shared row-creation logic for the two "quick" invite-link generators below
+// (generateInviteLink and generateInviteAndGetUrl). Both used to duplicate this
+// token + 7-day-expiry + team_invites insert independently — now there's exactly
+// one place that creates a team_invites row for this flow.
+// (sendEmailInvite has its own near-identical block; left untouched — its extra
+// language-selection logic makes it a distinct, out-of-scope case.)
+async function createTeamInvite(
+  admin: ReturnType<typeof createAdminClient>,
+  leaderUserId: string
+): Promise<{ token: string | null; error: string | null }> {
+  const token = crypto.randomUUID();
+  const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
+
+  // team_invites.team_id FK references auth.users(id) — must use the leader's user ID
+  const { error } = await admin
+    .from("team_invites")
+    .insert({ team_id: leaderUserId, token, expires_at: expiresAt });
+
+  if (error) return { token: null, error: error.message };
+  return { token, error: null };
+}
+
 export async function generateInviteLink(formData: FormData) {
   const supabase = await createClient();
   const admin = createAdminClient();
@@ -111,16 +133,8 @@ export async function generateInviteLink(formData: FormData) {
     .maybeSingle();
   if (!team) throw new Error("Unauthorized");
 
-  // Generate a secure token and set expiry 7 days from now
-  const token = crypto.randomUUID();
-  const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
-
-  // team_invites.team_id FK references auth.users(id) — must use the leader's user ID
-  const { error } = await admin
-    .from("team_invites")
-    .insert({ team_id: user.id, token, expires_at: expiresAt });
-
-  if (error) return { error: error.message };
+  const { error } = await createTeamInvite(admin, user.id);
+  if (error) return { error };
 
   revalidatePath("/dashboard/invite");
   return { error: null };
@@ -139,14 +153,8 @@ export async function generateInviteAndGetUrl(): Promise<{ url: string | null; e
     .maybeSingle();
   if (!team) return { url: null, error: "No team found" };
 
-  const token = crypto.randomUUID();
-  const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
-
-  const { error } = await admin
-    .from("team_invites")
-    .insert({ team_id: user.id, token, expires_at: expiresAt });
-
-  if (error) return { url: null, error: error.message };
+  const { token, error } = await createTeamInvite(admin, user.id);
+  if (error || !token) return { url: null, error: error ?? "Failed to create invite." };
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://crispyleaders.com";
   return { url: `${siteUrl}/invite/${token}`, error: null };

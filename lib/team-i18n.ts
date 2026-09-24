@@ -55,6 +55,7 @@ export const TEAM_UI = {
     people: "people",
     teamLanguageLabel: "Team Language",
     inviteMember: "+ Invite Member",
+    manageInvites: "Manage Invites",
     generating: "Generating…",
     teamAlone: "Your team is just you for now.",
     teamAloneHint: "Use + Invite Member above to bring someone in.",
@@ -89,7 +90,14 @@ export const TEAM_UI = {
     // TeamMemberDashboard intro
     memberIntroWithLeader: (name: string) => `${name} created this journey for your team.`,
     memberIntroNoLeader: "Your team leader created this journey for your team.",
-    memberIntroContinue: "Each member works through each step at the same pace. You will receive a notification when the next step is unlocked. Enjoy the journey!",
+    memberIntroContinue: "Everyone moves through the steps together, at the same pace. You'll be notified the moment the next one unlocks. Enjoy the journey!",
+    memberVisibilityExplainer: "Your results and reflections here are visible to your team and your leader. Everything else on your dashboard works just like it would for someone doing this solo. Your team leader invited you here specifically, and they're expecting you to engage, not just sign up and disappear.",
+    // InvitePage
+    inviteShareTitle: (team: string) => `You're invited to ${team}`,
+    inviteShareTextWithLeader: (leader: string, team: string) => `${leader} invited you to join ${team} on Crispy Development, where cross-cultural leaders grow together. Your seat is ready.`,
+    inviteShareTextNoLeader: (team: string) => `You're invited to join ${team} on Crispy Development, where cross-cultural leaders grow together. Your seat is ready.`,
+    beforeInviteEyebrow: "Before You Invite",
+    beforeInviteBody: "Once someone joins, their assessment results and reflections are visible to the whole team, including you. Shared visibility is what makes Team Pathway work: you grow together in the open, not separately. Invite people who are ready for that kind of honesty with their team.",
     // TeamLeaderDashboard fallback
     settingUpTeam: "Setting up your team...",
     applicationApproved: "Your application has been approved. Your team dashboard will be ready shortly.",
@@ -159,6 +167,7 @@ export const TEAM_UI = {
     people: "orang",
     teamLanguageLabel: "Bahasa Tim",
     inviteMember: "+ Undang Anggota",
+    manageInvites: "Kelola Undangan",
     generating: "Membuat…",
     teamAlone: "Tim Anda hanya Anda saat ini.",
     teamAloneHint: "Gunakan tombol + Undang Anggota di atas untuk mengajak seseorang.",
@@ -193,7 +202,14 @@ export const TEAM_UI = {
     // TeamMemberDashboard intro
     memberIntroWithLeader: (name: string) => `${name} telah membuat perjalanan ini untuk tim Anda.`,
     memberIntroNoLeader: "Pemimpin tim Anda telah membuat perjalanan ini untuk tim Anda.",
-    memberIntroContinue: "Setiap anggota mengerjakan langkah bersama. Anda akan diberi tahu saat langkah berikutnya dibuka. Selamat menikmati perjalanan!",
+    memberIntroContinue: "Semua anggota melangkah bersama, dengan kecepatan yang sama. Anda akan diberi tahu saat langkah berikutnya dibuka. Selamat menikmati perjalanan!",
+    memberVisibilityExplainer: "Hasil dan refleksi Anda di sini dapat dilihat oleh tim dan pemimpin Anda. Semua fitur lain di dashboard Anda tetap berfungsi penuh, sama seperti pengguna yang menjalani ini sendirian. Pemimpin tim Anda mengundang Anda secara khusus, dan mereka menantikan keterlibatan Anda, bukan sekadar Anda mendaftar lalu menghilang.",
+    // InvitePage
+    inviteShareTitle: (team: string) => `Anda diundang ke ${team}`,
+    inviteShareTextWithLeader: (leader: string, team: string) => `${leader} mengundang Anda untuk bergabung dengan ${team} di Crispy Development, tempat para pemimpin lintas budaya bertumbuh bersama. Tempat Anda sudah siap.`,
+    inviteShareTextNoLeader: (team: string) => `Anda diundang untuk bergabung dengan ${team} di Crispy Development, tempat para pemimpin lintas budaya bertumbuh bersama. Tempat Anda sudah siap.`,
+    beforeInviteEyebrow: "Sebelum Anda Mengundang",
+    beforeInviteBody: "Setelah seseorang bergabung, hasil asesmen dan refleksinya akan terlihat oleh seluruh tim, termasuk Anda. Keterbukaan inilah yang membuat Jalur Tim berjalan efektif: Anda bertumbuh bersama secara terbuka, bukan sendiri-sendiri. Undang orang-orang yang siap untuk kejujuran itu dengan timnya.",
     // TeamLeaderDashboard fallback
     settingUpTeam: "Menyiapkan tim Anda...",
     applicationApproved: "Lamaran Anda telah disetujui. Dasbor tim Anda akan segera siap.",

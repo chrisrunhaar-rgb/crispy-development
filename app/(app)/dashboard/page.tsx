@@ -7,7 +7,6 @@ import AccountMenu from "@/components/AccountMenu";
 import ContactCoach from "@/components/ContactCoach";
 import AddTeamContentForm from "@/components/AddTeamContentForm";
 import SendNotificationForm from "@/components/SendNotificationForm";
-import InviteButton from "@/components/InviteButton";
 import { RESOURCES } from "@/lib/resources-data";
 import ResourceCard from "@/components/ResourceCard";
 import AssessmentTileGrid from "./AssessmentTileGrid";
@@ -1149,6 +1148,9 @@ function TeamMemberDashboard({
         <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", color: "oklch(30% 0.10 260)", lineHeight: 1.7, margin: 0 }}>
           {leaderName ? ui.memberIntroWithLeader(leaderName) : ui.memberIntroNoLeader}{" "}
           {ui.memberIntroContinue}
+        </p>
+        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", color: "oklch(30% 0.10 260)", lineHeight: 1.7, margin: "0.875rem 0 0 0" }}>
+          {ui.memberVisibilityExplainer}
         </p>
       </div>
 

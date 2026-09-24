@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState, useActionState } from "react";
 import { generateInviteLink, deleteInviteLink, sendEmailInvite } from "@/app/(app)/dashboard/actions";
+import { TEAM_UI, type TeamLang } from "@/lib/team-i18n";
 
 type Invite = {
   id: string;
@@ -17,12 +18,17 @@ export default function InvitePage({
   invites,
   siteUrl,
   teamLanguage = "en",
+  leaderName,
+  showIntro = false,
 }: {
   team: { id: string; name: string };
   invites: Invite[];
   siteUrl: string;
   teamLanguage?: "en" | "id";
+  leaderName?: string;
+  showIntro?: boolean;
 }) {
+  const ui = TEAM_UI[teamLanguage as TeamLang];
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [generateState, generateAction, generatePending] = useActionState(
     async (_prev: { error: string | null }, formData: FormData) => {
@@ -45,9 +51,10 @@ export default function InvitePage({
 
   async function handleShare(token: string, id: string) {
     const url = inviteUrl(token);
+    const leader = leaderName?.trim();
     const shareData = {
-      title: `Join ${team.name} on Crispy Development`,
-      text: `You're invited to join our team on Crispy Development, a cross-cultural leadership platform.`,
+      title: ui.inviteShareTitle(team.name),
+      text: leader ? ui.inviteShareTextWithLeader(leader, team.name) : ui.inviteShareTextNoLeader(team.name),
       url,
     };
     if (navigator.share && navigator.canShare?.(shareData)) {
@@ -87,6 +94,19 @@ export default function InvitePage({
       </div>
 
       <div className="container-wide" style={{ paddingBlock: "3rem", maxWidth: "680px" }}>
+
+        {/* First-run leader explainer — shown once, gated server-side on
+            teams.invite_intro_seen. Persistent, no dismiss control by design. */}
+        {showIntro && (
+          <div style={{ marginBottom: "2.5rem", padding: "1.25rem 1.5rem", background: "oklch(97% 0.010 50)", border: "1px solid oklch(88% 0.030 50)", borderRadius: "6px" }}>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.5rem" }}>
+              {ui.beforeInviteEyebrow}
+            </p>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.6, color: "oklch(18% 0 0)", margin: 0 }}>
+              {ui.beforeInviteBody}
+            </p>
+          </div>
+        )}
 
         {/* Email invite */}
         <div style={{ marginBottom: "3rem" }}>
