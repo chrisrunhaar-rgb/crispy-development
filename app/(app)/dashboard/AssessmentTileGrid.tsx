@@ -1437,6 +1437,43 @@ function getTitle(key: string, lang: "en" | "id"): string {
 
 // â”€â”€ Tile components â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
+// Free-account overlay: a tilted orange "Members Only" ribbon across the tile.
+// The whole tile becomes a link to the pricing page.
+function MembersOnlyBanner({ lang = "en" }: { lang?: "en" | "id" }) {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <Link
+      href="/pricing"
+      aria-label={lang === "id" ? "Khusus anggota. Mulai keanggotaan" : "Members only. Start a membership"}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onClick={e => e.stopPropagation()}
+      style={{ position: "absolute", inset: 0, zIndex: 3, borderRadius: 12, overflow: "hidden", background: hovered ? "oklch(97% 0.005 80 / 0.35)" : "transparent", transition: "background 0.2s ease" }}
+    >
+      <span style={{
+        position: "absolute",
+        top: "50%",
+        left: "-15%",
+        width: "130%",
+        transform: `translateY(-50%) rotate(-8deg) scale(${hovered ? 1.04 : 1})`,
+        transition: "transform 0.2s ease",
+        background: orange,
+        color: "white",
+        textAlign: "center",
+        padding: "0.45rem 0",
+        fontFamily: "var(--font-montserrat)",
+        fontSize: "0.68rem",
+        fontWeight: 800,
+        letterSpacing: "0.14em",
+        textTransform: "uppercase",
+        boxShadow: "0 4px 14px oklch(45% 0.12 45 / 0.35)",
+      }}>
+        {lang === "id" ? "Khusus Anggota" : "Members Only"}
+      </span>
+    </Link>
+  );
+}
+
 function CompactTile({
   title,
   visual,
@@ -1513,9 +1550,10 @@ function CompactTile({
         {visual}
       </div>
 
-      {!done && href && (
+      {!done && !isSubscriber && <MembersOnlyBanner lang={lang} />}
+      {!done && href && isSubscriber && (
         <Link
-          href={isSubscriber ? href : "/personal"}
+          href={href}
           style={{
             fontFamily: "var(--font-montserrat)",
             fontSize: "0.62rem",
@@ -1623,9 +1661,10 @@ function WheelLifeTile({
             {visual}
           </div>
 
-          {!done && (
+          {!done && !isSubscriber && <MembersOnlyBanner lang={lang} />}
+          {!done && isSubscriber && (
             <Link
-              href={isSubscriber ? "/resources/wheel-of-life" : "/personal"}
+              href="/resources/wheel-of-life"
               style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, color: isSubscriber ? "oklch(42% 0.08 260)" : "oklch(55% 0.10 45)", textDecoration: "none", alignSelf: "flex-end" }}
               onClick={e => e.stopPropagation()}
             >
