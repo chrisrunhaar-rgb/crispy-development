@@ -408,39 +408,52 @@ body {
 
 .pathway-option {
   border: 1.5px solid oklch(88% 0.008 80);
-  padding: 1.25rem 1.25rem;
+  padding: 1.5rem 1.25rem;
   cursor: pointer;
   transition: border-color 0.15s ease, background 0.15s ease;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
+  text-align: center;
   gap: 0.75rem;
+  position: relative;
 }
 
-.pathway-option:hover,
-.pathway-option.selected {
+.pathway-option:hover {
   border-color: oklch(30% 0.12 260);
   background: oklch(30% 0.12 260 / 0.04);
+}
+
+/* Selected = solid brand-orange fill, matching the dashboard's Personal/Team tab
+   pill precedent (background: oklch(65% 0.15 45), white content). Higher specificity
+   than :hover above, so a selected tile stays orange even while the pointer is on it. */
+.pathway-option.selected {
+  border-color: oklch(65% 0.15 45);
+  background: oklch(65% 0.15 45);
 }
 
 .pathway-option:focus-within {
-  border-color: oklch(30% 0.12 260);
-  background: oklch(30% 0.12 260 / 0.04);
   outline: 2px solid oklch(30% 0.12 260);
   outline-offset: 2px;
 }
 
-.pathway-option-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-}
-
 .pathway-icon {
   display: flex;
-  color: oklch(30% 0.12 260);
-  flex-shrink: 0;
+  transition: color 0.15s ease;
+}
+
+/* Keeps the radio input in the DOM for native keyboard/screen-reader semantics —
+   the browser-drawn dot is what Chris wanted gone, not the control itself. */
+.pathway-radio-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* ── DASHBOARD ── */

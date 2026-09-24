@@ -10,29 +10,27 @@ import { trackPathwayStarted } from "@/lib/ga-events";
 type Pathway = "personal" | "team";
 const initialState = { error: "" };
 
-// Hand-drawn pathway icons — matched to the project's existing lucide-react stroke
-// aesthetic (24x24 viewBox, currentColor, strokeWidth 1.75, round caps/joins) but
-// authored as plain SVG so the imagery can be brand-specific rather than a generic
-// icon-library glyph. Both share one visual grammar — a node riding a path — so the
-// pairing reads as a matched set: Personal is a single node on its own ascending
-// path; Team is three nodes converging up two paths to one apex, i.e. people
-// coming together toward a shared summit. Deliberately not multi-person clipart.
-function PersonalPathIcon({ size = 22 }: { size?: number }) {
+// Same icons as the dashboard's Personal/Team tab toggle (app/(app)/dashboard/page.tsx)
+// — identical viewBox and path/circle data, just scaled up for the larger tile. Kept
+// in sync deliberately so a user sees the same glyph on signup and inside the app.
+function PersonalPathIcon({ size = 32 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M4.5 18.5c1.8-.3 3.4-1.1 4.6-2.3 1.2-1.2 2-2.8 2.3-4.6" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
-      <circle cx="12.5" cy="10.5" r="2.25" fill="currentColor" />
+    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <circle cx="8" cy="5" r="3" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M2 14c0-3.314 2.686-5 6-5s6 1.686 6 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
     </svg>
   );
 }
 
-function TeamPathIcon({ size = 22 }: { size?: number }) {
+function TeamPathIcon({ size = 32 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M6 17.5 12 9.5 18 17.5" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
-      <circle cx="6" cy="17.5" r="1.6" fill="currentColor" />
-      <circle cx="18" cy="17.5" r="1.6" fill="currentColor" />
-      <circle cx="12" cy="9.5" r="1.6" fill="currentColor" />
+    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <circle cx="8" cy="4.5" r="2.5" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M3.5 14c0-2.485 2.015-4.5 4.5-4.5s4.5 2.015 4.5 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      <circle cx="3.5" cy="6" r="2" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M1 14c0-2.2 1.1-3.5 2.5-3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      <circle cx="12.5" cy="6" r="2" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M15 14c0-2.2-1.1-3.5-2.5-3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
     </svg>
   );
 }
@@ -95,35 +93,40 @@ export default function SignupForm({ defaultPathway = "personal", inviteToken = 
               <div style={{ marginBottom: "2rem" }}>
                 <p className="form-label" style={{ marginBottom: "0.75rem" }}>{s.choosePathway}</p>
                 <div className="pathway-grid">
-                  {(["personal", "team"] as const).map((p) => (
-                    <label
-                      key={p}
-                      className={`pathway-option${pathway === p ? " selected" : ""}`}
-                      onClick={() => { setPathway(p); trackPathwayStarted(p); }}
-                    >
-                      <div className="pathway-option-top">
-                        <span className="pathway-icon">
-                          {p === "personal" ? <PersonalPathIcon /> : <TeamPathIcon />}
-                        </span>
+                  {(["personal", "team"] as const).map((p) => {
+                    const isSelected = pathway === p;
+                    return (
+                      <label
+                        key={p}
+                        className={`pathway-option${isSelected ? " selected" : ""}`}
+                        onClick={() => { setPathway(p); trackPathwayStarted(p); }}
+                      >
+                        {/* Visually hidden, not removed — keeps native radio-group keyboard
+                            and screen-reader semantics. The dot Chris flagged was the input's
+                            default browser-drawn appearance, not this element itself. */}
                         <input
                           type="radio"
                           name="pathway-visual"
                           value={p}
-                          checked={pathway === p}
+                          checked={isSelected}
                           onChange={() => setPathway(p)}
-                          style={{ accentColor: "oklch(30% 0.12 260)", flexShrink: 0 }}
+                          aria-label={p === "personal" ? s.personalTitle : s.teamTitle}
+                          className="pathway-radio-sr"
                         />
-                      </div>
-                      <div>
-                        <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.9375rem", color: "oklch(22% 0.005 260)", marginBottom: "0.25rem" }}>
-                          {p === "personal" ? s.personalTitle : s.teamTitle}
-                        </p>
-                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(52% 0.008 260)", lineHeight: 1.5 }}>
-                          {p === "personal" ? s.personalDesc : s.teamDesc}
-                        </p>
-                      </div>
-                    </label>
-                  ))}
+                        <span className="pathway-icon" style={{ color: isSelected ? "white" : "oklch(30% 0.12 260)" }}>
+                          {p === "personal" ? <PersonalPathIcon /> : <TeamPathIcon />}
+                        </span>
+                        <div style={{ textAlign: "center" }}>
+                          <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.9375rem", color: isSelected ? "white" : "oklch(22% 0.005 260)", marginBottom: "0.25rem" }}>
+                            {p === "personal" ? s.personalTitle : s.teamTitle}
+                          </p>
+                          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: isSelected ? "white" : "oklch(52% 0.008 260)", lineHeight: 1.5 }}>
+                            {p === "personal" ? s.personalDesc : s.teamDesc}
+                          </p>
+                        </div>
+                      </label>
+                    );
+                  })}
                 </div>
               </div>
             )}
