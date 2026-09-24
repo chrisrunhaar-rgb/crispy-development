@@ -223,6 +223,13 @@ export default async function DashboardPage({
   const challengeCurrentDay = (challengeRow as { current_day: number; status: string; path: string } | null)?.current_day ?? null;
   const challengePath = (challengeRow as { current_day: number; status: string; path: string } | null)?.path ?? null;
 
+  const { data: journeyRows } = await admin
+    .from("journey_step_completions")
+    .select("step_number")
+    .eq("user_id", viewingUserId);
+  const journeyDoneSet = new Set((journeyRows ?? []).map((r: { step_number: number }) => r.step_number));
+  const journeyNextStep = Array.from({ length: 60 }, (_, i) => i + 1).find(n => !journeyDoneSet.has(n)) ?? null;
+
   const { data: facilitatorGroups } = await admin
     .from("challenge_groups")
     .select("id, name")
@@ -655,7 +662,7 @@ export default async function DashboardPage({
           <>
             {pathway === "team" && teamApplicationStatus === "pending" && <TeamApplicationPending firstName={firstName} lang={languagePreference} />}
             {pathway === "team" && !teamApplicationStatus && <TeamApplicationPrompt lang={languagePreference} />}
-            <PersonalDashboard modules={modules} completedIds={completedIds} savedResources={savedResources} resourceNotes={resourceNotes} resourceRatings={resourceRatings} resourceRead={resourceRead} completedAssessments={completedAssessments} thinkingStyleResult={thinkingStyleResult} thinkingStyleScores={thinkingStyleScores} discResult={discResult} discScores={discScores} wheelOfLifeScores={wheelOfLifeScores} wheelReflections={wheelReflections} karuniaTopGifts={karuniaTopGifts} karuniaScores={karuniaScores} enneagramType={enneagramType} enneagramScores={enneagramScores} bigFiveScores={bigFiveScores} personalities16Type={personalities16Type} personalities16Scores={personalities16Scores} fivelaReceivingResult={fivelaReceivingResult} fivelaGivingResult={fivelaGivingResult} fivelaReceivingScores={fivelaReceivingScores} fivelaGivingScores={fivelaGivingScores} languagePreference={languagePreference} challengeCurrentDay={challengeCurrentDay} isFacilitator={!!facilitatorGroup} challengePath={challengePath} dashboardFirstName={firstName} isSubscriber={isSubscriber} raftPlan={raftPlan} smartGoals={smartGoalsRows ?? null} />
+            <PersonalDashboard modules={modules} completedIds={completedIds} savedResources={savedResources} resourceNotes={resourceNotes} resourceRatings={resourceRatings} resourceRead={resourceRead} completedAssessments={completedAssessments} thinkingStyleResult={thinkingStyleResult} thinkingStyleScores={thinkingStyleScores} discResult={discResult} discScores={discScores} wheelOfLifeScores={wheelOfLifeScores} wheelReflections={wheelReflections} karuniaTopGifts={karuniaTopGifts} karuniaScores={karuniaScores} enneagramType={enneagramType} enneagramScores={enneagramScores} bigFiveScores={bigFiveScores} personalities16Type={personalities16Type} personalities16Scores={personalities16Scores} fivelaReceivingResult={fivelaReceivingResult} fivelaGivingResult={fivelaGivingResult} fivelaReceivingScores={fivelaReceivingScores} fivelaGivingScores={fivelaGivingScores} languagePreference={languagePreference} journeyDone={journeyDoneSet.size} journeyNextStep={journeyNextStep} challengeCurrentDay={challengeCurrentDay} isFacilitator={!!facilitatorGroup} challengePath={challengePath} dashboardFirstName={firstName} isSubscriber={isSubscriber} raftPlan={raftPlan} smartGoals={smartGoalsRows ?? null} />
             {courseProgress.length > 0 && <MyCourses courses={courseProgress} lang={languagePreference} />}
           </>
         )}
@@ -821,7 +828,7 @@ function DiscPieCard({ result, scores }: { result: string; scores: { D: number; 
   );
 }
 
-function PersonalDashboard({ modules, completedIds, savedResources = [], resourceNotes = {}, resourceRatings = {}, resourceRead = [], completedAssessments = new Set(), thinkingStyleResult = null, thinkingStyleScores = null, discResult = null, discScores = null, wheelOfLifeScores = null, wheelReflections = null, karuniaTopGifts = null, karuniaScores = null, enneagramType = null, enneagramScores = null, bigFiveScores = null, personalities16Type = null, personalities16Scores = null, fivelaReceivingResult = null, fivelaGivingResult = null, fivelaReceivingScores = null, fivelaGivingScores = null, languagePreference = "en", challengeCurrentDay = null, isFacilitator = false, challengePath = null, dashboardFirstName = "", isSubscriber = true, raftPlan = null, smartGoals = null }: {
+function PersonalDashboard({ modules, completedIds, savedResources = [], resourceNotes = {}, resourceRatings = {}, resourceRead = [], completedAssessments = new Set(), thinkingStyleResult = null, thinkingStyleScores = null, discResult = null, discScores = null, wheelOfLifeScores = null, wheelReflections = null, karuniaTopGifts = null, karuniaScores = null, enneagramType = null, enneagramScores = null, bigFiveScores = null, personalities16Type = null, personalities16Scores = null, fivelaReceivingResult = null, fivelaGivingResult = null, fivelaReceivingScores = null, fivelaGivingScores = null, languagePreference = "en", journeyDone = 0, journeyNextStep = 1, challengeCurrentDay = null, isFacilitator = false, challengePath = null, dashboardFirstName = "", isSubscriber = true, raftPlan = null, smartGoals = null }: {
   modules: Module[];
   completedIds: Set<string>;
   savedResources?: string[];
@@ -847,6 +854,8 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
   fivelaReceivingScores?: { A: number; B: number; C: number; D: number; E: number } | null;
   fivelaGivingScores?: { A: number; B: number; C: number; D: number; E: number } | null;
   languagePreference?: "en" | "id";
+  journeyDone?: number;
+  journeyNextStep?: number | null;
   challengeCurrentDay?: number | null;
   isFacilitator?: boolean;
   challengePath?: string | null;
@@ -858,6 +867,8 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
   const savedItems = savedResources.filter(s => RESOURCE_META[s]);
 
   return (
+    <>
+    <JourneyTile done={journeyDone} nextStep={journeyNextStep} lang={languagePreference} />
     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "3rem", alignItems: "start" }}>
 
       {/* Left: saved resource list */}
@@ -920,14 +931,14 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
 
       {/* Right: challenge + assessments */}
       <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-        {/* ── Influential Leadership Challenge tile ── */}
-        {challengeCurrentDay !== null && (
+        {/* ── Old Influential Leadership Challenge tile: hidden, replaced by JourneyTile above ── */}
+        {false && challengeCurrentDay !== null && (
           <div>
             <p className="t-label" style={{ color: "oklch(52% 0.008 260)", fontSize: "0.62rem", marginBottom: "0.75rem" }}>
               {languagePreference === "id" ? "Tantangan Saya" : "My Challenge"}
             </p>
             <ChallengeTile
-              currentDay={challengeCurrentDay}
+              currentDay={challengeCurrentDay!}
               userRole={challengePath === "facilitator" ? "facilitator" : challengePath === "member" ? "member" : "solo"}
               firstName={dashboardFirstName}
             />
@@ -962,6 +973,47 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
           />
         </div>
 
+      </div>
+    </div>
+    </>
+  );
+}
+
+function JourneyTile({ done, nextStep, lang }: { done: number; nextStep: number | null; lang: "en" | "id" }) {
+  const isId = lang === "id";
+  const pct = Math.round((done / 60) * 100);
+  const cta = nextStep === null
+    ? (isId ? "Lihat perjalanan" : "View journey")
+    : done === 0
+      ? (isId ? "Mulai: Langkah 1" : "Start: Step 1")
+      : (isId ? `Lanjutkan: Langkah ${nextStep}` : `Continue: Step ${nextStep}`);
+  const href = nextStep === null ? "/journey" : `/journey/step/${nextStep}`;
+  return (
+    <div id="tour-leadership-journey" style={{ background: "oklch(22% 0.10 260)", borderRadius: 14, padding: "clamp(1.25rem, 3vw, 1.75rem) clamp(1.25rem, 3vw, 2rem)", marginBottom: "2.5rem", display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "1.25rem" }}>
+      <Link href="/journey" style={{ textDecoration: "none", flex: "1 1 320px", minWidth: 0 }}>
+        <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.65rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", margin: "0 0 0.35rem" }}>
+          {isId ? "60 langkah · gratis" : "60 steps · free"}
+        </p>
+        <h2 style={{ fontFamily: "var(--font-cormorant)", fontWeight: 600, fontSize: "clamp(1.5rem, 3.5vw, 2rem)", color: "oklch(97% 0.005 80)", lineHeight: 1.1, margin: "0 0 0.85rem" }}>
+          {isId ? "Perjalanan Kepemimpinan yang Berpengaruh" : "Influential Leadership Journey"}
+        </h2>
+        <div style={{ maxWidth: 380 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 600, color: "oklch(85% 0.02 260)", marginBottom: "0.35rem" }}>
+            <span>{isId ? `${done} dari 60 langkah selesai` : `${done} of 60 steps completed`}</span>
+            <span>{pct}%</span>
+          </div>
+          <div style={{ height: 6, borderRadius: 999, background: "oklch(35% 0.08 260)", overflow: "hidden" }}>
+            <div style={{ width: `${pct}%`, height: "100%", background: "oklch(55% 0.14 150)", borderRadius: 999 }} />
+          </div>
+        </div>
+      </Link>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "0.6rem" }}>
+        <Link href={href} style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.8rem", color: "oklch(22% 0.10 260)", background: "oklch(65% 0.15 45)", padding: "0.7rem 1.2rem", borderRadius: 8, textDecoration: "none", whiteSpace: "nowrap" }}>
+          {cta} →
+        </Link>
+        <Link href="/journey/journal" style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.8rem", color: "oklch(97% 0.005 80)", border: "1px solid oklch(97% 0.005 80 / 0.35)", padding: "0.7rem 1.2rem", borderRadius: 8, textDecoration: "none", whiteSpace: "nowrap" }}>
+          {isId ? "Jurnal saya" : "My journal"}
+        </Link>
       </div>
     </div>
   );
