@@ -9,20 +9,41 @@ interface Props {
   isIndonesia: boolean;
 }
 
-type BillingPeriod = "monthly" | "annual";
+// ── Path icons ───────────────────────────────────────────────────────────────
+// Same glyphs used on /signup and the dashboard's Personal/Team tab toggle —
+// identical viewBox and path/circle data. Kept as a local copy here (not
+// imported from SignupForm.tsx) so this file stays independent from the
+// signup flow, sized down for a corner badge rather than a large tile icon.
+function PersonalPathIcon({ size = 22 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <circle cx="8" cy="5" r="3" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M2 14c0-3.314 2.686-5 6-5s6 1.686 6 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function TeamPathIcon({ size = 22 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <circle cx="8" cy="4.5" r="2.5" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M3.5 14c0-2.485 2.015-4.5 4.5-4.5s4.5 2.015 4.5 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      <circle cx="3.5" cy="6" r="2" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M1 14c0-2.2 1.1-3.5 2.5-3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      <circle cx="12.5" cy="6" r="2" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M15 14c0-2.2-1.1-3.5-2.5-3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  );
+}
 
 // ── Checkout button ──────────────────────────────────────────────────────────
 function CheckoutButton({
   plan,
-  isIndonesia,
   variant,
-  billingPeriod,
   autoTrigger,
 }: {
   plan: "personal" | "team";
-  isIndonesia: boolean;
   variant: "orange" | "navy";
-  billingPeriod: BillingPeriod;
   autoTrigger?: boolean;
 }) {
   const { lang } = useLanguage();
@@ -58,11 +79,7 @@ function CheckoutButton({
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          plan,
-          currency: isIndonesia ? "idr" : "usd",
-          billingPeriod,
-        }),
+        body: JSON.stringify({ plan, type: "lifetime" }),
       });
       if (res.status === 401) {
         // signedIn hadn't resolved yet when they clicked — same redirect.
@@ -280,37 +297,12 @@ function Feature({ text, light }: { text: string; light?: boolean }) {
   );
 }
 
-// ── Savings badge ────────────────────────────────────────────────────────────
-function SavingsBadge({ label }: { label: string }) {
-  return (
-    <span
-      style={{
-        display: "inline-block",
-        background: "oklch(65% 0.15 45)",
-        color: "oklch(97% 0.005 80)",
-        fontFamily: "var(--font-montserrat)",
-        fontWeight: 700,
-        fontSize: "0.65rem",
-        letterSpacing: "0.08em",
-        textTransform: "uppercase",
-        padding: "0.25em 0.65em",
-        borderRadius: "999px",
-        marginLeft: "0.75rem",
-        verticalAlign: "middle",
-        lineHeight: 1.4,
-      }}
-    >
-      {label}
-    </span>
-  );
-}
-
 // ── Main component ───────────────────────────────────────────────────────────
 export default function PricingContent({ isIndonesia }: Props) {
   const { lang } = useLanguage();
   const id = lang === "id";
-  const [billing, setBilling] = useState<BillingPeriod>("monthly");
-  const annual = billing === "annual";
+  void isIndonesia; // kept in the signature — parent page.tsx still passes it — but
+  // lifetime pricing is USD-only, so it no longer drives any price/currency logic here.
 
   // Landed here right after confirming a signup that started on this page —
   // continue that plan's checkout automatically (see app/auth/callback/route.ts).
@@ -322,16 +314,11 @@ export default function PricingContent({ isIndonesia }: Props) {
 
   // ── Copy ────────────────────────────────────────────────────────────────
   const copy = {
-    toggleMonthly: id ? "Bulanan" : "Monthly",
-    toggleAnnual: id ? "Tahunan" : "Annual",
-
     // PERSONAL ───────────────────────────────────────────────────────────
-    personalLabel: id ? "Personal" : "Personal",
-
-    personalMonthlyPrice: isIndonesia ? "RP 99.000" : "$7.99",
-    personalMonthlyPeriod: id ? "per bulan · perpanjangan otomatis" : "per month · auto-renews",
-    personalMonthlyNote: id ? "Tanpa WayPoint · perpanjangan otomatis" : "No WayPoint · auto-renews",
-    personalMonthlyFeatures: id
+    personalLabel: "Personal",
+    personalPrice: "$15",
+    personalPriceNote: id ? "Sekali bayar - Akses permanen" : "One-time purchase · Permanent access",
+    personalFeatures: id
       ? [
           "50+ modul pelatihan dengan dasbor kemajuan",
           "Dasbor pribadi + pelacakan kemajuan",
@@ -345,29 +332,14 @@ export default function PricingContent({ isIndonesia }: Props) {
           "Direct access to new content as it launches",
         ],
 
-    personalAnnualPrice: isIndonesia ? "RP 749.000" : "$59",
-    personalAnnualPeriod: id ? "per tahun" : "per year",
-    personalAnnualBadge: id ? "Hemat 38%" : "Save 38%",
-    personalAnnualFeatures: id
-      ? [
-          "60 menit WayPoint AI Coaching disertakan",
-        ]
-      : [
-          "60 min WayPoint AI Coaching included",
-        ],
-
     // TEAM ───────────────────────────────────────────────────────────────
-    teamLabel: id ? "Tim · 8 Kursi" : "Team · 8 Seats",
-
-    teamMonthlyPrice: isIndonesia ? "RP 399.000" : "$39",
-    teamMonthlyPeriod: id ? "per bulan · perpanjangan otomatis" : "per month · auto-renews",
-    teamMonthlyValue: isIndonesia
-      ? "Hanya RP 49.875 per anggota"
-      : "Only $4.88/member",
-    teamMonthlyNote: id ? "Tanpa WayPoint · perpanjangan otomatis" : "No WayPoint · auto-renews",
-    teamMonthlyFeatures: id
+    teamLabel: id ? "Tim · 8 Akun Tim" : "Team · 8 Team Accounts",
+    teamPrice: "$80",
+    teamPriceSubNote: id ? "(hanya $10 per anggota)" : "(only $10 per member)",
+    teamPriceNote: id ? "Sekali bayar - Akses permanen" : "One-time purchase · Permanent access",
+    teamFeatures: id
       ? [
-          "Perjalanan pengembangan tim yang unik",
+          "Jalur pengembangan tim yang unik",
           "Jalur personal untuk semua 8 anggota",
           "Wawasan atas hasil tes kepribadian seluruh anggota tim Anda",
           "Dasbor tim + kontrol pemimpin",
@@ -375,20 +347,8 @@ export default function PricingContent({ isIndonesia }: Props) {
       : [
           "Full personal pathway access for all 8 team members",
           "Insight into all team members' personality test results",
-          "Unique team development journey",
+          "Unique team development pathway",
           "Team dashboard + leader controls",
-        ],
-
-    teamAnnualPrice: isIndonesia ? "RP 2.990.000" : "$299",
-    teamAnnualPeriod: id ? "per tahun" : "per year",
-    teamAnnualBadge: id ? "Hemat 36%" : "Save 36%",
-    teamAnnualValue: isIndonesia ? "Hanya RP 373.750 per anggota" : "Only $37.38/member",
-    teamAnnualFeatures: id
-      ? [
-          "4 jam total WayPoint AI Coaching (30 menit per anggota)",
-        ]
-      : [
-          "4 hours total WayPoint AI Coaching included (30 min/member)",
         ],
 
     // FAQ ────────────────────────────────────────────────────────────────
@@ -398,69 +358,48 @@ export default function PricingContent({ isIndonesia }: Props) {
       ? [
           {
             q: "Apakah ini berlangganan?",
-            a: "Ya — paket Bulanan dan Tahunan sama-sama berlangganan. Paket Bulanan diperpanjang otomatis setiap bulan. Paket Tahunan diperpanjang setiap tahun. Anda dapat membatalkan kapan saja dari dasbor akun Anda.",
+            a: "Tidak. Ini pembayaran satu kali: Anda membayar sekali dan mendapatkan akses permanen ke seluruh perpustakaan konten. Tidak ada pembayaran berulang, dan tidak ada yang perlu dibatalkan.",
           },
           {
-            q: "Bagaimana cara membatalkan?",
-            a: "Masuk ke dasbor akun Anda dan batalkan kapan saja. Akses tetap aktif hingga akhir periode penagihan saat ini. Tidak ada biaya pembatalan.",
+            q: "Apa yang termasuk dalam paket Personal dan Tim?",
+            a: "Paket Personal memberikan satu orang akses permanen ke seluruh perpustakaan konten, dasbor pribadi, dan seluruh asesmen kepribadian. Paket Tim memberikan akses yang sama untuk 8 akun sekaligus, ditambah dasbor khusus dengan kontrol untuk pemimpin tim.",
           },
           {
-            q: "Apa perbedaan Bulanan dan Tahunan?",
-            a: "Paket Bulanan memberikan akses ke seluruh perpustakaan konten tanpa coaching WayPoint. Paket Tahunan termasuk menit coaching WayPoint AI dan harga lebih hemat secara keseluruhan.",
+            q: "Bisakah saya beralih dari Personal ke Tim nanti?",
+            a: "Hubungi kami di hello@crispyleaders.com dan kami akan bantu Anda mengatur selisih harganya.",
           },
           {
-            q: "Apa yang termasuk dalam coaching AI WayPoint?",
-            a: "WayPoint adalah coach AI berbasis suara yang dirancang untuk pemimpin lintas budaya. Paket Tahunan Personal menyertakan 60 menit; Paket Tahunan Tim menyertakan 4 jam total (30 menit per anggota).",
+            q: "Apakah akun tim bisa dialihkan ke orang lain?",
+            a: "Tidak. Akun tim tidak dapat dialihkan ke anggota lain setelah ditetapkan.",
           },
           {
-            q: "Bisakah saya upgrade dari Bulanan ke Tahunan?",
-            a: "Ya — hubungi kami di hello@crispyleaders.com dan kami akan mengatur penyesuaian harga.",
-          },
-          {
-            q: "Apakah kursi tim bisa dialihkan?",
-            a: "Tidak. Kursi tim tidak dapat dialihkan ke anggota lain setelah ditetapkan.",
+            q: "Apakah ada kebijakan pengembalian dana?",
+            a: "Hubungi kami di hello@crispyleaders.com jika ada kendala dengan pembelian Anda dan kami akan meninjaunya langsung dengan Anda.",
           },
         ]
       : [
           {
             q: "Is this a subscription?",
-            a: "Yes — both Monthly and Annual plans are subscriptions. Monthly renews each month. Annual renews each year. You can cancel any time from your account dashboard.",
+            a: "No. This is a one-time payment: you pay once and get lifetime access to the full content library. Nothing recurring, and nothing to cancel.",
           },
           {
-            q: "How do I cancel?",
-            a: "Log in to your account dashboard and cancel any time. Access remains active until the end of your current billing period. No cancellation fees.",
+            q: "What's included in Personal vs Team?",
+            a: "Personal gives one person lifetime access to the full content library, a personal dashboard, and every personality assessment. Team gives the same access across 8 accounts under one purchase, plus a dashboard with leader controls.",
           },
           {
-            q: "What's the difference between Monthly and Annual?",
-            a: "Monthly gives you full access to all 50+ training modules without WayPoint coaching. Annual includes WayPoint AI coaching minutes and better overall value.",
+            q: "Can I move from Personal to Team later?",
+            a: "Get in touch at hello@crispyleaders.com and we'll help you sort out the price difference.",
           },
           {
-            q: "What's included in WayPoint AI coaching?",
-            a: "WayPoint is a voice-based AI coach built for cross-cultural leaders. The Personal Annual plan includes 60 minutes; the Team Annual plan includes 4 hours total (30 min per member).",
+            q: "Are team accounts transferable?",
+            a: "No. Team accounts are non-transferable once assigned.",
           },
           {
-            q: "Can I upgrade from Monthly to Annual?",
-            a: "Yes — contact us at hello@crispyleaders.com and we'll arrange the price difference.",
-          },
-          {
-            q: "Are team seats transferable?",
-            a: "No. Team seats are non-transferable once assigned.",
+            q: "What's your refund policy?",
+            a: "Reach out to hello@crispyleaders.com if something isn't working out with your purchase and we'll look at it directly with you.",
           },
         ],
   };
-
-  // Derived values for the active billing period
-  const personalPrice = annual ? copy.personalAnnualPrice : copy.personalMonthlyPrice;
-  const personalPeriod = annual ? copy.personalAnnualPeriod : copy.personalMonthlyPeriod;
-  const personalFeatures = annual
-    ? [...copy.personalMonthlyFeatures, ...copy.personalAnnualFeatures]
-    : copy.personalMonthlyFeatures;
-
-  const teamPrice = annual ? copy.teamAnnualPrice : copy.teamMonthlyPrice;
-  const teamPeriod = annual ? copy.teamAnnualPeriod : copy.teamMonthlyPeriod;
-  const teamFeatures = annual
-    ? [...copy.teamMonthlyFeatures, ...copy.teamAnnualFeatures]
-    : copy.teamMonthlyFeatures;
 
   return (
     <>
@@ -472,30 +411,6 @@ export default function PricingContent({ isIndonesia }: Props) {
           to   { opacity: 1; transform: translateY(0); }
         }
         .pricing-faq-answer { animation: pricingFadeDown 0.18s ease-out; }
-        .pricing-toggle-btn {
-          background: none;
-          border: none;
-          cursor: pointer;
-          font-family: var(--font-montserrat);
-          font-weight: 700;
-          font-size: 0.8rem;
-          letter-spacing: 0.06em;
-          text-transform: uppercase;
-          padding: 0.5rem 1.25rem;
-          border-radius: 8px;
-          transition: background 0.15s ease, color 0.15s ease;
-        }
-        .pricing-toggle-btn.active {
-          background: oklch(22% 0.10 260);
-          color: oklch(97% 0.005 80);
-        }
-        .pricing-toggle-btn.inactive {
-          background: none;
-          color: oklch(48% 0.008 260);
-        }
-        .pricing-toggle-btn.inactive:hover {
-          color: oklch(22% 0.10 260);
-        }
       `}} />
 
       {/* ── PRICING CARDS ─────────────────────────────────────────────────── */}
@@ -506,79 +421,6 @@ export default function PricingContent({ isIndonesia }: Props) {
         }}
       >
         <div className="container-wide">
-
-          {/* Toggle */}
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              marginBottom: "clamp(2rem, 4vw, 3rem)",
-            }}
-          >
-            <div
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                background: "oklch(88% 0.008 80)",
-                borderRadius: "12px",
-                padding: "4px",
-                gap: "2px",
-              }}
-            >
-              <button
-                className={`pricing-toggle-btn ${billing === "monthly" ? "active" : "inactive"}`}
-                onClick={() => setBilling("monthly")}
-              >
-                {copy.toggleMonthly}
-              </button>
-              <button
-                className={`pricing-toggle-btn ${billing === "annual" ? "active" : "inactive"}`}
-                onClick={() => setBilling("annual")}
-              >
-                {copy.toggleAnnual}
-                {billing === "monthly" && (
-                  <span
-                    style={{
-                      display: "inline-block",
-                      background: "oklch(65% 0.15 45)",
-                      color: "oklch(97% 0.005 80)",
-                      fontSize: "0.58rem",
-                      fontWeight: 700,
-                      letterSpacing: "0.06em",
-                      padding: "0.15em 0.5em",
-                      borderRadius: "999px",
-                      marginLeft: "0.5rem",
-                      verticalAlign: "middle",
-                      lineHeight: 1.4,
-                    }}
-                  >
-                    {id ? "Hemat" : "Save"}
-                  </span>
-                )}
-              </button>
-            </div>
-          </div>
-
-          {/* Indonesian pricing notice */}
-          {isIndonesia && (
-            <p
-              style={{
-                fontFamily: "var(--font-montserrat)",
-                fontSize: "0.75rem",
-                lineHeight: 1.6,
-                color: "oklch(48% 0.008 260)",
-                textAlign: "center",
-                marginBottom: "1.5rem",
-                padding: "0.75rem 1.25rem",
-                background: "oklch(90% 0.008 80)",
-                borderRadius: "8px",
-              }}
-            >
-              {id
-                ? "Harga IDR hanya tersedia untuk pengguna Indonesia. Pembayaran melalui rekening bank Indonesia."
-                : "IDR pricing is available for Indonesian subscribers only. Payment via Indonesian bank account."}
-            </p>
-          )}
 
           {/* Card grid */}
           <div
@@ -600,20 +442,31 @@ export default function PricingContent({ isIndonesia }: Props) {
                 gap: 0,
               }}
             >
-              {/* Label */}
-              <p
+              {/* Label + icon */}
+              <div
                 style={{
-                  fontFamily: "var(--font-montserrat)",
-                  fontSize: "0.68rem",
-                  fontWeight: 700,
-                  letterSpacing: "0.22em",
-                  textTransform: "uppercase",
-                  color: "oklch(65% 0.15 45)",
-                  margin: "0 0 1.75rem",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "flex-start",
+                  marginBottom: "1.75rem",
                 }}
               >
-                {copy.personalLabel}
-              </p>
+                <p
+                  style={{
+                    fontFamily: "var(--font-montserrat)",
+                    fontSize: "1.2rem",
+                    fontWeight: 800,
+                    letterSpacing: "0.01em",
+                    color: "oklch(65% 0.15 45)",
+                    margin: 0,
+                  }}
+                >
+                  {copy.personalLabel}
+                </p>
+                <span style={{ color: "oklch(65% 0.15 45)", flexShrink: 0, marginTop: "0.15rem" }}>
+                  <PersonalPathIcon />
+                </span>
+              </div>
 
               {/* Price row */}
               <div
@@ -635,24 +488,21 @@ export default function PricingContent({ isIndonesia }: Props) {
                     color: "oklch(97% 0.005 80)",
                   }}
                 >
-                  {personalPrice}
+                  {copy.personalPrice}
                 </span>
-                {annual && <SavingsBadge label={copy.personalAnnualBadge} />}
               </div>
 
-              {/* Period */}
+              {/* Price note */}
               <p
                 style={{
                   fontFamily: "var(--font-montserrat)",
-                  fontSize: "0.68rem",
+                  fontSize: "0.8rem",
                   fontWeight: 600,
-                  letterSpacing: "0.12em",
-                  textTransform: "uppercase",
-                  color: "oklch(52% 0.04 260)",
+                  color: "oklch(72% 0.04 260)",
                   margin: "0.625rem 0 1.75rem",
                 }}
               >
-                {personalPeriod}
+                {copy.personalPriceNote}
               </p>
 
               {/* Features */}
@@ -667,16 +517,14 @@ export default function PricingContent({ isIndonesia }: Props) {
                   flexGrow: 1,
                 }}
               >
-                {personalFeatures.map((f) => (
+                {copy.personalFeatures.map((f) => (
                   <Feature key={f} text={f} light />
                 ))}
               </ul>
 
               <CheckoutButton
                 plan="personal"
-                isIndonesia={isIndonesia}
                 variant="orange"
-                billingPeriod={billing}
                 autoTrigger={autoPlan === "personal"}
               />
             </div>
@@ -692,20 +540,31 @@ export default function PricingContent({ isIndonesia }: Props) {
                 gap: 0,
               }}
             >
-              {/* Label */}
-              <p
+              {/* Label + icon */}
+              <div
                 style={{
-                  fontFamily: "var(--font-montserrat)",
-                  fontSize: "0.68rem",
-                  fontWeight: 700,
-                  letterSpacing: "0.22em",
-                  textTransform: "uppercase",
-                  color: "oklch(65% 0.15 45)",
-                  margin: "0 0 1.75rem",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "flex-start",
+                  marginBottom: "1.75rem",
                 }}
               >
-                {copy.teamLabel}
-              </p>
+                <p
+                  style={{
+                    fontFamily: "var(--font-montserrat)",
+                    fontSize: "1.2rem",
+                    fontWeight: 800,
+                    letterSpacing: "0.01em",
+                    color: "oklch(65% 0.15 45)",
+                    margin: 0,
+                  }}
+                >
+                  {copy.teamLabel}
+                </p>
+                <span style={{ color: "oklch(65% 0.15 45)", flexShrink: 0, marginTop: "0.15rem" }}>
+                  <TeamPathIcon />
+                </span>
+              </div>
 
               {/* Price row */}
               <div
@@ -727,7 +586,7 @@ export default function PricingContent({ isIndonesia }: Props) {
                     color: "oklch(22% 0.10 260)",
                   }}
                 >
-                  {teamPrice}
+                  {copy.teamPrice}
                 </span>
                 <span
                   style={{
@@ -738,26 +597,21 @@ export default function PricingContent({ isIndonesia }: Props) {
                     lineHeight: 1,
                   }}
                 >
-                  {isIndonesia
-                    ? annual ? "" : "(Rp 50.000/anggota)"
-                    : annual ? "" : "(less than $5 per member)"}
+                  {copy.teamPriceSubNote}
                 </span>
-                {annual && <SavingsBadge label={copy.teamAnnualBadge} />}
               </div>
 
-              {/* Period */}
+              {/* Price note */}
               <p
                 style={{
                   fontFamily: "var(--font-montserrat)",
-                  fontSize: "0.68rem",
+                  fontSize: "0.8rem",
                   fontWeight: 600,
-                  letterSpacing: "0.12em",
-                  textTransform: "uppercase",
-                  color: "oklch(55% 0.008 260)",
+                  color: "oklch(48% 0.04 260)",
                   margin: "0.625rem 0 1.75rem",
                 }}
               >
-                {teamPeriod}
+                {copy.teamPriceNote}
               </p>
 
               {/* Features */}
@@ -772,17 +626,14 @@ export default function PricingContent({ isIndonesia }: Props) {
                   flexGrow: 1,
                 }}
               >
-                {teamFeatures.map((f) => (
+                {copy.teamFeatures.map((f) => (
                   <Feature key={f} text={f} />
                 ))}
               </ul>
 
-              {/* Team leader note */}
               <CheckoutButton
                 plan="team"
-                isIndonesia={isIndonesia}
                 variant="navy"
-                billingPeriod={billing}
                 autoTrigger={autoPlan === "team"}
               />
             </div>

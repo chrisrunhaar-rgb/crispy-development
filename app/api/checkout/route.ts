@@ -32,6 +32,15 @@ const MINUTE_PACKS: Record<MinutePackId, { priceId: string; minutes: number }> =
   "5hr": { priceId: "price_1UGbuOEHeFAKCmjl8FjtI5AZ", minutes: 300 },
 };
 
+// One-time lifetime-access purchases — mode: "payment", replaces the
+// recurring Personal/Team subscription on the pricing page. USD-only, no
+// IDR equivalent exists for these prices. Confirmed live/active via Stripe
+// MCP before wiring, per Chris's approved spec, 2026-09-24.
+const LIFETIME_PRICE_IDS: Record<Plan, string> = {
+  personal: "price_1UIpVjEHeFAKCmjlRYPEMscj",
+  team: "price_1UIpVnEHeFAKCmjl5v9NUu4G",
+};
+
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://crispyleaders.com";
 
 export async function POST(req: NextRequest) {
@@ -40,7 +49,7 @@ export async function POST(req: NextRequest) {
     plan?: Plan;
     currency?: Currency;
     billingPeriod?: BillingPeriod;
-    type?: "subscription" | "minute_pack";
+    type?: "subscription" | "minute_pack" | "lifetime";
     packId?: MinutePackId;
   };
 
@@ -80,6 +89,31 @@ export async function POST(req: NextRequest) {
       success_url: `${siteUrl}/coach?checkout=success`,
       cancel_url: `${siteUrl}/coach?checkout=cancelled`,
       metadata: { user_id: user.id, minute_pack: "true", pack_id: packId, minutes: String(minutes) },
+    });
+
+    return NextResponse.json({ ready: true, checkoutUrl: session.url });
+  }
+
+  if (type === "lifetime") {
+    if (!plan || !["personal", "team"].includes(plan)) {
+      return NextResponse.json({ error: "invalid_plan", checkoutUrl: null }, { status: 400 });
+    }
+    const priceId = LIFETIME_PRICE_IDS[plan];
+
+    const session = await stripe.checkout.sessions.create({
+      mode: "payment",
+      customer: customerId,
+      client_reference_id: user.id,
+      line_items: [{ price: priceId, quantity: 1 }],
+      billing_address_collection: "required",
+      // Same Managed Payments workaround as the subscription/minute_pack
+      // flows above — our Products don't carry a tax_code, so it 400s
+      // otherwise.
+      managed_payments: { enabled: false },
+      invoice_creation: { enabled: true },
+      success_url: `${siteUrl}/account/subscription?checkout=success`,
+      cancel_url: `${siteUrl}/pricing?checkout=cancelled`,
+      metadata: { user_id: user.id, lifetime: "true", plan },
     });
 
     return NextResponse.json({ ready: true, checkoutUrl: session.url });

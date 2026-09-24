@@ -97,6 +97,68 @@ async function handleCheckoutCompleted(admin: AdminClient, session: Stripe.Check
     return;
   }
 
+  // One-off lifetime-access purchase (Personal/Team) — replaces the
+  // recurring subscription flow below for these plans. Grants permanent
+  // access with no coach minutes (WayPoint AI coaching is intentionally
+  // excluded from this tier). NOTE: a lifetime purchase has no Stripe
+  // subscription to auto-cancel on refund, so revoking access after a
+  // refund is a manual step — flip subscription_active to false on the row.
+  if (session.mode === "payment" && session.metadata?.lifetime === "true") {
+    const lifetimePlan = session.metadata?.plan;
+    if (!userId || !lifetimePlan) {
+      console.error("checkout.session.completed lifetime missing user_id/plan metadata", session.id);
+      return;
+    }
+    const lifetimeCustomerId =
+      typeof session.customer === "string" ? session.customer : session.customer?.id ?? null;
+
+    if (lifetimePlan === "team") {
+      const { data: existingTeam } = await admin
+        .from("teams")
+        .select("id")
+        .eq("leader_user_id", userId)
+        .maybeSingle();
+
+      const teamPatch: Record<string, unknown> = {
+        subscription_active: true,
+        stripe_customer_id: lifetimeCustomerId,
+      };
+
+      if (existingTeam) {
+        await admin.from("teams").update(teamPatch).eq("id", existingTeam.id);
+      } else {
+        const { data: existingUser } = await admin.auth.admin.getUserById(userId);
+        const firstName = existingUser?.user?.user_metadata?.first_name as string | undefined;
+        const name = firstName ? `${firstName}'s Team` : "My Team";
+        await admin.from("teams").insert({
+          leader_user_id: userId,
+          name,
+          language: "en",
+          max_seats: 8,
+          ...teamPatch,
+        });
+      }
+
+      const { data: existingUser } = await admin.auth.admin.getUserById(userId);
+      await admin.auth.admin.updateUserById(userId, {
+        user_metadata: { ...existingUser?.user?.user_metadata, pathway: "team", is_leader: true },
+      });
+    } else {
+      const membershipPatch: Record<string, unknown> = {
+        user_id: userId,
+        subscription_active: true,
+        stripe_customer_id: lifetimeCustomerId,
+      };
+      await admin.from("memberships").upsert(membershipPatch, { onConflict: "user_id" });
+
+      const { data: existingUser } = await admin.auth.admin.getUserById(userId);
+      await admin.auth.admin.updateUserById(userId, {
+        user_metadata: { ...existingUser?.user?.user_metadata, pathway: "personal" },
+      });
+    }
+    return;
+  }
+
   const plan = session.metadata?.plan;
   const billingPeriod = session.metadata?.billing_period;
 
