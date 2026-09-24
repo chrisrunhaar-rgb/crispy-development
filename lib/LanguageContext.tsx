@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import { useRouter } from "next/navigation";
 import { Lang, translations } from "./i18n";
 
 type LanguageContextType = {
@@ -32,6 +33,7 @@ function setCookieLang(l: Lang) {
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>("en");
+  const router = useRouter();
 
   useEffect(() => {
     // Cookie takes precedence over localStorage
@@ -48,14 +50,17 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     setLangState(l);
     localStorage.setItem("crispy-lang", l);
     setCookieLang(l);
-    // Fire-and-forget: persist to Supabase user metadata + set httpOnly-safe cookie via server
+    // Persist to Supabase user metadata, then re-render server pages so they
+    // pick up the new language (they read user_metadata, not client state)
     fetch("/api/set-language", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ lang: l }),
-    }).catch(() => {
-      // Non-blocking — cookie + localStorage already set client-side
-    });
+    })
+      .catch(() => {
+        // Logged out or offline: cookie + localStorage already set client-side
+      })
+      .finally(() => router.refresh());
   };
 
   // Fall back to English for languages without full translations yet

@@ -64,6 +64,13 @@ export async function signUp(formData: FormData) {
 
   if (error) return { error: error.message };
 
+  // Tell Chris about every new self-serve signup. Member-invite signups are
+  // announced by acceptMemberInvite instead. Empty identities = email already
+  // registered, so no new account was created.
+  if (!memberInviteToken && data.user && (data.user.identities?.length ?? 0) > 0) {
+    await notifyNewSignup(email, firstName, lastName, inviteToken ? "Team member (team invite)" : pathway, language);
+  }
+
   if (!data.session) {
     const nameParam = firstName ? `${callbackExtra ? "&" : "?"}name=${encodeURIComponent(firstName)}` : "";
     redirect(`/signup/confirm${callbackExtra}${nameParam}`);
@@ -132,6 +139,23 @@ export async function submitTeamApplication(formData: FormData) {
   if (error) return { error: "Something went wrong. Please try again." };
 
   return { success: true };
+}
+
+async function notifyNewSignup(email: string, firstName: string, lastName: string, pathway: string, language: string) {
+  const token = process.env.TELEGRAM_BOT_TOKEN;
+  if (!token) return;
+  const name = [firstName, lastName].filter(Boolean).join(" ") || "(no name)";
+  const text = `🎉 New member signed up
+
+Name: ${name}
+Email: ${email}
+Pathway: ${pathway}
+Language: ${language === "id" ? "Indonesian" : "English"}`;
+  await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ chat_id: "8799746124", text }),
+  }).catch(() => {});
 }
 
 async function notifyTelegram(text: string) {
