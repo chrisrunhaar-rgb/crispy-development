@@ -11,7 +11,6 @@ import { RESOURCES } from "@/lib/resources-data";
 import ResourceCard from "@/components/ResourceCard";
 import AssessmentTileGrid from "./AssessmentTileGrid";
 import TeamPreviewDashboard from "./TeamPreviewDashboard";
-import ChallengeTile from "@/components/ChallengeTile";
 import TeamJourney, { BASE_JOURNEY_STEPS, buildJourneySteps, getTypeLabel, TYPE_BADGE } from "@/components/TeamJourney";
 import TeamCommsSection from "@/components/TeamCommsSection";
 import TeamRoster, { type RosterMember } from "@/components/TeamRoster";
@@ -193,7 +192,7 @@ export default async function DashboardPage({
   let completedIds = new Set<string>();
   let userMessages: CoachMsg[] = [];
 
-  const [{ data: allMods }, { data: progress }, { data: msgs }, { data: unseenReplies }, { data: challengeRow }, { data: smartGoalsRows }] = await Promise.all([
+  const [{ data: allMods }, { data: progress }, { data: msgs }, { data: unseenReplies }, { data: smartGoalsRows }] = await Promise.all([
     supabase
       .from("modules")
       .select("id, slug, title, description, type, pathway, is_free, order_index")
@@ -215,13 +214,10 @@ export default async function DashboardPage({
       .eq("status", "active")
       .eq("reply_seen", false)
       .not("admin_reply", "is", null),
-    admin.from("challenge_enrollments").select("current_day, status, path").eq("user_id", viewingUserId).maybeSingle(),
     supabase.from("smart_goals").select("id, goal, overall_score, created_at").eq("user_id", viewingUserId).order("created_at", { ascending: false }),
   ]);
   modules = allMods ?? [];
   completedIds = new Set((progress ?? []).map((p: { module_id: string }) => p.module_id));
-  const challengeCurrentDay = (challengeRow as { current_day: number; status: string; path: string } | null)?.current_day ?? null;
-  const challengePath = (challengeRow as { current_day: number; status: string; path: string } | null)?.path ?? null;
 
   const { data: journeyRows } = await admin
     .from("journey_step_completions")
@@ -230,12 +226,6 @@ export default async function DashboardPage({
   const journeyDoneSet = new Set((journeyRows ?? []).map((r: { step_number: number }) => r.step_number));
   const journeyNextStep = Array.from({ length: 60 }, (_, i) => i + 1).find(n => !journeyDoneSet.has(n)) ?? null;
 
-  const { data: facilitatorGroups } = await admin
-    .from("challenge_groups")
-    .select("id, name")
-    .eq("facilitator_id", viewingUserId)
-    .limit(1);
-  const facilitatorGroup = facilitatorGroups?.[0] ?? null;
   userMessages = (msgs ?? []) as CoachMsg[];
   const pendingReplies = (unseenReplies ?? []) as { id: string; module_slug: string; comment: string; admin_reply: string }[];
 
@@ -662,7 +652,7 @@ export default async function DashboardPage({
           <>
             {pathway === "team" && teamApplicationStatus === "pending" && <TeamApplicationPending firstName={firstName} lang={languagePreference} />}
             {pathway === "team" && !teamApplicationStatus && <TeamApplicationPrompt lang={languagePreference} />}
-            <PersonalDashboard modules={modules} completedIds={completedIds} savedResources={savedResources} resourceNotes={resourceNotes} resourceRatings={resourceRatings} resourceRead={resourceRead} completedAssessments={completedAssessments} thinkingStyleResult={thinkingStyleResult} thinkingStyleScores={thinkingStyleScores} discResult={discResult} discScores={discScores} wheelOfLifeScores={wheelOfLifeScores} wheelReflections={wheelReflections} karuniaTopGifts={karuniaTopGifts} karuniaScores={karuniaScores} enneagramType={enneagramType} enneagramScores={enneagramScores} bigFiveScores={bigFiveScores} personalities16Type={personalities16Type} personalities16Scores={personalities16Scores} fivelaReceivingResult={fivelaReceivingResult} fivelaGivingResult={fivelaGivingResult} fivelaReceivingScores={fivelaReceivingScores} fivelaGivingScores={fivelaGivingScores} languagePreference={languagePreference} journeyDone={journeyDoneSet.size} journeyNextStep={journeyNextStep} challengeCurrentDay={challengeCurrentDay} isFacilitator={!!facilitatorGroup} challengePath={challengePath} dashboardFirstName={firstName} isSubscriber={isSubscriber} raftPlan={raftPlan} smartGoals={smartGoalsRows ?? null} />
+            <PersonalDashboard modules={modules} completedIds={completedIds} savedResources={savedResources} resourceNotes={resourceNotes} resourceRatings={resourceRatings} resourceRead={resourceRead} completedAssessments={completedAssessments} thinkingStyleResult={thinkingStyleResult} thinkingStyleScores={thinkingStyleScores} discResult={discResult} discScores={discScores} wheelOfLifeScores={wheelOfLifeScores} wheelReflections={wheelReflections} karuniaTopGifts={karuniaTopGifts} karuniaScores={karuniaScores} enneagramType={enneagramType} enneagramScores={enneagramScores} bigFiveScores={bigFiveScores} personalities16Type={personalities16Type} personalities16Scores={personalities16Scores} fivelaReceivingResult={fivelaReceivingResult} fivelaGivingResult={fivelaGivingResult} fivelaReceivingScores={fivelaReceivingScores} fivelaGivingScores={fivelaGivingScores} languagePreference={languagePreference} journeyDone={journeyDoneSet.size} journeyNextStep={journeyNextStep} dashboardFirstName={firstName} isSubscriber={isSubscriber} raftPlan={raftPlan} smartGoals={smartGoalsRows ?? null} />
             {courseProgress.length > 0 && <MyCourses courses={courseProgress} lang={languagePreference} />}
           </>
         )}
@@ -828,7 +818,7 @@ function DiscPieCard({ result, scores }: { result: string; scores: { D: number; 
   );
 }
 
-function PersonalDashboard({ modules, completedIds, savedResources = [], resourceNotes = {}, resourceRatings = {}, resourceRead = [], completedAssessments = new Set(), thinkingStyleResult = null, thinkingStyleScores = null, discResult = null, discScores = null, wheelOfLifeScores = null, wheelReflections = null, karuniaTopGifts = null, karuniaScores = null, enneagramType = null, enneagramScores = null, bigFiveScores = null, personalities16Type = null, personalities16Scores = null, fivelaReceivingResult = null, fivelaGivingResult = null, fivelaReceivingScores = null, fivelaGivingScores = null, languagePreference = "en", journeyDone = 0, journeyNextStep = 1, challengeCurrentDay = null, isFacilitator = false, challengePath = null, dashboardFirstName = "", isSubscriber = true, raftPlan = null, smartGoals = null }: {
+function PersonalDashboard({ modules, completedIds, savedResources = [], resourceNotes = {}, resourceRatings = {}, resourceRead = [], completedAssessments = new Set(), thinkingStyleResult = null, thinkingStyleScores = null, discResult = null, discScores = null, wheelOfLifeScores = null, wheelReflections = null, karuniaTopGifts = null, karuniaScores = null, enneagramType = null, enneagramScores = null, bigFiveScores = null, personalities16Type = null, personalities16Scores = null, fivelaReceivingResult = null, fivelaGivingResult = null, fivelaReceivingScores = null, fivelaGivingScores = null, languagePreference = "en", journeyDone = 0, journeyNextStep = 1, dashboardFirstName = "", isSubscriber = true, raftPlan = null, smartGoals = null }: {
   modules: Module[];
   completedIds: Set<string>;
   savedResources?: string[];
@@ -856,9 +846,6 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
   languagePreference?: "en" | "id";
   journeyDone?: number;
   journeyNextStep?: number | null;
-  challengeCurrentDay?: number | null;
-  isFacilitator?: boolean;
-  challengePath?: string | null;
   dashboardFirstName?: string;
   isSubscriber?: boolean;
   raftPlan?: { R: string; A: string; F: string; T: string; lang: string; saved_at: string } | null;
@@ -929,22 +916,8 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
         )}
       </div>
 
-      {/* Right: challenge + assessments */}
+      {/* Right: assessments */}
       <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-        {/* ── Old Influential Leadership Challenge tile: hidden, replaced by JourneyTile above ── */}
-        {false && challengeCurrentDay !== null && (
-          <div>
-            <p className="t-label" style={{ color: "oklch(52% 0.008 260)", fontSize: "0.62rem", marginBottom: "0.75rem" }}>
-              {languagePreference === "id" ? "Tantangan Saya" : "My Challenge"}
-            </p>
-            <ChallengeTile
-              currentDay={challengeCurrentDay!}
-              userRole={challengePath === "facilitator" ? "facilitator" : challengePath === "member" ? "member" : "solo"}
-              firstName={dashboardFirstName}
-            />
-          </div>
-        )}
-
         {/* ── Assessment tile grid (2 × 4) ── */}
         <div id="tour-assessments">
           <p className="t-label" style={{ color: "oklch(52% 0.008 260)", fontSize: "0.62rem", marginBottom: "0.75rem" }}>{languagePreference === "id" ? "Hasil Asesmen Saya" : "My Assessment Results"}</p>
