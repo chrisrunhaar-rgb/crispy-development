@@ -856,9 +856,6 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
   smartGoals?: { id: string; goal: string; overall_score: number; created_at: string }[] | null;
 }) {
   const savedItems = savedResources.filter(s => RESOURCE_META[s]);
-  const total = savedItems.length;
-  const completed = savedItems.filter(slug => resourceRead.includes(slug) || completedAssessments.has(slug)).length;
-  const progressPct = total > 0 ? Math.round((completed / total) * 100) : 0;
 
   return (
     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "3rem", alignItems: "start" }}>
@@ -921,25 +918,8 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
         )}
       </div>
 
-      {/* Right: progress + assessments */}
+      {/* Right: challenge + assessments */}
       <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-
-        {/* Progress stat */}
-        <div id="tour-progress" className="stat-block">
-          <p className="t-label" style={{ color: "oklch(52% 0.008 260)", marginBottom: "0.75rem", fontSize: "0.62rem" }}>{languagePreference === "id" ? "Kemajuan Saya" : "My Progress"}</p>
-          <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "2.5rem", color: "oklch(30% 0.12 260)", lineHeight: 1 }}>
-            {completed}<span style={{ fontSize: "1.25rem", color: "oklch(72% 0.006 260)", fontWeight: 300 }}>/{total}</span>
-          </p>
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(52% 0.008 260)", marginTop: "0.375rem" }}>
-            {languagePreference === "id" ? "sumber daya selesai" : "resources completed"}
-          </p>
-          {total > 0 && (
-            <div style={{ height: "4px", background: "oklch(88% 0.008 80)", marginTop: "1rem" }}>
-              <div style={{ height: "100%", width: `${progressPct}%`, background: "oklch(65% 0.15 45)", transition: "width 0.5s ease" }} />
-            </div>
-          )}
-        </div>
-
         {/* ── Influential Leadership Challenge tile ── */}
         {challengeCurrentDay !== null && (
           <div>

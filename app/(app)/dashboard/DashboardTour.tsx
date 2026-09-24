@@ -29,11 +29,6 @@ const STEPS: TourStep[] = [
     body: "Save resources from the library here to build your personal plan. Mark them complete as you work through them.",
   },
   {
-    targetId: "tour-progress",
-    title: "Track your progress",
-    body: "See how many resources you've completed. Every finished assessment and module counts here.",
-  },
-  {
     targetId: "tour-assessments",
     title: "Assessment results",
     body: "Complete assessments — DISC, Wheel of Life, Enneagram, and more — to see your results stored here.",
