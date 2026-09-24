@@ -7,6 +7,7 @@ type Plan = "personal" | "team";
 type Currency = "usd" | "idr";
 type BillingPeriod = "monthly" | "annual";
 type MinutePackId = "1hr" | "3hr" | "5hr";
+const MAX_SEATS_PER_PURCHASE = 50;
 type AdminClient = ReturnType<typeof createAdminClient>;
 type SupabaseUser = { id: string; email?: string | null };
 
@@ -45,12 +46,13 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://crispyleaders.com";
 
 export async function POST(req: NextRequest) {
   const body = await req.json().catch(() => null);
-  const { plan, currency, billingPeriod, type, packId } = (body ?? {}) as {
+  const { plan, currency, billingPeriod, type, packId, quantity } = (body ?? {}) as {
     plan?: Plan;
     currency?: Currency;
     billingPeriod?: BillingPeriod;
-    type?: "subscription" | "minute_pack" | "lifetime";
+    type?: "subscription" | "minute_pack" | "lifetime" | "seat";
     packId?: MinutePackId;
+    quantity?: number;
   };
 
   const restrictedKey = process.env.STRIPE_RESTRICTED_KEY;
@@ -114,6 +116,47 @@ export async function POST(req: NextRequest) {
       success_url: `${siteUrl}/account/subscription?checkout=success`,
       cancel_url: `${siteUrl}/pricing?checkout=cancelled`,
       metadata: { user_id: user.id, lifetime: "true", plan },
+    });
+
+    return NextResponse.json({ ready: true, checkoutUrl: session.url });
+  }
+
+  if (type === "seat") {
+    const seatCount = Number(quantity);
+    if (!Number.isInteger(seatCount) || seatCount < 1 || seatCount > MAX_SEATS_PER_PURCHASE) {
+      return NextResponse.json({ error: "invalid_quantity", checkoutUrl: null }, { status: 400 });
+    }
+
+    // Only that team's actual leader can buy seats for it.
+    const { data: teamRow } = await admin
+      .from("teams")
+      .select("id")
+      .eq("leader_user_id", user.id)
+      .maybeSingle();
+    if (!teamRow) {
+      return NextResponse.json({ error: "not_team_leader", checkoutUrl: null }, { status: 403 });
+    }
+
+    // Reuses the same one-time $15 price already live on the Personal plan —
+    // Stripe charges price × quantity in a single checkout, so buying several
+    // seats at once is just a bigger quantity, not a new price object.
+    // Chris approved via Telegram 2026-09-24 (msg 16150).
+    const session = await stripe.checkout.sessions.create({
+      mode: "payment",
+      customer: customerId,
+      client_reference_id: user.id,
+      line_items: [{ price: LIFETIME_PRICE_IDS.personal, quantity: seatCount }],
+      billing_address_collection: "required",
+      managed_payments: { enabled: false },
+      invoice_creation: { enabled: true },
+      success_url: `${siteUrl}/dashboard?checkout=success`,
+      cancel_url: `${siteUrl}/dashboard?checkout=cancelled`,
+      metadata: {
+        user_id: user.id,
+        seat_purchase: "true",
+        team_id: teamRow.id,
+        quantity: String(seatCount),
+      },
     });
 
     return NextResponse.json({ ready: true, checkoutUrl: session.url });

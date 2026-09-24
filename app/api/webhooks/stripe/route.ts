@@ -97,6 +97,29 @@ async function handleCheckoutCompleted(admin: AdminClient, session: Stripe.Check
     return;
   }
 
+  // One-off seat purchase for an existing team — a leader topping up their
+  // team's seat limit (single seat or several at once in one checkout).
+  // ADDS to max_seats via a Postgres increment, never overwrites it, same
+  // additive pattern as increment_coach_minutes above. Chris approved via
+  // Telegram 2026-09-24 (msg 16150/16153).
+  if (session.mode === "payment" && session.metadata?.seat_purchase === "true") {
+    const teamId = session.metadata?.team_id;
+    const seatQuantity = Number(session.metadata?.quantity ?? 0);
+    if (!teamId || !seatQuantity) {
+      console.error("checkout.session.completed seat_purchase missing team_id/quantity metadata", session.id);
+      return;
+    }
+    const { error } = await admin.rpc("increment_team_max_seats", {
+      p_team_id: teamId,
+      p_seats: seatQuantity,
+    });
+    if (error) {
+      console.error("increment_team_max_seats failed", session.id, error);
+      throw error; // let Stripe retry rather than silently dropping the purchase
+    }
+    return;
+  }
+
   // One-off lifetime-access purchase (Personal/Team) — replaces the
   // recurring subscription flow below for these plans. Grants permanent
   // access with no coach minutes (WayPoint AI coaching is intentionally

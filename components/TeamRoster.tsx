@@ -70,6 +70,7 @@ export default function TeamRoster({
   const [editTenure, setEditTenure] = useState("");
   const [inviteStatus, setInviteStatus] = useState<"idle" | "loading">("idle");
   const [seatStatus, setSeatStatus] = useState<"idle" | "loading">("idle");
+  const [seatQty, setSeatQty] = useState(1);
   const [invitePopup, setInvitePopup] = useState<{ url: string; text: string; whatsapp: string; title: string } | null>(null);
   const [copied, setCopied] = useState<"link" | "text" | null>(null);
   const [isPending, startTransition] = useTransition();
@@ -168,22 +169,22 @@ export default function TeamRoster({
   const totalCount = (leaderName ? 1 : 0) + members.length;
   const isFull = members.length >= maxSeats;
 
-  async function handleAddSeat() {
+  async function handleAddSeats() {
     setSeatStatus("loading");
     try {
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ plan: "additional_seat", quantity: 1, currency: "usd" }),
+        body: JSON.stringify({ type: "seat", quantity: seatQty }),
       });
       const data = await res.json();
       if (data.checkoutUrl) {
         window.location.href = data.checkoutUrl;
       } else {
-        alert("Seat purchases are coming soon — check back shortly.");
+        alert(language === "id" ? "Terjadi kesalahan. Silakan coba lagi." : "Something went wrong. Please try again.");
       }
     } catch {
-      alert("Something went wrong. Please try again.");
+      alert(language === "id" ? "Terjadi kesalahan. Silakan coba lagi." : "Something went wrong. Please try again.");
     } finally {
       setSeatStatus("idle");
     }
@@ -271,14 +272,46 @@ export default function TeamRoster({
             )}
             {isLeader && (
               isFull ? (
-                <button
-                  type="button"
-                  onClick={handleAddSeat}
-                  disabled={seatStatus === "loading"}
-                  style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", background: seatStatus === "loading" ? "oklch(75% 0.10 45)" : "oklch(65% 0.15 45)", color: "white", border: "none", padding: "0.5rem 1rem", cursor: seatStatus === "loading" ? "wait" : "pointer", transition: "background 0.15s", flexShrink: 0 }}
-                >
-                  {seatStatus === "loading" ? (language === "id" ? "Memuat…" : "Loading…") : (language === "id" ? "+ Tambah Kursi — $49" : "+ Add a Seat — $49")}
-                </button>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap" }}>
+                  <div style={{ display: "flex", alignItems: "center", border: "1px solid oklch(50% 0.04 260)" }}>
+                    <button
+                      type="button"
+                      onClick={() => setSeatQty(q => Math.max(1, q - 1))}
+                      disabled={seatStatus === "loading"}
+                      style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.85rem", fontWeight: 700, background: "transparent", color: "oklch(80% 0.008 260)", border: "none", padding: "0.35rem 0.6rem", cursor: seatStatus === "loading" ? "default" : "pointer" }}
+                    >−</button>
+                    <input
+                      type="number"
+                      min={1}
+                      max={50}
+                      value={seatQty}
+                      onChange={e => {
+                        const n = Math.round(Number(e.target.value));
+                        setSeatQty(Number.isFinite(n) ? Math.min(50, Math.max(1, n)) : 1);
+                      }}
+                      disabled={seatStatus === "loading"}
+                      style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", fontWeight: 700, color: "oklch(97% 0.005 80)", background: "transparent", border: "none", width: "36px", textAlign: "center", MozAppearance: "textfield" }}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setSeatQty(q => Math.min(50, q + 1))}
+                      disabled={seatStatus === "loading"}
+                      style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.85rem", fontWeight: 700, background: "transparent", color: "oklch(80% 0.008 260)", border: "none", padding: "0.35rem 0.6rem", cursor: seatStatus === "loading" ? "default" : "pointer" }}
+                    >+</button>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleAddSeats}
+                    disabled={seatStatus === "loading"}
+                    style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", background: seatStatus === "loading" ? "oklch(75% 0.10 45)" : "oklch(65% 0.15 45)", color: "white", border: "none", padding: "0.5rem 1rem", cursor: seatStatus === "loading" ? "wait" : "pointer", transition: "background 0.15s", flexShrink: 0, whiteSpace: "nowrap" }}
+                  >
+                    {seatStatus === "loading"
+                      ? (language === "id" ? "Memuat…" : "Loading…")
+                      : (language === "id"
+                        ? `+ Tambah ${seatQty} Kursi — $${seatQty * 15} (Rp15 per kursi)`
+                        : `+ Add ${seatQty} Seat${seatQty > 1 ? "s" : ""} — $${seatQty * 15} ($15 each)`)}
+                  </button>
+                </div>
               ) : (
                 <button
                   type="button"
