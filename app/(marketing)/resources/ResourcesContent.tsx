@@ -263,6 +263,7 @@ export default function ResourcesContent({
 }: Props) {
   const { t, lang } = useLanguage();
   const r = t.resources;
+  const journeyHref = userId ? "/journey" : "/signup?redirectTo=/journey";
   const [localSaved, setLocalSaved] = useState<Set<string>>(
     new Set(savedResources)
   );
@@ -567,7 +568,7 @@ export default function ResourcesContent({
                 {lang === "id" ? "Gratis" : "Free"}
               </span>
               <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "oklch(42% 0.07 260)" }}>
-                {lang === "id" ? "Tantangan · 60 hari" : "Challenge · 60 days"}
+                {lang === "id" ? "Perjalanan · 60 langkah" : "Journey · 60 steps"}
               </span>
             </div>
 
@@ -579,13 +580,13 @@ export default function ResourcesContent({
             {/* Body */}
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", lineHeight: 1.75, color: "oklch(38% 0.05 260)", margin: "0 0 2rem", maxWidth: "46ch" }}>
               {lang === "id"
-                ? "Tantangan Kepemimpinan Berpengaruh — perjalanan 60 hari berdasarkan Deep Influence karya T.J. Addington. Untuk pemimpin dan tim yang ingin bertumbuh dari dalam ke luar."
-                : "The Influential Leadership Challenge — a 60-day guided journey based on T.J. Addington's Deep Influence. For leaders and teams who want to grow from the inside out."}
+                ? "Perjalanan gratis 60 langkah berdasarkan buku Deep Influence karya T.J. Addington. Jalani dengan kecepatanmu sendiri, satu batu demi satu batu, dan bertumbuhlah sebagai pemimpin dari dalam ke luar."
+                : "A free 60-step journey based on T.J. Addington's book Deep Influence. Walk it at your own pace, one stone at a time, and grow as a leader from the inside out."}
             </p>
 
             {/* CTA */}
             <Link
-              href="/influential-leadership-challenge"
+              href={journeyHref}
               style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "0.8rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(22% 0.10 260)", background: "oklch(65% 0.15 45)", padding: "0.875rem 2rem", borderRadius: "4px", textDecoration: "none" }}
             >
               {lang === "id" ? "Ikuti Sekarang" : "Join Now"} <span aria-hidden="true">→</span>

@@ -4,12 +4,20 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
+import { createClient } from "@/lib/supabase/client";
 
 export default function HomeContent() {
   const { t, lang } = useLanguage();
   const h = t.home;
   const [activeTile, setActiveTile] = useState<number | null>(null);
   const reasonRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [journeyHref, setJourneyHref] = useState("/signup?redirectTo=/journey");
+
+  useEffect(() => {
+    createClient().auth.getSession().then(({ data }) => {
+      if (data.session) setJourneyHref("/journey");
+    });
+  }, []);
 
   useEffect(() => {
     const obs = new IntersectionObserver(
@@ -249,7 +257,7 @@ export default function HomeContent() {
                 letterSpacing: "0.16em", textTransform: "uppercase",
                 color: "oklch(42% 0.07 260)",
               }}>
-                {lang === "id" ? "Tantangan · 60 hari" : "Challenge · 60 days"}
+                {lang === "id" ? "Perjalanan · 60 langkah" : "Journey · 60 steps"}
               </span>
             </div>
 
@@ -270,13 +278,13 @@ export default function HomeContent() {
               color: "oklch(38% 0.05 260)", margin: "0 0 2rem", maxWidth: "46ch",
             }}>
               {lang === "id"
-                ? "Tantangan Kepemimpinan Berpengaruh — perjalanan 60 hari berdasarkan Deep Influence karya T.J. Addington. Untuk pemimpin dan tim yang ingin bertumbuh dari dalam ke luar."
-                : "The Influential Leadership Challenge — a 60-day guided journey based on T.J. Addington's Deep Influence. For leaders and teams who want to grow from the inside out."}
+                ? "Perjalanan gratis 60 langkah berdasarkan buku Deep Influence karya T.J. Addington. Jalani dengan kecepatanmu sendiri, satu batu demi satu batu, dan bertumbuhlah sebagai pemimpin dari dalam ke luar."
+                : "A free 60-step journey based on T.J. Addington's book Deep Influence. Walk it at your own pace, one stone at a time, and grow as a leader from the inside out."}
             </p>
 
             {/* CTA */}
             <Link
-              href="/influential-leadership-challenge"
+              href={journeyHref}
               style={{
                 display: "inline-flex", alignItems: "center", gap: "0.5rem",
                 fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "0.8rem",
