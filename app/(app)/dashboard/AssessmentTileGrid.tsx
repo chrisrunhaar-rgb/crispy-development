@@ -8,6 +8,7 @@ import { KaruniaRing, GIFT_CATEGORIES } from "@/components/charts/KaruniaRing";
 // â”€â”€ Brand tokens â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const navy     = "oklch(22% 0.10 260)";
 const orange   = "oklch(65% 0.15 45)";
+const green    = "oklch(55% 0.14 150)";
 const offWhite = "oklch(97% 0.005 80)";
 
 // â”€â”€ Enneagram Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
@@ -1439,12 +1440,16 @@ function getTitle(key: string, lang: "en" | "id"): string {
 
 // Free-account overlay: a tilted orange "Members Only" ribbon across the tile.
 // The whole tile becomes a link to the pricing page.
-function MembersOnlyBanner({ lang = "en" }: { lang?: "en" | "id" }) {
+// freeHref set = green "Free Access" variant that opens the free assessment instead.
+function MembersOnlyBanner({ lang = "en", freeHref }: { lang?: "en" | "id"; freeHref?: string }) {
   const [hovered, setHovered] = useState(false);
+  const isFree = !!freeHref;
   return (
     <Link
-      href="/pricing"
-      aria-label={lang === "id" ? "Khusus anggota. Mulai keanggotaan" : "Members only. Start a membership"}
+      href={freeHref ?? "/pricing"}
+      aria-label={isFree
+        ? (lang === "id" ? "Akses gratis. Ikuti tes" : "Free access. Take the test")
+        : (lang === "id" ? "Khusus anggota. Mulai keanggotaan" : "Members only. Start a membership")}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onClick={e => e.stopPropagation()}
@@ -1457,7 +1462,7 @@ function MembersOnlyBanner({ lang = "en" }: { lang?: "en" | "id" }) {
         width: "130%",
         transform: `translateY(-50%) rotate(-8deg) scale(${hovered ? 1.04 : 1})`,
         transition: "transform 0.2s ease",
-        background: orange,
+        background: isFree ? green : orange,
         color: "white",
         textAlign: "center",
         padding: "0.45rem 0",
@@ -1466,9 +1471,11 @@ function MembersOnlyBanner({ lang = "en" }: { lang?: "en" | "id" }) {
         fontWeight: 800,
         letterSpacing: "0.14em",
         textTransform: "uppercase",
-        boxShadow: "0 4px 14px oklch(45% 0.12 45 / 0.35)",
+        boxShadow: isFree ? "0 4px 14px oklch(40% 0.12 150 / 0.35)" : "0 4px 14px oklch(45% 0.12 45 / 0.35)",
       }}>
-        {lang === "id" ? "Khusus Anggota" : "Members Only"}
+        {isFree
+          ? (lang === "id" ? "Akses Gratis" : "Free Access")
+          : (lang === "id" ? "Khusus Anggota" : "Members Only")}
       </span>
     </Link>
   );
@@ -1483,6 +1490,7 @@ function CompactTile({
   extraButton,
   lang = "en",
   isSubscriber = true,
+  freeAccess = false,
 }: {
   title: string;
   visual: React.ReactNode;
@@ -1492,6 +1500,8 @@ function CompactTile({
   extraButton?: React.ReactNode;
   lang?: "en" | "id";
   isSubscriber?: boolean;
+  /** Assessment open to free accounts: shows a green "Free Access" ribbon instead of "Members Only". */
+  freeAccess?: boolean;
 }) {
   const [hovered, setHovered] = useState(false);
 
@@ -1550,7 +1560,7 @@ function CompactTile({
         {visual}
       </div>
 
-      {!done && !isSubscriber && <MembersOnlyBanner lang={lang} />}
+      {!done && !isSubscriber && <MembersOnlyBanner lang={lang} freeHref={freeAccess ? href : undefined} />}
       {!done && href && isSubscriber && (
         <Link
           href={href}
@@ -2034,6 +2044,7 @@ export default function AssessmentTileGrid({
           href="/resources/5languages"
           lang={lang}
           isSubscriber={isSubscriber}
+          freeAccess
           onClick={fivelaReceivingResult && fivelaGivingResult && fivelaReceivingScores && fivelaGivingScores
             ? () => setModal({ type: "fivela", receivingResult: fivelaReceivingResult, givingResult: fivelaGivingResult, receivingScores: fivelaReceivingScores, givingScores: fivelaGivingScores })
             : undefined}
