@@ -440,17 +440,25 @@ export default function PricingContent({ isIndonesia }: Props) {
                 display: "flex",
                 flexDirection: "column",
                 gap: 0,
+                position: "relative",
               }}
             >
-              {/* Label + icon */}
-              <div
+              {/* Icon — absolutely positioned so its size is independent of the
+                  label row's height; sizing it up here never pushes the price
+                  row (or anything else) further down the card. */}
+              <span
                 style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "flex-start",
-                  marginBottom: "1.75rem",
+                  position: "absolute",
+                  top: "clamp(2rem, 4vw, 2.75rem)",
+                  right: "clamp(2rem, 4vw, 2.75rem)",
+                  color: "oklch(65% 0.15 45)",
                 }}
               >
+                <PersonalPathIcon size={40} />
+              </span>
+
+              {/* Label */}
+              <div style={{ marginBottom: "1.75rem" }}>
                 <p
                   style={{
                     fontFamily: "var(--font-montserrat)",
@@ -459,13 +467,11 @@ export default function PricingContent({ isIndonesia }: Props) {
                     letterSpacing: "0.01em",
                     color: "oklch(65% 0.15 45)",
                     margin: 0,
+                    maxWidth: "70%",
                   }}
                 >
                   {copy.personalLabel}
                 </p>
-                <span style={{ color: "oklch(65% 0.15 45)", flexShrink: 0, marginTop: "0.15rem" }}>
-                  <PersonalPathIcon />
-                </span>
               </div>
 
               {/* Price row */}
@@ -538,17 +544,25 @@ export default function PricingContent({ isIndonesia }: Props) {
                 display: "flex",
                 flexDirection: "column",
                 gap: 0,
+                position: "relative",
               }}
             >
-              {/* Label + icon */}
-              <div
+              {/* Icon — absolutely positioned so its size is independent of the
+                  label row's height; sizing it up here never pushes the price
+                  row (or anything else) further down the card. */}
+              <span
                 style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "flex-start",
-                  marginBottom: "1.75rem",
+                  position: "absolute",
+                  top: "clamp(2rem, 4vw, 2.75rem)",
+                  right: "clamp(2rem, 4vw, 2.75rem)",
+                  color: "oklch(65% 0.15 45)",
                 }}
               >
+                <TeamPathIcon size={40} />
+              </span>
+
+              {/* Label */}
+              <div style={{ marginBottom: "1.75rem" }}>
                 <p
                   style={{
                     fontFamily: "var(--font-montserrat)",
@@ -557,13 +571,11 @@ export default function PricingContent({ isIndonesia }: Props) {
                     letterSpacing: "0.01em",
                     color: "oklch(65% 0.15 45)",
                     margin: 0,
+                    maxWidth: "70%",
                   }}
                 >
                   {copy.teamLabel}
                 </p>
-                <span style={{ color: "oklch(65% 0.15 45)", flexShrink: 0, marginTop: "0.15rem" }}>
-                  <TeamPathIcon />
-                </span>
               </div>
 
               {/* Price row */}
