@@ -55,6 +55,8 @@ export default async function JourneyPage() {
         eyebrow: "Perjalanan Kepemimpinan yang Berpengaruh",
         title: "Satu langkah pada satu waktu",
         intro: "60 langkah untuk memimpin dari hati. Mulailah dari batu yang menyala, atau pilih langkah mana pun yang ingin kamu jelajahi.",
+        authorPre: "Semua isi modul ini diambil dari buku T.J. Addington, ",
+        authorPost: ". Kami berterima kasih kepadanya atas izin untuk menggunakan materi ini, sehingga lebih banyak orang dapat berfokus pada kepemimpinan berpengaruh yang mengubah hidup.",
         progress: `${doneCount} dari ${total} langkah selesai`,
         cont: nextStep ? `Lanjutkan: Langkah ${nextStep}` : "Lihat perjalananmu",
         start: "Mulai: Langkah 1",
@@ -69,6 +71,8 @@ export default async function JourneyPage() {
         eyebrow: "Influential Leadership Journey",
         title: "One step at a time",
         intro: "60 steps to lead from the heart. Start with the glowing stone, or pick any step you want to explore.",
+        authorPre: "All module content comes from T.J. Addington's book ",
+        authorPost: ". We are grateful for his approval to use this material, so it can help more people focus on life-changing influential leadership.",
         progress: `${doneCount} of ${total} steps completed`,
         cont: nextStep ? `Continue: Step ${nextStep}` : "View your journey",
         start: "Start: Step 1",
@@ -110,6 +114,9 @@ export default async function JourneyPage() {
           </h1>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", lineHeight: 1.6, color: "oklch(85% 0.02 260)", maxWidth: 560, margin: "0.75rem 0 1.5rem" }}>
             {t.intro}
+          </p>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", lineHeight: 1.6, color: "oklch(78% 0.03 260)", maxWidth: 560, margin: "-0.75rem 0 1.5rem", paddingLeft: "0.75rem", borderLeft: `2px solid ${orange}` }}>
+            {t.authorPre}<em>Deep Influence</em>{t.authorPost}
           </p>
 
           <div style={{ maxWidth: 420 }}>
