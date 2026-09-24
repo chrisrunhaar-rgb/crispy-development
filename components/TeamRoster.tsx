@@ -308,7 +308,7 @@ export default function TeamRoster({
                     {seatStatus === "loading"
                       ? (language === "id" ? "Memuat…" : "Loading…")
                       : (language === "id"
-                        ? `+ Tambah ${seatQty} Kursi — $${seatQty * 15} (Rp15 per kursi)`
+                        ? `+ Tambah ${seatQty} Kursi — $${seatQty * 15} ($15 per kursi)`
                         : `+ Add ${seatQty} Seat${seatQty > 1 ? "s" : ""} — $${seatQty * 15} ($15 each)`)}
                   </button>
                 </div>
