@@ -103,10 +103,34 @@ export async function removeTeamContent(formData: FormData) {
 // one place that creates a team_invites row for this flow.
 // (sendEmailInvite has its own near-identical block; left untouched — its extra
 // language-selection logic makes it a distinct, out-of-scope case.)
+// Each open slot holds at most one pending invite, so members + pending
+// invites may never exceed the team's member seats (max_seats, leader excluded).
+async function hasOpenSlot(
+  admin: ReturnType<typeof createAdminClient>,
+  leaderUserId: string
+): Promise<boolean> {
+  const { data: team } = await admin
+    .from("teams")
+    .select("id, max_seats")
+    .eq("leader_user_id", leaderUserId)
+    .maybeSingle();
+  if (!team) return false;
+  const [{ count: memberCount }, { count: pendingCount }] = await Promise.all([
+    admin.from("team_members").select("id", { count: "exact", head: true }).eq("team_id", team.id),
+    admin.from("team_invites").select("id", { count: "exact", head: true })
+      .eq("team_id", leaderUserId).is("used_at", null).gt("expires_at", new Date().toISOString()),
+  ]);
+  return (memberCount ?? 0) + (pendingCount ?? 0) < (team.max_seats ?? 7);
+}
+
+const NO_OPEN_SLOT = "All slots are taken. Buy more seats or revoke a pending invite first.";
+
 async function createTeamInvite(
   admin: ReturnType<typeof createAdminClient>,
   leaderUserId: string
 ): Promise<{ token: string | null; error: string | null }> {
+  if (!(await hasOpenSlot(admin, leaderUserId))) return { token: null, error: NO_OPEN_SLOT };
+
   const token = crypto.randomUUID();
   const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
 
@@ -136,7 +160,7 @@ export async function generateInviteLink(formData: FormData) {
   const { error } = await createTeamInvite(admin, user.id);
   if (error) return { error };
 
-  revalidatePath("/dashboard/invite");
+  revalidatePath("/dashboard/team-settings");
   return { error: null };
 }
 
@@ -178,6 +202,7 @@ export async function sendEmailInvite(formData: FormData): Promise<{ error?: str
     .eq("leader_user_id", user.id)
     .maybeSingle();
   if (!team) return { error: "No team found." };
+  if (!(await hasOpenSlot(admin, user.id))) return { error: NO_OPEN_SLOT };
 
   const token = crypto.randomUUID();
   const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
@@ -191,7 +216,7 @@ export async function sendEmailInvite(formData: FormData): Promise<{ error?: str
 
   const { error: insertError } = await admin
     .from("team_invites")
-    .insert({ team_id: user.id, token, expires_at: expiresAt, language });
+    .insert({ team_id: user.id, token, expires_at: expiresAt, language, recipient_email: recipientEmail, recipient_name: recipientName || null });
   if (insertError) return { error: "Failed to create invite." };
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.crispyleaders.com";
@@ -228,7 +253,7 @@ export async function sendEmailInvite(formData: FormData): Promise<{ error?: str
 
   if (!res.ok) return { error: "Failed to send email." };
 
-  revalidatePath("/dashboard/invite");
+  revalidatePath("/dashboard/team-settings");
   return { sent: true };
 }
 
@@ -251,7 +276,7 @@ export async function deleteInviteLink(formData: FormData) {
   if (invite.team_id !== user.id) throw new Error("Unauthorized");
 
   await admin.from("team_invites").delete().eq("id", inviteId);
-  revalidatePath("/dashboard/invite");
+  revalidatePath("/dashboard/team-settings");
 }
 
 export async function acceptInvite(token: string, userId: string): Promise<{ error: string | null }> {
@@ -283,7 +308,7 @@ export async function acceptInvite(token: string, userId: string): Promise<{ err
     .select("*", { count: "exact", head: true })
     .eq("team_id", team.id);
 
-  if ((currentCount ?? 0) >= (team.max_seats ?? 8)) {
+  if ((currentCount ?? 0) >= (team.max_seats ?? 7)) {
     return { error: "This team is full. The team leader can purchase additional seats to add more members." };
   }
 

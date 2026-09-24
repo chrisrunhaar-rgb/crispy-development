@@ -149,8 +149,8 @@ export async function POST(req: NextRequest) {
       billing_address_collection: "required",
       managed_payments: { enabled: false },
       invoice_creation: { enabled: true },
-      success_url: `${siteUrl}/dashboard?checkout=success`,
-      cancel_url: `${siteUrl}/dashboard?checkout=cancelled`,
+      success_url: `${siteUrl}/dashboard/team-settings?checkout=success#members`,
+      cancel_url: `${siteUrl}/dashboard/team-settings#members`,
       metadata: {
         user_id: user.id,
         seat_purchase: "true",

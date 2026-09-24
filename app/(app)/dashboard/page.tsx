@@ -16,7 +16,6 @@ import TeamJourney, { BASE_JOURNEY_STEPS, buildJourneySteps, getTypeLabel, TYPE_
 import TeamCommsSection from "@/components/TeamCommsSection";
 import TeamRoster, { type RosterMember } from "@/components/TeamRoster";
 import TimezoneDetector from "@/components/TimezoneDetector";
-import TeamAssessmentSelector from "./TeamAssessmentSelector";
 import { type TeamMemberResult } from "@/components/TeamResultsGrid";
 import { type FeedbackEntry } from "@/components/StepFeedback";
 import DashboardTour from "./DashboardTour";
@@ -1052,22 +1051,27 @@ function TeamLeaderDashboard({
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
 
-      {/* THE TEAM roster */}
+      {/* Team Settings — all leader-only setup lives on its own page, so the
+          dashboard below reads the same for the leader as for members. */}
+      <div style={{ display: "flex", justifyContent: "flex-end" }}>
+        <Link
+          href="/dashboard/team-settings"
+          className="btn-primary"
+          style={{ fontSize: "0.8rem", display: "inline-flex", alignItems: "center", gap: "0.5rem", textDecoration: "none" }}
+        >
+          <span aria-hidden="true">⚙</span> {lang === "id" ? "Pengaturan Tim" : "Team Settings"}
+        </Link>
+      </div>
+
+      {/* THE TEAM roster — read-only, same view members see */}
       <TeamRoster
         teamId={teamRecord.id}
         teamName={teamRecord.name}
         leaderName={leaderName}
         members={rosterMembers}
-        isLeader={true}
-        maxSeats={(teamRecord as { max_seats?: number }).max_seats ?? 8}
+        isLeader={false}
+        maxSeats={(teamRecord as { max_seats?: number }).max_seats ?? 7}
         language={(language as "en" | "id") || "en"}
-        currentLanguage={(language as "en" | "id") || "en"}
-      />
-
-      {/* Assessment selector */}
-      <TeamAssessmentSelector
-        teamId={teamRecord.id}
-        initialSelected={selectedAssessments}
       />
 
       {/* Team Journey — the main feature */}

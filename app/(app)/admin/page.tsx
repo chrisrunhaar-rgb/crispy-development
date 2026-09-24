@@ -113,7 +113,7 @@ export default async function AdminPage({
     });
     (teamsResult.data ?? []).forEach((t: { leader_user_id: string; max_seats: number | null; team_members: { count: number }[] }) => {
       const filled = t.team_members?.[0]?.count ?? 0;
-      const max = t.max_seats ?? 8;
+      const max = t.max_seats ?? 7;
       teamSeatsMap.set(t.leader_user_id, { filled, max });
     });
   }

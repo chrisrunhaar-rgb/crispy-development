@@ -157,7 +157,7 @@ async function handleCheckoutCompleted(admin: AdminClient, session: Stripe.Check
           leader_user_id: userId,
           name,
           language: "en",
-          max_seats: 8,
+          max_seats: 7, // member seats; leader is the 8th person
           ...teamPatch,
         });
       }
@@ -221,7 +221,7 @@ async function handleCheckoutCompleted(admin: AdminClient, session: Stripe.Check
         leader_user_id: userId,
         name,
         language: "en",
-        max_seats: 8,
+        max_seats: 7, // member seats; leader is the 8th person
         ...teamPatch,
       });
     }

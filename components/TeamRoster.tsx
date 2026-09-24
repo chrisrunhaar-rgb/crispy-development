@@ -50,7 +50,7 @@ export default function TeamRoster({
   leaderName,
   members: initialMembers,
   isLeader,
-  maxSeats = 8,
+  maxSeats = 7,
   language = "en",
   currentLanguage,
 }: {
@@ -92,7 +92,7 @@ export default function TeamRoster({
     if (!trimmed || trimmed === teamName) { setEditingName(false); return; }
     setTeamName(trimmed);
     setEditingName(false);
-    startTransition(() => renameTeam(teamId, trimmed));
+    startTransition(async () => { await renameTeam(teamId, trimmed); });
   }
 
   // ── Invite member ──
@@ -264,7 +264,7 @@ export default function TeamRoster({
             )}
             {isLeader && (
               <Link
-                href="/dashboard/invite"
+                href="/dashboard/team-settings"
                 style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(66% 0.04 260)", textDecoration: "underline", textUnderlineOffset: "2px", whiteSpace: "nowrap" }}
               >
                 {TEAM_UI[r(language)].manageInvites}
