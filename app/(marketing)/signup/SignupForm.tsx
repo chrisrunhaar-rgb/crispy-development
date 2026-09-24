@@ -35,7 +35,7 @@ function TeamPathIcon({ size = 32 }: { size?: number }) {
   );
 }
 
-export default function SignupForm({ defaultPathway = "personal", inviteToken = "", memberInviteToken = "", initialLanguage, redirectTo = "" }: { defaultPathway?: Pathway; inviteToken?: string; memberInviteToken?: string; initialLanguage?: "en" | "id"; redirectTo?: string }) {
+export default function SignupForm({ defaultPathway = "personal", inviteToken = "", memberInviteToken = "", initialLanguage, redirectTo = "", hidePathway = false }: { defaultPathway?: Pathway; inviteToken?: string; memberInviteToken?: string; initialLanguage?: "en" | "id"; redirectTo?: string; hidePathway?: boolean }) {
   const [pathway, setPathway] = useState<Pathway>(defaultPathway);
   const [showPassword, setShowPassword] = useState(false);
   const { t, lang, setLang } = useLanguage();
@@ -88,8 +88,9 @@ export default function SignupForm({ defaultPathway = "personal", inviteToken = 
 
             {/* Pathway selection — shown for public signup and the Influential Leadership
                 Challenge's team-invite flow. A member invite already carries its own fixed
-                pathway (set when the invite was created), so it's hidden there. */}
-            {!memberInviteToken && (
+                pathway (set when the invite was created), so it's hidden there. Also hidden for
+                the plain free-account signup from the nav (no pathway chosen yet). */}
+            {!memberInviteToken && !hidePathway && (
               <div style={{ marginBottom: "2rem" }}>
                 <p className="form-label" style={{ marginBottom: "0.75rem" }}>{s.choosePathway}</p>
                 <div className="pathway-grid">

@@ -50,6 +50,7 @@ export default async function SignupPage({
       memberInviteToken={member_invite ?? ""}
       initialLanguage={initialLanguage}
       redirectTo={redirectTo ?? ""}
+      hidePathway={!pathway && !invite && !member_invite}
     />
   );
 }
