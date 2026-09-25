@@ -121,12 +121,12 @@ const COPY = {
       fallback: "Questions first? Apply for access and we will get back to you.",
     },
     caption: {
-      results: "The leader's view: every member's assessment results side by side, so you can see how your team is wired before the next hard conversation.",
+      results: "The team view: every member's assessment results side by side, so the whole team can see how it is wired before the next hard conversation.",
       modules: "Inside a module: read the teaching, take the team assessment, and your result lands on the team dashboard next to everyone else's.",
       phone: "Every module reads comfortably on a phone, and many come with their own team assessment. Done on the commute, between meetings, or at home in the evening.",
     },
     shot: {
-      leaderResults: "Screenshot: leader results view",
+      leaderResults: "Screenshot: team results view",
       phoneRead: "Screenshot: a team assessment inside a module",
       phoneInput: "Screenshot: team progress and reflections",
       profileCard: "Screenshot: member profile card",
@@ -202,12 +202,12 @@ const COPY = {
       fallback: "Ada pertanyaan dulu? Ajukan akses dan kami akan menghubungi Anda.",
     },
     caption: {
-      results: "Tampilan pemimpin: hasil asesmen setiap anggota berdampingan, sehingga Anda tahu karakter tim Anda sebelum percakapan sulit berikutnya.",
+      results: "Tampilan tim: hasil asesmen setiap anggota berdampingan, sehingga seluruh tim tahu karakter timnya sebelum percakapan sulit berikutnya.",
       modules: "Di dalam modul: baca materinya, kerjakan asesmen timnya, dan hasil Anda langsung muncul di dasbor tim, di samping hasil anggota lain.",
       phone: "Setiap modul nyaman dibaca di ponsel, dan banyak modul punya asesmen timnya sendiri. Dikerjakan dalam perjalanan ke kantor, di sela rapat, atau di rumah pada malam hari.",
     },
     shot: {
-      leaderResults: "Tangkapan layar: tampilan hasil pemimpin",
+      leaderResults: "Tangkapan layar: tampilan hasil tim",
       phoneRead: "Tangkapan layar: asesmen tim di dalam modul",
       phoneInput: "Tangkapan layar: kemajuan dan refleksi tim",
       profileCard: "Tangkapan layar: kartu profil anggota",
