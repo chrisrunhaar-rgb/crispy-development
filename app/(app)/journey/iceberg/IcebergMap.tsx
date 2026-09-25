@@ -934,7 +934,7 @@ export default function IcebergMap({ steps, completed, nextStep, lang, heading }
                   role="dialog"
                   aria-labelledby="ice-card-title"
                   style={{
-                    position: "absolute", left: "50%", bottom: 12, transform: "translateX(-50%)",
+                    position: "absolute", left: 12, bottom: 12,
                     width: "min(calc(100% - 24px), 380px)", zIndex: 4,
                     background: offWhite, borderTop: `2px solid ${orange}`,
                     boxShadow: "0 18px 48px oklch(20% 0.08 260 / 0.35)",
