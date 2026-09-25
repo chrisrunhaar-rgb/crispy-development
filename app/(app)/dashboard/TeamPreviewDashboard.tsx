@@ -422,7 +422,8 @@ function PrimaryLink({ href, children }: { href: string; children: ReactNode }) 
 }
 
 /* ── Main ───────────────────────────────────────────────────────────────── */
-export default function TeamPreviewDashboard({ language }: { language: string }) {
+export default function TeamPreviewDashboard({ language, ctaHref = "/membership", asPage = false }: { language: string; ctaHref?: string; asPage?: boolean }) {
+  const HeroTitle = asPage ? "h1" : "h2";
   const lang: TeamLang = language === "id" ? "id" : "en";
   const c = COPY[lang];
   const [open, setOpen] = useState<boolean[]>(() => MODULE_TYPES.map((_, i) => i === 0));
@@ -450,16 +451,16 @@ export default function TeamPreviewDashboard({ language }: { language: string })
       <section className="tp-hero" aria-labelledby="tp-hero-title">
         <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
           <div className="tp-rise"><Eyebrow>{c.hero.eyebrow}</Eyebrow></div>
-          <h2 id="tp-hero-title" className="tp-rise" style={{
+          <HeroTitle id="tp-hero-title" className="tp-rise" style={{
             fontFamily: SERIF, fontStyle: "italic", fontWeight: 500, margin: 0,
             fontSize: "clamp(2.4rem, 5.2vw, 3.9rem)", lineHeight: 1.04, letterSpacing: "-0.01em",
             color: T.navy, textWrap: "balance", animationDelay: "80ms",
           }}>
             {c.hero.title}
-          </h2>
+          </HeroTitle>
           <p className="tp-rise" style={{ ...bodyStyle, fontSize: "1.02rem", maxWidth: "46ch", animationDelay: "160ms" }}>{c.hero.subline}</p>
           <div className="tp-rise" style={{ animationDelay: "240ms", paddingTop: "0.25rem" }}>
-            <PrimaryLink href="/membership">{c.hero.cta}</PrimaryLink>
+            <PrimaryLink href={ctaHref}>{c.hero.cta}</PrimaryLink>
           </div>
         </div>
         <figure className="tp-rise" style={{ margin: "0 auto", width: "100%", maxWidth: "25rem", animationDelay: "200ms" }}>
@@ -644,10 +645,10 @@ export default function TeamPreviewDashboard({ language }: { language: string })
         <h2 id="tp-cta-title" style={{ ...h2Style(), fontSize: "clamp(2.2rem, 4.6vw, 3.4rem)", lineHeight: 1.06 }}>{c.cta.title}</h2>
         <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem", alignItems: "flex-start" }}>
           <p style={bodyStyle}>{c.cta.body}</p>
-          <PrimaryLink href="/membership">{c.cta.button}</PrimaryLink>
-          <Link href="/apply" className="tp-link" style={{ fontFamily: SANS, fontSize: "0.86rem", lineHeight: 1.6, color: T.muted, textDecoration: "underline", textUnderlineOffset: "0.25em", textDecorationThickness: "1px" }}>
+          <PrimaryLink href={ctaHref}>{c.cta.button}</PrimaryLink>
+          {ctaHref !== "/apply" && <Link href="/apply" className="tp-link" style={{ fontFamily: SANS, fontSize: "0.86rem", lineHeight: 1.6, color: T.muted, textDecoration: "underline", textUnderlineOffset: "0.25em", textDecorationThickness: "1px" }}>
             {c.cta.fallback}
-          </Link>
+          </Link>}
         </div>
       </section>
     </div>
