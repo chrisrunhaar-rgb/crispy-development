@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { computeLayout, scatterDecor, type Decor, type Layout } from "./parkLayout";
 
-const navy   = "oklch(22% 0.10 260)";
+const navy   = "oklch(30% 0.12 260)";
 const orange = "oklch(65% 0.15 45)";
 
 export type PathStep = { n: number; title: string; chapter: string | null; chapterStart: boolean };
@@ -324,7 +324,7 @@ export default function StonePath({
     <div ref={ref} style={{
       position: "relative", width: "100%",
       height: layout ? layout.height : 800,
-      borderRadius: 20, overflow: "hidden",
+      borderRadius: 2, overflow: "hidden",
       background: C.meadow,
     }}>
       <style>{`

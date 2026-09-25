@@ -5,7 +5,11 @@ import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import StonePath, { type PathStep } from "./StonePath";
 
-const navy    = "oklch(22% 0.10 260)";
+const navy    = "oklch(30% 0.12 260)";
+const muted   = "oklch(48% 0.04 260)";
+const text    = "oklch(32% 0.06 260)";
+const rule    = "oklch(84% 0.01 80)";
+const orangeDeep = "oklch(58% 0.16 45)";
 const orange  = "oklch(65% 0.15 45)";
 const green   = "oklch(55% 0.14 150)";
 const offWhite = "oklch(97% 0.005 80)";
@@ -91,7 +95,6 @@ export default async function JourneyPage() {
     fontSize: "0.8rem",
     letterSpacing: "0.04em",
     padding: "0.75rem 1.25rem",
-    borderRadius: "8px",
     textDecoration: "none",
   } as const;
 
@@ -100,53 +103,54 @@ export default async function JourneyPage() {
   );
 
   return (
-    <div style={{ minHeight: "100vh", background: offWhite }}>
-      <header style={{ background: navy, color: offWhite, padding: "1.25rem 1rem 2.25rem" }}>
+    <div className="jrn" style={{ minHeight: "100vh", background: offWhite }}>
+      <style>{`.jrn a:focus-visible, .jrn button:focus-visible, .jrn summary:focus-visible, .jrn textarea:focus-visible { outline: 2px solid oklch(65% 0.15 45); outline-offset: 3px; } @media (prefers-reduced-motion: reduce) { .jrn *, .jrn *::before, .jrn *::after { transition: none !important; animation: none !important; } }`}</style>
+      <header style={{ background: offWhite, color: navy, padding: "1.25rem 1rem 2rem", borderBottom: `1px solid ${rule}` }}>
         <div style={{ maxWidth: 1080, margin: "0 auto" }}>
-          <Link href="/dashboard" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 600, color: "oklch(80% 0.03 260)", textDecoration: "none" }}>
+          <Link href="/dashboard" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 600, color: muted, textDecoration: "none" }}>
             {t.back}
           </Link>
-          <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.68rem", letterSpacing: "0.14em", textTransform: "uppercase", color: orange, margin: "1.5rem 0 0.5rem" }}>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.68rem", letterSpacing: "0.14em", textTransform: "uppercase", color: orangeDeep, margin: "1.5rem 0 0.5rem" }}>
             {t.eyebrow}
           </p>
-          <h1 style={{ fontFamily: "var(--font-cormorant)", fontWeight: 600, fontSize: "clamp(2rem, 5vw, 3rem)", lineHeight: 1.1, margin: 0 }}>
+          <h1 style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 500, fontSize: "clamp(2.1rem, 5vw, 3.1rem)", lineHeight: 1.05, color: navy, margin: 0 }}>
             {t.title}
           </h1>
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", lineHeight: 1.6, color: "oklch(85% 0.02 260)", maxWidth: 560, margin: "0.75rem 0 1.5rem" }}>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", lineHeight: 1.6, color: text, maxWidth: 560, margin: "0.75rem 0 1.5rem" }}>
             {t.intro}
           </p>
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", lineHeight: 1.6, color: "oklch(78% 0.03 260)", maxWidth: 560, margin: "-0.75rem 0 1.5rem", paddingLeft: "0.75rem", borderLeft: `2px solid ${orange}` }}>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", lineHeight: 1.6, color: muted, maxWidth: 560, margin: "-0.75rem 0 1.5rem", paddingLeft: "0.75rem", borderLeft: `2px solid ${orange}` }}>
             {t.authorPre}<em>Deep Influence</em>{t.authorPost}
           </p>
 
           <div style={{ maxWidth: 420 }}>
-            <div style={{ display: "flex", justifyContent: "space-between", fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 600, color: "oklch(85% 0.02 260)", marginBottom: "0.4rem" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 600, color: text, marginBottom: "0.4rem" }}>
               <span>{t.progress}</span>
               <span>{pct}%</span>
             </div>
-            <div style={{ height: 8, borderRadius: 999, background: "oklch(35% 0.08 260)", overflow: "hidden" }}>
-              <div style={{ width: `${pct}%`, height: "100%", background: green, borderRadius: 999 }} />
+            <div style={{ height: 6, background: rule, overflow: "hidden" }}>
+              <div style={{ width: `${pct}%`, height: "100%", background: green }} />
             </div>
           </div>
 
           <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem", marginTop: "1.5rem" }}>
             {nextStep && (
-              <Link href={`/journey/step/${nextStep}`} style={{ ...btnBase, background: orange, color: navy }}>
+              <Link href={`/journey/step/${nextStep}`} style={{ ...btnBase, background: navy, color: offWhite }}>
                 {doneCount === 0 ? t.start : t.cont} →
               </Link>
             )}
-            <Link href="/journey/journal" style={{ ...btnBase, background: "transparent", color: offWhite, border: "1px solid oklch(97% 0.005 80 / 0.35)" }}>
+            <Link href="/journey/journal" style={{ ...btnBase, background: "transparent", color: navy, border: `1px solid ${navy}` }}>
               {t.journal}
             </Link>
           </div>
           {!nextStep && (
-            <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9rem", color: "oklch(80% 0.12 150)", marginTop: "1rem" }}>{t.finished}</p>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9rem", color: "oklch(45% 0.12 150)", marginTop: "1rem" }}>{t.finished}</p>
           )}
         </div>
       </header>
 
       <main style={{ maxWidth: 1080, margin: "0 auto", padding: "1.5rem 1rem 4rem" }}>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "1.25rem", fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 600, color: "oklch(45% 0.02 260)", marginBottom: "0.5rem" }}>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "1.25rem", fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 600, color: muted, marginBottom: "0.5rem" }}>
           <span style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem" }}>{legendDot(green)} {t.done}</span>
           <span style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem" }}>{legendDot("oklch(72% 0.025 65)", { boxShadow: `0 0 0 2px ${orange}, 0 0 8px ${orange}` })} {t.next}</span>
           <span style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem" }}>{legendDot("oklch(72% 0.025 65)")} {t.open}</span>
