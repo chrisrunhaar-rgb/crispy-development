@@ -108,7 +108,8 @@ const COPY = {
       title: "Start with one assessment and one module.",
       body: "50+ modules, all eight assessments and your own dashboard, plus new content as it launches. $15 once, with permanent access. Nothing recurring, nothing to cancel.",
       button: "Get the Personal Pathway",
-      team: "Leading a team? The Team Pathway includes eight personal accounts.",
+      team: "Leading a team?",
+      teamButton: "Get the Team Pathway",
     },
     caption: {
       dashboard: "Your personal dashboard: saved modules, assessment results and progress, all in one view.",
@@ -183,7 +184,8 @@ const COPY = {
       title: "Mulailah dengan satu asesmen dan satu modul.",
       body: "50+ modul, kedelapan asesmen, dan dasbor pribadi Anda, ditambah konten baru saat diluncurkan. $15 sekali bayar, dengan akses permanen. Tanpa biaya berulang, tanpa perlu membatalkan langganan.",
       button: "Dapatkan Jalur Pribadi",
-      team: "Memimpin tim? Jalur Tim sudah termasuk delapan akun pribadi.",
+      team: "Memimpin tim?",
+      teamButton: "Dapatkan Jalur Tim",
     },
     caption: {
       dashboard: "Dasbor pribadi Anda: modul yang disimpan, hasil asesmen, dan kemajuan, semuanya dalam satu tampilan.",
@@ -217,6 +219,7 @@ const CSS = `
 @keyframes pp-rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 .pp-btn { transition: background-color 0.2s ease, transform 0.15s ease; }
 .pp-btn:hover { background-color: ${T.navyMid} !important; }
+.pp-btn-orange:hover { background-color: oklch(52% 0.15 45) !important; }
 .pp-btn:active { transform: translateY(1px); }
 .pp-btn:focus-visible, .pp-acc-btn:focus-visible, .pp-link:focus-visible { outline: 2px solid ${T.orange}; outline-offset: 3px; }
 .pp-acc-btn:hover .pp-acc-title { color: ${T.navyMid}; }
@@ -360,11 +363,11 @@ function LazyVideo({ label }: { label: string }) {
 }
 
 /* ── Primary button ─────────────────────────────────────────────────────── */
-function PrimaryLink({ href, children }: { href: string; children: ReactNode }) {
+function PrimaryLink({ href, children, orange = false }: { href: string; children: ReactNode; orange?: boolean }) {
   return (
-    <Link href={href} className="pp-btn" style={{
+    <Link href={href} className={orange ? "pp-btn pp-btn-orange" : "pp-btn"} style={{
       display: "inline-flex", alignItems: "center", gap: "0.75rem", minHeight: 48,
-      padding: "0.875rem 1.5rem", background: T.navy, color: T.onNavy,
+      padding: "0.875rem 1.5rem", background: orange ? "oklch(58% 0.16 45)" : T.navy, color: T.onNavy,
       fontFamily: SANS, fontSize: "0.8rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase",
       textDecoration: "none", borderRadius: 2,
     }}>
@@ -598,9 +601,10 @@ export default function PersonalPreview({ language, ctaHref = "/pricing" }: { la
         <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem", alignItems: "flex-start" }}>
           <p style={bodyStyle}>{c.cta.body}</p>
           <PrimaryLink href={ctaHref}>{c.cta.button}</PrimaryLink>
-          <Link href="/team" className="pp-link" style={{ fontFamily: SANS, fontSize: "0.88rem", lineHeight: 1.6, color: T.muted, textDecorationLine: "underline" }}>
+          <p style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: "1.35rem", lineHeight: 1.3, color: T.navy, margin: "0.5rem 0 0" }}>
             {c.cta.team}
-          </Link>
+          </p>
+          <PrimaryLink href="/team" orange>{c.cta.teamButton}</PrimaryLink>
         </div>
       </section>
     </div>
