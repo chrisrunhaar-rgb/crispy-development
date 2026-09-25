@@ -1,4 +1,3 @@
-import { createClient } from "@/lib/supabase/server";
 import TeamContent from "./TeamContent";
 
 export const metadata = {
@@ -6,9 +5,6 @@ export const metadata = {
   description: "Lead a team that actually knows each other. Up to eight people take the same assessments and modules on their own phones, and you see the whole team in one place.",
 };
 
-export default async function TeamPathwayPage() {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  const ctaHref = user ? "/apply" : "/membership";
-  return <TeamContent ctaHref={ctaHref} />;
+export default function TeamPathwayPage() {
+  return <TeamContent />;
 }

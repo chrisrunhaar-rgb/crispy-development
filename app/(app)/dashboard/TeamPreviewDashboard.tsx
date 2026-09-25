@@ -118,7 +118,6 @@ const COPY = {
       title: "Bring your whole team along.",
       body: "Eight team accounts, every assessment, all ten team modules and a leader dashboard. $80 once, which is $10 per member, with permanent access.",
       button: "Set up your team",
-      fallback: "Questions first? Apply for access and we will get back to you.",
     },
     caption: {
       results: "The team view: every member's assessment results side by side, so the whole team can see how it is wired before the next hard conversation.",
@@ -199,7 +198,6 @@ const COPY = {
       title: "Ajak seluruh tim Anda bertumbuh bersama.",
       body: "Delapan akun tim, semua asesmen, kesepuluh modul tim, dan dasbor pemimpin. $80 sekali bayar, atau $10 per anggota, dengan akses permanen.",
       button: "Bangun tim Anda",
-      fallback: "Ada pertanyaan dulu? Ajukan akses dan kami akan menghubungi Anda.",
     },
     caption: {
       results: "Tampilan tim: hasil asesmen setiap anggota berdampingan, sehingga seluruh tim tahu karakter timnya sebelum percakapan sulit berikutnya.",
@@ -422,7 +420,7 @@ function PrimaryLink({ href, children }: { href: string; children: ReactNode }) 
 }
 
 /* ── Main ───────────────────────────────────────────────────────────────── */
-export default function TeamPreviewDashboard({ language, ctaHref = "/membership", asPage = false }: { language: string; ctaHref?: string; asPage?: boolean }) {
+export default function TeamPreviewDashboard({ language, ctaHref = "/pricing", asPage = false }: { language: string; ctaHref?: string; asPage?: boolean }) {
   const HeroTitle = asPage ? "h1" : "h2";
   const lang: TeamLang = language === "id" ? "id" : "en";
   const c = COPY[lang];
@@ -646,9 +644,6 @@ export default function TeamPreviewDashboard({ language, ctaHref = "/membership"
         <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem", alignItems: "flex-start" }}>
           <p style={bodyStyle}>{c.cta.body}</p>
           <PrimaryLink href={ctaHref}>{c.cta.button}</PrimaryLink>
-          {ctaHref !== "/apply" && <Link href="/apply" className="tp-link" style={{ fontFamily: SANS, fontSize: "0.86rem", lineHeight: 1.6, color: T.muted, textDecoration: "underline", textUnderlineOffset: "0.25em", textDecorationThickness: "1px" }}>
-            {c.cta.fallback}
-          </Link>}
         </div>
       </section>
     </div>

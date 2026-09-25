@@ -1205,11 +1205,11 @@ function TeamApplicationPrompt({ lang = "en" }: { lang?: "en" | "id" }) {
       <div>
         <p className="t-label" style={{ color: "oklch(65% 0.15 45)", fontSize: "0.62rem", marginBottom: "0.25rem" }}>{lang === "id" ? "Jalur Tim" : "Team Pathway"}</p>
         <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9rem", color: "oklch(22% 0.005 260)" }}>
-          {lang === "id" ? "Siap memimpin tim Anda? Daftar untuk akses Pemimpin Tim." : "Ready to lead your team? Apply for Team Leader access."}
+          {lang === "id" ? "Siap memimpin tim Anda? Bangun tim Anda dengan paket Tim." : "Ready to lead your team? Set up your team with the Team plan."}
         </p>
       </div>
-      <Link href="/apply" className="btn-primary" style={{ fontSize: "0.78rem", padding: "0.6rem 1.25rem", whiteSpace: "nowrap" }}>
-        {lang === "id" ? "Daftar →" : "Apply →"}
+      <Link href="/pricing" className="btn-primary" style={{ fontSize: "0.78rem", padding: "0.6rem 1.25rem", whiteSpace: "nowrap" }}>
+        {lang === "id" ? "Bangun tim Anda →" : "Set up your team →"}
       </Link>
     </div>
   );
