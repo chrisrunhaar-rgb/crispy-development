@@ -6,6 +6,7 @@ import {CrossCulturalStatement} from '../components/Animations/CrossCulturalStat
 import {Day6HumilityPromo} from '../components/Animations/Day6HumilityPromo';
 import {ILChallengePromo60} from '../components/Animations/ILChallengePromo60';
 import {ModuleRevealReel} from '../components/Animations/ModuleRevealReel';
+import {CrispyRevealReel} from '../components/Animations/CrispyRevealReel';
 
 export const RemotionRoot = () => {
   return (
@@ -71,6 +72,15 @@ export const RemotionRoot = () => {
           subLine: 'Without it we get stuck in the details.',
           videoFile: 'clips/jungle_aerial_module.mp4',
         }}
+      />
+      <Composition
+        id="CrispyRevealReel"
+        component={CrispyRevealReel}
+        durationInFrames={1440}
+        fps={30}
+        width={1080}
+        height={1920}
+        defaultProps={{lang: 'en' as const}}
       />
     </>
   );
