@@ -14,6 +14,7 @@ import TeamLeadersTab from "./TeamLeadersTab";
 import PeerInitiatorsTab from "./PeerInitiatorsTab";
 import MembershipTab from "./MembershipTab";
 import CommentsTab from "./CommentsTab";
+import VisitsTab, { type VisitStats } from "./VisitsTab";
 
 export const metadata = {
   title: "Community Dashboard - Crispy Development",
@@ -48,7 +49,7 @@ export default async function AdminPage({
   if (!user || user.email !== "chris.runhaar@world-outreach.com") redirect("/");
 
   const { tab } = await searchParams;
-  const activeTab = tab === "leaders" ? "leaders" : tab === "peers" ? "peers" : tab === "content" ? "content" : tab === "messages" ? "messages" : tab === "membership" ? "membership" : tab === "comments" ? "comments" : "members";
+  const activeTab = tab === "leaders" ? "leaders" : tab === "peers" ? "peers" : tab === "content" ? "content" : tab === "messages" ? "messages" : tab === "membership" ? "membership" : tab === "comments" ? "comments" : tab === "visits" ? "visits" : "members";
 
   const admin = createAdminClient();
 
@@ -281,6 +282,15 @@ export default async function AdminPage({
     allComments = (cRows ?? []) as CommentAdminRow[];
   }
 
+  // Visits tab
+  let visitStats: VisitStats | null = null;
+  let visitError: string | null = null;
+  if (activeTab === "visits") {
+    const { data, error } = await admin.rpc("page_view_stats", { p_days: 30 });
+    visitStats = (data as VisitStats | null) ?? null;
+    visitError = error?.message ?? null;
+  }
+
   // Stats
   const { count: pendingTeamCount } = await admin.from("team_applications").select("id", { count: "exact", head: true }).eq("status", "pending");
   const { count: pendingPeerCount } = await admin.from("peer_group_applications").select("id", { count: "exact", head: true }).eq("status", "pending");
@@ -292,6 +302,7 @@ export default async function AdminPage({
   const memberCount = allUsers.length;
 
   const TABS = [
+    { key: "visits", label: "Visits" },
     { key: "members", label: "Members" },
     { key: "membership", label: "Membership", badge: pendingMembershipCount ?? 0 },
     { key: "leaders", label: "Team Leaders", badge: pendingTeamCount ?? 0 },
@@ -621,6 +632,11 @@ export default async function AdminPage({
               </div>
             )}
           </section>
+        )}
+
+        {/* VISITS TAB */}
+        {activeTab === "visits" && (
+          <VisitsTab stats={visitStats} error={visitError} />
         )}
 
         {/* COMMENTS TAB */}

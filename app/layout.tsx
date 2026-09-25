@@ -8,6 +8,7 @@ import PwaRegister from "@/components/PwaRegister";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import GlobalErrorSetup from "@/components/GlobalErrorSetup";
 import CookieConsent from "@/components/CookieConsent";
+import VisitTracker from "@/components/VisitTracker";
 
 const GA_ID = "G-ER3Z5GN1J7";
 
@@ -139,6 +140,7 @@ export default function RootLayout({
           </LanguageProvider>
         </ErrorBoundary>
         <CookieConsent />
+        <VisitTracker />
         <Analytics />
       </body>
     </html>
