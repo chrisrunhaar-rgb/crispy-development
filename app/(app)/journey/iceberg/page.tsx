@@ -60,14 +60,14 @@ export default async function IcebergPreviewPage() {
         eyebrow: "Pratinjau",
         title: "Apa yang ada di bawah permukaan",
         intro: "Di atas air adalah apa yang orang lihat dari seorang pemimpin. Kepemimpinan yang Berpengaruh adalah apa yang ada di bawahnya. Seret untuk memutar gunung es, perbesar untuk melihat lebih dekat, dan ketuk sebuah sisi untuk membukanya.",
-        progress: `${doneCount} dari ${total} modul selesai`,
+        progress: `${doneCount} dari ${total} bab selesai`,
         back: "← Kembali ke perjalanan",
       }
     : {
         eyebrow: "Preview",
         title: "What lies beneath the surface",
         intro: "Above the water is what people see of a leader. Influential Leadership is what sits below it. Drag to turn the iceberg, zoom in for a closer look, and tap a facet to open it.",
-        progress: `${doneCount} of ${total} modules completed`,
+        progress: `${doneCount} of ${total} chapters completed`,
         back: "← Back to the journey",
       };
 

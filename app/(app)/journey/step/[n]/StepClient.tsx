@@ -53,6 +53,7 @@ const textareaStyle: React.CSSProperties = {
 
 export default function StepClient({
   stepNumber,
+  chapterCode,
   lang,
   doneCount,
   initiallyCompleted,
@@ -60,6 +61,7 @@ export default function StepClient({
   initialJournal,
 }: {
   stepNumber: number;
+  chapterCode: string;
   lang: "en" | "id";
   doneCount: number;
   initiallyCompleted: boolean;
@@ -71,15 +73,15 @@ export default function StepClient({
     ? {
         back: "← Perjalanan",
         label: "Perjalanan Kepemimpinan",
-        stepOf: `Langkah ${stepNumber} dari 60`,
-        stepEyebrow: `Langkah ${String(stepNumber).padStart(2, "0")}`,
-        challenge: "Tantangan langkah ini",
-        complete: "Selesaikan langkah ini",
+        stepOf: `Bab ${chapterCode}`,
+        stepEyebrow: `Bab ${chapterCode}`,
+        challenge: "Tantangan bab ini",
+        complete: "Selesaikan bab ini",
         completing: "Menyimpan...",
         completed: "Selesai ✓",
         openJournal: "Buka jurnal",
-        prev: "← Langkah sebelumnya",
-        next: "Langkah berikutnya →",
+        prev: "← Bab sebelumnya",
+        next: "Bab berikutnya →",
         journalEyebrow: "Jurnal",
         journalTitle: "Luangkan waktu sejenak untuk merenung",
         journalHint: "Jawabanmu hanya untukmu. Kamu bisa melewatinya dan kembali nanti.",
@@ -90,20 +92,20 @@ export default function StepClient({
         saving: "Menyimpan...",
         skip: "Lewati untuk sekarang",
         error: "Gagal menyimpan. Coba lagi.",
-        doneMsg: "Langkah ditandai selesai.",
+        doneMsg: "Bab ditandai selesai.",
       }
     : {
         back: "← Journey",
         label: "Leadership Journey",
-        stepOf: `Step ${stepNumber} of 60`,
-        stepEyebrow: `Step ${String(stepNumber).padStart(2, "0")}`,
-        challenge: "This step's challenge",
-        complete: "Complete this step",
+        stepOf: `Chapter ${chapterCode}`,
+        stepEyebrow: `Chapter ${chapterCode}`,
+        challenge: "This chapter's challenge",
+        complete: "Complete this chapter",
         completing: "Saving...",
         completed: "Completed ✓",
         openJournal: "Open journal",
-        prev: "← Previous step",
-        next: "Next step →",
+        prev: "← Previous chapter",
+        next: "Next chapter →",
         journalEyebrow: "Journal",
         journalTitle: "Take a moment to reflect",
         journalHint: "Your answers are just for you. You can skip this and come back later.",
@@ -114,7 +116,7 @@ export default function StepClient({
         saving: "Saving...",
         skip: "Skip for now",
         error: "Could not save. Please try again.",
-        doneMsg: "Step marked as done.",
+        doneMsg: "Chapter marked as done.",
       };
 
   const [completed, setCompleted] = useState(initiallyCompleted);
