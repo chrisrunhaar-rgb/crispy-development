@@ -301,6 +301,18 @@ export const MODULE_CONNECTIONS: ModuleConnection[] = [
     angle: "when managing up becomes managing conflict — and how to speak truth to power without burning the relationship",
     angle_id: "ketika mengelola ke atas menjadi mengelola konflik — dan cara berbicara kebenaran kepada yang berkuasa tanpa membakar hubungan",
   },
+  // Model, Assist, Watch, Launch -> Four Stages of Competence
+  {
+    sourceSlug: "model-assist-watch-launch",
+    sourceSectionId: "mc-four-stages",
+    targetSlug: "four-stages-competence",
+    targetTitle: "Four Stages of Competence",
+    targetTitle_id: "Empat Tahap Kompetensi",
+    topic: "how a learner moves from awkward to automatic",
+    topic_id: "bagaimana seorang pelajar bergerak dari canggung menjadi otomatis",
+    angle: "what your learner is experiencing inside each phase of the cycle",
+    angle_id: "apa yang dialami pelajar Anda di dalam setiap tahap siklus",
+  },
 ];
 
 export function getConnectionsForSection(

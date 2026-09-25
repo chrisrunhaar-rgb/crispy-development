@@ -16,6 +16,7 @@ interface Props {
   moduleStatuses?: Record<string, string>;
   moduleCategories?: Record<string, string>;
   moduleFormats?: Record<string, string[]>;
+  isAdmin?: boolean;
 }
 
 const TYPE_COLORS: Record<string, string> = {
@@ -103,6 +104,7 @@ function ResourceTile({
   lang,
   localTitle,
   localDescription,
+  isAdmin = false,
 }: {
   resource: Resource;
   userId: string | null;
@@ -114,11 +116,14 @@ function ResourceTile({
   lang: string;
   localTitle: (r: Resource) => string;
   localDescription: (r: Resource) => string;
+  isAdmin?: boolean;
 }) {
   const [hovered, setHovered] = useState(false);
   const access = getModuleAccess(resource.slug, resource.gated, moduleStatuses);
+  // Admin can open development modules to review drafts before release.
+  const isAdminDraft = isAdmin && !!resource.slug && access === "development";
   const isClickable =
-    !!resource.slug && (access === "live_free" || access === "live_paid");
+    !!resource.slug && (access === "live_free" || access === "live_paid" || isAdminDraft);
   const types: string[] = resource.slug ? (moduleFormats[resource.slug] ?? []) : [];
   const displayTypes = types.length > 0 ? types : [resource.format];
 
@@ -147,7 +152,7 @@ function ResourceTile({
         borderRadius: "4px",
         overflow: "hidden",
         background: access === "development" ? "oklch(96% 0.003 260)" : "oklch(99.5% 0.002 80)",
-        opacity: access === "development" ? 0.65 : 1,
+        opacity: access === "development" && !isAdminDraft ? 0.65 : 1,
         cursor: isClickable ? "pointer" : "default",
         transition: "box-shadow 0.12s, transform 0.12s",
         boxShadow: hovered && isClickable ? "0 2px 8px oklch(0% 0 0 / 0.08)" : "none",
@@ -198,6 +203,23 @@ function ResourceTile({
           whiteSpace: "nowrap",
           textOverflow: "ellipsis",
         }}>
+          {isAdminDraft && (
+            <span style={{
+              fontFamily: "var(--font-montserrat)",
+              fontSize: "0.55rem",
+              fontWeight: 800,
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+              color: "oklch(99% 0.002 80)",
+              background: "oklch(65% 0.15 45)",
+              padding: "1px 6px",
+              borderRadius: 999,
+              marginRight: "0.4rem",
+              verticalAlign: "middle",
+            }}>
+              {lang === "id" ? "Draf" : "Draft"}
+            </span>
+          )}
           {localTitle(resource)}
         </p>
         <p style={{
@@ -275,6 +297,7 @@ export default function ResourcesContent({
   moduleStatuses = {},
   moduleCategories = {},
   moduleFormats = {},
+  isAdmin = false,
 }: Props) {
   const { lang } = useLanguage();
   const [localSaved, setLocalSaved] = useState<Set<string>>(
@@ -351,6 +374,7 @@ export default function ResourcesContent({
       lang={lang}
       localTitle={localTitle}
       localDescription={localDescription}
+      isAdmin={isAdmin}
     />
   );
 

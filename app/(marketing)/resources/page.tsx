@@ -40,6 +40,7 @@ export default async function ResourcesPage() {
       moduleStatuses={moduleStatuses}
       moduleCategories={moduleCategories}
       moduleFormats={moduleFormats}
+      isAdmin={user?.email === "chris.runhaar@world-outreach.com"}
     />
   );
 }

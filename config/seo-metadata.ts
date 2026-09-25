@@ -260,6 +260,11 @@ export const resourceMetadata: Record<string, { title: string; description: stri
     description: "The Four Stages of Competence explained for cross-cultural leaders: from unconscious incompetence to mastery, with coaching guidance for each stage.",
   },
 
+  "model-assist-watch-launch": {
+    title: "Model, Assist, Watch, Launch — Crispy Development",
+    description: "A four-phase training cycle for leaders who want their people to take over: model briefly, assist closely, watch for a long time, then launch. Skill by skill.",
+  },
+
   // Fallback
   resources: {
     title: "Leadership Resources & Assessments — Crispy Development",

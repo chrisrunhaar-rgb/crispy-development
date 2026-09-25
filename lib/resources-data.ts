@@ -281,6 +281,20 @@ export const RESOURCES: Resource[] = [
     topics: ["leadership"],
     keywords: ["story", "narrative", "communicate", "persuade", "inspire", "anecdote", "illustration", "hook", "public speaking", "presentation", "bercerita", "storytelling"],
   },
+  {
+    id: "model-assist-watch-launch",
+    slug: "model-assist-watch-launch",
+    title: "Model, Assist, Watch, Launch",
+    titleId: "Teladani, Bantu, Amati, Mandirikan",
+    description: "Your people will not take over until you make room for them. A four-phase cycle for training leaders skill by skill, from showing them once to stepping away.",
+    descriptionId: "Orang-orang Anda tidak akan mengambil alih sampai Anda memberi mereka ruang. Siklus empat tahap untuk melatih pemimpin keterampilan demi keterampilan, dari memberi contoh hingga melangkah pergi.",
+    time: "20 min",
+    format: "Guide",
+    languages: ["en", "id"],
+    gated: true,
+    topics: ["leadership"],
+    keywords: ["training cycle", "model", "assist", "watch", "launch", "delegation", "delegate", "mentoring", "discipleship", "multiplication", "generations", "2 Timothy 2:2", "handover", "succession", "gradual release", "scaffolding", "teladani", "bantu", "amati", "mandirikan", "melatih", "pemuridan", "pendelegasian", "generasi"],
+  },
   // ── TEAM & FACILITATION ────────────────────────────────────────────────────
   {
     id: "team-health",
