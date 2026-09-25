@@ -48,10 +48,11 @@ export default function PrivacyPage() {
           <p style={{ marginTop: "0.5rem" }}>If you opt in to push notifications, we store a device push subscription endpoint in our database. This is used only to deliver notifications you have consented to. We do not use it for profiling or advertising.</p>
 
           <p style={{ marginTop: "1rem" }}><strong>2.7 Analytics data</strong></p>
-          <p style={{ marginTop: "0.5rem" }}>We use two analytics tools:</p>
+          <p style={{ marginTop: "0.5rem" }}>We use three analytics tools:</p>
           <ul style={{ marginTop: "0.5rem" }}>
             <li><strong>Google Analytics 4 (GA4)</strong> — We use GA4 to collect basic usage data, including pages visited, time of visit, approximate location (country level), device type, and referring website. GA4 uses cookies. We activate GA4 only after you give explicit consent via the cookie banner shown on your first visit. You may decline or withdraw consent at any time. See our <a href="/cookies" style={{ color: "oklch(30% 0.12 260)" }}>Cookie Policy</a> for full details.</li>
             <li><strong>Vercel Analytics</strong> — A privacy-preserving tool that collects aggregated, anonymous traffic data (page views, device type, country-level location) without using cookies, without fingerprinting your device, and without tracking you across other websites. No consent is required for Vercel Analytics under UK GDPR.</li>
+            <li><strong>Crispy visit counter (our own)</strong> — We count visits to our pages ourselves, without cookies. For each page view we record the page, the website you came from, any campaign tag in the link, your country and city (worked out from your connection; the IP address itself is never stored), device type, browser, and browser language. To count unique visitors we create a code that changes every day, so it cannot follow you from one day to the next or across other websites. This data stays in our own database and is never shared or sold.</li>
           </ul>
         </LegalSection>
 
@@ -74,6 +75,7 @@ export default function PrivacyPage() {
                   ["Push notification tokens", "Art. 6(1)(a) — consent"],
                   ["GA4 analytics", "Art. 6(1)(a) — consent (cookie banner)"],
                   ["Vercel Analytics", "Art. 6(1)(f) — legitimate interests (privacy-preserving, no personal data)"],
+                  ["Crispy visit counter", "Art. 6(1)(f) — legitimate interests (understanding which pages help our visitors, with no cookies and no stored IP address)"],
                 ].map(([type, basis], i) => (
                   <tr key={i} style={{ borderBottom: "1px solid oklch(88% 0.008 80)" }}>
                     <td style={{ padding: "0.75rem", color: "oklch(22% 0.005 260)", fontWeight: 600 }}>{type}</td>
@@ -145,6 +147,7 @@ export default function PrivacyPage() {
                   ["Financial transaction records", "7 years (statutory requirement)"],
                   ["GA4 analytics data", "Per Google Analytics retention settings (configured at 14 months)"],
                   ["Vercel Analytics data", "Aggregated and anonymous — no personal data retained"],
+                  ["Crispy visit counter data", "Automatically deleted after 24 months"],
                 ].map(([type, period], i) => (
                   <tr key={i} style={{ borderBottom: "1px solid oklch(88% 0.008 80)" }}>
                     <td style={{ padding: "0.75rem", color: "oklch(22% 0.005 260)", fontWeight: 600 }}>{type}</td>
@@ -172,7 +175,7 @@ export default function PrivacyPage() {
         </LegalSection>
 
         <LegalSection heading="8. Cookies and Tracking">
-          <p>We use Google Analytics 4 (consent-based) and Vercel Analytics (no consent required). A cookie consent banner is shown on your first visit. You may accept or decline analytics cookies at any time.</p>
+          <p>We use Google Analytics 4 (consent-based) and Vercel Analytics (no consent required). A cookie consent banner is shown on your first visit. You may accept or decline analytics cookies at any time. We also run our own visit counter, which uses no cookies and does not need your consent.</p>
           <p style={{ marginTop: "1rem" }}>The following strictly necessary items may also be present:</p>
           <ul style={{ marginTop: "0.5rem" }}>
             <li><strong>Authentication session token</strong> — keeps you logged in (essential, no consent required)</li>

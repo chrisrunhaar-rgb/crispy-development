@@ -19,6 +19,7 @@ export default function CookiesPage() {
             <li>A cookie consent banner is shown on your first visit</li>
             <li>Google Analytics 4 is only activated if you click "Accept" — it never fires if you decline</li>
             <li>Vercel Analytics runs independently of your cookie choice: it uses no cookies and collects no personal data</li>
+            <li>Our own visit counter also runs whatever you choose: it sets no cookies and stores no personal details</li>
             <li>You can change your consent choice at any time by clearing your browser's local storage for this site</li>
           </ul>
         </LegalSection>
@@ -46,6 +47,9 @@ export default function CookiesPage() {
             <li>Referral source</li>
           </ul>
           <p style={{ marginTop: "0.75rem" }}>None of this data is linked to your account or identity. We cannot identify individual users from Vercel Analytics data. No cookies are set. Your device is not fingerprinted. You are not tracked across other websites.</p>
+
+          <p style={{ marginTop: "1.5rem" }}><strong>Crispy visit counter (no consent required)</strong></p>
+          <p style={{ marginTop: "0.5rem" }}>Our own counter records page views, the site you came from, campaign tags in the link, country and city, device type, browser, and browser language. No cookies are set and your IP address is not stored. A code that changes every day lets us count unique visitors without recognising you on another day or on other websites. The data stays in our own database and is automatically deleted after 24 months.</p>
         </LegalSection>
 
         <LegalSection heading="3. Full Cookie and Local Storage Inventory">
@@ -66,6 +70,7 @@ export default function CookiesPage() {
                   ["Cookie consent choice (local storage)", "Stores your accept or decline decision", "Strictly necessary", "No"],
                   ["GA4 cookies (_ga, _ga_*)", "Distinguishes sessions and returning visitors for Google Analytics 4", "Analytics", "Yes — via consent banner"],
                   ["Vercel Analytics (no cookies)", "Aggregated anonymous traffic data — no cookies set", "Analytics", "No"],
+                  ["Crispy visit counter (no cookies)", "Counts page visits for our own reports — no cookies set, no IP stored", "Analytics", "No"],
                 ].map(([name, purpose, category, consent], i) => (
                   <tr key={i} style={{ borderBottom: "1px solid oklch(88% 0.008 80)" }}>
                     <td style={{ padding: "0.75rem", color: "oklch(22% 0.005 260)", fontWeight: 600 }}>{name}</td>
