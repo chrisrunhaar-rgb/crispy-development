@@ -8,9 +8,7 @@ import IcebergMap from "./IcebergMap";
 
 const navy    = "oklch(30% 0.12 260)";
 const muted   = "oklch(48% 0.04 260)";
-const text    = "oklch(32% 0.06 260)";
 const rule    = "oklch(84% 0.01 80)";
-const green   = "oklch(55% 0.14 150)";
 const offWhite = "oklch(97% 0.005 80)";
 
 export const metadata = {
@@ -81,19 +79,10 @@ export default async function IcebergPreviewPage() {
           <Link href="/journey" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 600, color: muted, textDecoration: "none" }}>
             {t.back}
           </Link>
-          <div style={{ maxWidth: 420, marginTop: "1rem" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 600, color: text, marginBottom: "0.4rem" }}>
-              <span>{t.progress}</span>
-              <span>{pct}%</span>
-            </div>
-            <div style={{ height: 6, background: rule, overflow: "hidden" }}>
-              <div style={{ width: `${pct}%`, height: "100%", background: green }} />
-            </div>
-          </div>
         </div>
       </header>
 
-      <IcebergMap steps={steps} completed={completed} nextStep={nextStep} lang={lang} heading={{ eyebrow: t.eyebrow, title: t.title, intro: t.intro }} />
+      <IcebergMap steps={steps} completed={completed} nextStep={nextStep} lang={lang} heading={{ eyebrow: t.eyebrow, title: t.title, intro: t.intro, progress: t.progress, pct }} />
     </div>
   );
 }

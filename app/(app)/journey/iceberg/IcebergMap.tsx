@@ -221,7 +221,7 @@ type Props = {
   completed: number[];
   nextStep: number | null;
   lang: "en" | "id";
-  heading: { eyebrow: string; title: string; intro: string };
+  heading: { eyebrow: string; title: string; intro: string; progress: string; pct: number };
 };
 
 export default function IcebergMap({ steps, completed, nextStep, lang, heading }: Props) {
@@ -785,7 +785,9 @@ export default function IcebergMap({ steps, completed, nextStep, lang, heading }
           .ice-head { position: absolute; top: 1.1rem; left: 1.25rem; z-index: 2; max-width: min(36%, 340px); margin: 0; pointer-events: none; }
           .ice-head h1 { font-size: clamp(1.7rem, 2.6vw, 2.3rem); }
           .ice-head p.intro { font-size: 0.78rem; line-height: 1.55; }
+          .ice-prog { position: absolute; top: 1.1rem; right: 1.25rem; z-index: 2; width: min(30%, 240px); margin: 0; pointer-events: none; }
         }
+        .ice-prog { margin: 0 0 1rem; max-width: 420px; }
         .ice-stage {
           --wl: ${WATER_FRAC * 100}%;
           background: linear-gradient(to bottom,
@@ -841,6 +843,16 @@ export default function IcebergMap({ steps, completed, nextStep, lang, heading }
               <h1>{heading.title}</h1>
               <p className="intro">{heading.intro}</p>
             </header>
+
+            <div className="ice-prog">
+              <div style={{ display: "flex", justifyContent: "space-between", gap: "0.75rem", fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 600, color: text, marginBottom: "0.4rem" }}>
+                <span>{heading.progress}</span>
+                <span>{heading.pct}%</span>
+              </div>
+              <div style={{ height: 6, background: rule, overflow: "hidden" }}>
+                <div style={{ width: `${heading.pct}%`, height: "100%", background: "oklch(55% 0.14 150)" }} />
+              </div>
+            </div>
 
             <div
               ref={wrapRef}
