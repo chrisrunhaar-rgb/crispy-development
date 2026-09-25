@@ -1,11 +1,11 @@
 import { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
-import WayPointContent from "./WayPointContent";
+import WayPointPreview from "./WayPointPreview";
 
 export const metadata: Metadata = {
-  title: "WayPoint — AI Voice Coaching for Cross-Cultural Leaders | Crispy Development",
+  title: "WayPoint: AI Voice Coaching for Cross-Cultural Leaders | Crispy Development",
   description:
-    "A private AI voice coaching conversation whenever you need one. Not advice — the right questions. Find your own clarity. Available to Crispy Leaders members.",
+    "A private AI voice coaching conversation whenever you need one. Not advice, but the right questions to help you find your own clarity.",
 };
 
 export default async function WayPointPage() {
@@ -14,5 +14,5 @@ export default async function WayPointPage() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  return <WayPointContent isLoggedIn={!!user} />;
+  return <WayPointPreview isLoggedIn={!!user} />;
 }

@@ -6,6 +6,7 @@ import { useLanguage } from "@/lib/LanguageContext";
 import { RESOURCES, Resource } from "@/lib/resources-data";
 import { saveResourceToDashboard } from "./actions";
 import { trackResourceSaved } from "@/lib/ga-events";
+import { T, SERIF, SANS, KIT_CSS, Eyebrow, h2Style, bodyStyle, PrimaryLink, TextLink } from "@/components/promo/PromoKit";
 
 interface Props {
   userId: string | null;
@@ -51,6 +52,20 @@ const SECTION_ORDER = [
   { key: "faith-calling",      label: "Faith & Calling",      labelId: "Iman & Panggilan" },
   { key: "self-care",          label: "Self-Care & Resilience", labelId: "Perawatan Diri & Ketahanan" },
 ];
+
+const LIB_CSS = `
+.lib { display: flex; flex-direction: column; gap: clamp(3rem, 7vw, 5.5rem); }
+.lib-top { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
+.lib-split { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 3rem); }
+.lib-search:focus-visible, .lib-acc:focus-visible { outline: 2px solid ${T.orange}; outline-offset: 3px; }
+.lib-acc:hover .lib-acc-label { color: ${T.navyMid} !important; }
+.lib-chev { transition: transform 0.2s ease; }
+@media (min-width: 960px) {
+  .lib-top { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); align-items: end; }
+  .lib-split { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+}
+@media (prefers-reduced-motion: reduce) { .lib-chev { transition: none; } }
+`;
 
 function getModuleAccess(
   slug: string | null,
@@ -261,9 +276,7 @@ export default function ResourcesContent({
   moduleCategories = {},
   moduleFormats = {},
 }: Props) {
-  const { t, lang } = useLanguage();
-  const r = t.resources;
-  const journeyHref = userId ? "/journey" : "/signup?redirectTo=/journey";
+  const { lang } = useLanguage();
   const [localSaved, setLocalSaved] = useState<Set<string>>(
     new Set(savedResources)
   );
@@ -318,351 +331,195 @@ export default function ResourcesContent({
       })
     : null;
 
+  const sectionsWithItems = SECTION_ORDER
+    .map(section => ({
+      ...section,
+      items: RESOURCES.filter(res => getLibraryCategory(res, moduleCategories) === section.key),
+    }))
+    .filter(section => section.items.length > 0);
+
+  const tile = (resource: Resource) => (
+    <ResourceTile
+      key={resource.id}
+      resource={resource}
+      userId={userId}
+      moduleStatuses={moduleStatuses}
+      moduleFormats={moduleFormats}
+      localSaved={localSaved}
+      pendingSlug={pendingSlug}
+      onAddToDashboard={handleAddToDashboard}
+      lang={lang}
+      localTitle={localTitle}
+      localDescription={localDescription}
+    />
+  );
+
   return (
-    <>
-      {/* ── HEADER ── */}
-      <section
-        style={{
-          paddingTop: "clamp(4rem, 7vw, 7rem)",
-          paddingBottom: "clamp(4rem, 7vw, 7rem)",
-          background: "oklch(22% 0.10 260)",
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
-        {/* Photo background */}
-        <div aria-hidden="true" style={{ position: "absolute", inset: 0, backgroundImage: "url('/pathway-library.jpg')", backgroundSize: "cover", backgroundPosition: "center 40%", opacity: 0.15, pointerEvents: "none" }} />
-        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "oklch(65% 0.15 45)" }} />
-        <div aria-hidden="true" style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle, oklch(97% 0.005 80 / 0.06) 1px, transparent 1px)", backgroundSize: "28px 28px", pointerEvents: "none" }} />
+    <div style={{ background: T.offWhite }}>
+      <div className="container-wide lib" lang={lang} style={{ paddingBlock: "clamp(2.5rem, 6vw, 4.5rem)" }}>
+        <style>{KIT_CSS + LIB_CSS}</style>
 
-        <div className="container-wide" style={{ position: "relative" }}>
-          {/* Logo + label row */}
-          <div style={{ display: "flex", alignItems: "center", gap: "0.875rem", marginBottom: "1.5rem" }}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo-icon-dark-badge.png" alt="Crispy Development" width={28} height={28} style={{ flexShrink: 0, display: "block" }} />
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", margin: 0 }}>
-              {r.label}
-            </p>
+        {/* ── TOP: title + search, no hero ── */}
+        <header className="lib-top">
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.9rem" }}>
+            <Eyebrow>{lang === "id" ? "Perpustakaan" : "Library"}</Eyebrow>
+            <h1 style={{ ...h2Style(), fontSize: "clamp(2.1rem, 4.4vw, 3.1rem)", lineHeight: 1.05 }}>
+              {lang === "id" ? "Modul pelatihan untuk pemimpin lintas budaya." : "Training modules for cross-cultural leaders."}
+            </h1>
+            {isTeamLeader && pathway === "team" && (
+              <div>
+                <TextLink href="/dashboard">{lang === "id" ? "Kembali ke dasbor tim" : "Back to team dashboard"}</TextLink>
+              </div>
+            )}
           </div>
-          <div style={{ width: "48px", height: "2px", background: "oklch(65% 0.15 45)", marginBottom: "1.75rem" }} />
-
-          <h1 className="t-section" style={{ marginBottom: "1rem", maxWidth: "560px", color: "oklch(97% 0.005 80)" }}>
-            {r.h1.split("\n").map((line, i) => (
-              <span key={i}>
-                {line}
-                {i === 0 && <br />}
-              </span>
-            ))}
-          </h1>
-          <p
-            style={{
-              fontFamily: "var(--font-montserrat)",
-              fontSize: "0.9375rem",
-              color: "oklch(80% 0.025 260)",
-              maxWidth: "52ch",
-              lineHeight: 1.75,
-            }}
-          >
-            {r.tagline}
-          </p>
-
-          {/* Search */}
-          <div style={{ marginTop: "1.75rem", maxWidth: "420px", position: "relative" }}>
+          <div style={{ position: "relative", width: "100%", maxWidth: "26rem", justifySelf: "end" }}>
             <svg
               viewBox="0 0 20 20"
               fill="none"
-              stroke="oklch(60% 0.04 260)"
+              stroke={T.muted}
               strokeWidth="1.8"
-              style={{ position: "absolute", left: "0.875rem", top: "50%", transform: "translateY(-50%)", width: 16, height: 16, pointerEvents: "none" }}
+              aria-hidden="true"
+              style={{ position: "absolute", left: "0.95rem", top: "50%", transform: "translateY(-50%)", width: 16, height: 16, pointerEvents: "none" }}
             >
               <circle cx="8.5" cy="8.5" r="5.5" />
               <line x1="13" y1="13" x2="18" y2="18" />
             </svg>
             <input
               type="search"
+              className="lib-search"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder={lang === "id" ? "Cari modul..." : "Search modules..."}
+              aria-label={lang === "id" ? "Cari modul" : "Search modules"}
               style={{
                 width: "100%",
                 boxSizing: "border-box",
-                paddingLeft: "2.5rem",
-                paddingRight: searchQuery ? "2.5rem" : "1rem",
-                paddingBlock: "0.65rem",
-                fontFamily: "var(--font-montserrat)",
-                fontSize: "0.875rem",
-                color: "oklch(22% 0.005 260)",
-                background: "oklch(97% 0.005 80)",
-                border: "1.5px solid oklch(60% 0.04 260 / 0.4)",
-                borderRadius: "6px",
-                outline: "none",
+                minHeight: 48,
+                paddingLeft: "2.6rem",
+                paddingRight: searchQuery ? "2.6rem" : "1rem",
+                fontFamily: SANS,
+                fontSize: "0.9rem",
+                color: T.charcoal,
+                background: "oklch(99.5% 0.002 80)",
+                border: `1px solid ${T.rule}`,
+                borderRadius: 2,
               }}
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery("")}
-                aria-label="Clear search"
+                aria-label={lang === "id" ? "Hapus pencarian" : "Clear search"}
                 style={{
-                  position: "absolute", right: "0.75rem", top: "50%", transform: "translateY(-50%)",
+                  position: "absolute", right: "0.4rem", top: "50%", transform: "translateY(-50%)",
+                  minWidth: 36, minHeight: 36,
                   background: "none", border: "none", cursor: "pointer",
-                  color: "oklch(55% 0.008 260)", fontSize: "1rem", lineHeight: 1, padding: 0,
+                  color: T.muted, fontSize: "1.1rem", lineHeight: 1, padding: 0,
                 }}
               >
                 ×
               </button>
             )}
           </div>
+        </header>
 
-          {isTeamLeader && pathway === "team" && (
-            <div style={{ marginTop: "1.25rem" }}>
-              <Link
-                href="/dashboard"
-                style={{
-                  fontFamily: "var(--font-montserrat)",
-                  fontSize: "0.8125rem",
-                  fontWeight: 700,
-                  color: "oklch(65% 0.15 45)",
-                  textDecoration: "none",
-                }}
-              >
-                ← Team Dashboard
-              </Link>
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* ── SECTIONS ── */}
-      <section style={{ paddingBlock: "clamp(2rem, 4vw, 4rem)", background: "oklch(97% 0.005 80)" }}>
-        <div className="container-wide">
-
-          {/* Search results */}
+        {/* ── LIBRARY ── */}
+        <section aria-label={lang === "id" ? "Modul" : "Modules"} style={{ borderTop: `1px solid ${T.navy}` }}>
           {searchResults !== null && (
-            <div>
-              <p style={{
-                fontFamily: "var(--font-montserrat)",
-                fontSize: "0.8rem",
-                fontWeight: 600,
-                color: "oklch(52% 0.008 260)",
-                marginBottom: "1.25rem",
-              }}>
+            <div style={{ paddingTop: "1.5rem" }}>
+              <p style={{ fontFamily: SANS, fontSize: "0.8rem", fontWeight: 600, color: T.muted, margin: "0 0 1.25rem" }}>
                 {searchResults.length === 0
                   ? (lang === "id" ? "Tidak ada hasil ditemukan." : "No results found.")
                   : lang === "id"
                     ? `${searchResults.length} modul ditemukan`
                     : `${searchResults.length} module${searchResults.length === 1 ? "" : "s"} found`}
               </p>
-              {searchResults.length > 0 && (
-                <div className="resource-grid">
-                  {searchResults.map((resource) => (
-                    <ResourceTile
-                      key={resource.id}
-                      resource={resource}
-                      userId={userId}
-                      moduleStatuses={moduleStatuses}
-                      moduleFormats={moduleFormats}
-                      localSaved={localSaved}
-                      pendingSlug={pendingSlug}
-                      onAddToDashboard={handleAddToDashboard}
-                      lang={lang}
-                      localTitle={localTitle}
-                      localDescription={localDescription}
-                    />
-                  ))}
-                </div>
-              )}
+              {searchResults.length > 0 && <div className="resource-grid">{searchResults.map(tile)}</div>}
             </div>
           )}
 
-          {/* Category accordions — hidden while searching */}
-          {searchResults === null && SECTION_ORDER.map((section) => {
-            const sectionResources = RESOURCES.filter(
-              (res) => getLibraryCategory(res, moduleCategories) === section.key
-            );
-            if (sectionResources.length === 0) return null;
+          {searchResults === null && sectionsWithItems.map((section, i) => {
             const isOpen = openSections.has(section.key);
-
             return (
-              <div key={section.key} style={{ borderBottom: "1px solid oklch(88% 0.008 80)" }}>
-                {/* Accordion header */}
+              <div key={section.key} style={{ borderBottom: `1px solid ${T.rule}` }}>
                 <button
+                  className="lib-acc"
                   onClick={() => toggleSection(section.key)}
+                  aria-expanded={isOpen}
                   style={{
                     width: "100%",
-                    display: "flex",
+                    display: "grid",
+                    gridTemplateColumns: "2.5rem minmax(0, 1fr) auto auto",
                     alignItems: "center",
-                    justifyContent: "space-between",
+                    gap: "0.75rem",
                     padding: "1.25rem 0",
                     background: "none",
                     border: "none",
                     cursor: "pointer",
                     textAlign: "left",
-                    gap: "1rem",
                   }}
                 >
-                  <div style={{ display: "flex", alignItems: "baseline", gap: "0.75rem" }}>
-                    <span style={{
-                      fontFamily: "var(--font-montserrat)",
-                      fontWeight: 700,
-                      fontSize: "clamp(0.95rem, 2.5vw, 1.125rem)",
-                      color: isOpen ? "oklch(65% 0.15 45)" : "oklch(22% 0.005 260)",
-                      transition: "color 0.15s",
-                    }}>
-                      {lang === "id" ? section.labelId : section.label}
-                    </span>
-                  </div>
-                  <span style={{
-                    fontFamily: "var(--font-montserrat)",
-                    fontSize: "0.75rem",
-                    color: "oklch(55% 0.008 260)",
-                    flexShrink: 0,
-                    transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
-                    transition: "transform 0.2s ease",
-                    display: "inline-block",
-                  }}>▼</span>
+                  <span aria-hidden="true" style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: "1.2rem", color: T.orangeDeep }}>
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="lib-acc-label" style={{ fontFamily: SERIF, fontStyle: "italic", fontWeight: 500, fontSize: "clamp(1.4rem, 2.8vw, 1.8rem)", lineHeight: 1.15, color: isOpen ? T.orangeDeep : T.navy }}>
+                    {lang === "id" ? section.labelId : section.label}
+                  </span>
+                  <span style={{ fontFamily: SANS, fontSize: "0.72rem", fontWeight: 600, color: T.muted }}>
+                    {section.items.length}
+                  </span>
+                  <span aria-hidden="true" className="lib-chev" style={{ fontSize: "0.7rem", color: T.muted, display: "inline-block", transform: isOpen ? "rotate(180deg)" : "none" }}>▼</span>
                 </button>
-
-                {/* Tiles — shown when open */}
                 {isOpen && (
                   <div style={{ paddingBottom: "1.75rem" }}>
-                    <div className="resource-grid">
-                      {sectionResources.map((resource) => (
-                        <ResourceTile
-                          key={resource.id}
-                          resource={resource}
-                          userId={userId}
-                          moduleStatuses={moduleStatuses}
-                          moduleFormats={moduleFormats}
-                          localSaved={localSaved}
-                          pendingSlug={pendingSlug}
-                          onAddToDashboard={handleAddToDashboard}
-                          lang={lang}
-                          localTitle={localTitle}
-                          localDescription={localDescription}
-                        />
-                      ))}
-                    </div>
+                    <div className="resource-grid">{section.items.map(tile)}</div>
                   </div>
                 )}
               </div>
             );
           })}
+        </section>
 
-        </div>
-      </section>
-
-      {/* ── CHALLENGE BANNER ── */}
-      <section style={{ background: "oklch(95% 0.012 260)", paddingBlock: "clamp(3.5rem, 6vw, 5.5rem)", position: "relative", overflow: "hidden", borderTop: "3px solid oklch(65% 0.15 45)", borderBottom: "3px solid oklch(65% 0.15 45)" }}>
-        {/* Iceberg */}
-        <div aria-hidden="true" style={{ position: "absolute", top: 0, right: 0, bottom: 0, width: "clamp(260px, 42vw, 560px)", pointerEvents: "none", overflow: "hidden" }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/iceberg-full.jpg" alt="" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 40%", display: "block", opacity: 0.55 }} />
-          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, oklch(95% 0.012 260) 0%, oklch(95% 0.012 260 / 0.6) 35%, transparent 70%)" }} />
-        </div>
-
-        <div className="container-wide" style={{ position: "relative" }}>
-          <div style={{ maxWidth: "620px" }}>
-            {/* Eyebrow */}
-            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.5rem" }}>
-              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 800, letterSpacing: "0.2em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", border: "1px solid oklch(65% 0.15 45 / 0.6)", padding: "0.28em 0.75em", borderRadius: "3px" }}>
-                {lang === "id" ? "Gratis" : "Free"}
-              </span>
-              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "oklch(42% 0.07 260)" }}>
-                {lang === "id" ? "Perjalanan · 60 langkah" : "Journey · 60 steps"}
-              </span>
-            </div>
-
-            {/* Headline */}
-            <h2 style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 600, fontSize: "clamp(2rem, 4vw, 3.25rem)", lineHeight: 1.05, color: "oklch(22% 0.10 260)", margin: "0 0 1rem" }}>
-              {lang === "id" ? "Kepemimpinan dimulai\ndari dalam." : "Leadership starts\non the inside."}
-            </h2>
-
-            {/* Body */}
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", lineHeight: 1.75, color: "oklch(38% 0.05 260)", margin: "0 0 2rem", maxWidth: "46ch" }}>
-              {lang === "id"
-                ? "Perjalanan gratis 60 langkah berdasarkan buku Deep Influence karya T.J. Addington. Jalani dengan kecepatanmu sendiri, satu batu demi satu batu, dan bertumbuhlah sebagai pemimpin dari dalam ke luar."
-                : "A free 60-step journey based on T.J. Addington's book Deep Influence. Walk it at your own pace, one stone at a time, and grow as a leader from the inside out."}
-            </p>
-
-            {/* CTA */}
-            <Link
-              href={journeyHref}
-              style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "0.8rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(22% 0.10 260)", background: "oklch(65% 0.15 45)", padding: "0.875rem 2rem", borderRadius: "4px", textDecoration: "none" }}
-            >
-              {lang === "id" ? "Ikuti Sekarang" : "Join Now"} <span aria-hidden="true">→</span>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ── CONTRIBUTE SECTION ── */}
-      <section style={{ paddingBlock: "clamp(2.5rem, 5vw, 4rem)", background: "oklch(97% 0.005 80)" }}>
-        <div className="container-wide">
-          <div style={{ maxWidth: "600px" }}>
-            <p style={{
-              fontFamily: "var(--font-montserrat)",
-              fontSize: "0.62rem",
-              fontWeight: 700,
-              letterSpacing: "0.14em",
-              textTransform: "uppercase",
-              color: "oklch(65% 0.15 45)",
-              marginBottom: "1rem",
-            }}>
-              {lang === "id" ? "Ikut Berkontribusi" : "Get Involved"}
-            </p>
-            <p style={{
-              fontFamily: "var(--font-montserrat)",
-              fontSize: "clamp(0.9rem, 2vw, 1rem)",
-              lineHeight: 1.75,
-              color: "oklch(35% 0.008 260)",
-              marginBottom: "1.25rem",
-              maxWidth: "52ch",
-            }}>
-              {lang === "id"
-                ? "Perpustakaan kami terus berkembang. Kami mengembangkan materi pelatihan baru seputar topik-topik yang relevan dalam kepemimpinan lintas budaya, dan kami ingin mendengar pendapat Anda. Ingin menyarankan topik modul baru atau ikut terlibat dalam pengembangannya?"
-                : "Our library is always growing. We develop new training materials around timely topics in cross-cultural leadership, and we'd love your input. Want to suggest a new module topic or get involved in developing one?"}
-            </p>
-            <Link
-              href="/contact"
-              style={{
-                fontFamily: "var(--font-montserrat)",
-                fontSize: "0.875rem",
-                fontWeight: 700,
-                color: "oklch(65% 0.15 45)",
-                textDecoration: "none",
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "0.3rem",
-              }}
-            >
-              {lang === "id" ? "Hubungi kami →" : "Get in touch →"}
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ── MEMBERSHIP CTA ── */}
-      {!userId && (
-        <section style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(22% 0.10 260)", position: "relative" }}>
-          <div style={{ position: "absolute", left: "clamp(1.5rem, 5vw, 4rem)", top: 0, bottom: 0, width: "3px", background: "oklch(65% 0.15 45)" }} />
-          <div className="container-wide">
-            <div style={{ maxWidth: "560px", paddingLeft: "2.5rem" }}>
-              <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "1rem" }}>{r.label}</p>
-              <h2 className="t-section" style={{ color: "oklch(97% 0.005 80)", marginBottom: "1.25rem" }}>
-                {lang === "id" ? "Jelajahi semua modul pelatihan." : "Explore all training modules."}
+        {/* ── GET INVOLVED ── */}
+        <section aria-labelledby="lib-involved" style={{ background: T.band, padding: "clamp(2rem, 5vw, 3.5rem) clamp(1.25rem, 4.5vw, 3.5rem)" }}>
+          <div className="lib-split">
+            <div style={{ display: "flex", flexDirection: "column", gap: "1.1rem" }}>
+              <Eyebrow>{lang === "id" ? "Ikut berkontribusi" : "Get involved"}</Eyebrow>
+              <h2 id="lib-involved" style={h2Style()}>
+                {lang === "id" ? "Perpustakaan ini terus bertumbuh." : "This library keeps growing."}
               </h2>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.7, color: "oklch(72% 0.04 260)", marginBottom: "2rem", maxWidth: "44ch" }}>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem", alignItems: "flex-start", alignSelf: "end" }}>
+              <p style={bodyStyle}>
                 {lang === "id"
-                  ? "Modul pelatihan mandiri untuk pemimpin Kristen lintas budaya. Daftar untuk bergabung."
-                  : "Self-paced training modules for Christian cross-cultural leaders. Apply to join."}
+                  ? "Kami terus mengembangkan materi pelatihan baru seputar topik-topik penting dalam kepemimpinan lintas budaya, dan kami ingin mendengar masukan Anda. Ingin menyarankan topik modul baru atau ikut mengembangkannya?"
+                  : "We keep developing new training materials on timely topics in cross-cultural leadership, and we'd love your input. Want to suggest a new module topic or help develop one?"}
               </p>
-              <Link href="/membership" className="btn-primary" style={{ display: "inline-flex" }}>
-                {lang === "id" ? "Daftar keanggotaan →" : "Apply for membership →"}
-              </Link>
+              <TextLink href="/contact">{lang === "id" ? "Hubungi kami" : "Get in touch"}</TextLink>
             </div>
           </div>
         </section>
-      )}
-    </>
+
+        {/* ── LOGGED-OUT CTA ── */}
+        {!userId && (
+          <section aria-labelledby="lib-cta" className="lib-split" style={{ borderTop: `2px solid ${T.orange}`, paddingTop: "clamp(2rem, 5vw, 3rem)" }}>
+            <h2 id="lib-cta" style={h2Style()}>
+              {lang === "id" ? "Buka seluruh perpustakaan." : "Open up the whole library."}
+            </h2>
+            <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem", alignItems: "flex-start" }}>
+              <p style={bodyStyle}>
+                {lang === "id"
+                  ? "Modul gratis terbuka dengan akun gratis. Modul anggota sudah termasuk dalam jalur Personal dan Team."
+                  : "Free modules open with a free account. Member modules come with the Personal and Team paths."}
+              </p>
+              <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "1rem 1.5rem" }}>
+                <PrimaryLink href="/pricing">{lang === "id" ? "Lihat harga" : "See pricing"}</PrimaryLink>
+                <TextLink href="/personal">Personal</TextLink>
+                <TextLink href="/team">Team</TextLink>
+              </div>
+            </div>
+          </section>
+        )}
+      </div>
+    </div>
   );
 }

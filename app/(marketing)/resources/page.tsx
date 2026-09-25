@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 import { generateBreadcrumbSchema } from "@/lib/seo-utils";
 
 export const metadata = {
-  title: "Resources — Crispy Development",
+  title: "Library | Crispy Development",
   description: "Guides, assessments, and worksheets for Christian leaders navigating life and ministry across cultures.",
 };
 

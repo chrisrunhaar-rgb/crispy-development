@@ -62,8 +62,7 @@ const COPY = {
     waypoint: {
       label: "WayPoint",
       title: "A private space to think out loud.",
-      body: "WayPoint is our AI voice coach. It doesn't give advice. It asks good questions and helps you hear what you already know. Pick a coach, talk for as long as you need, and keep what you learn.",
-      price: "Free account. Coaching hours from $10.",
+      body: "WayPoint is our AI voice coach. It doesn't give advice. We believe you already carry the answers inside you, and WayPoint helps you find them. Pick a coach, talk for as long as you need, and keep what you learn.",
       cta: "Meet WayPoint",
       alt: "Tara, one of the WayPoint coaches, in a warm and quiet room.",
     },
@@ -123,8 +122,7 @@ const COPY = {
     waypoint: {
       label: "WayPoint",
       title: "Ruang pribadi untuk berpikir dengan suara.",
-      body: "WayPoint adalah pelatih suara AI kami. WayPoint tidak memberi nasihat. WayPoint mengajukan pertanyaan yang baik dan membantu Anda mendengar apa yang sebenarnya sudah Anda ketahui. Pilih pelatih, berbicaralah selama yang Anda perlukan, dan simpan apa yang Anda pelajari.",
-      price: "Akun gratis. Jam coaching mulai dari $10.",
+      body: "WayPoint adalah pelatih suara AI kami. WayPoint tidak memberi nasihat. Kami percaya Anda sudah membawa jawabannya di dalam diri Anda, dan WayPoint membantu Anda menemukannya. Pilih pelatih, berbicaralah selama yang Anda perlukan, dan simpan apa yang Anda pelajari.",
       cta: "Kenali WayPoint",
       alt: "Tara, salah satu pelatih WayPoint, di ruangan yang hangat dan tenang.",
     },
@@ -281,7 +279,6 @@ export default function HomePreview() {
               <Image src="/images/waypoint/waypoint-banner-transp.png" alt="WayPoint" width={7086} height={2362} style={{ width: "min(13rem, 60%)", height: "auto" }} />
               <h2 id="hp-wp-title" style={{ ...h2Style(), marginTop: "0.5rem" }}>{c.waypoint.title}</h2>
               <p style={bodyStyle}>{c.waypoint.body}</p>
-              <p style={{ margin: 0, fontFamily: SANS, fontSize: "0.86rem", fontWeight: 700, color: T.navy }}>{c.waypoint.price}</p>
               <div style={{ paddingTop: "0.5rem" }}>
                 <PrimaryLink href="/waypoint" tone="orange">{c.waypoint.cta}</PrimaryLink>
               </div>
