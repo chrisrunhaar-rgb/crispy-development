@@ -80,7 +80,6 @@ export default async function CoursePage({
     <div style={{ background: "oklch(97% 0.005 80)", minHeight: "100vh" }}>
       {/* ── HEADER ── */}
       <section style={{ position: "relative" }}>
-        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "5px", background: "oklch(65% 0.15 45)" }} />
         <div className="container-wide" style={{
           paddingTop: "clamp(3rem, 6vw, 5rem)",
           paddingBottom: "clamp(2rem, 4vw, 3rem)",
@@ -121,10 +120,10 @@ export default async function CoursePage({
               </div>
 
               <h1 style={{
-                fontFamily: "var(--font-cormorant)", fontWeight: 600,
-                fontSize: "clamp(2.2rem, 4.5vw, 3.5rem)", lineHeight: 1.05,
-                color: "oklch(22% 0.10 260)", marginBottom: "1rem",
-                letterSpacing: "-0.01em",
+                fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 500,
+                fontSize: "clamp(2.2rem, 4.5vw, 3.3rem)", lineHeight: 1.05,
+                color: "oklch(30% 0.12 260)", marginBottom: "1rem",
+                textWrap: "balance",
               }}>
                 {course.title}
               </h1>
@@ -140,9 +139,10 @@ export default async function CoursePage({
             {/* Start / continue CTA */}
             {startChapter && (
               <div style={{
-                background: "oklch(22% 0.10 260)",
+                background: "oklch(90.5% 0.012 80)",
+                borderTop: "2px solid oklch(65% 0.15 45)",
                 padding: "1.5rem",
-                minWidth: "200px",
+                minWidth: "220px",
                 display: "flex", flexDirection: "column", gap: "0.75rem",
               }}>
                 {user && completedCount > 0 ? (
@@ -150,14 +150,14 @@ export default async function CoursePage({
                     <span style={{
                       fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.6rem",
                       letterSpacing: "0.18em", textTransform: "uppercase",
-                      color: "oklch(65% 0.15 45)",
+                      color: "oklch(58% 0.16 45)",
                     }}>
                       Your progress
                     </span>
                     <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
                       <div style={{
                         flex: 1, height: "4px",
-                        background: "oklch(40% 0.08 260)",
+                        background: "oklch(84% 0.01 80)",
                         borderRadius: "2px", overflow: "hidden",
                       }}>
                         <div style={{
@@ -168,7 +168,7 @@ export default async function CoursePage({
                       </div>
                       <span style={{
                         fontFamily: "var(--font-montserrat)", fontSize: "0.7rem",
-                        color: "oklch(72% 0.006 260)", whiteSpace: "nowrap",
+                        color: "oklch(48% 0.04 260)", whiteSpace: "nowrap",
                       }}>
                         {completedCount}/{chapters.length}
                       </span>
@@ -179,9 +179,9 @@ export default async function CoursePage({
                   href={`/courses/${course.slug}/${startChapter.slug}`}
                   style={{
                     display: "block",
-                    background: "oklch(65% 0.15 45)",
+                    background: "oklch(30% 0.12 260)",
                     color: "oklch(97% 0.005 80)",
-                    padding: "0.75rem 1.25rem",
+                    padding: "0.8rem 1.25rem",
                     textDecoration: "none",
                     fontFamily: "var(--font-montserrat)", fontWeight: 700,
                     fontSize: "0.8rem", letterSpacing: "0.04em",
@@ -198,19 +198,19 @@ export default async function CoursePage({
 
       {/* ── CHAPTER LIST ── */}
       <section style={{
-        padding: "clamp(2rem, 4vw, 3.5rem) 0",
-        borderTop: "1px solid oklch(88% 0.008 80)",
+        padding: "0 0 clamp(3rem, 6vw, 5rem)",
       }}>
         <div className="container-wide" style={{ maxWidth: "720px" }}>
           <h2 style={{
             fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.68rem",
             letterSpacing: "0.18em", textTransform: "uppercase",
-            color: "oklch(52% 0.008 260)", marginBottom: "1.5rem",
+            color: "oklch(58% 0.16 45)", margin: 0, paddingBottom: "0.9rem",
+            borderBottom: "1px solid oklch(30% 0.12 260)",
           }}>
             Chapters
           </h2>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.125rem" }}>
+          <div style={{ display: "flex", flexDirection: "column" }}>
             {chapters.map((ch, idx) => {
               const done = completedIds.has(ch.id);
               return (
@@ -220,18 +220,17 @@ export default async function CoursePage({
                   className="chapter-row"
                   style={{
                     display: "flex", alignItems: "flex-start", gap: "1rem",
-                    padding: "1rem 1.25rem",
-                    background: "oklch(100% 0 0)",
-                    border: "1px solid oklch(90% 0.006 80)",
+                    padding: "1.1rem 0",
+                    borderBottom: "1px solid oklch(84% 0.01 80)",
                     textDecoration: "none",
-                    transition: "border-color 0.15s, background 0.15s",
                   }}
                 >
                   {/* Number / checkmark */}
                   <div style={{
                     width: "2rem", height: "2rem", minWidth: "2rem",
                     borderRadius: "50%",
-                    background: done ? "oklch(65% 0.15 45)" : "oklch(93% 0.006 80)",
+                    background: done ? "oklch(65% 0.15 45)" : "transparent",
+                    border: done ? "none" : "1px solid oklch(84% 0.01 80)",
                     display: "flex", alignItems: "center", justifyContent: "center",
                     marginTop: "0.125rem",
                   }}>
@@ -241,8 +240,8 @@ export default async function CoursePage({
                       </svg>
                     ) : (
                       <span style={{
-                        fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.7rem",
-                        color: "oklch(55% 0.008 260)",
+                        fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontSize: "0.95rem",
+                        color: "oklch(58% 0.16 45)",
                       }}>
                         {idx + 1}
                       </span>
@@ -250,9 +249,10 @@ export default async function CoursePage({
                   </div>
 
                   <div style={{ flex: 1 }}>
-                    <div style={{
+                    <div className="chapter-title" style={{
                       fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9rem",
-                      color: "oklch(22% 0.10 260)", lineHeight: 1.3, marginBottom: "0.3rem",
+                      color: "oklch(30% 0.12 260)", lineHeight: 1.3, marginBottom: "0.3rem",
+                      transition: "color 0.15s",
                     }}>
                       {ch.title}
                     </div>
@@ -282,10 +282,9 @@ export default async function CoursePage({
       </section>
 
       <style>{`
-        .chapter-row:hover {
-          border-color: oklch(65% 0.15 45);
-          background: oklch(98.5% 0.003 80) !important;
-        }
+        .chapter-row:hover .chapter-title { color: oklch(58% 0.16 45) !important; }
+        .chapter-row:focus-visible { outline: 2px solid oklch(65% 0.15 45); outline-offset: 3px; }
+        @media (prefers-reduced-motion: reduce) { .chapter-title { transition: none !important; } }
       `}</style>
     </div>
   );

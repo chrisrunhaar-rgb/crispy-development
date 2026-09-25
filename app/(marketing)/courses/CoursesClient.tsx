@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useLanguage } from "@/lib/LanguageContext";
+import { T, SERIF, SANS, KIT_CSS, Eyebrow, h2Style, bodyStyle, PrimaryLink, TextLink } from "@/components/promo/PromoKit";
 
 type CourseRow = {
   id: string;
@@ -20,157 +21,136 @@ type Props = {
   isLoggedIn: boolean;
 };
 
+const CRS_CSS = `
+.crs { display: flex; flex-direction: column; gap: clamp(3rem, 7vw, 5.5rem); }
+.crs-top { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
+.crs-split { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 3rem); }
+.crs-row { display: grid; grid-template-columns: 2.5rem minmax(0, 1fr); gap: 0.75rem 1rem; padding-block: clamp(1.75rem, 4vw, 2.5rem); border-bottom: 1px solid ${T.rule}; text-decoration: none; }
+.crs-side { grid-column: 2; display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; }
+.crs-row:hover .crs-title { color: ${T.navyMid}; }
+.crs-row:hover .crs-cta { color: ${T.orangeDeep}; }
+.crs-row:focus-visible { outline: 2px solid ${T.orange}; outline-offset: 4px; }
+@media (min-width: 960px) {
+  .crs-top { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); align-items: end; }
+  .crs-split { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+  .crs-row { grid-template-columns: 2.5rem minmax(0, 1fr) 15rem; align-items: center; column-gap: clamp(1.5rem, 3.5vw, 2.75rem); }
+  .crs-side { grid-column: 3; flex-direction: column; align-items: flex-end; text-align: right; }
+}
+@media (prefers-reduced-motion: reduce) { .crs-title, .crs-cta { transition: none !important; } }
+`;
+
 export default function CoursesClient({ courses, progressMap, isLoggedIn }: Props) {
   const { lang } = useLanguage();
   const isId = lang === "id";
 
   return (
-    <div style={{ background: "oklch(97% 0.005 80)", minHeight: "100vh" }}>
-      {/* ── PAGE HEADER ── */}
-      <section style={{ background: "oklch(22% 0.10 260)", paddingTop: "clamp(4rem, 7vw, 7rem)", paddingBottom: "clamp(4rem, 7vw, 7rem)", position: "relative", overflow: "hidden" }}>
-        <div aria-hidden="true" style={{ position: "absolute", inset: 0, backgroundImage: "url('/pathway-courses.jpg')", backgroundSize: "cover", backgroundPosition: "center 35%", opacity: 0.15, pointerEvents: "none" }} />
-        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "oklch(65% 0.15 45)" }} />
-        <div aria-hidden="true" style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle, oklch(97% 0.005 80 / 0.06) 1px, transparent 1px)", backgroundSize: "28px 28px", pointerEvents: "none" }} />
+    <div style={{ background: T.offWhite }}>
+      <div className="container-wide crs" lang={lang} style={{ paddingBlock: "clamp(2.5rem, 6vw, 4.5rem)" }}>
+        <style>{KIT_CSS + CRS_CSS}</style>
 
-        <div className="container-wide" style={{ position: "relative" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "0.875rem", marginBottom: "1.5rem" }}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo-icon-dark-badge.png" alt="Crispy Development" width={28} height={28} style={{ flexShrink: 0, display: "block" }} />
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", margin: 0 }}>
-              {isId ? "Kursus" : "Courses"}
+        {/* ── TOP: title + intro, no hero ── */}
+        <header className="crs-top">
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.9rem" }}>
+            <Eyebrow>{isId ? "Kursus" : "Courses"}</Eyebrow>
+            <h1 style={{ ...h2Style(), fontSize: "clamp(2.1rem, 4.4vw, 3.1rem)", lineHeight: 1.05 }}>
+              {isId ? "Kuasai alat yang diandalkan tim Anda." : "Master the tools your team relies on."}
+            </h1>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+            <p style={{ ...bodyStyle, maxWidth: "38ch" }}>
+              {isId
+                ? "Pelatihan langsung untuk pemimpin lintas budaya, sesuai kecepatan Anda sendiri."
+                : "Hands-on training for cross-cultural leaders, at your own pace."}
+            </p>
+            <p style={{ margin: 0, fontFamily: SANS, fontSize: "0.72rem", fontWeight: 600, color: T.muted }}>
+              {courses.length} {isId ? "kursus" : "courses"} · {isId ? "Khusus anggota" : "Members only"}
             </p>
           </div>
-          <div style={{ width: "48px", height: "2px", background: "oklch(65% 0.15 45)", marginBottom: "1.75rem" }} />
+        </header>
 
-          <h1 className="t-section" style={{ marginBottom: "1rem", maxWidth: "560px", color: "oklch(97% 0.005 80)" }}>
-            {isId ? <>Kursus<br />Praktis.</> : <>Practical<br />Courses.</>}
-          </h1>
+        {/* ── COURSES ── */}
+        <section aria-label={isId ? "Kursus" : "Courses"} style={{ borderTop: `1px solid ${T.navy}` }}>
+          {courses.map((course, i) => {
+            const chapterCount = course.course_chapters?.[0]?.count ?? 0;
+            const completed = progressMap[course.id] ?? 0;
+            const pct = chapterCount > 0 ? Math.round((completed / chapterCount) * 100) : 0;
+            const displayTitle = isId && course.title_id ? course.title_id : course.title;
+            const displayDesc = isId && course.description_id ? course.description_id : course.description;
 
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", color: "oklch(80% 0.025 260)", maxWidth: "52ch", lineHeight: 1.75 }}>
-            {isId
-              ? "Pelatihan langsung untuk pemimpin lintas budaya. Kuasai alat digital yang diandalkan tim Anda — sesuai kecepatan Anda sendiri."
-              : "Hands-on training for cross-cultural leaders. Master the digital tools your team relies on — at your own pace."
-            }
-          </p>
-        </div>
-      </section>
+            return (
+              <Link key={course.id} href={`/courses/${course.slug}`} className="crs-row">
+                <span aria-hidden="true" style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: "1.2rem", color: T.orangeDeep, lineHeight: 1.3 }}>
+                  {String(i + 1).padStart(2, "0")}
+                </span>
 
-      {/* Courses meta bar */}
-      <div style={{ background: "oklch(94% 0.006 80)", borderTop: "1px solid oklch(88% 0.008 80)" }}>
-        <div className="container-wide" style={{ display: "flex", alignItems: "center", gap: "1.25rem", paddingTop: "0.8rem", paddingBottom: "0.8rem" }}>
-          <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.63rem", letterSpacing: "0.16em", textTransform: "uppercase", color: "oklch(65% 0.15 45)" }}>
-            {courses.length} {isId ? "kursus" : "courses"}
-          </span>
-          <span style={{ width: "3px", height: "3px", borderRadius: "50%", background: "oklch(72% 0.006 260)", display: "inline-block" }} />
-          <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", color: "oklch(55% 0.008 260)" }}>
-            {isId ? "Perlu akun" : "Account required"}
-          </span>
-        </div>
-      </div>
-
-      {/* ── COURSE CARDS ── */}
-      <section style={{ padding: "clamp(3rem, 6vw, 5rem) 0" }}>
-        <div className="container-wide">
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 340px), 1fr))",
-            gap: "2rem",
-          }}>
-            {courses.map((course) => {
-              const chapterCount = course.course_chapters?.[0]?.count ?? 0;
-              const completed = progressMap[course.id] ?? 0;
-              const pct = chapterCount > 0 ? Math.round((completed / chapterCount) * 100) : 0;
-              const displayTitle = isId && course.title_id ? course.title_id : course.title;
-              const displayDesc = isId && course.description_id ? course.description_id : course.description;
-
-              return (
-                <Link
-                  key={course.id}
-                  href={`/courses/${course.slug}`}
-                  className="course-card"
-                  style={{
-                    display: "block",
-                    textDecoration: "none",
-                    background: "oklch(100% 0 0)",
-                    border: "1px solid oklch(88% 0.008 80)",
-                    padding: "2rem",
-                    transition: "border-color 0.15s, box-shadow 0.15s",
-                  }}
-                >
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1.25rem" }}>
-                    <span style={{
-                      fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.55rem",
-                      letterSpacing: "0.08em", textTransform: "uppercase",
-                      color: "oklch(45% 0.14 45)",
-                      background: "oklch(95% 0.04 60)",
-                      padding: "2px 8px",
-                      borderRadius: 999,
-                    }}>
-                      {isId ? "Khusus anggota" : "Members only"}
-                    </span>
-                    {isLoggedIn && chapterCount > 0 && (
-                      <ProgressRing pct={pct} completed={completed} total={chapterCount} />
-                    )}
-                  </div>
-
-                  <h2 style={{
-                    fontFamily: "var(--font-cormorant)", fontWeight: 600,
-                    fontSize: "clamp(1.5rem, 2.8vw, 1.9rem)", lineHeight: 1.15,
-                    color: "oklch(22% 0.10 260)", marginBottom: "0.875rem",
-                  }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.7rem", minWidth: 0 }}>
+                  <h2 className="crs-title" style={{ margin: 0, fontFamily: SERIF, fontStyle: "italic", fontWeight: 500, fontSize: "clamp(1.5rem, 2.8vw, 2rem)", lineHeight: 1.12, color: T.navy, textWrap: "balance", transition: "color 0.2s" }}>
                     {displayTitle}
                   </h2>
-
-                  <p style={{
-                    fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.65,
-                    color: "oklch(48% 0.007 260)", marginBottom: "1.5rem",
-                  }}>
-                    {displayDesc}
+                  {displayDesc && <p style={{ ...bodyStyle, fontSize: "0.9rem" }}>{displayDesc}</p>}
+                  <p style={{ margin: 0, fontFamily: SANS, fontSize: "0.66rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: T.muted }}>
+                    {chapterCount} {isId ? "bagian" : "chapters"}
                   </p>
+                </div>
 
-                  <div style={{
-                    display: "flex", alignItems: "center", justifyContent: "space-between",
-                    paddingTop: "1.25rem",
-                    borderTop: "1px solid oklch(90% 0.006 80)",
-                  }}>
-                    <span style={{
-                      fontFamily: "var(--font-montserrat)", fontSize: "0.72rem",
-                      color: "oklch(58% 0.006 260)",
-                    }}>
-                      {chapterCount} {isId ? "bagian" : "chapters"}
-                    </span>
-                    <span
-                      className="course-card-cta"
-                      style={{
-                        fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.78rem",
-                        letterSpacing: "0.05em", color: "oklch(65% 0.15 45)",
-                        transition: "color 0.15s",
-                      }}
-                    >
-                      {!isLoggedIn
-                        ? (isId ? "Masuk untuk akses →" : "Sign in to access →")
-                        : completed > 0
-                          ? (isId ? "Lanjutkan →" : "Continue →")
-                          : (isId ? "Mulai kursus →" : "Start course →")
-                      }
-                    </span>
-                  </div>
-                </Link>
-              );
-            })}
+                <div className="crs-side">
+                  {isLoggedIn && chapterCount > 0 && (
+                    <ProgressRing pct={pct} completed={completed} total={chapterCount} />
+                  )}
+                  <span className="crs-cta" style={{ fontFamily: SANS, fontSize: "0.8rem", fontWeight: 700, color: T.navy, transition: "color 0.2s", whiteSpace: "nowrap" }}>
+                    {!isLoggedIn
+                      ? (isId ? "Masuk untuk akses" : "Sign in to access")
+                      : completed > 0
+                        ? (isId ? "Lanjutkan" : "Continue")
+                        : (isId ? "Mulai kursus" : "Start course")}{" "}
+                    <span aria-hidden="true">→</span>
+                  </span>
+                </div>
+              </Link>
+            );
+          })}
+        </section>
+
+        {/* ── LOGGED-OUT CTA ── */}
+        {!isLoggedIn && (
+          <section aria-labelledby="crs-cta" className="crs-split" style={{ borderTop: `2px solid ${T.orange}`, paddingTop: "clamp(2rem, 5vw, 3rem)" }}>
+            <h2 id="crs-cta" style={h2Style()}>
+              {isId ? "Masuk untuk mulai belajar." : "Sign in to start learning."}
+            </h2>
+            <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem", alignItems: "flex-start" }}>
+              <p style={bodyStyle}>
+                {isId
+                  ? "Kursus terbuka untuk anggota. Buat akun atau masuk, dan kemajuan Anda tersimpan di setiap bagian."
+                  : "Courses are open to members. Create an account or sign in, and your progress is saved chapter by chapter."}
+              </p>
+              <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "1rem 1.5rem" }}>
+                <PrimaryLink href="/signup?redirectTo=/courses">{isId ? "Buat akun" : "Create an account"}</PrimaryLink>
+                <TextLink href="/login?redirectTo=/courses">{isId ? "Sudah punya akun? Masuk" : "Already a member? Sign in"}</TextLink>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* ── LIBRARY BAND ── */}
+        <section aria-labelledby="crs-more" style={{ background: T.band, padding: "clamp(2rem, 5vw, 3.5rem) clamp(1.25rem, 4.5vw, 3.5rem)" }}>
+          <div className="crs-split">
+            <div style={{ display: "flex", flexDirection: "column", gap: "1.1rem" }}>
+              <Eyebrow>{isId ? "Lebih lanjut" : "Keep going"}</Eyebrow>
+              <h2 id="crs-more" style={h2Style()}>
+                {isId ? "Dari alat ke kepemimpinan." : "From tools to leadership."}
+              </h2>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem", alignItems: "flex-start", alignSelf: "end" }}>
+              <p style={bodyStyle}>
+                {isId
+                  ? "Perpustakaan berisi modul pelatihan tentang budaya, komunikasi, dan memimpin tim lintas budaya."
+                  : "The Library holds training modules on culture, communication, and leading teams across cultures."}
+              </p>
+              <TextLink href="/resources">{isId ? "Buka Perpustakaan" : "Open the Library"}</TextLink>
+            </div>
           </div>
-        </div>
-      </section>
-
-      <style>{`
-        .course-card:hover {
-          border-color: oklch(65% 0.15 45);
-          box-shadow: 0 4px 24px oklch(22% 0.10 260 / 0.08);
-        }
-        .course-card:hover .course-card-cta {
-          color: oklch(55% 0.13 45);
-        }
-      `}</style>
+        </section>
+      </div>
     </div>
   );
 }
@@ -182,12 +162,12 @@ function ProgressRing({ pct, completed, total }: { pct: number; completed: numbe
 
   return (
     <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-      <svg width="40" height="40" viewBox="0 0 40 40">
-        <circle cx="20" cy="20" r={r} fill="none" stroke="oklch(90% 0.008 80)" strokeWidth="3" />
+      <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true">
+        <circle cx="20" cy="20" r={r} fill="none" stroke={T.rule} strokeWidth="3" />
         <circle
           cx="20" cy="20" r={r}
           fill="none"
-          stroke={pct === 100 ? "oklch(45% 0.10 155)" : "oklch(65% 0.15 45)"}
+          stroke={pct === 100 ? "oklch(45% 0.10 155)" : T.orange}
           strokeWidth="3"
           strokeDasharray={`${dash} ${circ}`}
           strokeLinecap="round"
@@ -197,16 +177,13 @@ function ProgressRing({ pct, completed, total }: { pct: number; completed: numbe
           x="20" y="20"
           textAnchor="middle"
           dominantBaseline="central"
-          style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "9px" }}
-          fill="oklch(22% 0.10 260)"
+          style={{ fontFamily: SANS, fontWeight: 700, fontSize: "9px" }}
+          fill={T.navy}
         >
           {pct}%
         </text>
       </svg>
-      <span style={{
-        fontFamily: "var(--font-montserrat)", fontSize: "0.68rem",
-        color: "oklch(55% 0.008 260)",
-      }}>
+      <span style={{ fontFamily: SANS, fontSize: "0.68rem", color: T.muted }}>
         {completed}/{total}
       </span>
     </div>
