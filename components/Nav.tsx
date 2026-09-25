@@ -21,10 +21,8 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
   const [open, setOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
   const [pathwaysOpen, setPathwaysOpen] = useState(false);
-  const [resourcesOpen, setResourcesOpen] = useState(false);
   const langRef = useRef<HTMLDivElement>(null);
   const pathwaysRef = useRef<HTMLDivElement>(null);
-  const resourcesRef = useRef<HTMLDivElement>(null);
   const [lastName, setLastName] = useState<string | null>(null);
   const [email, setEmail] = useState<string>("");
   const [contentLang, setContentLang] = useState<"en" | "id">("en");
@@ -38,9 +36,6 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
       }
       if (pathwaysRef.current && !pathwaysRef.current.contains(e.target as Node)) {
         setPathwaysOpen(false);
-      }
-      if (resourcesRef.current && !resourcesRef.current.contains(e.target as Node)) {
-        setResourcesOpen(false);
       }
     }
     document.addEventListener("mousedown", handleClick);
@@ -105,7 +100,7 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
             {/* Pathways dropdown */}
             <div ref={pathwaysRef} style={{ position: "relative" }}>
               <button
-                onClick={() => { setPathwaysOpen(o => !o); setResourcesOpen(false); }}
+                onClick={() => setPathwaysOpen(o => !o)}
                 style={{ display: "flex", alignItems: "center", gap: "0.3rem", background: "none", border: "none", borderBottom: (pathname === "/personal" || pathname === "/team") ? "2px solid oklch(65% 0.15 45)" : "2px solid transparent", cursor: "pointer", padding: 0, paddingBottom: "2px", fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.8125rem", letterSpacing: "0.03em", color: (pathname === "/personal" || pathname === "/team") ? "oklch(65% 0.15 45)" : "oklch(30% 0.12 260)" }}
                 className="nav-link"
               >
@@ -135,30 +130,22 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
               WayPoint Coaching
             </Link>
 
-            {/* Resources dropdown */}
-            <div ref={resourcesRef} style={{ position: "relative" }}>
-              <button
-                onClick={() => { setResourcesOpen(o => !o); setPathwaysOpen(false); }}
-                style={{ display: "flex", alignItems: "center", gap: "0.3rem", background: "none", border: "none", borderBottom: (pathname === "/resources" || pathname === "/courses" || pathname === "/articles" || pathname.startsWith("/resources/") || pathname.startsWith("/courses/")) ? "2px solid oklch(65% 0.15 45)" : "2px solid transparent", cursor: "pointer", padding: 0, paddingBottom: "2px", fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.8125rem", letterSpacing: "0.03em", color: (pathname === "/resources" || pathname === "/courses" || pathname === "/articles" || pathname.startsWith("/resources/") || pathname.startsWith("/courses/")) ? "oklch(65% 0.15 45)" : "oklch(30% 0.12 260)" }}
-                className="nav-link"
-              >
-                Training
-                <span style={{ fontSize: "0.45rem", opacity: 0.5 }}>▼</span>
-              </button>
-              {resourcesOpen && (
-                <div style={{ position: "absolute", top: "calc(100% + 10px)", left: 0, background: "oklch(99% 0.002 80)", border: "1px solid oklch(88% 0.008 80)", boxShadow: "0 8px 24px oklch(30% 0.12 260 / 0.12)", minWidth: "180px", zIndex: 100 }}>
-                  {[
-                    { label: "Library", href: "/resources" },
-                    { label: "Courses", href: "/courses" },
-                    { label: "Worth Reading", href: "/articles" },
-                  ].map(item => (
-                    <Link key={item.href} href={item.href} onClick={() => setResourcesOpen(false)} style={{ display: "block", fontFamily: "var(--font-montserrat)", fontWeight: 500, fontSize: "0.8125rem", color: "oklch(30% 0.12 260)", textDecoration: "none", padding: "0.625rem 1rem", borderBottom: "1px solid oklch(92% 0.004 80)" }}>
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
+            {/* Library + Worth Reading */}
+            <Link
+              href="/resources"
+              style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.8125rem", letterSpacing: "0.03em", color: (pathname === "/resources" || pathname.startsWith("/resources/")) ? "oklch(65% 0.15 45)" : "oklch(30% 0.12 260)", textDecoration: "none", borderBottom: (pathname === "/resources" || pathname.startsWith("/resources/")) ? "2px solid oklch(65% 0.15 45)" : "2px solid transparent", paddingBottom: "2px" }}
+              className="nav-link"
+            >
+              Library
+            </Link>
+
+            <Link
+              href="/articles"
+              style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.8125rem", letterSpacing: "0.03em", color: (pathname === "/articles") ? "oklch(65% 0.15 45)" : "oklch(30% 0.12 260)", textDecoration: "none", borderBottom: (pathname === "/articles") ? "2px solid oklch(65% 0.15 45)" : "2px solid transparent", paddingBottom: "2px" }}
+              className="nav-link"
+            >
+              Worth Reading
+            </Link>
 
           </nav>
 
@@ -245,12 +232,8 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
               WayPoint Coaching
             </Link>
             <div style={{ height: "1px", background: "oklch(88% 0.008 80)", margin: "0.5rem 0" }} />
-            <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", margin: "0 0 0.25rem" }}>Training</p>
             <Link href="/resources" onClick={() => setOpen(false)} style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9rem", letterSpacing: "0.04em", color: "oklch(30% 0.12 260)", textDecoration: "none", padding: "0.5rem 0 0.5rem 0.75rem" }}>
               Library
-            </Link>
-            <Link href="/courses" onClick={() => setOpen(false)} style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9rem", letterSpacing: "0.04em", color: "oklch(30% 0.12 260)", textDecoration: "none", padding: "0.5rem 0 0.5rem 0.75rem" }}>
-              Courses
             </Link>
             <Link href="/articles" onClick={() => setOpen(false)} style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9rem", letterSpacing: "0.04em", color: "oklch(30% 0.12 260)", textDecoration: "none", padding: "0.5rem 0 0.5rem 0.75rem" }}>
               Worth Reading

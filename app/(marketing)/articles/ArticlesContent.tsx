@@ -214,7 +214,6 @@ export default function ArticlesContent() {
             </p>
             <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "1rem 1.5rem" }}>
               <PrimaryLink href="/resources">Open the Library</PrimaryLink>
-              <TextLink href="/courses">See the courses</TextLink>
             </div>
           </div>
         </section>

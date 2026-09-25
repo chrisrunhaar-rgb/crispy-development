@@ -17,6 +17,9 @@ const nextConfig: NextConfig = {
       // Team Leader application flow retired; Team plan is bought on /pricing
       { source: "/apply", destination: "/pricing", permanent: false },
       { source: "/apply/:path*", destination: "/pricing", permanent: false },
+      // Courses hidden until more are added; code and data kept
+      { source: "/courses", destination: "/resources", permanent: false },
+      { source: "/courses/:path*", destination: "/resources", permanent: false },
     ];
   },
 };
