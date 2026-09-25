@@ -779,13 +779,16 @@ export default function IcebergMap({ steps, completed, nextStep, lang, heading }
         .ice-head h1 { font-family: var(--font-cormorant); font-style: italic; font-weight: 500; font-size: clamp(1.9rem, 4.5vw, 2.6rem); line-height: 1.05; color: ${navy}; margin: 0; text-wrap: balance; }
         .ice-head p.intro { font-family: var(--font-montserrat); font-size: 0.84rem; line-height: 1.6; color: ${text}; margin: 0.6rem 0 0; }
         @media ${WIDE} {
-          .ice-layout { grid-template-columns: 270px minmax(0, 1fr); align-items: start; }
-          .ice-chapters { flex-direction: column; overflow-x: visible; max-height: min(78vh, 740px); overflow-y: auto; }
-          .ice-chapters button { white-space: normal; }
+          .ice-layout { grid-template-columns: 270px minmax(0, 1fr); align-items: stretch; }
+          /* Chapter list fills exactly the height of the iceberg screen, rows share it evenly. */
+          .ice-nav { display: flex; flex-direction: column; min-height: 0; }
+          .ice-chapters { flex: 1 1 0; min-height: 0; flex-direction: column; gap: 0.3rem; padding: 0; overflow-x: visible; overflow-y: auto; }
+          .ice-chapters li { flex: 1 1 0; display: flex; min-height: 34px; }
+          .ice-chapters button { white-space: normal; min-height: 0; height: 100%; align-items: center; padding: 0.3rem 0.75rem; }
           .ice-head { position: absolute; top: 1.1rem; left: 1.25rem; z-index: 2; max-width: min(36%, 340px); margin: 0; pointer-events: none; }
           .ice-head h1 { font-size: clamp(1.7rem, 2.6vw, 2.3rem); }
           .ice-head p.intro { font-size: 0.78rem; line-height: 1.55; }
-          .ice-prog { position: absolute; top: 1.1rem; right: 1.25rem; z-index: 2; width: min(30%, 240px); margin: 0; pointer-events: none; }
+          .ice-prog { position: absolute; top: 1.1rem; right: 4.5rem; z-index: 2; width: min(30%, 240px); margin: 0; pointer-events: none; }
         }
         .ice-prog { margin: 0 0 1rem; max-width: 420px; }
         .ice-stage {
@@ -805,8 +808,8 @@ export default function IcebergMap({ steps, completed, nextStep, lang, heading }
       `}</style>
 
       <div className="ice-layout">
-        <nav aria-label={t.chapters}>
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 600, color: muted, margin: "0 0 0.6rem", lineHeight: 1.5 }}>
+        <nav aria-label={t.chapters} className="ice-nav">
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 600, color: muted, margin: "0 0 0.75rem", lineHeight: 1.5 }}>
             {t.chapterHint}
           </p>
           <ul className="ice-chapters">
@@ -823,7 +826,7 @@ export default function IcebergMap({ steps, completed, nextStep, lang, heading }
         </nav>
 
         <div>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "1.25rem", fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 600, color: muted, marginBottom: "0.75rem" }}>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "1.25rem", fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 600, color: muted, marginBottom: "0.75rem", lineHeight: 1.5 }}>
             <span style={legendItem}>
               <span aria-hidden="true" style={{ width: 22, height: 0, borderTop: `2px solid ${orange}`, boxShadow: `0 0 6px 1px ${orange}` }} />
               {t.legendDone}
