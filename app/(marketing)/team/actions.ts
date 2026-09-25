@@ -1,9 +1,12 @@
 "use server";
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { revalidatePath } from "next/cache";
 import { markStepCompleteByContentKey } from "@/app/(app)/dashboard/team-actions";
 
-async function getUserTeamId(supabase: Awaited<ReturnType<typeof createClient>>, userId: string): Promise<string | null> {
+async function getUserTeamId(_supabase: Awaited<ReturnType<typeof createClient>>, userId: string): Promise<string | null> {
+  // Admin client: the teams/team_members RLS policies reference each other and recurse for user clients
+  const supabase = createAdminClient();
   const { data: leadTeam } = await supabase.from("teams").select("id").eq("leader_user_id", userId).maybeSingle();
   if (leadTeam?.id) return leadTeam.id;
   const { data: memberRow } = await supabase.from("team_members").select("team_id").eq("user_id", userId).maybeSingle();
@@ -19,7 +22,7 @@ async function saveTeamResult(
 ): Promise<void> {
   const teamId = await getUserTeamId(supabase, userId);
   if (!teamId) return;
-  await supabase.from("team_member_results").upsert(
+  await createAdminClient().from("team_member_results").upsert(
     { team_id: teamId, user_id: userId, result_type: resultType, result_key: resultKey, scores, completed_at: new Date().toISOString() },
     { onConflict: "team_id,user_id,result_type" }
   );
@@ -84,7 +87,7 @@ export async function savePurposeVisionResult(
   const teamId = await getUserTeamId(supabase, user.id);
   if (!teamId) return { error: "No team found" };
   const resultKey = purposeStatement.trim().slice(0, 500) || "—";
-  await supabase.from("team_member_results").upsert(
+  await createAdminClient().from("team_member_results").upsert(
     {
       team_id: teamId,
       user_id: user.id,

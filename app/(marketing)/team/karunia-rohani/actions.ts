@@ -1,11 +1,14 @@
 "use server";
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { revalidatePath } from "next/cache";
 
 async function getUserTeamId(
-  supabase: Awaited<ReturnType<typeof createClient>>,
+  _supabase: Awaited<ReturnType<typeof createClient>>,
   userId: string
 ): Promise<string | null> {
+  // Admin client: the teams/team_members RLS policies reference each other and recurse for user clients
+  const supabase = createAdminClient();
   const { data: leadTeam } = await supabase
     .from("teams")
     .select("id")
@@ -32,7 +35,7 @@ export async function saveKaruniaTeamResult(
   const teamId = await getUserTeamId(supabase, user.id);
   if (!teamId) return { error: "Not part of a team" };
   const resultKey = topGifts[0] ?? "";
-  const { error } = await supabase.from("team_member_results").upsert(
+  const { error } = await createAdminClient().from("team_member_results").upsert(
     {
       team_id: teamId,
       user_id: user.id,
