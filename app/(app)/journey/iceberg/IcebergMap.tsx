@@ -9,7 +9,7 @@ import { LineSegmentsGeometry } from "three/examples/jsm/lines/LineSegmentsGeome
 import { LineMaterial } from "three/examples/jsm/lines/LineMaterial.js";
 import type { PathStep } from "../StonePath";
 
-// Brand colours (oklch in CSS). WebGL needs hex, converted by script, not by eye.
+// Brand colours (oklch in CSS). WebGL needs hex.
 const navy = "oklch(30% 0.12 260)";
 const muted = "oklch(48% 0.04 260)";
 const text = "oklch(32% 0.06 260)";
@@ -17,39 +17,35 @@ const rule = "oklch(84% 0.01 80)";
 const orange = "oklch(65% 0.15 45)";
 const orangeDeep = "oklch(58% 0.16 45)";
 const offWhite = "oklch(97% 0.005 80)";
+// Ice and sea colours follow the reference drawing: white tip, white-to-blue body, deep navy sea.
 const HEX = {
-  sea: "#002356",        // oklch(27% 0.1 258)
-  seaFar: "#0b376a",     // oklch(34% 0.1 255)
-  iceTop: "#f5f9fc",     // oklch(98% 0.006 240)
-  iceShallow: "#d8e7f2", // oklch(92% 0.022 240)
-  iceDeep: "#b4cbdf",    // oklch(83% 0.038 245)
-  warm: "#fffbf3",       // oklch(99% 0.012 80)
-  orange: "#d86d38",     // oklch(65% 0.15 45)
-  orangeDeep: "#c4530f", // oklch(58% 0.16 45)
-  navy: "#012868",       // oklch(30% 0.12 260)
-  zone: "#516b8b",       // oklch(52% 0.06 255)
-  label: "#334868",      // oklch(40% 0.06 258)
-  waterline: "#eff7fb",  // oklch(97% 0.01 230)
+  iceTop: "#f6f9fb",
+  iceShallow: "#dbe9f4",
+  iceMid: "#a8c8e6",
+  iceDeep: "#5f8fc4",
+  warm: "#fffbf3",
+  orange: "#d86d38",
+  orangeDeep: "#c4530f",
+  navy: "#012868",
+  border: "#12305e",
+  stepLine: "#6f93bf",
+  waterline: "#ffffff",
 };
 
 // ── Iceberg shape ──
-// The underwater body is a ring grid: 6 rows deep, 10 facets around = 60 steps.
-// Step n sits in cell n-1, so the steps spiral down row by row.
-const ROWS = 6;
-const COLS = 10;
-const LEVELS = [
-  { y: 0, r: 1.55 },
-  { y: -0.85, r: 2.35 },
-  { y: -1.8, r: 2.7 },
-  { y: -2.8, r: 2.65 },
-  { y: -3.75, r: 2.3 },
-  { y: -4.6, r: 1.75 },
-  { y: -5.3, r: 1.05 },
-];
-const BOTTOM: V3 = [0.1, -6.1, -0.05];
-const TARGET_Y = -2.2;
+// Below the water: one wedge per chapter, running from the waterline to the bottom point.
+// Each chapter's steps are stacked inside its wedge, first step at the top.
+// Above the water: a big lumpy tip with no steps ("what people see of a leader").
+const DEPTH = 6;
+const TIP_H = 2.45;
+const R_TOP = 2.6;
+const FOV = 30;
+const WATER_FRAC = 0.3;  // waterline sits 30% down the frame at the default zoom
+const ANCHOR_Y = -1.8;   // zoom keeps this height steady on screen
 
 type V3 = [number, number, number];
+type Cell = { poly: V3[]; center: V3 };
+type Shape = { cells: Cell[]; borders: V3[][]; rows: V3[][]; waterRing: V3[]; tip: V3[][]; orangeTris: Set<number> };
 
 function seeded(seed: number) {
   let s = seed >>> 0;
@@ -62,30 +58,107 @@ function seeded(seed: number) {
   };
 }
 
-function buildGrid(): { grid: V3[][]; mid: V3[]; peak: V3 } {
-  const rnd = seeded(1139);
-  const grid = LEVELS.map((lv, i) =>
-    Array.from({ length: COLS }, (_, j): V3 => {
-      const a = ((j + (rnd() - 0.5) * (i === 0 ? 0.3 : 0.45)) / COLS) * Math.PI * 2 + i * 0.09;
-      const r = lv.r * (1 + (rnd() - 0.5) * 0.18);
-      const y = i === 0 ? 0 : lv.y + (rnd() - 0.5) * 0.28;
-      return [Math.cos(a) * r, y, Math.sin(a) * r];
-    }),
-  );
-  // Above-water tip: one jagged ring, then a peak. No steps up here.
-  const mid = Array.from({ length: COLS }, (_, j): V3 => {
-    const a = ((j + 0.5 + (rnd() - 0.5) * 0.5) / COLS) * Math.PI * 2;
-    const r = 0.95 * (1 + (rnd() - 0.5) * 0.4);
-    return [Math.cos(a) * r + 0.1, 0.55 + rnd() * 0.85, Math.sin(a) * r];
-  });
-  return { grid, mid, peak: [0.3, 2.15, 0.05] };
+const axisX = (t: number) => 0.55 * t * t;
+const axisZ = (t: number) => -0.15 * t * t;
+const bodyR = (t: number) =>
+  R_TOP * (1 + 0.14 * Math.sin(Math.PI * Math.min(t / 0.5, 1))) * Math.pow(Math.max(0, 1 - Math.pow(t, 1.6)), 0.9);
+
+// A point on the underwater surface. Smooth in both angle and depth, so shared edges line up exactly.
+function surface(a: number, t: number): V3 {
+  const n = 1 + 0.08 * Math.sin(3 * a + 1.1 + 2.3 * t) + 0.05 * Math.sin(5 * a - 0.7 - 4 * t) + 0.035 * Math.sin(8 * a + 2.9 + 6 * t);
+  const r = bodyR(t) * n;
+  const y = -t * DEPTH + 0.18 * Math.sin(4 * a + 1.7 + 5 * t) * Math.sin(Math.PI * t);
+  return [axisX(t) + Math.cos(a) * r, y, axisZ(t) + Math.sin(a) * r];
 }
 
-function cellCorners(grid: V3[][], c: number): [V3, V3, V3, V3] {
-  const i = Math.floor(c / COLS);
-  const j = c % COLS;
-  const j1 = (j + 1) % COLS;
-  return [grid[i][j], grid[i][j1], grid[i + 1][j1], grid[i + 1][j]];
+// Upper steps get shorter bands because the berg is widest there.
+const bandT = (u: number) => Math.pow(u, 1.3);
+
+// Reference point inside the berg, used to face triangles and push lines outward.
+function inner(p: V3): V3 {
+  if (p[1] > 0) return [0.1, Math.min(p[1], 1), 0];
+  const t = Math.min(0.92, -p[1] / DEPTH);
+  return [axisX(t), Math.max(p[1], -DEPTH * 0.85), axisZ(t)];
+}
+
+function buildShape(sizes: number[]): Shape {
+  const rnd = seeded(1139);
+  const K = sizes.length;
+  const TAU = Math.PI * 2;
+  const bAng = Array.from({ length: K }, (_, k) => (k / K) * TAU + (rnd() - 0.5) * 0.12);
+  const mAng = bAng.map((a, k) => {
+    const next = k + 1 < K ? bAng[k + 1] : bAng[0] + TAU;
+    return (a + next) / 2 + (rnd() - 0.5) * 0.1;
+  });
+  const rightAng = (k: number) => (k + 1 < K ? bAng[k + 1] : bAng[0] + TAU);
+  const bandsOf = (k: number) => Array.from({ length: sizes[k] + 1 }, (_, m) => bandT(m / sizes[k]));
+
+  // Border k runs between chapter k-1 and chapter k. It carries the band edges of both.
+  const borderTs = bAng.map((_, k) => {
+    const set = new Map<string, number>();
+    for (const t of [...bandsOf(k), ...bandsOf((k + K - 1) % K)]) set.set(t.toFixed(6), t);
+    return [...set.values()].sort((x, y) => x - y);
+  });
+  const borders = borderTs.map((ts, k) => ts.map(t => surface(bAng[k], t)));
+
+  const same = (p: V3, q: V3) => Math.abs(p[0] - q[0]) + Math.abs(p[1] - q[1]) + Math.abs(p[2] - q[2]) < 1e-6;
+  const cells: Cell[] = [];
+  const rows: V3[][] = [];
+  for (let k = 0; k < K; k++) {
+    const kr = (k + 1) % K;
+    const aL = bAng[k];
+    const aR = rightAng(k);
+    const bands = bandsOf(k);
+    for (let m = 0; m < sizes[k]; m++) {
+      const t0 = bands[m];
+      const t1 = bands[m + 1];
+      const raw: V3[] = [
+        surface(aL, t0), surface(mAng[k], t0), surface(aR, t0),
+        ...borderTs[kr].filter(t => t > t0 + 1e-6 && t < t1 - 1e-6).map(t => surface(aR, t)),
+        surface(aR, t1), surface(mAng[k], t1), surface(aL, t1),
+        ...borderTs[k].filter(t => t > t0 + 1e-6 && t < t1 - 1e-6).reverse().map(t => surface(aL, t)),
+      ];
+      const poly = raw.filter((p, i) => !same(p, raw[(i + raw.length - 1) % raw.length]));
+      const c = surface(mAng[k], (t0 + t1) / 2);
+      const ref = inner(c);
+      const center: V3 = [c[0] + (c[0] - ref[0]) * 0.04, c[1], c[2] + (c[2] - ref[2]) * 0.04];
+      cells.push({ poly, center });
+      if (m > 0) rows.push([surface(aL, t0), surface(mAng[k], t0), surface(aR, t0)]);
+    }
+  }
+
+  // Waterline ring, shared by the body and the tip.
+  const waterAng: number[] = [];
+  const waterRing: V3[] = [];
+  for (let k = 0; k < K; k++) {
+    waterAng.push(bAng[k], mAng[k]);
+    waterRing.push(surface(bAng[k], 0), surface(mAng[k], 0));
+  }
+
+  // Tip rings, every other ring shifted half a step so the facets are triangles.
+  const Q = waterRing.length;
+  const levels = [0.26, 0.5, 0.7, 0.87];
+  const radii = [0.98, 0.87, 0.68, 0.42];
+  const tip: V3[][] = [waterRing];
+  levels.forEach((s, li) => {
+    const shifted = li % 2 === 0;
+    tip.push(Array.from({ length: Q }, (_, q): V3 => {
+      const a0 = waterAng[q];
+      const a1 = q + 1 < Q ? waterAng[q + 1] : waterAng[0] + TAU;
+      const a = (shifted ? (a0 + a1) / 2 : a0) + (rnd() - 0.5) * 0.08;
+      const r = R_TOP * radii[li] * (1 + (rnd() - 0.5) * 0.24);
+      const y = TIP_H * s * (1 + (rnd() - 0.5) * 0.28);
+      return [0.15 * s + Math.cos(a) * r, y, Math.sin(a) * r];
+    }));
+  });
+  tip.push([[0.3, TIP_H + 0.05, -0.12]]);
+
+  // A few warm facets on the tip, like the reference.
+  const orangeTris = new Set<number>();
+  const perRing = Q * 2;
+  for (const ring of [1, 2, 2, 3]) orangeTris.add(ring * perRing + Math.floor(rnd() * perRing));
+
+  return { cells, borders, rows, waterRing, tip, orangeTris };
 }
 
 // 2D outline of a facet, for the popup drawing.
@@ -93,12 +166,13 @@ function facetShape(corners: V3[]): string {
   const cx = corners.reduce((s, p) => s + p[0], 0) / corners.length;
   const cy = corners.reduce((s, p) => s + p[1], 0) / corners.length;
   const cz = corners.reduce((s, p) => s + p[2], 0) / corners.length;
-  const a = Math.atan2(cz, cx);
+  const ref = inner([cx, cy, cz]);
+  const a = Math.atan2(cz - ref[2], cx - ref[0]);
   const ux = -Math.sin(a);
   const uz = Math.cos(a);
   const pts = corners.map(p => [(p[0] - cx) * ux + (p[2] - cz) * uz, -(p[1] - cy)]);
-  const w = Math.max(...pts.map(p => Math.abs(p[0])));
-  const h = Math.max(...pts.map(p => Math.abs(p[1])));
+  const w = Math.max(...pts.map(p => Math.abs(p[0])), 1e-3);
+  const h = Math.max(...pts.map(p => Math.abs(p[1])), 1e-3);
   const k = Math.min(46 / w, 38 / h);
   return pts.map(p => `${(60 + p[0] * k).toFixed(1)},${(50 + p[1] * k).toFixed(1)}`).join(" ");
 }
@@ -127,12 +201,19 @@ export default function IcebergMap({ steps, completed, nextStep, lang }: Props) 
   const [failed, setFailed] = useState(false);
   const selectRef = useRef<(cell: number | null) => void>(() => {});
 
-  const shape = useMemo(buildGrid, []);
   const doneSet = useMemo(() => new Set(completed), [completed]);
   const chapterNo = useMemo(() => {
     let ch = 0;
     return steps.map(s => (s.chapterStart ? ++ch : ch));
   }, [steps]);
+  // Steps per chapter, in order. Falls back to 12 × 5 if the list is empty.
+  const sizes = useMemo(() => {
+    const out: number[] = [];
+    chapterNo.forEach(ch => { out[ch - 1] = (out[ch - 1] ?? 0) + 1; });
+    const clean = out.filter(n => n > 0);
+    return clean.length ? clean : Array(12).fill(5);
+  }, [chapterNo]);
+  const shape = useMemo(() => buildShape(sizes), [sizes]);
 
   const t = isId
     ? {
@@ -175,7 +256,6 @@ export default function IcebergMap({ steps, completed, nextStep, lang }: Props) 
       setFailed(true);
       return;
     }
-    let disposed = false;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setClearColor(0x000000, 0);
@@ -183,80 +263,76 @@ export default function IcebergMap({ steps, completed, nextStep, lang }: Props) 
     canvas.style.display = "block";
     canvas.style.width = "100%";
     canvas.style.height = "100%";
-    canvas.style.touchAction = "none";
+    canvas.style.position = "relative";
+    canvas.style.zIndex = "1";
     canvas.setAttribute("aria-hidden", "true");
     wrap.prepend(canvas);
 
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 800);
-    const target = new THREE.Vector3(0, TARGET_Y, 0);
+    const camera = new THREE.PerspectiveCamera(FOV, 1, 0.1, 800);
+    const target = new THREE.Vector3(0, 0, 0);
 
-    scene.add(new THREE.HemisphereLight(0xffffff, 0x7f95b5, 1.9));
+    // Light travels with the camera, so the side facing you stays bright and the edges fall to blue.
+    scene.add(new THREE.HemisphereLight(0xffffff, 0x5b7fae, 1.45));
     const sun = new THREE.DirectionalLight(0xffffff, 1.7);
-    sun.position.set(5, 7, 6);
-    scene.add(sun);
+    sun.position.set(4, 5, 3);
+    camera.add(sun);
+    scene.add(camera);
 
     const disposables: { dispose: () => void }[] = [];
     const track = <T extends { dispose: () => void }>(x: T) => { disposables.push(x); return x; };
 
-    // Sea: drawn first and never hides the ice, like a cut-away drawing.
-    const seaGeo = track(new THREE.CircleGeometry(300, 64));
-    seaGeo.rotateX(-Math.PI / 2);
-    const seaCols: number[] = [];
-    const cNear = new THREE.Color(HEX.sea);
-    const cFar = new THREE.Color(HEX.seaFar);
-    const seaPos = seaGeo.getAttribute("position");
-    for (let k = 0; k < seaPos.count; k++) {
-      const c = k === 0 ? cNear : cFar;
-      seaCols.push(c.r, c.g, c.b);
-    }
-    seaGeo.setAttribute("color", new THREE.Float32BufferAttribute(seaCols, 3));
-    const sea = new THREE.Mesh(seaGeo, track(new THREE.MeshBasicMaterial({ vertexColors: true, depthWrite: false, side: THREE.DoubleSide })));
-    sea.renderOrder = -1;
-    scene.add(sea);
-
-    const { grid, mid, peak } = shape;
+    const { cells, borders, rows, waterRing, tip, orangeTris } = shape;
     const rnd = seeded(77);
     const tmpA = new THREE.Vector3();
     const tmpB = new THREE.Vector3();
     const tmpN = new THREE.Vector3();
 
-    // Adds a triangle facing away from the reference axis point.
+    // Adds a triangle facing away from the inside of the berg.
     const pushTri = (pos: number[], a: V3, b: V3, c: V3) => {
       tmpA.set(b[0] - a[0], b[1] - a[1], b[2] - a[2]);
       tmpB.set(c[0] - a[0], c[1] - a[1], c[2] - a[2]);
       tmpN.crossVectors(tmpA, tmpB);
-      const cy = (a[1] + b[1] + c[1]) / 3;
-      const ry = Math.min(0.3, Math.max(-4.6, cy));
-      const ox = (a[0] + b[0] + c[0]) / 3;
-      const oz = (a[2] + b[2] + c[2]) / 3;
-      const out = tmpN.x * ox + tmpN.y * (cy - ry) + tmpN.z * oz;
+      const m: V3 = [(a[0] + b[0] + c[0]) / 3, (a[1] + b[1] + c[1]) / 3, (a[2] + b[2] + c[2]) / 3];
+      const r = inner(m);
+      const out = tmpN.x * (m[0] - r[0]) + tmpN.y * (m[1] - r[1]) + tmpN.z * (m[2] - r[2]);
       if (out < 0) pos.push(...a, ...c, ...b);
       else pos.push(...a, ...b, ...c);
     };
 
-    // Step facets
-    const cellCount = ROWS * COLS;
+    // Step facets: each cell is a shallow pyramid, so every step reads as its own facet.
+    const cellCount = cells.length;
     const tilePos: number[] = [];
     const tileCol: number[] = [];
-    const shallow = new THREE.Color(HEX.iceShallow);
-    const deep = new THREE.Color(HEX.iceDeep);
+    const faceToCell: number[] = [];
+    const cellVerts: [number, number][] = [];
     const white = new THREE.Color(HEX.iceTop);
+    const shallow = new THREE.Color(HEX.iceShallow);
+    const midBlue = new THREE.Color(HEX.iceMid);
+    const deep = new THREE.Color(HEX.iceDeep);
     const col = new THREE.Color();
-    for (let c = 0; c < cellCount; c++) {
-      const i = Math.floor(c / COLS);
-      const j = c % COLS;
-      const [a, b, cc, d] = cellCorners(grid, c);
-      const tris: [V3, V3, V3][] = (i + j) % 2 ? [[a, b, cc], [a, cc, d]] : [[a, b, d], [b, cc, d]];
+    const depthColour = (y: number) => {
+      const d = Math.min(1, Math.max(0, -y / DEPTH));
+      if (d < 0.45) col.copy(shallow).lerp(midBlue, d / 0.45);
+      else col.copy(midBlue).lerp(deep, (d - 0.45) / 0.55);
+      return col;
+    };
+    cells.forEach((cell, c) => {
+      const start = tilePos.length / 3;
       const ch = chapterNo[c] ?? 0;
-      for (const [p, q, r] of tris) {
-        pushTri(tilePos, p, q, r);
-        col.copy(shallow).lerp(deep, i / (ROWS - 1));
-        if (ch % 2 === 0) col.lerp(white, 0.14);
-        col.multiplyScalar(1 + (rnd() - 0.5) * 0.06);
+      const { poly, center } = cell;
+      for (let i = 0; i < poly.length; i++) {
+        const p = poly[i];
+        const q = poly[(i + 1) % poly.length];
+        pushTri(tilePos, p, q, center);
+        depthColour((p[1] + q[1] + center[1]) / 3);
+        if (ch % 2 === 0) col.lerp(white, 0.1);
+        col.multiplyScalar(1 + (rnd() - 0.5) * 0.07);
         for (let k = 0; k < 3; k++) tileCol.push(col.r, col.g, col.b);
+        faceToCell.push(c);
       }
-    }
+      cellVerts.push([start, tilePos.length / 3]);
+    });
     const tileGeo = track(new THREE.BufferGeometry());
     tileGeo.setAttribute("position", new THREE.Float32BufferAttribute(tilePos, 3));
     const baseCol = new Float32Array(tileCol);
@@ -270,36 +346,45 @@ export default function IcebergMap({ steps, completed, nextStep, lang }: Props) 
     const tiles = new THREE.Mesh(tileGeo, iceMat);
     scene.add(tiles);
 
-    // Tip above water + bottom point (not clickable)
-    const capPos: number[] = [];
-    const capCol: number[] = [];
-    const g0 = grid[0];
-    for (let j = 0; j < COLS; j++) {
-      const j1 = (j + 1) % COLS;
-      const jm = (j + COLS - 1) % COLS;
-      const tris: [V3, V3, V3][] = [[g0[j], g0[j1], mid[j]], [g0[j], mid[j], mid[jm]], [mid[jm], mid[j], peak]];
-      for (const [p, q, r] of tris) {
-        pushTri(capPos, p, q, r);
-        col.copy(white).multiplyScalar(1 + (rnd() - 0.5) * 0.05);
-        for (let k = 0; k < 3; k++) capCol.push(col.r, col.g, col.b);
+    // Tip above water (not clickable)
+    const tipPos: number[] = [];
+    const tipCol: number[] = [];
+    const orangeCol = new THREE.Color(HEX.orange);
+    let tri = 0;
+    const addTipTri = (a: V3, b: V3, c: V3) => {
+      pushTri(tipPos, a, b, c);
+      if (orangeTris.has(tri)) col.copy(orangeCol);
+      else col.copy(white).lerp(shallow, rnd() * 0.35);
+      col.multiplyScalar(1 + (rnd() - 0.5) * 0.04);
+      for (let k = 0; k < 3; k++) tipCol.push(col.r, col.g, col.b);
+      tri++;
+    };
+    for (let li = 1; li < tip.length - 1; li++) {
+      const A = tip[li - 1];
+      const B = tip[li];
+      const Q = A.length;
+      for (let q = 0; q < Q; q++) {
+        const q1 = (q + 1) % Q;
+        if (li % 2 === 1) { addTipTri(A[q], A[q1], B[q]); addTipTri(B[q], A[q1], B[q1]); }
+        else { addTipTri(B[q], B[q1], A[q]); addTipTri(A[q], B[q1], A[q1]); }
       }
     }
-    const gl = grid[ROWS];
-    for (let j = 0; j < COLS; j++) {
-      pushTri(capPos, gl[j], gl[(j + 1) % COLS], BOTTOM);
-      col.copy(deep).multiplyScalar(0.94 + rnd() * 0.05);
-      for (let k = 0; k < 3; k++) capCol.push(col.r, col.g, col.b);
-    }
-    const capGeo = track(new THREE.BufferGeometry());
-    capGeo.setAttribute("position", new THREE.Float32BufferAttribute(capPos, 3));
-    capGeo.setAttribute("color", new THREE.Float32BufferAttribute(capCol, 3));
-    capGeo.computeVertexNormals();
-    const caps = new THREE.Mesh(capGeo, iceMat);
-    scene.add(caps);
+    const top = tip[tip.length - 2];
+    const peak = tip[tip.length - 1][0];
+    for (let q = 0; q < top.length; q++) addTipTri(top[q], top[(q + 1) % top.length], peak);
+    const tipGeo = track(new THREE.BufferGeometry());
+    tipGeo.setAttribute("position", new THREE.Float32BufferAttribute(tipPos, 3));
+    tipGeo.setAttribute("color", new THREE.Float32BufferAttribute(tipCol, 3));
+    tipGeo.computeVertexNormals();
+    const tipMesh = new THREE.Mesh(tipGeo, iceMat);
+    scene.add(tipMesh);
 
     // ── Lines ──
     const lineMats: LineMaterial[] = [];
-    const out = (p: V3): V3 => [p[0] * 1.012, p[1], p[2] * 1.012];
+    const out = (p: V3): V3 => {
+      const r = inner(p);
+      return [p[0] + (p[0] - r[0]) * 0.015, p[1], p[2] + (p[2] - r[2]) * 0.015];
+    };
     const makeLines = (segs: number[], color: string, width: number, opacity = 1) => {
       const geo = track(new LineSegmentsGeometry());
       geo.setPositions(segs.length ? segs : [0, 0, 0, 0, 0, 0]);
@@ -311,97 +396,70 @@ export default function IcebergMap({ steps, completed, nextStep, lang }: Props) 
       return line;
     };
     const edge = (segs: number[], p: V3, q: V3) => segs.push(...out(p), ...out(q));
-    const outline = (segs: number[], c: number) => {
-      const [a, b, cc, d] = cellCorners(grid, c);
-      edge(segs, a, b); edge(segs, b, cc); edge(segs, cc, d); edge(segs, d, a);
+    const polyline = (segs: number[], pts: V3[], closed = false) => {
+      for (let i = 0; i < pts.length - 1; i++) edge(segs, pts[i], pts[i + 1]);
+      if (closed && pts.length > 2) edge(segs, pts[pts.length - 1], pts[0]);
     };
+    const outline = (segs: number[], c: number) => polyline(segs, cells[c].poly, true);
 
-    const zoneSegs: number[] = [];
+    const rowSegs: number[] = [];
+    rows.forEach(r => polyline(rowSegs, r));
+    makeLines(rowSegs, HEX.stepLine, 1.2, 0.75);
+
+    const borderSegs: number[] = [];
+    borders.forEach(b => polyline(borderSegs, b));
+    makeLines(borderSegs, HEX.border, 2.6, 0.92);
+
     const waterSegs: number[] = [];
-    for (let c = 0; c < cellCount; c++) {
-      const i = Math.floor(c / COLS);
-      const j = c % COLS;
-      const j1 = (j + 1) % COLS;
-      if (i === 0) edge(waterSegs, grid[0][j], grid[0][j1]);
-      const right = i * COLS + j1;
-      if (chapterNo[right] !== chapterNo[c]) edge(zoneSegs, grid[i][j1], grid[i + 1][j1]);
-      const below = c + COLS;
-      if (i === ROWS - 1 || chapterNo[below] !== chapterNo[c]) edge(zoneSegs, grid[i + 1][j], grid[i + 1][j1]);
-    }
-    makeLines(zoneSegs, HEX.zone, 1.3, 0.85);
+    polyline(waterSegs, waterRing, true);
     makeLines(waterSegs, HEX.waterline, 2.5, 0.95);
 
     const doneSegs: number[] = [];
     steps.forEach((s, c) => { if (doneSet.has(s.n) && c < cellCount) outline(doneSegs, c); });
-    makeLines(doneSegs, HEX.orange, 8, 0.28); // glow
-    makeLines(doneSegs, HEX.orange, 2.4);     // core
+    makeLines(doneSegs, HEX.orange, 8, 0.3); // glow
+    makeLines(doneSegs, HEX.orange, 2.4);    // core
 
     const nextSegs: number[] = [];
     const nextCell = nextStep ? steps.findIndex(s => s.n === nextStep) : -1;
     if (nextCell >= 0 && nextCell < cellCount) outline(nextSegs, nextCell);
-    makeLines(nextSegs, HEX.navy, 2.2);
+    makeLines(nextSegs, HEX.navy, 2.4);
 
     const selLine = makeLines([], HEX.navy, 3.2);
 
-    // ── Step numbers ──
-    const labels = new THREE.Group();
-    scene.add(labels);
-    const fontFamily = getComputedStyle(document.body).getPropertyValue("--font-montserrat").trim() || "sans-serif";
-    const addLabels = () => {
-      if (disposed) return;
-      steps.forEach((s, c) => {
-        if (c >= cellCount) return;
-        const cv = document.createElement("canvas");
-        cv.width = cv.height = 128;
-        const x = cv.getContext("2d");
-        if (!x) return;
-        x.font = `700 58px ${fontFamily}`;
-        x.textAlign = "center";
-        x.textBaseline = "middle";
-        x.fillStyle = doneSet.has(s.n) ? HEX.orangeDeep : HEX.label;
-        x.fillText(String(s.n), 64, 68);
-        const tex = track(new THREE.CanvasTexture(cv));
-        tex.colorSpace = THREE.SRGBColorSpace;
-        const sp = new THREE.Sprite(track(new THREE.SpriteMaterial({ map: tex, transparent: true, depthWrite: false })));
-        const corners = cellCorners(grid, c);
-        const cx = corners.reduce((a, p) => a + p[0], 0) / 4;
-        const cy = corners.reduce((a, p) => a + p[1], 0) / 4;
-        const cz = corners.reduce((a, p) => a + p[2], 0) / 4;
-        const len = Math.hypot(cx, cz) || 1;
-        sp.position.set(cx + (cx / len) * 0.12, cy, cz + (cz / len) * 0.12);
-        sp.scale.set(0.46, 0.46, 1);
-        labels.add(sp);
-      });
-    };
-    if (document.fonts?.ready) document.fonts.ready.then(addLabels).catch(addLabels);
-    else addLabels();
-
     // ── Camera + controls ──
+    // The camera stays level with the water and only circles around. Zoom changes distance only.
     const controls = new OrbitControls(camera, canvas);
     controls.target.copy(target);
     controls.enablePan = false;
     controls.enableDamping = true;
     controls.dampingFactor = 0.08;
-    controls.minDistance = 6;
-    controls.maxDistance = 26;
-    controls.minPolarAngle = 0.95;
-    controls.maxPolarAngle = 1.5;
-    controls.autoRotateSpeed = 0.6;
+    controls.minPolarAngle = Math.PI / 2;
+    controls.maxPolarAngle = Math.PI / 2;
+    controls.autoRotateSpeed = 0.5;
+    canvas.style.touchAction = "pan-y"; // vertical swipes still scroll the page
     let spinWanted = !reduced;
     let selectedCell: number | null = null;
     controls.autoRotate = spinWanted;
     if (reduced) setSpinning(false);
 
-    const placeCamera = (aspect: number) => {
-      const dist = aspect < 0.8 ? 20 : aspect < 1.2 ? 17 : 14.5;
-      const polar = 1.28;
-      const az = 0.5;
-      camera.position.set(
-        target.x + dist * Math.sin(polar) * Math.sin(az),
-        target.y + dist * Math.cos(polar),
-        target.z + dist * Math.sin(polar) * Math.cos(az),
-      );
-      controls.update();
+    const tanHalf = Math.tan(THREE.MathUtils.degToRad(FOV / 2));
+    let fit = 20;       // camera distance that frames the whole berg
+    let fitSpan = 10;   // world height visible at that distance
+    let w = 0;
+    let h = 0;
+    let lastDist = -1;
+
+    // Keeps the berg framed as you zoom: the waterline row moves, and the CSS sea follows it.
+    const frame = () => {
+      const dist = camera.position.distanceTo(target);
+      if (Math.abs(dist - lastDist) < 1e-4 || !w || !h) return;
+      lastDist = dist;
+      const span = 2 * dist * tanHalf;
+      const anchorRow = WATER_FRAC * h + (-ANCHOR_Y / fitSpan) * h;
+      const horizon = anchorRow - (-ANCHOR_Y / span) * h;
+      camera.setViewOffset(w, h, 0, h / 2 - horizon, w, h);
+      camera.updateProjectionMatrix();
+      wrap.style.setProperty("--wl", `${horizon.toFixed(1)}px`);
     };
 
     let resumeTimer: ReturnType<typeof setTimeout> | undefined;
@@ -415,14 +473,26 @@ export default function IcebergMap({ steps, completed, nextStep, lang }: Props) 
     // ── Sizing ──
     let first = true;
     const resize = () => {
-      const w = wrap.clientWidth;
-      const h = wrap.clientHeight;
+      w = wrap.clientWidth;
+      h = wrap.clientHeight;
       if (!w || !h) return;
+      const aspect = w / h;
       renderer.setSize(w, h, false);
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
+      camera.aspect = aspect;
       lineMats.forEach(m => m.resolution.set(w, h));
-      if (first) { placeCamera(w / h); first = false; }
+      // Fit the tip above the line and the body below it, with room for the near side when it turns.
+      const need = Math.max((TIP_H + 0.5) / WATER_FRAC, (DEPTH + 0.6) / (1 - WATER_FRAC), 8 / aspect) * 1.1;
+      const ratio = first ? 1 : camera.position.distanceTo(target) / fit;
+      fitSpan = need;
+      fit = need / (2 * tanHalf);
+      controls.minDistance = fit * 0.45;
+      controls.maxDistance = fit * 1.25;
+      const off = first ? new THREE.Vector3(Math.sin(0.5), 0, Math.cos(0.5)) : camera.position.clone().sub(target).normalize();
+      camera.position.copy(target).addScaledVector(off, fit * ratio);
+      first = false;
+      lastDist = -1;
+      controls.update();
+      frame();
     };
     const ro = new ResizeObserver(resize);
     ro.observe(wrap);
@@ -431,8 +501,9 @@ export default function IcebergMap({ steps, completed, nextStep, lang }: Props) 
     // ── Colours for hover / selection ──
     const warm = new THREE.Color(HEX.warm);
     const paint = (cell: number | null, on: boolean) => {
-      if (cell === null) return;
-      for (let v = cell * 6; v < cell * 6 + 6; v++) {
+      if (cell === null || !cellVerts[cell]) return;
+      const [a, b] = cellVerts[cell];
+      for (let v = a; v < b; v++) {
         if (on) colorAttr.setXYZ(v, warm.r, warm.g, warm.b);
         else colorAttr.setXYZ(v, baseCol[v * 3], baseCol[v * 3 + 1], baseCol[v * 3 + 2]);
       }
@@ -447,10 +518,10 @@ export default function IcebergMap({ steps, completed, nextStep, lang }: Props) 
       const rect = canvas.getBoundingClientRect();
       ndc.set(((clientX - rect.left) / rect.width) * 2 - 1, -((clientY - rect.top) / rect.height) * 2 + 1);
       ray.setFromCamera(ndc, camera);
-      const hit = ray.intersectObjects([tiles, caps], false)[0];
+      const hit = ray.intersectObjects([tiles, tipMesh], false)[0];
       if (!hit || hit.object !== tiles || hit.faceIndex == null) return null;
-      const cell = Math.floor(hit.faceIndex / 2);
-      return steps[cell] ? cell : null;
+      const cell = faceToCell[hit.faceIndex];
+      return cell !== undefined && steps[cell] ? cell : null;
     };
 
     let down: { x: number; y: number; t: number } | null = null;
@@ -516,12 +587,12 @@ export default function IcebergMap({ steps, completed, nextStep, lang }: Props) 
     const loop = () => {
       raf = requestAnimationFrame(loop);
       controls.update();
+      frame();
       renderer.render(scene, camera);
     };
     loop();
 
     return () => {
-      disposed = true;
       cancelAnimationFrame(raf);
       clearTimeout(resumeTimer);
       ro.disconnect();
@@ -574,6 +645,27 @@ export default function IcebergMap({ steps, completed, nextStep, lang }: Props) 
         .ice-sr:focus-within li:not(:focus-within) { display: none; }
         .ice-sr button { font-family: var(--font-montserrat); font-size: 0.78rem; font-weight: 600; color: ${navy}; background: ${offWhite}; border: 1px solid ${rule}; padding: 0.7rem 0.9rem; min-height: 44px; cursor: pointer; }
         .ice-start:hover { background: oklch(24% 0.11 260) !important; }
+        .ice-stage {
+          --wl: ${WATER_FRAC * 100}%;
+          background: linear-gradient(to bottom,
+            #dfe4e6 0, #ebedeb var(--wl),
+            #eaf3fa var(--wl), #8fb3da calc(var(--wl) + 3px), #3f6aa3 calc(var(--wl) + 10px),
+            #1f4478 calc(var(--wl) + 34px), #193a6c calc(var(--wl) + 40%), #102b58 100%);
+        }
+        .ice-stage::before, .ice-stage::after { content: ""; position: absolute; left: 0; right: 0; pointer-events: none; z-index: 0; }
+        .ice-stage::after {
+          top: 0; height: max(0px, var(--wl));
+          background:
+            radial-gradient(ellipse 22% 16% at 18% 30%, oklch(99% 0.015 85 / 0.8), transparent 70%),
+            radial-gradient(ellipse 30% 14% at 74% 22%, oklch(99% 0.015 85 / 0.7), transparent 70%),
+            radial-gradient(ellipse 18% 10% at 48% 62%, oklch(99% 0.012 85 / 0.55), transparent 70%);
+        }
+        .ice-stage::before {
+          top: var(--wl); bottom: 0;
+          background:
+            radial-gradient(circle, oklch(90% 0.03 240 / 0.22) 0.8px, transparent 1.4px) 0 0 / 37px 41px,
+            radial-gradient(circle, oklch(90% 0.03 240 / 0.14) 0.8px, transparent 1.4px) 17px 23px / 53px 47px;
+        }
       `}</style>
 
       <div style={{ display: "flex", flexWrap: "wrap", gap: "1.25rem", fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 600, color: muted, marginBottom: "0.75rem" }}>
@@ -586,7 +678,7 @@ export default function IcebergMap({ steps, completed, nextStep, lang }: Props) 
           {t.legendNext}
         </span>
         <span style={legendItem}>
-          <span aria-hidden="true" style={{ width: 22, height: 0, borderTop: "1px solid oklch(52% 0.06 255)" }} />
+          <span aria-hidden="true" style={{ width: 22, height: 0, borderTop: `3px solid ${HEX.border}` }} />
           {t.legendZone}
         </span>
       </div>
@@ -594,18 +686,18 @@ export default function IcebergMap({ steps, completed, nextStep, lang }: Props) 
       <div
         ref={wrapRef}
         tabIndex={-1}
+        className="ice-stage"
         style={{
           position: "relative",
-          height: "min(76vh, 720px)",
-          minHeight: 440,
+          height: "min(78vh, 740px)",
+          minHeight: 460,
           overflow: "hidden",
           border: `1px solid ${rule}`,
-          background: "linear-gradient(to bottom, #ddeaf2 0%, #f7f5f1 55%)",
           outline: "none",
         }}
       >
         {failed && (
-          <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "1rem", padding: "1.5rem", textAlign: "center" }}>
+          <div style={{ position: "absolute", inset: 0, zIndex: 2, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "1rem", padding: "1.5rem", textAlign: "center", background: offWhite }}>
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", color: text, margin: 0 }}>{t.failed}</p>
             <Link href="/journey" style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.8rem", color: navy }}>{t.fallback}</Link>
           </div>
@@ -643,7 +735,7 @@ export default function IcebergMap({ steps, completed, nextStep, lang }: Props) 
           </div>
         )}
 
-        {step && selected !== null && (
+        {step && selected !== null && shape.cells[selected] && (
           <div
             role="dialog"
             aria-labelledby="ice-card-title"
@@ -658,7 +750,7 @@ export default function IcebergMap({ steps, completed, nextStep, lang }: Props) 
           >
             <svg viewBox="0 0 120 100" width="96" height="80" aria-hidden="true" style={{ overflow: "visible" }}>
               <polygon
-                points={facetShape(cellCorners(shape.grid, selected))}
+                points={facetShape(shape.cells[selected].poly)}
                 fill={HEX.iceShallow}
                 stroke={isDone ? orange : navy}
                 strokeWidth={isDone ? 2.5 : 1.5}
