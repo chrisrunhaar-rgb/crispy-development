@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Montserrat, Cormorant_Garamond, Kalam } from "next/font/google";
+import localFont from "next/font/local";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
@@ -11,25 +11,29 @@ import CookieConsent from "@/components/CookieConsent";
 
 const GA_ID = "G-ER3Z5GN1J7";
 
-const montserrat = Montserrat({
-  subsets: ["latin"],
+// Self-hosted (latin subset from Google Fonts) so builds never fetch from Google:
+// next/font/google intermittently failed Vercel builds with "module not found".
+const montserrat = localFont({
+  src: [{ path: "./fonts/montserrat.woff2", weight: "300 800", style: "normal" }],
   variable: "--font-montserrat-var",
-  weight: ["300", "400", "600", "700", "800"],
   display: "swap",
 });
 
-const cormorant = Cormorant_Garamond({
-  subsets: ["latin"],
+const cormorant = localFont({
+  src: [
+    { path: "./fonts/cormorant-garamond.woff2", weight: "300 600", style: "normal" },
+    { path: "./fonts/cormorant-garamond-italic.woff2", weight: "300 600", style: "italic" },
+  ],
   variable: "--font-cormorant-var",
-  weight: ["300", "400", "600"],
-  style: ["normal", "italic"],
   display: "swap",
 });
 
-const kalam = Kalam({
-  subsets: ["latin"],
+const kalam = localFont({
+  src: [
+    { path: "./fonts/kalam-400.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/kalam-700.woff2", weight: "700", style: "normal" },
+  ],
   variable: "--font-kalam-var",
-  weight: ["400", "700"],
   display: "swap",
 });
 
