@@ -56,8 +56,8 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
-  // Protect /apply and /peer-groups/apply — require auth
-  if (!user && (request.nextUrl.pathname.startsWith("/apply") || request.nextUrl.pathname.startsWith("/peer-groups/apply"))) {
+  // Protect /peer-groups/apply — require auth (/apply is retired, redirected in next.config)
+  if (!user && request.nextUrl.pathname.startsWith("/peer-groups/apply")) {
     const loginUrl = request.nextUrl.clone();
     loginUrl.pathname = "/login";
     loginUrl.searchParams.set("redirectTo", request.nextUrl.pathname);
@@ -122,5 +122,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/community/:path*", "/community", "/login", "/signup", "/apply/:path*", "/peer-groups/apply", "/admin", "/admin/:path*", "/resources/:path+", "/account/:path*", "/welcome", "/courses/:path+"],
+  matcher: ["/dashboard/:path*", "/community/:path*", "/community", "/login", "/signup", "/peer-groups/apply", "/admin", "/admin/:path*", "/resources/:path+", "/account/:path*", "/welcome", "/courses/:path+"],
 };

@@ -14,6 +14,9 @@ const nextConfig: NextConfig = {
       { source: "/challenge/:path*", destination: "/journey", permanent: true },
       { source: "/influential-leadership-challenge", destination: "/journey", permanent: true },
       { source: "/influential-leadership-challenge/:path*", destination: "/journey", permanent: true },
+      // Team Leader application flow retired; Team plan is bought on /pricing
+      { source: "/apply", destination: "/pricing", permanent: false },
+      { source: "/apply/:path*", destination: "/pricing", permanent: false },
     ];
   },
 };
