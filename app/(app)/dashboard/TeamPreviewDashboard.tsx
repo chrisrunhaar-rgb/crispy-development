@@ -8,16 +8,22 @@ import { type TeamLang } from "@/lib/team-i18n";
 
 /* ─────────────────────────────────────────────────────────────────────────────
    SCREENSHOTS
-   Drop the PNGs into /public/images/team-promo/ and swap null for the path.
-   One line per image. A slot set to null shows a labelled placeholder
-   (profileCard is hidden completely while it is null).
+   Images live in /public/images/team-promo/. A slot set to null shows a
+   labelled placeholder (profileCard is hidden completely while it is null).
    ───────────────────────────────────────────────────────────────────────── */
-export const TEAM_PROMO_IMAGES: Record<"leaderResults" | "modulesOverview" | "phoneRead" | "phoneInput" | "profileCard", string | null> = {
-  leaderResults: null,   // "/images/team-promo/leader-results.png"
-  modulesOverview: null, // "/images/team-promo/modules-overview.png"
-  phoneRead: null,       // "/images/team-promo/module-phone-read.png"
-  phoneInput: null,      // "/images/team-promo/module-phone-input.png"
+export const TEAM_PROMO_IMAGES: Record<"leaderResults" | "phoneRead" | "phoneInput" | "profileCard", string | null> = {
+  leaderResults: "/images/team-promo/leader-results.jpg",
+  phoneRead: "/images/team-promo/module-phone-assessment.jpg",
+  phoneInput: "/images/team-promo/module-phone-team.jpg",
   profileCard: null,     // "/images/team-promo/profile-card.png" (optional)
+};
+
+// Module walkthrough clip: muted, looping, only loaded once scrolled near
+const TEAM_PROMO_VIDEO = {
+  webm: "/videos/team-module-flow.webm",
+  mp4: "/videos/team-module-flow.mp4",
+  poster: "/images/team-promo/module-flow-poster.jpg",
+  aspect: "720 / 840",
 };
 
 /* ── Tokens ─────────────────────────────────────────────────────────────── */
@@ -116,14 +122,13 @@ const COPY = {
     },
     caption: {
       results: "The leader's view: every member's assessment results side by side, so you can see how your team is wired before the next hard conversation.",
-      modules: "The team pathway: ten modules in order, with each member's progress visible at a glance.",
-      phone: "Each module reads comfortably on a phone, on the commute, between meetings, or at home in the evening.",
+      modules: "Inside a module: read the teaching, take the team assessment, and your result lands on the team dashboard next to everyone else's.",
+      phone: "Every module reads comfortably on a phone, and many come with their own team assessment. Done on the commute, between meetings, or at home in the evening.",
     },
     shot: {
       leaderResults: "Screenshot: leader results view",
-      modulesOverview: "Screenshot: team pathway overview",
-      phoneRead: "Screenshot: reading a module",
-      phoneInput: "Screenshot: member input",
+      phoneRead: "Screenshot: a team assessment inside a module",
+      phoneInput: "Screenshot: team progress and reflections",
       profileCard: "Screenshot: member profile card",
     },
   },
@@ -198,14 +203,13 @@ const COPY = {
     },
     caption: {
       results: "Tampilan pemimpin: hasil asesmen setiap anggota berdampingan, sehingga Anda tahu karakter tim Anda sebelum percakapan sulit berikutnya.",
-      modules: "Jalur tim: sepuluh modul berurutan, dengan kemajuan setiap anggota terlihat sekilas.",
-      phone: "Setiap modul nyaman dibaca di ponsel, dalam perjalanan ke kantor, di sela rapat, atau di rumah pada malam hari.",
+      modules: "Di dalam modul: baca materinya, kerjakan asesmen timnya, dan hasil Anda langsung muncul di dasbor tim, di samping hasil anggota lain.",
+      phone: "Setiap modul nyaman dibaca di ponsel, dan banyak modul punya asesmen timnya sendiri. Dikerjakan dalam perjalanan ke kantor, di sela rapat, atau di rumah pada malam hari.",
     },
     shot: {
       leaderResults: "Tangkapan layar: tampilan hasil pemimpin",
-      modulesOverview: "Tangkapan layar: ikhtisar jalur tim",
-      phoneRead: "Tangkapan layar: membaca modul",
-      phoneInput: "Tangkapan layar: masukan anggota",
+      phoneRead: "Tangkapan layar: asesmen tim di dalam modul",
+      phoneInput: "Tangkapan layar: kemajuan dan refleksi tim",
       profileCard: "Tangkapan layar: kartu profil anggota",
     },
   },
@@ -298,8 +302,8 @@ function Caption({ children, onDark = false }: { children: ReactNode; onDark?: b
 }
 
 /* ── ScreenshotFrame: browser window or phone, image or labelled placeholder ── */
-function ScreenshotFrame({ kind, src, label, alt, onDark = false, priority = false }: {
-  kind: "browser" | "phone"; src: string | null; label: string; alt: string; onDark?: boolean; priority?: boolean;
+function ScreenshotFrame({ kind, src, label, alt, onDark = false, priority = false, aspect = "16 / 10", children }: {
+  kind: "browser" | "phone"; src: string | null; label: string; alt: string; onDark?: boolean; priority?: boolean; aspect?: string; children?: ReactNode;
 }) {
   const placeholder = (
     <div
@@ -318,9 +322,9 @@ function ScreenshotFrame({ kind, src, label, alt, onDark = false, priority = fal
     </div>
   );
 
-  const media = src ? (
+  const media = children ?? (src ? (
     <Image src={src} alt={alt} fill priority={priority} sizes={kind === "phone" ? "220px" : "(min-width: 960px) 680px, 100vw"} style={{ objectFit: "cover", objectPosition: "top" }} />
-  ) : placeholder;
+  ) : placeholder);
 
   if (kind === "phone") {
     return (
@@ -354,8 +358,51 @@ function ScreenshotFrame({ kind, src, label, alt, onDark = false, priority = fal
         </span>
         <span style={{ width: "2.2rem" }} />
       </div>
-      <div style={{ position: "relative", aspectRatio: "16 / 10" }}>{media}</div>
+      <div style={{ position: "relative", aspectRatio: aspect }}>{media}</div>
     </div>
+  );
+}
+
+/* ── LazyVideo: sources attach only once the clip nears the viewport ────── */
+function LazyVideo({ label }: { label: string }) {
+  const ref = useRef<HTMLVideoElement>(null);
+  const [load, setLoad] = useState(false);
+  const [still, setStill] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    setStill(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+    if (typeof IntersectionObserver === "undefined") { setLoad(true); return; }
+    const io = new IntersectionObserver(entries => {
+      if (entries.some(e => e.isIntersecting)) { setLoad(true); io.disconnect(); }
+    }, { rootMargin: "200px" });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!load || !el) return;
+    el.load();
+    if (!still) el.play().catch(() => {});
+  }, [load, still]);
+
+  return (
+    <video
+      ref={ref}
+      aria-label={label}
+      poster={TEAM_PROMO_VIDEO.poster}
+      muted
+      loop
+      playsInline
+      controls={still}
+      preload="none"
+      style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "top", display: "block" }}
+    >
+      {load && <source src={TEAM_PROMO_VIDEO.webm} type="video/webm" />}
+      {load && <source src={TEAM_PROMO_VIDEO.mp4} type="video/mp4" />}
+    </video>
   );
 }
 
@@ -416,7 +463,7 @@ export default function TeamPreviewDashboard({ language }: { language: string })
           </div>
         </div>
         <figure className="tp-rise" style={{ margin: 0, animationDelay: "200ms" }}>
-          <ScreenshotFrame kind="browser" src={TEAM_PROMO_IMAGES.leaderResults} label={c.shot.leaderResults} alt={c.caption.results} priority />
+          <ScreenshotFrame kind="browser" src={TEAM_PROMO_IMAGES.leaderResults} label={c.shot.leaderResults} alt={c.caption.results} aspect="720 / 907" priority />
           <Caption>{c.caption.results}</Caption>
         </figure>
       </section>
@@ -485,7 +532,9 @@ export default function TeamPreviewDashboard({ language }: { language: string })
             <p style={bodyStyle}>{c.modules.intro}</p>
           </div>
           <figure style={{ margin: 0 }}>
-            <ScreenshotFrame kind="browser" src={TEAM_PROMO_IMAGES.modulesOverview} label={c.shot.modulesOverview} alt={c.caption.modules} />
+            <ScreenshotFrame kind="browser" src={null} label={c.caption.modules} alt={c.caption.modules} aspect={TEAM_PROMO_VIDEO.aspect}>
+              <LazyVideo label={c.caption.modules} />
+            </ScreenshotFrame>
             <Caption>{c.caption.modules}</Caption>
           </figure>
         </div>
@@ -575,7 +624,7 @@ export default function TeamPreviewDashboard({ language }: { language: string })
 
         <figure className="tp-phones" style={{ margin: 0, borderTop: "1px solid oklch(97% 0.005 80 / 0.14)", paddingTop: "clamp(2rem, 4vw, 3rem)" }}>
           <div className="tp-phone-pair">
-            {([["phoneRead", 0], ["phoneInput", 1]] as const).map(([slot, step]) => (
+            {([["phoneRead", 1], ["phoneInput", 2]] as const).map(([slot, step]) => (
               <div key={slot} style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
                 <ScreenshotFrame kind="phone" src={TEAM_PROMO_IMAGES[slot]} label={c.shot[slot]} alt={`${c.rhythm.steps[step].label}: ${c.rhythm.steps[step].body}`} onDark />
                 <span aria-hidden="true" style={{ fontFamily: SANS, fontSize: "0.64rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: T.onNavyMuted }}>
