@@ -305,6 +305,11 @@ export default function IcebergMap({ steps, completed, nextStep, lang, heading }
     const next = chapter === k ? null : k;
     setChapter(next);
     apiRef.current?.chapter(next);
+    // On phones the chapter strip sits under the berg, so bring the berg back into view.
+    if (next !== null && !window.matchMedia(WIDE).matches) {
+      const smooth = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      wrapRef.current?.scrollIntoView({ behavior: smooth ? "smooth" : "auto", block: "nearest" });
+    }
   };
 
   // Hover label: text through state (changes rarely), position straight on the element (changes every move).
@@ -564,7 +569,7 @@ export default function IcebergMap({ steps, completed, nextStep, lang, heading }
       camera.aspect = aspect;
       lineMats.forEach(m => m.resolution.set(w, h));
       // Fit the tip above the line and the body below it, with room for the near side when it turns.
-      const need = Math.max((TIP_H + 0.5) / WATER_FRAC, (DEPTH + 0.6) / (1 - WATER_FRAC), 8 / aspect) * 1.1;
+      const need = Math.max((TIP_H + 0.5) / WATER_FRAC, (DEPTH + 0.6) / (1 - WATER_FRAC), (wide.matches ? 8 : 6.8) / aspect) * 1.1;
       const ratio = first ? 1 : camera.position.distanceTo(target) / fit;
       fitSpan = need;
       fit = need / (2 * tanHalf);
@@ -776,6 +781,42 @@ export default function IcebergMap({ steps, completed, nextStep, lang, heading }
         .ice-chapters .ti { font-weight: 600; font-size: 0.8rem; line-height: 1.35; }
         .ice-chapters .ct { margin-left: auto; font-size: 0.68rem; font-weight: 600; color: ${muted}; padding-left: 0.5rem; }
         .ice-head { margin: 0 0 1rem; }
+        .ice-stage-wrap { position: relative; }
+        .ice-stage { position: relative; overflow: hidden; outline: none; border: 1px solid ${rule}; height: min(78vh, 740px); min-height: 460px; }
+        .ice-tools { position: absolute; top: 12px; right: 12px; display: flex; flex-direction: column; gap: 6px; z-index: 2; }
+        .ice-card {
+          position: absolute; left: 12px; bottom: 12px; width: min(calc(100% - 24px), 380px); z-index: 4;
+          background: ${offWhite}; border-top: 2px solid ${orange}; box-shadow: 0 18px 48px oklch(20% 0.08 260 / 0.35);
+          padding: 1rem 3rem 1.1rem 1.1rem;
+        }
+        .ice-chapters .row { display: contents; }
+        /* Phones: title, then the berg edge to edge, then legend and a swipeable chapter strip.
+           The module card slides up from the bottom of the screen as a sheet, over the app menu. */
+        @media not all and ${WIDE} {
+          .ice-nav { order: 2; }
+          .ice-main { display: flex; flex-direction: column; }
+          .ice-legend { order: 2; margin: 0.75rem 0 0 !important; }
+          .ice-head h1 { font-size: 1.85rem; }
+          .ice-head p.intro { font-size: 0.8rem; }
+          .ice-prog { max-width: none; }
+          .ice-stage { margin: 0 -1rem; border-left: 0; border-right: 0; height: min(125vw, 62svh); min-height: 380px; }
+          .ice-tools { top: auto; bottom: 12px; right: 10px; }
+          .ice-tools button { width: 40px !important; height: 40px !important; }
+          .ice-chapters { scroll-snap-type: x mandatory; margin: 0 -1rem; padding: 0 1rem 0.4rem; scroll-padding: 0 1rem; }
+          .ice-chapters li { flex: 0 0 auto; scroll-snap-align: start; }
+          .ice-chapters button { width: 168px; min-height: 68px; flex-direction: column; align-items: flex-start; gap: 0.25rem; white-space: normal; }
+          .ice-chapters .row { display: flex; width: 100%; justify-content: space-between; }
+          .ice-chapters .ti { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+          .ice-chapters .ct { margin-left: 0; padding-left: 0; }
+          .ice-card {
+            position: fixed; left: 0; right: 0; bottom: 0; width: auto; z-index: 110;
+            padding: 1.1rem 3.25rem calc(1.25rem + env(safe-area-inset-bottom, 0px)) 1.25rem;
+            box-shadow: 0 -12px 40px oklch(20% 0.08 260 / 0.3);
+            animation: ice-sheet 0.22s ease-out;
+          }
+          .ice-card .ice-start { display: flex !important; justify-content: center; }
+        }
+        @keyframes ice-sheet { from { transform: translateY(100%); } to { transform: none; } }
         .ice-head h1 { font-family: var(--font-cormorant); font-style: italic; font-weight: 500; font-size: clamp(1.9rem, 4.5vw, 2.6rem); line-height: 1.05; color: ${navy}; margin: 0; text-wrap: balance; }
         .ice-head p.intro { font-family: var(--font-montserrat); font-size: 0.84rem; line-height: 1.6; color: ${text}; margin: 0.6rem 0 0; }
         @media ${WIDE} {
@@ -816,17 +857,19 @@ export default function IcebergMap({ steps, completed, nextStep, lang, heading }
             {chapters.map((c, k) => (
               <li key={k}>
                 <button type="button" aria-pressed={chapter === k} onClick={() => pickChapter(k)}>
-                  <span className="no">{k + 1}</span>
+                  <span className="row">
+                    <span className="no">{k + 1}</span>
+                    <span className="ct">{c.done}/{c.count}</span>
+                  </span>
                   <span className="ti">{c.title}</span>
-                  <span className="ct">{c.done}/{c.count}</span>
                 </button>
               </li>
             ))}
           </ul>
         </nav>
 
-        <div>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "1.25rem", fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 600, color: muted, marginBottom: "0.75rem", lineHeight: 1.5 }}>
+        <div className="ice-main">
+          <div className="ice-legend" style={{ display: "flex", flexWrap: "wrap", gap: "1.25rem", fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 600, color: muted, marginBottom: "0.75rem", lineHeight: 1.5 }}>
             <span style={legendItem}>
               <span aria-hidden="true" style={{ width: 22, height: 0, borderTop: `2px solid ${orange}`, boxShadow: `0 0 6px 1px ${orange}` }} />
               {t.legendDone}
@@ -837,7 +880,7 @@ export default function IcebergMap({ steps, completed, nextStep, lang, heading }
             </span>
           </div>
 
-          <div style={{ position: "relative" }}>
+          <div className="ice-stage-wrap">
             {/* Title sits in the sky on wide screens, above the map on phones. */}
             <header className="ice-head">
               <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.64rem", letterSpacing: "0.14em", textTransform: "uppercase", color: orangeDeep, margin: "0 0 0.4rem" }}>
@@ -861,14 +904,6 @@ export default function IcebergMap({ steps, completed, nextStep, lang, heading }
               ref={wrapRef}
               tabIndex={-1}
               className="ice-stage"
-              style={{
-                position: "relative",
-                height: "min(78vh, 740px)",
-                minHeight: 460,
-                overflow: "hidden",
-                border: `1px solid ${rule}`,
-                outline: "none",
-              }}
             >
               {failed && (
                 <div style={{ position: "absolute", inset: 0, zIndex: 2, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "1rem", padding: "1.5rem", textAlign: "center", background: offWhite }}>
@@ -912,7 +947,7 @@ export default function IcebergMap({ steps, completed, nextStep, lang, heading }
               </div>
 
               {!failed && (
-                <div style={{ position: "absolute", top: 12, right: 12, display: "flex", flexDirection: "column", gap: 6, zIndex: 2 }}>
+                <div className="ice-tools">
                   <button type="button" aria-label={t.zoomIn} title={t.zoomIn} style={iconBtn} onClick={() => apiRef.current?.zoom(0.8)}>+</button>
                   <button type="button" aria-label={t.zoomOut} title={t.zoomOut} style={iconBtn} onClick={() => apiRef.current?.zoom(1.25)}>−</button>
                   <button
@@ -936,13 +971,7 @@ export default function IcebergMap({ steps, completed, nextStep, lang, heading }
                 <div
                   role="dialog"
                   aria-labelledby="ice-card-title"
-                  style={{
-                    position: "absolute", left: 12, bottom: 12,
-                    width: "min(calc(100% - 24px), 380px)", zIndex: 4,
-                    background: offWhite, borderTop: `2px solid ${orange}`,
-                    boxShadow: "0 18px 48px oklch(20% 0.08 260 / 0.35)",
-                    padding: "1rem 3rem 1.1rem 1.1rem",
-                  }}
+                  className="ice-card"
                 >
                   <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.62rem", letterSpacing: "0.14em", textTransform: "uppercase", color: orangeDeep, margin: "0 0 0.35rem", lineHeight: 1.4 }}>
                     {t.chapter} {code(selected)}{step.chapter ? ` · ${step.chapter}` : ""}
