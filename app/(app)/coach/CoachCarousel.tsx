@@ -667,7 +667,7 @@ export default function CoachCarousel({
       <style>{`
         .wpc-outer {
           background: ${PAGE};
-          height: calc(100dvh - 80px);
+          height: calc(100dvh - 80px - env(safe-area-inset-bottom, 0px));
           overflow: hidden;
           display: flex;
           flex-direction: column;
@@ -824,7 +824,7 @@ export default function CoachCarousel({
             const rightLabel = PANEL_NAMES[(activePanel + 1) % 4];
             return (
               <div style={{
-                position: "absolute", bottom: "1.125rem", left: "50%",
+                position: "absolute", bottom: "1.75rem", left: "50%",
                 transform: "translateX(-50%)",
                 display: "flex", alignItems: "center",
                 gap: "0.25rem", zIndex: 20,
