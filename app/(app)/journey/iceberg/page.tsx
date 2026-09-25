@@ -10,7 +10,6 @@ const navy    = "oklch(30% 0.12 260)";
 const muted   = "oklch(48% 0.04 260)";
 const text    = "oklch(32% 0.06 260)";
 const rule    = "oklch(84% 0.01 80)";
-const orangeDeep = "oklch(58% 0.16 45)";
 const green   = "oklch(55% 0.14 150)";
 const offWhite = "oklch(97% 0.005 80)";
 
@@ -62,36 +61,27 @@ export default async function IcebergPreviewPage() {
     ? {
         eyebrow: "Pratinjau",
         title: "Apa yang ada di bawah permukaan",
-        intro: "Di atas air adalah apa yang orang lihat dari seorang pemimpin. Ke-60 langkah ada di bawahnya. Seret untuk memutar, perbesar untuk melihat lebih dekat, dan ketuk sebuah sisi untuk membuka langkahnya.",
-        progress: `${doneCount} dari ${total} langkah selesai`,
+        intro: "Di atas air adalah apa yang orang lihat dari seorang pemimpin. Kepemimpinan yang Berpengaruh adalah apa yang ada di bawahnya. Seret untuk memutar gunung es, perbesar untuk melihat lebih dekat, dan ketuk sebuah sisi untuk membukanya.",
+        progress: `${doneCount} dari ${total} modul selesai`,
         back: "← Kembali ke perjalanan",
       }
     : {
         eyebrow: "Preview",
         title: "What lies beneath the surface",
-        intro: "Above the water is what people see of a leader. All 60 steps sit below it. Drag to turn the iceberg, zoom in for a closer look, and tap a facet to open its step.",
-        progress: `${doneCount} of ${total} steps completed`,
+        intro: "Above the water is what people see of a leader. Influential Leadership is what sits below it. Drag to turn the iceberg, zoom in for a closer look, and tap a facet to open it.",
+        progress: `${doneCount} of ${total} modules completed`,
         back: "← Back to the journey",
       };
 
   return (
     <div className="jrn" style={{ minHeight: "100vh", background: offWhite }}>
       <style>{`.jrn a:focus-visible, .jrn button:focus-visible { outline: 2px solid oklch(65% 0.15 45); outline-offset: 3px; } @media (prefers-reduced-motion: reduce) { .jrn *, .jrn *::before, .jrn *::after { transition: none !important; animation: none !important; } }`}</style>
-      <header style={{ background: offWhite, color: navy, padding: "1.25rem 1rem 1.5rem", borderBottom: `1px solid ${rule}` }}>
-        <div style={{ maxWidth: 1080, margin: "0 auto" }}>
+      <header style={{ background: offWhite, color: navy, padding: "1.25rem 1rem 1.25rem", borderBottom: `1px solid ${rule}` }}>
+        <div style={{ maxWidth: 1148, margin: "0 auto" }}>
           <Link href="/journey" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 600, color: muted, textDecoration: "none" }}>
             {t.back}
           </Link>
-          <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.68rem", letterSpacing: "0.14em", textTransform: "uppercase", color: orangeDeep, margin: "1.25rem 0 0.5rem" }}>
-            {t.eyebrow}
-          </p>
-          <h1 style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 500, fontSize: "clamp(2rem, 5vw, 3rem)", lineHeight: 1.05, color: navy, margin: 0, textWrap: "balance" }}>
-            {t.title}
-          </h1>
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.88rem", lineHeight: 1.6, color: text, maxWidth: 580, margin: "0.75rem 0 1.25rem" }}>
-            {t.intro}
-          </p>
-          <div style={{ maxWidth: 420 }}>
+          <div style={{ maxWidth: 420, marginTop: "1rem" }}>
             <div style={{ display: "flex", justifyContent: "space-between", fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 600, color: text, marginBottom: "0.4rem" }}>
               <span>{t.progress}</span>
               <span>{pct}%</span>
@@ -103,7 +93,7 @@ export default async function IcebergPreviewPage() {
         </div>
       </header>
 
-      <IcebergMap steps={steps} completed={completed} nextStep={nextStep} lang={lang} />
+      <IcebergMap steps={steps} completed={completed} nextStep={nextStep} lang={lang} heading={{ eyebrow: t.eyebrow, title: t.title, intro: t.intro }} />
     </div>
   );
 }

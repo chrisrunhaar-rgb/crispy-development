@@ -25,27 +25,39 @@ const HEX = {
   iceDeep: "#5f8fc4",
   warm: "#fffbf3",
   orange: "#d86d38",
-  orangeDeep: "#c4530f",
+  orangePale: "#f3dccb",
   navy: "#012868",
-  border: "#12305e",
-  stepLine: "#6f93bf",
+  chapter: "#0f3a8c",
+  stepLine: "#7897c0",
   waterline: "#ffffff",
 };
 
 // ── Iceberg shape ──
 // Below the water: one wedge per chapter, running from the waterline to the bottom point.
-// Each chapter's steps are stacked inside its wedge, first step at the top.
-// Above the water: a big lumpy tip with no steps ("what people see of a leader").
+// Wedge borders wander a little so the chapters don't read as straight stripes.
+// Each chapter's modules are stacked inside its wedge, first module at the top.
+// Above the water: a big lumpy tip with no modules ("what people see of a leader").
 const DEPTH = 6;
 const TIP_H = 2.45;
 const R_TOP = 2.6;
 const FOV = 30;
 const WATER_FRAC = 0.3;  // waterline sits 30% down the frame at the default zoom
 const ANCHOR_Y = -1.8;   // zoom keeps this height steady on screen
+const WIDE = "(min-width: 860px)";
+const SHIFT = 0.14;      // on wide screens the berg sits right of centre, leaving the sky for the title
 
 type V3 = [number, number, number];
 type Cell = { poly: V3[]; center: V3 };
-type Shape = { cells: Cell[]; borders: V3[][]; rows: V3[][]; waterRing: V3[]; tip: V3[][]; orangeTris: Set<number> };
+type Shape = {
+  cells: Cell[];
+  borders: V3[][];
+  rows: V3[][];
+  outlines: V3[][][];   // per chapter: the polylines around its wedge
+  facing: number[];     // per chapter: the angle to turn the camera to
+  waterRing: V3[];
+  tip: V3[][];
+  orangeTris: Map<number, number>; // tip triangle → how faded (0 = full orange)
+};
 
 function seeded(seed: number) {
   let s = seed >>> 0;
@@ -71,7 +83,7 @@ function surface(a: number, t: number): V3 {
   return [axisX(t) + Math.cos(a) * r, y, axisZ(t) + Math.sin(a) * r];
 }
 
-// Upper steps get shorter bands because the berg is widest there.
+// Upper modules get shorter bands because the berg is widest there.
 const bandT = (u: number) => Math.pow(u, 1.3);
 
 // Reference point inside the berg, used to face triangles and push lines outward.
@@ -85,54 +97,79 @@ function buildShape(sizes: number[]): Shape {
   const rnd = seeded(1139);
   const K = sizes.length;
   const TAU = Math.PI * 2;
-  const bAng = Array.from({ length: K }, (_, k) => (k / K) * TAU + (rnd() - 0.5) * 0.12);
-  const mAng = bAng.map((a, k) => {
-    const next = k + 1 < K ? bAng[k + 1] : bAng[0] + TAU;
-    return (a + next) / 2 + (rnd() - 0.5) * 0.1;
-  });
-  const rightAng = (k: number) => (k + 1 < K ? bAng[k + 1] : bAng[0] + TAU);
-  const bandsOf = (k: number) => Array.from({ length: sizes[k] + 1 }, (_, m) => bandT(m / sizes[k]));
+  const base = Array.from({ length: K }, (_, k) => (k / K) * TAU + (rnd() - 0.5) * 0.12);
+  const phase = base.map(() => rnd() * TAU);
+  const amp = base.map(() => 0.06 + rnd() * 0.05);
+  const midOff = base.map(() => (rnd() - 0.5) * 0.1);
+  // Border k (between chapter k-1 and k) at depth t. k may be K, which is border 0 one turn on.
+  const bA = (k: number, t: number) => {
+    const i = k % K;
+    return base[i] + (k >= K ? TAU : 0) + amp[i] * Math.sin(5.5 * t + phase[i]);
+  };
+  const mA = (k: number, t: number) => (bA(k, t) + bA(k + 1, t)) / 2 + midOff[k] + 0.05 * Math.sin(4 * t + phase[k] * 1.7);
 
-  // Border k runs between chapter k-1 and chapter k. It carries the band edges of both.
-  const borderTs = bAng.map((_, k) => {
+  // Band edges per chapter, a little uneven, plus a middle point that sits a bit higher or lower
+  // so the lines between modules zig-zag instead of running flat.
+  const bands: number[][] = [];
+  const mids: number[][] = [];
+  for (let k = 0; k < K; k++) {
+    const n = sizes[k];
+    const b = Array.from({ length: n + 1 }, (_, m) =>
+      m === 0 ? 0 : m === n ? 1 : bandT((m + (rnd() - 0.5) * 0.5) / n));
+    bands.push(b);
+    mids.push(b.map((t, m) => {
+      if (m === 0 || m === n) return t;
+      const gap = Math.min(t - b[m - 1], b[m + 1] - t);
+      return t + (rnd() - 0.5) * gap * 0.6;
+    }));
+  }
+
+  // Border k carries the band edges of both neighbours, so no cracks appear.
+  const borderTs = base.map((_, k) => {
     const set = new Map<string, number>();
-    for (const t of [...bandsOf(k), ...bandsOf((k + K - 1) % K)]) set.set(t.toFixed(6), t);
+    for (const t of [...bands[k], ...bands[(k + K - 1) % K]]) set.set(t.toFixed(6), t);
     return [...set.values()].sort((x, y) => x - y);
   });
-  const borders = borderTs.map((ts, k) => ts.map(t => surface(bAng[k], t)));
+  const borderPts = (k: number) => borderTs[k % K].map(t => surface(bA(k, t), t));
+  const borders = base.map((_, k) => borderPts(k));
 
   const same = (p: V3, q: V3) => Math.abs(p[0] - q[0]) + Math.abs(p[1] - q[1]) + Math.abs(p[2] - q[2]) < 1e-6;
   const cells: Cell[] = [];
   const rows: V3[][] = [];
+  const outlines: V3[][][] = [];
   for (let k = 0; k < K; k++) {
     const kr = (k + 1) % K;
-    const aL = bAng[k];
-    const aR = rightAng(k);
-    const bands = bandsOf(k);
+    const L = (t: number) => surface(bA(k, t), t);
+    const R = (t: number) => surface(bA(k + 1, t), t);
+    const M = (t: number) => surface(mA(k, t), t);
     for (let m = 0; m < sizes[k]; m++) {
-      const t0 = bands[m];
-      const t1 = bands[m + 1];
+      const t0 = bands[k][m];
+      const t1 = bands[k][m + 1];
+      const between = (ts: number[]) => ts.filter(t => t > t0 + 1e-6 && t < t1 - 1e-6);
       const raw: V3[] = [
-        surface(aL, t0), surface(mAng[k], t0), surface(aR, t0),
-        ...borderTs[kr].filter(t => t > t0 + 1e-6 && t < t1 - 1e-6).map(t => surface(aR, t)),
-        surface(aR, t1), surface(mAng[k], t1), surface(aL, t1),
-        ...borderTs[k].filter(t => t > t0 + 1e-6 && t < t1 - 1e-6).reverse().map(t => surface(aL, t)),
+        L(t0), M(mids[k][m]), R(t0),
+        ...between(borderTs[kr]).map(R),
+        R(t1), M(mids[k][m + 1]), L(t1),
+        ...between(borderTs[k]).reverse().map(L),
       ];
       const poly = raw.filter((p, i) => !same(p, raw[(i + raw.length - 1) % raw.length]));
-      const c = surface(mAng[k], (t0 + t1) / 2);
+      const tc = (mids[k][m] + mids[k][m + 1]) / 2;
+      const c = M(tc);
       const ref = inner(c);
       const center: V3 = [c[0] + (c[0] - ref[0]) * 0.04, c[1], c[2] + (c[2] - ref[2]) * 0.04];
       cells.push({ poly, center });
-      if (m > 0) rows.push([surface(aL, t0), surface(mAng[k], t0), surface(aR, t0)]);
+      if (m > 0) rows.push([L(t0), M(mids[k][m]), R(t0)]);
     }
+    outlines.push([borderPts(k), borderPts(k + 1), [L(0), M(0), R(0)]]);
   }
+  const facing = base.map((_, k) => mA(k, 0.3));
 
   // Waterline ring, shared by the body and the tip.
   const waterAng: number[] = [];
   const waterRing: V3[] = [];
   for (let k = 0; k < K; k++) {
-    waterAng.push(bAng[k], mAng[k]);
-    waterRing.push(surface(bAng[k], 0), surface(mAng[k], 0));
+    waterAng.push(bA(k, 0), mA(k, 0));
+    waterRing.push(surface(bA(k, 0), 0), surface(mA(k, 0), 0));
   }
 
   // Tip rings, every other ring shifted half a step so the facets are triangles.
@@ -153,32 +190,28 @@ function buildShape(sizes: number[]): Shape {
   });
   tip.push([[0.3, TIP_H + 0.05, -0.12]]);
 
-  // A few warm facets on the tip, like the reference.
-  const orangeTris = new Set<number>();
+  // Warm facets all the way round the tip: single triangles and small patches, in full and faded orange.
+  const orangeTris = new Map<number, number>();
   const perRing = Q * 2;
-  for (const ring of [1, 2, 2, 3]) orangeTris.add(ring * perRing + Math.floor(rnd() * perRing));
+  const sectors = 8;
+  const span = Math.max(1, Math.floor(Q / sectors));
+  for (let s = 0; s < sectors; s++) {
+    for (let pick = 0; pick < 2; pick++) {
+      const layer = Math.floor(rnd() * levels.length);
+      const q = Math.min(Q - 1, s * span + Math.floor(rnd() * span));
+      const idx = layer * perRing + q * 2 + (rnd() < 0.5 ? 0 : 1);
+      const fade = pick === 0 ? rnd() * 0.35 : 0.3 + rnd() * 0.45;
+      orangeTris.set(idx, fade);
+      if (rnd() < 0.45) orangeTris.set(idx ^ 1, Math.min(0.85, fade + 0.2));
+    }
+  }
 
-  return { cells, borders, rows, waterRing, tip, orangeTris };
-}
-
-// 2D outline of a facet, for the popup drawing.
-function facetShape(corners: V3[]): string {
-  const cx = corners.reduce((s, p) => s + p[0], 0) / corners.length;
-  const cy = corners.reduce((s, p) => s + p[1], 0) / corners.length;
-  const cz = corners.reduce((s, p) => s + p[2], 0) / corners.length;
-  const ref = inner([cx, cy, cz]);
-  const a = Math.atan2(cz - ref[2], cx - ref[0]);
-  const ux = -Math.sin(a);
-  const uz = Math.cos(a);
-  const pts = corners.map(p => [(p[0] - cx) * ux + (p[2] - cz) * uz, -(p[1] - cy)]);
-  const w = Math.max(...pts.map(p => Math.abs(p[0])), 1e-3);
-  const h = Math.max(...pts.map(p => Math.abs(p[1])), 1e-3);
-  const k = Math.min(46 / w, 38 / h);
-  return pts.map(p => `${(60 + p[0] * k).toFixed(1)},${(50 + p[1] * k).toFixed(1)}`).join(" ");
+  return { cells, borders, rows, outlines, facing, waterRing, tip, orangeTris };
 }
 
 type Api = {
   select: (cell: number | null) => void;
+  chapter: (k: number | null) => void;
   zoom: (factor: number) => void;
   setSpin: (on: boolean) => void;
 };
@@ -188,49 +221,73 @@ type Props = {
   completed: number[];
   nextStep: number | null;
   lang: "en" | "id";
+  heading: { eyebrow: string; title: string; intro: string };
 };
 
-export default function IcebergMap({ steps, completed, nextStep, lang }: Props) {
+export default function IcebergMap({ steps, completed, nextStep, lang, heading }: Props) {
   const isId = lang === "id";
   const wrapRef = useRef<HTMLDivElement>(null);
+  const tipRef = useRef<HTMLDivElement>(null);
   const apiRef = useRef<Api | null>(null);
   const startRef = useRef<HTMLAnchorElement>(null);
   const returnFocusRef = useRef<HTMLElement | null>(null);
   const [selected, setSelected] = useState<number | null>(null);
+  const [chapter, setChapter] = useState<number | null>(null);
+  const [hover, setHover] = useState<number | null>(null);
   const [spinning, setSpinning] = useState(true);
   const [failed, setFailed] = useState(false);
   const selectRef = useRef<(cell: number | null) => void>(() => {});
+  const hoverRef = useRef<(cell: number | null, x: number, y: number) => void>(() => {});
 
   const doneSet = useMemo(() => new Set(completed), [completed]);
-  const chapterNo = useMemo(() => {
+  // Chapter number and position inside the chapter for every module, e.g. 11 and 3 → "11.3".
+  const { chapterNo, localNo } = useMemo(() => {
     let ch = 0;
-    return steps.map(s => (s.chapterStart ? ++ch : ch));
+    let local = 0;
+    const c: number[] = [];
+    const l: number[] = [];
+    steps.forEach(s => {
+      if (s.chapterStart) { ch++; local = 0; }
+      local++;
+      c.push(ch);
+      l.push(local);
+    });
+    return { chapterNo: c, localNo: l };
   }, [steps]);
-  // Steps per chapter, in order. Falls back to 12 × 5 if the list is empty.
-  const sizes = useMemo(() => {
-    const out: number[] = [];
-    chapterNo.forEach(ch => { out[ch - 1] = (out[ch - 1] ?? 0) + 1; });
-    const clean = out.filter(n => n > 0);
-    return clean.length ? clean : Array(12).fill(5);
-  }, [chapterNo]);
+  const chapters = useMemo(() => {
+    const out: { title: string; count: number; done: number }[] = [];
+    steps.forEach((s, i) => {
+      const k = chapterNo[i] - 1;
+      if (k < 0) return;
+      out[k] ??= { title: s.chapter ?? "", count: 0, done: 0 };
+      out[k].count++;
+      if (doneSet.has(s.n)) out[k].done++;
+    });
+    return out.filter(Boolean);
+  }, [steps, chapterNo, doneSet]);
+  // Modules per chapter, in order. Falls back to 12 × 5 if the list is empty.
+  const sizes = useMemo(() => (chapters.length ? chapters.map(c => c.count) : Array(12).fill(5)), [chapters]);
   const shape = useMemo(() => buildShape(sizes), [sizes]);
+  const code = (i: number) => `${chapterNo[i]}.${localNo[i]}`;
 
   const t = isId
     ? {
-        chapter: "Bab", step: "Langkah", start: "Mulai langkah ini", review: "Buka lagi",
-        done: "Selesai", next: "Langkah berikutnya", close: "Tutup",
+        chapter: "Bab", chapters: "Bab", start: "Mulai", review: "Buka lagi",
+        done: "Selesai", next: "Berikutnya", close: "Tutup",
         zoomIn: "Perbesar", zoomOut: "Perkecil", pause: "Hentikan putaran", play: "Putar lagi",
-        legendDone: "Selesai", legendNext: "Langkah berikutnya", legendZone: "Batas bab",
-        failed: "Peta 3D tidak dapat dimuat di perangkat ini.", fallback: "Buka daftar langkah",
-        stepsLabel: "Semua langkah",
+        legendDone: "Selesai", legendNext: "Berikutnya",
+        chapterHint: "Pilih bab untuk melihatnya di gunung es.",
+        failed: "Peta 3D tidak dapat dimuat di perangkat ini.", fallback: "Buka daftar",
+        modulesLabel: "Semua modul",
       }
     : {
-        chapter: "Chapter", step: "Step", start: "Start this step", review: "Open again",
-        done: "Completed", next: "Next step", close: "Close",
+        chapter: "Chapter", chapters: "Chapters", start: "Start", review: "Open again",
+        done: "Completed", next: "Up next", close: "Close",
         zoomIn: "Zoom in", zoomOut: "Zoom out", pause: "Stop turning", play: "Turn again",
-        legendDone: "Completed", legendNext: "Next step", legendZone: "Chapter border",
-        failed: "The 3D map could not load on this device.", fallback: "Open the step list",
-        stepsLabel: "All steps",
+        legendDone: "Completed", legendNext: "Up next",
+        chapterHint: "Pick a chapter to see it on the iceberg.",
+        failed: "The 3D map could not load on this device.", fallback: "Open the list",
+        modulesLabel: "All modules",
       };
 
   const open = (cell: number | null) => {
@@ -243,6 +300,19 @@ export default function IcebergMap({ steps, completed, nextStep, lang }: Props) 
     apiRef.current?.select(cell);
   };
   selectRef.current = open;
+
+  const pickChapter = (k: number) => {
+    const next = chapter === k ? null : k;
+    setChapter(next);
+    apiRef.current?.chapter(next);
+  };
+
+  // Hover label: text through state (changes rarely), position straight on the element (changes every move).
+  hoverRef.current = (cell, x, y) => {
+    setHover(cell);
+    const el = tipRef.current;
+    if (el && cell !== null) el.style.transform = `translate(${Math.round(x + 14)}px, ${Math.round(y + 16)}px)`;
+  };
 
   // ── Three.js scene ──
   useEffect(() => {
@@ -257,6 +327,7 @@ export default function IcebergMap({ steps, completed, nextStep, lang }: Props) 
       return;
     }
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const wide = window.matchMedia(WIDE);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setClearColor(0x000000, 0);
     const canvas = renderer.domElement;
@@ -272,17 +343,18 @@ export default function IcebergMap({ steps, completed, nextStep, lang }: Props) 
     const camera = new THREE.PerspectiveCamera(FOV, 1, 0.1, 800);
     const target = new THREE.Vector3(0, 0, 0);
 
-    // Light travels with the camera, so the side facing you stays bright and the edges fall to blue.
-    scene.add(new THREE.HemisphereLight(0xffffff, 0x5b7fae, 1.45));
-    const sun = new THREE.DirectionalLight(0xffffff, 1.7);
-    sun.position.set(4, 5, 3);
+    // Light travels with the camera from the front left: the side facing you is bright,
+    // the far right side falls into a deeper blue shadow.
+    scene.add(new THREE.HemisphereLight(0xffffff, 0x2d4f80, 0.75));
+    const sun = new THREE.DirectionalLight(0xffffff, 2.5);
+    sun.position.set(-3, 3.5, 5);
     camera.add(sun);
     scene.add(camera);
 
     const disposables: { dispose: () => void }[] = [];
     const track = <T extends { dispose: () => void }>(x: T) => { disposables.push(x); return x; };
 
-    const { cells, borders, rows, waterRing, tip, orangeTris } = shape;
+    const { cells, borders, rows, outlines, facing, waterRing, tip, orangeTris } = shape;
     const rnd = seeded(77);
     const tmpA = new THREE.Vector3();
     const tmpB = new THREE.Vector3();
@@ -300,7 +372,7 @@ export default function IcebergMap({ steps, completed, nextStep, lang }: Props) 
       else pos.push(...a, ...b, ...c);
     };
 
-    // Step facets: each cell is a shallow pyramid, so every step reads as its own facet.
+    // Module facets: each cell is a shallow pyramid, so every module reads as its own facet.
     const cellCount = cells.length;
     const tilePos: number[] = [];
     const tileCol: number[] = [];
@@ -326,7 +398,7 @@ export default function IcebergMap({ steps, completed, nextStep, lang }: Props) 
         const q = poly[(i + 1) % poly.length];
         pushTri(tilePos, p, q, center);
         depthColour((p[1] + q[1] + center[1]) / 3);
-        if (ch % 2 === 0) col.lerp(white, 0.1);
+        if (ch % 2 === 0) col.lerp(white, 0.08);
         col.multiplyScalar(1 + (rnd() - 0.5) * 0.07);
         for (let k = 0; k < 3; k++) tileCol.push(col.r, col.g, col.b);
         faceToCell.push(c);
@@ -350,10 +422,12 @@ export default function IcebergMap({ steps, completed, nextStep, lang }: Props) 
     const tipPos: number[] = [];
     const tipCol: number[] = [];
     const orangeCol = new THREE.Color(HEX.orange);
+    const paleCol = new THREE.Color(HEX.orangePale);
     let tri = 0;
     const addTipTri = (a: V3, b: V3, c: V3) => {
       pushTri(tipPos, a, b, c);
-      if (orangeTris.has(tri)) col.copy(orangeCol);
+      const fade = orangeTris.get(tri);
+      if (fade !== undefined) col.copy(orangeCol).lerp(paleCol, fade);
       else col.copy(white).lerp(shallow, rnd() * 0.35);
       col.multiplyScalar(1 + (rnd() - 0.5) * 0.04);
       for (let k = 0; k < 3; k++) tipCol.push(col.r, col.g, col.b);
@@ -401,14 +475,16 @@ export default function IcebergMap({ steps, completed, nextStep, lang }: Props) 
       if (closed && pts.length > 2) edge(segs, pts[pts.length - 1], pts[0]);
     };
     const outline = (segs: number[], c: number) => polyline(segs, cells[c].poly, true);
+    const setLine = (line: LineSegments2, segs: number[]) => {
+      (line.geometry as LineSegmentsGeometry).setPositions(segs.length ? segs : [0, 0, 0, 0, 0, 0]);
+      line.visible = segs.length > 0;
+    };
 
-    const rowSegs: number[] = [];
-    rows.forEach(r => polyline(rowSegs, r));
-    makeLines(rowSegs, HEX.stepLine, 1.2, 0.75);
-
-    const borderSegs: number[] = [];
-    borders.forEach(b => polyline(borderSegs, b));
-    makeLines(borderSegs, HEX.border, 2.6, 0.92);
+    // Every module edge is a soft thin line. A chapter only gets its bold outline when picked.
+    const thinSegs: number[] = [];
+    rows.forEach(r => polyline(thinSegs, r));
+    borders.forEach(b => polyline(thinSegs, b));
+    makeLines(thinSegs, HEX.stepLine, 1.2, 0.7);
 
     const waterSegs: number[] = [];
     polyline(waterSegs, waterRing, true);
@@ -424,6 +500,8 @@ export default function IcebergMap({ steps, completed, nextStep, lang }: Props) 
     if (nextCell >= 0 && nextCell < cellCount) outline(nextSegs, nextCell);
     makeLines(nextSegs, HEX.navy, 2.4);
 
+    const chapterGlow = makeLines([], "#ffffff", 7, 0.55);
+    const chapterLine = makeLines([], HEX.chapter, 3);
     const selLine = makeLines([], HEX.navy, 3.2);
 
     // ── Camera + controls ──
@@ -439,6 +517,9 @@ export default function IcebergMap({ steps, completed, nextStep, lang }: Props) 
     canvas.style.touchAction = "pan-y"; // vertical swipes still scroll the page
     let spinWanted = !reduced;
     let selectedCell: number | null = null;
+    let selectedChapter: number | null = null;
+    let turnTo: number | null = null;
+    const idle = () => selectedCell === null && selectedChapter === null;
     controls.autoRotate = spinWanted;
     if (reduced) setSpinning(false);
 
@@ -447,6 +528,7 @@ export default function IcebergMap({ steps, completed, nextStep, lang }: Props) 
     let fitSpan = 10;   // world height visible at that distance
     let w = 0;
     let h = 0;
+    let shiftX = 0;
     let lastDist = -1;
 
     // Keeps the berg framed as you zoom: the waterline row moves, and the CSS sea follows it.
@@ -457,7 +539,7 @@ export default function IcebergMap({ steps, completed, nextStep, lang }: Props) 
       const span = 2 * dist * tanHalf;
       const anchorRow = WATER_FRAC * h + (-ANCHOR_Y / fitSpan) * h;
       const horizon = anchorRow - (-ANCHOR_Y / span) * h;
-      camera.setViewOffset(w, h, 0, h / 2 - horizon, w, h);
+      camera.setViewOffset(w, h, -shiftX, h / 2 - horizon, w, h);
       camera.updateProjectionMatrix();
       wrap.style.setProperty("--wl", `${horizon.toFixed(1)}px`);
     };
@@ -465,9 +547,9 @@ export default function IcebergMap({ steps, completed, nextStep, lang }: Props) 
     let resumeTimer: ReturnType<typeof setTimeout> | undefined;
     const resume = () => {
       clearTimeout(resumeTimer);
-      resumeTimer = setTimeout(() => { controls.autoRotate = spinWanted && selectedCell === null; }, 3500);
+      resumeTimer = setTimeout(() => { controls.autoRotate = spinWanted && idle(); }, 3500);
     };
-    controls.addEventListener("start", () => { clearTimeout(resumeTimer); controls.autoRotate = false; });
+    controls.addEventListener("start", () => { clearTimeout(resumeTimer); controls.autoRotate = false; turnTo = null; });
     controls.addEventListener("end", resume);
 
     // ── Sizing ──
@@ -477,6 +559,7 @@ export default function IcebergMap({ steps, completed, nextStep, lang }: Props) 
       h = wrap.clientHeight;
       if (!w || !h) return;
       const aspect = w / h;
+      shiftX = wide.matches ? w * SHIFT : 0;
       renderer.setSize(w, h, false);
       camera.aspect = aspect;
       lineMats.forEach(m => m.resolution.set(w, h));
@@ -487,7 +570,7 @@ export default function IcebergMap({ steps, completed, nextStep, lang }: Props) 
       fit = need / (2 * tanHalf);
       controls.minDistance = fit * 0.45;
       controls.maxDistance = fit * 1.25;
-      const off = first ? new THREE.Vector3(Math.sin(0.5), 0, Math.cos(0.5)) : camera.position.clone().sub(target).normalize();
+      const off = first ? new THREE.Vector3(Math.cos(1.07), 0, Math.sin(1.07)) : camera.position.clone().sub(target).normalize();
       camera.position.copy(target).addScaledVector(off, fit * ratio);
       first = false;
       lastDist = -1;
@@ -534,18 +617,24 @@ export default function IcebergMap({ steps, completed, nextStep, lang }: Props) 
       if (moved > 7 || !quick) return;
       selectRef.current(pick(e.clientX, e.clientY));
     };
+    const onLeave = () => {
+      if (hovered !== selectedCell) paint(hovered, false);
+      hovered = null;
+      hoverRef.current(null, 0, 0);
+    };
     const onMove = (e: PointerEvent) => {
-      if (e.pointerType !== "mouse" || e.buttons) return;
+      if (e.pointerType !== "mouse" || e.buttons) {
+        if (hovered !== null) onLeave();
+        return;
+      }
       const cell = pick(e.clientX, e.clientY);
+      const rect = wrap.getBoundingClientRect();
+      hoverRef.current(cell, e.clientX - rect.left, e.clientY - rect.top);
       if (cell === hovered) return;
       if (hovered !== selectedCell) paint(hovered, false);
       hovered = cell;
       paint(hovered, true);
       canvas.style.cursor = cell === null ? "grab" : "pointer";
-    };
-    const onLeave = () => {
-      if (hovered !== selectedCell) paint(hovered, false);
-      hovered = null;
     };
     canvas.addEventListener("pointerdown", onDown);
     canvas.addEventListener("pointerup", onUp);
@@ -561,14 +650,27 @@ export default function IcebergMap({ steps, completed, nextStep, lang }: Props) 
           paint(cell, true);
           const segs: number[] = [];
           outline(segs, cell);
-          (selLine.geometry as LineSegmentsGeometry).setPositions(segs);
-          selLine.visible = true;
+          setLine(selLine, segs);
           clearTimeout(resumeTimer);
           controls.autoRotate = false;
         } else {
-          selLine.visible = false;
+          setLine(selLine, []);
+          if (idle()) resume();
+        }
+      },
+      chapter: k => {
+        selectedChapter = k;
+        const segs: number[] = [];
+        if (k !== null && outlines[k]) {
+          outlines[k].forEach(p => polyline(segs, p));
+          clearTimeout(resumeTimer);
+          controls.autoRotate = false;
+          turnTo = facing[k];
+        } else if (idle()) {
           resume();
         }
+        setLine(chapterGlow, segs);
+        setLine(chapterLine, segs);
       },
       zoom: factor => {
         const off = camera.position.clone().sub(controls.target);
@@ -579,13 +681,29 @@ export default function IcebergMap({ steps, completed, nextStep, lang }: Props) 
       setSpin: on => {
         spinWanted = on;
         clearTimeout(resumeTimer);
-        controls.autoRotate = on && selectedCell === null;
+        controls.autoRotate = on && idle();
       },
+    };
+
+    // Smoothly turn the berg so the picked chapter faces the viewer.
+    const turn = () => {
+      if (turnTo === null) return;
+      const dx = camera.position.x - target.x;
+      const dz = camera.position.z - target.z;
+      const dist = Math.hypot(dx, dz);
+      const now = Math.atan2(dz, dx);
+      let diff = turnTo - now;
+      diff = Math.atan2(Math.sin(diff), Math.cos(diff));
+      const done = Math.abs(diff) < 0.002 || reduced;
+      const a = done ? turnTo : now + diff * 0.08;
+      camera.position.set(target.x + Math.cos(a) * dist, camera.position.y, target.z + Math.sin(a) * dist);
+      if (done) turnTo = null;
     };
 
     let raf = 0;
     const loop = () => {
       raf = requestAnimationFrame(loop);
+      turn();
       controls.update();
       frame();
       renderer.render(scene, camera);
@@ -629,6 +747,7 @@ export default function IcebergMap({ steps, completed, nextStep, lang }: Props) 
   const step = selected !== null ? steps[selected] : null;
   const isDone = step ? doneSet.has(step.n) : false;
   const isNext = step ? step.n === nextStep : false;
+  const hoverStep = hover !== null && hover !== selected ? steps[hover] : null;
 
   const iconBtn: React.CSSProperties = {
     width: 44, height: 44, display: "inline-flex", alignItems: "center", justifyContent: "center",
@@ -638,155 +757,207 @@ export default function IcebergMap({ steps, completed, nextStep, lang }: Props) 
   const legendItem: React.CSSProperties = { display: "inline-flex", alignItems: "center", gap: "0.45rem" };
 
   return (
-    <main style={{ maxWidth: 1080, margin: "0 auto", padding: "1.25rem 1rem 3rem" }}>
+    <main style={{ maxWidth: 1180, margin: "0 auto", padding: "1.25rem 1rem 3rem" }}>
       <style>{`
         .ice-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; margin: 0; padding: 0; list-style: none; }
         .ice-sr:focus-within { width: auto; height: auto; clip: auto; overflow: visible; top: 0.75rem; left: 0.75rem; z-index: 3; }
         .ice-sr:focus-within li:not(:focus-within) { display: none; }
         .ice-sr button { font-family: var(--font-montserrat); font-size: 0.78rem; font-weight: 600; color: ${navy}; background: ${offWhite}; border: 1px solid ${rule}; padding: 0.7rem 0.9rem; min-height: 44px; cursor: pointer; }
         .ice-start:hover { background: oklch(24% 0.11 260) !important; }
+        .ice-layout { display: grid; gap: 1rem; }
+        .ice-chapters { display: flex; gap: 0.4rem; overflow-x: auto; margin: 0; padding: 0 0 0.25rem; list-style: none; scrollbar-width: thin; }
+        .ice-chapters button {
+          display: flex; align-items: baseline; gap: 0.55rem; width: 100%; min-height: 44px; padding: 0.55rem 0.75rem;
+          background: ${offWhite}; border: 1px solid ${rule}; border-left: 3px solid transparent; cursor: pointer; text-align: left;
+          font-family: var(--font-montserrat); color: ${text}; white-space: nowrap; transition: background 0.15s, border-color 0.15s;
+        }
+        .ice-chapters button:hover { background: oklch(94% 0.012 250); }
+        .ice-chapters button[aria-pressed="true"] { background: oklch(93% 0.025 255); border-left-color: ${navy}; color: ${navy}; }
+        .ice-chapters .no { font-weight: 700; font-size: 0.7rem; color: ${orangeDeep}; min-width: 1.3rem; }
+        .ice-chapters .ti { font-weight: 600; font-size: 0.8rem; line-height: 1.35; }
+        .ice-chapters .ct { margin-left: auto; font-size: 0.68rem; font-weight: 600; color: ${muted}; padding-left: 0.5rem; }
+        .ice-head { margin: 0 0 1rem; }
+        .ice-head h1 { font-family: var(--font-cormorant); font-style: italic; font-weight: 500; font-size: clamp(1.9rem, 4.5vw, 2.6rem); line-height: 1.05; color: ${navy}; margin: 0; text-wrap: balance; }
+        .ice-head p.intro { font-family: var(--font-montserrat); font-size: 0.84rem; line-height: 1.6; color: ${text}; margin: 0.6rem 0 0; }
+        @media ${WIDE} {
+          .ice-layout { grid-template-columns: 270px minmax(0, 1fr); align-items: start; }
+          .ice-chapters { flex-direction: column; overflow-x: visible; max-height: min(78vh, 740px); overflow-y: auto; }
+          .ice-chapters button { white-space: normal; }
+          .ice-head { position: absolute; top: 1.1rem; left: 1.25rem; z-index: 2; max-width: min(36%, 340px); margin: 0; pointer-events: none; }
+          .ice-head h1 { font-size: clamp(1.7rem, 2.6vw, 2.3rem); }
+          .ice-head p.intro { font-size: 0.78rem; line-height: 1.55; }
+        }
         .ice-stage {
           --wl: ${WATER_FRAC * 100}%;
           background: linear-gradient(to bottom,
             #dfe4e6 0, #ebedeb var(--wl),
             #eaf3fa var(--wl), #8fb3da calc(var(--wl) + 3px), #3f6aa3 calc(var(--wl) + 10px),
-            #1f4478 calc(var(--wl) + 34px), #193a6c calc(var(--wl) + 40%), #102b58 100%);
+            #1f4478 calc(var(--wl) + 34px), #193a6c calc(var(--wl) + 40%), #0e2752 100%);
         }
-        .ice-stage::before, .ice-stage::after { content: ""; position: absolute; left: 0; right: 0; pointer-events: none; z-index: 0; }
         .ice-stage::after {
-          top: 0; height: max(0px, var(--wl));
+          content: ""; position: absolute; left: 0; right: 0; top: 0; height: max(0px, var(--wl)); pointer-events: none; z-index: 0;
           background:
             radial-gradient(ellipse 22% 16% at 18% 30%, oklch(99% 0.015 85 / 0.8), transparent 70%),
             radial-gradient(ellipse 30% 14% at 74% 22%, oklch(99% 0.015 85 / 0.7), transparent 70%),
             radial-gradient(ellipse 18% 10% at 48% 62%, oklch(99% 0.012 85 / 0.55), transparent 70%);
         }
-        .ice-stage::before {
-          top: var(--wl); bottom: 0;
-          background:
-            radial-gradient(circle, oklch(90% 0.03 240 / 0.22) 0.8px, transparent 1.4px) 0 0 / 37px 41px,
-            radial-gradient(circle, oklch(90% 0.03 240 / 0.14) 0.8px, transparent 1.4px) 17px 23px / 53px 47px;
-        }
       `}</style>
 
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "1.25rem", fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 600, color: muted, marginBottom: "0.75rem" }}>
-        <span style={legendItem}>
-          <span aria-hidden="true" style={{ width: 22, height: 0, borderTop: `2px solid ${orange}`, boxShadow: `0 0 6px 1px ${orange}` }} />
-          {t.legendDone}
-        </span>
-        <span style={legendItem}>
-          <span aria-hidden="true" style={{ width: 22, height: 0, borderTop: `2px solid ${navy}` }} />
-          {t.legendNext}
-        </span>
-        <span style={legendItem}>
-          <span aria-hidden="true" style={{ width: 22, height: 0, borderTop: `3px solid ${HEX.border}` }} />
-          {t.legendZone}
-        </span>
-      </div>
+      <div className="ice-layout">
+        <nav aria-label={t.chapters}>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 600, color: muted, margin: "0 0 0.6rem", lineHeight: 1.5 }}>
+            {t.chapterHint}
+          </p>
+          <ul className="ice-chapters">
+            {chapters.map((c, k) => (
+              <li key={k}>
+                <button type="button" aria-pressed={chapter === k} onClick={() => pickChapter(k)}>
+                  <span className="no">{k + 1}</span>
+                  <span className="ti">{c.title}</span>
+                  <span className="ct">{c.done}/{c.count}</span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </nav>
 
-      <div
-        ref={wrapRef}
-        tabIndex={-1}
-        className="ice-stage"
-        style={{
-          position: "relative",
-          height: "min(78vh, 740px)",
-          minHeight: 460,
-          overflow: "hidden",
-          border: `1px solid ${rule}`,
-          outline: "none",
-        }}
-      >
-        {failed && (
-          <div style={{ position: "absolute", inset: 0, zIndex: 2, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "1rem", padding: "1.5rem", textAlign: "center", background: offWhite }}>
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", color: text, margin: 0 }}>{t.failed}</p>
-            <Link href="/journey" style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.8rem", color: navy }}>{t.fallback}</Link>
+        <div>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "1.25rem", fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 600, color: muted, marginBottom: "0.75rem" }}>
+            <span style={legendItem}>
+              <span aria-hidden="true" style={{ width: 22, height: 0, borderTop: `2px solid ${orange}`, boxShadow: `0 0 6px 1px ${orange}` }} />
+              {t.legendDone}
+            </span>
+            <span style={legendItem}>
+              <span aria-hidden="true" style={{ width: 22, height: 0, borderTop: `2px solid ${navy}` }} />
+              {t.legendNext}
+            </span>
           </div>
-        )}
 
-        {/* Keyboard + screen reader access to every step. Hidden until focused. */}
-        <ul className="ice-sr" aria-label={t.stepsLabel}>
-          {steps.map((s, c) => (
-            <li key={s.n}>
-              <button type="button" onClick={() => open(c)}>
-                {t.step} {s.n}: {s.title}{doneSet.has(s.n) ? ` (${t.done})` : ""}
-              </button>
-            </li>
-          ))}
-        </ul>
+          <div style={{ position: "relative" }}>
+            {/* Title sits in the sky on wide screens, above the map on phones. */}
+            <header className="ice-head">
+              <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.64rem", letterSpacing: "0.14em", textTransform: "uppercase", color: orangeDeep, margin: "0 0 0.4rem" }}>
+                {heading.eyebrow}
+              </p>
+              <h1>{heading.title}</h1>
+              <p className="intro">{heading.intro}</p>
+            </header>
 
-        {!failed && (
-          <div style={{ position: "absolute", top: 12, right: 12, display: "flex", flexDirection: "column", gap: 6, zIndex: 2 }}>
-            <button type="button" aria-label={t.zoomIn} title={t.zoomIn} style={iconBtn} onClick={() => apiRef.current?.zoom(0.8)}>+</button>
-            <button type="button" aria-label={t.zoomOut} title={t.zoomOut} style={iconBtn} onClick={() => apiRef.current?.zoom(1.25)}>−</button>
-            <button
-              type="button"
-              aria-label={spinning ? t.pause : t.play}
-              title={spinning ? t.pause : t.play}
-              aria-pressed={!spinning}
-              style={{ ...iconBtn, fontSize: "0.8rem" }}
-              onClick={() => { const on = !spinning; setSpinning(on); apiRef.current?.setSpin(on); }}
+            <div
+              ref={wrapRef}
+              tabIndex={-1}
+              className="ice-stage"
+              style={{
+                position: "relative",
+                height: "min(78vh, 740px)",
+                minHeight: 460,
+                overflow: "hidden",
+                border: `1px solid ${rule}`,
+                outline: "none",
+              }}
             >
-              {spinning ? (
-                <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><rect x="2" y="1" width="3.5" height="12" fill="currentColor" /><rect x="8.5" y="1" width="3.5" height="12" fill="currentColor" /></svg>
-              ) : (
-                <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 1 L12 7 L3 13 Z" fill="currentColor" /></svg>
+              {failed && (
+                <div style={{ position: "absolute", inset: 0, zIndex: 2, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "1rem", padding: "1.5rem", textAlign: "center", background: offWhite }}>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", color: text, margin: 0 }}>{t.failed}</p>
+                  <Link href="/journey" style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.8rem", color: navy }}>{t.fallback}</Link>
+                </div>
               )}
-            </button>
-          </div>
-        )}
 
-        {step && selected !== null && shape.cells[selected] && (
-          <div
-            role="dialog"
-            aria-labelledby="ice-card-title"
-            style={{
-              position: "absolute", left: "50%", bottom: 12, transform: "translateX(-50%)",
-              width: "min(calc(100% - 24px), 400px)", zIndex: 4,
-              background: offWhite, borderTop: `2px solid ${orange}`,
-              boxShadow: "0 18px 48px oklch(20% 0.08 260 / 0.35)",
-              padding: "1rem 1rem 1.1rem",
-              display: "grid", gridTemplateColumns: "96px minmax(0, 1fr)", gap: "0.9rem", alignItems: "start",
-            }}
-          >
-            <svg viewBox="0 0 120 100" width="96" height="80" aria-hidden="true" style={{ overflow: "visible" }}>
-              <polygon
-                points={facetShape(shape.cells[selected].poly)}
-                fill={HEX.iceShallow}
-                stroke={isDone ? orange : navy}
-                strokeWidth={isDone ? 2.5 : 1.5}
-                strokeLinejoin="round"
-                style={isDone ? { filter: `drop-shadow(0 0 4px ${orange})` } : undefined}
-              />
-              <text x="60" y="52" textAnchor="middle" dominantBaseline="central" fill={isDone ? orangeDeep : navy}
-                style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 500, fontSize: 30 }}>
-                {step.n}
-              </text>
-            </svg>
-            <div style={{ minWidth: 0, paddingRight: 36 }}>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.62rem", letterSpacing: "0.14em", textTransform: "uppercase", color: orangeDeep, margin: "0 0 0.35rem", lineHeight: 1.4 }}>
-                {t.chapter} {chapterNo[selected]}{step.chapter ? ` · ${step.chapter}` : ""}
-              </p>
-              <h2 id="ice-card-title" style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 500, fontSize: "1.45rem", lineHeight: 1.15, color: navy, margin: 0, textWrap: "balance" }}>
-                {step.title}
-              </h2>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 600, color: muted, margin: "0.35rem 0 0.8rem" }}>
-                {t.step} {step.n}{isDone ? ` · ${t.done}` : isNext ? ` · ${t.next}` : ""}
-              </p>
-              <Link
-                ref={startRef}
-                href={`/journey/step/${step.n}`}
-                className="ice-start"
-                style={{ display: "inline-flex", alignItems: "center", minHeight: 44, padding: "0 1.2rem", background: navy, color: offWhite, fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.8rem", letterSpacing: "0.04em", textDecoration: "none", transition: "background 0.15s" }}
+              {/* Keyboard + screen reader access to every module. Hidden until focused. */}
+              <ul className="ice-sr" aria-label={t.modulesLabel}>
+                {steps.map((s, c) => (
+                  <li key={s.n}>
+                    <button type="button" onClick={() => open(c)}>
+                      {t.chapter} {code(c)}: {s.title}{doneSet.has(s.n) ? ` (${t.done})` : ""}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+
+              {/* Hover label */}
+              <div
+                ref={tipRef}
+                aria-hidden="true"
+                style={{
+                  position: "absolute", left: 0, top: 0, zIndex: 3, pointerEvents: "none",
+                  display: hoverStep ? "block" : "none", maxWidth: 260,
+                  background: offWhite, borderLeft: `2px solid ${orange}`,
+                  boxShadow: "0 8px 24px oklch(20% 0.08 260 / 0.3)", padding: "0.45rem 0.7rem",
+                }}
               >
-                {isDone ? t.review : t.start} →
-              </Link>
+                {hoverStep && hover !== null && (
+                  <>
+                    <span style={{ display: "block", fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.12em", textTransform: "uppercase", color: orangeDeep }}>
+                      {t.chapter} {code(hover)}
+                    </span>
+                    <span style={{ display: "block", fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 500, fontSize: "1.1rem", lineHeight: 1.2, color: navy }}>
+                      {hoverStep.title}
+                    </span>
+                  </>
+                )}
+              </div>
+
+              {!failed && (
+                <div style={{ position: "absolute", top: 12, right: 12, display: "flex", flexDirection: "column", gap: 6, zIndex: 2 }}>
+                  <button type="button" aria-label={t.zoomIn} title={t.zoomIn} style={iconBtn} onClick={() => apiRef.current?.zoom(0.8)}>+</button>
+                  <button type="button" aria-label={t.zoomOut} title={t.zoomOut} style={iconBtn} onClick={() => apiRef.current?.zoom(1.25)}>−</button>
+                  <button
+                    type="button"
+                    aria-label={spinning ? t.pause : t.play}
+                    title={spinning ? t.pause : t.play}
+                    aria-pressed={!spinning}
+                    style={{ ...iconBtn, fontSize: "0.8rem" }}
+                    onClick={() => { const on = !spinning; setSpinning(on); apiRef.current?.setSpin(on); }}
+                  >
+                    {spinning ? (
+                      <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><rect x="2" y="1" width="3.5" height="12" fill="currentColor" /><rect x="8.5" y="1" width="3.5" height="12" fill="currentColor" /></svg>
+                    ) : (
+                      <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 1 L12 7 L3 13 Z" fill="currentColor" /></svg>
+                    )}
+                  </button>
+                </div>
+              )}
+
+              {step && selected !== null && (
+                <div
+                  role="dialog"
+                  aria-labelledby="ice-card-title"
+                  style={{
+                    position: "absolute", left: "50%", bottom: 12, transform: "translateX(-50%)",
+                    width: "min(calc(100% - 24px), 380px)", zIndex: 4,
+                    background: offWhite, borderTop: `2px solid ${orange}`,
+                    boxShadow: "0 18px 48px oklch(20% 0.08 260 / 0.35)",
+                    padding: "1rem 3rem 1.1rem 1.1rem",
+                  }}
+                >
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.62rem", letterSpacing: "0.14em", textTransform: "uppercase", color: orangeDeep, margin: "0 0 0.35rem", lineHeight: 1.4 }}>
+                    {t.chapter} {code(selected)}{step.chapter ? ` · ${step.chapter}` : ""}
+                  </p>
+                  <h2 id="ice-card-title" style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 500, fontSize: "1.5rem", lineHeight: 1.15, color: navy, margin: 0, textWrap: "balance" }}>
+                    {step.title}
+                  </h2>
+                  {(isDone || isNext) && (
+                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 600, color: muted, margin: "0.35rem 0 0" }}>
+                      {isDone ? t.done : t.next}
+                    </p>
+                  )}
+                  <Link
+                    ref={startRef}
+                    href={`/journey/step/${step.n}`}
+                    className="ice-start"
+                    style={{ display: "inline-flex", alignItems: "center", minHeight: 44, marginTop: "0.8rem", padding: "0 1.2rem", background: navy, color: offWhite, fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.8rem", letterSpacing: "0.04em", textDecoration: "none", transition: "background 0.15s" }}
+                  >
+                    {isDone ? t.review : t.start} →
+                  </Link>
+                  <button type="button" aria-label={t.close} onClick={close}
+                    style={{ ...iconBtn, position: "absolute", top: 4, right: 4, border: "none", background: "transparent", color: muted, fontSize: "1.4rem" }}>
+                    ×
+                  </button>
+                </div>
+              )}
             </div>
-            <button type="button" aria-label={t.close} onClick={close}
-              style={{ ...iconBtn, position: "absolute", top: 4, right: 4, border: "none", background: "transparent", color: muted, fontSize: "1.4rem" }}>
-              ×
-            </button>
           </div>
-        )}
+        </div>
       </div>
     </main>
   );
