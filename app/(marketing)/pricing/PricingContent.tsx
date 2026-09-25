@@ -322,13 +322,13 @@ export default function PricingContent({ isIndonesia }: Props) {
       ? [
           "50+ modul pelatihan dengan dasbor kemajuan",
           "Dasbor pribadi + pelacakan kemajuan",
-          "Asesmen Kepribadian\nDISC - Enneagram - 5 Bahasa Cinta - Roda Kehidupan - Gaya Berpikir - Karunia Rohani - Big Five - 16 Kepribadian",
+          "8 Asesmen Kepribadian\nDISC - Enneagram - 5 Bahasa Penghargaan - Roda Kehidupan - Tiga Gaya Berpikir - Karunia Rohani - Big Five - 16 Kepribadian",
           "Konten baru saat diluncurkan",
         ]
       : [
           "50+ training modules on Cross-Cultural Leadership",
           "Personal dashboard + progress tracking",
-          "8 Personality Assessments\nDISC - Enneagram - 5 Love Languages - Wheel of Life - Thinking Styles - Spiritual Gifts - Big Five - 16 Personalities",
+          "8 Personality Assessments\nDISC - Enneagram - 5 Languages of Appreciation - Wheel of Life - Three Thinking Styles - Spiritual Gifts - Big Five - 16 Personalities",
           "Direct access to new content as it launches",
         ],
 
