@@ -462,7 +462,7 @@ export default function TeamPreviewDashboard({ language }: { language: string })
             <PrimaryLink href="/membership">{c.hero.cta}</PrimaryLink>
           </div>
         </div>
-        <figure className="tp-rise" style={{ margin: 0, animationDelay: "200ms" }}>
+        <figure className="tp-rise" style={{ margin: "0 auto", width: "100%", maxWidth: "25rem", animationDelay: "200ms" }}>
           <ScreenshotFrame kind="browser" src={TEAM_PROMO_IMAGES.leaderResults} label={c.shot.leaderResults} alt={c.caption.results} aspect="720 / 907" priority />
           <Caption>{c.caption.results}</Caption>
         </figure>
@@ -531,7 +531,7 @@ export default function TeamPreviewDashboard({ language }: { language: string })
             <h2 id="tp-mod-title" style={h2Style()}>{c.modules.title}</h2>
             <p style={bodyStyle}>{c.modules.intro}</p>
           </div>
-          <figure style={{ margin: 0 }}>
+          <figure style={{ margin: "0 auto", width: "100%", maxWidth: "23rem" }}>
             <ScreenshotFrame kind="browser" src={null} label={c.caption.modules} alt={c.caption.modules} aspect={TEAM_PROMO_VIDEO.aspect}>
               <LazyVideo label={c.caption.modules} />
             </ScreenshotFrame>
