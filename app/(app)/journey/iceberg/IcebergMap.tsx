@@ -768,7 +768,9 @@ export default function IcebergMap({ steps, completed, nextStep, lang, heading }
         .ice-sr:focus-within li:not(:focus-within) { display: none; }
         .ice-sr button { font-family: var(--font-montserrat); font-size: 0.78rem; font-weight: 600; color: ${navy}; background: ${offWhite}; border: 1px solid ${rule}; padding: 0.7rem 0.9rem; min-height: 44px; cursor: pointer; }
         .ice-start:hover { background: oklch(24% 0.11 260) !important; }
-        .ice-layout { display: grid; gap: 1rem; }
+        /* minmax(0,1fr) + min-width 0 stop the swipe strip from stretching the page wider than the screen. */
+        .ice-layout { display: grid; gap: 1rem; grid-template-columns: minmax(0, 1fr); }
+        .ice-layout > * { min-width: 0; }
         .ice-chapters { display: flex; gap: 0.4rem; overflow-x: auto; margin: 0; padding: 0 0 0.25rem; list-style: none; scrollbar-width: thin; }
         .ice-chapters button {
           display: flex; align-items: baseline; gap: 0.55rem; width: 100%; min-height: 44px; padding: 0.55rem 0.75rem;
