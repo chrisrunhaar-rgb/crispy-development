@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { Lang, translations } from "./i18n";
 
 type LanguageContextType = {
@@ -34,7 +34,11 @@ function setCookieLang(l: Lang) {
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>("en");
   const router = useRouter();
+  const pathname = usePathname();
 
+  // Re-read on every navigation: the dashboard toggle (a server action) and
+  // AuthLanguageSync change the cookie without going through setLang, so a
+  // one-time read on mount left client pages in the old language.
   useEffect(() => {
     // Cookie takes precedence over localStorage
     const fromCookie = getCookieLang();
@@ -44,7 +48,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     }
     const stored = localStorage.getItem("crispy-lang") as Lang | null;
     if (stored && VALID_LANGS.includes(stored)) setLangState(stored);
-  }, []);
+  }, [pathname]);
 
   const setLang = (l: Lang) => {
     setLangState(l);
