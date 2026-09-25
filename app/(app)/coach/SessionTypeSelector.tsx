@@ -24,16 +24,15 @@ export default function SessionTypeSelector({ trialExhausted, trialRemainingMinu
   if (trialExhausted) {
     return (
       <div style={{
-        background: "oklch(22% 0.06 260)",
-        border: "1px solid oklch(35% 0.06 260)",
+        background: "oklch(90.5% 0.012 80)",
+        borderTop: "2px solid oklch(65% 0.15 45)",
         padding: "1rem 1.25rem",
         marginBottom: "1rem",
-        borderRadius: 8,
       }}>
         <p style={{
           fontFamily: "var(--font-montserrat)",
           fontSize: "0.775rem",
-          color: "oklch(72% 0.008 260)",
+          color: "oklch(32% 0.06 260)",
           lineHeight: 1.6,
           margin: 0,
         }}>
@@ -65,9 +64,8 @@ export default function SessionTypeSelector({ trialExhausted, trialRemainingMinu
                 justifyContent: "center",
                 gap: "0.25rem",
                 padding: "1rem 0.75rem",
-                background: isSelected ? "oklch(28% 0.10 260)" : "oklch(22% 0.06 260)",
-                border: `2px solid ${isSelected ? "oklch(65% 0.15 45)" : "oklch(32% 0.06 260)"}`,
-                borderRadius: 10,
+                background: isSelected ? "oklch(90.5% 0.012 80)" : "oklch(99.5% 0.002 80)",
+                border: `2px solid ${isSelected ? "oklch(65% 0.15 45)" : "oklch(84% 0.01 80)"}`,
                 cursor: "pointer",
                 textAlign: "center",
                 transition: "all 0.15s ease",
@@ -79,14 +77,14 @@ export default function SessionTypeSelector({ trialExhausted, trialRemainingMinu
                 fontSize: "0.75rem",
                 letterSpacing: "0.05em",
                 textTransform: "uppercase",
-                color: isSelected ? "oklch(65% 0.15 45)" : "oklch(72% 0.008 260)",
+                color: isSelected ? "oklch(58% 0.16 45)" : "oklch(30% 0.12 260)",
               }}>
                 {type === "deep" ? s.deep : s.quick}
               </span>
               <span style={{
                 fontFamily: "var(--font-montserrat)",
                 fontSize: "0.65rem",
-                color: "oklch(60% 0.008 260)",
+                color: "oklch(48% 0.04 260)",
                 lineHeight: 1.3,
               }}>
                 {type === "deep" ? s.deepType : s.quickType}
@@ -103,8 +101,8 @@ export default function SessionTypeSelector({ trialExhausted, trialRemainingMinu
         onClick={handleStart}
         style={{
           width: "100%",
-          background: starting || !canStart ? "oklch(40% 0.06 260)" : "oklch(65% 0.15 45)",
-          color: "white",
+          background: starting || !canStart ? "oklch(84% 0.01 80)" : "oklch(30% 0.12 260)",
+          color: starting || !canStart ? "oklch(48% 0.04 260)" : "oklch(97% 0.005 80)",
           fontFamily: "var(--font-montserrat)",
           fontWeight: 700,
           fontSize: "0.8rem",
@@ -112,7 +110,6 @@ export default function SessionTypeSelector({ trialExhausted, trialRemainingMinu
           textTransform: "uppercase",
           padding: "0.9rem",
           border: "none",
-          borderRadius: 12,
           cursor: starting || !canStart ? "not-allowed" : "pointer",
           transition: "background 0.15s ease",
         }}

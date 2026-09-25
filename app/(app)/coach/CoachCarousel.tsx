@@ -23,13 +23,15 @@ const DOM_MINUTES = 4;
 const DOM_CLONE_AFTER = 5;
 
 // ── Colors ───────────────────────────────────────────────────────
-const NAVY = "oklch(14% 0.08 260)";
-const NAVY_CARD = "oklch(18% 0.09 260)";
-const NAVY_SUBTLE = "oklch(22% 0.08 260)";
+const PAGE = "oklch(97% 0.005 80)";
+const BAND = "oklch(90.5% 0.012 80)";
+const CARD = "oklch(99.5% 0.002 80)";
+const RULE = "oklch(84% 0.01 80)";
 const ORANGE = "oklch(65% 0.15 45)";
-const MUTED = "oklch(55% 0.008 260)";
-const LIGHT = "oklch(78% 0.008 260)";
-const WHITE = "oklch(97% 0.005 80)";
+const ORANGE_DEEP = "oklch(58% 0.16 45)";
+const MUTED = "oklch(48% 0.04 260)";
+const TEXT = "oklch(32% 0.06 260)";
+const INK = "oklch(30% 0.12 260)";
 
 // ── Coach + package data ─────────────────────────────────────────
 const COACHES = [
@@ -152,15 +154,15 @@ function AccordionNotes({ sessions, lang }: { sessions: NotebookSession[]; lang:
                 justifyContent: "space-between",
                 alignItems: "center",
                 padding: "0.875rem 1rem",
-                background: isOpen ? NAVY_CARD : NAVY_SUBTLE,
-                border: `1px solid ${isOpen ? "oklch(30% 0.08 260)" : "oklch(26% 0.07 260)"}`,
+                background: isOpen ? BAND : CARD,
+                border: `1px solid ${RULE}`,
                 cursor: "pointer",
                 textAlign: "left",
                 transition: "background 0.15s",
               }}
             >
               <div>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.08em", color: isOpen ? ORANGE : LIGHT, marginBottom: "0.15rem" }}>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.08em", color: isOpen ? ORANGE_DEEP : INK, marginBottom: "0.15rem" }}>
                   {lang === "id" ? "Sesi" : "Session"} {sessionNum}{dur ? ` · ${dur}` : ""}
                 </p>
                 <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: MUTED }}>
@@ -174,7 +176,7 @@ function AccordionNotes({ sessions, lang }: { sessions: NotebookSession[]; lang:
 
             {/* Expanded content */}
             {isOpen && wb && (
-              <div style={{ background: "oklch(16% 0.085 260)", padding: "1rem 1.125rem", display: "flex", flexDirection: "column", gap: "0.875rem" }}>
+              <div style={{ background: "oklch(94.5% 0.008 80)", borderInline: `1px solid ${RULE}`, borderBottom: `1px solid ${RULE}`, padding: "1rem 1.125rem", display: "flex", flexDirection: "column", gap: "0.875rem" }}>
                 {wb.focus_today && (
                   <NoteSection label={s.focus}>
                     <p style={noteText}>{wb.focus_today}</p>
@@ -200,13 +202,13 @@ function AccordionNotes({ sessions, lang }: { sessions: NotebookSession[]; lang:
                     <p style={{ ...noteText, fontStyle: "italic" }}>&ldquo;{wb.carrying_forward}&rdquo;</p>
                   </NoteSection>
                 )}
-                <Link href={`/coach/session/${sess.id}`} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 600, color: ORANGE, textDecoration: "none", letterSpacing: "0.04em", marginTop: "0.25rem" }}>
+                <Link href={`/coach/session/${sess.id}`} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 600, color: ORANGE_DEEP, textDecoration: "none", letterSpacing: "0.04em", marginTop: "0.25rem" }}>
                   {s.viewFullSession}
                 </Link>
               </div>
             )}
             {isOpen && !wb && (
-              <div style={{ background: "oklch(16% 0.085 260)", padding: "1rem 1.125rem" }}>
+              <div style={{ background: "oklch(94.5% 0.008 80)", borderInline: `1px solid ${RULE}`, borderBottom: `1px solid ${RULE}`, padding: "1rem 1.125rem" }}>
                 <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: MUTED, fontStyle: "italic" }}>{s.noNotesThisSession}</p>
               </div>
             )}
@@ -220,7 +222,7 @@ function AccordionNotes({ sessions, lang }: { sessions: NotebookSession[]; lang:
 const noteText: React.CSSProperties = {
   fontFamily: "var(--font-montserrat)",
   fontSize: "0.78rem",
-  color: LIGHT,
+  color: TEXT,
   lineHeight: 1.65,
   margin: 0,
 };
@@ -228,7 +230,7 @@ const noteText: React.CSSProperties = {
 function NoteSection({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div>
-      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.52rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(58% 0.12 150)", marginBottom: "0.3rem" }}>
+      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.52rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE_DEEP, marginBottom: "0.3rem" }}>
         {label}
       </p>
       {children}
@@ -260,7 +262,7 @@ function CoachPanel({
           onClick={onSwitchOpen}
           style={{
             width: "200px", height: "200px", borderRadius: "50%",
-            overflow: "hidden", border: "3px solid oklch(38% 0.10 260)",
+            overflow: "hidden", border: `3px solid ${RULE}`,
             cursor: "pointer", padding: 0, background: "none",
           }}
           aria-label="Switch coach"
@@ -274,10 +276,10 @@ function CoachPanel({
       </div>
 
       <div style={{ textAlign: "center" }}>
-        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, marginBottom: "0.25rem" }}>
+        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE_DEEP, marginBottom: "0.25rem" }}>
           {s.yourAiCoach}
         </p>
-        <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "2.5rem", fontStyle: "italic", color: WHITE, lineHeight: 1.1 }}>
+        <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "2.5rem", fontStyle: "italic", fontWeight: 500, color: INK, lineHeight: 1.1 }}>
           {coachName}
         </p>
         <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: MUTED, marginTop: "0.25rem", lineHeight: 1.5 }}>
@@ -330,7 +332,7 @@ function MinutesPanel({
       {/* Ring */}
       <div style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
         <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-          <circle cx={RING_R + 10} cy={RING_R + 10} r={RING_R} fill="none" stroke="oklch(28% 0.07 260)" strokeWidth="10" />
+          <circle cx={RING_R + 10} cy={RING_R + 10} r={RING_R} fill="none" stroke={RULE} strokeWidth="10" />
           <circle
             cx={RING_R + 10} cy={RING_R + 10} r={RING_R}
             fill="none" stroke={ringColor} strokeWidth="10" strokeLinecap="round"
@@ -340,7 +342,7 @@ function MinutesPanel({
           />
         </svg>
         <div style={{ position: "absolute", textAlign: "center" }}>
-          <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "5.5rem", fontStyle: "italic", color: WHITE, lineHeight: 1 }}>
+          <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "5.5rem", fontStyle: "italic", color: INK, lineHeight: 1 }}>
             {trialExhausted ? "0" : trialRemainingMinutes}
           </p>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: MUTED }}>
@@ -371,8 +373,8 @@ function MinutesPanel({
                   display: "flex", alignItems: "center", justifyContent: "space-between",
                   width: "100%", textAlign: "left",
                   padding: "0.875rem 1rem",
-                  background: pkg.bestValue ? "oklch(20% 0.10 260)" : NAVY_SUBTLE,
-                  border: `1px solid ${pkg.bestValue ? "oklch(36% 0.12 260)" : "oklch(28% 0.07 260)"}`,
+                  background: pkg.bestValue ? BAND : CARD,
+                  border: `1px solid ${pkg.bestValue ? INK : RULE}`,
                   borderRadius: 0,
                   position: "relative",
                   cursor: disabled ? "default" : "pointer",
@@ -392,7 +394,7 @@ function MinutesPanel({
                   </span>
                 )}
                 <div>
-                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: LIGHT, marginBottom: "0.15rem", marginTop: pkg.bestValue ? "0.4rem" : 0 }}>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: TEXT, marginBottom: "0.15rem", marginTop: pkg.bestValue ? "0.4rem" : 0 }}>
                     {lang === "id"
                       ? pkg.minutes === 60 ? "1 Jam" : pkg.minutes === 180 ? "3 Jam" : "5 Jam"
                       : pkg.label}
@@ -401,7 +403,7 @@ function MinutesPanel({
                     {isPending ? s.processing : `${pkg.minutes} ${lang === "id" ? "menit" : "minutes"}`}
                   </p>
                 </div>
-                <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "1.5rem", fontStyle: "italic", color: WHITE }}>
+                <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "1.5rem", fontStyle: "italic", color: INK }}>
                   {pkg.usd}
                 </p>
               </button>
@@ -409,7 +411,7 @@ function MinutesPanel({
           })}
         </div>
         {purchaseError && (
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", color: "oklch(70% 0.18 30)", textAlign: "center", marginTop: "0.5rem" }}>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", color: "oklch(50% 0.18 30)", textAlign: "center", marginTop: "0.5rem" }}>
             {s.purchaseError}
           </p>
         )}
@@ -428,7 +430,7 @@ function NotesPanel({ sessions, lang }: { sessions: NotebookSession[]; lang: Coa
       overflow: "hidden",
     }}>
       <div style={{ padding: "1.25rem 1.25rem 0.75rem", flexShrink: 0 }}>
-        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE }}>
+        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE_DEEP }}>
           {s.sessionNotes}
         </p>
         {sessions.length > 0 && (
@@ -474,7 +476,7 @@ function BgPanel({ profile, lang }: { profile: ProfileData; lang: CoachLang }) {
       overflow: "hidden",
     }}>
       <div style={{ padding: "1.25rem 1.25rem 0.75rem", flexShrink: 0 }}>
-        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE }}>
+        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE_DEEP }}>
           {s.aboutYou}
         </p>
       </div>
@@ -485,17 +487,17 @@ function BgPanel({ profile, lang }: { profile: ProfileData; lang: CoachLang }) {
           </p>
         ) : (
           fields.map(f => (
-            <div key={f.label} style={{ paddingBottom: "0.75rem", borderBottom: "1px solid oklch(24% 0.07 260)" }}>
+            <div key={f.label} style={{ paddingBottom: "0.75rem", borderBottom: `1px solid ${RULE}` }}>
               <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: MUTED, marginBottom: "0.25rem" }}>
                 {f.label}
               </p>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: LIGHT, lineHeight: 1.5 }}>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: TEXT, lineHeight: 1.5 }}>
                 {f.value}
               </p>
             </div>
           ))
         )}
-        <Link href="/coach/setup" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: ORANGE, textDecoration: "none", letterSpacing: "0.04em", marginTop: "0.25rem" }}>
+        <Link href="/coach/setup" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: ORANGE_DEEP, textDecoration: "none", letterSpacing: "0.04em", marginTop: "0.25rem" }}>
           {s.editBackgroundInfo}
         </Link>
       </div>
@@ -543,7 +545,7 @@ export default function CoachCarousel({
     const prevBg = main?.style.background ?? "";
     const prevOverflow = main?.style.overflow ?? "";
     if (main) {
-      main.style.background = NAVY;
+      main.style.background = PAGE;
       main.style.overflow = "hidden";
     }
     document.documentElement.style.overflow = "hidden";
@@ -592,6 +594,31 @@ export default function CoachCarousel({
     }, 60);
   }, []);
 
+  // Click / keyboard navigation for the carousel (touch swipe keeps working as before)
+  const goToDom = useCallback((domIdx: number) => {
+    const el = scrollRef.current;
+    if (!el) return;
+    el.scrollTo({ left: domIdx * el.clientWidth, behavior: "smooth" });
+  }, []);
+  const stepPanel = useCallback((dir: -1 | 1) => {
+    const el = scrollRef.current;
+    if (!el) return;
+    goToDom(Math.round(el.scrollLeft / el.clientWidth) + dir);
+  }, [goToDom]);
+
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (showSwitcher) return;
+      const t = e.target as HTMLElement | null;
+      if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable)) return;
+      if (!scrollRef.current || scrollRef.current.offsetParent === null) return;
+      if (e.key === "ArrowLeft") stepPanel(-1);
+      else if (e.key === "ArrowRight") stepPanel(1);
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [showSwitcher, stepPanel]);
+
   async function handleCoachSwitch(c: typeof COACHES[0]) {
     if (c.name === coachName) { setShowSwitcher(false); return; }
     setSwitching(true);
@@ -639,20 +666,20 @@ export default function CoachCarousel({
     <>
       <style>{`
         .wpc-outer {
-          background: ${NAVY};
+          background: ${PAGE};
           height: calc(100dvh - 80px);
           overflow: hidden;
           display: flex;
           flex-direction: column;
         }
         .wpc-header {
-          background: oklch(16% 0.09 260);
+          background: ${PAGE};
           flex-shrink: 0;
           padding: 0.875rem 1.25rem;
           display: flex;
           justify-content: space-between;
           align-items: center;
-          border-bottom: 1px solid oklch(22% 0.08 260);
+          border-bottom: 1px solid ${RULE};
         }
         .wpc-mobile {
           flex: 1;
@@ -670,6 +697,18 @@ export default function CoachCarousel({
           -webkit-overflow-scrolling: touch;
         }
         .wpc-scroll::-webkit-scrollbar { display: none; }
+        .wpc-navbtn {
+          background: none; border: none; cursor: pointer;
+          font-family: var(--font-montserrat); font-size: 0.72rem; font-weight: 600;
+          letter-spacing: 0.04em; color: ${MUTED};
+          padding: 0.55rem 0.7rem; border-radius: 100px;
+          transition: color 0.15s, background 0.15s;
+        }
+        .wpc-navbtn:hover { color: ${INK}; background: ${BAND}; }
+        .wpc-dotbtn {
+          background: none; border: none; cursor: pointer;
+          padding: 0.6rem 0.2rem; display: flex; align-items: center;
+        }
         .wpc-panel {
           flex-shrink: 0;
           width: 100%;
@@ -699,8 +738,8 @@ export default function CoachCarousel({
           .wpc-desktop-left {
             width: 380px;
             flex-shrink: 0;
-            background: oklch(16% 0.09 260);
-            border-right: 1px solid oklch(22% 0.08 260);
+            background: ${BAND};
+            border-right: 1px solid ${RULE};
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -716,8 +755,8 @@ export default function CoachCarousel({
             overflow: hidden;
           }
           .wpc-minutes-bar {
-            background: ${NAVY_CARD};
-            border-bottom: 1px solid oklch(22% 0.08 260);
+            background: ${PAGE};
+            border-bottom: 1px solid ${RULE};
             padding: 1rem 2rem;
             display: flex;
             align-items: center;
@@ -730,6 +769,11 @@ export default function CoachCarousel({
             overflow-y: auto;
             padding: 1.5rem 2rem;
           }
+        }
+        .wpc-outer button:focus-visible, .wpc-outer a:focus-visible { outline: 2px solid ${ORANGE}; outline-offset: 2px; }
+        @media (prefers-reduced-motion: reduce) {
+          .wpc-outer *, .wpc-outer *::before { transition: none !important; }
+          .wpc-scroll { scroll-behavior: auto !important; }
         }
       `}</style>
 
@@ -783,30 +827,35 @@ export default function CoachCarousel({
                 position: "absolute", bottom: "1.125rem", left: "50%",
                 transform: "translateX(-50%)",
                 display: "flex", alignItems: "center",
-                gap: "0.625rem", zIndex: 20, pointerEvents: "none",
-                background: "oklch(10% 0.06 260 / 0.7)",
-                padding: "0.35rem 0.875rem",
+                gap: "0.25rem", zIndex: 20,
+                background: "oklch(99% 0.003 80 / 0.9)",
+                border: `1px solid ${RULE}`,
+                padding: "0.2rem 0.3rem",
                 borderRadius: "100px",
                 backdropFilter: "blur(4px)",
                 whiteSpace: "nowrap",
               }}>
-                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.52rem", fontWeight: 600, letterSpacing: "0.06em", color: "oklch(62% 0.007 260)" }}>
+                <button type="button" className="wpc-navbtn" onClick={() => stepPanel(-1)} aria-label={leftLabel}>
                   ← {leftLabel}
-                </span>
-                <div style={{ display: "flex", gap: "5px", alignItems: "center" }}>
+                </button>
+                <div style={{ display: "flex", alignItems: "center" }}>
                   {[PANEL_BG, PANEL_NOTES, PANEL_COACH, PANEL_MINUTES].map(i => (
-                    <div key={i} style={{
-                      height: "6px",
-                      width: i === activePanel ? "22px" : "6px",
-                      borderRadius: "3px",
-                      background: i === activePanel ? ORANGE : "oklch(52% 0.06 260)",
-                      transition: "width 0.25s ease, background 0.25s ease",
-                    }} />
+                    <button key={i} type="button" className="wpc-dotbtn" onClick={() => goToDom(i + 1)}
+                      aria-label={PANEL_NAMES[i]} aria-current={i === activePanel ? "true" : undefined}>
+                      <span style={{
+                        display: "block",
+                        height: "7px",
+                        width: i === activePanel ? "24px" : "7px",
+                        borderRadius: "4px",
+                        background: i === activePanel ? ORANGE : "oklch(78% 0.015 80)",
+                        transition: "width 0.25s ease, background 0.25s ease",
+                      }} />
+                    </button>
                   ))}
                 </div>
-                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.52rem", fontWeight: 600, letterSpacing: "0.06em", color: "oklch(62% 0.007 260)" }}>
+                <button type="button" className="wpc-navbtn" onClick={() => stepPanel(1)} aria-label={rightLabel}>
                   {rightLabel} →
-                </span>
+                </button>
               </div>
             );
           })()}
@@ -820,7 +869,7 @@ export default function CoachCarousel({
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.4rem", flexShrink: 0 }}>
               <button onClick={() => setShowSwitcher(true)} style={{
                 width: "140px", height: "140px", borderRadius: "50%",
-                overflow: "hidden", border: "3px solid oklch(38% 0.10 260)",
+                overflow: "hidden", border: `3px solid ${RULE}`,
                 cursor: "pointer", padding: 0, background: "none",
               }} aria-label="Switch coach">
                 <Image src={coachImage} alt={coachName} width={140} height={140}
@@ -832,10 +881,10 @@ export default function CoachCarousel({
             </div>
 
             <div style={{ textAlign: "center" }}>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, marginBottom: "0.25rem" }}>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE_DEEP, marginBottom: "0.25rem" }}>
                 {s.yourAiCoach}
               </p>
-              <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "2.5rem", fontStyle: "italic", color: WHITE, lineHeight: 1.1 }}>
+              <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "2.5rem", fontStyle: "italic", fontWeight: 500, color: INK, lineHeight: 1.1 }}>
                 {coachName}
               </p>
               <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: MUTED, marginTop: "0.25rem" }}>
@@ -853,7 +902,7 @@ export default function CoachCarousel({
           <div className="wpc-desktop-right">
             <div className="wpc-minutes-bar">
               <svg width="56" height="56" viewBox="0 0 56 56" style={{ flexShrink: 0 }}>
-                <circle cx="28" cy="28" r={MINI_R} fill="none" stroke="oklch(28% 0.07 260)" strokeWidth="6" />
+                <circle cx="28" cy="28" r={MINI_R} fill="none" stroke={RULE} strokeWidth="6" />
                 <circle cx="28" cy="28" r={MINI_R} fill="none"
                   stroke={ringColor} strokeWidth="6" strokeLinecap="round"
                   strokeDasharray={MINI_C}
@@ -865,7 +914,7 @@ export default function CoachCarousel({
                 <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: MUTED, marginBottom: "0.15rem" }}>
                   {grantedMinutes === 0 ? "" : s.minutesLabel}
                 </p>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", fontWeight: 700, color: (trialExhausted || grantedMinutes === 0) ? "oklch(55% 0.15 30)" : WHITE }}>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", fontWeight: 700, color: (trialExhausted || grantedMinutes === 0) ? "oklch(50% 0.16 30)" : INK }}>
                   {grantedMinutes === 0 ? s.noCredit : trialExhausted ? s.trialComplete : s.minRemaining(trialRemainingMinutes)}
                 </p>
                 {grantedMinutes > 0 && (
@@ -883,8 +932,8 @@ export default function CoachCarousel({
                       <button key={pkg.label} onClick={() => handleDesktopBuy(pkg.packId)} disabled={disabled} style={{
                         fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.05em",
                         padding: "0.5rem 0.75rem",
-                        background: pkg.bestValue ? "oklch(20% 0.10 260)" : "oklch(24% 0.07 260)", color: MUTED,
-                        border: `1px solid ${pkg.bestValue ? ORANGE : "oklch(28% 0.07 260)"}`,
+                        background: pkg.bestValue ? BAND : CARD, color: INK,
+                        border: `1px solid ${pkg.bestValue ? ORANGE : RULE}`,
                         whiteSpace: "nowrap", position: "relative",
                         cursor: disabled ? "default" : "pointer",
                         opacity: disabled && !isPending ? 0.5 : 1,
@@ -897,14 +946,14 @@ export default function CoachCarousel({
                     );
                   })}
                 </div>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.52rem", color: desktopPurchaseError ? "oklch(70% 0.18 30)" : "oklch(40% 0.007 260)", letterSpacing: "0.04em" }}>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.52rem", color: desktopPurchaseError ? "oklch(50% 0.18 30)" : MUTED, letterSpacing: "0.04em" }}>
                   {desktopPurchaseError ? s.purchaseError : s.buyMoreMinutes}
                 </p>
               </div>
             </div>
 
             {/* Tab strip */}
-            <div style={{ display: "flex", borderBottom: "1px solid oklch(22% 0.08 260)", flexShrink: 0 }}>
+            <div style={{ display: "flex", borderBottom: `1px solid ${RULE}`, flexShrink: 0 }}>
               {(["notes", "background"] as const).map(tab => (
                 <button
                   key={tab}
@@ -915,7 +964,7 @@ export default function CoachCarousel({
                     padding: "0.75rem 1.5rem",
                     background: "none", border: "none",
                     borderBottom: `2px solid ${rightTab === tab ? ORANGE : "transparent"}`,
-                    color: rightTab === tab ? ORANGE : MUTED,
+                    color: rightTab === tab ? ORANGE_DEEP : MUTED,
                     cursor: "pointer",
                     transition: "color 0.15s, border-color 0.15s",
                     marginBottom: "-1px",
@@ -964,17 +1013,17 @@ export default function CoachCarousel({
                       </p>
                     ) : (
                       fields.map(f => (
-                        <div key={f.label} style={{ paddingBottom: "0.75rem", borderBottom: "1px solid oklch(24% 0.07 260)" }}>
+                        <div key={f.label} style={{ paddingBottom: "0.75rem", borderBottom: `1px solid ${RULE}` }}>
                           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: MUTED, marginBottom: "0.25rem" }}>
                             {f.label}
                           </p>
-                          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: LIGHT, lineHeight: 1.5 }}>
+                          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: TEXT, lineHeight: 1.5 }}>
                             {f.value}
                           </p>
                         </div>
                       ))
                     )}
-                    <Link href="/coach/setup" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: ORANGE, textDecoration: "none", letterSpacing: "0.04em" }}>
+                    <Link href="/coach/setup" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: ORANGE_DEEP, textDecoration: "none", letterSpacing: "0.04em" }}>
                       {s.editBackgroundInfo}
                     </Link>
                   </div>
@@ -988,21 +1037,21 @@ export default function CoachCarousel({
         {showSwitcher && (
           <>
             <div onClick={() => setShowSwitcher(false)} style={{
-              position: "fixed", inset: 0, background: "rgba(0,0,0,0.72)", zIndex: 50,
+              position: "fixed", inset: 0, background: "oklch(25% 0.06 260 / 0.45)", zIndex: 50,
             }} />
             <div style={{
               position: "fixed",
               top: "50%", left: "50%",
               transform: "translate(-50%, -50%)",
-              background: "oklch(17% 0.09 260)",
+              background: PAGE,
+              borderTop: `2px solid ${ORANGE}`,
               padding: "2rem 1.75rem 2rem",
               zIndex: 51,
-              borderRadius: "12px",
               width: "min(92vw, 440px)",
-              boxShadow: "0 32px 80px rgba(0,0,0,0.6)",
+              boxShadow: "0 24px 60px oklch(25% 0.06 260 / 0.2)",
             }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.25rem" }}>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE }}>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE_DEEP }}>
                   {s.chooseCoach}
                 </p>
                 <button onClick={() => setShowSwitcher(false)} style={{
@@ -1016,17 +1065,17 @@ export default function CoachCarousel({
                 {COACHES.map(c => (
                   <button key={c.name} onClick={() => handleCoachSwitch(c)} disabled={switching} style={{
                     flex: 1, padding: "1.25rem 1rem",
-                    background: c.name === coachName ? "oklch(25% 0.10 260)" : NAVY_SUBTLE,
-                    border: `2px solid ${c.name === coachName ? ORANGE : "oklch(28% 0.07 260)"}`,
+                    background: c.name === coachName ? BAND : CARD,
+                    border: `2px solid ${c.name === coachName ? ORANGE : RULE}`,
                     cursor: switching ? "wait" : "pointer",
                     display: "flex", flexDirection: "column", alignItems: "center", gap: "0.75rem",
                     borderRadius: "6px",
                   }}>
-                    <div style={{ width: "80px", height: "80px", borderRadius: "50%", overflow: "hidden", border: `2px solid ${c.name === coachName ? ORANGE : "oklch(32% 0.08 260)"}` }}>
+                    <div style={{ width: "80px", height: "80px", borderRadius: "50%", overflow: "hidden", border: `2px solid ${c.name === coachName ? ORANGE : RULE}` }}>
                       <Image src={c.image} alt={c.name} width={80} height={80} style={{ objectFit: "cover", width: "100%", height: "100%" }} />
                     </div>
                     <div style={{ textAlign: "center" }}>
-                      <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "1.75rem", fontStyle: "italic", color: WHITE }}>
+                      <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "1.75rem", fontStyle: "italic", color: INK }}>
                         {c.name}
                       </p>
                       <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", color: MUTED, lineHeight: 1.4 }}>
@@ -1034,7 +1083,7 @@ export default function CoachCarousel({
                       </p>
                     </div>
                     {c.name === coachName && (
-                      <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: ORANGE }}>
+                      <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: ORANGE_DEEP }}>
                         {s.current}
                       </span>
                     )}
@@ -1043,7 +1092,7 @@ export default function CoachCarousel({
               </div>
 
               {/* Coaching style toggle (item 4/7) — direct vs relational baseline */}
-              <div style={{ marginTop: "1.5rem", paddingTop: "1.25rem", borderTop: "1px solid oklch(28% 0.07 260)" }}>
+              <div style={{ marginTop: "1.5rem", paddingTop: "1.25rem", borderTop: `1px solid ${RULE}` }}>
                 <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, marginBottom: "0.5rem" }}>
                   {s.coachingStyleLabel}
                 </p>
@@ -1055,12 +1104,12 @@ export default function CoachCarousel({
                       disabled={savingStyle}
                       style={{
                         flex: 1, padding: "0.6rem 0.75rem",
-                        background: coachingStyle === style ? "oklch(25% 0.10 260)" : NAVY_SUBTLE,
-                        border: `1.5px solid ${coachingStyle === style ? ORANGE : "oklch(28% 0.07 260)"}`,
+                        background: coachingStyle === style ? BAND : CARD,
+                        border: `1.5px solid ${coachingStyle === style ? ORANGE : RULE}`,
                         borderRadius: "5px",
                         cursor: savingStyle ? "wait" : "pointer",
                         fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 600,
-                        color: coachingStyle === style ? WHITE : MUTED,
+                        color: coachingStyle === style ? INK : MUTED,
                       }}
                     >
                       {style === "direct" ? s.coachingStyleDirect : s.coachingStyleRelational}
@@ -1073,7 +1122,7 @@ export default function CoachCarousel({
               </div>
 
               {/* Coaching intensity toggle — firm vs gentle, second independent axis */}
-              <div style={{ marginTop: "1.25rem", paddingTop: "1.25rem", borderTop: "1px solid oklch(28% 0.07 260)" }}>
+              <div style={{ marginTop: "1.25rem", paddingTop: "1.25rem", borderTop: `1px solid ${RULE}` }}>
                 <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, marginBottom: "0.5rem" }}>
                   {s.coachingIntensityLabel}
                 </p>
@@ -1085,12 +1134,12 @@ export default function CoachCarousel({
                       disabled={savingIntensity}
                       style={{
                         flex: 1, padding: "0.6rem 0.75rem",
-                        background: coachingIntensity === intensity ? "oklch(25% 0.10 260)" : NAVY_SUBTLE,
-                        border: `1.5px solid ${coachingIntensity === intensity ? ORANGE : "oklch(28% 0.07 260)"}`,
+                        background: coachingIntensity === intensity ? BAND : CARD,
+                        border: `1.5px solid ${coachingIntensity === intensity ? ORANGE : RULE}`,
                         borderRadius: "5px",
                         cursor: savingIntensity ? "wait" : "pointer",
                         fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 600,
-                        color: coachingIntensity === intensity ? WHITE : MUTED,
+                        color: coachingIntensity === intensity ? INK : MUTED,
                       }}
                     >
                       {intensity === "firm" ? s.coachingIntensityFirm : s.coachingIntensityGentle}
