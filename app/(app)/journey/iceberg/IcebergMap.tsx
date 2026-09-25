@@ -455,9 +455,9 @@ export default function IcebergMap({ steps, completed, nextStep, lang, heading }
 
     // ── Lines ──
     const lineMats: LineMaterial[] = [];
-    const out = (p: V3): V3 => {
+    const out = (p: V3, push = 0.015): V3 => {
       const r = inner(p);
-      return [p[0] + (p[0] - r[0]) * 0.015, p[1], p[2] + (p[2] - r[2]) * 0.015];
+      return [p[0] + (p[0] - r[0]) * push, p[1], p[2] + (p[2] - r[2]) * push];
     };
     const makeLines = (segs: number[], color: string, width: number, opacity = 1) => {
       const geo = track(new LineSegmentsGeometry());
@@ -469,10 +469,10 @@ export default function IcebergMap({ steps, completed, nextStep, lang, heading }
       scene.add(line);
       return line;
     };
-    const edge = (segs: number[], p: V3, q: V3) => segs.push(...out(p), ...out(q));
-    const polyline = (segs: number[], pts: V3[], closed = false) => {
-      for (let i = 0; i < pts.length - 1; i++) edge(segs, pts[i], pts[i + 1]);
-      if (closed && pts.length > 2) edge(segs, pts[pts.length - 1], pts[0]);
+    const edge = (segs: number[], p: V3, q: V3, push?: number) => segs.push(...out(p, push), ...out(q, push));
+    const polyline = (segs: number[], pts: V3[], closed = false, push?: number) => {
+      for (let i = 0; i < pts.length - 1; i++) edge(segs, pts[i], pts[i + 1], push);
+      if (closed && pts.length > 2) edge(segs, pts[pts.length - 1], pts[0], push);
     };
     const outline = (segs: number[], c: number) => polyline(segs, cells[c].poly, true);
     const setLine = (line: LineSegments2, segs: number[]) => {
@@ -500,8 +500,8 @@ export default function IcebergMap({ steps, completed, nextStep, lang, heading }
     if (nextCell >= 0 && nextCell < cellCount) outline(nextSegs, nextCell);
     makeLines(nextSegs, HEX.navy, 2.4);
 
-    const chapterGlow = makeLines([], "#ffffff", 7, 0.55);
-    const chapterLine = makeLines([], HEX.chapter, 3);
+    // Picked chapter: one solid navy line, same as the "up next" outline, lifted clear of the ice.
+    const chapterLine = makeLines([], HEX.navy, 3.2);
     const selLine = makeLines([], HEX.navy, 3.2);
 
     // ── Camera + controls ──
@@ -662,14 +662,13 @@ export default function IcebergMap({ steps, completed, nextStep, lang, heading }
         selectedChapter = k;
         const segs: number[] = [];
         if (k !== null && outlines[k]) {
-          outlines[k].forEach(p => polyline(segs, p));
+          outlines[k].forEach(p => polyline(segs, p, false, 0.04));
           clearTimeout(resumeTimer);
           controls.autoRotate = false;
           turnTo = facing[k];
         } else if (idle()) {
           resume();
         }
-        setLine(chapterGlow, segs);
         setLine(chapterLine, segs);
       },
       zoom: factor => {
