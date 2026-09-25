@@ -59,7 +59,7 @@ export default async function JourneyJournalPage() {
       <style>{`.jrn a:focus-visible, .jrn button:focus-visible, .jrn summary:focus-visible, .jrn textarea:focus-visible { outline: 2px solid oklch(65% 0.15 45); outline-offset: 3px; } @media (prefers-reduced-motion: reduce) { .jrn *, .jrn *::before, .jrn *::after { transition: none !important; animation: none !important; } }`}</style>
       <header style={{ background: offWhite, color: navy, padding: "1.25rem 1rem 2rem", borderBottom: `1px solid ${rule}` }}>
         <div style={{ maxWidth: 760, margin: "0 auto" }}>
-          <Link href="/journey" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 600, color: mid, textDecoration: "none" }}>{t.back}</Link>
+          <Link href="/journey/iceberg" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 600, color: mid, textDecoration: "none" }}>{t.back}</Link>
           <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.68rem", letterSpacing: "0.14em", textTransform: "uppercase", color: orangeDeep, margin: "1.5rem 0 0.5rem" }}>{t.eyebrow}</p>
           <h1 style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 500, fontSize: "clamp(2.1rem, 5vw, 2.9rem)", lineHeight: 1.05, color: navy, margin: 0 }}>{t.title}</h1>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.88rem", lineHeight: 1.6, color: text, margin: "0.75rem 0 0" }}>{t.intro}</p>
@@ -70,7 +70,7 @@ export default async function JourneyJournalPage() {
         {filled.length === 0 ? (
           <div style={{ background: "oklch(90.5% 0.012 80)", borderTop: `2px solid ${orange}`, padding: "2rem", textAlign: "center" }}>
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", color: mid, lineHeight: 1.6, margin: "0 0 1.25rem" }}>{t.empty}</p>
-            <Link href="/journey" style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.85rem", color: offWhite, background: navy, padding: "0.8rem 1.4rem", textDecoration: "none", display: "inline-block" }}>{t.start}</Link>
+            <Link href="/journey/iceberg" style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.85rem", color: offWhite, background: navy, padding: "0.8rem 1.4rem", textDecoration: "none", display: "inline-block" }}>{t.start}</Link>
           </div>
         ) : (
           <div style={{ display: "flex", flexDirection: "column", borderTop: `1px solid ${navy}` }}>

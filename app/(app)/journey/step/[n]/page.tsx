@@ -9,7 +9,7 @@ export const metadata = { title: "Influential Leadership Journey" };
 export default async function JourneyStepPage({ params }: { params: Promise<{ n: string }> }) {
   const { n } = await params;
   const stepNumber = parseInt(n, 10);
-  if (isNaN(stepNumber) || stepNumber < 1 || stepNumber > 60) redirect("/journey");
+  if (isNaN(stepNumber) || stepNumber < 1 || stepNumber > 60) redirect("/journey/iceberg");
 
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
@@ -23,7 +23,7 @@ export default async function JourneyStepPage({ params }: { params: Promise<{ n:
     supabase.from("journey_step_completions").select("step_number", { count: "exact", head: true }).eq("user_id", user.id),
     admin.from("challenge_modules").select("day_number, chapter_title").gte("day_number", 1).lte("day_number", stepNumber).order("day_number"),
   ]);
-  if (!module) redirect("/journey");
+  if (!module) redirect("/journey/iceberg");
 
   const cookieStore = await cookies();
   const metaLang = (user.user_metadata as Record<string, unknown>)?.language_preference as string | undefined;

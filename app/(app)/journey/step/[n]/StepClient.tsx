@@ -157,11 +157,11 @@ export default function StepClient({
     setSaveState("saving");
     const res = await saveStepJournal(stepNumber, answer1, answer2, aiQuestion, aiAnswer);
     if (res.error) { setSaveState("error"); return; }
-    window.location.href = "/journey";
+    window.location.href = "/journey/iceberg";
   }
 
   function handleSkip() {
-    window.location.href = "/journey";
+    window.location.href = "/journey/iceberg";
   }
 
   // Close on Escape, lock page scroll while the journal is open
@@ -219,7 +219,7 @@ export default function StepClient({
       {/* Top bar */}
       <div style={{ background: offWhite, borderBottom: `1px solid ${rule}`, position: "sticky", top: 0, zIndex: 10 }}>
         <div style={{ maxWidth: "1020px", margin: "0 auto", padding: "1rem clamp(1rem, 4vw, 2rem)", display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center", gap: "1rem" }}>
-          <Link href="/journey" style={{ color: mid, textDecoration: "none", fontSize: "0.75rem", fontFamily: "var(--font-montserrat)", fontWeight: 600, letterSpacing: "0.04em" }}>
+          <Link href="/journey/iceberg" style={{ color: mid, textDecoration: "none", fontSize: "0.75rem", fontFamily: "var(--font-montserrat)", fontWeight: 600, letterSpacing: "0.04em" }}>
             {t.back}
           </Link>
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.25rem" }}>

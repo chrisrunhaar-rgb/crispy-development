@@ -277,7 +277,7 @@ export default function IcebergMap({ steps, completed, nextStep, lang, heading }
         zoomIn: "Perbesar", zoomOut: "Perkecil", pause: "Hentikan putaran", play: "Putar lagi",
         legendDone: "Selesai", legendNext: "Berikutnya",
         chapterHint: "Pilih bab untuk melihatnya di gunung es.",
-        failed: "Peta 3D tidak dapat dimuat di perangkat ini.", fallback: "Buka daftar",
+        failed: "Peta 3D tidak dapat dimuat di perangkat ini.", fallback: "Buka bab berikutnya",
         modulesLabel: "Semua modul",
       }
     : {
@@ -286,7 +286,7 @@ export default function IcebergMap({ steps, completed, nextStep, lang, heading }
         zoomIn: "Zoom in", zoomOut: "Zoom out", pause: "Stop turning", play: "Turn again",
         legendDone: "Completed", legendNext: "Up next",
         chapterHint: "Pick a chapter to see it on the iceberg.",
-        failed: "The 3D map could not load on this device.", fallback: "Open the list",
+        failed: "The 3D map could not load on this device.", fallback: "Open the next chapter",
         modulesLabel: "All modules",
       };
 
@@ -910,7 +910,7 @@ export default function IcebergMap({ steps, completed, nextStep, lang, heading }
               {failed && (
                 <div style={{ position: "absolute", inset: 0, zIndex: 2, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "1rem", padding: "1.5rem", textAlign: "center", background: offWhite }}>
                   <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", color: text, margin: 0 }}>{t.failed}</p>
-                  <Link href="/journey" style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.8rem", color: navy }}>{t.fallback}</Link>
+                  <Link href={`/journey/step/${nextStep ?? 1}`} style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.8rem", color: navy }}>{t.fallback}</Link>
                 </div>
               )}
 

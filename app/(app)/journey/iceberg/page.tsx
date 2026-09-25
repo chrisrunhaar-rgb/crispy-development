@@ -12,11 +12,10 @@ const rule    = "oklch(84% 0.01 80)";
 const offWhite = "oklch(97% 0.005 80)";
 
 export const metadata = {
-  title: "Iceberg preview | Crispy Development",
-  robots: { index: false, follow: false },
+  title: "Influential Leadership Journey | Crispy Development",
 };
 
-// Preview of the 3D iceberg map. Replaces the stone path on /journey once approved.
+// The journey map. /journey redirects here.
 export default async function IcebergPreviewPage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
@@ -57,18 +56,18 @@ export default async function IcebergPreviewPage() {
 
   const t = isId
     ? {
-        eyebrow: "Pratinjau",
+        eyebrow: "Perjalanan Kepemimpinan yang Berpengaruh",
         title: "Apa yang ada di bawah permukaan",
         intro: "Di atas air adalah apa yang orang lihat dari seorang pemimpin. Kepemimpinan yang Berpengaruh adalah apa yang ada di bawahnya. Seret untuk memutar gunung es, perbesar untuk melihat lebih dekat, dan ketuk sebuah sisi untuk membukanya.",
         progress: `${doneCount} dari ${total} bab selesai`,
-        back: "← Kembali ke perjalanan",
+        back: "← Kembali ke dasbor",
       }
     : {
-        eyebrow: "Preview",
+        eyebrow: "Influential Leadership Journey",
         title: "What lies beneath the surface",
         intro: "Above the water is what people see of a leader. Influential Leadership is what sits below it. Drag to turn the iceberg, zoom in for a closer look, and tap a facet to open it.",
         progress: `${doneCount} of ${total} chapters completed`,
-        back: "← Back to the journey",
+        back: "← Back to dashboard",
       };
 
   return (
@@ -76,7 +75,7 @@ export default async function IcebergPreviewPage() {
       <style>{`.jrn a:focus-visible, .jrn button:focus-visible { outline: 2px solid oklch(65% 0.15 45); outline-offset: 3px; } @media (prefers-reduced-motion: reduce) { .jrn *, .jrn *::before, .jrn *::after { transition: none !important; animation: none !important; } }`}</style>
       <header style={{ background: offWhite, color: navy, padding: "1.25rem 1rem 1.25rem", borderBottom: `1px solid ${rule}` }}>
         <div style={{ maxWidth: 1148, margin: "0 auto" }}>
-          <Link href="/journey" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 600, color: muted, textDecoration: "none" }}>
+          <Link href="/dashboard" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 600, color: muted, textDecoration: "none" }}>
             {t.back}
           </Link>
         </div>

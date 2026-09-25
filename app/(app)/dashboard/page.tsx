@@ -856,11 +856,11 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
 
   return (
     <>
-    <JourneyTile done={journeyDone} nextStep={journeyNextStep} lang={languagePreference} />
     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "3rem", alignItems: "start" }}>
 
-      {/* Left: saved resource list */}
+      {/* Left: journey tile + saved resource list */}
       <div id="tour-journey">
+        <JourneyTile done={journeyDone} lang={languagePreference} />
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem", gap: "1rem", flexWrap: "wrap" }}>
           <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1.125rem", color: "oklch(22% 0.005 260)" }}>
             {languagePreference === "id" ? "Perjalanan Pengembangan Pribadi Saya" : "My Personal Development Journey"}
@@ -953,42 +953,33 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
   );
 }
 
-function JourneyTile({ done, nextStep, lang }: { done: number; nextStep: number | null; lang: "en" | "id" }) {
+function JourneyTile({ done, lang }: { done: number; lang: "en" | "id" }) {
   const isId = lang === "id";
   const pct = Math.round((done / 60) * 100);
-  const cta = nextStep === null
-    ? (isId ? "Lihat perjalanan" : "View journey")
-    : done === 0
-      ? (isId ? "Mulai: Langkah 1" : "Start: Step 1")
-      : (isId ? `Lanjutkan: Langkah ${nextStep}` : `Continue: Step ${nextStep}`);
-  const href = nextStep === null ? "/journey" : `/journey/step/${nextStep}`;
+  const navy = "oklch(30% 0.12 260)";
   return (
-    <div id="tour-leadership-journey" style={{ background: "oklch(22% 0.10 260)", borderRadius: 14, padding: "clamp(1.25rem, 3vw, 1.75rem) clamp(1.25rem, 3vw, 2rem)", marginBottom: "2.5rem", display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "1.25rem" }}>
-      <Link href="/journey" style={{ textDecoration: "none", flex: "1 1 320px", minWidth: 0 }}>
-        <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.65rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", margin: "0 0 0.35rem" }}>
-          {isId ? "60 langkah · gratis" : "60 steps · free"}
-        </p>
-        <h2 style={{ fontFamily: "var(--font-cormorant)", fontWeight: 600, fontSize: "clamp(1.5rem, 3.5vw, 2rem)", color: "oklch(97% 0.005 80)", lineHeight: 1.1, margin: "0 0 0.85rem" }}>
+    <div id="tour-leadership-journey" className="journey-tile" style={{ position: "relative", background: "oklch(99% 0.003 80)", border: "1px solid oklch(84% 0.01 80)", borderTop: "3px solid oklch(65% 0.15 45)", padding: "1.25rem 1.35rem", marginBottom: "2rem" }}>
+      <style>{`.journey-tile { transition: box-shadow 0.15s ease; } .journey-tile:hover { box-shadow: 0 8px 24px oklch(30% 0.12 260 / 0.12); } .journey-tile .jt-link:focus-visible { outline: none; } .journey-tile:has(.jt-link:focus-visible) { outline: 2px solid oklch(65% 0.15 45); outline-offset: 3px; }`}</style>
+      <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.62rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(58% 0.16 45)", margin: "0 0 0.35rem" }}>
+        {isId ? "60 bab · gratis" : "60 chapters · free"}
+      </p>
+      <h2 style={{ fontFamily: "var(--font-cormorant)", fontWeight: 600, fontSize: "1.6rem", color: navy, lineHeight: 1.1, margin: "0 0 0.85rem" }}>
+        {/* The whole tile opens the iceberg: this link's overlay covers the card, My journal sits above it. */}
+        <Link href="/journey/iceberg" className="jt-link" style={{ color: "inherit", textDecoration: "none" }}>
           {isId ? "Perjalanan Kepemimpinan yang Berpengaruh" : "Influential Leadership Journey"}
-        </h2>
-        <div style={{ maxWidth: 380 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 600, color: "oklch(85% 0.02 260)", marginBottom: "0.35rem" }}>
-            <span>{isId ? `${done} dari 60 langkah selesai` : `${done} of 60 steps completed`}</span>
-            <span>{pct}%</span>
-          </div>
-          <div style={{ height: 6, borderRadius: 999, background: "oklch(35% 0.08 260)", overflow: "hidden" }}>
-            <div style={{ width: `${pct}%`, height: "100%", background: "oklch(55% 0.14 150)", borderRadius: 999 }} />
-          </div>
-        </div>
-      </Link>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "0.6rem" }}>
-        <Link href={href} style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.8rem", color: "oklch(22% 0.10 260)", background: "oklch(65% 0.15 45)", padding: "0.7rem 1.2rem", borderRadius: 8, textDecoration: "none", whiteSpace: "nowrap" }}>
-          {cta} →
+          <span aria-hidden style={{ position: "absolute", inset: 0 }} />
         </Link>
-        <Link href="/journey/journal" style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.8rem", color: "oklch(97% 0.005 80)", border: "1px solid oklch(97% 0.005 80 / 0.35)", padding: "0.7rem 1.2rem", borderRadius: 8, textDecoration: "none", whiteSpace: "nowrap" }}>
-          {isId ? "Jurnal saya" : "My journal"}
-        </Link>
+      </h2>
+      <div style={{ display: "flex", justifyContent: "space-between", fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 600, color: "oklch(48% 0.04 260)", marginBottom: "0.35rem" }}>
+        <span>{isId ? `${done} dari 60 bab selesai` : `${done} of 60 chapters completed`}</span>
+        <span>{pct}%</span>
       </div>
+      <div style={{ height: 6, background: "oklch(90% 0.01 80)", overflow: "hidden", marginBottom: "1rem" }}>
+        <div style={{ width: `${pct}%`, height: "100%", background: "oklch(55% 0.14 150)" }} />
+      </div>
+      <Link href="/journey/journal" style={{ position: "relative", zIndex: 1, display: "inline-block", fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.72rem", letterSpacing: "0.04em", color: navy, border: `1px solid ${navy}`, padding: "0.45rem 0.9rem", textDecoration: "none", whiteSpace: "nowrap", background: "oklch(99% 0.003 80)" }}>
+        {isId ? "Jurnal saya" : "My journal"}
+      </Link>
     </div>
   );
 }
