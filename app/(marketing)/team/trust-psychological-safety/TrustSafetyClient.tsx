@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useEffect } from "react";
 import Link from "next/link";
 import type { User } from "@supabase/supabase-js";
 import { saveTrustScores } from "../actions";
@@ -73,8 +73,12 @@ export default function TrustSafetyClient({ user }: { user: User | null }) {
 
   function handleSubmit() {
     setSubmitted(true);
-    window.scrollTo({ top: document.getElementById("result-panel")?.offsetTop ?? 0, behavior: "smooth" });
   }
+
+  // Scroll after the result panel has rendered, otherwise it isn't in the DOM yet
+  useEffect(() => {
+    if (submitted) document.getElementById("result-panel")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [submitted]);
 
   function handleSave() {
     startSaving(async () => {
