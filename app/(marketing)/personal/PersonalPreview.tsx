@@ -50,6 +50,7 @@ const COPY = {
       title: "Know how you lead, wherever you are leading.",
       subline: "Eight assessments, 50+ short modules on cross-cultural leadership, and a personal dashboard that keeps your results, your notes and your progress together. Read on your phone between meetings, save what matters, and come back to it when you need it.",
       cta: "See pricing",
+      libraryCta: "Browse the library",
     },
     why: {
       label: "Why a personal pathway",
@@ -126,6 +127,7 @@ const COPY = {
       title: "Kenali cara Anda memimpin, di mana pun Anda memimpin.",
       subline: "Delapan asesmen, 50+ modul singkat tentang kepemimpinan lintas budaya, dan dasbor pribadi yang menyimpan hasil, catatan, dan kemajuan Anda di satu tempat. Baca di ponsel di sela rapat, simpan yang penting, dan kembali kapan pun Anda membutuhkannya.",
       cta: "Lihat harga",
+      libraryCta: "Jelajahi perpustakaan",
     },
     why: {
       label: "Mengapa jalur pribadi",
@@ -220,6 +222,7 @@ const CSS = `
 .pp-btn { transition: background-color 0.2s ease, transform 0.15s ease; }
 .pp-btn:hover { background-color: ${T.navyMid} !important; }
 .pp-btn-orange:hover { background-color: oklch(52% 0.15 45) !important; }
+.pp-btn-outline:hover { background-color: ${T.navy} !important; color: ${T.onNavy} !important; }
 .pp-btn:active { transform: translateY(1px); }
 .pp-btn:focus-visible, .pp-acc-btn:focus-visible, .pp-link:focus-visible { outline: 2px solid ${T.orange}; outline-offset: 3px; }
 .pp-acc-btn:hover .pp-acc-title { color: ${T.navyMid}; }
@@ -363,11 +366,12 @@ function LazyVideo({ label }: { label: string }) {
 }
 
 /* ── Primary button ─────────────────────────────────────────────────────── */
-function PrimaryLink({ href, children, orange = false }: { href: string; children: ReactNode; orange?: boolean }) {
+function PrimaryLink({ href, children, orange = false, outline = false }: { href: string; children: ReactNode; orange?: boolean; outline?: boolean }) {
   return (
-    <Link href={href} className={orange ? "pp-btn pp-btn-orange" : "pp-btn"} style={{
+    <Link href={href} className={orange ? "pp-btn pp-btn-orange" : outline ? "pp-btn pp-btn-outline" : "pp-btn"} style={{
       display: "inline-flex", alignItems: "center", gap: "0.75rem", minHeight: 48,
-      padding: "0.875rem 1.5rem", background: orange ? "oklch(58% 0.16 45)" : T.navy, color: T.onNavy,
+      padding: "0.875rem 1.5rem", background: orange ? "oklch(58% 0.16 45)" : outline ? "transparent" : T.navy,
+      color: outline ? T.navy : T.onNavy, boxShadow: outline ? `inset 0 0 0 1.5px ${T.navy}` : undefined,
       fontFamily: SANS, fontSize: "0.8rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase",
       textDecoration: "none", borderRadius: 2,
     }}>
@@ -414,8 +418,9 @@ export default function PersonalPreview({ language, ctaHref = "/pricing" }: { la
             {c.hero.title}
           </h1>
           <p className="pp-rise" style={{ ...bodyStyle, fontSize: "1.02rem", maxWidth: "46ch", animationDelay: "160ms" }}>{c.hero.subline}</p>
-          <div className="pp-rise" style={{ animationDelay: "240ms", paddingTop: "0.25rem" }}>
+          <div className="pp-rise" style={{ animationDelay: "240ms", paddingTop: "0.25rem", display: "flex", flexWrap: "wrap", gap: "0.75rem" }}>
             <PrimaryLink href={ctaHref}>{c.hero.cta}</PrimaryLink>
+            <PrimaryLink href="/resources" outline>{c.hero.libraryCta}</PrimaryLink>
           </div>
         </div>
         <figure className="pp-rise" style={{ margin: "0 auto", width: "100%", maxWidth: "27rem", animationDelay: "200ms" }}>
