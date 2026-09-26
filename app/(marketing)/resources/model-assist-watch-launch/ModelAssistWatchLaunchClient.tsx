@@ -116,6 +116,134 @@ const PHASES: Record<PhaseKey, Phase> = {
 
 const phaseName = (k: PhaseKey, lang: Lang) => t(PHASES[k].en, PHASES[k].id, lang);
 
+// ─── Theory: the method behind each phase ─────────────────────────────────────
+type L = { en: string; id: string };
+type Theory = {
+  key: PhaseKey;
+  motto: L;
+  what: L;
+  why: L; whySup: string;
+  elements: L[];
+  nextLabel: L;
+  next: L;
+  scripture: L;
+};
+
+const THEORY: Theory[] = [
+  {
+    key: "model",
+    motto: { en: "I do, you watch", id: "Saya melakukan, Anda mengamati" },
+    what: {
+      en: "You do the real task while they are with you. Afterwards you explain what you did, why you did it and what you were thinking at each step.",
+      id: "Anda mengerjakan tugas yang sesungguhnya sementara mereka bersama Anda. Sesudahnya Anda menjelaskan apa yang Anda lakukan, mengapa, dan apa yang Anda pikirkan di setiap langkah.",
+    },
+    why: {
+      en: "People copy what they see far more than what they are told. Much of a skill is also hidden inside your head: what you noticed, the options you rejected, the moment you decided. If you never say it out loud, they only see the result and miss the thinking.",
+      id: "Orang jauh lebih banyak meniru apa yang mereka lihat daripada apa yang dikatakan kepada mereka. Sebagian besar keterampilan juga tersembunyi di dalam kepala Anda: apa yang Anda perhatikan, pilihan yang Anda tolak, saat Anda memutuskan. Jika Anda tidak pernah mengucapkannya, mereka hanya melihat hasilnya dan kehilangan cara berpikirnya.",
+    },
+    whySup: "⁵",
+    elements: [
+      { en: "Real situations, not a staged demonstration", id: "Situasi nyata, bukan peragaan yang diatur" },
+      { en: "Think out loud: name what you notice and why you choose", id: "Berpikir dengan suara keras: sebutkan apa yang Anda perhatikan dan mengapa Anda memilih" },
+      { en: "Let them see your mistakes and how you recover", id: "Biarkan mereka melihat kesalahan Anda dan cara Anda memperbaikinya" },
+      { en: "Keep it short. A few times is usually enough", id: "Buatlah singkat. Beberapa kali biasanya sudah cukup" },
+    ],
+    nextLabel: { en: "Move on when", id: "Lanjut ketika" },
+    next: {
+      en: "They can describe what good looks like and they are asking to try.",
+      id: "Mereka bisa menjelaskan seperti apa pekerjaan yang baik dan mereka ingin mencoba.",
+    },
+    scripture: {
+      en: "Jesus first called the twelve \"that they might be with him\" (Mark 3:14). They watched him teach, heal and pray long before he sent them anywhere.",
+      id: "Yesus pertama-tama memanggil kedua belas murid \"untuk menyertai Dia\" (Markus 3:14). Mereka melihat Dia mengajar, menyembuhkan, dan berdoa jauh sebelum Ia mengutus mereka ke mana pun.",
+    },
+  },
+  {
+    key: "assist",
+    motto: { en: "You do, I help", id: "Anda melakukan, saya membantu" },
+    what: {
+      en: "They do the task and you stay close enough to help in the moment. You give clear instructions, step in when needed and then hand it straight back.",
+      id: "Mereka mengerjakan tugas itu dan Anda tetap cukup dekat untuk membantu saat itu juga. Anda memberi instruksi yang jelas, turun tangan bila perlu, lalu segera menyerahkannya kembali.",
+    },
+    why: {
+      en: "Watching builds understanding, but only doing builds skill. The first attempts are where most people lose heart, so this is where support matters most. Learning research calls this scaffolding: help that lets someone do what they cannot yet do alone.",
+      id: "Mengamati membangun pemahaman, tetapi hanya melakukan yang membangun keterampilan. Percobaan-percobaan pertama adalah saat kebanyakan orang patah semangat, jadi di sinilah dukungan paling dibutuhkan. Penelitian pembelajaran menyebutnya scaffolding (perancah): bantuan yang memungkinkan seseorang melakukan apa yang belum bisa ia lakukan sendiri.",
+    },
+    whySup: "³ ⁴",
+    elements: [
+      { en: "Give real work, not practice tasks", id: "Berikan pekerjaan nyata, bukan tugas latihan" },
+      { en: "Coach during the task and talk it through straight after", id: "Bimbing selama tugas berlangsung dan bahas bersama segera sesudahnya" },
+      { en: "Expect falls. If a step fails, show it again, then hand it back", id: "Terimalah bahwa mereka akan jatuh. Jika satu langkah gagal, contohkan lagi, lalu serahkan kembali" },
+      { en: "Name the progress you see, as specifically as you can", id: "Sebutkan kemajuan yang Anda lihat, sespesifik mungkin" },
+    ],
+    nextLabel: { en: "Move on when", id: "Lanjut ketika" },
+    next: {
+      en: "They can do the whole task from start to finish without you stepping in, even if it is not polished yet.",
+      id: "Mereka bisa mengerjakan seluruh tugas dari awal sampai akhir tanpa Anda turun tangan, meskipun belum sempurna.",
+    },
+    scripture: {
+      en: "Jesus sent the twelve out two by two with clear instructions. When they came back, he took them aside to hear what had happened (Luke 9:1-10).",
+      id: "Yesus mengutus kedua belas murid berdua-dua dengan instruksi yang jelas. Ketika mereka kembali, Ia membawa mereka menyendiri untuk mendengar apa yang telah terjadi (Lukas 9:1-10).",
+    },
+  },
+  {
+    key: "watch",
+    motto: { en: "You do, I watch", id: "Anda melakukan, saya mengamati" },
+    what: {
+      en: "You step back. They lead without you in the room, and you check in from a distance through visits, calls and good questions.",
+      id: "Anda mundur. Mereka memimpin tanpa Anda di ruangan, dan Anda memantau dari kejauhan melalui kunjungan, telepon, dan pertanyaan yang baik.",
+    },
+    why: {
+      en: "Confidence and judgement only grow when you are not there to lean on. This is where they meet situations you never showed them. Your job moves from teaching to encouraging and checking, so small gaps are caught early. Support that is never taken away slowly turns into dependence.",
+      id: "Rasa percaya diri dan kemampuan menimbang hanya bertumbuh ketika Anda tidak ada di sana untuk diandalkan. Di sinilah mereka bertemu situasi yang tidak pernah Anda tunjukkan. Tugas Anda bergeser dari mengajar menjadi menguatkan dan memeriksa, sehingga celah kecil ketahuan lebih awal. Dukungan yang tidak pernah ditarik perlahan berubah menjadi ketergantungan.",
+    },
+    whySup: "² ⁴",
+    elements: [
+      { en: "A set rhythm of check-ins that gets less frequent over time", id: "Jadwal pemantauan yang tetap dan makin jarang seiring waktu" },
+      { en: "Ask questions instead of giving answers", id: "Ajukan pertanyaan, bukan jawaban" },
+      { en: "Check the whole skill set, including the rare and hard parts", id: "Periksa seluruh keterampilan, termasuk bagian yang jarang dan sulit" },
+      { en: "Encourage often, and send others to encourage them too", id: "Sering-seringlah menguatkan, dan utus orang lain untuk menguatkan mereka juga" },
+    ],
+    nextLabel: { en: "Move on when", id: "Lanjut ketika" },
+    next: {
+      en: "They handle the unexpected well, solve problems without calling you, and you have checked every skill the role needs.",
+      id: "Mereka menangani hal tak terduga dengan baik, menyelesaikan masalah tanpa menelepon Anda, dan Anda sudah memeriksa setiap keterampilan yang dibutuhkan peran itu.",
+    },
+    scripture: {
+      en: "When the seventy-two came back full of joy, Jesus listened, celebrated with them and corrected their focus (Luke 10:17-20). Paul kept watch in the same way, through visits and letters to the churches he had started.",
+      id: "Ketika ketujuh puluh dua murid kembali dengan sukacita, Yesus mendengarkan, bersukacita bersama mereka, dan meluruskan fokus mereka (Lukas 10:17-20). Paulus memantau dengan cara yang sama, melalui kunjungan dan surat kepada jemaat-jemaat yang ia rintis.",
+    },
+  },
+  {
+    key: "launch",
+    motto: { en: "You do, I pray", id: "Anda melakukan, saya berdoa" },
+    what: {
+      en: "You hand over the role for real and say so openly. You stay in touch as a friend who prays and encourages, but the decisions are now theirs.",
+      id: "Anda menyerahkan peran itu dengan sungguh-sungguh dan menyatakannya secara terbuka. Anda tetap berhubungan sebagai sahabat yang mendoakan dan menguatkan, tetapi keputusan-keputusan kini ada di tangan mereka.",
+    },
+    why: {
+      en: "Until the handover is clear, they keep checking with you and others keep coming to you. A public release gives them authority, not only tasks. It also frees you to begin the cycle again with someone new.",
+      id: "Selama serah terima itu belum jelas, mereka akan terus bertanya kepada Anda dan orang lain akan terus datang kepada Anda. Pelepasan secara terbuka memberi mereka wewenang, bukan hanya tugas. Hal itu juga membebaskan Anda untuk memulai siklus lagi dengan orang baru.",
+    },
+    whySup: "⁶",
+    elements: [
+      { en: "Make the handover public, in front of the people they will lead", id: "Lakukan serah terima secara terbuka, di depan orang-orang yang akan mereka pimpin" },
+      { en: "Hand over authority, not only the work", id: "Serahkan wewenang, bukan hanya pekerjaannya" },
+      { en: "Stay a friend, not a supervisor. Do not take decisions back", id: "Tetaplah menjadi sahabat, bukan atasan. Jangan mengambil kembali keputusan mereka" },
+      { en: "Agree that they will now train someone else", id: "Sepakati bahwa sekarang mereka akan melatih orang lain" },
+    ],
+    nextLabel: { en: "You know it worked when", id: "Anda tahu ini berhasil ketika" },
+    next: {
+      en: "They are modelling the same skill for someone new. The cycle has started again without you.",
+      id: "Mereka sedang meneladankan keterampilan yang sama kepada orang baru. Siklusnya sudah dimulai lagi tanpa Anda.",
+    },
+    scripture: {
+      en: "Before he left Ephesus, Paul gathered the elders, entrusted the church to them and committed them to God (Acts 20:17-38). He then asked Timothy to pass on what he had learned to reliable people who could teach others (2 Timothy 2:2).",
+      id: "Sebelum meninggalkan Efesus, Paulus mengumpulkan para penatua, mempercayakan jemaat kepada mereka, dan menyerahkan mereka kepada Allah (Kisah Para Rasul 20:17-38). Kemudian ia meminta Timotius meneruskan apa yang telah ia pelajari kepada orang-orang yang dapat dipercaya, yang cakap mengajar orang lain (2 Timotius 2:2).",
+    },
+  },
+];
+
 // ─── Shared styles ────────────────────────────────────────────────────────────
 const eyebrow: React.CSSProperties = {
   fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase",
@@ -430,6 +558,9 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
   const [years, setYears] = useState(3);
   const [openMistake, setOpenMistake] = useState<number | null>(null);
   const [researchOpen, setResearchOpen] = useState(false);
+  const [theoryOpen, setTheoryOpen] = useState<PhaseKey[]>(["model"]);
+  const toggleTheory = (k: PhaseKey) =>
+    setTheoryOpen(o => (o.includes(k) ? o.filter(x => x !== k) : [...o, k]));
 
   function handleSave() {
     if (saved) return;
@@ -596,6 +727,77 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
                 </li>
               ))}
             </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 2b. THEORY ──────────────────────────────────────────────────────── */}
+      <section style={{ ...section, paddingTop: 0 }}>
+        <div style={wrap}>
+          <div style={{ borderTop: `1px solid ${lightGray}`, paddingTop: 56 }}>
+            <p style={eyebrow}>{t("The method", "Metodenya", lang)}</p>
+            <h2 style={h2}>{t("What each phase is for", "Untuk apa setiap tahap", lang)}</h2>
+            <p style={p}>{t(
+              "Each phase has its own job, a reason it works and a sign that tells you it is time to move on. Underneath all four is one idea: your support goes down in steps while their ability goes up. Jesus trained the twelve this way, and leadership and learning research arrives at the same shape.",
+              "Setiap tahap memiliki tugasnya sendiri, alasan mengapa ia berhasil, dan tanda yang memberi tahu Anda bahwa sudah waktunya melangkah. Di balik keempatnya ada satu gagasan: dukungan Anda turun selangkah demi selangkah sementara kemampuan mereka naik. Yesus melatih kedua belas murid dengan cara ini, dan penelitian kepemimpinan serta pembelajaran sampai pada bentuk yang sama.", lang)}<Sup n="¹ ² ⁶" /></p>
+
+            {/* The four steps at a glance */}
+            <ol aria-label={t("The four steps at a glance", "Keempat langkah sekilas", lang)}
+              style={{ listStyle: "none", padding: 0, margin: "24px 0 28px", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 8 }}>
+              {THEORY.map((th, i) => (
+                <li key={th.key} style={{ background: i === 3 ? orange : `oklch(${22 + i * 12}% ${0.10 - i * 0.015} 260)`, color: white, borderRadius: 8, padding: "12px 14px" }}>
+                  <span style={{ display: "block", fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", opacity: 0.85 }}>{i + 1}. {phaseName(th.key, lang)}</span>
+                  <span style={{ display: "block", fontFamily: "Cormorant Garamond, serif", fontSize: 20, fontWeight: 600, lineHeight: 1.25, marginTop: 4 }}>{t(th.motto.en, th.motto.id, lang)}</span>
+                </li>
+              ))}
+            </ol>
+
+            {/* Phase-by-phase detail */}
+            <div style={{ display: "grid", gap: 12 }}>
+              {THEORY.map((th, i) => {
+                const open = theoryOpen.includes(th.key);
+                const panelId = `mawl-theory-${th.key}`;
+                return (
+                  <div key={th.key} style={{ background: white, border: `1px solid ${open ? navy : lightGray}`, borderRadius: 8 }}>
+                    <button type="button" aria-expanded={open} aria-controls={panelId} onClick={() => toggleTheory(th.key)}
+                      style={{ width: "100%", minHeight: 56, display: "grid", gridTemplateColumns: "36px 1fr 20px", alignItems: "center", gap: 10, padding: "12px 16px", background: "none", border: "none", cursor: "pointer", textAlign: "left", fontFamily: "Montserrat, sans-serif" }}>
+                      <span aria-hidden="true" style={{ width: 32, height: 32, borderRadius: "50%", background: open ? navy : offWhite, color: open ? white : navy, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: 14 }}>{i + 1}</span>
+                      <span>
+                        <span style={{ display: "block", fontSize: 16, fontWeight: 700, color: navy }}>{phaseName(th.key, lang)}</span>
+                        <span style={{ display: "block", fontSize: 13.5, color: muted, marginTop: 2 }}>{t(PHASES[th.key].shortEn, PHASES[th.key].shortId, lang)}</span>
+                      </span>
+                      <span aria-hidden="true" className="mawl-trans" style={{ color: orange, fontSize: 18, fontWeight: 700, transform: open ? "rotate(45deg)" : "none", textAlign: "center" }}>+</span>
+                    </button>
+                    {open && (
+                      <div id={panelId} role="region" aria-label={phaseName(th.key, lang)} style={{ padding: "4px 20px 22px" }}>
+                        <p style={foldLabel}>{t("What you do", "Apa yang Anda lakukan", lang)}</p>
+                        <p style={{ ...p, marginBottom: 18 }}>{t(th.what.en, th.what.id, lang)}</p>
+                        <p style={foldLabel}>{t("Why it works", "Mengapa ini berhasil", lang)}</p>
+                        <p style={{ ...p, marginBottom: 18 }}>{t(th.why.en, th.why.id, lang)}<Sup n={th.whySup} /></p>
+                        <p style={foldLabel}>{t("Key elements", "Unsur utama", lang)}</p>
+                        <ul style={{ margin: "0 0 18px", padding: 0, listStyle: "none" }}>
+                          {th.elements.map(el => (
+                            <li key={el.en} style={{ display: "grid", gridTemplateColumns: "20px 1fr", gap: 6, fontSize: 15, lineHeight: 1.6, color: navy, marginBottom: 6 }}>
+                              <span aria-hidden="true" style={{ color: orange, fontWeight: 700 }}>•</span>
+                              <span>{t(el.en, el.id, lang)}</span>
+                            </li>
+                          ))}
+                        </ul>
+                        <div style={{ ...callout, marginBottom: 14 }}>
+                          <p style={foldLabel}>{t(th.nextLabel.en, th.nextLabel.id, lang)}</p>
+                          <p style={{ margin: 0, fontSize: 15, lineHeight: 1.6, color: navy, fontWeight: 600 }}>{t(th.next.en, th.next.id, lang)}</p>
+                        </div>
+                        <p style={foldLabel}>{t("In Scripture", "Dalam Alkitab", lang)}</p>
+                        <p style={{ ...p, margin: 0, fontStyle: "italic" }}>{t(th.scripture.en, th.scripture.id, lang)}<Sup n="⁷" /></p>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+            <p style={{ fontSize: 13.5, color: muted, margin: "16px 0 0" }}>{t(
+              "Now watch the method in action. The story below walks through all four phases.",
+              "Sekarang lihat metode ini dijalankan. Kisah di bawah ini melewati keempat tahap.", lang)}</p>
           </div>
         </div>
       </section>
