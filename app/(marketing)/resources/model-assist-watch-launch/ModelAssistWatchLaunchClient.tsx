@@ -558,6 +558,7 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
   const [years, setYears] = useState(3);
   const [openMistake, setOpenMistake] = useState<number | null>(null);
   const [researchOpen, setResearchOpen] = useState(false);
+  const [smallScreen, setSmallScreen] = useState(false);
   const [theoryOpen, setTheoryOpen] = useState<PhaseKey[]>(["model"]);
   const toggleTheory = (k: PhaseKey) =>
     setTheoryOpen(o => (o.includes(k) ? o.filter(x => x !== k) : [...o, k]));
@@ -692,6 +693,13 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
             {t("Many leaders want their people to take over. Often the leader is the one standing in the way.",
               "Banyak pemimpin ingin orang-orangnya mengambil alih. Sering kali justru sang pemimpin yang menghalanginya.", lang)}
           </p>
+          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 12 }}>
+          <Link href={`/resources/${SLUG}/present`}
+            onClick={e => { if (window.innerWidth < 768) { e.preventDefault(); setSmallScreen(true); } }}
+            style={{ display: "inline-flex", alignItems: "center", gap: 8, background: orange, color: white, padding: "10px 18px", minHeight: 44, borderRadius: 8, fontWeight: 700, fontSize: 13, textDecoration: "none", fontFamily: "Montserrat, sans-serif" }}>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2" /><path d="M12 16v4M8 20h8" /></svg>
+            {t("Present", "Presentasi", lang)}
+          </Link>
           {saved ? (
             <Link href="/dashboard" style={{ fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.06em", color: "oklch(72% 0.14 145)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.375rem", minHeight: 44 }}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" /></svg>
@@ -704,8 +712,32 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
               {isPending ? t("Saving...", "Menyimpan...", lang) : t("Save to dashboard", "Simpan ke dasbor", lang)}
             </button>
           )}
+          </div>
         </div>
       </div>
+
+      {smallScreen && (
+        <div role="dialog" aria-modal="true" aria-labelledby="mawl-small-title" onClick={() => setSmallScreen(false)}
+          style={{ position: "fixed", inset: 0, zIndex: 1000, background: "oklch(14% 0.05 260 / 0.6)", display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}>
+          <div onClick={e => e.stopPropagation()}
+            style={{ background: white, borderRadius: 16, padding: "28px 24px", maxWidth: 340, textAlign: "center", boxShadow: "0 20px 60px oklch(0% 0 0 / 0.3)", fontFamily: "Montserrat, sans-serif" }}>
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke={orange} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ display: "block", margin: "0 auto 14px" }}>
+              <rect x="3" y="4" width="18" height="12" rx="2" /><path d="M12 16v4M8 20h8" />
+            </svg>
+            <p id="mawl-small-title" style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 24, fontWeight: 600, color: navy, margin: "0 0 8px", lineHeight: 1.2 }}>
+              {t("A bigger screen is needed", "Butuh layar yang lebih besar", lang)}
+            </p>
+            <p style={{ fontSize: 14, lineHeight: 1.6, color: "oklch(48% 0.04 260)", margin: "0 0 20px" }}>
+              {t("Presentation mode works on a tablet or computer. Open this module there to show the slides.",
+                "Mode presentasi berfungsi di tablet atau komputer. Buka modul ini di sana untuk menampilkan slide.", lang)}
+            </p>
+            <button type="button" onClick={() => setSmallScreen(false)} autoFocus
+              style={{ minHeight: 44, padding: "0 24px", borderRadius: 8, border: "none", background: navy, color: white, fontWeight: 700, fontSize: 14, cursor: "pointer", fontFamily: "Montserrat, sans-serif" }}>
+              {t("OK", "OK", lang)}
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* ── 2. OPENER ───────────────────────────────────────────────────────── */}
       <section style={section}>
