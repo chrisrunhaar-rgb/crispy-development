@@ -388,6 +388,7 @@ export default function HealthyConflictClient({ isSaved: initialSaved }: Props) 
   const [expandedCards, setExpandedCards] = useState<Record<number, boolean>>({});
   const [bgOpen, setBgOpen] = useState(false);
   const [reflections, setReflections] = useState<Record<number, string>>({});
+  const [smallScreen, setSmallScreen] = useState(false);
 
   const t = (en: string, id: string) => tFn(en, id, lang);
 
@@ -504,6 +505,53 @@ export default function HealthyConflictClient({ isSaved: initialSaved }: Props) 
           </div>
         </div>
       </div>
+
+      {/* ── Teaching strip: guided slideshow for leaders who teach this ───── */}
+      <div style={{ background: "oklch(99.5% 0.002 80)", borderBottom: `1px solid ${lightGray}`, padding: "20px 24px" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto", display: "flex", flexWrap: "wrap", alignItems: "center", gap: "14px 20px" }}>
+          <span aria-hidden="true" style={{ flexShrink: 0, width: 44, height: 44, borderRadius: 12, background: "oklch(65% 0.15 45 / 0.12)", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={amber} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="12" rx="2" /><path d="M12 16v4M8 20h8" /></svg>
+          </span>
+          <div style={{ flex: "1 1 260px", minWidth: 0 }}>
+            <p style={{ margin: "0 0 2px", fontSize: 14, fontWeight: 700, color: navy }}>
+              {t("Teaching this to someone else?", "Mengajarkan ini kepada orang lain?")}
+            </p>
+            <p style={{ margin: 0, fontSize: 13, lineHeight: 1.5, color: subText }}>
+              {t("Use the guided slideshow to walk your team through the five elements of a safe space, full screen in English or Indonesian.",
+                "Gunakan slideshow terpandu untuk mengajak timmu melalui lima elemen ruang yang aman, layar penuh dalam bahasa Inggris atau Indonesia.")}
+            </p>
+          </div>
+          <Link href={"/resources/healthy-conflict/present"}
+            onClick={e => { if (window.innerWidth < 768) { e.preventDefault(); setSmallScreen(true); } }}
+            style={{ flexShrink: 0, display: "inline-flex", alignItems: "center", gap: 8, background: "transparent", color: navy, padding: "0 18px", minHeight: 44, borderRadius: 8, border: `1.5px solid ${navy}`, fontWeight: 700, fontSize: 13, textDecoration: "none", fontFamily: "Montserrat, sans-serif" }}>
+            {t("Open the slideshow", "Buka slideshow")}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6" /></svg>
+          </Link>
+        </div>
+      </div>
+
+      {smallScreen && (
+        <div role="dialog" aria-modal="true" aria-labelledby="hc-small-title" onClick={() => setSmallScreen(false)}
+          style={{ position: "fixed", inset: 0, zIndex: 1000, background: "oklch(14% 0.05 260 / 0.6)", display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}>
+          <div onClick={e => e.stopPropagation()}
+            style={{ background: "oklch(99.5% 0.002 80)", borderRadius: 16, padding: "28px 24px", maxWidth: 340, textAlign: "center", boxShadow: "0 20px 60px oklch(0% 0 0 / 0.3)", fontFamily: "Montserrat, sans-serif" }}>
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke={amber} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ display: "block", margin: "0 auto 14px" }}>
+              <rect x="3" y="4" width="18" height="12" rx="2" /><path d="M12 16v4M8 20h8" />
+            </svg>
+            <p id="hc-small-title" style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 24, fontWeight: 600, color: navy, margin: "0 0 8px", lineHeight: 1.2 }}>
+              {t("A bigger screen is needed", "Butuh layar yang lebih besar")}
+            </p>
+            <p style={{ fontSize: 14, lineHeight: 1.6, color: subText, margin: "0 0 20px" }}>
+              {t("Presentation mode works on a tablet or computer. Open this module there to show the slides.",
+                "Mode presentasi berfungsi di tablet atau komputer. Buka modul ini di sana untuk menampilkan slide.")}
+            </p>
+            <button type="button" onClick={() => setSmallScreen(false)} autoFocus
+              style={{ minHeight: 44, padding: "0 24px", borderRadius: 8, border: "none", background: navy, color: "oklch(99.5% 0.002 80)", fontWeight: 700, fontSize: 14, cursor: "pointer", fontFamily: "Montserrat, sans-serif" }}>
+              {t("OK", "OK")}
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* ── 2. INTRODUCTION ──────────────────────────────────────────────────── */}
       <div style={{ background: offWhite, padding: "clamp(56px, 8vw, 80px) 24px" }}>
