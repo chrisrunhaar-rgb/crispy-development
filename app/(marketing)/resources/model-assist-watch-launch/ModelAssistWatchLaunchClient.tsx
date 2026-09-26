@@ -1,5 +1,5 @@
 "use client";
-import { useState, useTransition, useId } from "react";
+import { useState, useTransition } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/lib/LanguageContext";
 import LangToggle from "@/components/LangToggle";
@@ -39,6 +39,9 @@ type Phase = {
   roleEn: string; roleId: string;
   longEn: string; longId: string;
   riskEn: string; riskId: string;
+  storyEn: string; storyId: string;
+  bubbleEn?: string; bubbleId?: string;
+  img: { w: number; h: number; altEn: string; altId: string };
   involvement: number; ownership: number;
 };
 
@@ -54,6 +57,9 @@ const PHASES: Record<PhaseKey, Phase> = {
     longEn: "Short. A few times.", longId: "Singkat. Beberapa kali saja.",
     riskEn: "Staying here. Endless demonstrations feel safe for you and teach them to watch instead of act.",
     riskId: "Terlalu lama di sini. Demonstrasi tanpa akhir terasa aman bagi Anda, tetapi mengajar mereka untuk menonton, bukan bertindak.",
+    storyEn: "Before you ride anywhere, you put your helmet on. They see that before they hear a single instruction, and it is the first thing you model. Then they stand and watch how you ride: sitting up straight, hands steady, eyes on the road.",
+    storyId: "Sebelum berkendara ke mana pun, Anda memakai helm. Mereka melihatnya bahkan sebelum mendengar satu instruksi pun, dan itulah hal pertama yang Anda teladankan. Lalu mereka berdiri dan mengamati cara Anda berkendara: duduk tegak, tangan mantap, mata ke jalan.",
+    img: { w: 752, h: 564, altEn: "A learner stands and watches the leader, in blue, ride a scooter. A light bulb above the learner's head.", altId: "Seorang pelajar berdiri dan mengamati pemimpin, berwarna biru, mengendarai skuter. Ada bola lampu di atas kepala pelajar." },
     involvement: 95, ownership: 10,
   },
   assist: {
@@ -67,6 +73,10 @@ const PHASES: Record<PhaseKey, Phase> = {
     longEn: "Weeks, sometimes months", longId: "Beberapa minggu, kadang berbulan-bulan",
     riskEn: "Taking the task back after the first fall, or never taking your hand off the handlebar.",
     riskId: "Mengambil kembali tugas itu setelah jatuh pertama, atau tidak pernah melepaskan tangan dari setang.",
+    storyEn: "Now they sit on the scooter and you walk right beside them, one hand on their back. You tell them to try first. They wobble, you steady them, and they try again.",
+    storyId: "Sekarang mereka yang duduk di skuter dan Anda berjalan tepat di samping mereka, satu tangan di punggung mereka. Anda meminta mereka mencoba lebih dulu. Mereka oleng, Anda menahan, lalu mereka mencoba lagi.",
+    bubbleEn: "Try first.", bubbleId: "Coba dulu.",
+    img: { w: 602, h: 452, altEn: "The leader, in blue, walks beside the learner on a scooter with a hand on their back.", altId: "Pemimpin, berwarna biru, berjalan di samping pelajar di atas skuter dengan satu tangan di punggungnya." },
     involvement: 70, ownership: 40,
   },
   watch: {
@@ -80,6 +90,10 @@ const PHASES: Record<PhaseKey, Phase> = {
     longEn: "Months to years", longId: "Berbulan-bulan hingga bertahun-tahun",
     riskEn: "Never leaving, or launching before every skill on the list has been checked.",
     riskId: "Tidak pernah pergi, atau melepas mereka sebelum setiap keterampilan dalam daftar diperiksa.",
+    storyEn: "They ride off on their own. You stand at the side of the road with your arms folded and call out the one thing that matters most. The rest they work out on the road.",
+    storyId: "Mereka melaju sendiri. Anda berdiri di pinggir jalan dengan tangan terlipat dan meneriakkan satu hal yang paling penting. Sisanya mereka pelajari sendiri di jalan.",
+    bubbleEn: "Don't hit other motorbikes on the road!", bubbleId: "Jangan menabrak motor lain di jalan!",
+    img: { w: 624, h: 468, altEn: "The leader, in blue, stands with arms folded as the learner rides past on a scooter.", altId: "Pemimpin, berwarna biru, berdiri dengan tangan terlipat saat pelajar melaju melewatinya di atas skuter." },
     involvement: 35, ownership: 75,
   },
   launch: {
@@ -93,6 +107,9 @@ const PHASES: Record<PhaseKey, Phase> = {
     longEn: "Open-ended", longId: "Tanpa batas waktu",
     riskEn: "Hovering because being needed feels good.",
     riskId: "Terus membayangi karena dibutuhkan itu terasa menyenangkan.",
+    storyEn: "They learned on a small scooter. They leave on a much bigger motorbike, heading for roads you have never ridden. You fade to an outline and wave them off.",
+    storyId: "Mereka belajar dengan skuter kecil. Mereka pergi dengan sepeda motor yang jauh lebih besar, menuju jalan-jalan yang belum pernah Anda lalui. Anda memudar menjadi garis samar dan melambaikan tangan.",
+    img: { w: 656, h: 492, altEn: "The learner rides away on a big motorbike while the leader, now a dashed outline, waves goodbye.", altId: "Pelajar melaju dengan sepeda motor besar sementara pemimpin, kini hanya garis putus-putus, melambaikan tangan." },
     involvement: 5, ownership: 100,
   },
 };
@@ -121,114 +138,47 @@ const callout: React.CSSProperties = {
 
 // ─── Motion (respects reduced motion) ─────────────────────────────────────────
 const MOTION_CSS = `
-@keyframes mawl-pop { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-@keyframes mawl-fade { from { opacity: 1; } to { opacity: 0.25; } }
-@keyframes mawl-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-.mawl-pop { opacity: 0; transform-box: fill-box; animation: mawl-pop 0.5s ease-out forwards; }
-.mawl-fadeout { animation: mawl-fade 2.4s ease-in-out 0.4s forwards; }
-.mawl-pulse { animation: mawl-pulse 1.6s ease-in-out infinite; }
 .mawl-trans { transition: all 0.35s ease; }
+.mawl-range { accent-color: ${orange}; width: 100%; height: 44px; cursor: pointer; }
+@media (max-width: 560px) {
+  .mawl-strip { grid-template-columns: repeat(2, 1fr) !important; }
+}
 @media (prefers-reduced-motion: reduce) {
-  .mawl-pop { animation: none; opacity: 1; transform: none; }
-  .mawl-fadeout { animation: none; opacity: 0.25; }
-  .mawl-pulse { animation: none; }
   .mawl-trans { transition: none !important; }
 }
 `;
 
-// ─── Small SVG person ─────────────────────────────────────────────────────────
-function Person({ x, y, color, dashed = false, s = 1, className, style }: {
-  x: number; y: number; color: string; dashed?: boolean; s?: number;
-  className?: string; style?: React.CSSProperties;
-}) {
-  const dash = dashed ? "4 4" : undefined;
-  return (
-    <g transform={`translate(${x} ${y}) scale(${s})`}>
-      <g className={className} style={style}>
-        <circle cx={0} cy={-38} r={11} fill={dashed ? "none" : color} stroke={color} strokeWidth={2.5} strokeDasharray={dash} />
-        <path d="M -18 12 Q -18 -22 0 -22 Q 18 -22 18 12 Z" fill={dashed ? "none" : color} stroke={color} strokeWidth={2.5} strokeDasharray={dash} strokeLinejoin="round" />
-      </g>
-    </g>
-  );
-}
 
-// ─── Phase scenes ─────────────────────────────────────────────────────────────
-function PhaseScene({ phase, lang }: { phase: PhaseKey; lang: Lang }) {
-  const learner = orange;
-  if (phase === "model") {
-    return (
-      <svg viewBox="0 0 320 150" width="100%" style={{ maxWidth: 360, display: "block" }} aria-hidden="true">
-        <Person x={100} y={118} color={navy} />
-        <rect x={128} y={96} width={44} height={26} rx={5} fill={navy} className="mawl-pulse" />
-        <Person x={232} y={118} color={learner} s={0.9} />
-        <g className="mawl-pop" style={{ animationDelay: "0.7s" }}>
-          <rect x={168} y={10} width={132} height={32} rx={8} fill={white} stroke={lightGray} strokeWidth={1.5} />
-          <text x={234} y={31} textAnchor="middle" fontSize={14} fontWeight={600} fill={navy}>
-            {t("I could do that.", "Saya juga bisa.", lang)}
-          </text>
-        </g>
-      </svg>
-    );
-  }
-  if (phase === "assist") {
-    return (
-      <svg viewBox="0 0 320 150" width="100%" style={{ maxWidth: 360, display: "block" }} aria-hidden="true">
-        <defs>
-          <marker id="mawl-scene-arrow" viewBox="0 0 10 10" refX={8} refY={5} markerWidth={6} markerHeight={6} orient="auto-start-reverse">
-            <path d="M0 0 L10 5 L0 10 z" fill={orange} />
-          </marker>
-        </defs>
-        <text x={122} y={30} textAnchor="end" fontSize={14} fontWeight={700} fill={navy}>{phaseName("model", lang)}</text>
-        <line x1={132} y1={20} x2={176} y2={20} stroke={orange} strokeWidth={2} markerEnd="url(#mawl-scene-arrow)" />
-        <line x1={176} y1={30} x2={132} y2={30} stroke={orange} strokeWidth={2} markerEnd="url(#mawl-scene-arrow)" />
-        <text x={186} y={30} fontSize={14} fontWeight={700} fill={navy}>{phaseName("assist", lang)}</text>
-        <Person x={92} y={130} color={navy} s={0.9} style={{ opacity: 0.85 }} />
-        <Person x={140} y={130} color={learner} s={0.9} />
-        <text x={214} y={80} fontSize={14} fontWeight={700} fill={muted}>{t("Falls", "Jatuh", lang)}</text>
-        {[0, 1, 2].map(i => (
-          <circle key={i} cx={222 + i * 24} cy={100} r={8} fill={navy} className="mawl-pop" style={{ animationDelay: `${0.4 + i * 0.6}s` }} />
-        ))}
-        <text x={214} y={134} fontSize={14} fontWeight={700} fill={orange} className="mawl-pop" style={{ animationDelay: "2.2s" }}>
-          {t("Normal.", "Wajar.", lang)}
-        </text>
-      </svg>
-    );
-  }
-  if (phase === "watch") {
-    const skills = lang === "id"
-      ? ["Menyalakan", "Mengerem", "Mengarahkan", "Tanjakan", "Aturan jalan"]
-      : ["Start", "Brake", "Steer", "Hills", "Road rules"];
-    return (
-      <svg viewBox="0 0 320 150" width="100%" style={{ maxWidth: 360, display: "block" }} aria-hidden="true">
-        <Person x={36} y={128} color={navy} dashed s={0.75} style={{ opacity: 0.6 }} />
-        <Person x={100} y={128} color={learner} />
-        {skills.map((s, i) => (
-          <g key={s}>
-            <rect x={160} y={10 + i * 27} width={18} height={18} rx={3} fill="none" stroke={muted} strokeWidth={1.5} />
-            <path d={`M ${164} ${19 + i * 27} l 4 4 l 7 -8`} fill="none" stroke={orange} strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" className="mawl-pop" style={{ animationDelay: `${0.4 + i * 0.5}s` }} />
-            <text x={188} y={24 + i * 27} fontSize={14} fill={navy}>{s}</text>
-          </g>
-        ))}
-      </svg>
-    );
-  }
+// ─── How your role shifts: two-line chart ─────────────────────────────────────
+function RoleShiftChart({ selected, lang }: { selected: PhaseKey; lang: Lang }) {
+  const xs = [60, 160, 260, 360];
+  const y = (v: number) => 24 + (100 - v) * 1.5;
+  const inv = PHASE_KEYS.map((k, i) => `${xs[i]},${y(PHASES[k].involvement)}`).join(" ");
+  const own = PHASE_KEYS.map((k, i) => `${xs[i]},${y(PHASES[k].ownership)}`).join(" ");
   return (
-    <svg viewBox="0 0 320 150" width="100%" style={{ maxWidth: 360, display: "block" }} aria-hidden="true">
-      <defs>
-        <marker id="mawl-scene-arrow2" viewBox="0 0 10 10" refX={8} refY={5} markerWidth={6} markerHeight={6} orient="auto">
-          <path d="M0 0 L10 5 L0 10 z" fill={orange} />
-        </marker>
-      </defs>
-      <Person x={52} y={128} color={navy} dashed s={0.9} className="mawl-fadeout" />
-      <g className="mawl-pop" style={{ animationDelay: "0.3s" }}>
-        <rect x={8} y={14} width={104} height={32} rx={8} fill={white} stroke={lightGray} strokeWidth={1.5} />
-        <text x={60} y={35} textAnchor="middle" fontSize={14} fontWeight={600} fill={navy}>
-          {t("It's yours.", "Ini milik Anda.", lang)}
-        </text>
-      </g>
-      <Person x={158} y={128} color={learner} s={1.1} />
-      <line x1={190} y1={100} x2={236} y2={100} stroke={orange} strokeWidth={2} markerEnd="url(#mawl-scene-arrow2)" className="mawl-pop" style={{ animationDelay: "1.6s" }} />
-      <Person x={270} y={128} color={muted} s={0.8} className="mawl-pop" style={{ animationDelay: "2s" }} />
+    <svg viewBox="0 0 400 230" width="100%" style={{ maxWidth: 560, display: "block", margin: "0 auto" }}
+      role="img" aria-label={t(
+        "Line chart. Your involvement falls from 95 percent in Model to 5 percent in Launch. Their ownership rises from 10 percent to 100 percent. The lines cross between Assist and Watch.",
+        "Grafik garis. Keterlibatan Anda turun dari 95 persen di tahap Teladani menjadi 5 persen di tahap Mandirikan. Kepemilikan mereka naik dari 10 persen menjadi 100 persen. Kedua garis bersilangan di antara Bantu dan Amati.", lang)}>
+      {[0, 50, 100].map(v => (
+        <line key={v} x1={30} x2={390} y1={y(v)} y2={y(v)} stroke={lightGray} strokeWidth={1} />
+      ))}
+      {PHASE_KEYS.map((k, i) => k === selected && (
+        <rect key={k} x={xs[i] - 40} y={12} width={80} height={172} rx={8} fill={calloutBg} className="mawl-trans" />
+      ))}
+      <text x={203} y={y(55) - 14} textAnchor="middle" fontSize={12} fontWeight={700} fill={muted}>{t("Handover", "Serah terima", lang)}</text>
+      <polyline points={inv} fill="none" stroke={navy} strokeWidth={3.5} strokeLinejoin="round" strokeLinecap="round" />
+      <polyline points={own} fill="none" stroke={orange} strokeWidth={3.5} strokeLinejoin="round" strokeLinecap="round" />
+      {PHASE_KEYS.map((k, i) => {
+        const sel = k === selected;
+        return (
+          <g key={k}>
+            <circle cx={xs[i]} cy={y(PHASES[k].involvement)} r={sel ? 7 : 5} fill={navy} stroke={white} strokeWidth={2} />
+            <circle cx={xs[i]} cy={y(PHASES[k].ownership)} r={sel ? 7 : 5} fill={orange} stroke={white} strokeWidth={2} />
+            <text x={xs[i]} y={208} textAnchor="middle" fontSize={14} fontWeight={700} fill={sel ? navy : muted}>{phaseName(k, lang)}</text>
+          </g>
+        );
+      })}
     </svg>
   );
 }
@@ -248,7 +198,7 @@ function CycleDiagram({ selected, onSelect, lang }: { selected: PhaseKey; onSele
     "M 143 316.8 A 130 130 0 0 1 83.2 257",
   ];
   return (
-    <svg viewBox="0 0 400 400" width="100%" style={{ maxWidth: 420, display: "block", margin: "0 auto" }} aria-hidden="true">
+    <svg viewBox="0 0 400 400" width="100%" style={{ maxWidth: 620, display: "block", margin: "0 auto" }} aria-hidden="true">
       <defs>
         <marker id="mawl-arrow" viewBox="0 0 10 10" refX={8} refY={5} markerWidth={7} markerHeight={7} orient="auto-start-reverse">
           <path d="M0 0 L10 5 L0 10 z" fill={orange} />
@@ -369,196 +319,79 @@ function ScenarioCard({ s, index, lang }: { s: Scenario; index: number; lang: La
   );
 }
 
-// ─── Generations ──────────────────────────────────────────────────────────────
-const GEN_STEPS = [
-  {
-    labelEn: "Gen 1", labelId: "Gen 1",
-    en: "You train Ana, a nurse in Cebu, to lead a health-education group for mothers. You model, assist, watch and launch.",
-    id: "Anda melatih Ana, seorang perawat di Cebu, untuk memimpin kelompok penyuluhan kesehatan bagi para ibu. Anda meneladani, membantu, mengamati, lalu memandirikannya.",
-  },
-  {
-    labelEn: "Gen 2", labelId: "Gen 2",
-    en: "Ana trains Joel with the same four phases. You are not in the room. Your job now is to watch whether Ana passes on the cycle, not only the skill.",
-    id: "Ana melatih Joel dengan empat tahap yang sama. Anda tidak berada di ruangan. Tugas Anda sekarang adalah mengamati apakah Ana meneruskan siklusnya, bukan hanya keterampilannya.",
-  },
-  {
-    labelEn: "Gen 3", labelId: "Gen 3",
-    en: "Joel trains Ria. Others are doing the same alongside them, and you have never met most of them.",
-    id: "Joel melatih Ria. Orang-orang lain melakukan hal yang sama di samping mereka, dan sebagian besar dari mereka belum pernah Anda temui.",
-  },
-  {
-    labelEn: "Gen 4", labelId: "Gen 4",
-    en: "Ria trains Tomas. The fourth generation is the proof. It shows that the cycle itself was passed on, not just a single skill.",
-    id: "Ria melatih Tomas. Generasi keempat adalah buktinya. Ini menunjukkan bahwa siklus itu sendiri yang diteruskan, bukan sekadar satu keterampilan.",
-  },
-  {
-    labelEn: "And beyond", labelId: "Dan seterusnya",
-    en: "From here nobody can count, and nobody controls it. That is what a movement looks like: leaders training leaders long after anyone remembers who started it.",
-    id: "Dari sini tidak ada yang bisa menghitung, dan tidak ada yang mengendalikannya. Seperti itulah sebuah gerakan: pemimpin melatih pemimpin, lama setelah tidak ada lagi yang ingat siapa yang memulainya.",
-  },
+// ─── Multiplication ───────────────────────────────────────────────────────────
+const IMG = `/images/resources/${SLUG}`;
+
+const GEN_STRIP = [
+  { src: "cut-you", w: 334, h: 400, hPx: 110, en: "You", id: "Anda", subEn: "Paul", subId: "Paulus" },
+  { src: "cut-scooter", w: 282, h: 334, hPx: 120, en: "Ana", id: "Ana", subEn: "Timothy", subId: "Timotius" },
+  { src: "cut-bigbike", w: 436, h: 418, hPx: 140, en: "Joel", id: "Joel", subEn: "Reliable people", subId: "Orang yang dapat dipercaya" },
 ];
 
-function GenerationsVisual({ step, lang }: { step: number; lang: Lang }) {
-  const rows = [
-    { y: 36, xs: [200] },
-    { y: 96, xs: [130, 270] },
-    { y: 156, xs: [80, 160, 240, 320] },
-    { y: 216, xs: [25, 75, 125, 175, 225, 275, 325, 375] },
-  ];
-  const chain = [{ g: 0, i: 0 }, { g: 1, i: 0 }, { g: 2, i: 1 }, { g: 3, i: 3 }];
-  const names = ["Ana", "Joel", "Ria", "Tomas"];
-  const isChain = (g: number, i: number) => chain.some(c => c.g === g && c.i === i);
-  const vis = (g: number) => (step >= g ? 1 : 0.08);
+function MultiplyStrip({ lang }: { lang: Lang }) {
+  const cell: React.CSSProperties = { display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-end", textAlign: "center", minWidth: 0 };
+  const name: React.CSSProperties = { fontSize: 14, fontWeight: 700, color: navy, margin: "10px 0 2px" };
+  const sub: React.CSSProperties = { fontSize: 12.5, color: muted, margin: 0 };
   return (
-    <svg viewBox="0 0 400 290" width="100%" style={{ maxWidth: 480, display: "block", margin: "0 auto" }} aria-hidden="true">
-      {rows.slice(1).map((row, g) =>
-        row.xs.map((x, i) => {
-          const parent = rows[g].xs[Math.floor(i / 2)];
-          const onChain = isChain(g, Math.floor(i / 2)) && isChain(g + 1, i);
-          return (
-            <line key={`${g}-${i}`} x1={parent} y1={rows[g].y} x2={x} y2={row.y} className="mawl-trans"
-              stroke={onChain ? orange : lightGray} strokeWidth={onChain ? 3 : 1.5} opacity={vis(g + 1)} />
-          );
-        })
-      )}
-      {rows.map((row, g) =>
-        row.xs.map((x, i) => (
-          <circle key={`n${g}-${i}`} cx={x} cy={row.y} r={g === 3 ? 9 : 12} className="mawl-trans"
-            fill={isChain(g, i) ? orange : navy} opacity={vis(g)} />
-        ))
-      )}
-      {chain.map((c, n) => {
-        const x = rows[c.g].xs[c.i];
-        const y = rows[c.g].y;
-        const pos = n === 0 ? { x: x + 20, y: y + 5, a: "start" } : n === 1 ? { x: x - 20, y: y + 5, a: "end" } : n === 2 ? { x: x + 20, y: y + 5, a: "start" } : { x, y: y + 30, a: "middle" };
-        return (
-          <text key={names[n]} x={pos.x} y={pos.y} textAnchor={pos.a as "start" | "end" | "middle"} fontSize={14} fontWeight={700} fill={navy} className="mawl-trans" opacity={vis(c.g)}>
-            {names[n]}
-          </text>
-        );
-      })}
-      {Array.from({ length: 16 }).map((_, i) => (
-        <circle key={`b${i}`} cx={12.5 + i * 25} cy={272} r={4} fill={navy} className="mawl-trans" opacity={step >= 4 ? 0.35 : 0.05} />
-      ))}
-      <text x={200} y={16} textAnchor="middle" fontSize={14} fill={muted}>{t("You", "Anda", lang)}</text>
-    </svg>
+    <figure style={{ margin: "28px 0 8px" }}>
+      <div className="mawl-strip" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "24px 12px", alignItems: "end" }}>
+        {GEN_STRIP.map(g => (
+          <div key={g.src} style={cell}>
+            <img src={`${IMG}/${g.src}.webp`} alt="" aria-hidden="true" width={g.w} height={g.h}
+              style={{ height: g.hPx, width: "auto", maxWidth: "100%", display: "block" }} />
+            <p style={name}>{t(g.en, g.id, lang)}</p>
+            <p style={sub}>{t(g.subEn, g.subId, lang)}</p>
+          </div>
+        ))}
+        <div style={cell}>
+          <div aria-hidden="true" style={{ display: "flex", alignItems: "flex-end", justifyContent: "center", gap: 2, height: 140 }}>
+            {[0.55, 0.7, 0.85, 0.7].map((s, i) => (
+              <img key={i} src={`${IMG}/cut-bigbike.webp`} alt="" width={436} height={418}
+                style={{ height: 140 * s * 0.6, width: "auto", display: "block", opacity: 0.55 + i * 0.1 }} />
+            ))}
+          </div>
+          <p style={name}>{t("And beyond", "Dan seterusnya", lang)}</p>
+          <p style={sub}>{t("Others", "Orang lain", lang)}</p>
+        </div>
+      </div>
+      <figcaption style={{ fontSize: 13, color: muted, textAlign: "center", marginTop: 16 }}>
+        {t("Each generation rides a bigger motorbike than the one before. The four generations of 2 Timothy 2:2.",
+          "Setiap generasi mengendarai motor yang lebih besar daripada generasi sebelumnya. Empat generasi dalam 2 Timotius 2:2.", lang)}
+      </figcaption>
+    </figure>
   );
 }
 
-// ─── Planner ──────────────────────────────────────────────────────────────────
-type SkillRow = { skill: string; phase: PhaseKey | null; next: string };
-const NEXT_HINT: Record<PhaseKey, { en: string; id: string }> = {
-  model: { en: "e.g. Let them sit in next time, then explain your thinking afterwards.", id: "mis. Ajak mereka ikut lain kali, lalu jelaskan cara berpikir Anda sesudahnya." },
-  assist: { en: "e.g. Hand it over next week and stay right beside them.", id: "mis. Serahkan minggu depan dan tetaplah di samping mereka." },
-  watch: { en: "e.g. Stay out of the room and ask three questions afterwards.", id: "mis. Jangan hadir di ruangan, lalu ajukan tiga pertanyaan sesudahnya." },
-  launch: { en: "e.g. Announce the handover and set a monthly friendship call.", id: "mis. Umumkan penyerahannya dan atur telepon persahabatan sebulan sekali." },
-};
-
-function LaunchPlanner({ lang }: { lang: Lang }) {
-  const uid = useId();
-  const [name, setName] = useState("");
-  const [rows, setRows] = useState<SkillRow[]>([{ skill: "", phase: null, next: "" }]);
-  const [copyState, setCopyState] = useState<"idle" | "ok" | "fail">("idle");
-
-  const update = (i: number, patch: Partial<SkillRow>) =>
-    setRows(r => r.map((row, j) => (j === i ? { ...row, ...patch } : row)));
-
-  const counts = PHASE_KEYS.map(k => ({ k, n: rows.filter(r => r.phase === k).length }));
-
-  async function copyPlan() {
-    const lines = [
-      `${t("Launch plan for", "Rencana pemandirian untuk", lang)}: ${name || "..."}`,
-      ...rows.filter(r => r.skill.trim()).map((r, i) =>
-        `${i + 1}. ${r.skill} | ${r.phase ? phaseName(r.phase, lang) : "?"} | ${t("Next step", "Langkah berikutnya", lang)}: ${r.next || "..."}`),
-    ];
-    try {
-      await navigator.clipboard.writeText(lines.join("\n"));
-      setCopyState("ok");
-    } catch {
-      setCopyState("fail");
-    }
-  }
-
-  const input: React.CSSProperties = {
-    width: "100%", minHeight: 44, padding: "10px 12px", borderRadius: 6, border: `1px solid ${lightGray}`,
-    fontSize: 15, fontFamily: "Montserrat, sans-serif", color: navy, background: white, boxSizing: "border-box",
-  };
-  const label: React.CSSProperties = { display: "block", fontSize: 13, fontWeight: 700, color: navy, margin: "0 0 6px" };
-
-  return (
-    <div style={{ background: white, border: `1px solid ${lightGray}`, borderRadius: 8, padding: "24px 20px" }}>
-      <label htmlFor={`${uid}-name`} style={label}>{t("Who are you training?", "Siapa yang sedang Anda latih?", lang)}</label>
-      <input id={`${uid}-name`} value={name} onChange={e => setName(e.target.value)} style={{ ...input, marginBottom: 20 }}
-        placeholder={t("First name", "Nama depan", lang)} />
-
-      {rows.map((row, i) => (
-        <fieldset key={i} style={{ border: `1px solid ${lightGray}`, borderRadius: 6, padding: "16px 14px", margin: "0 0 14px" }}>
-          <legend style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: orange, padding: "0 6px" }}>
-            {t("Skill", "Keterampilan", lang)} {i + 1}
-          </legend>
-          <label htmlFor={`${uid}-s${i}`} style={label}>{t("Skill their role needs", "Keterampilan yang dibutuhkan perannya", lang)}</label>
-          <input id={`${uid}-s${i}`} value={row.skill} onChange={e => update(i, { skill: e.target.value })} style={{ ...input, marginBottom: 12 }}
-            placeholder={t("e.g. Running the weekly meeting", "mis. Memimpin rapat mingguan", lang)} />
-          <p style={label} id={`${uid}-p${i}`}>{t("Where is this skill today?", "Di tahap mana keterampilan ini sekarang?", lang)}</p>
-          <div role="group" aria-labelledby={`${uid}-p${i}`} style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 12 }}>
-            {PHASE_KEYS.map(k => (
-              <button key={k} type="button" aria-pressed={row.phase === k} onClick={() => update(i, { phase: k })}
-                style={{
-                  minHeight: 44, padding: "8px 14px", borderRadius: 999, fontSize: 13.5, fontWeight: 600, cursor: "pointer",
-                  fontFamily: "Montserrat, sans-serif", border: `1.5px solid ${row.phase === k ? navy : lightGray}`,
-                  background: row.phase === k ? navy : white, color: row.phase === k ? white : navy,
-                }}>
-                {phaseName(k, lang)}
-              </button>
-            ))}
-          </div>
-          <label htmlFor={`${uid}-n${i}`} style={label}>{t("One next step", "Satu langkah berikutnya", lang)}</label>
-          <textarea id={`${uid}-n${i}`} value={row.next} onChange={e => update(i, { next: e.target.value })} rows={2}
-            style={{ ...input, resize: "vertical" }}
-            placeholder={row.phase ? t(NEXT_HINT[row.phase].en, NEXT_HINT[row.phase].id, lang) : t("Pick a phase first for a suggestion.", "Pilih tahap terlebih dahulu untuk melihat saran.", lang)} />
-          {rows.length > 1 && (
-            <button type="button" onClick={() => setRows(r => r.filter((_, j) => j !== i))}
-              style={{ marginTop: 8, minHeight: 44, background: "none", border: "none", color: muted, fontSize: 13, textDecoration: "underline", cursor: "pointer", padding: 0, fontFamily: "Montserrat, sans-serif" }}>
-              {t("Remove this skill", "Hapus keterampilan ini", lang)}
-            </button>
-          )}
-        </fieldset>
-      ))}
-
-      {rows.length < 5 && (
-        <button type="button" onClick={() => setRows(r => [...r, { skill: "", phase: null, next: "" }])}
-          style={{ minHeight: 44, padding: "10px 18px", borderRadius: 8, border: `1.5px dashed ${navy}`, background: "transparent", color: navy, fontWeight: 600, fontSize: 14, cursor: "pointer", fontFamily: "Montserrat, sans-serif", marginBottom: 20 }}>
-          + {t("Add a skill", "Tambah keterampilan", lang)} ({rows.length}/5)
-        </button>
-      )}
-
-      <div style={{ ...callout, marginBottom: 16 }}>
-        <p style={{ ...label, marginBottom: 8 }}>{t("Your picture so far", "Gambaran Anda sejauh ini", lang)}</p>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "8px 18px" }}>
-          {counts.map(({ k, n }) => (
-            <span key={k} style={{ fontSize: 14, color: bodyText }}>
-              <strong style={{ color: navy }}>{phaseName(k, lang)}</strong>: {n}
-            </span>
-          ))}
-        </div>
-        {counts[0].n + counts[1].n > 2 && (
-          <p style={{ ...p, fontSize: 14, margin: "10px 0 0" }}>
-            {t("Most skills are still close to you. Pick one to move forward this month, not all of them.",
-              "Sebagian besar keterampilan masih dekat dengan Anda. Pilih satu untuk digerakkan bulan ini, bukan semuanya.", lang)}
-          </p>
-        )}
+function GrowthSlider({ years, setYears, lang }: { years: number; setYears: (n: number) => void; lang: Lang }) {
+  const add = years + 1;
+  const mult = Math.pow(2, years);
+  const fmt = (n: number) => n.toLocaleString(lang === "id" ? "id-ID" : "en-US");
+  const bar = (n: number, color: string, label: string) => (
+    <div style={{ marginBottom: 16 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 12, marginBottom: 6 }}>
+        <span style={{ fontSize: 14, fontWeight: 700, color: navy }}>{label}</span>
+        <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 30, fontWeight: 600, color, lineHeight: 1 }}>{fmt(n)}</span>
       </div>
-
-      <button type="button" onClick={copyPlan}
-        style={{ minHeight: 44, padding: "10px 20px", borderRadius: 8, border: "none", background: orange, color: white, fontWeight: 700, fontSize: 14, cursor: "pointer", fontFamily: "Montserrat, sans-serif" }}>
-        {t("Copy my plan", "Salin rencana saya", lang)}
-      </button>
-      <span aria-live="polite" style={{ marginLeft: 12, fontSize: 13.5, color: muted }}>
-        {copyState === "ok" && t("Copied.", "Tersalin.", lang)}
-        {copyState === "fail" && t("Could not copy. Select the text and copy it yourself.", "Gagal menyalin. Pilih teksnya dan salin sendiri.", lang)}
-      </span>
-      <p style={{ ...p, fontSize: 13, color: muted, margin: "14px 0 0" }}>
-        {t("Nothing here is saved or sent. It stays on this page until you leave.", "Tidak ada yang disimpan atau dikirim. Semuanya hanya ada di halaman ini sampai Anda pergi.", lang)}
+      <div style={{ height: 14, background: lightGray, borderRadius: 7, overflow: "hidden" }}>
+        <div className="mawl-trans" style={{ width: `${Math.max(1.5, (n / 1024) * 100)}%`, height: "100%", background: color, borderRadius: 7 }} />
+      </div>
+    </div>
+  );
+  return (
+    <div style={{ background: white, border: `1px solid ${lightGray}`, borderRadius: 8, padding: "24px 20px", margin: "20px 0 8px" }}>
+      <label htmlFor="mawl-years" style={{ display: "block", fontSize: 14, fontWeight: 700, color: navy, marginBottom: 4 }}>
+        {t("Years", "Tahun", lang)}: <span style={{ color: orange }}>{years}</span>
+      </label>
+      <input id="mawl-years" type="range" min={1} max={10} step={1} value={years} className="mawl-range"
+        onChange={e => setYears(Number(e.target.value))}
+        aria-valuetext={t(`${years} years`, `${years} tahun`, lang)} />
+      <div aria-live="polite" style={{ marginTop: 12 }}>
+        {bar(add, navy, t("Addition: you train one new leader a year", "Penambahan: Anda melatih satu pemimpin baru setiap tahun", lang))}
+        {bar(mult, orange, t("Multiplication: every leader trains one new leader a year", "Pelipatgandaan: setiap pemimpin melatih satu pemimpin baru setiap tahun", lang))}
+      </div>
+      <p style={{ fontSize: 12.5, color: muted, margin: "4px 0 0" }}>
+        {t("An illustration, not a forecast. Real life is slower and messier, but the shape holds.",
+          "Ini ilustrasi, bukan ramalan. Kenyataannya lebih lambat dan tidak serapi ini, tetapi polanya tetap sama.", lang)}
       </p>
     </div>
   );
@@ -594,7 +427,8 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
   const [saved, setSaved] = useState(initialSaved);
   const [isPending, startTransition] = useTransition();
   const [phase, setPhase] = useState<PhaseKey>("model");
-  const [genStep, setGenStep] = useState(0);
+  const [years, setYears] = useState(3);
+  const [openMistake, setOpenMistake] = useState<number | null>(null);
   const [researchOpen, setResearchOpen] = useState(false);
 
   function handleSave() {
@@ -608,6 +442,36 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
   const ph = PHASES[phase];
   const research = (lang === "id" ? RESEARCH_ID : RESEARCH_EN).split("\n\n");
 
+  const objectives = [
+    { en: "know the four phases and what your role is in each one", id: "mengenal keempat tahap dan peran Anda di setiap tahap" },
+    { en: "spot which phase someone is in, skill by skill", id: "mengenali tahap yang sedang dijalani seseorang, keterampilan demi keterampilan" },
+    { en: "avoid the five places where the cycle usually breaks", id: "menghindari lima titik di mana siklus ini biasanya macet" },
+    { en: "train for multiplication, not just one successor", id: "melatih untuk pelipatgandaan, bukan hanya untuk satu pengganti" },
+  ];
+
+  const story = [
+    {
+      en: "Before a single word about safety, the teacher puts on a helmet. That is the first act of modelling. The learner sees it and copies it without being told.",
+      id: "Sebelum mengucapkan satu kata pun tentang keselamatan, sang pengajar memakai helm. Itulah tindakan meneladani yang pertama. Si pelajar melihatnya dan menirunya tanpa perlu disuruh.",
+    },
+    {
+      en: "Then the learner watches how the teacher rides: sitting up straight, hands steady, eyes on the road.",
+      id: "Lalu si pelajar mengamati cara sang pengajar berkendara: duduk tegak, tangan mantap, mata ke jalan.",
+    },
+    {
+      en: "Next the learner gets on a small scooter while the teacher walks right beside them.",
+      id: "Berikutnya si pelajar naik skuter kecil sementara sang pengajar berjalan tepat di sampingnya.",
+    },
+    {
+      en: "Later the teacher stands by the road, calling out advice, and the learner rides off alone.",
+      id: "Kemudian sang pengajar berdiri di pinggir jalan sambil meneriakkan saran, dan si pelajar melaju sendiri.",
+    },
+    {
+      en: "Years later the learner rides a much bigger motorbike on roads the teacher has never seen. Good training ends with someone who does more than you.",
+      id: "Bertahun-tahun kemudian si pelajar mengendarai sepeda motor yang jauh lebih besar di jalan-jalan yang belum pernah dilihat sang pengajar. Pelatihan yang baik berakhir dengan seseorang yang melakukan lebih banyak daripada Anda.",
+    },
+  ];
+
   const riderSkills: { en: string; id: string; phase: PhaseKey }[] = [
     { en: "Starting the engine", id: "Menyalakan mesin", phase: "launch" },
     { en: "Braking", id: "Mengerem", phase: "watch" },
@@ -618,29 +482,49 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
 
   const mistakes = [
     {
-      en: "Skipping Assist.", id: "Melewatkan Bantu.",
-      dEn: "You show it once and say \"over to you\". Most people fall without someone beside them and decide they are not cut out for it.",
-      dId: "Anda menunjukkannya sekali lalu berkata \"silakan\". Kebanyakan orang jatuh tanpa ada yang mendampingi, lalu menyimpulkan bahwa mereka tidak cocok untuk tugas itu.",
+      en: "Skipping Assist", id: "Melewatkan tahap Bantu",
+      lookEn: "You show it once, say \"over to you\" and walk away. It is like handing someone the keys after one demonstration.",
+      lookId: "Anda menunjukkannya sekali, berkata \"silakan\", lalu pergi. Seperti menyerahkan kunci motor setelah satu kali peragaan.",
+      whyEn: "It feels efficient. You assume they understood because they nodded.",
+      whyId: "Rasanya efisien. Anda mengira mereka sudah paham karena mereka mengangguk.",
+      doEn: "Stay beside them for the first real attempts. Expect falls and plan time for them.",
+      doId: "Tetaplah di samping mereka pada percobaan-percobaan pertama yang sungguhan. Terimalah bahwa mereka akan jatuh dan sediakan waktu untuk itu.",
     },
     {
-      en: "Staying in Assist too long.", id: "Terlalu lama di tahap Bantu.",
-      dEn: "Help turns into control. They stop thinking because you will fix it anyway.",
-      dId: "Bantuan berubah menjadi kendali. Mereka berhenti berpikir karena toh Anda yang akan memperbaikinya.",
+      en: "Staying in Assist too long", id: "Terlalu lama di tahap Bantu",
+      lookEn: "Months later you are still holding the handlebar. They have stopped thinking, because you will fix it anyway.",
+      lookId: "Berbulan-bulan kemudian Anda masih memegang setang. Mereka berhenti berpikir, karena toh Anda yang akan memperbaikinya.",
+      whyEn: "Stepping back feels risky, and fixing it yourself is faster.",
+      whyId: "Mundur terasa berisiko, dan memperbaikinya sendiri lebih cepat.",
+      doEn: "Agree on a date when you will step back. Let small mistakes stand and talk them through afterwards.",
+      doId: "Sepakati tanggal kapan Anda akan mundur. Biarkan kesalahan kecil terjadi, lalu bahas bersama sesudahnya.",
     },
     {
-      en: "Never leaving Watch.", id: "Tidak pernah keluar dari tahap Amati.",
-      dEn: "Your check-ins become an approval step they cannot move without.",
-      dId: "Pemantauan Anda berubah menjadi izin yang harus mereka tunggu sebelum bisa bergerak.",
+      en: "Never leaving Watch", id: "Tidak pernah keluar dari tahap Amati",
+      lookEn: "Every decision still passes through you. Your check-ins have turned into an approval step they cannot move without.",
+      lookId: "Setiap keputusan masih harus melalui Anda. Pemantauan Anda sudah berubah menjadi izin yang harus mereka tunggu sebelum bisa bergerak.",
+      whyEn: "Being needed feels good.",
+      whyId: "Dibutuhkan itu terasa menyenangkan.",
+      doEn: "Check in less often, on a set rhythm. Ask questions instead of giving answers. Name a launch date.",
+      doId: "Kurangi frekuensi pemantauan dan tetapkan jadwal yang tetap. Ajukan pertanyaan, bukan jawaban. Tentukan tanggal pemandirian.",
     },
     {
-      en: "Launching without checking the whole skill set.", id: "Memandirikan tanpa memeriksa seluruh keterampilan.",
-      dEn: "They can run the meeting but have never handled a conflict in it. The gap shows up at the worst moment.",
-      dId: "Mereka bisa memimpin rapat, tetapi belum pernah menangani konflik di dalamnya. Celah itu muncul di saat yang paling buruk.",
+      en: "Launching without checking the whole skill set", id: "Memandirikan tanpa memeriksa seluruh keterampilan",
+      lookEn: "They can run the meeting but have never handled a conflict in it. The gap shows up at the worst moment.",
+      lookId: "Mereka bisa memimpin rapat, tetapi belum pernah menangani konflik di dalamnya. Celah itu muncul di saat yang paling buruk.",
+      whyEn: "You checked the skills you could see and missed the ones that only appear under pressure.",
+      whyId: "Anda memeriksa keterampilan yang terlihat dan melewatkan yang baru muncul saat ada tekanan.",
+      doEn: "List every skill the role needs, including the rare and hard ones, and check each one.",
+      doId: "Tuliskan setiap keterampilan yang dibutuhkan peran itu, termasuk yang jarang dan sulit, lalu periksa satu per satu.",
     },
     {
-      en: "Stopping at one generation.", id: "Berhenti di satu generasi.",
-      dEn: "You trained a leader who does not train anyone. The work ends with them.",
-      dId: "Anda melatih seorang pemimpin yang tidak melatih siapa pun. Pekerjaan itu berhenti pada dirinya.",
+      en: "Stopping at one generation", id: "Berhenti di satu generasi",
+      lookEn: "You trained a good leader who does not train anyone. The work ends with them.",
+      lookId: "Anda melatih seorang pemimpin yang baik, tetapi ia tidak melatih siapa pun. Pekerjaan itu berhenti pada dirinya.",
+      whyEn: "Passing on the cycle was never part of the goal.",
+      whyId: "Meneruskan siklus ini memang tidak pernah menjadi bagian dari tujuan.",
+      doEn: "Say from the start that the goal is for them to train someone else. Watch whether they pass on the cycle, not only the skill.",
+      doId: "Katakan sejak awal bahwa tujuannya adalah agar mereka melatih orang lain. Amati apakah mereka meneruskan siklusnya, bukan hanya keterampilannya.",
     },
   ];
 
@@ -652,12 +536,14 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
   ];
 
   const takeaways = [
-    { en: "The leader is often the bottleneck. If your team waits for you, look at your own habits first.", id: "Pemimpin sering kali menjadi penghambat. Jika tim Anda menunggu Anda, periksa dulu kebiasaan Anda sendiri." },
+    { en: "The goal is leaders who go further than you, not copies of you.", id: "Tujuannya adalah pemimpin yang melangkah lebih jauh dari Anda, bukan tiruan Anda." },
     { en: "Model briefly, assist closely, watch for a long time, then launch.", id: "Teladani dengan singkat, bantu dari dekat, amati dalam waktu lama, lalu mandirikan." },
-    { en: "Work skill by skill. One person can be in all four phases at once.", id: "Bekerjalah keterampilan demi keterampilan. Satu orang bisa berada di keempat tahap sekaligus." },
+    { en: "Work skill by skill. Someone can be in Launch for one skill and still in Model for another.", id: "Bekerjalah keterampilan demi keterampilan. Seseorang bisa berada di tahap Mandirikan untuk satu keterampilan dan masih di tahap Teladani untuk keterampilan lain." },
     { en: "Falls in Assist are normal. Show it again, then hand it straight back.", id: "Jatuh di tahap Bantu itu wajar. Contohkan lagi, lalu segera serahkan kembali." },
-    { en: "Watch through to the fourth generation. The cycle itself is the last skill you pass on.", id: "Amati hingga generasi keempat. Siklus itu sendiri adalah keterampilan terakhir yang Anda teruskan." },
+    { en: "Multiplication only happens when you choose it. Train people who will train others.", id: "Pelipatgandaan hanya terjadi jika Anda memilihnya. Latihlah orang-orang yang akan melatih orang lain." },
   ];
+
+  const foldLabel: React.CSSProperties = { fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: orange, margin: "0 0 4px" };
 
   return (
     <div style={{ fontFamily: "Montserrat, sans-serif", background: offWhite, minHeight: "100vh" }}>
@@ -693,32 +579,50 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
       {/* ── 2. OPENER ───────────────────────────────────────────────────────── */}
       <section style={section}>
         <div style={wrap}>
-          <h2 style={h2}>{t("Why your team is still waiting", "Mengapa tim Anda masih menunggu", lang)}</h2>
+          <h2 style={h2}>{t("Growing leaders who go further than you", "Menumbuhkan pemimpin yang melangkah lebih jauh dari Anda", lang)}</h2>
           <p style={p}>{t(
             "Many leaders say they want their people to step up. Then they keep running the meeting, answering every question and fixing each mistake before anyone else sees it. The team learns the lesson quickly: wait, and the leader will do it.",
             "Banyak pemimpin berkata mereka ingin orang-orangnya maju. Lalu mereka tetap memimpin setiap rapat, menjawab setiap pertanyaan, dan memperbaiki setiap kesalahan sebelum orang lain melihatnya. Tim dengan cepat menangkap pelajarannya: tunggu saja, nanti pemimpin yang mengerjakan.", lang)}</p>
           <p style={p}>{t(
-            "Think back to how you learned to ride a motorbike or a bicycle. Someone showed you how. Then they held the seat while you wobbled. Then they stood by the road and called out advice. One day you rode off and they were no longer there. Four phases, and in each one the teacher did less.",
-            "Ingat kembali bagaimana Anda belajar mengendarai sepeda motor atau sepeda. Seseorang menunjukkan caranya. Lalu ia memegangi jok sementara Anda oleng. Lalu ia berdiri di pinggir jalan dan meneriakkan saran. Suatu hari Anda melaju sendiri dan ia tidak ada lagi di sana. Empat tahap, dan di setiap tahap sang pengajar semakin sedikit terlibat.", lang)}</p>
-          <p style={p}>{t(
-            "The pattern is old. Jesus used it with his disciples, and Paul used it in city after city.",
-            "Pola ini sudah lama ada. Yesus memakainya bersama murid-murid-Nya, dan Paulus memakainya dari kota ke kota.", lang)}<Sup n="¹" />{t(
-            " This module walks through the four phases, shows where leaders get stuck, and helps you plan the next step for the people you are training.",
-            " Modul ini membahas keempat tahap, menunjukkan di mana pemimpin sering tersangkut, dan menolong Anda merencanakan langkah berikutnya bagi orang-orang yang sedang Anda latih.", lang)}</p>
-          <figure style={{ margin: "32px 0 0" }}>
+            "The goal is not a copy of yourself. It is a leader who can do the work without you, and in time do more than you could. Jesus trained his disciples this way, and Paul did the same in city after city.",
+            "Tujuannya bukan tiruan diri Anda. Tujuannya adalah seorang pemimpin yang bisa mengerjakan tugas itu tanpa Anda, dan pada waktunya melakukan lebih banyak daripada yang bisa Anda lakukan. Yesus melatih murid-murid-Nya dengan cara ini, dan Paulus melakukan hal yang sama dari kota ke kota.", lang)}<Sup n="¹" /></p>
+          <div style={{ ...callout, marginTop: 24 }}>
+            <p style={{ ...foldLabel, marginBottom: 10 }}>{t("After this module you will", "Setelah modul ini Anda akan", lang)}</p>
+            <ul style={{ margin: 0, padding: 0, listStyle: "none" }}>
+              {objectives.map(o => (
+                <li key={o.en} style={{ display: "grid", gridTemplateColumns: "22px 1fr", gap: 6, fontSize: 15, lineHeight: 1.6, color: navy, marginBottom: 6 }}>
+                  <span aria-hidden="true" style={{ color: orange, fontWeight: 700 }}>✓</span>
+                  <span>{t(o.en, o.id, lang)}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 3. STORY ────────────────────────────────────────────────────────── */}
+      <section style={{ ...section, background: white }}>
+        <div style={wrap}>
+          <p style={eyebrow}>{t("A story", "Sebuah kisah", lang)}</p>
+          <h2 style={h2}>{t("Learning to ride a motorbike", "Belajar mengendarai sepeda motor", lang)}</h2>
+          {story.map(s => <p key={s.en} style={p}>{t(s.en, s.id, lang)}</p>)}
+          <figure style={{ margin: "28px 0 0" }}>
             <img
-              src={`/images/resources/${SLUG}/cycle-${lang}.webp`}
+              src={`${IMG}/cycle-${lang}.webp`}
               alt={t("Illustration of the four-phase training cycle: Model, Assist, Watch and Launch, with the leader stepping back at each phase.",
                 "Ilustrasi siklus pelatihan empat tahap: Teladani, Bantu, Amati, dan Mandirikan, dengan pemimpin semakin mundur di setiap tahap.", lang)}
               width={1280} height={985}
-              style={{ width: "100%", height: "auto", borderRadius: 8, display: "block", background: white }}
+              style={{ width: "100%", height: "auto", display: "block" }}
             />
+            <figcaption style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 20, fontStyle: "italic", color: navy, textAlign: "center", marginTop: 12 }}>
+              {t("Four phases, and in each one the teacher does less.", "Empat tahap, dan di setiap tahap sang pengajar semakin sedikit terlibat.", lang)}
+            </figcaption>
           </figure>
         </div>
       </section>
 
-      {/* ── 3. THE CYCLE ────────────────────────────────────────────────────── */}
-      <section style={{ ...section, background: white }}>
+      {/* ── 4. THE CYCLE ────────────────────────────────────────────────────── */}
+      <section style={section}>
         <div style={wrap}>
           <p style={eyebrow}>{t("The cycle", "Siklusnya", lang)}</p>
           <h2 style={h2}>{t("Four phases. Your presence fades.", "Empat tahap. Kehadiran Anda memudar.", lang)}</h2>
@@ -746,22 +650,32 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
           </div>
 
           <div id="mawl-phase-panel" role="region" aria-live="polite" aria-label={phaseName(phase, lang)}
-            style={{ border: `1px solid ${lightGray}`, borderRadius: 8, padding: "24px 20px", background: offWhite }}>
+            style={{ border: `1px solid ${lightGray}`, borderRadius: 8, padding: "24px 20px", background: white }}>
             <h3 style={h3}>{phaseName(phase, lang)}: {t(ph.shortEn, ph.shortId, lang)}</h3>
-            <div key={`${phase}-${lang}`} style={{ margin: "8px 0 16px" }}>
-              <PhaseScene phase={phase} lang={lang} />
+            <div style={{ height: 260, display: "flex", alignItems: "center", justifyContent: "center", background: white, margin: "8px 0 12px" }}>
+              <img key={phase} src={`${IMG}/phase-${phase}.webp`} alt={t(ph.img.altEn, ph.img.altId, lang)}
+                width={ph.img.w} height={ph.img.h}
+                style={{ maxHeight: "100%", maxWidth: "100%", width: "auto", height: "auto", objectFit: "contain", display: "block" }} />
             </div>
+            {ph.bubbleEn && (
+              <div style={{ display: "flex", justifyContent: "center", marginBottom: 14 }}>
+                <p style={{ margin: 0, background: calloutBg, border: `1.5px solid ${calloutBorder}`, borderRadius: 14, padding: "8px 16px", fontSize: 15, fontWeight: 700, color: navy }}>
+                  &ldquo;{t(ph.bubbleEn, ph.bubbleId ?? "", lang)}&rdquo;
+                </p>
+              </div>
+            )}
+            <p style={{ ...p, fontStyle: "italic" }}>{t(ph.storyEn, ph.storyId, lang)}</p>
             <p style={p}>{t(ph.bodyEn, ph.bodyId, lang)}</p>
-            <dl style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 12, margin: 0 }}>
+            <dl style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gridAutoRows: "1fr", gap: 12, margin: 0 }}>
               {[
                 { l: t("Who does the work", "Siapa yang mengerjakan", lang), v: t(ph.whoEn, ph.whoId, lang) },
                 { l: t("Your role", "Peran Anda", lang), v: t(ph.roleEn, ph.roleId, lang) },
                 { l: t("How long", "Berapa lama", lang), v: t(ph.longEn, ph.longId, lang) },
                 { l: t("Watch out", "Waspadai", lang), v: t(ph.riskEn, ph.riskId, lang) },
               ].map(c => (
-                <div key={c.l} style={{ background: white, borderRadius: 6, padding: "12px 14px", border: `1px solid ${lightGray}` }}>
+                <div key={c.l} style={{ background: offWhite, borderRadius: 6, padding: "12px 14px", border: `1px solid ${lightGray}`, minHeight: 132, boxSizing: "border-box" }}>
                   <dt style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: orange, marginBottom: 6 }}>{c.l}</dt>
-                  <dd style={{ margin: 0, fontSize: 14.5, lineHeight: 1.55, color: navy }}>{c.v}</dd>
+                  <dd style={{ margin: 0, fontSize: 14, lineHeight: 1.5, color: navy }}>{c.v}</dd>
                 </div>
               ))}
             </dl>
@@ -770,30 +684,14 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
           {/* How your role shifts */}
           <h3 style={{ ...h3, marginTop: 48 }}>{t("How your role shifts", "Bagaimana peran Anda bergeser", lang)}</h3>
           <p style={p}>{t(
-            "Your involvement falls as their ownership grows. The phases are also very different in length. Model is short. Watch is long.",
-            "Keterlibatan Anda menurun seiring bertumbuhnya rasa kepemilikan mereka. Panjang setiap tahap juga sangat berbeda. Teladani singkat. Amati panjang.", lang)}</p>
-          <div style={{ display: "flex", gap: 18, flexWrap: "wrap", fontSize: 13, color: bodyText, marginBottom: 14 }}>
-            <span><span aria-hidden="true" style={{ display: "inline-block", width: 12, height: 12, borderRadius: 3, background: navy, marginRight: 6, verticalAlign: "middle" }} />{t("Your involvement", "Keterlibatan Anda", lang)}</span>
-            <span><span aria-hidden="true" style={{ display: "inline-block", width: 12, height: 12, borderRadius: 3, background: orange, marginRight: 6, verticalAlign: "middle" }} />{t("Their ownership", "Kepemilikan mereka", lang)}</span>
+            "Your involvement goes down as their ownership goes up. Somewhere between Assist and Watch the lines cross, and the work becomes more theirs than yours.",
+            "Keterlibatan Anda turun seiring naiknya rasa kepemilikan mereka. Di antara tahap Bantu dan Amati kedua garis itu bersilangan, dan pekerjaan itu menjadi lebih milik mereka daripada milik Anda.", lang)}</p>
+          <div style={{ display: "flex", gap: 18, flexWrap: "wrap", fontSize: 13, color: bodyText, marginBottom: 10 }}>
+            <span><span aria-hidden="true" style={{ display: "inline-block", width: 18, height: 4, borderRadius: 2, background: navy, marginRight: 6, verticalAlign: "middle" }} />{t("Your involvement", "Keterlibatan Anda", lang)}</span>
+            <span><span aria-hidden="true" style={{ display: "inline-block", width: 18, height: 4, borderRadius: 2, background: orange, marginRight: 6, verticalAlign: "middle" }} />{t("Their ownership", "Kepemilikan mereka", lang)}</span>
           </div>
-          <div>
-            {PHASE_KEYS.map(k => {
-              const d = PHASES[k];
-              const active = k === phase;
-              return (
-                <div key={k} style={{ display: "grid", gridTemplateColumns: "96px 1fr", alignItems: "center", gap: 12, marginBottom: 12, opacity: active ? 1 : 0.6 }} className="mawl-trans">
-                  <span style={{ fontSize: 14, fontWeight: 700, color: navy }}>{phaseName(k, lang)}</span>
-                  <div>
-                    <div role="img" aria-label={`${t("Your involvement", "Keterlibatan Anda", lang)} ${d.involvement}%`} style={{ height: 10, background: lightGray, borderRadius: 5, marginBottom: 5 }}>
-                      <div className="mawl-trans" style={{ width: `${d.involvement}%`, height: "100%", background: navy, borderRadius: 5 }} />
-                    </div>
-                    <div role="img" aria-label={`${t("Their ownership", "Kepemilikan mereka", lang)} ${d.ownership}%`} style={{ height: 10, background: lightGray, borderRadius: 5 }}>
-                      <div className="mawl-trans" style={{ width: `${d.ownership}%`, height: "100%", background: orange, borderRadius: 5 }} />
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
+          <div style={{ background: white, border: `1px solid ${lightGray}`, borderRadius: 8, padding: "16px 12px 8px" }}>
+            <RoleShiftChart selected={phase} lang={lang} />
           </div>
           <p style={{ fontSize: 13, fontWeight: 700, color: navy, margin: "28px 0 8px" }}>{t("Typical length", "Panjang yang umum", lang)}</p>
           <div style={{ display: "flex", borderRadius: 6, overflow: "hidden", height: 36, fontSize: 12, fontWeight: 700 }}>
@@ -806,15 +704,18 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
         </div>
       </section>
 
-      {/* ── 4. SKILL BY SKILL ───────────────────────────────────────────────── */}
-      <section id="mc-four-stages" style={section}>
+      {/* ── 5. SKILL BY SKILL ───────────────────────────────────────────────── */}
+      <section id="mc-four-stages" style={{ ...section, background: white }}>
         <div style={wrap}>
           <p style={eyebrow}>{t("Skill by skill", "Keterampilan demi keterampilan", lang)}</p>
-          <h2 style={h2}>{t("Nobody is in one phase for a whole role", "Tidak ada yang berada di satu tahap untuk seluruh perannya", lang)}</h2>
+          <h2 style={h2}>{t("One person can be in Launch and Model at the same time", "Satu orang bisa berada di tahap Mandirikan dan Teladani sekaligus", lang)}</h2>
           <p style={p}>{t(
-            "Go back to the new rider. On the same afternoon they can be in Launch for starting the engine, Watch for braking and Assist on steep hills, while you still model the road rules in a busy city. A team leader is the same. They may run meetings on their own and still need you beside them for a hard conversation. Readiness belongs to the task, not the person.",
-            "Kembali ke pengendara baru tadi. Pada sore yang sama ia bisa berada di tahap Mandirikan untuk menyalakan mesin, Amati untuk mengerem, dan Bantu di tanjakan curam, sementara Anda masih meneladankan aturan jalan di kota yang ramai. Seorang pemimpin tim pun sama. Ia mungkin sudah bisa memimpin rapat sendiri, tetapi masih membutuhkan Anda di sampingnya untuk percakapan yang sulit. Kesiapan melekat pada tugas, bukan pada orangnya.", lang)}<Sup n="²" /></p>
-          <div style={{ background: white, border: `1px solid ${lightGray}`, borderRadius: 8, overflow: "hidden", margin: "20px 0 24px" }}>
+            "You move each skill through the cycle, not the whole person. Go back to the new rider. You have launched them on starting the engine. You watch their braking from the roadside. On steep hills you still walk beside them. And on the rules of a busy city road you are still riding in front, showing the way.",
+            "Yang Anda gerakkan melalui siklus ini adalah setiap keterampilan, bukan orangnya secara utuh. Kembali ke pengendara baru tadi. Untuk menyalakan mesin, Anda sudah memandirikannya. Cara ia mengerem Anda amati dari pinggir jalan. Di tanjakan curam Anda masih berjalan di sampingnya. Dan untuk aturan jalan di kota yang ramai, Anda masih berkendara di depan untuk menunjukkan jalannya.", lang)}</p>
+          <p style={p}>{t(
+            "A team leader is the same. They may run meetings on their own and still need you beside them for a hard conversation. Readiness belongs to the task, not the person.",
+            "Seorang pemimpin tim pun sama. Ia mungkin sudah bisa memimpin rapat sendiri, tetapi masih membutuhkan Anda di sampingnya untuk percakapan yang sulit. Kesiapan melekat pada tugas, bukan pada orangnya.", lang)}<Sup n="²" /></p>
+          <div style={{ background: offWhite, border: `1px solid ${lightGray}`, borderRadius: 8, overflow: "hidden", margin: "20px 0 24px" }}>
             {riderSkills.map((s, i) => (
               <div key={s.en} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, padding: "12px 16px", borderTop: i ? `1px solid ${lightGray}` : "none" }}>
                 <span style={{ fontSize: 14.5, color: navy }}>{t(s.en, s.id, lang)}</span>
@@ -832,21 +733,24 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
         </div>
       </section>
 
-      {/* ── 5. SHADOW LEADERSHIP ────────────────────────────────────────────── */}
-      <section style={{ ...section, background: white }}>
+      {/* ── 6. SHADOW LEADERSHIP ────────────────────────────────────────────── */}
+      <section style={section}>
         <div style={wrap}>
           <p style={eyebrow}>{t("Leading from the shadows", "Memimpin dari balik layar", lang)}</p>
           <h2 style={h2}>{t("Put them in the spotlight", "Tempatkan mereka di bawah sorotan", lang)}</h2>
           <figure style={{ margin: "8px 0 20px" }}>
-            <svg viewBox="0 0 400 200" width="100%" style={{ maxWidth: 440, display: "block", margin: "0 auto" }} aria-hidden="true">
-              <rect x={0} y={0} width={400} height={200} rx={8} fill={navy} />
-              <path d="M 230 0 L 290 0 L 330 178 L 190 178 Z" fill={orange} opacity={0.28} />
-              <ellipse cx={260} cy={180} rx={72} ry={10} fill={orange} opacity={0.35} />
-              <Person x={260} y={166} color={orange} s={1.2} />
-              <Person x={80} y={170} color="oklch(60% 0.05 260)" dashed s={1} />
-              <text x={260} y={196} textAnchor="middle" fontSize={14} fontWeight={700} fill={offWhite}>{t("Them", "Mereka", lang)}</text>
-              <text x={80} y={196} textAnchor="middle" fontSize={14} fill="oklch(75% 0.04 260)">{t("You", "Anda", lang)}</text>
-            </svg>
+            <div style={{ position: "relative", borderRadius: 8, overflow: "hidden" }}>
+              <img src={`${IMG}/spotlight.webp`} width={1400} height={760}
+                alt={t("On a dark stage, the learner rides a big motorbike under a spotlight while the leader stands in the shadows with arms folded.",
+                  "Di panggung yang gelap, pelajar mengendarai sepeda motor besar di bawah sorotan lampu, sementara pemimpin berdiri di balik bayang-bayang dengan tangan terlipat.", lang)}
+                style={{ width: "100%", height: "auto", display: "block" }} />
+              <span aria-hidden="true" style={{ position: "absolute", left: "20%", bottom: "6%", transform: "translateX(-50%)", fontSize: "clamp(11px, 2.2vw, 14px)", fontWeight: 700, color: "#8b97b3", whiteSpace: "nowrap" }}>
+                {t("In the shadows", "Di balik layar", lang)}
+              </span>
+              <span aria-hidden="true" style={{ position: "absolute", left: "65%", bottom: "6%", transform: "translateX(-50%)", fontSize: "clamp(11px, 2.2vw, 14px)", fontWeight: 700, color: "#fff3d6", whiteSpace: "nowrap" }}>
+                {t("In the spotlight", "Di bawah sorotan", lang)}
+              </span>
+            </div>
             <figcaption style={{ fontSize: 13, color: muted, textAlign: "center", marginTop: 8 }}>
               {t("In Watch and Launch, the light belongs to them. You stay in the shadows.", "Di tahap Amati dan Mandirikan, sorotan milik mereka. Anda tetap di balik layar.", lang)}
             </figcaption>
@@ -860,8 +764,8 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
         </div>
       </section>
 
-      {/* ── 6. SCENARIOS ────────────────────────────────────────────────────── */}
-      <section style={section}>
+      {/* ── 7. SCENARIOS + MISTAKES ─────────────────────────────────────────── */}
+      <section style={{ ...section, background: white }}>
         <div style={wrap}>
           <p style={eyebrow}>{t("Practice", "Latihan", lang)}</p>
           <h2 style={h2}>{t("Which phase is this?", "Tahap apakah ini?", lang)}</h2>
@@ -869,68 +773,84 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
           {SCENARIOS.map((s, i) => <ScenarioCard key={s.placeEn} s={s} index={i} lang={lang} />)}
 
           <h3 style={{ ...h3, marginTop: 40 }}>{t("Where the cycle breaks", "Di mana siklus ini macet", lang)}</h3>
-          <ol style={{ margin: 0, padding: 0, listStyle: "none" }}>
-            {mistakes.map((m, i) => (
-              <li key={m.en} style={{ display: "grid", gridTemplateColumns: "32px 1fr", gap: 10, marginBottom: 14 }}>
-                <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 24, fontWeight: 600, color: orange, lineHeight: 1.1 }}>{i + 1}</span>
-                <p style={{ ...p, margin: 0 }}><strong style={{ color: navy }}>{t(m.en, m.id, lang)}</strong> {t(m.dEn, m.dId, lang)}</p>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
-
-      {/* ── 7. GENERATIONS ──────────────────────────────────────────────────── */}
-      <section style={{ ...section, background: white }}>
-        <div style={wrap}>
-          <p style={eyebrow}>{t("Generations", "Generasi", lang)}</p>
-          <h2 style={h2}>{t("Launch starts the next cycle", "Mandirikan memulai siklus berikutnya", lang)}</h2>
-          <p style={p}>{t(
-            "Launch is not the end. The person you launched now models the same work for someone else. Step through to see what happens.",
-            "Mandirikan bukanlah akhir. Orang yang Anda mandirikan kini meneladankan pekerjaan yang sama bagi orang lain. Ikuti langkah demi langkah untuk melihat apa yang terjadi.", lang)}</p>
-          <div role="group" aria-label={t("Generations", "Generasi", lang)} style={{ display: "flex", flexWrap: "wrap", gap: 8, margin: "16px 0 20px" }}>
-            {GEN_STEPS.map((g, i) => (
-              <button key={g.labelEn} type="button" aria-pressed={genStep === i} aria-controls="mawl-gen-text" onClick={() => setGenStep(i)}
-                style={{
-                  minHeight: 44, padding: "8px 14px", borderRadius: 999, fontSize: 13.5, fontWeight: 600, cursor: "pointer",
-                  fontFamily: "Montserrat, sans-serif", border: `1.5px solid ${genStep === i ? orange : lightGray}`,
-                  background: genStep === i ? orange : white, color: genStep === i ? white : navy,
-                }}>
-                {t(g.labelEn, g.labelId, lang)}
-              </button>
-            ))}
-          </div>
-          <figure style={{ margin: 0 }}>
-            <GenerationsVisual step={genStep} lang={lang} />
-            <figcaption style={{ fontSize: 13, color: muted, textAlign: "center", marginTop: 8 }}>
-              {t("Each leader trains others. The orange line follows one chain from Ana to Tomas.", "Setiap pemimpin melatih orang lain. Garis oranye mengikuti satu rantai dari Ana hingga Tomas.", lang)}
-            </figcaption>
-          </figure>
-          <p id="mawl-gen-text" aria-live="polite" style={{ ...p, marginTop: 20, minHeight: 84 }}>
-            {t(GEN_STEPS[genStep].en, GEN_STEPS[genStep].id, lang)}
-          </p>
-          <div style={{ display: "flex", gap: 10 }}>
-            <button type="button" disabled={genStep === 0} onClick={() => setGenStep(s => Math.max(0, s - 1))}
-              style={{ minHeight: 44, padding: "8px 18px", borderRadius: 8, border: `1.5px solid ${lightGray}`, background: white, color: navy, fontWeight: 600, cursor: genStep === 0 ? "default" : "pointer", opacity: genStep === 0 ? 0.4 : 1, fontFamily: "Montserrat, sans-serif" }}>
-              {t("Back", "Kembali", lang)}
-            </button>
-            <button type="button" disabled={genStep === GEN_STEPS.length - 1} onClick={() => setGenStep(s => Math.min(GEN_STEPS.length - 1, s + 1))}
-              style={{ minHeight: 44, padding: "8px 18px", borderRadius: 8, border: "none", background: navy, color: white, fontWeight: 600, cursor: genStep === GEN_STEPS.length - 1 ? "default" : "pointer", opacity: genStep === GEN_STEPS.length - 1 ? 0.4 : 1, fontFamily: "Montserrat, sans-serif" }}>
-              {t("Next", "Lanjut", lang)}
-            </button>
+          <p style={p}>{t("Five common places leaders get stuck. Open each one to see what it looks like and what to do instead.",
+            "Lima titik yang sering membuat pemimpin tersangkut. Buka masing-masing untuk melihat seperti apa bentuknya dan apa yang sebaiknya dilakukan.", lang)}</p>
+          <div>
+            {mistakes.map((m, i) => {
+              const open = openMistake === i;
+              return (
+                <div key={m.en} style={{ border: `1px solid ${lightGray}`, borderRadius: 8, marginBottom: 10, background: open ? offWhite : white }} className="mawl-trans">
+                  <button type="button" aria-expanded={open} aria-controls={`mawl-mistake-${i}`} onClick={() => setOpenMistake(open ? null : i)}
+                    style={{ width: "100%", minHeight: 44, display: "grid", gridTemplateColumns: "32px 1fr 20px", alignItems: "center", gap: 10, padding: "12px 16px", background: "none", border: "none", cursor: "pointer", textAlign: "left", fontFamily: "Montserrat, sans-serif" }}>
+                    <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 24, fontWeight: 600, color: orange, lineHeight: 1 }}>{i + 1}</span>
+                    <span style={{ fontSize: 15, fontWeight: 700, color: navy }}>{t(m.en, m.id, lang)}</span>
+                    <span aria-hidden="true" style={{ fontSize: 18, color: orange, fontWeight: 700 }}>{open ? "−" : "+"}</span>
+                  </button>
+                  <div id={`mawl-mistake-${i}`} hidden={!open} style={{ padding: "0 16px 16px 58px" }}>
+                    {[
+                      { l: t("What it looks like", "Seperti apa bentuknya", lang), v: t(m.lookEn, m.lookId, lang) },
+                      { l: t("Why it happens", "Mengapa terjadi", lang), v: t(m.whyEn, m.whyId, lang) },
+                      { l: t("What to do instead", "Apa yang sebaiknya dilakukan", lang), v: t(m.doEn, m.doId, lang) },
+                    ].map(r => (
+                      <div key={r.l} style={{ marginBottom: 12 }}>
+                        <p style={foldLabel}>{r.l}</p>
+                        <p style={{ ...p, margin: 0, fontSize: 15 }}>{r.v}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* ── 8. PLANNER ──────────────────────────────────────────────────────── */}
+      {/* ── 8. MULTIPLICATION ───────────────────────────────────────────────── */}
       <section style={section}>
         <div style={wrap}>
-          <p style={eyebrow}>{t("Your plan", "Rencana Anda", lang)}</p>
-          <h2 style={h2}>{t("My Launch Planner", "Perencana Pemandirian Saya", lang)}</h2>
+          <p style={eyebrow}>{t("Multiplication through generations", "Pelipatgandaan lintas generasi", lang)}</p>
+          <h2 style={h2}>{t("The game changer: they go further than you", "Pengubah permainan: mereka melangkah lebih jauh dari Anda", lang)}</h2>
           <p style={p}>{t(
-            "Pick one person you are training. List up to five skills their role needs, mark where each one is today, and write one next step for each. Run the cycle skill by skill.",
-            "Pilih satu orang yang sedang Anda latih. Tuliskan hingga lima keterampilan yang dibutuhkan perannya, tandai posisi masing-masing saat ini, lalu tulis satu langkah berikutnya untuk setiap keterampilan. Jalankan siklusnya keterampilan demi keterampilan.", lang)}</p>
-          <LaunchPlanner lang={lang} />
+            "Addition means you train people yourself, one after another. Multiplication means the people you train go on to train others. Launch is not the end of the cycle. It is where the next one begins.",
+            "Penambahan berarti Anda sendiri yang melatih orang, satu demi satu. Pelipatgandaan berarti orang-orang yang Anda latih melanjutkan dengan melatih orang lain. Mandirikan bukanlah akhir siklus. Di sanalah siklus berikutnya dimulai.", lang)}</p>
+          <blockquote style={{ margin: "24px 0", padding: "20px 22px", background: white, borderLeft: `4px solid ${orange}`, borderRadius: 6 }}>
+            <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 21, fontStyle: "italic", lineHeight: 1.5, color: navy, margin: "0 0 8px" }}>
+              {t("\"And the things you have heard me say in the presence of many witnesses entrust to reliable people who will also be qualified to teach others.\"",
+                "\"Apa yang telah engkau dengar dari padaku di depan banyak saksi, percayakanlah itu kepada orang-orang yang dapat dipercayai, yang juga cakap mengajar orang lain.\"", lang)}
+            </p>
+            <cite style={{ fontSize: 13, fontStyle: "normal", color: orange, fontWeight: 700 }}>{t("2 Timothy 2:2 (NIV)", "2 Timotius 2:2 (TB)", lang)}</cite>
+          </blockquote>
+          <p style={p}>{t(
+            "Four generations in one verse: Paul, Timothy, reliable people, and others. The finish line is not the first person you train. It is the fourth.",
+            "Empat generasi dalam satu ayat: Paulus, Timotius, orang-orang yang dapat dipercaya, dan orang lain. Garis akhirnya bukan orang pertama yang Anda latih, melainkan orang keempat.", lang)}</p>
+
+          <MultiplyStrip lang={lang} />
+
+          <p style={{ ...p, marginTop: 24 }}>{t(
+            "Picture it in Cebu. You train Ana, a nurse, to lead a health group for mothers. Ana trains Joel. Joel trains Ria. Soon mothers are being helped by people you have never met, in places you have never been.",
+            "Bayangkan di Cebu. Anda melatih Ana, seorang perawat, untuk memimpin kelompok kesehatan bagi para ibu. Ana melatih Joel. Joel melatih Ria. Tak lama kemudian para ibu ditolong oleh orang-orang yang belum pernah Anda temui, di tempat-tempat yang belum pernah Anda kunjungi.", lang)}</p>
+
+          <h3 style={{ ...h3, marginTop: 36 }}>{t("Jesus with the Twelve", "Yesus bersama kedua belas murid", lang)}</h3>
+          <p style={p}>{t(
+            "Jesus spent about three years with twelve people. He did not try to reach everyone himself. Then he sent them to make disciples of all nations (Matthew 28:19). Within about thirty years the message had travelled from Jerusalem to Rome (Acts 28).",
+            "Yesus menghabiskan sekitar tiga tahun bersama dua belas orang. Ia tidak berusaha menjangkau semua orang seorang diri. Lalu Ia mengutus mereka untuk menjadikan semua bangsa murid-Nya (Matius 28:19). Dalam waktu sekitar tiga puluh tahun, berita itu sudah sampai dari Yerusalem ke Roma (Kisah Para Rasul 28).", lang)}</p>
+
+          <h3 style={{ ...h3, marginTop: 36 }}>{t("Addition or multiplication?", "Penambahan atau pelipatgandaan?", lang)}</h3>
+          <p style={p}>{t("Move the slider to see how the two compare over time.", "Geser penggeser untuk melihat perbandingan keduanya dari waktu ke waktu.", lang)}</p>
+          <GrowthSlider years={years} setYears={setYears} lang={lang} />
+
+          <h3 style={{ ...h3, marginTop: 36 }}>{t("Why it matters", "Mengapa ini penting", lang)}</h3>
+          <p style={p}>{t(
+            "Your reach is limited by your time and your years. Theirs is not. When the people you train also train others, the work keeps growing long after you have stepped back, and in places you will never go.",
+            "Jangkauan Anda dibatasi oleh waktu dan usia Anda. Jangkauan mereka tidak. Ketika orang-orang yang Anda latih juga melatih orang lain, pekerjaan itu terus bertumbuh lama setelah Anda mundur, dan di tempat-tempat yang tidak akan pernah Anda datangi.", lang)}</p>
+          <div style={{ ...callout, margin: "24px 0" }}>
+            <p style={{ ...p, margin: 0 }}><strong style={{ color: navy }}>{t("It only happens when you choose it. ", "Ini hanya terjadi jika Anda memilihnya. ", lang)}</strong>{t(
+              "Multiplication does not happen by accident. Make it the goal from the first day, and say it out loud: \"I am training you so that you can train someone else.\"",
+              "Pelipatgandaan tidak terjadi secara kebetulan. Jadikan itu tujuan sejak hari pertama, dan katakan dengan jelas: \"Saya melatih Anda supaya Anda bisa melatih orang lain.\"", lang)}</p>
+          </div>
+          <p style={{ ...p, margin: 0 }}>{t(
+            "This is the game changer. They learned on your small scooter. They ride off on a bigger motorbike and do more than you ever could. That is not a threat to your leadership. It is the fruit of it.",
+            "Inilah pengubah permainannya. Mereka belajar dengan skuter kecil Anda. Mereka melaju dengan sepeda motor yang lebih besar dan melakukan lebih banyak daripada yang pernah bisa Anda lakukan. Itu bukan ancaman bagi kepemimpinan Anda. Itulah buahnya.", lang)}</p>
         </div>
       </section>
 
@@ -991,19 +911,9 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
             </p>
             <cite style={{ fontSize: 13, fontStyle: "normal", color: orange, fontWeight: 700 }}>{t("Acts 20:32 (NIV)", "Kisah Para Rasul 20:32 (TB)", lang)}</cite>
           </blockquote>
-          <p style={{ ...p, color: "oklch(85% 0.02 260)" }}>{t(
+          <p style={{ ...p, color: "oklch(85% 0.02 260)", margin: 0 }}>{t(
             "Paul did not hand the elders a manual. He handed them to God. Launch is an act of trust in God as much as in people. Paul kept writing and praying for the churches he had left, but he did not take them back.",
             "Paulus tidak menyerahkan buku panduan kepada para penatua. Ia menyerahkan mereka kepada Tuhan. Memandirikan adalah tindakan percaya kepada Tuhan, sama seperti percaya kepada manusia. Paulus terus menulis surat dan mendoakan jemaat-jemaat yang ia tinggalkan, tetapi ia tidak mengambil alih mereka kembali.", lang)}</p>
-          <blockquote style={{ margin: "0 0 16px", padding: "20px 22px", background: "oklch(28% 0.10 260)", borderRadius: 6 }}>
-            <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 21, fontStyle: "italic", lineHeight: 1.5, color: offWhite, margin: "0 0 8px" }}>
-              {t("\"And the things you have heard me say in the presence of many witnesses entrust to reliable people who will also be qualified to teach others.\"",
-                "\"Apa yang telah engkau dengar dari padaku di depan banyak saksi, percayakanlah itu kepada orang-orang yang dapat dipercayai, yang juga cakap mengajar orang lain.\"", lang)}
-            </p>
-            <cite style={{ fontSize: 13, fontStyle: "normal", color: orange, fontWeight: 700 }}>{t("2 Timothy 2:2 (NIV)", "2 Timotius 2:2 (TB)", lang)}</cite>
-          </blockquote>
-          <p style={{ ...p, color: "oklch(85% 0.02 260)", margin: 0 }}>{t(
-            "Four generations in one verse: Paul, Timothy, reliable people, and others. The finish line is not the first person you train. It is the fourth.",
-            "Empat generasi dalam satu ayat: Paulus, Timotius, orang-orang yang dapat dipercaya, dan orang lain. Garis akhirnya bukan orang pertama yang Anda latih, melainkan orang keempat.", lang)}</p>
         </div>
       </section>
 
@@ -1063,7 +973,7 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
         "Wood, D., Bruner, J. S., & Ross, G. (1976). The role of tutoring in problem solving. Journal of Child Psychology and Psychiatry, 17(2), 89-100.",
         "Collins, A., Brown, J. S., & Newman, S. E. (1989). Cognitive apprenticeship: Teaching the crafts of reading, writing, and mathematics. In L. B. Resnick (Ed.), Knowing, learning, and instruction (pp. 453-494). Erlbaum.",
         "Pearson, P. D., & Gallagher, M. C. (1983). The instruction of reading comprehension. Contemporary Educational Psychology, 8(3), 317-344.",
-        "The Holy Bible, New International Version (2011) and Alkitab Terjemahan Baru (LAI): Mark 3:14; Luke 9-10; Acts 17:2, 18:11, 20:17-38; 2 Timothy 2:2.",
+        "The Holy Bible, New International Version (2011) and Alkitab Terjemahan Baru (LAI): Mark 3:14; Luke 9-10; Matthew 28:19; Acts 17:2, 18:11, 20:17-38, 28; 2 Timothy 2:2.",
       ]} lang={lang} markerStyle="superscript" />
     </div>
   );
