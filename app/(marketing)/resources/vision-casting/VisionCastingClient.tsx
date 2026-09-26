@@ -26,7 +26,7 @@ import {
 
 type LangCode = "en" | "id";
 
-type Props = { userPathway: string | null; isSaved: boolean };
+type Props = { userPathway: string | null; isSaved: boolean; signupBanner?: React.ReactNode };
 
 // ─── Flip Card Data ───────────────────────────────────────────────────────────
 
@@ -90,7 +90,7 @@ const FLIP_CARDS: FlipCard[] = [
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
-export default function VisionCastingClient({ userPathway, isSaved: initialSaved }: Props) {
+export default function VisionCastingClient({ userPathway, isSaved: initialSaved, signupBanner }: Props) {
   const { lang: _ctxLang } = useLanguage();
   const lang = (_ctxLang === "id" ? _ctxLang : "en") as LangCode;
 
@@ -179,7 +179,7 @@ export default function VisionCastingClient({ userPathway, isSaved: initialSaved
   const lightGray = "oklch(95% 0.008 80)";
   const charcoal = "oklch(38% 0.05 260)";
 
-  const cormorant = "Cormorant Garamond, Georgia, serif";
+  const cormorant = "var(--font-cormorant, Georgia, serif)";
   const montserrat = "Montserrat, sans-serif";
 
   // Direction button positions relative to compass container
@@ -536,6 +536,10 @@ export default function VisionCastingClient({ userPathway, isSaved: initialSaved
               );
             })}
           </div>
+
+          {signupBanner && (
+            <div style={{ marginTop: "clamp(56px, 8vw, 72px)" }}>{signupBanner}</div>
+          )}
         </div>
       </div>
 
