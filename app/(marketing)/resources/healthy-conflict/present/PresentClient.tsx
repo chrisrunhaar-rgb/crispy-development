@@ -119,6 +119,13 @@ const card: React.CSSProperties = {
 };
 const rule = (w = 96) => <div aria-hidden="true" style={{ width: w, height: 4, background: orange, borderRadius: 2 }} />;
 
+// Build-up reveal: hidden parts keep their space so the slide never jumps
+const show = (on: boolean): React.CSSProperties => ({
+  opacity: on ? 1 : 0,
+  transform: on ? "none" : "translateY(14px)",
+  transition: "opacity 0.5s ease, transform 0.5s ease",
+});
+
 function Check({ good }: { good: boolean }) {
   return (
     <span aria-hidden="true" style={{ flexShrink: 0, width: 34, height: 34, borderRadius: 999, background: good ? orange : lightGray, display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
@@ -129,7 +136,36 @@ function Check({ good }: { good: boolean }) {
   );
 }
 
-function ElementSlide({ n, lang }: { n: number; lang: Lang }) {
+// The Conflict Table overview, built up one element at a time.
+// Elements before `upTo` are shown, `upTo` is the one about to be unpacked.
+function TableSlide({ upTo, lang }: { upTo: number; lang: Lang }) {
+  return (
+    <>
+      <p style={kicker}>{t("The Conflict Table", "Meja Konflik", lang)}</p>
+      <h2 style={{ ...midTitle, fontSize: 68 }}>{t("5 elements of a safe space", "5 elemen ruang yang aman", lang)}</h2>
+      <ol style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 14, width: 1100 }}>
+        {ELEMENTS.map((e, n) => {
+          const current = n === upTo;
+          const future = n > upTo;
+          return (
+            <li key={e.title.en} className={current ? "hc-step" : undefined}
+              style={{ ...card, display: "flex", alignItems: "center", gap: 24, padding: "16px 28px",
+                background: future ? "transparent" : "white", boxShadow: future ? "none" : card.boxShadow,
+                border: future ? `2px dashed ${lightGray}` : current ? `2px solid ${orange}` : "2px solid transparent" }}>
+              <span style={{ flexShrink: 0, width: 52, height: 52, borderRadius: 999, fontFamily: serif, fontSize: 32, fontWeight: 600, display: "inline-flex", alignItems: "center", justifyContent: "center",
+                background: future ? "transparent" : current ? orange : navy, color: future ? lightGray : offWhite, border: future ? `2px solid ${lightGray}` : "none" }}>{n + 1}</span>
+              <span style={{ fontFamily: sans, fontSize: 28, fontWeight: 600, color: current ? navy : muted, visibility: future ? "hidden" : "visible" }}>
+                {t(e.title.en, e.title.id, lang)}
+              </span>
+            </li>
+          );
+        })}
+      </ol>
+    </>
+  );
+}
+
+function ElementSlide({ n, lang, step }: { n: number; lang: Lang; step: number }) {
   const e = ELEMENTS[n];
   return (
     <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: 30 }}>
@@ -141,7 +177,7 @@ function ElementSlide({ n, lang }: { n: number; lang: Lang }) {
         </div>
       </div>
       <p style={{ ...body, textAlign: "left", maxWidth: 1180 }}>{t(e.body.en, e.body.id, lang)}</p>
-      <div style={{ ...card, borderLeft: `8px solid ${orange}`, padding: "36px 48px" }}>
+      <div style={{ ...card, ...show(step >= 1), borderLeft: `8px solid ${orange}`, padding: "36px 48px" }}>
         <p style={{ fontFamily: sans, fontSize: 18, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: muted, margin: "0 0 14px" }}>
           {t("You might say", "Kamu bisa berkata", lang)}
         </p>
@@ -154,7 +190,8 @@ function ElementSlide({ n, lang }: { n: number; lang: Lang }) {
 }
 
 // ─── The slides ───────────────────────────────────────────────────────────────
-type Slide = { key: string; dark?: boolean; render: (lang: Lang) => React.ReactNode };
+// `steps` is how many clicks a slide has: each click reveals the next part.
+type Slide = { key: string; dark?: boolean; steps?: number; render: (lang: Lang, step: number) => React.ReactNode };
 
 const SLIDES: Slide[] = [
   {
@@ -174,16 +211,17 @@ const SLIDES: Slide[] = [
   },
   {
     key: "silence",
-    render: lang => (
+    steps: 4,
+    render: (lang, step) => (
       <div style={{ display: "grid", gridTemplateColumns: "1.05fr 1fr", alignItems: "center", gap: 72, width: "100%" }}>
         <img src={`${IMG}/conflict-table.jpg`} alt={t("A team around a table.", "Sebuah tim di sekitar meja.", lang)}
           style={{ width: "100%", height: 560, objectFit: "cover", borderRadius: 20, display: "block", boxShadow: "0 24px 60px oklch(14% 0.05 260 / 0.22)" }} />
         <div style={{ display: "flex", flexDirection: "column", gap: 22 }}>
-          {[t("The meeting ends.", "Rapat berakhir.", lang), t("Heads nod.", "Kepala mengangguk.", lang), t("Everyone smiles.", "Semua orang tersenyum.", lang)].map(line => (
-            <p key={line} style={{ fontFamily: serif, fontSize: 62, fontWeight: 600, color: navy, margin: 0, lineHeight: 1.1 }}>{line}</p>
+          {[t("The meeting ends.", "Rapat berakhir.", lang), t("Heads nod.", "Kepala mengangguk.", lang), t("Everyone smiles.", "Semua orang tersenyum.", lang)].map((line, n) => (
+            <p key={line} style={{ ...show(step >= n), fontFamily: serif, fontSize: 62, fontWeight: 600, color: navy, margin: 0, lineHeight: 1.1 }}>{line}</p>
           ))}
-          {rule()}
-          <p style={{ fontFamily: serif, fontStyle: "italic", fontSize: 62, fontWeight: 600, color: orange, margin: 0, lineHeight: 1.1 }}>
+          <div style={show(step >= 3)}>{rule()}</div>
+          <p style={{ ...show(step >= 3), fontFamily: serif, fontStyle: "italic", fontSize: 62, fontWeight: 600, color: orange, margin: 0, lineHeight: 1.1 }}>
             {t("And then nothing changes.", "Lalu tidak ada yang berubah.", lang)}
           </p>
         </div>
@@ -192,18 +230,19 @@ const SLIDES: Slide[] = [
   },
   {
     key: "why",
-    render: lang => (
+    steps: 6,
+    render: (lang, step) => (
       <>
         <p style={kicker}>{t("Why we avoid it", "Mengapa kita menghindarinya", lang)}</p>
         <h2 style={midTitle}>{t("Silence protects something real", "Diam melindungi sesuatu yang nyata", lang)}</h2>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 28, width: "100%" }}>
-          {PROTECTS.map(p => (
-            <div key={p.en} style={{ ...card, padding: "40px 20px", textAlign: "center", borderTop: `6px solid ${orange}` }}>
+          {PROTECTS.map((p, n) => (
+            <div key={p.en} style={{ ...card, ...show(step > n), padding: "40px 20px", textAlign: "center", borderTop: `6px solid ${orange}` }}>
               <p style={{ fontFamily: serif, fontSize: 46, fontWeight: 600, color: navy, margin: 0 }}>{t(p.en, p.id, lang)}</p>
             </div>
           ))}
         </div>
-        <p style={{ ...body, maxWidth: 1200 }}>
+        <p style={{ ...body, ...show(step >= 5), maxWidth: 1200 }}>
           {t("Avoidance is not laziness. The problem is not the instinct. It is using it everywhere, even when the silence is hurting the team.",
             "Menghindar bukan kemalasan. Masalahnya bukan instingnya, tapi ketika insting itu dipakai di mana saja, bahkan ketika diam itu melukai tim.", lang)}
         </p>
@@ -213,24 +252,25 @@ const SLIDES: Slide[] = [
   {
     key: "cost",
     dark: true,
-    render: lang => (
+    steps: 6,
+    render: (lang, step) => (
       <>
         <h2 style={{ ...midTitle, color: offWhite }}>{t("Conflict doesn't disappear. It moves.", "Konflik tidak hilang. Ia berpindah.", lang)}</h2>
         <div style={{ display: "flex", alignItems: "center", gap: 18, width: "100%", justifyContent: "center" }}>
           {DRIFT.map((d, n) => (
-            <div key={d.en} className="hc-step" style={{ display: "flex", alignItems: "center", gap: 18, animationDelay: `${0.35 + n * 0.55}s` }}>
+            <div key={d.en} style={{ ...show(step > n), display: "flex", alignItems: "center", gap: 18 }}>
+              {n > 0 && (
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke={orange} strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+              )}
               <div style={{ width: 270, height: 170, borderRadius: 18, padding: 20, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center",
                 background: n === DRIFT.length - 1 ? orange : `oklch(${30 + n * 5}% 0.09 260)`, border: "1px solid oklch(100% 0 0 / 0.12)" }}>
                 <span style={{ fontFamily: sans, fontSize: 18, fontWeight: 700, color: n === DRIFT.length - 1 ? "white" : orange, letterSpacing: "0.1em", marginBottom: 10 }}>{n + 1}</span>
                 <span style={{ fontFamily: sans, fontSize: 27, fontWeight: 700, color: "white", lineHeight: 1.25 }}>{t(d.en, d.id, lang)}</span>
               </div>
-              {n < DRIFT.length - 1 && (
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke={orange} strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-              )}
             </div>
           ))}
         </div>
-        <p className="hc-step" style={{ ...body, color: onNavy, maxWidth: 1150, animationDelay: "2.6s" }}>
+        <p style={{ ...body, ...show(step >= 5), color: onNavy, maxWidth: 1150 }}>
           {t("The team stops offering honest disagreement. You lose the best thinking of the people you lead.",
             "Tim berhenti menyampaikan ketidaksetujuan yang jujur. Kamu kehilangan pemikiran terbaik dari orang-orang yang kamu pimpin.", lang)}
         </p>
@@ -239,12 +279,13 @@ const SLIDES: Slide[] = [
   },
   {
     key: "contrast",
-    render: lang => (
+    steps: 3,
+    render: (lang, step) => (
       <>
         <h2 style={{ ...midTitle, fontSize: 64 }}>{t("Avoidance vs. healthy conflict", "Penghindaran vs. konflik yang sehat", lang)}</h2>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32, width: "100%" }}>
           {[false, true].map(good => (
-            <div key={String(good)} style={{ ...card, padding: "30px 36px", background: good ? "white" : "oklch(93% 0.008 80)", boxShadow: good ? card.boxShadow : "none" }}>
+            <div key={String(good)} style={{ ...card, ...show(step >= (good ? 2 : 1)), padding: "30px 36px", background: good ? "white" : "oklch(93% 0.008 80)", boxShadow: good ? card.boxShadow : "none" }}>
               <p style={{ ...kicker, textAlign: "left", color: good ? orange : muted, marginBottom: 18 }}>{good ? t("Healthy conflict", "Konflik yang sehat", lang) : t("Avoidance", "Penghindaran", lang)}</p>
               <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 16 }}>
                 {CONTRAST.map(c => {
@@ -265,7 +306,8 @@ const SLIDES: Slide[] = [
   },
   {
     key: "research",
-    render: lang => (
+    steps: 2,
+    render: (lang, step) => (
       <>
         <p style={kicker}>{t("What the research shows", "Apa kata penelitian", lang)}</p>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1.15fr", gap: 64, width: "100%", alignItems: "stretch" }}>
@@ -277,14 +319,14 @@ const SLIDES: Slide[] = [
                 "Prediktor terkuat tim yang efektif: keamanan psikologis. Orang merasa aman untuk bersuara dan tidak setuju.", lang)}
             </p>
           </div>
-          <div style={{ ...card, padding: "36px 44px" }}>
+          <div style={{ ...card, ...show(step >= 1), padding: "36px 44px" }}>
             <p style={{ fontFamily: sans, fontSize: 24, fontWeight: 700, color: navy, margin: "0 0 22px" }}>{t("Power distance (Hofstede)", "Jarak kekuasaan (Hofstede)", lang)}</p>
             <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
               {PDI.map(c => (
                 <div key={c.en} style={{ display: "grid", gridTemplateColumns: "190px 1fr 56px", alignItems: "center", gap: 16 }}>
                   <span style={{ fontFamily: sans, fontSize: 21, fontWeight: 600, color: navy }}>{t(c.en, c.id, lang)}</span>
                   <div style={{ height: 26, background: "oklch(93% 0.008 80)", borderRadius: 6, overflow: "hidden" }}>
-                    <div className="hc-bar" style={{ width: `${c.v}%`, height: "100%", background: c.v > 50 ? navy : orange, borderRadius: 6 }} />
+                    <div style={{ width: step >= 1 ? `${c.v}%` : 0, height: "100%", background: c.v > 50 ? navy : orange, borderRadius: 6, transition: "width 0.9s ease 0.25s" }} />
                   </div>
                   <span style={{ fontFamily: sans, fontSize: 21, fontWeight: 700, color: muted, textAlign: "right" }}>{c.v}</span>
                 </div>
@@ -305,16 +347,17 @@ const SLIDES: Slide[] = [
   {
     key: "reframe",
     dark: true,
-    render: lang => (
+    steps: 3,
+    render: (lang, step) => (
       <>
         <p style={kicker}>{t("The reframe", "Mengubah sudut pandang", lang)}</p>
         <h2 style={{ ...bigTitle, color: offWhite, fontSize: 92, maxWidth: 1300 }}>
           {t("Conflict is not the opposite of harmony.", "Konflik bukan lawan dari keharmonisan.", lang)}
           <br />
-          <span style={{ color: orange, fontStyle: "italic" }}>{t("It is often the path to it.", "Justru sering menjadi jalannya.", lang)}</span>
+          <span style={{ ...show(step >= 1), display: "inline-block", color: orange, fontStyle: "italic" }}>{t("It is often the path to it.", "Justru sering menjadi jalannya.", lang)}</span>
         </h2>
-        {rule(120)}
-        <p style={{ ...body, color: onNavy, maxWidth: 1100 }}>
+        <div style={show(step >= 2)}>{rule(120)}</div>
+        <p style={{ ...body, ...show(step >= 2), color: onNavy, maxWidth: 1100 }}>
           {t("Peace that has not been tested is fragile. Peace that came through honest conflict can hold under pressure.",
             "Damai yang belum diuji itu rapuh. Damai yang lahir dari konflik yang jujur dapat bertahan di bawah tekanan.", lang)}
         </p>
@@ -323,7 +366,8 @@ const SLIDES: Slide[] = [
   },
   {
     key: "kinds",
-    render: lang => {
+    steps: 4,
+    render: (lang, step) => {
       const cols: { good: boolean; head: Pair; items: Pair[] }[] = [
         { good: false, head: { en: "Destructive", id: "Destruktif" }, items: [
           { en: "Attacks the person", id: "Menyerang orangnya" },
@@ -342,7 +386,7 @@ const SLIDES: Slide[] = [
           <h2 style={{ ...midTitle, fontSize: 64 }}>{t("Two kinds of conflict", "Dua jenis konflik", lang)}</h2>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32, width: "100%" }}>
             {cols.map(c => (
-              <div key={c.head.en} style={{ ...card, padding: "34px 40px", background: c.good ? "white" : "oklch(93% 0.008 80)", boxShadow: c.good ? card.boxShadow : "none" }}>
+              <div key={c.head.en} style={{ ...card, ...show(step >= (c.good ? 2 : 1)), padding: "34px 40px", background: c.good ? "white" : "oklch(93% 0.008 80)", boxShadow: c.good ? card.boxShadow : "none" }}>
                 <p style={{ fontFamily: serif, fontSize: 52, fontWeight: 600, color: c.good ? orange : muted, margin: "0 0 20px" }}>{t(c.head.en, c.head.id, lang)}</p>
                 <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 18 }}>
                   {c.items.map(it => (
@@ -355,7 +399,7 @@ const SLIDES: Slide[] = [
               </div>
             ))}
           </div>
-          <p style={{ ...body, fontSize: 25, maxWidth: 1250 }}>
+          <p style={{ ...body, ...show(step >= 3), fontSize: 25, maxWidth: 1250 }}>
             {t("The leader's job is not to prevent conflict. It is to create the conditions where the productive kind can happen.",
               "Tugas pemimpin bukan mencegah konflik, tapi menciptakan kondisi di mana konflik yang produktif bisa terjadi.", lang)}
           </p>
@@ -363,27 +407,15 @@ const SLIDES: Slide[] = [
       );
     },
   },
-  {
-    key: "table",
-    render: lang => (
-      <>
-        <p style={kicker}>{t("The Conflict Table", "Meja Konflik", lang)}</p>
-        <h2 style={{ ...midTitle, fontSize: 68 }}>{t("5 elements of a safe space", "5 elemen ruang yang aman", lang)}</h2>
-        <ol style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 14, width: 1100 }}>
-          {ELEMENTS.map((e, n) => (
-            <li key={e.title.en} style={{ ...card, display: "flex", alignItems: "center", gap: 24, padding: "16px 28px" }}>
-              <span style={{ flexShrink: 0, width: 52, height: 52, borderRadius: 999, background: navy, color: offWhite, fontFamily: serif, fontSize: 32, fontWeight: 600, display: "inline-flex", alignItems: "center", justifyContent: "center" }}>{n + 1}</span>
-              <span style={{ fontFamily: sans, fontSize: 28, fontWeight: 600, color: navy }}>{t(e.title.en, e.title.id, lang)}</span>
-            </li>
-          ))}
-        </ol>
-      </>
-    ),
-  },
-  ...ELEMENTS.map((e, n): Slide => ({ key: `element-${n + 1}`, render: lang => <ElementSlide n={n} lang={lang} /> })),
+  // The table builds up: table with element 1, detail of 1, table with 1 and 2, detail of 2, and so on
+  ...ELEMENTS.flatMap((_, n): Slide[] => [
+    { key: `table-${n + 1}`, render: lang => <TableSlide upTo={n} lang={lang} /> },
+    { key: `element-${n + 1}`, steps: 2, render: (lang, step) => <ElementSlide n={n} lang={lang} step={step} /> },
+  ]),
   {
     key: "story",
-    render: lang => (
+    steps: 4,
+    render: (lang, step) => (
       <>
         <p style={kicker}>{t("Field story", "Kisah lapangan", lang)}</p>
         <h2 style={{ ...midTitle, fontSize: 68 }}>{t("Two leaders, one table", "Dua pemimpin, satu meja", lang)}</h2>
@@ -393,9 +425,9 @@ const SLIDES: Slide[] = [
             { en: "A friend said: \"I want to bring you to a table where conflict is going to happen. I think you need it, and I think it is safe.\"", id: "Seorang sahabat berkata: \"Saya ingin membawa kamu ke sebuah meja di mana konflik akan terjadi. Saya pikir kamu membutuhkannya, dan saya pikir itu aman.\"" },
             { en: "Unity grew from that table. Not because the conflict disappeared, but because it was finally allowed to exist.", id: "Persatuan tumbuh dari meja itu. Bukan karena konflik itu hilang, tapi karena ia akhirnya diizinkan untuk ada." },
           ].map((b, n) => (
-            <div key={n} style={{ ...card, padding: "34px 34px", borderTop: `6px solid ${n === 2 ? orange : navy}` }}>
+            <div key={n} style={{ ...card, ...show(step > n), padding: "34px 34px", borderTop: `6px solid ${n === 2 ? orange : navy}` }}>
               <p style={{ fontFamily: sans, fontSize: 18, fontWeight: 700, color: orange, letterSpacing: "0.12em", margin: "0 0 14px" }}>{n + 1}</p>
-              <p style={{ fontFamily: n === 1 ? serif : sans, fontStyle: n === 1 ? "italic" : "normal", fontSize: n === 1 ? 34 : 25, lineHeight: 1.4, fontWeight: n === 1 ? 500 : 500, color: navy, margin: 0 }}>{t(b.en, b.id, lang)}</p>
+              <p style={{ fontFamily: n === 1 ? serif : sans, fontStyle: n === 1 ? "italic" : "normal", fontSize: n === 1 ? 34 : 25, lineHeight: 1.4, fontWeight: 500, color: navy, margin: 0 }}>{t(b.en, b.id, lang)}</p>
             </div>
           ))}
         </div>
@@ -405,14 +437,15 @@ const SLIDES: Slide[] = [
   {
     key: "wounds",
     dark: true,
-    render: lang => (
+    steps: 2,
+    render: (lang, step) => (
       <>
         <h2 style={{ ...bigTitle, color: offWhite, fontStyle: "italic", fontSize: 108, maxWidth: 1300 }}>
           &ldquo;{t("Faithful are the wounds of a friend.", "Setia adalah luka seorang sahabat.", lang)}&rdquo;
         </h2>
         <p style={kicker}>{t("Proverbs 27:6", "Amsal 27:6", lang)}</p>
-        {rule(120)}
-        <p style={{ ...body, color: onNavy, maxWidth: 1100 }}>
+        <div style={show(step >= 1)}>{rule(120)}</div>
+        <p style={{ ...body, ...show(step >= 1), color: onNavy, maxWidth: 1100 }}>
           {t("A friend who only tells you what you want to hear is not actually serving you.",
             "Seorang teman yang hanya memberitahumu apa yang ingin kamu dengar sebenarnya tidak melayanimu.", lang)}
         </p>
@@ -421,7 +454,8 @@ const SLIDES: Slide[] = [
   },
   {
     key: "iron",
-    render: lang => (
+    steps: 4,
+    render: (lang, step) => (
       <>
         <h2 style={{ ...midTitle, fontSize: 68 }}>{t("Sharpened by honest contact", "Diasah oleh perjumpaan yang jujur", lang)}</h2>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32, width: "100%" }}>
@@ -430,15 +464,15 @@ const SLIDES: Slide[] = [
               text: { en: "Iron against iron makes friction, heat and sparks. The sharpening needs the friction.", id: "Besi melawan besi menghasilkan gesekan, panas, dan percikan. Penajaman membutuhkan gesekan." } },
             { ref: { en: "Ephesians 4:15", id: "Efesus 4:15" }, head: { en: "Speaking the truth in love", id: "Berkata benar dalam kasih" },
               text: { en: "This is how a body grows up into maturity. Silence is not neutral. It steps out of that growth.", id: "Beginilah tubuh bertumbuh menjadi dewasa. Diam bukan netral. Diam berarti mundur dari pertumbuhan itu." } },
-          ].map(v => (
-            <div key={v.ref.en} style={{ ...card, padding: "40px 44px", borderLeft: `8px solid ${orange}` }}>
+          ].map((v, n) => (
+            <div key={v.ref.en} style={{ ...card, ...show(step > n), padding: "40px 44px", borderLeft: `8px solid ${orange}` }}>
               <p style={{ ...kicker, textAlign: "left", marginBottom: 14 }}>{t(v.ref.en, v.ref.id, lang)}</p>
               <p style={{ fontFamily: serif, fontSize: 54, fontWeight: 600, color: navy, margin: "0 0 18px", lineHeight: 1.1 }}>{t(v.head.en, v.head.id, lang)}</p>
               <p style={{ fontFamily: sans, fontSize: 24, lineHeight: 1.5, color: muted, margin: 0 }}>{t(v.text.en, v.text.id, lang)}</p>
             </div>
           ))}
         </div>
-        <p style={{ fontFamily: serif, fontStyle: "italic", fontSize: 38, color: navy, margin: 0, textAlign: "center", maxWidth: 1250, lineHeight: 1.3 }}>
+        <p style={{ ...show(step >= 3), fontFamily: serif, fontStyle: "italic", fontSize: 38, color: navy, margin: 0, textAlign: "center", maxWidth: 1250, lineHeight: 1.3 }}>
           {t("Honest confrontation, rooted in care, is an act of covenant love.", "Konfrontasi yang jujur, berakar pada kepedulian, adalah tindakan kasih perjanjian.", lang)}
         </p>
       </>
@@ -446,13 +480,14 @@ const SLIDES: Slide[] = [
   },
   {
     key: "questions",
-    render: lang => (
+    steps: 4,
+    render: (lang, step) => (
       <>
         <p style={kicker}>{t("Talk about it", "Diskusikan", lang)}</p>
         <h2 style={{ ...midTitle, fontSize: 68 }}>{t("Questions to sit with", "Pertanyaan untuk direnungkan", lang)}</h2>
         <ol style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 20, width: 1200 }}>
           {QUESTIONS.map((q, n) => (
-            <li key={q.en} style={{ ...card, display: "flex", alignItems: "center", gap: 28, padding: "26px 36px" }}>
+            <li key={q.en} style={{ ...card, ...show(step > n), display: "flex", alignItems: "center", gap: 28, padding: "26px 36px" }}>
               <span style={{ flexShrink: 0, fontFamily: serif, fontSize: 64, fontWeight: 600, color: orange, lineHeight: 1, width: 44 }}>{n + 1}</span>
               <span style={{ fontFamily: serif, fontSize: 38, fontWeight: 500, color: navy, lineHeight: 1.25 }}>{t(q.en, q.id, lang)}</span>
             </li>
@@ -463,13 +498,14 @@ const SLIDES: Slide[] = [
   },
   {
     key: "this-week",
-    render: lang => (
+    steps: 4,
+    render: (lang, step) => (
       <>
         <p style={kicker}>{t("Key takeaway", "Poin utama", lang)}</p>
         <h2 style={{ ...midTitle, fontSize: 68 }}>{t("Three things to do this week", "Tiga hal untuk dilakukan minggu ini", lang)}</h2>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 28, width: "100%" }}>
           {THIS_WEEK.map((w, n) => (
-            <div key={w.en} style={{ ...card, padding: "36px 34px", display: "flex", flexDirection: "column", gap: 18 }}>
+            <div key={w.en} style={{ ...card, ...show(step > n), padding: "36px 34px", display: "flex", flexDirection: "column", gap: 18 }}>
               <span style={{ width: 64, height: 64, borderRadius: 999, background: orange, color: "white", fontFamily: serif, fontSize: 40, fontWeight: 600, display: "inline-flex", alignItems: "center", justifyContent: "center" }}>{n + 1}</span>
               <p style={{ fontFamily: sans, fontSize: 25, lineHeight: 1.45, fontWeight: 600, color: navy, margin: 0 }}>{t(w.en, w.id, lang)}</p>
             </div>
@@ -480,8 +516,10 @@ const SLIDES: Slide[] = [
   },
 ];
 
+const stepsOf = (index: number) => SLIDES[index].steps ?? 1;
+
 // One slide on the 1600×900 canvas, with a quiet footer
-function SlideFrame({ index, lang }: { index: number; lang: Lang }) {
+function SlideFrame({ index, lang, step }: { index: number; lang: Lang; step: number }) {
   const s = SLIDES[index];
   const isTitle = index === 0;
   const dark = !!s.dark;
@@ -493,7 +531,7 @@ function SlideFrame({ index, lang }: { index: number; lang: Lang }) {
       )}
       <div aria-hidden="true" style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 10, background: orange }} />
       <div style={{ position: "absolute", inset: "64px 120px 110px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 36 }}>
-        {s.render(lang)}
+        {s.render(lang, step)}
       </div>
       {!isTitle && (
         <div style={{ position: "absolute", left: 120, right: 120, bottom: 44, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
@@ -514,7 +552,9 @@ function SlideFrame({ index, lang }: { index: number; lang: Lang }) {
 export default function PresentClient() {
   const { lang: ctxLang, setLang } = useLanguage();
   const lang = (ctxLang === "id" ? "id" : "en") as Lang;
-  const [i, setI] = useState(0);
+  // Position = slide index plus how many builds of that slide are showing
+  const [pos, setPos] = useState({ i: 0, s: 0 });
+  const { i, s: step } = pos;
   const [isFull, setIsFull] = useState(false);
   const [uiVisible, setUiVisible] = useState(true);
   const [overview, setOverview] = useState(false);
@@ -528,9 +568,16 @@ export default function PresentClient() {
   const touchX = useRef<number | null>(null);
   const last = SLIDES.length - 1;
 
-  const go = useCallback((n: number) => { setBlank(false); setI(Math.max(0, Math.min(last, n))); }, [last]);
-  const next = useCallback(() => { setBlank(false); setI(n => Math.min(last, n + 1)); }, [last]);
-  const prev = useCallback(() => { setBlank(false); setI(n => Math.max(0, n - 1)); }, []);
+  const atEnd = i === last && step === stepsOf(last) - 1;
+  const go = useCallback((n: number) => { setBlank(false); setPos({ i: Math.max(0, Math.min(last, n)), s: 0 }); }, [last]);
+  const next = useCallback(() => {
+    setBlank(false);
+    setPos(p => p.s < stepsOf(p.i) - 1 ? { i: p.i, s: p.s + 1 } : p.i < last ? { i: p.i + 1, s: 0 } : p);
+  }, [last]);
+  const prev = useCallback(() => {
+    setBlank(false);
+    setPos(p => p.s > 0 ? { i: p.i, s: p.s - 1 } : p.i > 0 ? { i: p.i - 1, s: stepsOf(p.i - 1) - 1 } : p);
+  }, []);
 
   const toggleFull = useCallback(() => {
     if (document.fullscreenElement) document.exitFullscreen?.().catch(() => {});
@@ -678,7 +725,7 @@ export default function PresentClient() {
         <div aria-live="polite" aria-roledescription="slide" aria-label={`${i + 1} / ${SLIDES.length}`}
           style={{ width: W * scale, height: H * scale, position: "relative", boxShadow: isFull ? "none" : "0 30px 80px oklch(0% 0 0 / 0.45)", borderRadius: isFull ? 0 : 6, overflow: "hidden" }}>
           <div key={`${i}-${lang}`} className="hc-fade" style={{ width: W, height: H, transform: `scale(${scale})`, transformOrigin: "top left" }}>
-            <SlideFrame index={i} lang={lang} />
+            <SlideFrame index={i} lang={lang} step={step} />
           </div>
           {blank && <div style={{ position: "absolute", inset: 0, background: "black" }} />}
         </div>
@@ -709,7 +756,7 @@ export default function PresentClient() {
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6" /></svg>
         </button>
         <span style={{ minWidth: 64, textAlign: "center", fontSize: 14, fontWeight: 700, color: offWhite, fontVariantNumeric: "tabular-nums" }}>{i + 1} / {SLIDES.length}</span>
-        <button type="button" className="hc-pill" style={{ ...pill, opacity: i === last ? 0.35 : 1 }} disabled={i === last} onClick={() => { setStarted(true); next(); }}
+        <button type="button" className="hc-pill" style={{ ...pill, opacity: atEnd ? 0.35 : 1 }} disabled={atEnd} onClick={() => { setStarted(true); next(); }}
           aria-label={t("Next slide", "Slide berikutnya", lang)}>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6" /></svg>
         </button>
@@ -784,7 +831,7 @@ function Thumb({ index, lang, active }: { index: number; lang: Lang; active: boo
     <div ref={ref} style={{ width: "100%", aspectRatio: "16 / 9", position: "relative", overflow: "hidden", borderRadius: 8,
       outline: active ? `3px solid ${orange}` : "1px solid oklch(100% 0 0 / 0.12)", outlineOffset: active ? 2 : 0 }}>
       <div style={{ width: W, height: H, transform: `scale(${s})`, transformOrigin: "top left", pointerEvents: "none" }}>
-        <SlideFrame index={index} lang={lang} />
+        <SlideFrame index={index} lang={lang} step={stepsOf(index) - 1} />
       </div>
     </div>
   );
