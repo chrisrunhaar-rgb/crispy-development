@@ -694,12 +694,6 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
               "Banyak pemimpin ingin orang-orangnya mengambil alih. Sering kali justru sang pemimpin yang menghalanginya.", lang)}
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 12 }}>
-          <Link href={`/resources/${SLUG}/present`}
-            onClick={e => { if (window.innerWidth < 768) { e.preventDefault(); setSmallScreen(true); } }}
-            style={{ display: "inline-flex", alignItems: "center", gap: 8, background: orange, color: white, padding: "10px 18px", minHeight: 44, borderRadius: 8, fontWeight: 700, fontSize: 13, textDecoration: "none", fontFamily: "Montserrat, sans-serif" }}>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2" /><path d="M12 16v4M8 20h8" /></svg>
-            {t("Present", "Presentasi", lang)}
-          </Link>
           {saved ? (
             <Link href="/dashboard" style={{ fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.06em", color: "oklch(72% 0.14 145)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.375rem", minHeight: 44 }}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" /></svg>
@@ -713,6 +707,30 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
             </button>
           )}
           </div>
+        </div>
+      </div>
+
+      {/* ── Teaching strip: guided slideshow for leaders who teach this ───── */}
+      <div style={{ background: white, borderBottom: `1px solid ${lightGray}`, padding: "20px 24px" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto", display: "flex", flexWrap: "wrap", alignItems: "center", gap: "14px 20px" }}>
+          <span aria-hidden="true" style={{ flexShrink: 0, width: 44, height: 44, borderRadius: 12, background: "oklch(65% 0.15 45 / 0.12)", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={orange} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="12" rx="2" /><path d="M12 16v4M8 20h8" /></svg>
+          </span>
+          <div style={{ flex: "1 1 260px", minWidth: 0 }}>
+            <p style={{ margin: "0 0 2px", fontSize: 14, fontWeight: 700, color: navy }}>
+              {t("Teaching this to someone else?", "Mengajarkan ini kepada orang lain?", lang)}
+            </p>
+            <p style={{ margin: 0, fontSize: 13, lineHeight: 1.5, color: "oklch(48% 0.04 260)" }}>
+              {t("Use the guided slideshow to walk your team through the four phases, full screen in English or Indonesian.",
+                "Gunakan slideshow terpandu untuk mengajak tim Anda melalui keempat tahap, layar penuh dalam bahasa Inggris atau Indonesia.", lang)}
+            </p>
+          </div>
+          <Link href={`/resources/${SLUG}/present`}
+            onClick={e => { if (window.innerWidth < 768) { e.preventDefault(); setSmallScreen(true); } }}
+            style={{ flexShrink: 0, display: "inline-flex", alignItems: "center", gap: 8, background: "transparent", color: navy, padding: "0 18px", minHeight: 44, borderRadius: 8, border: `1.5px solid ${navy}`, fontWeight: 700, fontSize: 13, textDecoration: "none", fontFamily: "Montserrat, sans-serif" }}>
+            {t("Open the slideshow", "Buka slideshow", lang)}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6" /></svg>
+          </Link>
         </div>
       </div>
 
