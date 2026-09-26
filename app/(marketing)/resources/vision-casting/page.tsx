@@ -7,6 +7,7 @@ import RelatedResources from "@/components/RelatedResources";
 import ModuleComments from "@/components/ModuleComments";
 import VisionCastingClient from "./VisionCastingClient";
 import ModuleConnector from "@/components/ModuleConnector";
+import SignupBanner from "@/components/SignupBanner";
 
 export const dynamic = "force-dynamic";
 
@@ -91,6 +92,8 @@ export default async function ResourcePage(props: any) {
           />
         </div>
       </div>
+
+      {!user && <SignupBanner redirectTo="/dashboard" />}
 
       <VisionCastingClient {...props} isSaved={isSaved} />
       <ModuleConnector currentSlug={RESOURCE_SLUG} savedResources={savedResources} isLoggedIn={!!user} />

@@ -185,20 +185,30 @@ export default function VisionCastingClient({ userPathway, isSaved: initialSaved
   // Direction button positions relative to compass container
   // Container is 360px wide, 340px tall on desktop
   const directionButtonStyle = (dir: "N" | "S" | "E" | "W", isActive: boolean, accentColor: string): React.CSSProperties => {
+    // Pill buttons so it reads as "tap me", not as a map label
     const base: React.CSSProperties = {
       position: "absolute",
-      background: "transparent",
-      border: "none",
+      zIndex: 2,
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      gap: 1,
+      minWidth: 76,
+      minHeight: 44,
+      justifyContent: "center",
+      background: isActive ? `color-mix(in oklch, ${accentColor} 18%, white)` : "white",
+      border: `1.5px solid ${isActive ? accentColor : "oklch(80% 0.03 260)"}`,
+      boxShadow: isActive ? "none" : "0 2px 8px oklch(22% 0.10 260 / 0.12)",
       cursor: "pointer",
       fontFamily: montserrat,
       fontSize: 11,
       fontWeight: 700,
       textTransform: "uppercase" as const,
       letterSpacing: "0.08em",
-      color: isActive ? accentColor : charcoal,
-      padding: "6px 10px",
-      borderRadius: 4,
-      transition: "color 0.2s ease",
+      color: navy,
+      padding: "5px 12px",
+      borderRadius: 999,
+      transition: "background 0.2s ease, color 0.2s ease",
       whiteSpace: "nowrap" as const,
     };
     if (dir === "N") return { ...base, top: 0, left: "50%", transform: "translateX(-50%)" };
@@ -210,20 +220,21 @@ export default function VisionCastingClient({ userPathway, isSaved: initialSaved
 
   // Compass glow positions
   const glowStyle = (dir: "N" | "S" | "E" | "W", accentColor: string): React.CSSProperties => {
+    // Sits out at the arrow tip, pointing toward the selected word
     const base: React.CSSProperties = {
       position: "absolute",
-      width: 100,
-      height: 100,
+      width: 80,
+      height: 80,
       borderRadius: "50%",
       background: accentColor,
       opacity: 0.2,
       pointerEvents: "none",
       transition: "opacity 0.3s ease",
     };
-    if (dir === "N") return { ...base, top: 20, left: "50%", transform: "translateX(-50%)" };
-    if (dir === "S") return { ...base, bottom: 20, left: "50%", transform: "translateX(-50%)" };
-    if (dir === "E") return { ...base, right: 20, top: "50%", transform: "translateY(-50%)" };
-    return { ...base, left: 20, top: "50%", transform: "translateY(-50%)" };
+    if (dir === "N") return { ...base, top: -30, left: "50%", transform: "translateX(-50%)" };
+    if (dir === "S") return { ...base, bottom: -30, left: "50%", transform: "translateX(-50%)" };
+    if (dir === "E") return { ...base, right: -30, top: "50%", transform: "translateY(-50%)" };
+    return { ...base, left: -30, top: "50%", transform: "translateY(-50%)" };
   };
 
   // Resource type label
@@ -596,7 +607,8 @@ export default function VisionCastingClient({ userPathway, isSaved: initialSaved
                       style={directionButtonStyle(ch.direction, isActive, ch.colorAccent)}
                       aria-pressed={isActive}
                     >
-                      {ch.direction} — {t(ch.label)}
+                      <span style={{ fontSize: 9, opacity: 0.7 }}>{ch.direction}</span>
+                      {t(ch.label)}
                     </button>
                   );
                 })}
@@ -607,8 +619,8 @@ export default function VisionCastingClient({ userPathway, isSaved: initialSaved
                   top: "50%",
                   left: "50%",
                   transform: "translate(-50%, -50%)",
-                  width: 200,
-                  height: 200,
+                  width: 170,
+                  height: 170,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -627,8 +639,8 @@ export default function VisionCastingClient({ userPathway, isSaved: initialSaved
 
                   <Image
                     src="/logo-icon.png"
-                    width={200}
-                    height={200}
+                    width={170}
+                    height={170}
                     alt="Vision Compass"
                     style={{ position: "relative", zIndex: 1 }}
                   />
@@ -637,14 +649,15 @@ export default function VisionCastingClient({ userPathway, isSaved: initialSaved
 
               <p style={{
                 textAlign: "center",
-                color: charcoal,
-                fontSize: 12,
+                color: navy,
+                fontSize: 14,
+                fontWeight: 600,
                 fontFamily: montserrat,
                 marginTop: 16,
                 lineHeight: 1.5,
-                maxWidth: 260,
+                maxWidth: 280,
               }}>
-                {lang === "en" ? "Select a direction to explore that channel" : lang === "id" ? "Pilih arah untuk menjelajahi saluran tersebut" : "Kies een richting om dat kanaal te verkennen"}
+                {lang === "en" ? "Tap one of the four words to explore that channel" : lang === "id" ? "Ketuk salah satu dari empat kata untuk menjelajahi saluran itu" : "Tik op een van de vier woorden om dat kanaal te verkennen"}
               </p>
             </div>
 
