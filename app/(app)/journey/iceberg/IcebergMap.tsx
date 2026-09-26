@@ -236,6 +236,7 @@ export default function IcebergMap({ steps, completed, nextStep, lang, heading }
   const [hover, setHover] = useState<number | null>(null);
   const [spinning, setSpinning] = useState(true);
   const [failed, setFailed] = useState(false);
+  const [view, setView] = useState<"map" | "list">("map");
   const selectRef = useRef<(cell: number | null) => void>(() => {});
   const hoverRef = useRef<(cell: number | null, x: number, y: number) => void>(() => {});
 
@@ -279,6 +280,8 @@ export default function IcebergMap({ steps, completed, nextStep, lang, heading }
         chapterHint: "Pilih bab untuk melihatnya di gunung es.",
         failed: "Peta 3D tidak dapat dimuat di perangkat ini.", fallback: "Buka bab berikutnya",
         modulesLabel: "Semua modul",
+        viewMap: "Gunung es", viewList: "Daftar bab", viewLabel: "Tampilan",
+        continueLabel: "Lanjutkan", allDone: "Semua bab sudah selesai. Luar biasa!",
       }
     : {
         chapter: "Chapter", chapters: "Chapters", start: "Start", review: "Open again",
@@ -288,7 +291,24 @@ export default function IcebergMap({ steps, completed, nextStep, lang, heading }
         chapterHint: "Pick a chapter to see it on the iceberg.",
         failed: "The 3D map could not load on this device.", fallback: "Open the next chapter",
         modulesLabel: "All modules",
+        viewMap: "Iceberg", viewList: "Chapter list", viewLabel: "View",
+        continueLabel: "Continue", allDone: "Every chapter is done. Well done!",
       };
+
+  // Remember whether this person prefers the iceberg or the plain list.
+  useEffect(() => {
+    try { if (localStorage.getItem("journey-view") === "list") setView("list"); } catch {}
+  }, []);
+  const groups = useMemo(() => {
+    const out: { no: number; title: string; items: { s: PathStep; i: number }[] }[] = [];
+    steps.forEach((s, i) => {
+      const last = out[out.length - 1];
+      if (!last || last.no !== chapterNo[i]) out.push({ no: chapterNo[i], title: s.chapter ?? "", items: [] });
+      out[out.length - 1].items.push({ s, i });
+    });
+    return out;
+  }, [steps, chapterNo]);
+  const nextIndex = steps.findIndex(s => s.n === nextStep);
 
   const open = (cell: number | null) => {
     if (cell !== null && !steps[cell]) return;
@@ -300,6 +320,12 @@ export default function IcebergMap({ steps, completed, nextStep, lang, heading }
     apiRef.current?.select(cell);
   };
   selectRef.current = open;
+
+  const switchView = (v: "map" | "list") => {
+    setView(v);
+    if (v === "list") open(null);
+    try { localStorage.setItem("journey-view", v); } catch {}
+  };
 
   const pickChapter = (k: number) => {
     const next = chapter === k ? null : k;
@@ -783,6 +809,37 @@ export default function IcebergMap({ steps, completed, nextStep, lang, heading }
         .ice-chapters .ti { font-weight: 600; font-size: 0.8rem; line-height: 1.35; }
         .ice-chapters .ct { margin-left: auto; font-size: 0.68rem; font-weight: 600; color: ${muted}; padding-left: 0.5rem; }
         .ice-head { margin: 0 0 1rem; }
+        .ice-switch { display: inline-flex; border: 1px solid ${rule}; background: ${offWhite}; margin: 0 0 1rem; }
+        .ice-switch button {
+          min-height: 44px; padding: 0 1rem; border: 0; background: transparent; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem;
+          font-family: var(--font-montserrat); font-size: 0.78rem; font-weight: 700; color: ${muted}; transition: background 0.15s, color 0.15s;
+        }
+        .ice-switch button + button { border-left: 1px solid ${rule}; }
+        .ice-switch button:hover { color: ${navy}; }
+        .ice-switch button[aria-pressed="true"] { background: ${navy}; color: ${offWhite}; }
+        .ice-list { max-width: 760px; }
+        .ice-list .lhead { margin: 0 0 1.25rem; }
+        .ice-list .lhead h1 { font-family: var(--font-cormorant); font-style: italic; font-weight: 500; font-size: clamp(1.85rem, 4.5vw, 2.6rem); line-height: 1.05; color: ${navy}; margin: 0; text-wrap: balance; }
+        .ice-cont { display: flex; align-items: center; gap: 1rem; margin: 0 0 2rem; padding: 1rem 1.1rem; text-decoration: none; background: ${navy}; color: ${offWhite}; transition: background 0.15s; }
+        .ice-cont:hover { background: oklch(24% 0.11 260); }
+        .ice-sec { margin: 0 0 1.75rem; }
+        .ice-sec h2 { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 0.75rem; margin: 0 0 0.35rem; padding: 0 0 0.5rem; border-bottom: 1px solid ${rule}; }
+        .ice-sec h2 .no { font-family: var(--font-montserrat); font-size: 0.64rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: ${orangeDeep}; white-space: nowrap; }
+        .ice-sec h2 .ct { margin-left: auto; font-family: var(--font-montserrat); font-size: 0.7rem; font-weight: 600; color: ${muted}; white-space: nowrap; }
+        .ice-sec h2 .ti { flex: 1 0 100%; order: 3; font-family: var(--font-cormorant); font-style: italic; font-weight: 500; font-size: 1.4rem; line-height: 1.15; color: ${navy}; }
+        .ice-rows { list-style: none; margin: 0; padding: 0; }
+        .ice-rows a { display: flex; align-items: center; gap: 0.75rem; min-height: 52px; padding: 0.55rem 0.75rem; text-decoration: none; border-left: 3px solid transparent; font-family: var(--font-montserrat); color: ${text}; transition: background 0.15s; }
+        .ice-rows a:hover { background: oklch(94% 0.012 250); }
+        .ice-rows a.is-next { background: oklch(95% 0.035 60); border-left-color: ${orange}; }
+        .ice-rows .mk { flex: 0 0 22px; width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid ${rule}; display: inline-flex; align-items: center; justify-content: center; }
+        .ice-rows .is-done .mk { background: oklch(55% 0.14 150); border-color: oklch(55% 0.14 150); color: white; }
+        .ice-rows .is-next .mk { border-color: ${orange}; }
+        .ice-rows .is-next .mk::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: ${orange}; }
+        .ice-rows .cd { flex: 0 0 2.5rem; font-size: 0.72rem; font-weight: 700; color: ${muted}; }
+        .ice-rows .tt { flex: 1 1 auto; min-width: 0; font-size: 0.86rem; font-weight: 600; line-height: 1.4; }
+        .ice-rows .is-done .tt { color: ${muted}; font-weight: 500; }
+        .ice-rows .tag { flex: 0 0 auto; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: ${orangeDeep}; }
+        .ice-rows .chev { flex: 0 0 auto; color: ${muted}; font-size: 1.1rem; }
         .ice-stage-wrap { position: relative; }
         .ice-stage { position: relative; overflow: hidden; outline: none; border: 1px solid ${rule}; height: min(78vh, 740px); min-height: 460px; }
         .ice-tools { position: absolute; top: 12px; right: 12px; display: flex; flex-direction: column; gap: 6px; z-index: 2; }
@@ -850,7 +907,89 @@ export default function IcebergMap({ steps, completed, nextStep, lang, heading }
         }
       `}</style>
 
-      <div className="ice-layout">
+      <div role="group" aria-label={t.viewLabel} className="ice-switch">
+        <button type="button" aria-pressed={view === "map"} onClick={() => switchView("map")}>
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5 L11.5 6.5 L14.5 14.5 H1.5 L4.5 6.5 Z" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" /><path d="M1 9.5 H15" stroke="currentColor" strokeWidth="1.5" /></svg>
+          {t.viewMap}
+        </button>
+        <button type="button" aria-pressed={view === "list"} onClick={() => switchView("list")}>
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.5 H15 M5 8 H15 M5 12.5 H15" stroke="currentColor" strokeWidth="1.5" /><circle cx="1.8" cy="3.5" r="1.1" fill="currentColor" /><circle cx="1.8" cy="8" r="1.1" fill="currentColor" /><circle cx="1.8" cy="12.5" r="1.1" fill="currentColor" /></svg>
+          {t.viewList}
+        </button>
+      </div>
+
+      {view === "list" && (
+        <div className="ice-list">
+          <header className="lhead">
+            <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.64rem", letterSpacing: "0.14em", textTransform: "uppercase", color: orangeDeep, margin: "0 0 0.4rem" }}>
+              {heading.eyebrow}
+            </p>
+            <h1>{heading.title}</h1>
+          </header>
+
+          <div style={{ margin: "0 0 1.25rem" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", gap: "0.75rem", fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 600, color: text, marginBottom: "0.4rem" }}>
+              <span>{heading.progress}</span>
+              <span>{heading.pct}%</span>
+            </div>
+            <div style={{ height: 6, background: rule, overflow: "hidden" }}>
+              <div style={{ width: `${heading.pct}%`, height: "100%", background: "oklch(55% 0.14 150)" }} />
+            </div>
+          </div>
+
+          {nextIndex >= 0 ? (
+            <Link href={`/journey/step/${steps[nextIndex].n}`} className="ice-cont">
+              <span style={{ flex: "1 1 auto", minWidth: 0 }}>
+                <span style={{ display: "block", fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.62rem", letterSpacing: "0.14em", textTransform: "uppercase", color: orange, marginBottom: "0.25rem" }}>
+                  {t.continueLabel} · {t.chapter} {code(nextIndex)}
+                </span>
+                <span style={{ display: "block", fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 500, fontSize: "1.35rem", lineHeight: 1.2 }}>
+                  {steps[nextIndex].title}
+                </span>
+              </span>
+              <span aria-hidden="true" style={{ fontSize: "1.3rem" }}>→</span>
+            </Link>
+          ) : steps.length > 0 && (
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.86rem", fontWeight: 600, color: navy, margin: "0 0 2rem" }}>{t.allDone}</p>
+          )}
+
+          {groups.map(g => {
+            const done = g.items.filter(({ s }) => doneSet.has(s.n)).length;
+            return (
+              <section key={g.no} className="ice-sec" aria-labelledby={`ice-sec-${g.no}`}>
+                <h2 id={`ice-sec-${g.no}`}>
+                  <span className="no">{t.chapter} {g.no}</span>
+                  <span className="ct">{done}/{g.items.length}</span>
+                  <span className="ti">{g.title}</span>
+                </h2>
+                <ul className="ice-rows">
+                  {g.items.map(({ s, i }) => {
+                    const isD = doneSet.has(s.n);
+                    const isN = s.n === nextStep;
+                    return (
+                      <li key={s.n}>
+                        <Link href={`/journey/step/${s.n}`} className={isD ? "is-done" : isN ? "is-next" : undefined} aria-current={isN ? "step" : undefined}>
+                          <span className="mk" aria-hidden="true">
+                            {isD && <svg width="12" height="12" viewBox="0 0 12 12"><path d="M2.5 6.2 L5 8.6 L9.6 3.6" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>}
+                          </span>
+                          <span className="cd">{code(i)}</span>
+                          <span className="tt">
+                            {s.title}
+                            {isD && <span className="ice-sr"> ({t.done})</span>}
+                          </span>
+                          {isN ? <span className="tag">{t.next}</span> : <span className="chev" aria-hidden="true">›</span>}
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </section>
+            );
+          })}
+        </div>
+      )}
+
+      <div className="ice-layout" style={view === "list" ? { display: "none" } : undefined}>
         <nav aria-label={t.chapters} className="ice-nav">
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 600, color: muted, margin: "0 0 0.75rem", lineHeight: 1.5 }}>
             {t.chapterHint}
