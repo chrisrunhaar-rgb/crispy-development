@@ -6,6 +6,7 @@ import Breadcrumb from "@/components/Breadcrumb";
 import RelatedResources from "@/components/RelatedResources";
 import ModuleComments from "@/components/ModuleComments";
 import TimeAndCultureClient from "./TimeAndCultureClient";
+import FreeModuleSignupBanner from "@/components/FreeModuleSignupBanner";
 
 const faqItems = [
   {
@@ -92,6 +93,7 @@ export default async function ResourcePage(props: any) {
       </div>
 
       <TimeAndCultureClient {...props} isSaved={isSaved} />
+      <FreeModuleSignupBanner slug="time-and-culture" isLoggedIn={!!user} />
       <div className="border-t border-gray-100 py-10">
         <div className="container-wide">
           <ModuleComments slug="time-and-culture" />

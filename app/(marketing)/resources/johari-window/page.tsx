@@ -6,6 +6,7 @@ import Breadcrumb from "@/components/Breadcrumb";
 import RelatedResources from "@/components/RelatedResources";
 import ModuleComments from "@/components/ModuleComments";
 import JohariWindowClient from "./JohariWindowClient";
+import FreeModuleSignupBanner from "@/components/FreeModuleSignupBanner";
 import ModuleConnector from "@/components/ModuleConnector";
 
 export const dynamic = "force-dynamic";
@@ -93,6 +94,7 @@ export default async function ResourcePage(props: any) {
       </div>
 
       <JohariWindowClient {...props} isSaved={isSaved} />
+      <FreeModuleSignupBanner slug="johari-window" isLoggedIn={!!user} />
       <ModuleConnector currentSlug={RESOURCE_SLUG} savedResources={savedResources} isLoggedIn={!!user} />
       <div className="border-t border-gray-100 py-10">
         <div className="container-wide">

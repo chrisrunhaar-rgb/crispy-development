@@ -6,6 +6,7 @@ import Breadcrumb from "@/components/Breadcrumb";
 import RelatedResources from "@/components/RelatedResources";
 import ModuleComments from "@/components/ModuleComments";
 import FiveLanguagesClient from "./FiveLanguagesClient";
+import FreeModuleSignupBanner from "@/components/FreeModuleSignupBanner";
 
 export const dynamic = "force-dynamic";
 
@@ -104,6 +105,7 @@ export default async function ResourcePage(props: any) {
         receivingScores={receivingScores}
         givingScores={givingScores}
       />
+      <FreeModuleSignupBanner slug="5languages" isLoggedIn={!!user} />
 
       {/* Related Resources */}
       <div className="border-t border-gray-100 py-10">
