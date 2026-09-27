@@ -27,7 +27,8 @@ export type PendingInvite = {
 
 type Lang = "en" | "id";
 
-const SEAT_PRICE_USD = 15;
+const SEAT_PRICE_USD = 20;
+const MAX_TEAM_SIZE = 10; // people, leader included
 
 const COPY = {
   en: {
@@ -69,7 +70,9 @@ const COPY = {
     tenure: "Time on the team",
     removeConfirm: (name: string) => `Remove ${name} from the team?`,
     buySection: "Need more seats?",
-    buyHint: "Each extra seat adds one open slot to your team.",
+    buyHint: (left: number) => `Each extra seat is $20 and adds one open slot. A team can have up to 10 people, including you. You can add ${left} more.`,
+    teamFull: "Your team has reached the maximum of 10 people, including you.",
+    contactMore: "Need a bigger team? Contact us",
     seats: (n: number) => `${n} seat${n === 1 ? "" : "s"}`,
     buy: (n: number, price: number) => `Buy ${n} seat${n === 1 ? "" : "s"} · $${price}`,
     redirecting: "Opening checkout…",
@@ -115,7 +118,9 @@ const COPY = {
     tenure: "Lama di tim",
     removeConfirm: (name: string) => `Hapus ${name} dari tim?`,
     buySection: "Butuh tempat tambahan?",
-    buyHint: "Setiap tempat tambahan menambah satu slot kosong di tim Anda.",
+    buyHint: (left: number) => `Setiap tempat tambahan seharga $20 dan menambah satu slot kosong. Satu tim bisa berisi hingga 10 orang, termasuk Anda. Anda masih bisa menambah ${left} lagi.`,
+    teamFull: "Tim Anda sudah mencapai batas 10 orang, termasuk Anda.",
+    contactMore: "Butuh tim yang lebih besar? Hubungi kami",
     seats: (n: number) => `${n} tempat`,
     buy: (n: number, price: number) => `Beli ${n} tempat · $${price}`,
     redirecting: "Membuka pembayaran…",
@@ -342,6 +347,7 @@ export default function TeamSettings({
   }
 
   // ── Buy seats ──
+  const seatsLeft = Math.max(0, MAX_TEAM_SIZE - 1 - memberSeats);
   const [seatQty, setSeatQty] = useState(1);
   const [buying, setBuying] = useState(false);
   const [buyError, setBuyError] = useState<string | null>(null);
@@ -353,7 +359,7 @@ export default function TeamSettings({
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ type: "seat", quantity: seatQty }),
+        body: JSON.stringify({ type: "seat", quantity: Math.min(seatQty, seatsLeft) }),
       });
       const data = await res.json();
       if (data.checkoutUrl) {
@@ -582,24 +588,30 @@ export default function TeamSettings({
         {/* ── Buy more seats ── */}
         <section style={cardStyle}>
           <p style={sectionLabel}>{c.buySection}</p>
-          <p style={hintStyle}>{c.buyHint}</p>
+          <p style={hintStyle}>{seatsLeft > 0 ? c.buyHint(seatsLeft) : c.teamFull}</p>
           {checkoutSuccess && (
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.85rem", color: "oklch(40% 0.12 145)", padding: "0.875rem 1rem", background: "oklch(95% 0.03 145)", border: "1px solid oklch(80% 0.06 145)", borderRadius: "6px", marginBottom: "1.25rem" }}>
               {c.checkoutSuccess}
             </p>
           )}
+          {seatsLeft > 0 ? (
           <div style={{ display: "flex", gap: "1rem", alignItems: "center", flexWrap: "wrap" }}>
             <div style={{ display: "flex", alignItems: "center", border: "1px solid oklch(86% 0.008 80)", borderRadius: "4px" }}>
               <button type="button" aria-label="-" onClick={() => setSeatQty(q => Math.max(1, q - 1))} style={stepBtn}>−</button>
               <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.85rem", minWidth: "5.5rem", textAlign: "center", color: navy }}>
                 {c.seats(seatQty)}
               </span>
-              <button type="button" aria-label="+" onClick={() => setSeatQty(q => Math.min(50, q + 1))} style={stepBtn}>+</button>
+              <button type="button" aria-label="+" onClick={() => setSeatQty(q => Math.min(seatsLeft, q + 1))} style={stepBtn}>+</button>
             </div>
             <button type="button" className="btn-primary" onClick={buySeats} disabled={buying} style={{ fontSize: "0.85rem", opacity: buying ? 0.7 : 1 }}>
-              {buying ? c.redirecting : c.buy(seatQty, seatQty * SEAT_PRICE_USD)}
+              {buying ? c.redirecting : c.buy(Math.min(seatQty, seatsLeft), Math.min(seatQty, seatsLeft) * SEAT_PRICE_USD)}
             </button>
           </div>
+          ) : (
+            <Link href="/contact" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.85rem", fontWeight: 700, color: orange, textDecoration: "none" }}>
+              {c.contactMore} →
+            </Link>
+          )}
           {buyError && (
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: errorColor, marginTop: "0.75rem" }}>{buyError}</p>
           )}

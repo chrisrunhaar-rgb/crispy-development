@@ -41,10 +41,12 @@ function CheckoutButton({
   plan,
   variant,
   autoTrigger,
+  teamSize,
 }: {
   plan: "personal" | "team";
   variant: "orange" | "navy";
   autoTrigger?: boolean;
+  teamSize?: number;
 }) {
   const { lang } = useLanguage();
   const [status, setStatus] = useState<"idle" | "loading" | "unavailable">("idle");
@@ -68,6 +70,10 @@ function CheckoutButton({
   }, [autoTrigger, signedIn]);
 
   async function go() {
+    // Remember the chosen team size so it survives the signup detour.
+    if (plan === "team" && teamSize) {
+      try { sessionStorage.setItem(TEAM_SIZE_KEY, String(teamSize)); } catch {}
+    }
     // Logged-out visitor: account comes first, then payment — send them to
     // signup with the pathway pre-selected and a way back to finish checkout.
     if (signedIn === false) {
@@ -79,7 +85,7 @@ function CheckoutButton({
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ plan, type: "lifetime" }),
+        body: JSON.stringify({ plan, type: "lifetime", quantity: plan === "team" ? teamSize : undefined }),
       });
       if (res.status === 401) {
         // signedIn hadn't resolved yet when they clicked — same redirect.
@@ -297,6 +303,11 @@ function Feature({ text, light }: { text: string; light?: boolean }) {
   );
 }
 
+const TEAM_SIZE_KEY = "pricing_team_size";
+const TEAM_SEAT_PRICE = 20;
+const MIN_TEAM = 2;
+const MAX_TEAM = 10;
+
 // ── Main component ───────────────────────────────────────────────────────────
 export default function PricingContent({ isIndonesia }: Props) {
   const { lang } = useLanguage();
@@ -310,6 +321,15 @@ export default function PricingContent({ isIndonesia }: Props) {
   useEffect(() => {
     const auto = new URLSearchParams(window.location.search).get("autocheckout");
     if (auto === "personal" || auto === "team") setAutoPlan(auto);
+  }, []);
+
+  const [teamSize, setTeamSize] = useState(5);
+  useEffect(() => {
+    try {
+      const saved = Number(sessionStorage.getItem(TEAM_SIZE_KEY));
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      if (saved >= MIN_TEAM && saved <= MAX_TEAM) setTeamSize(saved);
+    } catch {}
   }, []);
 
   // ── Copy ────────────────────────────────────────────────────────────────
@@ -333,21 +353,25 @@ export default function PricingContent({ isIndonesia }: Props) {
         ],
 
     // TEAM ───────────────────────────────────────────────────────────────
-    teamLabel: id ? "Tim · 8 Akun Tim" : "Team · 8 Team Accounts",
-    teamPrice: "$80",
-    teamPriceSubNote: id ? "(hanya $10 per anggota)" : "(only $10 per member)",
+    teamLabel: id ? "Tim · 2 sampai 10 orang" : "Team · 2 to 10 people",
+    teamPrice: "$20",
+    teamPriceSubNote: id ? "per orang, termasuk pemimpin" : "per person, leader included",
+    teamSizeLabel: id ? "Ukuran tim" : "Team size",
+    teamSizeValue: (n: number) => (id ? `${n} orang` : `${n} people`),
+    teamTotal: (n: number) => `Total $${n}`,
+    teamMore: id ? "Lebih dari 10 orang? Hubungi kami" : "More than 10 people? Contact us",
     teamPriceNote: id ? "Sekali bayar - Akses permanen" : "One-time purchase · Permanent access",
     teamFeatures: id
       ? [
+          "Akun Personal lengkap untuk setiap anggota tim",
           "Jalur pengembangan tim yang unik",
-          "Jalur personal untuk semua 8 anggota",
-          "Wawasan atas hasil tes kepribadian seluruh anggota tim Anda",
+          "Hasil asesmen seluruh tim, terlihat oleh semua anggota",
           "Dasbor tim + kontrol pemimpin",
         ]
       : [
-          "Full personal pathway access for all 8 team members",
-          "Insight into all team members' personality test results",
+          "A full Personal account for every team member",
           "Unique team development pathway",
+          "The whole team's assessment results, visible to everyone",
           "Team dashboard + leader controls",
         ],
 
@@ -362,7 +386,15 @@ export default function PricingContent({ isIndonesia }: Props) {
           },
           {
             q: "Apa yang termasuk dalam paket Personal dan Tim?",
-            a: "Paket Personal memberikan satu orang akses permanen ke seluruh perpustakaan konten, dasbor pribadi, dan seluruh asesmen kepribadian. Paket Tim memberikan akses yang sama untuk 8 akun sekaligus, ditambah dasbor khusus dengan kontrol untuk pemimpin tim.",
+            a: "Paket Personal memberikan satu orang akses permanen ke seluruh perpustakaan konten, dasbor pribadi, dan seluruh asesmen kepribadian. Paket Tim memberikan akses yang sama kepada setiap anggota tim, ditambah ruang bersama tim: jalur tim, hasil seluruh tim, dan dasbor tim dengan kontrol untuk pemimpin.",
+          },
+          {
+            q: "Bagaimana harga paket Tim dihitung?",
+            a: "Anda membayar $20 per orang, sekali bayar, dan pemimpin tim juga dihitung. Pilih ukuran tim antara 2 dan 10 orang sebelum membayar. Tim berisi 5 orang berarti $100. Untuk tim lebih dari 10 orang, hubungi kami.",
+          },
+          {
+            q: "Bisakah saya menambah anggota tim nanti?",
+            a: "Bisa. Pemimpin tim dapat menambah tempat dari pengaturan tim, $20 per tempat, sampai total 10 orang.",
           },
           {
             q: "Bisakah saya beralih dari Personal ke Tim nanti?",
@@ -384,7 +416,15 @@ export default function PricingContent({ isIndonesia }: Props) {
           },
           {
             q: "What's included in Personal vs Team?",
-            a: "Personal gives one person lifetime access to the full content library, a personal dashboard, and every personality assessment. Team gives the same access across 8 accounts under one purchase, plus a dashboard with leader controls.",
+            a: "Personal gives one person lifetime access to the full content library, a personal dashboard, and every personality assessment. Team gives that same access to every person on the team, plus a shared team space: the team pathway, the whole team's results, and a team dashboard with leader controls.",
+          },
+          {
+            q: "How is Team priced?",
+            a: "You pay $20 per person, once, and the leader counts as one of the team. Pick a team size from 2 to 10 people before you pay. A team of 5 is $100. For more than 10 people, contact us.",
+          },
+          {
+            q: "Can I add people to my team later?",
+            a: "Yes. The team leader can add seats from team settings at $20 per seat, up to 10 people in total.",
           },
           {
             q: "Can I move from Personal to Team later?",
@@ -406,6 +446,14 @@ export default function PricingContent({ isIndonesia }: Props) {
       {/* eslint-disable-next-line react/no-danger */}
       <style dangerouslySetInnerHTML={{ __html: `
         .pricing-contact-link:hover { text-decoration: underline; }
+        .pricing-team-size { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1rem; font-family: var(--font-montserrat); }
+        .pricing-team-size-label { font-size: 0.8rem; font-weight: 700; color: oklch(38% 0.008 260); }
+        .pricing-stepper { display: flex; align-items: center; border: 1px solid oklch(84% 0.008 80); border-radius: 10px; background: oklch(99% 0.003 80); }
+        .pricing-stepper button { width: 44px; height: 44px; border: none; background: none; font-size: 1.1rem; font-weight: 700; color: oklch(22% 0.10 260); cursor: pointer; }
+        .pricing-stepper button:disabled { color: oklch(78% 0.008 260); cursor: default; }
+        .pricing-stepper span { min-width: 6.5rem; text-align: center; font-size: 0.875rem; font-weight: 700; color: oklch(22% 0.10 260); }
+        .pricing-team-total { font-size: 0.95rem; font-weight: 800; color: oklch(22% 0.10 260); }
+        .pricing-team-more { display: inline-block; margin-top: 1rem; font-family: var(--font-montserrat); font-size: 0.8rem; font-weight: 700; color: oklch(32% 0.10 260); text-decoration: none; }
         @keyframes pricingFadeDown {
           from { opacity: 0; transform: translateY(-5px); }
           to   { opacity: 1; transform: translateY(0); }
@@ -643,11 +691,41 @@ export default function PricingContent({ isIndonesia }: Props) {
                 ))}
               </ul>
 
+              {/* Team size picker */}
+              <div className="pricing-team-size">
+                <span className="pricing-team-size-label">{copy.teamSizeLabel}</span>
+                <div className="pricing-stepper">
+                  <button
+                    type="button"
+                    aria-label={id ? "Kurangi" : "Fewer people"}
+                    onClick={() => setTeamSize((n) => Math.max(MIN_TEAM, n - 1))}
+                    disabled={teamSize <= MIN_TEAM}
+                  >
+                    −
+                  </button>
+                  <span aria-live="polite">{copy.teamSizeValue(teamSize)}</span>
+                  <button
+                    type="button"
+                    aria-label={id ? "Tambah" : "More people"}
+                    onClick={() => setTeamSize((n) => Math.min(MAX_TEAM, n + 1))}
+                    disabled={teamSize >= MAX_TEAM}
+                  >
+                    +
+                  </button>
+                </div>
+                <span className="pricing-team-total">{copy.teamTotal(teamSize * TEAM_SEAT_PRICE)}</span>
+              </div>
+
               <CheckoutButton
                 plan="team"
                 variant="navy"
                 autoTrigger={autoPlan === "team"}
+                teamSize={teamSize}
               />
+
+              <Link href="/contact" className="pricing-contact-link pricing-team-more">
+                {copy.teamMore} →
+              </Link>
             </div>
           </div>
         </div>

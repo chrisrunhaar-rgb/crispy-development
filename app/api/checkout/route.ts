@@ -7,7 +7,9 @@ type Plan = "personal" | "team";
 type Currency = "usd" | "idr";
 type BillingPeriod = "monthly" | "annual";
 type MinutePackId = "1hr" | "3hr" | "5hr";
-const MAX_SEATS_PER_PURCHASE = 50;
+// A team is 2 to 10 people, leader included. Bigger teams go through "contact us".
+const MIN_TEAM_SIZE = 2;
+const MAX_TEAM_SIZE = 10;
 type AdminClient = ReturnType<typeof createAdminClient>;
 type SupabaseUser = { id: string; email?: string | null };
 
@@ -39,8 +41,12 @@ const MINUTE_PACKS: Record<MinutePackId, { priceId: string; minutes: number }> =
 // MCP before wiring, per Chris's approved spec, 2026-09-24.
 const LIFETIME_PRICE_IDS: Record<Plan, string> = {
   personal: "price_1UIpVjEHeFAKCmjlRYPEMscj",
-  team: "price_1UIpVnEHeFAKCmjl5v9NUu4G",
+  team: "price_1UIpVnEHeFAKCmjl5v9NUu4G", // retired $80 bundle, no longer sold
 };
+
+// Team seat: $20 one-off per person, bought by quantity. Replaces the $80
+// bundle and is also used for seat top-ups. Chris approved 2026-09-27 (msg 16948).
+const TEAM_SEAT_PRICE_ID = "price_1UKHMOEHeFAKCmjlkWRaJ2Pk";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://crispyleaders.com";
 
@@ -100,13 +106,19 @@ export async function POST(req: NextRequest) {
     if (!plan || !["personal", "team"].includes(plan)) {
       return NextResponse.json({ error: "invalid_plan", checkoutUrl: null }, { status: 400 });
     }
-    const priceId = LIFETIME_PRICE_IDS[plan];
+    const teamSize = Number(quantity);
+    if (plan === "team" && (!Number.isInteger(teamSize) || teamSize < MIN_TEAM_SIZE || teamSize > MAX_TEAM_SIZE)) {
+      return NextResponse.json({ error: "invalid_quantity", checkoutUrl: null }, { status: 400 });
+    }
+    const lineItem = plan === "team"
+      ? { price: TEAM_SEAT_PRICE_ID, quantity: teamSize }
+      : { price: LIFETIME_PRICE_IDS.personal, quantity: 1 };
 
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       customer: customerId,
       client_reference_id: user.id,
-      line_items: [{ price: priceId, quantity: 1 }],
+      line_items: [lineItem],
       billing_address_collection: "required",
       // Same Managed Payments workaround as the subscription/minute_pack
       // flows above — our Products don't carry a tax_code, so it 400s
@@ -115,7 +127,12 @@ export async function POST(req: NextRequest) {
       invoice_creation: { enabled: true },
       success_url: `${siteUrl}/account/subscription?checkout=success`,
       cancel_url: `${siteUrl}/pricing?checkout=cancelled`,
-      metadata: { user_id: user.id, lifetime: "true", plan },
+      metadata: {
+        user_id: user.id,
+        lifetime: "true",
+        plan,
+        ...(plan === "team" ? { team_size: String(teamSize) } : {}),
+      },
     });
 
     return NextResponse.json({ ready: true, checkoutUrl: session.url });
@@ -123,29 +140,32 @@ export async function POST(req: NextRequest) {
 
   if (type === "seat") {
     const seatCount = Number(quantity);
-    if (!Number.isInteger(seatCount) || seatCount < 1 || seatCount > MAX_SEATS_PER_PURCHASE) {
+    if (!Number.isInteger(seatCount) || seatCount < 1) {
       return NextResponse.json({ error: "invalid_quantity", checkoutUrl: null }, { status: 400 });
     }
 
     // Only that team's actual leader can buy seats for it.
     const { data: teamRow } = await admin
       .from("teams")
-      .select("id")
+      .select("id, max_seats")
       .eq("leader_user_id", user.id)
       .maybeSingle();
     if (!teamRow) {
       return NextResponse.json({ error: "not_team_leader", checkoutUrl: null }, { status: 403 });
     }
 
-    // Reuses the same one-time $15 price already live on the Personal plan —
-    // Stripe charges price × quantity in a single checkout, so buying several
-    // seats at once is just a bigger quantity, not a new price object.
-    // Chris approved via Telegram 2026-09-24 (msg 16150).
+    // Keep the team at 10 people or fewer, leader included. max_seats counts
+    // member seats only, so the leader is the +1.
+    const peopleNow = 1 + (teamRow.max_seats ?? 0);
+    if (peopleNow + seatCount > MAX_TEAM_SIZE) {
+      return NextResponse.json({ error: "team_full", checkoutUrl: null }, { status: 400 });
+    }
+
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       customer: customerId,
       client_reference_id: user.id,
-      line_items: [{ price: LIFETIME_PRICE_IDS.personal, quantity: seatCount }],
+      line_items: [{ price: TEAM_SEAT_PRICE_ID, quantity: seatCount }],
       billing_address_collection: "required",
       managed_payments: { enabled: false },
       invoice_creation: { enabled: true },

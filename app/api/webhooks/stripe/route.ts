@@ -142,9 +142,13 @@ async function handleCheckoutCompleted(admin: AdminClient, session: Stripe.Check
         .eq("leader_user_id", userId)
         .maybeSingle();
 
+      // team_size is the number of people paid for, leader included.
+      // Older $80 bundle checkouts carry no team_size and were 8 people.
+      const teamSize = Number(session.metadata?.team_size ?? 8) || 8;
       const teamPatch: Record<string, unknown> = {
         subscription_active: true,
         stripe_customer_id: lifetimeCustomerId,
+        max_seats: teamSize - 1, // member seats; the leader is the extra person
       };
 
       if (existingTeam) {
@@ -157,7 +161,6 @@ async function handleCheckoutCompleted(admin: AdminClient, session: Stripe.Check
           leader_user_id: userId,
           name,
           language: "en",
-          max_seats: 7, // member seats; leader is the 8th person
           ...teamPatch,
         });
       }
