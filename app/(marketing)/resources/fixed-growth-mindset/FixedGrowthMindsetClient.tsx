@@ -7,6 +7,7 @@ import Image from "next/image";
 import { saveResourceToDashboard, saveMindsetScore } from "../actions";
 import LangToggle from "@/components/LangToggle";
 import SourcesDropdown from "@/components/SourcesDropdown";
+import PresentLauncher from "@/components/PresentLauncher";
 
 type Lang = "en" | "id";
 
@@ -357,6 +358,7 @@ export default function FixedGrowthMindsetClient({
 
       {/* HERO */}
       <section style={{ background: NAVY, padding: "80px 24px 72px", position: "relative", overflow: "hidden" }}>
+        <PresentLauncher href="/resources/fixed-growth-mindset/present" lang={lang} title={{ en: "Teaching this to someone else?", id: "Mengajarkan ini kepada orang lain?" }} text={{ en: "Use the guided slideshow to walk your team through the difference between a fixed and a growth mindset.", id: "Gunakan slideshow terpandu untuk membawa tim Anda memahami perbedaan antara pola pikir tetap dan pola pikir bertumbuh." }} />
         {/* Hero photo overlay */}
         <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
           <Image

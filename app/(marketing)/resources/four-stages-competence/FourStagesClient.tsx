@@ -5,6 +5,7 @@ import { useLanguage } from "@/lib/LanguageContext";
 import LangToggle from "@/components/LangToggle";
 import { saveResourceToDashboard } from "../actions";
 import SourcesDropdown from "@/components/SourcesDropdown";
+import PresentLauncher from "@/components/PresentLauncher";
 
 type Lang = "en" | "id";
 const t = (en: string, id: string, lang: Lang) => lang === "id" ? id : en;
@@ -313,6 +314,7 @@ export default function FourStagesClient({ isSaved: initialSaved }: Props) {
 
       {/* ── 1. HERO ──────────────────────────────────────────────────────────── */}
       <div style={{ background: navy, padding: "80px 24px 72px", position: "relative", overflow: "hidden" }}>
+        <PresentLauncher href="/resources/four-stages-competence/present" lang={lang} title={{ en: "Teaching this to someone else?", id: "Mengajarkan ini kepada orang lain?" }} text={{ en: "Use the guided slideshow to walk your team through the four stages of competence, step by step.", id: "Gunakan slideshow terpandu untuk membawa tim Anda memahami empat tahap kompetensi, langkah demi langkah." }} />
         {/* Hero image */}
         <img
           src="/images/resources/four-stages-competence/hero-competence.jpg"
