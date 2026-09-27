@@ -30,26 +30,28 @@ const COPY = {
     },
     paths: {
       label: "Two pathways",
+      whyLabel: "Why",
+      howLabel: "How",
       title: "Grow on your own, or grow together.",
       body: "Both pathways open the full library of 50+ modules and all eight assessments. The difference is who you bring with you.",
       personal: {
         name: "Personal Pathway",
-        price: "$15",
-        per: "one-time",
-        body: "For the leader who wants to know how they lead. Take the assessments, save the modules that fit your season and keep your notes and progress together.",
+        what: "Know how you lead.",
+        why: "Leading far from home stretches you in ways you can't always see. Growth starts when you understand your own patterns.",
+        how: "Eight assessments, 50+ short modules and a private dashboard that keeps your notes and progress together.",
         cta: "Explore Personal",
       },
       team: {
         name: "Team Pathway",
-        price: "$80",
-        per: "for up to 8 people, one-time",
-        body: "For the leader of a team. Everyone gets their own dashboard, and you see the whole team's results side by side, ready for your next team conversation.",
+        what: "Lead a team that understands each other.",
+        why: "Cross-cultural teams lose a lot of energy to misunderstanding. When people see how their colleagues work, conflict becomes conversation.",
+        how: "Everyone gets their own dashboard. You see the whole team's results side by side, ready for your next team meeting.",
         cta: "Explore Team",
       },
     },
     inside: {
       label: "Inside the platform",
-      title: "Built for a full week and a small screen.",
+      title: "Your personal development dashboard.",
       points: [
         "50+ modules, most of them 15 to 25 minutes",
         "8 assessments, every result saved",
@@ -90,26 +92,28 @@ const COPY = {
     },
     paths: {
       label: "Dua jalur",
+      whyLabel: "Mengapa",
+      howLabel: "Bagaimana",
       title: "Bertumbuh sendiri, atau bertumbuh bersama.",
       body: "Kedua jalur membuka seluruh perpustakaan berisi 50+ modul dan kedelapan asesmen. Bedanya adalah siapa yang Anda ajak.",
       personal: {
         name: "Jalur Pribadi",
-        price: "$15",
-        per: "sekali bayar",
-        body: "Untuk pemimpin yang ingin mengenal cara ia memimpin. Kerjakan asesmen, simpan modul yang sesuai dengan musim Anda, dan simpan catatan serta kemajuan Anda di satu tempat.",
+        what: "Kenali cara Anda memimpin.",
+        why: "Memimpin jauh dari rumah menguji Anda dengan cara yang tidak selalu terlihat. Pertumbuhan dimulai saat Anda memahami pola Anda sendiri.",
+        how: "Delapan asesmen, 50+ modul singkat, dan dasbor pribadi yang menyimpan catatan serta kemajuan Anda di satu tempat.",
         cta: "Lihat Jalur Pribadi",
       },
       team: {
         name: "Jalur Tim",
-        price: "$80",
-        per: "untuk hingga 8 orang, sekali bayar",
-        body: "Untuk pemimpin sebuah tim. Setiap orang mendapat dasbornya sendiri, dan Anda melihat hasil seluruh tim berdampingan, siap untuk percakapan tim berikutnya.",
+        what: "Pimpin tim yang saling memahami.",
+        why: "Tim lintas budaya banyak kehilangan tenaga karena salah paham. Saat setiap orang melihat cara rekannya bekerja, konflik berubah menjadi percakapan.",
+        how: "Setiap orang mendapat dasbornya sendiri. Anda melihat hasil seluruh tim berdampingan, siap untuk pertemuan tim berikutnya.",
         cta: "Lihat Jalur Tim",
       },
     },
     inside: {
       label: "Di dalam platform",
-      title: "Dibuat untuk minggu yang padat dan layar yang kecil.",
+      title: "Dasbor pengembangan pribadi Anda.",
       points: [
         "50+ modul, sebagian besar 15 sampai 25 menit",
         "8 asesmen, setiap hasil tersimpan",
@@ -171,15 +175,20 @@ const CSS = `
 }
 `;
 
-function PathCard({ href, name, price, per, body, cta, accent }: { href: string; name: string; price: string; per: string; body: string; cta: string; accent: string }) {
+function PathCard({ href, name, what, why, how, cta, accent, whyLabel, howLabel }: { href: string; name: string; what: string; why: string; how: string; cta: string; accent: string; whyLabel: string; howLabel: string }) {
+  const sub = { margin: "0 0 0.3rem", fontFamily: SANS, fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" as const, color: accent };
   return (
     <article className="hp-card" style={{ display: "flex", flexDirection: "column", gap: "1rem", padding: "clamp(1.5rem, 3vw, 2.25rem)", border: `1px solid ${T.rule}`, borderTop: `3px solid ${accent}`, borderRadius: 2, background: T.offWhite }}>
       <h3 style={{ margin: 0, fontFamily: SANS, fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: T.muted }}>{name}</h3>
-      <p style={{ margin: 0, display: "flex", alignItems: "baseline", gap: "0.6rem", flexWrap: "wrap" }}>
-        <span style={{ fontFamily: SERIF, fontStyle: "italic", fontWeight: 500, fontSize: "clamp(2.6rem, 5vw, 3.4rem)", lineHeight: 1, color: T.navy }}>{price}</span>
-        <span style={{ fontFamily: SANS, fontSize: "0.82rem", color: T.muted }}>{per}</span>
-      </p>
-      <p style={{ ...bodyStyle, fontSize: "0.94rem", flex: 1 }}>{body}</p>
+      <p style={{ margin: 0, fontFamily: SERIF, fontStyle: "italic", fontWeight: 500, fontSize: "clamp(1.9rem, 3.6vw, 2.5rem)", lineHeight: 1.1, color: T.navy, textWrap: "balance" }}>{what}</p>
+      <div>
+        <p style={sub}>{whyLabel}</p>
+        <p style={{ ...bodyStyle, fontSize: "0.94rem" }}>{why}</p>
+      </div>
+      <div style={{ flex: 1 }}>
+        <p style={sub}>{howLabel}</p>
+        <p style={{ ...bodyStyle, fontSize: "0.94rem" }}>{how}</p>
+      </div>
       <div style={{ paddingTop: "0.25rem" }}>
         <PrimaryLink href={href} tone={accent === T.orange ? "orange" : "navy"}>{cta}</PrimaryLink>
       </div>
@@ -241,8 +250,8 @@ export default function HomePreview() {
             <p style={{ ...bodyStyle, alignSelf: "end" }}>{c.paths.body}</p>
           </div>
           <div className="hp-paths">
-            <PathCard href="/personal" accent={T.navy} {...c.paths.personal} />
-            <PathCard href="/team" accent={T.orange} {...c.paths.team} />
+            <PathCard href="/personal" accent={T.navy} whyLabel={c.paths.whyLabel} howLabel={c.paths.howLabel} {...c.paths.personal} />
+            <PathCard href="/team" accent={T.orange} whyLabel={c.paths.whyLabel} howLabel={c.paths.howLabel} {...c.paths.team} />
           </div>
         </section>
 
