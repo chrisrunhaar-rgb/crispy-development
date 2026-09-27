@@ -439,6 +439,31 @@ export default function HealthyConflictClient({ isSaved: initialSaved }: Props) 
           width: 5,
           background: amber,
         }} />
+        {/* Slideshow launcher: icon only, details on hover/focus */}
+        <style>{`
+          .hc-present { position: absolute; right: clamp(16px, 3vw, 32px); bottom: clamp(16px, 3vw, 28px); z-index: 2; }
+          .hc-present a { width: 48px; height: 48px; border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; background: oklch(100% 0 0 / 0.08); border: 1px solid oklch(100% 0 0 / 0.22); transition: background 0.2s ease, border-color 0.2s ease; }
+          .hc-present a:hover, .hc-present a:focus-visible { background: oklch(65% 0.15 45 / 0.22); border-color: oklch(65% 0.15 45); outline: none; }
+          .hc-present-tip { position: absolute; right: 0; bottom: calc(100% + 10px); width: min(300px, calc(100vw - 48px)); padding: 14px 16px; border-radius: 10px; background: oklch(99.5% 0.002 80); box-shadow: 0 12px 32px oklch(0% 0 0 / 0.3); opacity: 0; transform: translateY(6px); pointer-events: none; transition: opacity 0.2s ease, transform 0.2s ease; text-align: left; }
+          .hc-present:hover .hc-present-tip, .hc-present:focus-within .hc-present-tip { opacity: 1; transform: translateY(0); }
+        `}</style>
+        <div className="hc-present">
+          <Link href={"/resources/healthy-conflict/present"}
+            aria-label={t("Open the slideshow", "Buka slideshow")}
+            aria-describedby="hc-present-tip"
+            onClick={e => { if (window.innerWidth < 768) { e.preventDefault(); setSmallScreen(true); } }}>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={amber} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2" /><path d="M12 16v4M8 20h8" /></svg>
+          </Link>
+          <div id="hc-present-tip" role="tooltip" className="hc-present-tip">
+            <p style={{ margin: "0 0 4px", fontSize: 14, fontWeight: 700, color: navy }}>
+              {t("Teaching this to someone else?", "Mengajarkan ini kepada orang lain?")}
+            </p>
+            <p style={{ margin: 0, fontSize: 13, lineHeight: 1.5, color: subText }}>
+              {t("Use the guided slideshow to walk your team through the five elements of a safe space.",
+                "Gunakan slideshow terpandu untuk mengajak timmu melalui lima elemen ruang yang aman.")}
+            </p>
+          </div>
+        </div>
         <div style={{ maxWidth: 760, margin: "0 auto" }}>
           <p style={{
             fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
@@ -503,30 +528,6 @@ export default function HealthyConflictClient({ isSaved: initialSaved }: Props) 
                 : t("Save to Dashboard", "Simpan ke Dashboard")}
             </button>
           </div>
-        </div>
-      </div>
-
-      {/* ── Teaching strip: guided slideshow for leaders who teach this ───── */}
-      <div style={{ background: "oklch(99.5% 0.002 80)", borderBottom: `1px solid ${lightGray}`, padding: "20px 24px" }}>
-        <div style={{ maxWidth: 720, margin: "0 auto", display: "flex", flexWrap: "wrap", alignItems: "center", gap: "14px 20px" }}>
-          <span aria-hidden="true" style={{ flexShrink: 0, width: 44, height: 44, borderRadius: 12, background: "oklch(65% 0.15 45 / 0.12)", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={amber} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="12" rx="2" /><path d="M12 16v4M8 20h8" /></svg>
-          </span>
-          <div style={{ flex: "1 1 260px", minWidth: 0 }}>
-            <p style={{ margin: "0 0 2px", fontSize: 14, fontWeight: 700, color: navy }}>
-              {t("Teaching this to someone else?", "Mengajarkan ini kepada orang lain?")}
-            </p>
-            <p style={{ margin: 0, fontSize: 13, lineHeight: 1.5, color: subText }}>
-              {t("Use the guided slideshow to walk your team through the five elements of a safe space, full screen in English or Indonesian.",
-                "Gunakan slideshow terpandu untuk mengajak timmu melalui lima elemen ruang yang aman, layar penuh dalam bahasa Inggris atau Indonesia.")}
-            </p>
-          </div>
-          <Link href={"/resources/healthy-conflict/present"}
-            onClick={e => { if (window.innerWidth < 768) { e.preventDefault(); setSmallScreen(true); } }}
-            style={{ flexShrink: 0, display: "inline-flex", alignItems: "center", gap: 8, background: "transparent", color: navy, padding: "0 18px", minHeight: 44, borderRadius: 8, border: `1.5px solid ${navy}`, fontWeight: 700, fontSize: 13, textDecoration: "none", fontFamily: "Montserrat, sans-serif" }}>
-            {t("Open the slideshow", "Buka slideshow")}
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6" /></svg>
-          </Link>
         </div>
       </div>
 
