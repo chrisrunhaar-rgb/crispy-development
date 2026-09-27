@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { useLanguage } from "@/lib/LanguageContext";
 import {
   T, SERIF, SANS, KIT_CSS, Eyebrow, h2Style, bodyStyle, Caption,
-  BrowserFrame, PhoneFrame, LazyVideo, PrimaryLink, TextLink,
+  BrowserFrame, PhoneFrame, LazyVideo, PrimaryLink,
 } from "@/components/promo/PromoKit";
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -69,10 +70,8 @@ const COPY = {
       alt: "Tara, one of the WayPoint coaches, in a warm and quiet room.",
     },
     cta: {
-      title: "Start with one step this week.",
-      body: "Try the free journey, take a pathway for yourself, or bring your team along. Everything you do stays in your own dashboard.",
-      button: "Compare pathways",
-      library: "Browse the library",
+      title: "Take your first step today.",
+      options: ["Set up your free account", "See which pathways are available", "Explore the full library waiting for you"],
     },
     dashAlt: "The Crispy dashboard with saved modules, assessment results and progress.",
   },
@@ -125,10 +124,8 @@ const COPY = {
       alt: "Tara, salah satu pelatih WayPoint, di ruangan yang hangat dan tenang.",
     },
     cta: {
-      title: "Mulailah dengan satu langkah minggu ini.",
-      body: "Coba perjalanan gratis, ambil jalur untuk diri Anda sendiri, atau ajak tim Anda. Semua yang Anda kerjakan tersimpan di dasbor Anda sendiri.",
-      button: "Bandingkan jalur",
-      library: "Jelajahi perpustakaan",
+      title: "Ambil langkah pertama Anda hari ini.",
+      options: ["Buat akun gratis Anda", "Lihat jalur yang tersedia", "Jelajahi seluruh perpustakaan yang menanti Anda"],
     },
     dashAlt: "Dasbor Crispy dengan modul tersimpan, hasil asesmen, dan kemajuan.",
   },
@@ -137,6 +134,9 @@ const COPY = {
 const CSS = `
 .hp { display: flex; flex-direction: column; gap: clamp(4rem, 9vw, 7.5rem); }
 .hp-hero, .hp-split, .hp-cta, .hp-wp, .hp-inside { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(2rem, 5vw, 4rem); }
+.hp-cta-opt { display: flex; align-items: center; gap: 1rem; padding: 1.1rem 0.25rem; font-family: ${SANS}; font-weight: 600; font-size: 1rem; color: ${T.navy}; text-decoration: none; transition: color 0.2s ease; }
+.hp-cta-opt:hover { color: ${T.orangeDeep}; }
+.hp-cta-opt:focus-visible { outline: 2px solid ${T.orange}; outline-offset: 3px; }
 .hp-paths { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.25rem; }
 .hp-points { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0 2rem; list-style: none; margin: 0; padding: 0; }
 .hp-shots { position: relative; }
@@ -288,11 +288,17 @@ export default function HomePreview() {
         {/* ── 5. Closing CTA ── */}
         <section aria-labelledby="hp-cta-title" className="hp-cta" style={{ borderTop: `1px solid ${T.navy}`, paddingTop: "clamp(2.5rem, 5vw, 3.5rem)" }}>
           <h2 id="hp-cta-title" style={{ ...h2Style(), fontSize: "clamp(2.2rem, 4.6vw, 3.4rem)", lineHeight: 1.06 }}>{c.cta.title}</h2>
-          <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem", alignItems: "flex-start" }}>
-            <p style={bodyStyle}>{c.cta.body}</p>
-            <PrimaryLink href="/pricing">{c.cta.button}</PrimaryLink>
-            <TextLink href="/resources">{c.cta.library}</TextLink>
-          </div>
+          <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
+            {c.cta.options.map((label, i) => (
+              <li key={label} style={{ borderBottom: `1px solid ${T.rule}`, ...(i === 0 ? { borderTop: `1px solid ${T.rule}` } : {}) }}>
+                <Link href={[signedIn ? "/dashboard" : "/signup", "/pricing", "/resources"][i]} className="hp-cta-opt">
+                  <span style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: "1.6rem", color: T.orange, width: "1.75rem", flexShrink: 0 }}>{i + 1}</span>
+                  <span style={{ flex: 1 }}>{i === 0 && signedIn ? c.hero.ctaIn : label}</span>
+                  <span aria-hidden style={{ color: T.orange }}>&rarr;</span>
+                </Link>
+              </li>
+            ))}
+          </ol>
         </section>
       </div>
     </div>

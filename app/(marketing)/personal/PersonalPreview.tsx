@@ -55,7 +55,7 @@ const COPY = {
     why: {
       label: "Why a personal pathway",
       title: "Growth that fits the life you already have.",
-      body: "A colleague goes quiet in a meeting and you read it as agreement. Your feedback, meant kindly, lands as a public correction. A deadline you called firm turns out to be a suggestion to everyone else. Cross-cultural leadership is full of moments like these, and most of them happen far from any training room. The Personal Pathway gives you short, practical modules to read when those moments come up, assessments that show how you are wired, and space to think about how God is shaping you as a leader through it all. You set the pace, and everything you learn stays in one place.",
+      body: "Most of cross-cultural leadership happens far from any training room. The Personal Pathway gives you short modules for the moments that matter, assessments that show how you are wired, and space to reflect on how God is shaping you. You set the pace.",
       points: [
         "50+ modules on cross-cultural leadership",
         "8 assessments, with every result saved to your dashboard",
@@ -132,7 +132,7 @@ const COPY = {
     why: {
       label: "Mengapa jalur pribadi",
       title: "Pertumbuhan yang sesuai dengan hidup yang sudah Anda jalani.",
-      body: "Seorang rekan diam dalam rapat, dan Anda mengira ia setuju. Umpan balik Anda, yang dimaksudkan baik, diterima sebagai teguran di depan umum. Tenggat waktu yang Anda anggap pasti ternyata hanya dianggap saran oleh orang lain. Kepemimpinan lintas budaya penuh dengan momen seperti ini, dan sebagian besar terjadi jauh dari ruang pelatihan. Jalur Pribadi memberi Anda modul singkat dan praktis untuk dibaca ketika momen itu datang, asesmen yang menunjukkan karakter Anda, dan ruang untuk merenungkan bagaimana Tuhan membentuk Anda sebagai pemimpin di dalam semua itu. Anda yang menentukan kecepatannya, dan semua yang Anda pelajari tersimpan di satu tempat.",
+      body: "Sebagian besar kepemimpinan lintas budaya terjadi jauh dari ruang pelatihan. Jalur Pribadi memberi Anda modul singkat untuk momen yang penting, asesmen yang menunjukkan karakter Anda, dan ruang untuk merenungkan bagaimana Tuhan membentuk Anda. Anda yang menentukan kecepatannya.",
       points: [
         "50+ modul tentang kepemimpinan lintas budaya",
         "8 asesmen, dengan setiap hasil tersimpan di dasbor Anda",

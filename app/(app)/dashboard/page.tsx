@@ -22,7 +22,6 @@ import GaEventTracker from "@/components/GaEventTracker";
 import { TEAM_UI, type TeamLang } from "@/lib/team-i18n";
 import AdminReplyNotification from "@/components/AdminReplyNotification";
 import RaftPlanTile from "@/components/RaftPlanTile";
-import PwaInstall from "@/components/PwaInstall";
 
 export const metadata = {
   title: "Dashboard — Crispy Development",
@@ -534,7 +533,6 @@ export default async function DashboardPage({
               </div>
             </div>
             <div style={{ flexShrink: 0, display: "flex", alignItems: "center", gap: "0.75rem" }}>
-              <PwaInstall />
               <AccountMenu
                 firstName={user.user_metadata?.first_name ?? firstName}
                 lastName={user.user_metadata?.last_name}
