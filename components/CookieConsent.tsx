@@ -2,37 +2,48 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useLanguage } from "@/lib/LanguageContext";
 
 const STORAGE_KEY = "cookie_consent";
 
-declare global {
-  interface Window {
-    gtag?: (...args: unknown[]) => void;
-  }
-}
-
-function grantConsent() {
+// Google's script is only fetched after Accept, so Decline sends nothing to Google.
+function grantConsent(gaId: string) {
   window.gtag?.("consent", "update", {
     analytics_storage: "granted",
     ad_storage: "denied",
   });
+  if (document.getElementById("ga4-src")) return;
+  const s = document.createElement("script");
+  s.id = "ga4-src";
+  s.async = true;
+  s.src = `https://www.googletagmanager.com/gtag/js?id=${gaId}`;
+  document.head.appendChild(s);
 }
 
-export default function CookieConsent() {
+const COPY = {
+  en: { text: "We use Google Analytics cookies to see how visitors use this site. They don't tell us who you are.", policy: "Privacy Policy", accept: "Accept", decline: "Decline", label: "Cookie consent" },
+  id: { text: "Kami memakai cookie Google Analytics untuk melihat cara pengunjung memakai situs ini. Cookie ini tidak memberi tahu kami siapa Anda.", policy: "Kebijakan Privasi", accept: "Terima", decline: "Tolak", label: "Persetujuan cookie" },
+};
+
+export default function CookieConsent({ gaId }: { gaId: string }) {
   const [visible, setVisible] = useState(false);
+  const { lang } = useLanguage();
+  const t = lang === "id" ? COPY.id : COPY.en;
 
   useEffect(() => {
+    // Reading localStorage must wait for the client, so showing the banner happens here.
     const stored = localStorage.getItem(STORAGE_KEY);
     if (!stored) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setVisible(true);
     } else if (stored === "granted") {
-      grantConsent();
+      grantConsent(gaId);
     }
-  }, []);
+  }, [gaId]);
 
   function accept() {
     localStorage.setItem(STORAGE_KEY, "granted");
-    grantConsent();
+    grantConsent(gaId);
     setVisible(false);
   }
 
@@ -46,7 +57,7 @@ export default function CookieConsent() {
   return (
     <div
       role="dialog"
-      aria-label="Cookie consent"
+      aria-label={t.label}
       style={{
         position: "fixed",
         bottom: "1.5rem",
@@ -61,9 +72,9 @@ export default function CookieConsent() {
       }}
     >
       <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(82% 0.02 260)", lineHeight: 1.65, marginBottom: "1rem" }}>
-        We use Google Analytics to understand how visitors use this site. No personal data is stored.{" "}
+        {t.text}{" "}
         <Link href="/privacy" style={{ color: "oklch(65% 0.15 45)", textDecoration: "none" }}>
-          Privacy Policy
+          {t.policy}
         </Link>
       </p>
       <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
@@ -82,7 +93,7 @@ export default function CookieConsent() {
             cursor: "pointer",
           }}
         >
-          Accept
+          {t.accept}
         </button>
         <button
           onClick={decline}
@@ -99,7 +110,7 @@ export default function CookieConsent() {
             cursor: "pointer",
           }}
         >
-          Decline
+          {t.decline}
         </button>
       </div>
     </div>

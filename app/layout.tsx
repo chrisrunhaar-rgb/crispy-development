@@ -120,15 +120,12 @@ export default function RootLayout({
           `}
         </Script>
 
-        {/* Google Analytics 4 */}
-        <Script
-          src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
-          strategy="afterInteractive"
-        />
+        {/* Google Analytics 4: commands queue locally; CookieConsent loads Google's script only after Accept */}
         <Script id="ga4-init" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
+            window.gtag = gtag;
             gtag('js', new Date());
             gtag('config', '${GA_ID}', { send_page_view: true });
           `}
@@ -137,9 +134,9 @@ export default function RootLayout({
         <ErrorBoundary componentName="RootLayout">
           <LanguageProvider>
             {children}
+            <CookieConsent gaId={GA_ID} />
           </LanguageProvider>
         </ErrorBoundary>
-        <CookieConsent />
         <VisitTracker />
         <Analytics />
       </body>
