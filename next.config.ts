@@ -11,6 +11,8 @@ const nextConfig: NextConfig = {
       },
       // Old 60-day challenge retired; links in past posts land on the journey
       { source: "/challenge", destination: "/journey", permanent: true },
+      // Old Team Pathway "coming soon" page retired; the /team page covers it
+      { source: "/team-pathway", destination: "/team", permanent: true },
       { source: "/challenge/:path*", destination: "/journey", permanent: true },
       { source: "/influential-leadership-challenge", destination: "/journey", permanent: true },
       { source: "/influential-leadership-challenge/:path*", destination: "/journey", permanent: true },

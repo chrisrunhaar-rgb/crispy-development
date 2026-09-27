@@ -360,17 +360,18 @@ export default function PricingContent({ isIndonesia }: Props) {
     teamSizeValue: (n: number) => (id ? `${n} orang` : `${n} people`),
     teamTotal: (n: number) => `Total $${n}`,
     teamMore: id ? "Lebih dari 10 orang? Hubungi kami" : "More than 10 people? Contact us",
+    teamDiffNote: id ? "Hanya $5 lebih per orang dibanding Personal" : "Just $5 more per person than Personal",
     teamPriceNote: id ? "Sekali bayar - Akses permanen" : "One-time purchase · Permanent access",
     teamFeatures: id
       ? [
           "Akun Personal lengkap untuk setiap anggota tim",
-          "Jalur pengembangan tim yang unik",
+          "Perjalanan Pertumbuhan Tim, ditulis khusus untuk pengembangan tim",
           "Hasil asesmen seluruh tim, terlihat oleh semua anggota",
           "Dasbor tim + kontrol pemimpin",
         ]
       : [
           "A full Personal account for every team member",
-          "Unique team development pathway",
+          "The Team Growth Journey, written for team development",
           "The whole team's assessment results, visible to everyone",
           "Team dashboard + leader controls",
         ],
@@ -386,7 +387,7 @@ export default function PricingContent({ isIndonesia }: Props) {
           },
           {
             q: "Apa yang termasuk dalam paket Personal dan Tim?",
-            a: "Paket Personal memberikan satu orang akses permanen ke seluruh perpustakaan konten, dasbor pribadi, dan seluruh asesmen kepribadian. Paket Tim memberikan akses yang sama kepada setiap anggota tim, ditambah ruang bersama tim: jalur tim, hasil seluruh tim, dan dasbor tim dengan kontrol untuk pemimpin.",
+            a: "Paket Personal memberikan satu orang akses permanen ke seluruh perpustakaan konten, dasbor pribadi, dan seluruh asesmen kepribadian. Paket Tim memberikan semua isi Personal kepada setiap anggota tim, ditambah Perjalanan Pertumbuhan Tim: modul yang ditulis khusus untuk pengembangan tim dan membentuk budaya tim. Anda juga mendapat hasil seluruh tim dan dasbor tim dengan kontrol untuk pemimpin. Semua itu hanya $5 lebih per orang.",
           },
           {
             q: "Bagaimana harga paket Tim dihitung?",
@@ -416,7 +417,7 @@ export default function PricingContent({ isIndonesia }: Props) {
           },
           {
             q: "What's included in Personal vs Team?",
-            a: "Personal gives one person lifetime access to the full content library, a personal dashboard, and every personality assessment. Team gives that same access to every person on the team, plus a shared team space: the team pathway, the whole team's results, and a team dashboard with leader controls.",
+            a: "Personal gives one person lifetime access to the full content library, a personal dashboard, and every personality assessment. Team gives everything in Personal to every person on the team, plus the Team Growth Journey: modules written for team development and shaping team culture. You also get the whole team's results and a team dashboard with leader controls. All of that for just $5 more per person.",
           },
           {
             q: "How is Team priced?",
@@ -668,10 +669,21 @@ export default function PricingContent({ isIndonesia }: Props) {
                   fontSize: "0.8rem",
                   fontWeight: 600,
                   color: "oklch(48% 0.04 260)",
-                  margin: "0.625rem 0 1.75rem",
+                  margin: "0.625rem 0 0.375rem",
                 }}
               >
                 {copy.teamPriceNote}
+              </p>
+              <p
+                style={{
+                  fontFamily: "var(--font-montserrat)",
+                  fontSize: "0.8rem",
+                  fontWeight: 700,
+                  color: "oklch(48% 0.04 260)",
+                  margin: "0 0 1.75rem",
+                }}
+              >
+                {copy.teamDiffNote}
               </p>
 
               {/* Features */}

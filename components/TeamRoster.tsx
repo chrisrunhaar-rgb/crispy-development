@@ -29,7 +29,7 @@ const MAX_TEAM_SIZE = 10; // people, leader included
 const SHARE_COPY: Record<Lang, (leaderName: string | undefined, teamName: string, url: string) => { title: string; text: string; whatsapp: string }> = {
   en: (leaderName, teamName, url) => {
     const leader = leaderName?.trim() || "[LEADER_NAME]";
-    const body = `${leader} invited you to join ${teamName} on Crispy Development, where cross-cultural leaders grow together. Your seat is ready.\n\n👉 ${url}`;
+    const body = `${leader} invited you to join ${teamName} on Crispy Development, where cross-cultural leaders grow together. You get your own full Personal account (your own dashboard, the complete library and all the personal assessments), and we work through the Team Growth Journey together.\n\n👉 ${url}`;
     return {
       title: `Join ${teamName} on Crispy Development`,
       text: body,
@@ -38,7 +38,7 @@ const SHARE_COPY: Record<Lang, (leaderName: string | undefined, teamName: string
   },
   id: (leaderName, teamName, url) => {
     const leader = leaderName?.trim() || "[LEADER_NAME]";
-    const body = `${leader} mengundang Anda untuk bergabung dengan ${teamName} di Crispy Development, tempat para pemimpin lintas budaya bertumbuh bersama. Tempat Anda sudah siap.\n\n👉 ${url}`;
+    const body = `${leader} mengundang Anda untuk bergabung dengan ${teamName} di Crispy Development, tempat para pemimpin lintas budaya bertumbuh bersama. Anda mendapat akun Personal lengkap sendiri (dasbor pribadi, seluruh perpustakaan, dan semua asesmen pribadi), dan kita menjalani Perjalanan Pertumbuhan Tim bersama.\n\n👉 ${url}`;
     return {
       title: `Bergabunglah dengan ${teamName} di Crispy Development`,
       text: body,

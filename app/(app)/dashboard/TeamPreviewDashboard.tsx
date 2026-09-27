@@ -55,7 +55,7 @@ const COPY = {
     hero: {
       eyebrow: "Team Pathway",
       title: "Lead a team that actually knows each other.",
-      subline: "Two to ten people, one shared pathway. Every member takes the assessments and reads each module on their own phone. You see the whole team in one place, and your weekly meeting starts where the reading left off.",
+      subline: "Two to ten people. Every member gets a full Personal account, and together you work through the Team Growth Journey. Everyone takes the assessments and reads each module on their own phone. You see the whole team in one place, and your weekly meeting starts where the reading left off.",
       cta: "See team pricing",
     },
     why: {
@@ -63,9 +63,9 @@ const COPY = {
       title: "Personal growth is good. Growing together changes how the team works.",
       body: "When one person reads about trust or conflict, they learn something. When the whole team reads the same module in the same week, they get a shared language. \"That was a process conflict, not a relationship one\" becomes something anyone on the team can say. In multicultural teams this matters even more, because people arrive with different defaults about silence, disagreement, hierarchy and feedback. A team account gives everyone the same starting point, and gives the leader a clear view of who is on the team.",
       points: [
-        "An account for every team member (2 to 10 people), each with full personal pathway access",
+        "A full Personal account for every team member (2 to 10 people): their own dashboard, the complete library and all eight personal assessments",
         "Every member's assessment results in one leader view",
-        "10 team modules built for weekly meetings",
+        "The Team Growth Journey, written for team development and built for weekly meetings",
         "One payment, permanent access",
       ],
     },
@@ -87,7 +87,7 @@ const COPY = {
     },
     modules: {
       label: "The team pathway",
-      title: "Ten modules. One conversation each week.",
+      title: "The Team Growth Journey. One conversation each week.",
       intro: "Short readings and hands-on workshops, in order. Each one ends with something the team does together, and several save their results straight to your team dashboard.",
       type: { article: "Reading · 20 min", workshop: "Workshop · 45 min" },
       items: [
@@ -116,7 +116,7 @@ const COPY = {
     },
     cta: {
       title: "Bring your whole team along.",
-      body: "An account for every member of a team of 2 to 10 people, every assessment, all ten team modules and a leader dashboard. $20 per person, paid once, with permanent access.",
+      body: "Every person on your team gets a full Personal account: their own dashboard, the complete library of 50+ modules and all eight personal assessments.\n\nOn top of that, your team gets the Team Growth Journey, written for team development, to shape how your team works together and the culture you build.\n\nPersonal is $15. Team is $20 per person. The extra $5 adds the Team Growth Journey, the shared team results and your leader dashboard. For 2 to 10 people, paid once, with permanent access.",
       button: "Set up your team",
     },
     caption: {
@@ -135,7 +135,7 @@ const COPY = {
     hero: {
       eyebrow: "Jalur Tim",
       title: "Pimpin tim yang benar-benar saling mengenal.",
-      subline: "Dua sampai sepuluh orang, satu jalur bersama. Setiap anggota mengerjakan asesmen dan membaca setiap modul di ponsel masing-masing. Anda melihat gambaran seluruh tim di satu tempat, dan pertemuan mingguan Anda dimulai dari apa yang sudah mereka baca.",
+      subline: "Dua sampai sepuluh orang. Setiap anggota mendapat akun Personal lengkap, dan bersama-sama Anda menjalani Perjalanan Pertumbuhan Tim. Setiap orang mengerjakan asesmen dan membaca setiap modul di ponsel masing-masing. Anda melihat gambaran seluruh tim di satu tempat, dan pertemuan mingguan Anda dimulai dari apa yang sudah mereka baca.",
       cta: "Lihat harga tim",
     },
     why: {
@@ -143,9 +143,9 @@ const COPY = {
       title: "Bertumbuh sendiri itu baik. Bertumbuh bersama mengubah cara tim bekerja.",
       body: "Ketika satu orang membaca tentang kepercayaan atau konflik, ia belajar sesuatu. Ketika seluruh tim membaca modul yang sama di minggu yang sama, mereka mendapat bahasa bersama. Kalimat seperti \"Itu konflik proses, bukan konflik hubungan\" bisa diucapkan oleh siapa saja di tim. Dalam tim multibudaya hal ini lebih penting lagi, karena setiap orang datang dengan kebiasaan berbeda soal diam, perbedaan pendapat, hierarki, dan umpan balik. Akun tim memberi semua orang titik awal yang sama, dan memberi pemimpin gambaran yang jelas tentang siapa saja yang ada di timnya.",
       points: [
-        "Satu akun untuk setiap anggota tim (2 sampai 10 orang), masing-masing dengan akses penuh ke jalur pribadi",
+        "Akun Personal lengkap untuk setiap anggota tim (2 sampai 10 orang): dasbor sendiri, seluruh perpustakaan, dan kedelapan asesmen pribadi",
         "Hasil asesmen setiap anggota dalam satu tampilan pemimpin",
-        "10 modul tim yang dirancang untuk pertemuan mingguan",
+        "Perjalanan Pertumbuhan Tim, ditulis untuk pengembangan tim dan dirancang untuk pertemuan mingguan",
         "Sekali bayar, akses permanen",
       ],
     },
@@ -167,7 +167,7 @@ const COPY = {
     },
     modules: {
       label: "Jalur tim",
-      title: "Sepuluh modul. Satu percakapan setiap minggu.",
+      title: "Perjalanan Pertumbuhan Tim. Satu percakapan setiap minggu.",
       intro: "Bacaan singkat dan lokakarya praktis, berurutan. Setiap modul diakhiri dengan sesuatu yang dikerjakan tim bersama, dan beberapa di antaranya menyimpan hasilnya langsung ke dasbor tim Anda.",
       type: { article: "Bacaan · 20 menit", workshop: "Lokakarya · 45 menit" },
       items: [
@@ -196,7 +196,7 @@ const COPY = {
     },
     cta: {
       title: "Ajak seluruh tim Anda bertumbuh bersama.",
-      body: "Satu akun untuk setiap anggota tim berisi 2 sampai 10 orang, semua asesmen, kesepuluh modul tim, dan dasbor pemimpin. $20 per orang, sekali bayar, dengan akses permanen.",
+      body: "Setiap orang di tim Anda mendapat akun Personal lengkap: dasbor sendiri, seluruh perpustakaan berisi 50+ modul, dan kedelapan asesmen pribadi.\n\nSelain itu, tim Anda mendapat Perjalanan Pertumbuhan Tim, yang ditulis khusus untuk pengembangan tim, untuk membentuk cara tim Anda bekerja sama dan budaya yang Anda bangun.\n\nPersonal $15. Tim $20 per orang. Tambahan $5 itu memberi Perjalanan Pertumbuhan Tim, hasil tim bersama, dan dasbor pemimpin Anda. Untuk 2 sampai 10 orang, sekali bayar, dengan akses permanen.",
       button: "Bangun tim Anda",
     },
     caption: {
@@ -642,7 +642,9 @@ export default function TeamPreviewDashboard({ language, ctaHref = "/pricing", a
       <section aria-labelledby="tp-cta-title" className="tp-cta" style={{ borderTop: `1px solid ${T.navy}`, paddingTop: "clamp(2.5rem, 5vw, 3.5rem)" }}>
         <h2 id="tp-cta-title" style={{ ...h2Style(), fontSize: "clamp(2.2rem, 4.6vw, 3.4rem)", lineHeight: 1.06 }}>{c.cta.title}</h2>
         <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem", alignItems: "flex-start" }}>
-          <p style={bodyStyle}>{c.cta.body}</p>
+          {c.cta.body.split("\n\n").map((para) => (
+            <p key={para} style={bodyStyle}>{para}</p>
+          ))}
           <PrimaryLink href={ctaHref}>{c.cta.button}</PrimaryLink>
         </div>
       </section>

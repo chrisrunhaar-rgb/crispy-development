@@ -94,8 +94,8 @@ export const TEAM_UI = {
     memberVisibilityExplainer: "Your results and reflections here are visible to your team and your leader. Everything else on your dashboard works just like it would for someone doing this solo. Your team leader invited you here specifically, and they're expecting you to engage, not just sign up and disappear.",
     // InvitePage
     inviteShareTitle: (team: string) => `You're invited to ${team}`,
-    inviteShareTextWithLeader: (leader: string, team: string) => `${leader} invited you to join ${team} on Crispy Development, where cross-cultural leaders grow together. Your seat is ready.`,
-    inviteShareTextNoLeader: (team: string) => `You're invited to join ${team} on Crispy Development, where cross-cultural leaders grow together. Your seat is ready.`,
+    inviteShareTextWithLeader: (leader: string, team: string) => `${leader} invited you to join ${team} on Crispy Development, where cross-cultural leaders grow together. You get your own full Personal account (your own dashboard, the complete library and all the personal assessments), and we work through the Team Growth Journey together.`,
+    inviteShareTextNoLeader: (team: string) => `You're invited to join ${team} on Crispy Development, where cross-cultural leaders grow together. You get your own full Personal account (your own dashboard, the complete library and all the personal assessments), and we work through the Team Growth Journey together.`,
     beforeInviteEyebrow: "Before You Invite",
     beforeInviteBody: "Once someone joins, their assessment results and reflections are visible to the whole team, including you. Shared visibility is what makes Team Pathway work: you grow together in the open, not separately. Invite people who are ready for that kind of honesty with their team.",
     invitePageTitle: "Invite Members",
@@ -224,8 +224,8 @@ export const TEAM_UI = {
     memberVisibilityExplainer: "Hasil dan refleksi Anda di sini dapat dilihat oleh tim dan pemimpin Anda. Semua fitur lain di dashboard Anda tetap berfungsi penuh, sama seperti pengguna yang menjalani ini sendirian. Pemimpin tim Anda mengundang Anda secara khusus, dan mereka menantikan keterlibatan Anda, bukan sekadar Anda mendaftar lalu menghilang.",
     // InvitePage
     inviteShareTitle: (team: string) => `Anda diundang ke ${team}`,
-    inviteShareTextWithLeader: (leader: string, team: string) => `${leader} mengundang Anda untuk bergabung dengan ${team} di Crispy Development, tempat para pemimpin lintas budaya bertumbuh bersama. Tempat Anda sudah siap.`,
-    inviteShareTextNoLeader: (team: string) => `Anda diundang untuk bergabung dengan ${team} di Crispy Development, tempat para pemimpin lintas budaya bertumbuh bersama. Tempat Anda sudah siap.`,
+    inviteShareTextWithLeader: (leader: string, team: string) => `${leader} mengundang Anda untuk bergabung dengan ${team} di Crispy Development, tempat para pemimpin lintas budaya bertumbuh bersama. Anda mendapat akun Personal lengkap sendiri (dasbor pribadi, seluruh perpustakaan, dan semua asesmen pribadi), dan kita menjalani Perjalanan Pertumbuhan Tim bersama.`,
+    inviteShareTextNoLeader: (team: string) => `Anda diundang untuk bergabung dengan ${team} di Crispy Development, tempat para pemimpin lintas budaya bertumbuh bersama. Anda mendapat akun Personal lengkap sendiri (dasbor pribadi, seluruh perpustakaan, dan semua asesmen pribadi), dan kita menjalani Perjalanan Pertumbuhan Tim bersama.`,
     beforeInviteEyebrow: "Sebelum Anda Mengundang",
     beforeInviteBody: "Setelah seseorang bergabung, hasil asesmen dan refleksinya akan terlihat oleh seluruh tim, termasuk Anda. Keterbukaan inilah yang membuat Jalur Tim berjalan efektif: Anda bertumbuh bersama secara terbuka, bukan sendiri-sendiri. Undang orang-orang yang siap untuk kejujuran itu dengan timnya.",
     invitePageTitle: "Undang Anggota",
