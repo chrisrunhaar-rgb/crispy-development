@@ -71,7 +71,7 @@ const COPY = {
     },
     cta: {
       title: "Take your first step today.",
-      options: ["Set up your free account", "See which pathways are available", "Explore the full library waiting for you"],
+      options: ["Set up your free account", "Choose your pathway", "Explore the full library waiting for you"],
     },
     dashAlt: "The Crispy dashboard with saved modules, assessment results and progress.",
   },
@@ -125,7 +125,7 @@ const COPY = {
     },
     cta: {
       title: "Ambil langkah pertama Anda hari ini.",
-      options: ["Buat akun gratis Anda", "Lihat jalur yang tersedia", "Jelajahi seluruh perpustakaan yang menanti Anda"],
+      options: ["Buat akun gratis Anda", "Pilih jalur Anda", "Jelajahi seluruh perpustakaan yang menanti Anda"],
     },
     dashAlt: "Dasbor Crispy dengan modul tersimpan, hasil asesmen, dan kemajuan.",
   },
@@ -137,6 +137,9 @@ const CSS = `
 .hp-cta-opt { display: flex; align-items: center; gap: 1rem; padding: 1.1rem 0.25rem; font-family: ${SANS}; font-weight: 600; font-size: 1rem; color: ${T.navy}; text-decoration: none; transition: color 0.2s ease; }
 .hp-cta-opt:hover { color: ${T.orangeDeep}; }
 .hp-cta-opt:focus-visible { outline: 2px solid ${T.orange}; outline-offset: 3px; }
+.hp-cta-pick { color: ${T.orangeDeep}; text-decoration: none; font-size: 0.9rem; white-space: nowrap; }
+.hp-cta-pick:hover { color: ${T.navy}; }
+.hp-cta-pick:focus-visible { outline: 2px solid ${T.orange}; outline-offset: 3px; }
 .hp-paths { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.25rem; }
 .hp-points { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0 2rem; list-style: none; margin: 0; padding: 0; }
 .hp-shots { position: relative; }
@@ -291,11 +294,22 @@ export default function HomePreview() {
           <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
             {c.cta.options.map((label, i) => (
               <li key={label} style={{ borderBottom: `1px solid ${T.rule}`, ...(i === 0 ? { borderTop: `1px solid ${T.rule}` } : {}) }}>
-                <Link href={[signedIn ? "/dashboard" : "/signup", "/pricing", "/resources"][i]} className="hp-cta-opt">
-                  <span style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: "1.6rem", color: T.orange, width: "1.75rem", flexShrink: 0 }}>{i + 1}</span>
-                  <span style={{ flex: 1 }}>{i === 0 && signedIn ? c.hero.ctaIn : label}</span>
-                  <span aria-hidden style={{ color: T.orange }}>&rarr;</span>
-                </Link>
+                {i === 1 ? (
+                  <div className="hp-cta-opt" style={{ flexWrap: "wrap" }}>
+                    <span style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: "1.6rem", color: T.orange, width: "1.75rem", flexShrink: 0 }}>{i + 1}</span>
+                    <span style={{ flex: 1 }}>{label}</span>
+                    <span style={{ display: "flex", gap: "1.25rem" }}>
+                      <Link href="/personal" className="hp-cta-pick">{c.paths.personal.name} <span aria-hidden>&rarr;</span></Link>
+                      <Link href="/team" className="hp-cta-pick">{c.paths.team.name} <span aria-hidden>&rarr;</span></Link>
+                    </span>
+                  </div>
+                ) : (
+                  <Link href={i === 0 ? (signedIn ? "/dashboard" : "/signup") : "/resources"} className="hp-cta-opt">
+                    <span style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: "1.6rem", color: T.orange, width: "1.75rem", flexShrink: 0 }}>{i + 1}</span>
+                    <span style={{ flex: 1 }}>{i === 0 && signedIn ? c.hero.ctaIn : label}</span>
+                    <span aria-hidden style={{ color: T.orange }}>&rarr;</span>
+                  </Link>
+                )}
               </li>
             ))}
           </ol>
