@@ -264,7 +264,7 @@ export default function VisionCastingClient({ userPathway, isSaved: initialSaved
             id: "Gunakan slideshow terpandu ini untuk memandu tim Anda memahami Kompas Visi dan cara menguji visi yang berasal dari Allah.",
           }}
         />
-        <img src="/images/resources/disc/hero.jpg" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", opacity: 0.22, mixBlendMode: "luminosity", pointerEvents: "none" }} />
+        <img src="/images/resources/vision-casting/hero.jpg" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", opacity: 0.22, mixBlendMode: "luminosity", pointerEvents: "none" }} />
 
         <p style={{
           color: orange,
