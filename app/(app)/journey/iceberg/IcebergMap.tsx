@@ -809,14 +809,13 @@ export default function IcebergMap({ steps, completed, nextStep, lang, heading }
         .ice-chapters .ti { font-weight: 600; font-size: 0.8rem; line-height: 1.35; }
         .ice-chapters .ct { margin-left: auto; font-size: 0.68rem; font-weight: 600; color: ${muted}; padding-left: 0.5rem; }
         .ice-head { margin: 0 0 1rem; }
-        .ice-switch { display: inline-flex; border: 1px solid ${rule}; background: ${offWhite}; margin: 0 0 1rem; }
-        .ice-switch button {
-          min-height: 44px; padding: 0 1rem; border: 0; background: transparent; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem;
-          font-family: var(--font-montserrat); font-size: 0.78rem; font-weight: 700; color: ${muted}; transition: background 0.15s, color 0.15s;
+        .ice-tomap, .ice-tolist {
+          min-height: 44px; padding: 0 1rem; border: 1px solid ${rule}; background: ${offWhite}; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem;
+          font-family: var(--font-montserrat); font-size: 0.78rem; font-weight: 700; color: ${navy}; transition: background 0.15s;
         }
-        .ice-switch button + button { border-left: 1px solid ${rule}; }
-        .ice-switch button:hover { color: ${navy}; }
-        .ice-switch button[aria-pressed="true"] { background: ${navy}; color: ${offWhite}; }
+        .ice-tomap:hover, .ice-tolist:hover { background: oklch(94% 0.012 250); }
+        .ice-tomap { margin: -1.25rem 0 2rem; }
+        .ice-tolist { position: absolute; left: 12px; bottom: 12px; z-index: 2; }
         .ice-list { max-width: 760px; }
         .ice-list .lhead { margin: 0 0 1.25rem; }
         .ice-list .lhead h1 { font-family: var(--font-cormorant); font-style: italic; font-weight: 500; font-size: clamp(1.85rem, 4.5vw, 2.6rem); line-height: 1.05; color: ${navy}; margin: 0; text-wrap: balance; }
@@ -907,17 +906,6 @@ export default function IcebergMap({ steps, completed, nextStep, lang, heading }
         }
       `}</style>
 
-      <div role="group" aria-label={t.viewLabel} className="ice-switch">
-        <button type="button" aria-pressed={view === "map"} onClick={() => switchView("map")}>
-          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5 L11.5 6.5 L14.5 14.5 H1.5 L4.5 6.5 Z" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" /><path d="M1 9.5 H15" stroke="currentColor" strokeWidth="1.5" /></svg>
-          {t.viewMap}
-        </button>
-        <button type="button" aria-pressed={view === "list"} onClick={() => switchView("list")}>
-          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.5 H15 M5 8 H15 M5 12.5 H15" stroke="currentColor" strokeWidth="1.5" /><circle cx="1.8" cy="3.5" r="1.1" fill="currentColor" /><circle cx="1.8" cy="8" r="1.1" fill="currentColor" /><circle cx="1.8" cy="12.5" r="1.1" fill="currentColor" /></svg>
-          {t.viewList}
-        </button>
-      </div>
-
       {view === "list" && (
         <div className="ice-list">
           <header className="lhead">
@@ -952,6 +940,7 @@ export default function IcebergMap({ steps, completed, nextStep, lang, heading }
           ) : steps.length > 0 && (
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.86rem", fontWeight: 600, color: navy, margin: "0 0 2rem" }}>{t.allDone}</p>
           )}
+          <button type="button" className="ice-tomap" onClick={() => switchView("map")}>{t.viewMap}</button>
 
           {groups.map(g => {
             const done = g.items.filter(({ s }) => doneSet.has(s.n)).length;
@@ -1087,6 +1076,12 @@ export default function IcebergMap({ steps, completed, nextStep, lang, heading }
                 )}
               </div>
 
+              {!failed && (
+                <button type="button" className="ice-tolist" onClick={() => switchView("list")}>
+                  <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.5 H15 M5 8 H15 M5 12.5 H15" stroke="currentColor" strokeWidth="1.5" /><circle cx="1.8" cy="3.5" r="1.1" fill="currentColor" /><circle cx="1.8" cy="8" r="1.1" fill="currentColor" /><circle cx="1.8" cy="12.5" r="1.1" fill="currentColor" /></svg>
+                  {t.viewList}
+                </button>
+              )}
               {!failed && (
                 <div className="ice-tools">
                   <button type="button" aria-label={t.zoomIn} title={t.zoomIn} style={iconBtn} onClick={() => apiRef.current?.zoom(0.8)}>+</button>
