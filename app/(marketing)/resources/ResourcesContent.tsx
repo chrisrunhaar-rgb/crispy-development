@@ -93,6 +93,17 @@ function getLibraryCategory(
   return resource.topics[0] ?? "personal-development";
 }
 
+// Modules with a presenter slideshow at /resources/<slug>/present
+const SLIDESHOW_SLUGS = new Set([
+  "fixed-growth-mindset",
+  "four-stages-competence",
+  "healthy-conflict",
+  "johari-window",
+  "model-assist-watch-launch",
+  "six-thinking-hats",
+  "vision-casting",
+]);
+
 function ResourceTile({
   resource,
   userId,
@@ -126,6 +137,8 @@ function ResourceTile({
     !!resource.slug && (access === "live_free" || access === "live_paid" || isAdminDraft);
   const types: string[] = resource.slug ? (moduleFormats[resource.slug] ?? []) : [];
   const displayTypes = types.length > 0 ? types : [resource.format];
+  const hasSlideshow = !!resource.slug && SLIDESHOW_SLUGS.has(resource.slug);
+  const slideshowLabel = lang === "id" ? "Termasuk slideshow" : "Includes a slideshow";
 
   const barColor =
     access === "live_free"
@@ -147,6 +160,7 @@ function ResourceTile({
   const inner = (
     <div
       style={{
+        position: "relative",
         display: "flex",
         border: "1px solid oklch(88% 0.008 80)",
         borderRadius: "4px",
@@ -161,6 +175,17 @@ function ResourceTile({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
+      {/* Slideshow badge: absolutely positioned so it never changes tile size */}
+      {hasSlideshow && (
+        <span
+          role="img"
+          aria-label={slideshowLabel}
+          title={slideshowLabel}
+          style={{ position: "absolute", top: "0.6rem", right: "0.6rem", display: "flex", lineHeight: 0 }}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="oklch(65% 0.15 45)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2" /><path d="M12 16v4M8 20h8" /></svg>
+        </span>
+      )}
       {/* Left bar */}
       <div style={{
         width: "36px",
@@ -199,6 +224,7 @@ function ResourceTile({
           fontSize: "0.875rem",
           color: "oklch(22% 0.005 260)",
           margin: 0,
+          paddingRight: hasSlideshow ? "1.25rem" : 0,
           overflow: "hidden",
           whiteSpace: "nowrap",
           textOverflow: "ellipsis",
