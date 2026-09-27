@@ -1,5 +1,6 @@
 ﻿"use client";
 
+import type { ReactNode } from "react";
 import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
@@ -128,9 +129,9 @@ const BIBLICAL_ANCHORS: Record<string, {
   },
 };
 
-type Props = { userPathway: string | null; isSaved: boolean };
+type Props = { userPathway: string | null; isSaved: boolean; signupBanner?: ReactNode };
 
-export default function JohariWindowClient({ userPathway, isSaved: initialSaved }: Props) {
+export default function JohariWindowClient({ userPathway, isSaved: initialSaved, signupBanner }: Props) {
   const { lang: _ctxLang } = useLanguage();
   const lang = (_ctxLang === "id" ? _ctxLang : "en") as Lang;
   const [saved, setSaved] = useState(initialSaved);
@@ -364,6 +365,8 @@ export default function JohariWindowClient({ userPathway, isSaved: initialSaved 
           </div>
         </section>
       )}
+
+      {signupBanner}
 
       {/* ── BIBLICAL FOUNDATION ── */}
       <section style={{ paddingBlock: "clamp(3rem, 5vw, 5rem)", background: "oklch(22% 0.10 260)" }}>

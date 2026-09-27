@@ -92,8 +92,7 @@ export default async function ResourcePage(props: any) {
         </div>
       </div>
 
-      <HealthyConflictClient userId={user?.id ?? null} isSaved={isSaved} />
-      <FreeModuleSignupBanner slug="healthy-conflict" isLoggedIn={!!user} />
+      <HealthyConflictClient userId={user?.id ?? null} isSaved={isSaved} signupBanner={<FreeModuleSignupBanner slug="healthy-conflict" isLoggedIn={!!user} />} />
       <ModuleConnector currentSlug={RESOURCE_SLUG} savedResources={savedResources} isLoggedIn={!!user} />
 
       <div className="bg-gray-50 border-t border-gray-200 py-12">

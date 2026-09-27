@@ -101,7 +101,7 @@ export async function middleware(request: NextRequest) {
     "escaping-the-comfort-zone", "emotional-intelligence", "johari-window",
     "decision-making", "cognitive-biases",
     "disc", "three-thinking-styles", "big-five",
-    "5languages",
+    "5languages", "healthy-conflict",
     "sabbath-leadership",
     "enneagram", "16-personalities", "wheel-of-life", "karunia-rohani",
     // multi-part resources

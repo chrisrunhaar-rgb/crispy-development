@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { useState, useTransition, useEffect } from "react";
 import { trackResourceViewed, trackResourceSaved } from "@/lib/ga-events";
 import { useLanguage } from "@/lib/LanguageContext";
@@ -378,9 +379,9 @@ const RESEARCH_CALLOUTS = [
 
 // ── COMPONENT ──────────────────────────────────────────────────────────────────
 
-type Props = { userId: string | null; isSaved: boolean };
+type Props = { userId: string | null; isSaved: boolean; signupBanner?: ReactNode };
 
-export default function HealthyConflictClient({ isSaved: initialSaved }: Props) {
+export default function HealthyConflictClient({ isSaved: initialSaved, signupBanner }: Props) {
   const { lang: ctxLang } = useLanguage();
   const lang = (ctxLang === "id" ? "id" : "en") as Lang;
 
@@ -758,6 +759,8 @@ export default function HealthyConflictClient({ isSaved: initialSaved }: Props) 
           </div>
         </div>
       </div>
+
+      {signupBanner}
 
       {/* ── 5. TEACHING — 4 SECTIONS ─────────────────────────────────────────── */}
       {TEACHING_SECTIONS.map((section, si) => (

@@ -104,8 +104,8 @@ export default async function ResourcePage(props: any) {
         givingResult={givingResult}
         receivingScores={receivingScores}
         givingScores={givingScores}
+        signupBanner={<FreeModuleSignupBanner slug="5languages" isLoggedIn={!!user} />}
       />
-      <FreeModuleSignupBanner slug="5languages" isLoggedIn={!!user} />
 
       {/* Related Resources */}
       <div className="border-t border-gray-100 py-10">

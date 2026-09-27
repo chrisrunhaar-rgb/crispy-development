@@ -93,8 +93,7 @@ export default async function ResourcePage(props: any) {
         </div>
       </div>
 
-      <JohariWindowClient {...props} isSaved={isSaved} />
-      <FreeModuleSignupBanner slug="johari-window" isLoggedIn={!!user} />
+      <JohariWindowClient {...props} isSaved={isSaved} signupBanner={<FreeModuleSignupBanner slug="johari-window" isLoggedIn={!!user} />} />
       <ModuleConnector currentSlug={RESOURCE_SLUG} savedResources={savedResources} isLoggedIn={!!user} />
       <div className="border-t border-gray-100 py-10">
         <div className="container-wide">

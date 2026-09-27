@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { useState, useTransition } from "react";
 import { saveResourceToDashboard, saveFiveLanguagesResult } from "../actions";
 import { trackAssessmentCompletion } from "@/lib/ga-events";
@@ -432,6 +433,7 @@ export default function FiveLanguagesClient({
   receivingScores,
   givingScores,
   lang: langProp = "en",
+  signupBanner,
 }: {
   isSaved: boolean;
   receivingResult: string | null;
@@ -439,6 +441,7 @@ export default function FiveLanguagesClient({
   receivingScores: { A: number; B: number; C: number; D: number; E: number } | null;
   givingScores: { A: number; B: number; C: number; D: number; E: number } | null;
   lang?: "en" | "id";
+  signupBanner?: ReactNode;
 }) {
   const { lang: ctxLang } = useLanguage();
   const lang: "en" | "id" = langProp === "id" ? "id" : ctxLang === "id" ? "id" : "en";
@@ -717,6 +720,8 @@ export default function FiveLanguagesClient({
                 }
               </p>
             </div>
+
+            {signupBanner}
 
             {/* Want to go deeper? accordion */}
             <div style={{ marginBottom: "2.5rem" }}>

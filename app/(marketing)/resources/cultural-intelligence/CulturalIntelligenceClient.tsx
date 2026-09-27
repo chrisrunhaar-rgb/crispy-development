@@ -1,4 +1,5 @@
 ﻿"use client";
+import type { ReactNode } from "react";
 import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
@@ -149,9 +150,9 @@ const reflectionQuestions = [
   },
 ];
 
-type Props = { userPathway: string | null; isSaved: boolean };
+type Props = { userPathway: string | null; isSaved: boolean; signupBanner?: ReactNode };
 
-export default function CulturalIntelligenceClient({ userPathway, isSaved: initialSaved }: Props) {
+export default function CulturalIntelligenceClient({ userPathway, isSaved: initialSaved, signupBanner }: Props) {
   const { lang: _ctxLang } = useLanguage();
   const lang = (_ctxLang === "id" ? _ctxLang : "en") as Lang;
   const [saved, setSaved] = useState(initialSaved);
@@ -371,6 +372,8 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
           </p>
         </div>
       </div>
+
+      {signupBanner}
 
       {/* --- SECTION 3: THE 4 DIMENSIONS — ACCORDION ------------------------- */}
       {/* Format: Interactive expandable accordion with depth */}

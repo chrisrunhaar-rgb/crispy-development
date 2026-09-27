@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { useState, useEffect, useRef, useTransition } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/lib/LanguageContext";
@@ -1079,9 +1080,9 @@ function OneAtATimeQuiz({
 }
 
 // ─── Main component ───────────────────────────────────────────────────────────
-type Props = { isSaved: boolean };
+type Props = { isSaved: boolean; signupBanner?: ReactNode };
 
-export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
+export default function TimeAndCultureClient({ isSaved: initialSaved, signupBanner }: Props) {
   const { lang } = useLanguage();
   const [saved, setSaved] = useState(initialSaved);
   const [isPending, startTransition] = useTransition();
@@ -1376,6 +1377,8 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
           </div>
         )}
       </div>
+
+      {signupBanner}
 
       {/* ─── THE FREEDOM ──────────────────────────────────────────────────── */}
       <div style={{ background: OFF_WHITE, padding: "96px 24px 64px" }}>
