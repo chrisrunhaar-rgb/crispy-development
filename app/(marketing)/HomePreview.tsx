@@ -68,12 +68,6 @@ const COPY = {
       cta: "Meet WayPoint",
       alt: "Tara, one of the WayPoint coaches, in a warm and quiet room.",
     },
-    journey: {
-      label: "Free to start",
-      title: "The Leadership Journey",
-      body: "A free 60-step journey based on T.J. Addington's book Deep Influence. Walk it at your own pace, one stone at a time, and grow as a leader from the inside out.",
-      cta: "Start the journey",
-    },
     cta: {
       title: "Start with one step this week.",
       body: "Try the free journey, take a pathway for yourself, or bring your team along. Everything you do stays in your own dashboard.",
@@ -129,12 +123,6 @@ const COPY = {
       body: "WayPoint adalah pelatih suara AI kami. WayPoint tidak memberi nasihat. Kami percaya Anda sudah membawa jawabannya di dalam diri Anda, dan WayPoint membantu Anda menemukannya. Pilih pelatih, berbicaralah selama yang Anda perlukan, dan simpan apa yang Anda pelajari.",
       cta: "Kenali WayPoint",
       alt: "Tara, salah satu pelatih WayPoint, di ruangan yang hangat dan tenang.",
-    },
-    journey: {
-      label: "Gratis untuk memulai",
-      title: "Perjalanan Kepemimpinan",
-      body: "Perjalanan gratis 60 langkah berdasarkan buku Deep Influence karya T.J. Addington. Jalani dengan kecepatanmu sendiri, satu batu demi satu batu, dan bertumbuhlah sebagai pemimpin dari dalam ke luar.",
-      cta: "Mulai perjalanan",
     },
     cta: {
       title: "Mulailah dengan satu langkah minggu ini.",
@@ -200,12 +188,11 @@ export default function HomePreview() {
   const { lang: rawLang } = useLanguage();
   const lang = rawLang === "id" ? "id" : "en";
   const c = COPY[lang];
-  const [journeyHref, setJourneyHref] = useState("/signup?redirectTo=/journey");
   const [signedIn, setSignedIn] = useState(false);
 
   useEffect(() => {
     createClient().auth.getSession().then(({ data }) => {
-      if (data.session) { setJourneyHref("/journey"); setSignedIn(true); }
+      if (data.session) setSignedIn(true);
     });
   }, []);
 
@@ -298,19 +285,7 @@ export default function HomePreview() {
           </div>
         </section>
 
-        {/* ── 5. Free journey ── */}
-        <section aria-labelledby="hp-journey-title" className="hp-split" style={{ borderTop: `1px solid ${T.rule}`, paddingTop: "clamp(2.5rem, 5vw, 3.5rem)" }}>
-          <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
-            <Eyebrow>{c.journey.label}</Eyebrow>
-            <h2 id="hp-journey-title" style={h2Style()}>{c.journey.title}</h2>
-          </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem", alignItems: "flex-start", alignSelf: "end" }}>
-            <p style={bodyStyle}>{c.journey.body}</p>
-            <TextLink href={journeyHref}>{c.journey.cta}</TextLink>
-          </div>
-        </section>
-
-        {/* ── 6. Closing CTA ── */}
+        {/* ── 5. Closing CTA ── */}
         <section aria-labelledby="hp-cta-title" className="hp-cta" style={{ borderTop: `1px solid ${T.navy}`, paddingTop: "clamp(2.5rem, 5vw, 3.5rem)" }}>
           <h2 id="hp-cta-title" style={{ ...h2Style(), fontSize: "clamp(2.2rem, 4.6vw, 3.4rem)", lineHeight: 1.06 }}>{c.cta.title}</h2>
           <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem", alignItems: "flex-start" }}>
