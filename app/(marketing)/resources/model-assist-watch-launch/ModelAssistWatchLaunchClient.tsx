@@ -5,6 +5,7 @@ import { useLanguage } from "@/lib/LanguageContext";
 import LangToggle from "@/components/LangToggle";
 import { saveResourceToDashboard } from "../actions";
 import SourcesDropdown from "@/components/SourcesDropdown";
+import PresentLauncher from "@/components/PresentLauncher";
 
 type Lang = "en" | "id";
 const t = (en: string, id: string, lang: Lang) => (lang === "id" ? id : en);
@@ -558,7 +559,6 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
   const [years, setYears] = useState(3);
   const [openMistake, setOpenMistake] = useState<number | null>(null);
   const [researchOpen, setResearchOpen] = useState(false);
-  const [smallScreen, setSmallScreen] = useState(false);
   const [theoryOpen, setTheoryOpen] = useState<PhaseKey[]>(["model"]);
   const toggleTheory = (k: PhaseKey) =>
     setTheoryOpen(o => (o.includes(k) ? o.filter(x => x !== k) : [...o, k]));
@@ -683,7 +683,10 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
       <LangToggle />
 
       {/* ── 1. HERO ─────────────────────────────────────────────────────────── */}
-      <div style={{ background: navy, padding: "80px 24px 72px" }}>
+      <div style={{ background: navy, padding: "80px 24px 72px", position: "relative" }}>
+        <PresentLauncher href={`/resources/${SLUG}/present`} lang={lang}
+          title={{ en: "Teaching this to someone else?", id: "Mengajarkan ini kepada orang lain?" }}
+          text={{ en: "Use the guided slideshow to walk your team through the four phases.", id: "Gunakan slideshow terpandu untuk mengajak tim Anda melalui keempat tahap." }} />
         <div style={{ maxWidth: 720, margin: "0 auto" }}>
           <p style={eyebrow}>{t("Leadership", "Kepemimpinan", lang)}</p>
           <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: offWhite, margin: "0 0 20px", lineHeight: 1.08 }}>
@@ -709,53 +712,6 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
           </div>
         </div>
       </div>
-
-      {/* ── Teaching strip: guided slideshow for leaders who teach this ───── */}
-      <div style={{ background: white, borderBottom: `1px solid ${lightGray}`, padding: "20px 24px" }}>
-        <div style={{ maxWidth: 720, margin: "0 auto", display: "flex", flexWrap: "wrap", alignItems: "center", gap: "14px 20px" }}>
-          <span aria-hidden="true" style={{ flexShrink: 0, width: 44, height: 44, borderRadius: 12, background: "oklch(65% 0.15 45 / 0.12)", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={orange} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="12" rx="2" /><path d="M12 16v4M8 20h8" /></svg>
-          </span>
-          <div style={{ flex: "1 1 260px", minWidth: 0 }}>
-            <p style={{ margin: "0 0 2px", fontSize: 14, fontWeight: 700, color: navy }}>
-              {t("Teaching this to someone else?", "Mengajarkan ini kepada orang lain?", lang)}
-            </p>
-            <p style={{ margin: 0, fontSize: 13, lineHeight: 1.5, color: "oklch(48% 0.04 260)" }}>
-              {t("Use the guided slideshow to walk your team through the four phases, full screen in English or Indonesian.",
-                "Gunakan slideshow terpandu untuk mengajak tim Anda melalui keempat tahap, layar penuh dalam bahasa Inggris atau Indonesia.", lang)}
-            </p>
-          </div>
-          <Link href={`/resources/${SLUG}/present`}
-            onClick={e => { if (window.innerWidth < 768) { e.preventDefault(); setSmallScreen(true); } }}
-            style={{ flexShrink: 0, display: "inline-flex", alignItems: "center", gap: 8, background: "transparent", color: navy, padding: "0 18px", minHeight: 44, borderRadius: 8, border: `1.5px solid ${navy}`, fontWeight: 700, fontSize: 13, textDecoration: "none", fontFamily: "Montserrat, sans-serif" }}>
-            {t("Open the slideshow", "Buka slideshow", lang)}
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6" /></svg>
-          </Link>
-        </div>
-      </div>
-
-      {smallScreen && (
-        <div role="dialog" aria-modal="true" aria-labelledby="mawl-small-title" onClick={() => setSmallScreen(false)}
-          style={{ position: "fixed", inset: 0, zIndex: 1000, background: "oklch(14% 0.05 260 / 0.6)", display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}>
-          <div onClick={e => e.stopPropagation()}
-            style={{ background: white, borderRadius: 16, padding: "28px 24px", maxWidth: 340, textAlign: "center", boxShadow: "0 20px 60px oklch(0% 0 0 / 0.3)", fontFamily: "Montserrat, sans-serif" }}>
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke={orange} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ display: "block", margin: "0 auto 14px" }}>
-              <rect x="3" y="4" width="18" height="12" rx="2" /><path d="M12 16v4M8 20h8" />
-            </svg>
-            <p id="mawl-small-title" style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 24, fontWeight: 600, color: navy, margin: "0 0 8px", lineHeight: 1.2 }}>
-              {t("A bigger screen is needed", "Butuh layar yang lebih besar", lang)}
-            </p>
-            <p style={{ fontSize: 14, lineHeight: 1.6, color: "oklch(48% 0.04 260)", margin: "0 0 20px" }}>
-              {t("Presentation mode works on a tablet or computer. Open this module there to show the slides.",
-                "Mode presentasi berfungsi di tablet atau komputer. Buka modul ini di sana untuk menampilkan slide.", lang)}
-            </p>
-            <button type="button" onClick={() => setSmallScreen(false)} autoFocus
-              style={{ minHeight: 44, padding: "0 24px", borderRadius: 8, border: "none", background: navy, color: white, fontWeight: 700, fontSize: 14, cursor: "pointer", fontFamily: "Montserrat, sans-serif" }}>
-              {t("OK", "OK", lang)}
-            </button>
-          </div>
-        </div>
-      )}
 
       {/* ── 2. OPENER ───────────────────────────────────────────────────────── */}
       <section style={section}>
