@@ -25,8 +25,8 @@ const COPY = {
       eyebrow: "Crispy Development",
       title: "Raising leaders who cross cultures.",
       subline: "Practical training for leaders who serve far from home. Short modules, honest assessments and a private dashboard that keeps your growth in one place, for you or for your whole team.",
-      cta: "See the pathways",
-      secondary: "Start the free journey",
+      cta: "Set up your free account",
+      ctaIn: "Go to your dashboard",
     },
     paths: {
       label: "Two pathways",
@@ -85,8 +85,8 @@ const COPY = {
       eyebrow: "Crispy Development",
       title: "Raising leaders who cross cultures.",
       subline: "Pelatihan praktis bagi pemimpin yang melayani jauh dari rumah. Modul singkat, asesmen yang jujur, dan dasbor pribadi yang menyimpan pertumbuhan Anda di satu tempat, untuk Anda sendiri atau untuk seluruh tim Anda.",
-      cta: "Lihat jalur",
-      secondary: "Mulai perjalanan gratis",
+      cta: "Buat akun gratis Anda",
+      ctaIn: "Buka dasbor Anda",
     },
     paths: {
       label: "Dua jalur",
@@ -192,10 +192,11 @@ export default function HomePreview() {
   const lang = rawLang === "id" ? "id" : "en";
   const c = COPY[lang];
   const [journeyHref, setJourneyHref] = useState("/signup?redirectTo=/journey");
+  const [signedIn, setSignedIn] = useState(false);
 
   useEffect(() => {
     createClient().auth.getSession().then(({ data }) => {
-      if (data.session) setJourneyHref("/journey");
+      if (data.session) { setJourneyHref("/journey"); setSignedIn(true); }
     });
   }, []);
 
@@ -217,8 +218,7 @@ export default function HomePreview() {
             </h1>
             <p className="pk-rise" style={{ ...bodyStyle, fontSize: "1.02rem", maxWidth: "46ch", animationDelay: "160ms" }}>{c.hero.subline}</p>
             <div className="pk-rise" style={{ animationDelay: "240ms", paddingTop: "0.25rem", display: "flex", flexWrap: "wrap", alignItems: "center", gap: "1rem 1.5rem" }}>
-              <PrimaryLink href="/pricing">{c.hero.cta}</PrimaryLink>
-              <TextLink href={journeyHref}>{c.hero.secondary}</TextLink>
+              <PrimaryLink href={signedIn ? "/dashboard" : "/signup"}>{signedIn ? c.hero.ctaIn : c.hero.cta}</PrimaryLink>
             </div>
           </div>
           <figure className="pk-rise hp-shots" style={{ margin: "0 auto", width: "100%", maxWidth: "34rem", animationDelay: "200ms" }}>
