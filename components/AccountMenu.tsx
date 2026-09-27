@@ -5,6 +5,8 @@ import { usePathname } from "next/navigation";
 import { signOut } from "@/app/auth/actions";
 import PersonalLanguageSelector from "@/components/PersonalLanguageSelector";
 import PushNotificationToggle from "@/components/PushNotificationToggle";
+import InstallAppGuide from "@/components/InstallAppGuide";
+import { useInstallMode, promptInstall } from "@/lib/pwa-install";
 
 /* Light panel everywhere the menu appears (site nav, dashboard header, account pages). */
 const PANEL = {
@@ -39,6 +41,15 @@ export default function AccountMenu({ firstName, lastName, email, currentLanguag
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+  const installMode = useInstallMode();
+  const [guideOpen, setGuideOpen] = useState(false);
+  const lang = currentLanguage === "id" ? "id" : "en";
+
+  function handleInstall() {
+    setOpen(false);
+    if (installMode === "prompt") promptInstall();
+    else setGuideOpen(true);
+  }
 
   const initials = [firstName[0], lastName?.[0]].filter(Boolean).join("").toUpperCase() || "?";
   const displayName = lastName ? `${firstName} ${lastName}` : firstName;
@@ -99,6 +110,24 @@ export default function AccountMenu({ firstName, lastName, email, currentLanguag
             <PushNotificationToggle />
           </div>
 
+          {/* Install as app: shown until Crispy runs from the home-screen icon */}
+          {installMode !== "hidden" && (
+            <div style={{ padding: "0.375rem 0", borderBottom: `1px solid ${PANEL.rule}` }}>
+              <button
+                type="button"
+                onClick={handleInstall}
+                style={{ width: "100%", display: "flex", alignItems: "center", gap: "0.625rem", padding: "0.625rem 1rem", minHeight: 44, fontFamily: SANS, fontSize: "0.8rem", fontWeight: 700, color: PANEL.navy, background: "transparent", border: "none", cursor: "pointer", textAlign: "left" }}
+                onMouseEnter={e => (e.currentTarget.style.background = PANEL.hover)}
+                onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={PANEL.orange} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ flexShrink: 0 }}>
+                  <rect x="6" y="2" width="12" height="20" rx="2" /><path d="M12 7v7M9 11l3 3 3-3" />
+                </svg>
+                {lang === "id" ? "Pasang Crispy sebagai aplikasi" : "Install Crispy as an app"}
+              </button>
+            </div>
+          )}
+
           {/* Account pages */}
           <div style={{ padding: "0.375rem 0" }}>
             {LINKS.map(link => {
@@ -134,6 +163,8 @@ export default function AccountMenu({ firstName, lastName, email, currentLanguag
           </div>
         </div>
       )}
+
+      {guideOpen && <InstallAppGuide mode={installMode} lang={lang} onClose={() => setGuideOpen(false)} />}
     </div>
   );
 }
