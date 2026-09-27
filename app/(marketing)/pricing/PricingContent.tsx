@@ -453,7 +453,7 @@ export default function PricingContent({ isIndonesia }: Props) {
         .pricing-stepper button:disabled { color: oklch(78% 0.008 260); cursor: default; }
         .pricing-stepper span { min-width: 6.5rem; text-align: center; font-size: 0.875rem; font-weight: 700; color: oklch(22% 0.10 260); }
         .pricing-team-total { font-size: 0.95rem; font-weight: 800; color: oklch(22% 0.10 260); }
-        .pricing-team-more { display: inline-block; margin-top: 1rem; font-family: var(--font-montserrat); font-size: 0.8rem; font-weight: 700; color: oklch(32% 0.10 260); text-decoration: none; }
+        .pricing-team-more { display: inline-block; margin: -0.25rem 0 1rem; font-family: var(--font-montserrat); font-size: 0.8rem; font-weight: 700; color: oklch(32% 0.10 260); text-decoration: none; }
         @keyframes pricingFadeDown {
           from { opacity: 0; transform: translateY(-5px); }
           to   { opacity: 1; transform: translateY(0); }
@@ -715,6 +715,9 @@ export default function PricingContent({ isIndonesia }: Props) {
                 </div>
                 <span className="pricing-team-total">{copy.teamTotal(teamSize * TEAM_SEAT_PRICE)}</span>
               </div>
+              <Link href="/contact" className="pricing-contact-link pricing-team-more">
+                {copy.teamMore} →
+              </Link>
 
               <CheckoutButton
                 plan="team"
@@ -723,9 +726,6 @@ export default function PricingContent({ isIndonesia }: Props) {
                 teamSize={teamSize}
               />
 
-              <Link href="/contact" className="pricing-contact-link pricing-team-more">
-                {copy.teamMore} →
-              </Link>
             </div>
           </div>
         </div>
