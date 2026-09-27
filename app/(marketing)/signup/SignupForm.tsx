@@ -10,33 +10,15 @@ import { trackPathwayStarted } from "@/lib/ga-events";
 type Pathway = "personal" | "team";
 const initialState = { error: "" };
 
-// Same icons as the dashboard's Personal/Team tab toggle (app/(app)/dashboard/page.tsx)
-// — identical viewBox and path/circle data, just scaled up for the larger tile. Kept
-// in sync deliberately so a user sees the same glyph on signup and inside the app.
-function PersonalPathIcon({ size = 32 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden="true">
-      <circle cx="8" cy="5" r="3" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M2 14c0-3.314 2.686-5 6-5s6 1.686 6 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    </svg>
-  );
-}
+// Must match TEAM_SIZE_KEY / seat price / limits in app/(marketing)/pricing/PricingContent.tsx.
+const TEAM_SIZE_KEY = "pricing_team_size";
+const TEAM_SEAT_PRICE = 20;
+const MIN_TEAM = 2;
+const MAX_TEAM = 10;
 
-function TeamPathIcon({ size = 32 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden="true">
-      <circle cx="8" cy="4.5" r="2.5" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M3.5 14c0-2.485 2.015-4.5 4.5-4.5s4.5 2.015 4.5 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-      <circle cx="3.5" cy="6" r="2" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M1 14c0-2.2 1.1-3.5 2.5-3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-      <circle cx="12.5" cy="6" r="2" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M15 14c0-2.2-1.1-3.5-2.5-3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-export default function SignupForm({ defaultPathway = "personal", inviteToken = "", memberInviteToken = "", initialLanguage, redirectTo = "", hidePathway = false }: { defaultPathway?: Pathway; inviteToken?: string; memberInviteToken?: string; initialLanguage?: "en" | "id"; redirectTo?: string; hidePathway?: boolean }) {
-  const [pathway, setPathway] = useState<Pathway>(defaultPathway);
+export default function SignupForm({ defaultPathway = "personal", inviteToken = "", memberInviteToken = "", initialLanguage, redirectTo = "", fromPricing = false }: { defaultPathway?: Pathway; inviteToken?: string; memberInviteToken?: string; initialLanguage?: "en" | "id"; redirectTo?: string; fromPricing?: boolean }) {
+  // The plan is chosen on /pricing and arrives via ?pathway=, so there's no picker here.
+  const pathway = defaultPathway;
   const [showPassword, setShowPassword] = useState(false);
   const { t, lang, setLang } = useLanguage();
   const s = t.signup;
@@ -50,6 +32,20 @@ export default function SignupForm({ defaultPathway = "personal", inviteToken = 
     // otherwise this would fight the user's own manual language toggle.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialLanguage]);
+
+  // Team size picked on /pricing, saved just before the signup detour.
+  const [teamSize, setTeamSize] = useState<number | null>(null);
+  useEffect(() => {
+    if (!fromPricing) return;
+    trackPathwayStarted(pathway);
+    if (pathway !== "team") return;
+    try {
+      const saved = Number(sessionStorage.getItem(TEAM_SIZE_KEY));
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      if (saved >= MIN_TEAM && saved <= MAX_TEAM) setTeamSize(saved);
+    } catch {}
+  }, [fromPricing, pathway]);
+
   const [state, formAction, pending] = useActionState(
     async (_prev: typeof initialState, formData: FormData) => {
       const result = await signUp(formData);
@@ -86,49 +82,29 @@ export default function SignupForm({ defaultPathway = "personal", inviteToken = 
               </p>
             </div>
 
-            {/* Pathway selection — shown for public signup and the Influential Leadership
-                Challenge's team-invite flow. A member invite already carries its own fixed
-                pathway (set when the invite was created), so it's hidden there. Also hidden for
-                the plain free-account signup from the nav (no pathway chosen yet). */}
-            {!memberInviteToken && !hidePathway && (
-              <div style={{ marginBottom: "2rem" }}>
-                <p className="form-label" style={{ marginBottom: "0.75rem" }}>{s.choosePathway}</p>
-                <div className="pathway-grid">
-                  {(["personal", "team"] as const).map((p) => {
-                    const isSelected = pathway === p;
-                    return (
-                      <label
-                        key={p}
-                        className={`pathway-option${isSelected ? " selected" : ""}`}
-                        onClick={() => { setPathway(p); trackPathwayStarted(p); }}
-                      >
-                        {/* Visually hidden, not removed — keeps native radio-group keyboard
-                            and screen-reader semantics. The dot Chris flagged was the input's
-                            default browser-drawn appearance, not this element itself. */}
-                        <input
-                          type="radio"
-                          name="pathway-visual"
-                          value={p}
-                          checked={isSelected}
-                          onChange={() => setPathway(p)}
-                          aria-label={p === "personal" ? s.personalTitle : s.teamTitle}
-                          className="pathway-radio-sr"
-                        />
-                        <span className="pathway-icon" style={{ color: isSelected ? "white" : "oklch(30% 0.12 260)" }}>
-                          {p === "personal" ? <PersonalPathIcon /> : <TeamPathIcon />}
-                        </span>
-                        <div style={{ textAlign: "center" }}>
-                          <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.9375rem", color: isSelected ? "white" : "oklch(22% 0.005 260)", marginBottom: "0.25rem" }}>
-                            {p === "personal" ? s.personalTitle : s.teamTitle}
-                          </p>
-                          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: isSelected ? "white" : "oklch(52% 0.008 260)", lineHeight: 1.5 }}>
-                            {p === "personal" ? s.personalDesc : s.teamDesc}
-                          </p>
-                        </div>
-                      </label>
-                    );
-                  })}
+            {/* Team plan summary — carried over from the /pricing size picker. */}
+            {teamSize && (
+              <div style={{
+                marginBottom: "2rem",
+                padding: "1rem 1.25rem",
+                border: "1.5px solid oklch(65% 0.15 45)",
+                background: "oklch(65% 0.15 45 / 0.06)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                gap: "1rem",
+              }}>
+                <div>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.9375rem", color: "oklch(22% 0.005 260)", marginBottom: "0.25rem" }}>
+                    {s.teamSummary.replace("{n}", String(teamSize))}
+                  </p>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(52% 0.008 260)" }}>
+                    {s.teamSummaryNote.replace("{total}", String(teamSize * TEAM_SEAT_PRICE))}
+                  </p>
                 </div>
+                <Link href="/pricing" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(30% 0.12 260)", fontWeight: 600, textDecoration: "none", flexShrink: 0 }}>
+                  {s.changePlan}
+                </Link>
               </div>
             )}
 

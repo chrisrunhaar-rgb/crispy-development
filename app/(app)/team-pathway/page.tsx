@@ -58,7 +58,7 @@ export default async function TeamPathwayPage() {
             What&apos;s included
           </p>
           {[
-            "Up to 8 team members",
+            "2 to 10 team members",
             "Full 18-step team journey",
             "Shared assessments with side-by-side results",
             "Modules that unpack each assessment for your team",

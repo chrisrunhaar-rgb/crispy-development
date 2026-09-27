@@ -55,7 +55,7 @@ const COPY = {
     hero: {
       eyebrow: "Team Pathway",
       title: "Lead a team that actually knows each other.",
-      subline: "Eight people, one shared pathway. Every member takes the assessments and reads each module on their own phone. You see the whole team in one place, and your weekly meeting starts where the reading left off.",
+      subline: "Two to ten people, one shared pathway. Every member takes the assessments and reads each module on their own phone. You see the whole team in one place, and your weekly meeting starts where the reading left off.",
       cta: "See team pricing",
     },
     why: {
@@ -63,7 +63,7 @@ const COPY = {
       title: "Personal growth is good. Growing together changes how the team works.",
       body: "When one person reads about trust or conflict, they learn something. When the whole team reads the same module in the same week, they get a shared language. \"That was a process conflict, not a relationship one\" becomes something anyone on the team can say. In multicultural teams this matters even more, because people arrive with different defaults about silence, disagreement, hierarchy and feedback. A team account gives everyone the same starting point, and gives the leader a clear view of who is on the team.",
       points: [
-        "8 team accounts, each with full personal pathway access",
+        "An account for every team member (2 to 10 people), each with full personal pathway access",
         "Every member's assessment results in one leader view",
         "10 team modules built for weekly meetings",
         "One payment, permanent access",
@@ -96,7 +96,7 @@ const COPY = {
         { title: "Getting to Know Each Other", body: "Knowing facts about a colleague is different from knowing them. This module looks at why being known feels risky, how culture shapes what people will share, and why the leader has to go first. The team gets 24 question cards across three levels of depth, and builds a simple habit: one question at every meeting, week after week." },
         { title: "Communication Culture", body: "On a multicultural team, silence can mean agreement, disagreement or respect. This module explains high- and low-context communication and four styles: Architect, Diplomat, Connector and Analyst. Each member takes a 12-question assessment, saved to the dashboard. The team then says its norms out loud and builds feedback channels that work for every style, not only the loudest." },
         { title: "Trust & Psychological Safety", body: "Research from Google and Amy Edmondson points the same way: teams do their best work when people can admit mistakes without fear. This module covers what breaks trust, where shame gets in across cultures, and simple practices like thanking the person who brings bad news. The team completes a Trust Temperature Check across six areas, and the resulting profile is saved." },
-        { title: "Roles & Contribution", body: "What someone was hired to do and what they were made to do are often two different things. Using four Contribution Zones (Pioneer, Builder, Connector, Deepener), each member finds their zone and the team maps all eight side by side. Gaps become visible. In cultures where people rarely name their own strengths, the team learns to name them for each other." },
+        { title: "Roles & Contribution", body: "What someone was hired to do and what they were made to do are often two different things. Using four Contribution Zones (Pioneer, Builder, Connector, Deepener), each member finds their zone and the team maps everyone side by side. Gaps become visible. In cultures where people rarely name their own strengths, the team learns to name them for each other." },
         { title: "Navigating Conflict", body: "Conflict carries information, and avoiding it costs more than facing it. This module separates task, relationship and process conflict, shows how culture shapes each one, and gives the team a five-step PAUSE framework to use in the moment. A short quiz shows whether each person tends to protect, address or facilitate, so the team knows how the others will react." },
         { title: "Decision Making Together", body: "Trust wears down fastest when people don't know how a decision is being made. This module sets out three modes (directive, consultative and consensus) and what breaks each one, such as asking for input on a decision that was already made. The team works through six real scenarios, then commits to naming the mode, closing the loop and reviewing big decisions afterwards." },
         { title: "Accountability & Follow-Through", body: "A real commitment has three parts: what, by when, and to whom. This module looks at why people over-promise to keep the peace, how hierarchy and shame make it hard to report a slip, and why the leader must be the most accountable person in the room. The team adds a five-minute commitment round to each meeting and writes a shared Team Commitment." },
@@ -116,7 +116,7 @@ const COPY = {
     },
     cta: {
       title: "Bring your whole team along.",
-      body: "Eight team accounts, every assessment, all ten team modules and a leader dashboard. $80 once, which is $10 per member, with permanent access.",
+      body: "An account for every member of a team of 2 to 10 people, every assessment, all ten team modules and a leader dashboard. $20 per person, paid once, with permanent access.",
       button: "Set up your team",
     },
     caption: {
@@ -135,7 +135,7 @@ const COPY = {
     hero: {
       eyebrow: "Jalur Tim",
       title: "Pimpin tim yang benar-benar saling mengenal.",
-      subline: "Delapan orang, satu jalur bersama. Setiap anggota mengerjakan asesmen dan membaca setiap modul di ponsel masing-masing. Anda melihat gambaran seluruh tim di satu tempat, dan pertemuan mingguan Anda dimulai dari apa yang sudah mereka baca.",
+      subline: "Dua sampai sepuluh orang, satu jalur bersama. Setiap anggota mengerjakan asesmen dan membaca setiap modul di ponsel masing-masing. Anda melihat gambaran seluruh tim di satu tempat, dan pertemuan mingguan Anda dimulai dari apa yang sudah mereka baca.",
       cta: "Lihat harga tim",
     },
     why: {
@@ -143,7 +143,7 @@ const COPY = {
       title: "Bertumbuh sendiri itu baik. Bertumbuh bersama mengubah cara tim bekerja.",
       body: "Ketika satu orang membaca tentang kepercayaan atau konflik, ia belajar sesuatu. Ketika seluruh tim membaca modul yang sama di minggu yang sama, mereka mendapat bahasa bersama. Kalimat seperti \"Itu konflik proses, bukan konflik hubungan\" bisa diucapkan oleh siapa saja di tim. Dalam tim multibudaya hal ini lebih penting lagi, karena setiap orang datang dengan kebiasaan berbeda soal diam, perbedaan pendapat, hierarki, dan umpan balik. Akun tim memberi semua orang titik awal yang sama, dan memberi pemimpin gambaran yang jelas tentang siapa saja yang ada di timnya.",
       points: [
-        "8 akun tim, masing-masing dengan akses penuh ke jalur pribadi",
+        "Satu akun untuk setiap anggota tim (2 sampai 10 orang), masing-masing dengan akses penuh ke jalur pribadi",
         "Hasil asesmen setiap anggota dalam satu tampilan pemimpin",
         "10 modul tim yang dirancang untuk pertemuan mingguan",
         "Sekali bayar, akses permanen",
@@ -176,7 +176,7 @@ const COPY = {
         { title: "Saling Mengenal", body: "Mengetahui fakta tentang rekan kerja berbeda dengan mengenal dia. Modul ini membahas mengapa dikenal terasa berisiko, bagaimana budaya membentuk apa yang mau dibagikan seseorang, dan mengapa pemimpin harus memulai lebih dulu. Tim mendapat 24 kartu pertanyaan dalam tiga tingkat kedalaman, dan membangun kebiasaan sederhana: satu pertanyaan di setiap pertemuan, minggu demi minggu." },
         { title: "Budaya Komunikasi", body: "Dalam tim multibudaya, diam bisa berarti setuju, tidak setuju, atau menghormati. Modul ini menjelaskan komunikasi konteks tinggi dan konteks rendah, serta empat gaya: Arsitek, Diplomat, Penghubung, dan Analis. Setiap anggota mengerjakan asesmen 12 pertanyaan yang tersimpan di dasbor. Lalu tim menyebutkan norma mereka secara terbuka dan membangun jalur umpan balik yang bisa dipakai oleh setiap gaya, bukan hanya yang paling vokal." },
         { title: "Kepercayaan & Keamanan Psikologis", body: "Riset dari Google dan Amy Edmondson menunjuk ke arah yang sama: tim bekerja paling baik ketika orang bisa mengakui kesalahan tanpa takut. Modul ini membahas apa yang merusak kepercayaan, di mana rasa malu masuk dalam berbagai budaya, dan kebiasaan sederhana seperti berterima kasih kepada orang yang membawa kabar buruk. Tim mengisi Cek Suhu Kepercayaan untuk enam area, dan profilnya tersimpan." },
-        { title: "Peran & Kontribusi", body: "Tugas yang diberikan kepada seseorang dan hal yang memang menjadi panggilannya sering kali berbeda. Dengan empat Zona Kontribusi (Perintis, Pembangun, Penghubung, Pendalam), setiap anggota menemukan zonanya dan tim memetakan kedelapan orang berdampingan. Kekosongan menjadi terlihat. Dalam budaya di mana orang jarang menyebut kekuatannya sendiri, tim belajar menyebutkannya untuk satu sama lain." },
+        { title: "Peran & Kontribusi", body: "Tugas yang diberikan kepada seseorang dan hal yang memang menjadi panggilannya sering kali berbeda. Dengan empat Zona Kontribusi (Perintis, Pembangun, Penghubung, Pendalam), setiap anggota menemukan zonanya dan tim memetakan semua anggota berdampingan. Kekosongan menjadi terlihat. Dalam budaya di mana orang jarang menyebut kekuatannya sendiri, tim belajar menyebutkannya untuk satu sama lain." },
         { title: "Menghadapi Konflik", body: "Konflik membawa informasi, dan menghindarinya lebih mahal daripada menghadapinya. Modul ini membedakan konflik tugas, hubungan, dan proses, menunjukkan bagaimana budaya membentuk masing-masing, dan memberi tim kerangka PAUSE lima langkah untuk dipakai saat itu juga. Kuis singkat menunjukkan apakah seseorang cenderung melindungi, menghadapi, atau menengahi, sehingga tim tahu bagaimana anggota lain akan bereaksi." },
         { title: "Mengambil Keputusan Bersama", body: "Kepercayaan paling cepat terkikis ketika orang tidak tahu bagaimana sebuah keputusan diambil. Modul ini memaparkan tiga cara (direktif, konsultatif, dan konsensus) serta apa yang merusak masing-masing, misalnya meminta masukan untuk keputusan yang sudah diambil. Tim membahas enam skenario nyata, lalu berkomitmen untuk menyebut cara yang dipakai, menutup lingkaran, dan meninjau keputusan besar sesudahnya." },
         { title: "Akuntabilitas & Tindak Lanjut", body: "Komitmen yang nyata punya tiga bagian: apa, kapan, dan kepada siapa. Modul ini membahas mengapa orang berjanji berlebihan demi menjaga suasana damai, bagaimana hierarki dan rasa malu membuat sulit melaporkan keterlambatan, dan mengapa pemimpin harus menjadi orang yang paling bertanggung jawab di ruangan. Tim menambahkan putaran komitmen lima menit di setiap pertemuan dan menulis Komitmen Tim bersama." },
@@ -196,7 +196,7 @@ const COPY = {
     },
     cta: {
       title: "Ajak seluruh tim Anda bertumbuh bersama.",
-      body: "Delapan akun tim, semua asesmen, kesepuluh modul tim, dan dasbor pemimpin. $80 sekali bayar, atau $10 per anggota, dengan akses permanen.",
+      body: "Satu akun untuk setiap anggota tim berisi 2 sampai 10 orang, semua asesmen, kesepuluh modul tim, dan dasbor pemimpin. $20 per orang, sekali bayar, dengan akses permanen.",
       button: "Bangun tim Anda",
     },
     caption: {

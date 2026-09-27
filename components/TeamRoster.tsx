@@ -23,6 +23,9 @@ function r(lang: Lang): TeamLang { return lang === "id" ? "id" : "en"; }
 
 // leaderName falls back to "[LEADER_NAME]" if missing, so a bad data state is
 // obvious rather than silently reading as generic.
+const SEAT_PRICE_USD = 20;
+const MAX_TEAM_SIZE = 10; // people, leader included
+
 const SHARE_COPY: Record<Lang, (leaderName: string | undefined, teamName: string, url: string) => { title: string; text: string; whatsapp: string }> = {
   en: (leaderName, teamName, url) => {
     const leader = leaderName?.trim() || "[LEADER_NAME]";
@@ -168,14 +171,19 @@ export default function TeamRoster({
 
   const totalCount = (leaderName ? 1 : 0) + members.length;
   const isFull = members.length >= maxSeats;
+  // Seat top-ups: $20 each, team capped at 10 people (leader + 9 member seats).
+  // Must match SEAT_PRICE_USD / MAX_TEAM_SIZE in team-settings/TeamSettings.tsx and api/checkout.
+  const seatsLeft = Math.max(0, MAX_TEAM_SIZE - 1 - maxSeats);
+  const buyQty = Math.min(seatQty, Math.max(1, seatsLeft));
 
   async function handleAddSeats() {
+    if (seatsLeft < 1) return;
     setSeatStatus("loading");
     try {
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ type: "seat", quantity: seatQty }),
+        body: JSON.stringify({ type: "seat", quantity: buyQty }),
       });
       const data = await res.json();
       if (data.checkoutUrl) {
@@ -236,7 +244,7 @@ export default function TeamRoster({
               </div>
             )}
             <p style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontSize: "0.9rem", color: isFull ? "oklch(65% 0.15 45)" : "oklch(66% 0.04 260)", lineHeight: 1.4 }}>
-              {members.length} / {maxSeats} {language === "id" ? "kursi anggota" : "member seats"}{isFull ? " — Full" : ""}
+              {members.length} / {maxSeats} {language === "id" ? "kursi anggota" : "member seats"}{isFull ? (language === "id" ? " · Penuh" : " · Full") : ""}
             </p>
           </div>
 
@@ -271,7 +279,7 @@ export default function TeamRoster({
               </Link>
             )}
             {isLeader && (
-              isFull ? (
+              isFull ? (seatsLeft < 1 ? null : (
                 <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap" }}>
                   <div style={{ display: "flex", alignItems: "center", border: "1px solid oklch(50% 0.04 260)" }}>
                     <button
@@ -283,18 +291,18 @@ export default function TeamRoster({
                     <input
                       type="number"
                       min={1}
-                      max={50}
-                      value={seatQty}
+                      max={seatsLeft}
+                      value={buyQty}
                       onChange={e => {
                         const n = Math.round(Number(e.target.value));
-                        setSeatQty(Number.isFinite(n) ? Math.min(50, Math.max(1, n)) : 1);
+                        setSeatQty(Number.isFinite(n) ? Math.min(seatsLeft, Math.max(1, n)) : 1);
                       }}
                       disabled={seatStatus === "loading"}
                       style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", fontWeight: 700, color: "oklch(97% 0.005 80)", background: "transparent", border: "none", width: "36px", textAlign: "center", MozAppearance: "textfield" }}
                     />
                     <button
                       type="button"
-                      onClick={() => setSeatQty(q => Math.min(50, q + 1))}
+                      onClick={() => setSeatQty(q => Math.min(seatsLeft, q + 1))}
                       disabled={seatStatus === "loading"}
                       style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.85rem", fontWeight: 700, background: "transparent", color: "oklch(80% 0.008 260)", border: "none", padding: "0.35rem 0.6rem", cursor: seatStatus === "loading" ? "default" : "pointer" }}
                     >+</button>
@@ -308,11 +316,11 @@ export default function TeamRoster({
                     {seatStatus === "loading"
                       ? (language === "id" ? "Memuat…" : "Loading…")
                       : (language === "id"
-                        ? `+ Tambah ${seatQty} Kursi — $${seatQty * 15} ($15 per kursi)`
-                        : `+ Add ${seatQty} Seat${seatQty > 1 ? "s" : ""} — $${seatQty * 15} ($15 each)`)}
+                        ? `+ Tambah ${buyQty} Kursi, $${buyQty * SEAT_PRICE_USD} ($${SEAT_PRICE_USD} per kursi)`
+                        : `+ Add ${buyQty} Seat${buyQty > 1 ? "s" : ""}, $${buyQty * SEAT_PRICE_USD} ($${SEAT_PRICE_USD} each)`)}
                   </button>
                 </div>
-              ) : (
+              )) : (
                 <button
                   type="button"
                   onClick={handleInvite}
