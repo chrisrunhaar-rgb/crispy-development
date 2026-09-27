@@ -6,6 +6,7 @@ import Image from "next/image";
 import { saveResourceToDashboard } from "../actions";
 import LangToggle from "@/components/LangToggle";
 import SourcesDropdown from "@/components/SourcesDropdown";
+import PresentLauncher from "@/components/PresentLauncher";
 import {
   Lang,
   ChannelId,
@@ -254,6 +255,15 @@ export default function VisionCastingClient({ userPathway, isSaved: initialSaved
 
       {/* ── SECTION 1: NAVY HERO ────────────────────────────────────── */}
       <div style={{ background: navy, padding: "80px 24px 72px", textAlign: "center", position: "relative", overflow: "hidden" }}>
+        <PresentLauncher
+          href="/resources/vision-casting/present"
+          lang={lang}
+          title={{ en: "Teaching this to someone else?", id: "Mengajarkan ini kepada orang lain?" }}
+          text={{
+            en: "Use the guided slideshow to walk your team through the Vision Compass and how to test a God-given vision.",
+            id: "Gunakan slideshow terpandu ini untuk memandu tim Anda memahami Kompas Visi dan cara menguji visi yang berasal dari Allah.",
+          }}
+        />
         <img src="/images/resources/disc/hero.jpg" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", opacity: 0.22, mixBlendMode: "luminosity", pointerEvents: "none" }} />
 
         <p style={{
