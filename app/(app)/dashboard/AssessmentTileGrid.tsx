@@ -151,21 +151,34 @@ const DISC_SLICES = [
 ] as const;
 
 const DISC_RESULT_TEXT: Record<string, string> = {
-  D:  "You lead with boldness and results. Your greatest strength is driving action and cutting through indecision. Growth edge: slow down enough to bring people with you — not just past them.",
+  D:  "You lead with boldness and results. Your greatest strength is driving action and cutting through indecision. Growth edge: slow down enough to bring people with you, not just past them.",
   I:  "You lead with energy and relationships. Your greatest strength is inspiring others and creating momentum. Growth edge: follow through on commitments and develop your eye for detail.",
   S:  "You lead with patience and loyalty. Your greatest strength is creating environments where people feel safe and valued. Growth edge: practise taking initiative and speaking your concerns earlier.",
   C:  "You lead with precision and expertise. Your greatest strength is bringing rigour and quality to everything. Growth edge: learn to act with less-than-perfect information and share your insights more openly.",
-  DI: "You combine boldness with people-energy — driving results while keeping others inspired. A powerful combination in leading diverse teams.",
-  DS: "You balance directness with steadiness — goal-focused yet able to create stable, loyal teams. You lead with both force and consistency.",
-  DC: "You combine drive with precision — results-oriented and quality-obsessed. Your challenge: don't let perfectionism slow momentum.",
-  IS: "You blend enthusiasm with warmth — inspiring people while genuinely caring for them. A gift in relational and cross-cultural contexts.",
-  IC: "You combine persuasion with precision — engaging communicator and careful thinker. Balance spontaneity with follow-through.",
-  SC: "You bring steadiness and rigour together — reliable, patient, and quality-driven. A trusted anchor for any team.",
+  DI: "You combine boldness with people-energy, driving results while keeping others inspired. A powerful combination in leading diverse teams.",
+  DS: "You balance directness with steadiness: goal-focused yet able to create stable, loyal teams. You lead with both force and consistency.",
+  DC: "You combine drive with precision: results-oriented and quality-obsessed. Your challenge: don't let perfectionism slow momentum.",
+  IS: "You blend enthusiasm with warmth, inspiring people while genuinely caring for them. A gift in relational and cross-cultural contexts.",
+  IC: "You combine persuasion with precision: an engaging communicator and careful thinker. Balance spontaneity with follow-through.",
+  SC: "You bring steadiness and rigour together: reliable, patient, and quality-driven. A trusted anchor for any team.",
 };
 
 const DISC_NAMES: Record<string, string> = {
   D: "Dominant", I: "Influential", S: "Steady", C: "Conscientious",
 };
+
+// Saved DISC scores are answer counts (one per question), not percentages.
+// Convert to whole-number shares of 100 so the pie closes and the bars read right.
+function discToPct(scores: { D: number; I: number; S: number; C: number }) {
+  const keys = ["D", "I", "S", "C"] as const;
+  const total = keys.reduce((n, k) => n + (scores[k] ?? 0), 0);
+  if (total <= 0) return { D: 0, I: 0, S: 0, C: 0 };
+  const raw = keys.map(k => ((scores[k] ?? 0) / total) * 100);
+  const out = raw.map(Math.floor);
+  let left = 100 - out.reduce((a, b) => a + b, 0);
+  raw.map((v, i) => [v - out[i], i] as const).sort((a, b) => b[0] - a[0]).forEach(([, i]) => { if (left > 0) { out[i]++; left--; } });
+  return { D: out[0], I: out[1], S: out[2], C: out[3] };
+}
 
 function OceanRadarSVG({ scores, size = 160 }: { scores: Record<string, number>; size?: number }) {
   // scores are raw accumulated values (10-50 per trait), keys: O, C, E, A, N
@@ -233,9 +246,10 @@ function DiscPieSVG({ scores, size, showCenter = true }: {
   showCenter?: boolean;
 }) {
   const cx = size / 2, cy = size / 2, r = size / 2 - 2, gap = 1.2;
+  const pcts = discToPct(scores);
   let angle = 0;
-  const slices = DISC_SLICES.map(s => {
-    const pct = scores[s.key as keyof typeof scores];
+  const slices = DISC_SLICES.filter(s => pcts[s.key] > 0).map(s => {
+    const pct = pcts[s.key];
     const span = (pct / 100) * 360;
     const start = angle + gap / 2;
     const end = angle + span - gap / 2;
@@ -525,12 +539,13 @@ function SmartGoalsModal({ data, onClose }: { data: Extract<ModalData, { type: "
 
 function DiscModal({ data, onClose }: { data: Extract<ModalData, { type: "disc" }>; onClose: () => void }) {
   const { result, scores, lang } = data;
-  const resultLabel = result.split("").map(k => DISC_NAMES[k] ?? k).join(" Â· ");
+  const resultLabel = result.split("").map(k => DISC_NAMES[k] ?? k).join(" · ");
   const description = DISC_RESULT_TEXT[result] ?? null;
 
+  const pcts = discToPct(scores);
   let angle = 0;
   const slicesWithPct = DISC_SLICES.map(s => {
-    const pct = scores[s.key as keyof typeof scores];
+    const pct = pcts[s.key];
     const span = (pct / 100) * 360;
     const start = angle + 1;
     const end = angle + span - 1;
@@ -552,7 +567,7 @@ function DiscModal({ data, onClose }: { data: Extract<ModalData, { type: "disc" 
       {/* Large pie + legend */}
       <div style={{ display: "flex", gap: "1.5rem", alignItems: "center", marginBottom: "1.5rem" }}>
         <svg width="160" height="160" viewBox="0 0 160 160" style={{ flexShrink: 0 }}>
-          {slicesWithPct.map(s => (
+          {slicesWithPct.filter(s => s.pct > 0).map(s => (
             <path key={s.key} d={discSlicePath(cx, cy, r, s.start, s.end)} fill={s.fill} />
           ))}
           <circle cx={cx} cy={cy} r={30} fill={offWhite} />
@@ -1366,7 +1381,7 @@ function FivelaModal({ data, onClose }: { data: Extract<ModalData, { type: "five
           )}
         </div>
         <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "rgba(255,255,255,0.85)", marginTop: "0.35rem" }}>
-          Receive Â· {isMatch ? "Same giving language" : `Give: ${FIVELA_MODAL_NAMES[givingResult] ?? givingResult}`}
+          Receive · {isMatch ? "Same giving language" : `Give: ${FIVELA_MODAL_NAMES[givingResult] ?? givingResult}`}
         </p>
       </div>
 
