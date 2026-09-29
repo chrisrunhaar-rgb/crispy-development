@@ -85,15 +85,6 @@ const STAGES: StageData[] = [
   },
 ];
 
-const FIELD_STORY: Pair[] = [
-  { en: "A cross-cultural team leader in West Africa had spent eighteen months building relationships. Meetings were warm. Agreements were reached.",
-    id: "Seorang pemimpin tim lintas budaya di Afrika Barat telah menghabiskan delapan belas bulan membangun hubungan. Pertemuan berjalan hangat. Kesepakatan tercapai." },
-  { en: "Then a trusted local counterpart told her, \"They say yes to you because they respect you, not because they agree.\"",
-    id: "Lalu seorang rekan lokal yang dipercaya berkata kepadanya, \"Mereka mengatakan ya kepadamu karena mereka menghormatimu, bukan karena mereka setuju.\"" },
-  { en: "She had been in Stage 1 for a year and a half. She stayed, learned to read agreement in that culture, and became the person sent to help others make the same transition.",
-    id: "Ia telah berada di Tahap 1 selama satu setengah tahun. Ia tetap tinggal, belajar membaca persetujuan dalam budaya itu, dan menjadi orang yang dikirim untuk membantu orang lain melakukan transisi yang sama." },
-];
-
 const KEY_TAKEAWAYS: { lead: Pair; rest: Pair }[] = [
   { lead: { en: "Awareness of incompetence is the beginning of growth.", id: "Kesadaran akan ketidakmampuan adalah awal dari pertumbuhan." },
     rest: { en: "Stage 1, not Stage 2, is the most dangerous: you don't know what you don't know.", id: "Tahap 1, bukan Tahap 2, yang paling berbahaya: kamu tidak tahu apa yang kamu tidak tahu." } },
@@ -115,6 +106,28 @@ const QUESTIONS: Pair[] = [
   { en: "Which of the four stages are you in right now, with the skill that matters most to your leadership?", id: "Di tahap mana kamu berada sekarang, dengan keterampilan yang paling penting bagi kepemimpinanmu?" },
   { en: "Think of someone you lead who is stuck in Stage 1. What single experience could help them see the gap?", id: "Pikirkan seseorang yang kamu pimpin yang terjebak di Tahap 1. Pengalaman seperti apa yang bisa membantu mereka melihat celah itu?" },
   { en: "Where might your own mastery be making it harder for you to teach someone at Stage 2?", id: "Di mana penguasaanmu sendiri mungkin membuatmu lebih sulit mengajar seseorang di Tahap 2?" },
+];
+
+// The two pairs of words the four stages are built from
+const WORD_PAIRS: { heading: Pair; words: { word: Pair; meaning: Pair; strong: boolean }[] }[] = [
+  {
+    heading: { en: "Awareness", id: "Kesadaran" },
+    words: [
+      { word: { en: "Unconscious", id: "Tidak sadar" }, strong: false,
+        meaning: { en: "You are not aware of it. It happens without you noticing.", id: "Anda tidak menyadarinya. Semuanya terjadi tanpa Anda perhatikan." } },
+      { word: { en: "Conscious", id: "Sadar" }, strong: true,
+        meaning: { en: "You are aware of it. You notice what you can and cannot do.", id: "Anda menyadarinya. Anda tahu apa yang bisa dan belum bisa Anda lakukan." } },
+    ],
+  },
+  {
+    heading: { en: "Ability", id: "Kemampuan" },
+    words: [
+      { word: { en: "Incompetence", id: "Ketidakmampuan" }, strong: false,
+        meaning: { en: "You cannot do it yet. The skill is not there.", id: "Anda belum bisa melakukannya. Keterampilannya belum ada." } },
+      { word: { en: "Competence", id: "Kompetensi" }, strong: true,
+        meaning: { en: "You can do it. The skill is there and it works.", id: "Anda bisa melakukannya. Keterampilannya ada dan berjalan." } },
+    ],
+  },
 ];
 
 // ─── Slide building blocks (fixed px on the 1600×900 canvas) ─────────────────
@@ -263,30 +276,39 @@ const SLIDES: Slide[] = [
       </>
     ),
   },
+  {
+    key: "word-pairs",
+    steps: 3,
+    render: (lang, step) => (
+      <>
+        <p style={kicker}>{t("Before the stages", "Sebelum tahapannya", lang)}</p>
+        <h2 style={{ ...midTitle, fontSize: 64 }}>{t("Two pairs of words", "Dua pasang kata", lang)}</h2>
+        <div style={{ display: "flex", gap: 40, width: 1340 }}>
+          {WORD_PAIRS.map((pair, n) => (
+            <div key={n} style={{ ...card, ...show(step >= n), flex: 1, padding: "30px 36px", borderTop: `6px solid ${n === 0 ? orange : navy}` }}>
+              <p style={{ ...kicker, textAlign: "left", fontSize: 18, color: n === 0 ? orange : navy, marginBottom: 20 }}>{t(pair.heading.en, pair.heading.id, lang)}</p>
+              <div style={{ display: "flex", flexDirection: "column", gap: 22 }}>
+                {pair.words.map((w, i) => (
+                  <div key={i}>
+                    <p style={{ fontFamily: serif, fontSize: 40, fontWeight: 600, color: w.strong ? navy : muted, margin: "0 0 4px", lineHeight: 1.1 }}>{t(w.word.en, w.word.id, lang)}</p>
+                    <p style={{ fontFamily: sans, fontSize: 22, lineHeight: 1.45, color: muted, margin: 0 }}>{t(w.meaning.en, w.meaning.id, lang)}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+        <p style={{ ...body, ...show(step >= 2), fontSize: 26 }}>
+          {t("Each stage combines one word from each pair.", "Setiap tahap menggabungkan satu kata dari masing-masing pasangan.", lang)}
+        </p>
+      </>
+    ),
+  },
   // The staircase builds up: stage 1 revealed, its detail, stage 2 added, its detail, and so on
   ...STAGES.flatMap((st, n): Slide[] => [
     { key: `staircase-${n + 1}`, render: lang => <StaircaseSlide upTo={n} lang={lang} /> },
     { key: `stage-${n + 1}`, steps: st.extra ? 3 : 2, render: (lang, step) => <StageDetailSlide n={n} lang={lang} step={step} /> },
   ]),
-  {
-    key: "field-story",
-    steps: 3,
-    render: (lang, step) => (
-      <>
-        <p style={kicker}>{t("Field story", "Kisah lapangan", lang)}</p>
-        <h2 style={{ ...midTitle, fontSize: 66 }}>{t("A year and a half in Stage 1", "Satu setengah tahun di Tahap 1", lang)}</h2>
-        <div style={{ display: "flex", flexDirection: "column", gap: 22, width: 1200 }}>
-          {FIELD_STORY.map((par, n) => (
-            <div key={n} style={{ ...card, ...show(step >= n), padding: "28px 34px", borderLeft: `6px solid ${n === 1 ? orange : navy}` }}>
-              <p style={{ fontFamily: n === 1 ? serif : sans, fontStyle: n === 1 ? "italic" : "normal", fontSize: n === 1 ? 30 : 24, lineHeight: 1.45, fontWeight: 500, color: navy, margin: 0 }}>
-                {t(par.en, par.id, lang)}
-              </p>
-            </div>
-          ))}
-        </div>
-      </>
-    ),
-  },
   {
     key: "faith-anchor",
     dark: true,
@@ -319,7 +341,7 @@ const SLIDES: Slide[] = [
         <h2 style={{ ...midTitle, fontSize: 60 }}>{t("Four things to carry forward", "Empat hal untuk dibawa pulang", lang)}</h2>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 26, width: "100%" }}>
           {KEY_TAKEAWAYS.map((k, n) => (
-            <div key={n} style={{ ...card, ...show(step > n), padding: "30px 32px", borderTop: `6px solid ${orange}` }}>
+            <div key={n} style={{ ...card, ...show(step >= n), padding: "30px 32px", borderTop: `6px solid ${orange}` }}>
               <p style={{ fontFamily: sans, fontSize: 17, fontWeight: 700, color: orange, letterSpacing: "0.1em", margin: "0 0 12px" }}>{n + 1}</p>
               <p style={{ fontFamily: serif, fontSize: 27, fontWeight: 600, color: navy, margin: "0 0 10px", lineHeight: 1.25 }}>{t(k.lead.en, k.lead.id, lang)}</p>
               <p style={{ fontFamily: sans, fontSize: 18, lineHeight: 1.45, color: muted, margin: 0 }}>{t(k.rest.en, k.rest.id, lang)}</p>
@@ -338,7 +360,7 @@ const SLIDES: Slide[] = [
         <h2 style={{ ...midTitle, fontSize: 62 }}>{t("Three things to do this week", "Tiga hal untuk dilakukan minggu ini", lang)}</h2>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 28, width: "100%" }}>
           {THIS_WEEK.map((w, n) => (
-            <div key={n} style={{ ...card, ...show(step > n), padding: "34px 32px", display: "flex", flexDirection: "column", gap: 18 }}>
+            <div key={n} style={{ ...card, ...show(step >= n), padding: "34px 32px", display: "flex", flexDirection: "column", gap: 18 }}>
               <span style={{ width: 60, height: 60, borderRadius: 999, background: orange, color: "white", fontFamily: serif, fontSize: 36, fontWeight: 600, display: "inline-flex", alignItems: "center", justifyContent: "center" }}>{n + 1}</span>
               <p style={{ fontFamily: sans, fontSize: 23, lineHeight: 1.45, fontWeight: 600, color: navy, margin: 0 }}>{t(w.en, w.id, lang)}</p>
             </div>
@@ -356,7 +378,7 @@ const SLIDES: Slide[] = [
         <h2 style={{ ...midTitle, fontSize: 66 }}>{t("Questions to sit with", "Pertanyaan untuk direnungkan", lang)}</h2>
         <ol style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 20, width: 1200 }}>
           {QUESTIONS.map((q, n) => (
-            <li key={n} style={{ ...card, ...show(step > n), display: "flex", alignItems: "center", gap: 28, padding: "26px 36px" }}>
+            <li key={n} style={{ ...card, ...show(step >= n), display: "flex", alignItems: "center", gap: 28, padding: "26px 36px" }}>
               <span style={{ flexShrink: 0, fontFamily: serif, fontSize: 60, fontWeight: 600, color: orange, lineHeight: 1, width: 44 }}>{n + 1}</span>
               <span style={{ fontFamily: serif, fontSize: 34, fontWeight: 500, color: navy, lineHeight: 1.25 }}>{t(q.en, q.id, lang)}</span>
             </li>

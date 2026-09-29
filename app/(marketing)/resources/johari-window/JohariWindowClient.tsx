@@ -195,7 +195,7 @@ export default function JohariWindowClient({ userPathway, isSaved: initialSaved,
       {/* ── LEARNING OUTCOME ─────────────────────────────────────────────────── */}
       <div style={{ background: "oklch(22% 0.10 260)", padding: "clamp(48px, 7vw, 64px) 24px" }}>
         <div style={{ maxWidth: 720, margin: "0 auto" }}>
-          <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: 24 }}>
+          <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: 24 }}>
             {t("After This Module", "Setelah Modul Ini")}
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
@@ -218,6 +218,70 @@ export default function JohariWindowClient({ userPathway, isSaved: initialSaved,
       {/* ── THE WINDOW ── */}
       <section style={{ paddingBlock: "clamp(3rem, 5vw, 5rem)", background: "oklch(97% 0.005 80)" }}>
         <div className="container-wide">
+
+          {/* Core idea */}
+          <div style={{ maxWidth: 860, margin: "0 auto clamp(3rem, 5vw, 4rem)" }}>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.875rem" }}>
+              {t("The Core Idea", "Gagasan Inti")}
+            </p>
+            <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontWeight: 600, fontSize: "clamp(1.9rem, 4vw, 3rem)", color: "oklch(22% 0.10 260)", lineHeight: 1.15, margin: "0 0 1.25rem" }}>
+              {t("What you know about yourself", "Apa yang Anda ketahui tentang diri sendiri")}<br />
+              {t("and what others know about you", "dan apa yang diketahui orang lain tentang Anda")}<br />
+              <span style={{ color: "oklch(65% 0.15 45)" }}>{t("do not always match.", "tidak selalu sama.")}</span>
+            </h2>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "clamp(1rem, 1.5vw, 1.1rem)", color: "oklch(40% 0.04 260)", lineHeight: 1.65, margin: 0, maxWidth: "52ch" }}>
+              {t("That gap is where much of the invisible friction in leadership lives.", "Celah itulah tempat sebagian besar gesekan tak terlihat dalam kepemimpinan berada.")}
+            </p>
+          </div>
+
+          {/* Two questions */}
+          <div style={{ maxWidth: 860, margin: "0 auto clamp(3rem, 5vw, 4rem)" }}>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.875rem" }}>
+              {t("Two Questions", "Dua Pertanyaan")}
+            </p>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "clamp(1rem, 1.5vw, 1.1rem)", color: "oklch(40% 0.04 260)", lineHeight: 1.65, margin: "0 0 2rem", maxWidth: "60ch" }}>
+              {t("The window is built from two simple questions. Together they give you four panes.", "Jendela ini dibangun dari dua pertanyaan sederhana. Bersama-sama, keduanya menghasilkan empat pane.")}
+            </p>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "clamp(1.5rem, 3vw, 2.5rem)" }}>
+              {[
+                {
+                  q: t("What do I see in myself?", "Apa yang saya lihat dalam diri saya?"),
+                  items: [
+                    { color: "oklch(48% 0.18 145)", label: t("Known to self", "Diketahui diri"), text: t("What you are aware of. Your values, your habits, your strengths.", "Apa yang Anda sadari. Nilai-nilai, kebiasaan, dan kekuatan Anda.") },
+                    { color: "oklch(62% 0.17 50)", label: t("Unknown to self", "Tidak diketahui diri"), text: t("What you cannot see. How you come across, reactions you miss, gifts others notice first.", "Apa yang tidak bisa Anda lihat. Kesan yang Anda berikan, reaksi yang Anda lewatkan, karunia yang lebih dulu dilihat orang lain.") },
+                  ],
+                },
+                {
+                  q: t("What do others see in me?", "Apa yang dilihat orang lain dalam diri saya?"),
+                  items: [
+                    { color: "oklch(48% 0.18 145)", label: t("Known to others", "Diketahui orang lain"), text: t("What people around you notice and experience in you.", "Apa yang diperhatikan dan dialami orang-orang di sekitar Anda dalam diri Anda.") },
+                    { color: "oklch(62% 0.17 50)", label: t("Unknown to others", "Tidak diketahui orang lain"), text: t("What you keep inside. Thoughts, fears, history, hopes you haven't shared.", "Apa yang Anda simpan di dalam. Pikiran, ketakutan, masa lalu, harapan yang belum Anda bagikan.") },
+                  ],
+                },
+              ].map((block, i) => (
+                <div key={i}>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(50% 0.06 260)", marginBottom: "0.375rem" }}>
+                    {t(`Question ${i + 1}`, `Pertanyaan ${i + 1}`)}
+                  </p>
+                  <h3 style={{ fontFamily: "Cormorant Garamond, serif", fontWeight: 600, fontSize: "clamp(1.5rem, 2.6vw, 1.9rem)", color: "oklch(22% 0.10 260)", lineHeight: 1.2, margin: "0 0 1.25rem" }}>
+                    {block.q}
+                  </h3>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+                    {block.items.map(item => (
+                      <div key={item.label} style={{ borderLeft: `4px solid ${item.color}`, paddingLeft: "1rem" }}>
+                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 800, letterSpacing: "0.1em", textTransform: "uppercase", color: item.color, margin: "0 0 0.375rem" }}>
+                          {item.label}
+                        </p>
+                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.95rem", color: "oklch(40% 0.04 260)", lineHeight: 1.65, margin: 0 }}>
+                          {item.text}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
 
           {/* Axis labels + grid */}
           <div style={{ marginBottom: "0.5rem" }}>
@@ -309,10 +373,10 @@ export default function JohariWindowClient({ userPathway, isSaved: initialSaved,
       {selected && (
         <section style={{ paddingBlock: "clamp(3rem, 5vw, 5rem)", background: selected.colorBg, borderTop: `3px solid ${selected.color}` }}>
           <div className="container-wide">
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: selected.color, marginBottom: "0.5rem" }}>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: selected.color, marginBottom: "0.5rem" }}>
               {lang === "id" ? selected.id_sub : selected.en_sub}
             </p>
-            <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "clamp(1.5rem, 3vw, 2.25rem)", color: "oklch(22% 0.10 260)", marginBottom: "2rem" }}>
+            <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontWeight: 600, fontSize: "clamp(1.9rem, 3.6vw, 2.75rem)", lineHeight: 1.15, color: "oklch(22% 0.10 260)", marginBottom: "2rem" }}>
               {lang === "id" ? selected.id_title : selected.en_title}
             </h2>
 
@@ -322,7 +386,7 @@ export default function JohariWindowClient({ userPathway, isSaved: initialSaved,
                   {lang === "id" ? selected.id_body : selected.en_body}
                 </p>
                 <div style={{ background: "oklch(22% 0.10 260 / 0.06)", padding: "1.25rem 1.5rem", marginBottom: "1.5rem" }}>
-                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: selected.color, marginBottom: "0.5rem" }}>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: selected.color, marginBottom: "0.5rem" }}>
                     {t("Cross-cultural dimension", "Dimensi lintas budaya")}
                   </p>
                   <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.7, color: "oklch(38% 0.05 260)", margin: 0 }}>
@@ -333,7 +397,7 @@ export default function JohariWindowClient({ userPathway, isSaved: initialSaved,
 
               <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
                 <div style={{ background: "oklch(97% 0.005 80)", padding: "1.5rem" }}>
-                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: selected.color, marginBottom: "0.625rem" }}>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: selected.color, marginBottom: "0.625rem" }}>
                     {t("Reflection", "Refleksi")}
                   </p>
                   <p style={{ fontFamily: "var(--font-cormorant, Cormorant Garamond, Georgia, serif)", fontSize: "1.1rem", fontStyle: "italic", color: "oklch(28% 0.10 260)", lineHeight: 1.65, margin: 0 }}>
@@ -341,7 +405,7 @@ export default function JohariWindowClient({ userPathway, isSaved: initialSaved,
                   </p>
                 </div>
                 <div style={{ background: "oklch(22% 0.10 260)", padding: "1.5rem" }}>
-                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.625rem" }}>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.625rem" }}>
                     {t("This week", "Minggu ini")}
                   </p>
                   <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.75, color: "oklch(78% 0.03 80)", margin: 0 }}>
@@ -353,7 +417,7 @@ export default function JohariWindowClient({ userPathway, isSaved: initialSaved,
 
             {/* Biblical Anchor */}
             <div style={{ marginTop: "2.5rem", borderTop: `2px solid ${selected.color}30`, paddingTop: "2rem" }}>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: selected.color, marginBottom: "0.5rem" }}>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: selected.color, marginBottom: "0.5rem" }}>
                 {t("Biblical Anchor", "Jangkar Alkitab")}
               </p>
               <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", fontWeight: 700, color: "oklch(38% 0.05 260)", marginBottom: "1rem" }}>
@@ -372,10 +436,10 @@ export default function JohariWindowClient({ userPathway, isSaved: initialSaved,
       {/* ── BIBLICAL FOUNDATION ── */}
       <section style={{ paddingBlock: "clamp(3rem, 5vw, 5rem)", background: "oklch(22% 0.10 260)" }}>
         <div className="container-wide">
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.75rem" }}>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.75rem" }}>
             {t("Biblical Foundation", "Landasan Alkitab")}
           </p>
-          <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "clamp(1.4rem, 2.5vw, 2rem)", color: "oklch(97% 0.005 80)", marginBottom: "1.25rem", maxWidth: "36ch" }}>
+          <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontWeight: 600, fontSize: "clamp(1.75rem, 3vw, 2.4rem)", lineHeight: 1.15, color: "oklch(97% 0.005 80)", marginBottom: "1.25rem", maxWidth: "36ch" }}>
             {t("Being known — and knowing yourself", "Dikenal — dan mengenal diri sendiri")}
           </h2>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(72% 0.04 260)", maxWidth: "62ch", marginBottom: "1rem" }}>
@@ -416,10 +480,10 @@ export default function JohariWindowClient({ userPathway, isSaved: initialSaved,
       {/* ── KEY TAKEAWAY ─────────────────────────────────────────────────────── */}
       <div style={{ background: "oklch(97% 0.005 80)", padding: "clamp(64px, 9vw, 88px) 24px", borderTop: "3px solid oklch(65% 0.15 45)" }}>
         <div style={{ maxWidth: 720, margin: "0 auto" }}>
-          <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: 12 }}>
+          <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: 12 }}>
             Key Takeaway
           </p>
-          <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(18px, 2.2vw, 24px)", fontWeight: 800, color: "oklch(22% 0.10 260)", marginBottom: 36 }}>
+          <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontWeight: 600, fontSize: "clamp(24px, 3.5vw, 32px)", color: "oklch(22% 0.10 260)", marginBottom: 36 }}>
             Three things to act on this week
           </h2>
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
@@ -442,10 +506,10 @@ export default function JohariWindowClient({ userPathway, isSaved: initialSaved,
       {/* ── LONG-FORM SEO SECTION ─────────────────────────────────────────────── */}
       <section id="mc-cross-cultural" style={{ paddingBlock: "clamp(3rem, 5vw, 5rem)", background: "oklch(95% 0.008 80)" }}>
         <div className="container-wide" style={{ maxWidth: 720 }}>
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.875rem" }}>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.875rem" }}>
             Background
           </p>
-          <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "clamp(1.25rem, 2.5vw, 1.7rem)", color: "oklch(22% 0.10 260)", marginBottom: "1.5rem", lineHeight: 1.2 }}>
+          <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontWeight: 600, fontSize: "clamp(1.6rem, 3vw, 2.1rem)", color: "oklch(22% 0.10 260)", marginBottom: "1.5rem", lineHeight: 1.2 }}>
             The Johari Window: Self-Awareness, Blind Spots, and What Faith Adds
           </h2>
           <button
@@ -492,10 +556,10 @@ export default function JohariWindowClient({ userPathway, isSaved: initialSaved,
       <section style={{ paddingBlock: "clamp(3rem, 5vw, 5rem)", background: "oklch(97% 0.005 80)" }}>
         <div className="container-wide" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "3rem", alignItems: "center" }}>
           <div>
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.875rem" }}>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.875rem" }}>
               {t("More Training", "Pelatihan Lainnya")}
             </p>
-            <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", color: "oklch(22% 0.10 260)", marginBottom: "1rem" }}>
+            <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontWeight: 600, fontSize: "clamp(1.6rem, 3vw, 2.2rem)", lineHeight: 1.15, color: "oklch(22% 0.10 260)", marginBottom: "1rem" }}>
               {t("Part of the full training library.", "Bagian dari perpustakaan pelatihan lengkap.")}
             </h2>
             <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
