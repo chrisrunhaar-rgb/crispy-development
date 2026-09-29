@@ -243,8 +243,7 @@ const SLIDES: Slide[] = [
           ))}
         </div>
         <p style={{ ...body, ...show(step >= 5), maxWidth: 1200 }}>
-          {t("Avoidance is not laziness. The problem is not the instinct. It is using it everywhere, even when the silence is hurting the team.",
-            "Menghindar bukan kemalasan. Masalahnya bukan instingnya, tapi ketika insting itu dipakai di mana saja, bahkan ketika diam itu melukai tim.", lang)}
+          {t("Avoidance is not laziness.", "Menghindar bukan kemalasan.", lang)}
         </p>
       </>
     ),
@@ -271,8 +270,7 @@ const SLIDES: Slide[] = [
           ))}
         </div>
         <p style={{ ...body, ...show(step >= 5), color: onNavy, maxWidth: 1150 }}>
-          {t("The team stops offering honest disagreement. You lose the best thinking of the people you lead.",
-            "Tim berhenti menyampaikan ketidaksetujuan yang jujur. Kamu kehilangan pemikiran terbaik dari orang-orang yang kamu pimpin.", lang)}
+          {t("The team stops offering honest disagreement.", "Tim berhenti menyampaikan ketidaksetujuan yang jujur.", lang)}
         </p>
       </>
     ),
@@ -358,8 +356,9 @@ const SLIDES: Slide[] = [
         </h2>
         <div style={show(step >= 2)}>{rule(120)}</div>
         <p style={{ ...body, ...show(step >= 2), color: onNavy, maxWidth: 1100 }}>
-          {t("Peace that has not been tested is fragile. Peace that came through honest conflict can hold under pressure.",
-            "Damai yang belum diuji itu rapuh. Damai yang lahir dari konflik yang jujur dapat bertahan di bawah tekanan.", lang)}
+          {t("Peace that has not been tested is fragile.", "Damai yang belum diuji itu rapuh.", lang)}
+          <br />
+          {t("Peace that came through honest conflict can hold under pressure.", "Damai yang lahir dari konflik yang jujur dapat bertahan di bawah tekanan.", lang)}
         </p>
       </>
     ),
@@ -412,28 +411,6 @@ const SLIDES: Slide[] = [
     { key: `table-${n + 1}`, render: lang => <TableSlide upTo={n} lang={lang} /> },
     { key: `element-${n + 1}`, steps: 2, render: (lang, step) => <ElementSlide n={n} lang={lang} step={step} /> },
   ]),
-  {
-    key: "story",
-    steps: 4,
-    render: (lang, step) => (
-      <>
-        <p style={kicker}>{t("Field story", "Kisah lapangan", lang)}</p>
-        <h2 style={{ ...midTitle, fontSize: 68 }}>{t("Two leaders, one table", "Dua pemimpin, satu meja", lang)}</h2>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 28, width: "100%" }}>
-          {[
-            { en: "They respected each other deeply. So they never talked about the gap between them.", id: "Mereka saling menghormati dengan dalam. Karena itu mereka tidak pernah membicarakan perbedaan di antara mereka." },
-            { en: "A friend said: \"I want to bring you to a table where conflict is going to happen. I think you need it, and I think it is safe.\"", id: "Seorang sahabat berkata: \"Saya ingin membawa kamu ke sebuah meja di mana konflik akan terjadi. Saya pikir kamu membutuhkannya, dan saya pikir itu aman.\"" },
-            { en: "Unity grew from that table. Not because the conflict disappeared, but because it was finally allowed to exist.", id: "Persatuan tumbuh dari meja itu. Bukan karena konflik itu hilang, tapi karena ia akhirnya diizinkan untuk ada." },
-          ].map((b, n) => (
-            <div key={n} style={{ ...card, ...show(step > n), padding: "34px 34px", borderTop: `6px solid ${n === 2 ? orange : navy}` }}>
-              <p style={{ fontFamily: sans, fontSize: 18, fontWeight: 700, color: orange, letterSpacing: "0.12em", margin: "0 0 14px" }}>{n + 1}</p>
-              <p style={{ fontFamily: n === 1 ? serif : sans, fontStyle: n === 1 ? "italic" : "normal", fontSize: n === 1 ? 34 : 25, lineHeight: 1.4, fontWeight: 500, color: navy, margin: 0 }}>{t(b.en, b.id, lang)}</p>
-            </div>
-          ))}
-        </div>
-      </>
-    ),
-  },
   {
     key: "wounds",
     dark: true,
