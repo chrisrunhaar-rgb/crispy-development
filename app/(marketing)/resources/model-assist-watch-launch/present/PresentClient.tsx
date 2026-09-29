@@ -191,7 +191,7 @@ function GenerationsSlide({ lang, step }: { lang: Lang; step: number }) {
                     <span style={{ fontFamily: sans, fontSize: 18, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: current ? "white" : orange }}>
                       {t(`Generation ${n}`, `Generasi ${n}`, lang)}
                     </span>
-                    <span style={{ fontFamily: sans, fontSize: 28, fontWeight: 700, color: current ? "white" : navy, marginTop: 6 }}>{t(g.en, g.id, lang)}</span>
+                    <span style={{ fontFamily: sans, fontSize: 23, fontWeight: 700, lineHeight: 1.2, textAlign: "center", padding: "0 14px", color: current ? "white" : navy, marginTop: 6 }}>{t(g.en, g.id, lang)}</span>
                   </>
                 )}
               </div>
