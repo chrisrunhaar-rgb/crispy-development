@@ -1010,6 +1010,20 @@ export default function BigFiveClient({
           <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, color: "oklch(50% 0.06 280)", textAlign: "center", maxWidth: 380 }}>
             {lang === "id" ? "Pentagon unik Anda — bentuk yang terbentuk dari lima skor Anda" : "Your unique pentagon — the shape formed by your five scores combined"}
           </p>
+          {!resultSaved && (
+            <button
+              onClick={handleSave}
+              disabled={isPending}
+              style={{ padding: "13px 28px", background: "oklch(52% 0.22 280)", color: "white", border: "none", borderRadius: 8, fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 15, fontWeight: 600, cursor: "pointer", opacity: isPending ? 0.7 : 1 }}
+            >
+              {isPending ? t.saving : t.saveDashboard}
+            </button>
+          )}
+          {resultSaved && (
+            <div style={{ padding: "13px 20px", background: "oklch(92% 0.05 155)", color: "oklch(35% 0.14 155)", borderRadius: 8, fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 15, fontWeight: 600 }}>
+              {t.savedDashboard}
+            </div>
+          )}
         </div>
       </div>
 
