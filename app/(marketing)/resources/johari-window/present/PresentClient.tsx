@@ -204,11 +204,10 @@ function GapSlide({ lang, step }: { lang: Lang; step: number }) {
   return (
     <div style={{ textAlign: "center", maxWidth: 1200 }}>
       <p style={kickerStyle}>{tp({ en: "The Core Idea", id: "Gagasan Inti" }, lang)}</p>
-      <p style={{ ...midTitle, fontSize: 56 }}>
-        {tp({
-          en: "What you know about yourself and what others know about you do not always match.",
-          id: "Apa yang Anda ketahui tentang diri sendiri dan apa yang diketahui orang lain tentang Anda tidak selalu sama.",
-        }, lang)}
+      <p style={{ ...midTitle, fontSize: 60 }}>
+        {tp({ en: "What you know about yourself", id: "Apa yang Anda ketahui tentang diri sendiri" }, lang)}<br />
+        {tp({ en: "and what others know about you", id: "dan apa yang diketahui orang lain tentang Anda" }, lang)}<br />
+        <span style={{ color: orange }}>{tp({ en: "do not always match.", id: "tidak selalu sama." }, lang)}</span>
       </p>
       <div style={{ ...show(step >= 1), marginTop: 40 }}>
         {rule()}
@@ -223,37 +222,115 @@ function GapSlide({ lang, step }: { lang: Lang; step: number }) {
   );
 }
 
-function AxisCross({ step }: { step: number }) {
+const SELF_KNOWN = "oklch(48% 0.14 145)";
+const SELF_UNKNOWN = "oklch(58% 0.15 15)";
+const OTHERS_UNKNOWN = "oklch(45% 0.08 260)";
+
+// The one window used through the whole deck. `upTo` = last revealed pane
+// (-1 shows four "?" boxes); `top` / `side` switch the two sets of titles.
+function WindowGrid({ upTo, lang, top = true, side = true }: { upTo: number; lang: Lang; top?: boolean; side?: boolean }) {
+  const colHead = (on: boolean): React.CSSProperties => ({
+    fontFamily: sans, fontSize: 18, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase",
+    display: "flex", alignItems: "flex-end", justifyContent: "center", paddingBottom: 8, textAlign: "center",
+    opacity: on ? 1 : 0, transition: "opacity 0.4s ease",
+  });
   return (
-    <svg aria-hidden="true" width="520" height="360" viewBox="0 0 520 360" style={{ display: "block", margin: "0 auto" }}>
-      <line x1="60" y1="300" x2="460" y2="300" stroke={lightGray} strokeWidth="3" />
-      <line x1="60" y1="300" x2="60" y2="40" stroke={lightGray} strokeWidth="3" />
-      <g style={show(step >= 0)}>
-        <text x="260" y="340" textAnchor="middle" fontFamily={sans} fontSize="20" fontWeight="700" fill={navy}>KNOWN / UNKNOWN</text>
-        <text x="260" y="360" textAnchor="middle" fontFamily={sans} fontSize="14" fill={muted}>to yourself</text>
-      </g>
-      <g style={show(step >= 1)}>
-        <text x="30" y="170" textAnchor="middle" fontFamily={sans} fontSize="20" fontWeight="700" fill={navy} transform="rotate(-90 30 170)">KNOWN / UNKNOWN</text>
-        <text x="10" y="170" textAnchor="middle" fontFamily={sans} fontSize="14" fill={muted} transform="rotate(-90 10 170)">to others</text>
-      </g>
-    </svg>
+    <div style={{ display: "grid", gridTemplateColumns: "140px 1fr 1fr", gridTemplateRows: "60px 1fr 1fr" }}>
+      <div />
+      <div style={{ ...colHead(top), color: SELF_KNOWN }}>{tp({ en: "Known to self", id: "Diketahui diri" }, lang)}</div>
+      <div style={{ ...colHead(top), color: SELF_UNKNOWN }}>{tp({ en: "Unknown to self", id: "Tidak diketahui diri" }, lang)}</div>
+      {[0, 1].map(row => (
+        <>
+          <div key={`label-${row}`} style={{ fontFamily: sans, fontSize: 16, fontWeight: 800, letterSpacing: "0.06em", textTransform: "uppercase", color: row === 0 ? SELF_KNOWN : OTHERS_UNKNOWN, display: "flex", alignItems: "center", justifyContent: "flex-end", paddingRight: 16, textAlign: "right", opacity: side ? 1 : 0, transition: "opacity 0.4s ease" }}>
+            {row === 0
+              ? tp({ en: "Known to others", id: "Diketahui orang lain" }, lang)
+              : tp({ en: "Unknown to others", id: "Tidak diketahui orang lain" }, lang)}
+          </div>
+          {PANES.filter(p => p.row === row).map(pane => {
+            const n = PANES.indexOf(pane);
+            const revealed = n <= upTo;
+            const current = n === upTo;
+            return (
+              <div key={pane.key} style={{
+                border: `3px solid ${current ? pane.color : lightGray}`,
+                background: revealed ? pane.colorBg : offWhite,
+                borderStyle: revealed ? "solid" : "dashed",
+                minHeight: 130,
+                display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+                margin: 3,
+                transition: "all 0.4s ease",
+              }}>
+                {revealed ? (
+                  <>
+                    <span style={{ fontFamily: serif, fontSize: 34, fontWeight: 700, color: pane.color }}>{tp(pane.title, lang)}</span>
+                    <span style={{ fontFamily: sans, fontSize: 13, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: muted, marginTop: 4 }}>{tp(pane.sub, lang)}</span>
+                  </>
+                ) : (
+                  <span style={{ fontFamily: sans, fontSize: 22, color: lightGray }}>?</span>
+                )}
+              </div>
+            );
+          })}
+        </>
+      ))}
+    </div>
   );
 }
 
-function AxesSlide({ lang, step }: { lang: Lang; step: number }) {
+const AXES = [
+  {
+    kicker: { en: "Question 1", id: "Pertanyaan 1" } as Pair,
+    title: { en: "What do I see in myself?", id: "Apa yang saya lihat dalam diri saya?" } as Pair,
+    items: [
+      {
+        color: SELF_KNOWN,
+        label: { en: "Known to self", id: "Diketahui diri" } as Pair,
+        text: { en: "What you are aware of. Your values, your habits, your strengths.", id: "Apa yang Anda sadari. Nilai-nilai, kebiasaan, dan kekuatan Anda." } as Pair,
+      },
+      {
+        color: SELF_UNKNOWN,
+        label: { en: "Unknown to self", id: "Tidak diketahui diri" } as Pair,
+        text: { en: "What you cannot see. How you come across, reactions you miss, gifts others notice first.", id: "Apa yang tidak bisa Anda lihat. Kesan yang Anda berikan, reaksi yang Anda lewatkan, karunia yang lebih dulu dilihat orang lain." } as Pair,
+      },
+    ],
+  },
+  {
+    kicker: { en: "Question 2", id: "Pertanyaan 2" } as Pair,
+    title: { en: "What do others see in me?", id: "Apa yang dilihat orang lain dalam diri saya?" } as Pair,
+    items: [
+      {
+        color: SELF_KNOWN,
+        label: { en: "Known to others", id: "Diketahui orang lain" } as Pair,
+        text: { en: "What people around you notice and experience in you.", id: "Apa yang diperhatikan dan dialami orang-orang di sekitar Anda dalam diri Anda." } as Pair,
+      },
+      {
+        color: OTHERS_UNKNOWN,
+        label: { en: "Unknown to others", id: "Tidak diketahui orang lain" } as Pair,
+        text: { en: "What you keep inside. Thoughts, fears, history, hopes you haven't shared.", id: "Apa yang Anda simpan di dalam. Pikiran, ketakutan, masa lalu, harapan yang belum Anda bagikan." } as Pair,
+      },
+    ],
+  },
+];
+
+function AxesSlide({ q, lang, step }: { q: 0 | 1; lang: Lang; step: number }) {
+  const a = AXES[q];
   return (
-    <div style={{ textAlign: "center" }}>
-      <p style={kickerStyle}>{tp({ en: "Two Questions", id: "Dua Pertanyaan" }, lang)}</p>
-      <h2 style={midTitle}>{tp({ en: "Two questions build the window", id: "Dua pertanyaan membangun jendela" }, lang)}</h2>
+    <div style={{ width: "100%", maxWidth: 1340 }}>
+      <p style={kickerStyle}>{tp(a.kicker, lang)}</p>
+      <h2 style={{ ...midTitle, fontSize: 64 }}>{tp(a.title, lang)}</h2>
       {rule()}
-      <AxisCross step={step} />
-      <div style={{ display: "flex", justifyContent: "center", gap: 60, marginTop: 8 }}>
-        <p style={{ ...bodyStyle, ...show(step >= 0), fontSize: 24, maxWidth: 420 }}>
-          {tp({ en: "Known or unknown to yourself?", id: "Diketahui atau tidak diketahui oleh diri sendiri?" }, lang)}
-        </p>
-        <p style={{ ...bodyStyle, ...show(step >= 1), fontSize: 24, maxWidth: 420 }}>
-          {tp({ en: "Known or unknown to others?", id: "Diketahui atau tidak diketahui oleh orang lain?" }, lang)}
-        </p>
+      <div style={{ display: "flex", alignItems: "center", gap: 64, marginTop: 16 }}>
+        <div style={{ flex: "0 0 700px" }}>
+          <WindowGrid upTo={-1} lang={lang} top={q === 0} side={q === 1} />
+        </div>
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 32 }}>
+          {a.items.map((it, i) => (
+            <div key={i} style={{ ...show(step >= i), borderLeft: `5px solid ${it.color}`, paddingLeft: 24 }}>
+              <p style={{ fontFamily: sans, fontSize: 18, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", color: it.color, margin: "0 0 8px" }}>{tp(it.label, lang)}</p>
+              <p style={{ fontFamily: sans, fontSize: 26, color: muted, lineHeight: 1.5, margin: 0 }}>{tp(it.text, lang)}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -266,49 +343,7 @@ function WindowSlide({ upTo, lang }: { upTo: number; lang: Lang }) {
       <h2 style={midTitle}>{tp({ en: "Four panes of self-awareness", id: "Empat pane kesadaran diri" }, lang)}</h2>
       {rule()}
       <figure style={{ margin: "36px auto 0", maxWidth: 900 }}>
-        <div style={{ display: "grid", gridTemplateColumns: "140px 1fr 1fr", gridTemplateRows: "60px 1fr 1fr" }}>
-          <div />
-          <div style={{ fontFamily: sans, fontSize: 18, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(48% 0.14 145)", display: "flex", alignItems: "flex-end", justifyContent: "center", paddingBottom: 8 }}>
-            {tp({ en: "Known to self", id: "Diketahui diri" }, lang)}
-          </div>
-          <div style={{ fontFamily: sans, fontSize: 18, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(58% 0.15 15)", display: "flex", alignItems: "flex-end", justifyContent: "center", paddingBottom: 8 }}>
-            {tp({ en: "Unknown to self", id: "Tidak diketahui diri" }, lang)}
-          </div>
-          {[0, 1].map(row => (
-            <>
-              <div key={`label-${row}`} style={{ fontFamily: sans, fontSize: 16, fontWeight: 800, letterSpacing: "0.06em", textTransform: "uppercase", color: row === 0 ? "oklch(48% 0.14 145)" : "oklch(45% 0.08 260)", display: "flex", alignItems: "center", justifyContent: "flex-end", paddingRight: 16, textAlign: "right" }}>
-                {row === 0
-                  ? tp({ en: "Known to others", id: "Diketahui orang lain" }, lang)
-                  : tp({ en: "Unknown to others", id: "Tidak diketahui orang lain" }, lang)}
-              </div>
-              {PANES.filter(p => p.row === row).map(pane => {
-                const n = PANES.indexOf(pane);
-                const revealed = n <= upTo;
-                const current = n === upTo;
-                return (
-                  <div key={pane.key} style={{
-                    border: `3px solid ${current ? pane.color : revealed ? lightGray : lightGray}`,
-                    background: revealed ? pane.colorBg : offWhite,
-                    borderStyle: revealed ? "solid" : "dashed",
-                    minHeight: 130,
-                    display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
-                    margin: 3,
-                    transition: "all 0.4s ease",
-                  }}>
-                    {revealed ? (
-                      <>
-                        <span style={{ fontFamily: serif, fontSize: 34, fontWeight: 700, color: pane.color }}>{tp(pane.title, lang)}</span>
-                        <span style={{ fontFamily: sans, fontSize: 13, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: muted, marginTop: 4 }}>{tp(pane.sub, lang)}</span>
-                      </>
-                    ) : (
-                      <span style={{ fontFamily: sans, fontSize: 22, color: lightGray }}>?</span>
-                    )}
-                  </div>
-                );
-              })}
-            </>
-          ))}
-        </div>
+        <WindowGrid upTo={upTo} lang={lang} />
         <figcaption style={{ fontFamily: sans, fontSize: 14, color: muted, marginTop: 14 }}>
           {tp({ en: "The Johari Window, four quadrants of self-awareness", id: "Jendela Johari, empat kuadran kesadaran diri" }, lang)}
         </figcaption>
@@ -421,7 +456,8 @@ type Slide = { key: string; dark?: boolean; steps?: number; render: (lang: Lang,
 const SLIDES: Slide[] = [
   { key: "title", dark: true, render: lang => <TitleSlide lang={lang} /> },
   { key: "the-gap", steps: 2, render: (lang, step) => <GapSlide lang={lang} step={step} /> },
-  { key: "axes", steps: 2, render: (lang, step) => <AxesSlide lang={lang} step={step} /> },
+  { key: "axes-self", steps: 2, render: (lang, step) => <AxesSlide q={0} lang={lang} step={step} /> },
+  { key: "axes-others", steps: 2, render: (lang, step) => <AxesSlide q={1} lang={lang} step={step} /> },
   ...PANES.flatMap((_, n): Slide[] => [
     { key: `window-${n + 1}`, render: lang => <WindowSlide upTo={n} lang={lang} /> },
     { key: `pane-${n + 1}`, steps: 2, render: (lang, step) => <PaneSlide n={n} lang={lang} step={step} /> },
