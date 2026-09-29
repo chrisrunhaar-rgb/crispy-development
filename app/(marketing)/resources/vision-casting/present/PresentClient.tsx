@@ -275,6 +275,18 @@ const show = (on: boolean): React.CSSProperties => ({
   transition: "opacity 0.5s ease, transform 0.5s ease",
 });
 
+// Each channel's arrow points towards the centre of the compass,
+// so passion (bottom) points up and revelation (top) points down.
+const ARROW_TURN: Record<Direction, number> = { S: 0, W: 90, N: 180, E: 270 };
+function DirArrow({ dir, size, color }: { dir: Direction; size: number; color: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" aria-hidden="true" focusable="false"
+      style={{ display: "block", transform: `rotate(${ARROW_TURN[dir]}deg)` }}>
+      <path d="M12 20V4M5 11l7-7 7 7" fill="none" stroke={color} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 // The compass overview, same picture as the module:
 // the Crispy logo in the centre with the four channels around it.
 function CompassSlide({ lang }: { lang: Lang }) {
@@ -298,7 +310,7 @@ function CompassSlide({ lang }: { lang: Lang }) {
             border: `3px solid ${c.colorAccent}`, boxShadow: "0 4px 16px oklch(22% 0.10 260 / 0.12)",
             display: "flex", flexDirection: "column", alignItems: "center", gap: 2,
           }}>
-            <span style={{ fontFamily: sans, fontSize: 15, fontWeight: 700, color: c.colorAccent, letterSpacing: "0.1em" }}>{c.direction}</span>
+            <DirArrow dir={c.direction} size={26} color={c.colorAccent} />
             <span style={{ fontFamily: sans, fontSize: 24, fontWeight: 700, color: navy, letterSpacing: "0.08em", textTransform: "uppercase" }}>
               {t(c.label.en, c.label.id, lang)}
             </span>
@@ -314,7 +326,7 @@ function ChannelDetailSlide({ n, lang, step }: { n: number; lang: Lang; step: nu
   return (
     <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: 22 }}>
       <div style={{ display: "flex", alignItems: "center", gap: 28 }}>
-        <span style={{ flexShrink: 0, width: 100, height: 100, borderRadius: 999, background: c.colorAccent, color: "white", fontFamily: serif, fontSize: 40, fontWeight: 600, display: "inline-flex", alignItems: "center", justifyContent: "center" }}>{c.direction}</span>
+        <span style={{ flexShrink: 0, width: 100, height: 100, borderRadius: 999, background: c.colorAccent, color: "white", fontFamily: serif, fontSize: 40, fontWeight: 600, display: "inline-flex", alignItems: "center", justifyContent: "center" }}><DirArrow dir={c.direction} size={52} color="white" /></span>
         <div>
           <p style={{ ...kicker, textAlign: "left", marginBottom: 8 }}>{t(`Channel ${n + 1} of 4`, `Saluran ${n + 1} dari 4`, lang)}</p>
           <h2 style={{ ...midTitle, textAlign: "left", fontSize: 52 }}>{t(c.label.en, c.label.id, lang)}</h2>
