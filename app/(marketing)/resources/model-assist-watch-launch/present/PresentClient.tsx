@@ -130,6 +130,111 @@ function ShiftBars({ lang }: { lang: Lang }) {
   );
 }
 
+// ─── Multiplication through generations (2 Timothy 2:1-2) ────────────────────
+// Shown as five slides: the verse and question, then one more generation
+// highlighted on each click.
+type Seg = [string, number]; // text, generation (0 = plain)
+const VERSE: Record<Lang, Seg[]> = {
+  en: [
+    ["\u201cYou then, ", 0], ["my son", 2], [", be strong in the grace that is in Christ Jesus. And the things you have heard ", 0],
+    ["me", 1], [" say in the presence of many witnesses entrust to ", 0], ["reliable people", 3],
+    [" who will also be qualified to teach ", 0], ["others", 4], [".\u201d", 0],
+  ],
+  id: [
+    ["\u201cSebab itu, ", 0], ["hai anakku", 2], [", jadilah kuat oleh kasih karunia dalam Kristus Yesus. Apa yang telah engkau dengar ", 0],
+    ["dari padaku", 1], [" di depan banyak saksi, percayakanlah itu kepada ", 0], ["orang-orang yang dapat dipercayai", 3],
+    [", yang juga cakap mengajar ", 0], ["orang lain", 4], [".\u201d", 0],
+  ],
+};
+const GENS = [
+  { en: "Paul", id: "Paulus" },
+  { en: "Timothy", id: "Timotius" },
+  { en: "Reliable people", id: "Orang yang dapat dipercaya" },
+  { en: "Others", id: "Orang lain" },
+];
+
+function GenerationsSlide({ lang, step }: { lang: Lang; step: number }) {
+  return (
+    <div style={{ width: 1320, display: "flex", flexDirection: "column", alignItems: "center", gap: 44 }}>
+      <p style={kicker}>{t("Multiplication through generations", "Pelipatgandaan lintas generasi", lang)}</p>
+      <div style={{ textAlign: "center" }}>
+        <p style={{ fontFamily: serif, fontSize: 50, fontStyle: "italic", lineHeight: 1.45, color: navy, margin: "0 0 18px" }}>
+          {VERSE[lang].map(([text, g], i) => {
+            const on = g > 0 && g <= step;
+            return (
+              <span key={i} style={on ? {
+                background: g === step ? orange : "oklch(90% 0.06 55)", color: g === step ? "white" : navy,
+                borderRadius: 10, padding: "0 10px", fontStyle: "normal", fontWeight: 600,
+                boxDecorationBreak: "clone", WebkitBoxDecorationBreak: "clone",
+              } : undefined}>{text}</span>
+            );
+          })}
+        </p>
+        <p style={{ fontFamily: sans, fontSize: 22, fontWeight: 700, color: orange, margin: 0 }}>{t("2 Timothy 2:1-2 (NIV)", "2 Timotius 2:1-2 (TB)", lang)}</p>
+      </div>
+      {step === 0 ? (
+        <p style={{ fontFamily: sans, fontSize: 40, fontWeight: 700, color: navy, margin: 0, textAlign: "center" }}>
+          {t("Can you identify four generations?", "Dapatkah Anda menemukan empat generasi?", lang)}
+        </p>
+      ) : (
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 280px)", gap: 24 }}>
+          {GENS.map((g, i) => {
+            const n = i + 1, shown = n <= step, current = n === step;
+            return (
+              <div key={g.en} style={{
+                height: 118, borderRadius: 16, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+                background: current ? orange : shown ? "white" : "transparent",
+                border: `2px ${shown ? "solid" : "dashed"} ${current ? orange : shown ? lightGray : "oklch(80% 0.01 260)"}`,
+              }}>
+                {shown && (
+                  <>
+                    <span style={{ fontFamily: sans, fontSize: 18, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: current ? "white" : orange }}>
+                      {t(`Generation ${n}`, `Generasi ${n}`, lang)}
+                    </span>
+                    <span style={{ fontFamily: sans, fontSize: 28, fontWeight: 700, color: current ? "white" : navy, marginTop: 6 }}>{t(g.en, g.id, lang)}</span>
+                  </>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── Multiplication counter ───────────────────────────────────────────────────
+// Addition (you train one leader a year) against multiplication (every leader
+// trains one a year). One click per step; same numbers as the module slider.
+const COUNTER_YEARS = [1, 2, 3, 5, 10];
+
+function CounterSlide({ lang, years }: { lang: Lang; years: number }) {
+  const add = years + 1;
+  const mult = Math.pow(2, years);
+  const fmt = (n: number) => n.toLocaleString(lang === "id" ? "id-ID" : "en-US");
+  const row = (n: number, color: string, label: string) => (
+    <div style={{ width: "100%" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 14 }}>
+        <span style={{ fontFamily: sans, fontSize: 30, fontWeight: 700, color: navy }}>{label}</span>
+        <span style={{ fontFamily: serif, fontSize: 120, fontWeight: 600, color, lineHeight: 0.9 }}>{fmt(n)}</span>
+      </div>
+      <div style={{ height: 36, background: lightGray, borderRadius: 18, overflow: "hidden" }}>
+        <div style={{ width: `${Math.max(1.5, (n / 1024) * 100)}%`, height: "100%", background: color, borderRadius: 18, transition: "width 0.7s ease" }} />
+      </div>
+    </div>
+  );
+  return (
+    <div style={{ width: 1240, display: "flex", flexDirection: "column", alignItems: "center", gap: 48 }}>
+      <p style={kicker}>{t("The multiplication counter", "Penghitung pelipatgandaan", lang)}</p>
+      <h2 style={{ ...midTitle, margin: 0 }}>
+        {t("After ", "Setelah ", lang)}<span style={{ color: orange }}>{years}</span>{t(years === 1 ? " year" : " years", " tahun", lang)}
+      </h2>
+      {row(add, navy, t("Addition: you train one leader a year", "Penambahan: Anda melatih satu pemimpin setiap tahun", lang))}
+      {row(mult, orange, t("Multiplication: every leader trains one a year", "Pelipatgandaan: setiap pemimpin melatih satu orang setiap tahun", lang))}
+    </div>
+  );
+}
+
 // ─── The slides ───────────────────────────────────────────────────────────────
 type Slide = { key: string; render: (lang: Lang) => React.ReactNode };
 
@@ -277,6 +382,14 @@ const SLIDES: Slide[] = [
       </>
     ),
   },
+  ...[0, 1, 2, 3, 4].map(step => ({
+    key: `generations-${step}`,
+    render: (lang: Lang) => <GenerationsSlide lang={lang} step={step} />,
+  })),
+  ...COUNTER_YEARS.map(years => ({
+    key: `counter-${years}`,
+    render: (lang: Lang) => <CounterSlide lang={lang} years={years} />,
+  })),
   {
     key: "start",
     render: lang => (
