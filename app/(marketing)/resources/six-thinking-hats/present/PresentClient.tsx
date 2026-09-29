@@ -1,21 +1,12 @@
 "use client";
-
-import Link from "next/link";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
-
-// Presentation mode for Six Thinking Hats. Architecture mirrors
-// healthy-conflict/present/PresentClient.tsx exactly: fixed 1600x900 canvas
-// scaled to fit, click-by-click step reveal, keyboard nav, fullscreen,
-// EN/ID toggle, overview thumbnail strip.
+import Link from "next/link";
+import { useLanguage } from "@/lib/LanguageContext";
 
 type Lang = "en" | "id";
-type Pair = { en: string; id: string };
 const t = (en: string, id: string, lang: Lang) => (lang === "id" ? id : en);
-const tp = (p: Pair, lang: Lang) => (lang === "id" ? p.id : p.en);
 
-const SLUG = "six-thinking-hats";
-const IMG = `/images/resources/${SLUG}`;
-
+// ─── Brand tokens ─────────────────────────────────────────────────────────────
 const navy = "oklch(22% 0.10 260)";
 const ink = "oklch(14% 0.05 260)";
 const offWhite = "oklch(96% 0.005 80)";
@@ -24,9 +15,12 @@ const lightGray = "oklch(88% 0.008 80)";
 const muted = "oklch(48% 0.04 260)";
 const onNavy = "oklch(82% 0.025 80)";
 
-const serif = "'Cormorant Garamond', Georgia, serif";
-const sans = "'Montserrat', sans-serif";
+const SLUG = "six-thinking-hats";
+const serif = "var(--font-cormorant)";
+const sans = "var(--font-montserrat)";
 
+// Slides are designed on a fixed 16:9 canvas and scaled to fit the screen,
+// so they look the same on a laptop, a projector or a TV.
 const W = 1600;
 const H = 900;
 const MIN_WIDTH = 768;
@@ -34,545 +28,423 @@ const IDLE_MS = 2500;
 
 type Hat = {
   key: string;
-  num: string;
-  nameEn: string;
-  nameId: string;
-  focusEn: string;
-  focusId: string;
-  fill: string;
-  bg: string;
-  txt: string;
-  accent: string;
-  briefEn: string;
-  briefId: string;
-  noteEn: string;
-  noteId: string;
-  questionEn: string;
-  questionId: string;
+  en: string; id: string;
+  focusEn: string; focusId: string;
+  jobEn: string; jobId: string;
+  askEn: string; askId: string;
+  fill: string; bg: string; txt: string;
 };
 
-const SIX_HATS: Hat[] = [
-  {
-    key: "white", num: "01", nameEn: "White", nameId: "Putih",
-    focusEn: "Facts & Information", focusId: "Fakta & Informasi",
-    fill: "oklch(97% 0 0)", bg: "oklch(94% 0.00 0)", txt: "oklch(35% 0.03 260)", accent: "oklch(55% 0.04 260)",
-    briefEn: "Objective data only. What do we know, what don't we, what do we need to find out.",
-    briefId: "Hanya data objektif. Apa yang kita ketahui, apa yang belum, apa yang perlu dicari tahu.",
-    noteEn: "What counts as evidence differs by culture. Some weigh testimony and precedent, others weigh statistics.",
-    noteId: "Apa yang dianggap bukti berbeda antar budaya. Sebagian mengutamakan kesaksian, sebagian lagi statistik.",
-    questionEn: "What information do we have, and what do we need to find out?",
-    questionId: "Informasi apa yang kita miliki, dan apa yang perlu kita cari tahu?",
-  },
-  {
-    key: "red", num: "02", nameEn: "Red", nameId: "Merah",
-    focusEn: "Feelings & Intuition", focusId: "Perasaan & Intuisi",
-    fill: "oklch(55% 0.20 25)", bg: "oklch(94% 0.05 25)", txt: "oklch(42% 0.18 25)", accent: "oklch(55% 0.20 25)",
-    briefEn: "Gut feelings and emotion, shared without needing to justify them.",
-    briefId: "Perasaan naluriah dan emosi, disampaikan tanpa perlu dibenarkan.",
-    noteEn: "Naming the hat separates the feeling from the person, so quieter voices can speak safely.",
-    noteId: "Menyebut nama topi memisahkan perasaan dari orangnya, sehingga suara yang lebih pelan bisa aman bicara.",
-    questionEn: "What is my gut feeling about this, and what does it tell us?",
-    questionId: "Apa perasaan naluriah saya tentang ini, dan apa yang diungkapkannya?",
-  },
-  {
-    key: "black", num: "03", nameEn: "Black", nameId: "Hitam",
-    focusEn: "Critical Judgment", focusId: "Penilaian Kritis",
-    fill: "oklch(18% 0.01 260)", bg: "oklch(94% 0.01 260)", txt: "oklch(22% 0.04 260)", accent: "oklch(38% 0.05 260)",
-    briefEn: "Risks and weak points. Caution is the job, not the person.",
-    briefId: "Risiko dan titik lemah. Kehati-hatian adalah tugas topi ini, bukan sifat pribadi.",
-    noteEn: "Assigning dissent as a shared role, not a personality, widens the range of views a team considers.",
-    noteId: "Menjadikan ketidaksetujuan sebagai peran bersama, bukan sifat pribadi, memperluas sudut pandang yang dipertimbangkan tim.",
-    questionEn: "What are the risks, and who might be negatively affected?",
-    questionId: "Apa risikonya, dan siapa yang mungkin terdampak negatif?",
-  },
-  {
-    key: "yellow", num: "04", nameEn: "Yellow", nameId: "Kuning",
-    focusEn: "Optimistic Thinking", focusId: "Pemikiran Optimistis",
-    fill: "oklch(80% 0.16 95)", bg: "oklch(96% 0.06 90)", txt: "oklch(45% 0.14 85)", accent: "oklch(60% 0.16 85)",
-    briefEn: "Benefits and opportunity, backed by reasoning, not wishful thinking.",
-    briefId: "Manfaat dan peluang, didukung alasan, bukan sekadar angan-angan.",
-    noteEn: "Naming benefits is the hat's job, not self-promotion, so modest voices get a fair hearing too.",
-    noteId: "Menyebut manfaat adalah tugas topi ini, bukan promosi diri, sehingga suara yang rendah hati juga didengar.",
-    questionEn: "Why might this succeed, and what value does it create?",
-    questionId: "Mengapa ini bisa berhasil, dan nilai apa yang diciptakannya?",
-  },
-  {
-    key: "green", num: "05", nameEn: "Green", nameId: "Hijau",
-    focusEn: "Creativity & Alternatives", focusId: "Kreativitas & Alternatif",
-    fill: "oklch(55% 0.15 145)", bg: "oklch(94% 0.05 145)", txt: "oklch(38% 0.14 145)", accent: "oklch(52% 0.16 145)",
-    briefEn: "New ideas and alternatives. Judgment is suspended so possibilities can emerge.",
-    briefId: "Ide baru dan alternatif. Penilaian ditangguhkan agar berbagai kemungkinan bisa muncul.",
-    noteEn: "Diverse life experience is a direct creative asset for cross-cultural teams.",
-    noteId: "Pengalaman hidup yang beragam adalah aset kreatif langsung bagi tim lintas budaya.",
-    questionEn: "What would we try if we knew we could not fail?",
-    questionId: "Apa yang akan kita coba jika kita tahu tidak akan gagal?",
-  },
-  {
-    key: "blue", num: "06", nameEn: "Blue", nameId: "Biru",
-    focusEn: "Process Control", focusId: "Kontrol Proses",
-    fill: "oklch(48% 0.18 250)", bg: "oklch(93% 0.04 250)", txt: "oklch(40% 0.16 250)", accent: "oklch(55% 0.18 250)",
-    briefEn: "Manages the thinking process. Opens and closes every session.",
-    briefId: "Mengelola proses berpikir. Membuka dan menutup setiap sesi.",
-    noteEn: "The facilitator can redirect the conversation without anyone losing face.",
-    noteId: "Fasilitator bisa mengarahkan ulang percakapan tanpa siapa pun kehilangan muka.",
-    questionEn: "What is our goal today, and which hats does this need?",
-    questionId: "Apa tujuan kita hari ini, dan topi apa yang dibutuhkan?",
-  },
+const HATS: Hat[] = [
+  { key: "white", en: "White Hat", id: "Topi Putih", focusEn: "Facts", focusId: "Fakta",
+    jobEn: "Only the facts. What we know, and what we don't.", jobId: "Hanya fakta. Apa yang kita tahu, dan apa yang belum.",
+    askEn: "What do we know? What do we need to find out?", askId: "Apa yang kita tahu? Apa yang perlu kita cari tahu?",
+    fill: "oklch(99% 0 0)", bg: "oklch(91% 0.01 260)", txt: "oklch(35% 0.03 260)" },
+  { key: "red", en: "Red Hat", id: "Topi Merah", focusEn: "Feelings", focusId: "Perasaan",
+    jobEn: "Gut reactions. No reasons needed.", jobId: "Reaksi naluri. Tidak perlu alasan.",
+    askEn: "How do I feel about this?", askId: "Apa perasaan saya tentang ini?",
+    fill: "oklch(55% 0.20 25)", bg: "oklch(93% 0.05 25)", txt: "oklch(48% 0.19 25)" },
+  { key: "black", en: "Black Hat", id: "Topi Hitam", focusEn: "Risks", focusId: "Risiko",
+    jobEn: "Risks and weak points. Careful, not negative.", jobId: "Risiko dan titik lemah. Hati-hati, bukan negatif.",
+    askEn: "What could go wrong?", askId: "Apa yang bisa salah?",
+    fill: "oklch(20% 0.01 260)", bg: "oklch(90% 0.01 260)", txt: "oklch(20% 0.02 260)" },
+  { key: "yellow", en: "Yellow Hat", id: "Topi Kuning", focusEn: "Benefits", focusId: "Manfaat",
+    jobEn: "Benefits and value, with reasons.", jobId: "Manfaat dan nilai, dengan alasan.",
+    askEn: "Why could this work?", askId: "Mengapa ini bisa berhasil?",
+    fill: "oklch(82% 0.16 90)", bg: "oklch(95% 0.06 90)", txt: "oklch(52% 0.13 80)" },
+  { key: "green", en: "Green Hat", id: "Topi Hijau", focusEn: "New ideas", focusId: "Ide baru",
+    jobEn: "Fresh ideas. No judging yet.", jobId: "Ide segar. Belum menilai.",
+    askEn: "What else could we try?", askId: "Apa lagi yang bisa kita coba?",
+    fill: "oklch(58% 0.15 145)", bg: "oklch(93% 0.05 145)", txt: "oklch(45% 0.14 145)" },
+  { key: "blue", en: "Blue Hat", id: "Topi Biru", focusEn: "Process", focusId: "Proses",
+    jobEn: "Runs the meeting. Opens it and closes it.", jobId: "Mengatur pertemuan. Membuka dan menutupnya.",
+    askEn: "What is our goal, and which hat is next?", askId: "Apa tujuan kita, dan topi apa berikutnya?",
+    fill: "oklch(50% 0.18 250)", bg: "oklch(92% 0.04 250)", txt: "oklch(45% 0.17 250)" },
 ];
-const HAT_BY_KEY: Record<string, Hat> = Object.fromEntries(SIX_HATS.map(h => [h.key, h]));
+const HAT = Object.fromEntries(HATS.map(h => [h.key, h])) as Record<string, Hat>;
+const hatName = (k: string, lang: Lang) => t(HAT[k].en, HAT[k].id, lang);
 
-const SEQUENCES: { labelEn: string; labelId: string; order: string[] }[] = [
-  { labelEn: "Problem-Solving", labelId: "Pemecahan Masalah", order: ["green", "black", "blue"] },
-  { labelEn: "Decision-Making", labelId: "Pengambilan Keputusan", order: ["white", "black", "yellow"] },
+const SEQUENCES = [
+  { en: "Solving a problem", id: "Memecahkan masalah", order: ["green", "black", "blue"] },
+  { en: "Making a decision", id: "Mengambil keputusan", order: ["white", "black", "yellow"] },
 ];
 
-const TIPS: { titleEn: string; titleId: string; bodyEn: string; bodyId: string }[] = [
-  {
-    titleEn: "Name the hat out loud", titleId: "Sebutkan topi dengan lantang",
-    bodyEn: "\"I'm wearing the Black Hat.\" Separates the concern from the person raising it.",
-    bodyId: "\"Saya memakai Topi Hitam.\" Memisahkan kekhawatiran dari orang yang menyampaikannya.",
-  },
-  {
-    titleEn: "Switch hats when you need to", titleId: "Ganti topi saat dibutuhkan",
-    bodyEn: "New information changes the mode. Name it, then move.",
-    bodyId: "Informasi baru mengubah mode. Sebutkan, lalu lanjutkan.",
-  },
-  {
-    titleEn: "Use all six, not just favourites", titleId: "Gunakan semua enam, bukan hanya favorit",
-    bodyEn: "The Green Hat matters exactly as much as the Black.",
-    bodyId: "Topi Hijau sama pentingnya dengan Topi Hitam.",
-  },
-];
+// ─── Slide building blocks (fixed px on the 1600×900 canvas) ─────────────────
+const bigTitle: React.CSSProperties = {
+  fontFamily: serif, fontWeight: 600, color: navy, lineHeight: 1.04, margin: 0, fontSize: 116, textAlign: "center",
+};
+const midTitle: React.CSSProperties = { ...bigTitle, fontSize: 84 };
+const kicker: React.CSSProperties = {
+  fontFamily: sans, fontSize: 22, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: orange, margin: 0, textAlign: "center",
+};
+const line: React.CSSProperties = { fontFamily: sans, fontSize: 40, fontWeight: 600, color: navy, margin: 0, lineHeight: 1.3, textAlign: "center" };
+const rule = <div aria-hidden="true" style={{ width: 120, height: 4, background: orange, borderRadius: 2 }} />;
 
-const QUESTIONS: Pair[] = [
-  { en: "What information do we have, and what do we need to find out?", id: "Informasi apa yang kita miliki, dan apa yang perlu kita cari tahu?" },
-  { en: "Who might be negatively affected, and in what ways?", id: "Siapa yang mungkin terdampak negatif, dan dengan cara apa?" },
-  { en: "What is our goal today, and which hats does this conversation need?", id: "Apa tujuan kita hari ini, dan topi apa yang dibutuhkan percakapan ini?" },
-];
-
-const bigTitle: React.CSSProperties = { fontFamily: serif, fontWeight: 600, fontSize: 64, lineHeight: 1.08, margin: 0 };
-const midTitle: React.CSSProperties = { fontFamily: serif, fontWeight: 600, fontSize: 44, lineHeight: 1.15, margin: "0 0 28px" };
-const kicker: React.CSSProperties = { fontFamily: sans, fontSize: 15, letterSpacing: "0.18em", textTransform: "uppercase", fontWeight: 600, color: orange, margin: "0 0 18px" };
-const body: React.CSSProperties = { fontFamily: sans, fontSize: 22, lineHeight: 1.55, margin: 0 };
-const card = (bg: string): React.CSSProperties => ({ background: bg, borderRadius: 14, padding: "26px 30px" });
-const rule = (w: number): React.CSSProperties => ({ width: w, height: 3, background: orange, borderRadius: 2 });
-
-function show(on: boolean): React.CSSProperties {
-  return {
-    opacity: on ? 1 : 0,
-    transform: on ? "translateY(0)" : "translateY(10px)",
-    transition: "opacity 0.45s ease, transform 0.45s ease",
-  };
-}
-
-function HatIcon({ fill, size = 88 }: { fill: string; size?: number }) {
+// A top hat: brim, tapered crown, band. The outline keeps the white hat visible.
+function HatIcon({ fill, size }: { fill: string; size: number }) {
   return (
-    <svg width={size} height={Math.round(size * 0.78)} viewBox="0 0 120 94" aria-hidden="true" focusable="false">
-      <ellipse cx="60" cy="78" rx="54" ry="13" fill={fill} opacity={0.92} />
-      <path d="M22 74 Q22 18 60 18 Q98 18 98 74 Z" fill={fill} stroke="oklch(20% 0.02 260 / 0.25)" strokeWidth={2} />
-      <ellipse cx="60" cy="18" rx="16" ry="6" fill="oklch(100% 0 0 / 0.22)" />
+    <svg width={size} height={Math.round(size * 0.75)} viewBox="0 0 200 150" aria-hidden="true" focusable="false" style={{ display: "block", overflow: "visible" }}>
+      <ellipse cx="100" cy="130" rx="94" ry="17" fill={fill} stroke="oklch(20% 0.02 260 / 0.35)" strokeWidth="2.5" />
+      <path d="M50 128 L58 28 Q100 16 142 28 L150 128 Q100 140 50 128 Z" fill={fill} stroke="oklch(20% 0.02 260 / 0.35)" strokeWidth="2.5" strokeLinejoin="round" />
+      <path d="M53 98 Q100 108 147 98 L148.6 114 Q100 124 51.4 114 Z" fill="oklch(10% 0.02 260 / 0.28)" />
+      <ellipse cx="100" cy="28" rx="42" ry="9" fill="oklch(100% 0 0 / 0.25)" />
     </svg>
   );
 }
 
-function SequenceRow({ seq, lang }: { seq: { labelEn: string; labelId: string; order: string[] }; lang: Lang }) {
+function HatRow({ size, gap, lang, labels }: { size: number; gap: number; lang: Lang; labels?: boolean }) {
   return (
-    <div>
-      <p style={{ fontFamily: sans, fontSize: 18, fontWeight: 700, color: navy, margin: "0 0 14px" }}>
-        {t(seq.labelEn, seq.labelId, lang)}
-      </p>
-      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-        {seq.order.map((key, i) => {
-          const h = HAT_BY_KEY[key];
-          return (
-            <div key={key} style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
-                <HatIcon fill={h.fill} size={52} />
-                <span style={{ fontFamily: sans, fontSize: 13, fontWeight: 600, color: muted }}>
-                  {t(h.nameEn, h.nameId, lang)}
-                </span>
-              </div>
-              {i < seq.order.length - 1 && (
-                <span style={{ fontFamily: sans, fontSize: 22, color: orange }} aria-hidden="true">&rarr;</span>
-              )}
-            </div>
-          );
-        })}
-      </div>
+    <div style={{ display: "flex", gap, alignItems: "flex-end", justifyContent: "center" }}>
+      {HATS.map(h => (
+        <div key={h.key} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 14 }}>
+          <HatIcon fill={h.fill} size={size} />
+          {labels && <span style={{ fontFamily: sans, fontSize: 24, fontWeight: 700, color: h.txt }}>{t(h.focusEn, h.focusId, lang)}</span>}
+        </div>
+      ))}
     </div>
   );
 }
 
-type Slide = { key: string; dark?: boolean; steps?: number; render: (lang: Lang, step: number) => React.ReactNode };
+// ─── The slides ───────────────────────────────────────────────────────────────
+type Slide = { key: string; dark?: boolean; render: (lang: Lang) => React.ReactNode };
 
 const SLIDES: Slide[] = [
-  // 1. Title
   {
-    key: "title", dark: true,
-    render: (lang) => (
-      <div style={{ position: "relative", height: "100%", display: "flex", flexDirection: "column", justifyContent: "flex-end", padding: "80px 96px" }}>
-        <p style={kicker}>{t("Cross-Cultural Facilitation", "Fasilitasi Lintas Budaya", lang)}</p>
-        <h1 style={{ ...bigTitle, color: offWhite, maxWidth: 980 }}>
-          {t("Six Thinking Hats", "Enam Topi Berpikir", lang)}
-        </h1>
-        <div style={{ ...rule(72), margin: "26px 0" }} />
-        <p style={{ ...body, color: onNavy, maxWidth: 760, fontStyle: "italic" }}>
-          {t(
-            "\"The method separates thinking into different modes, making it easier for people to think about the right things at the right time.\"",
-            "\"Metode ini memisahkan cara berpikir menjadi beberapa mode berbeda, sehingga orang lebih mudah memikirkan hal yang tepat pada waktu yang tepat.\"",
-            lang
-          )}
-        </p>
-        <p style={{ ...body, color: muted, fontSize: 17, marginTop: 10 }}>{t("Edward de Bono", "Edward de Bono", lang)}</p>
-      </div>
+    key: "title",
+    render: lang => (
+      <>
+        <HatRow size={170} gap={36} lang={lang} />
+        {rule}
+        <h1 style={{ ...bigTitle, fontSize: 140 }}>{t("Six Thinking Hats", "Enam Topi Berpikir", lang)}</h1>
+        <p style={kicker}>{t("Think together, one hat at a time", "Berpikir bersama, satu topi pada satu waktu", lang)}</p>
+      </>
     ),
   },
-  // 2. Reframe
   {
-    key: "reframe", dark: true, steps: 3,
-    render: (lang, step) => (
-      <div style={{ padding: "80px 96px", height: "100%", display: "flex", flexDirection: "column", justifyContent: "center" }}>
-        <p style={kicker}>{t("The Core Idea", "Gagasan Inti", lang)}</p>
-        <h2 style={{ ...midTitle, color: offWhite }}>{t("Parallel thinking, not adversarial thinking", "Berpikir paralel, bukan berpikir bertentangan", lang)}</h2>
-        <div style={{ display: "flex", flexDirection: "column", gap: 20, maxWidth: 900 }}>
-          <p style={{ ...body, color: onNavy }}>{t("Most meetings default to debate: positions are taken, defended, attacked.", "Sebagian besar rapat berjalan seperti debat: posisi diambil, dipertahankan, diserang.", lang)}</p>
-          <p style={{ ...body, color: onNavy, ...show(step >= 1) }}>{t("Six Thinking Hats separates thinking into six distinct modes.", "Enam Topi Berpikir memisahkan cara berpikir menjadi enam mode yang berbeda.", lang)}</p>
-          <p style={{ ...body, color: offWhite, fontWeight: 700, ...show(step >= 2) }}>{t("Everyone thinks in the same mode, at the same time, then shifts together.", "Semua orang berpikir dalam mode yang sama, di waktu yang sama, lalu berpindah bersama.", lang)}</p>
+    key: "problem",
+    render: lang => (
+      <>
+        <p style={kicker}>{t("The problem", "Masalahnya", lang)}</p>
+        <h2 style={{ ...bigTitle, fontSize: 104 }}>{t("Most meetings turn into a debate.", "Banyak rapat berubah jadi perdebatan.", lang)}</h2>
+        {rule}
+        <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+          <p style={line}>{t("One side defends.", "Satu pihak membela.", lang)}</p>
+          <p style={line}>{t("The other side attacks.", "Pihak lain menyerang.", lang)}</p>
+          <p style={{ ...line, color: orange }}>{t("The loudest voice wins.", "Suara paling keras yang menang.", lang)}</p>
         </div>
-      </div>
+      </>
     ),
   },
-  // 3. Six hats overview (one per click)
   {
-    key: "overview", steps: 7,
-    render: (lang, step) => (
-      <div style={{ padding: "70px 96px", height: "100%" }}>
-        <p style={kicker}>{t("The Framework", "Kerangka Kerja", lang)}</p>
-        <h2 style={midTitle}>{t("The Six Hats", "Enam Topi", lang)}</h2>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20 }}>
-          {SIX_HATS.map((h, n) => (
-            <div key={h.key} style={{ ...card(h.bg), display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: 10, ...show(step > n) }}>
-              <HatIcon fill={h.fill} size={64} />
-              <p style={{ fontFamily: sans, fontSize: 19, fontWeight: 700, color: h.txt, margin: 0 }}>{t(h.nameEn, h.nameId, lang)}</p>
-              <p style={{ fontFamily: sans, fontSize: 15, color: h.txt, margin: 0, opacity: 0.85 }}>{t(h.focusEn, h.focusId, lang)}</p>
+    key: "idea",
+    render: lang => (
+      <>
+        <p style={kicker}>{t("The idea", "Gagasannya", lang)}</p>
+        <div style={{ display: "flex", gap: 40 }}>
+          {[0, 1, 2, 3, 4].map(n => <HatIcon key={n} fill={HAT.green.fill} size={170} />)}
+        </div>
+        <h2 style={{ ...bigTitle, fontSize: 96 }}>{t("Everyone wears the same hat,", "Semua memakai topi yang sama,", lang)}<br />{t("at the same time.", "pada waktu yang sama.", lang)}</h2>
+        <p style={{ ...line, color: muted, fontWeight: 500 }}>{t("Not for or against. Side by side.", "Bukan pro atau kontra. Berdampingan.", lang)}</p>
+      </>
+    ),
+  },
+  {
+    key: "overview",
+    render: lang => (
+      <>
+        <h2 style={midTitle}>{t("Six hats. Six ways to think.", "Enam topi. Enam cara berpikir.", lang)}</h2>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "44px 120px", marginTop: 12 }}>
+          {HATS.map(h => (
+            <div key={h.key} style={{ display: "flex", alignItems: "center", gap: 28 }}>
+              <HatIcon fill={h.fill} size={150} />
+              <div>
+                <p style={{ fontFamily: sans, fontSize: 22, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: h.txt, margin: 0 }}>{t(h.en, h.id, lang)}</p>
+                <p style={{ fontFamily: serif, fontSize: 52, fontWeight: 600, color: navy, margin: 0, lineHeight: 1.05 }}>{t(h.focusEn, h.focusId, lang)}</p>
+              </div>
             </div>
           ))}
         </div>
-      </div>
+      </>
     ),
   },
-  // 4-9. One detail slide per hat
-  ...SIX_HATS.map((h, idx): Slide => ({
-    key: `hat-${h.key}`, steps: 3,
-    render: (lang, step) => (
-      <div style={{ padding: "70px 96px", height: "100%" }}>
-        <p style={kicker}>{t(`Hat ${idx + 1} of 6`, `Topi ${idx + 1} dari 6`, lang)}</p>
-        <div style={{ display: "flex", alignItems: "center", gap: 24, marginBottom: 26 }}>
-          <HatIcon fill={h.fill} size={80} />
-          <div>
-            <h2 style={{ ...midTitle, margin: 0, color: navy }}>{t(h.nameEn, h.nameId, lang)}</h2>
-            <p style={{ fontFamily: sans, fontSize: 18, fontWeight: 600, color: h.accent, margin: "4px 0 0" }}>{t(h.focusEn, h.focusId, lang)}</p>
-          </div>
+  ...HATS.map((h, i): Slide => ({
+    key: h.key,
+    render: lang => (
+      <div style={{ display: "grid", gridTemplateColumns: "560px 1fr", alignItems: "center", gap: 90, width: "100%" }}>
+        <div style={{ width: 560, height: 560, borderRadius: "50%", background: h.bg, display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <HatIcon fill={h.fill} size={400} />
         </div>
-        <p style={{ ...body, color: ink, maxWidth: 900, marginBottom: 24 }}>{t(h.briefEn, h.briefId, lang)}</p>
-        <div style={{ display: "flex", flexDirection: "column", gap: 18, maxWidth: 940 }}>
-          <div style={{ ...card(h.bg), ...show(step >= 1) }}>
-            <p style={{ fontFamily: sans, fontSize: 13, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: h.txt, margin: "0 0 8px", opacity: 0.7 }}>
-              {t("Cross-Cultural Note", "Catatan Lintas Budaya", lang)}
-            </p>
-            <p style={{ fontFamily: sans, fontSize: 19, lineHeight: 1.5, color: h.txt, margin: 0 }}>{t(h.noteEn, h.noteId, lang)}</p>
-          </div>
-          <div style={{ ...card(lightGray), ...show(step >= 2) }}>
-            <p style={{ fontFamily: sans, fontSize: 13, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: muted, margin: "0 0 8px" }}>
-              {t("Ask", "Tanyakan", lang)}
-            </p>
-            <p style={{ fontFamily: sans, fontSize: 19, lineHeight: 1.5, color: navy, margin: 0, fontStyle: "italic" }}>{t(h.questionEn, h.questionId, lang)}</p>
-          </div>
+        <div>
+          <p style={{ ...kicker, textAlign: "left" }}>{t(`Hat ${i + 1} of 6 · ${h.focusEn}`, `Topi ${i + 1} dari 6 · ${h.focusId}`, lang)}</p>
+          <h2 style={{ ...bigTitle, textAlign: "left", fontSize: 130, color: h.txt, margin: "10px 0 20px" }}>{t(h.en, h.id, lang)}</h2>
+          <p style={{ ...line, textAlign: "left", fontSize: 38 }}>{t(h.jobEn, h.jobId, lang)}</p>
+          <div style={{ width: 96, height: 4, background: orange, borderRadius: 2, margin: "40px 0 28px" }} />
+          <p style={{ fontFamily: sans, fontSize: 20, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: muted, margin: "0 0 8px" }}>{t("Ask", "Tanyakan", lang)}</p>
+          <p style={{ fontFamily: serif, fontStyle: "italic", fontWeight: 500, fontSize: 56, color: navy, margin: 0, lineHeight: 1.12 }}>{t(h.askEn, h.askId, lang)}</p>
         </div>
       </div>
     ),
   })),
-  // 10. Sequencing
   {
-    key: "sequencing", steps: 3,
-    render: (lang, step) => (
-      <div style={{ padding: "70px 96px", height: "100%" }}>
-        <p style={kicker}>{t("Putting It Together", "Menerapkannya", lang)}</p>
-        <h2 style={midTitle}>{t("Combine hats in sequence", "Menggabungkan topi secara berurutan", lang)}</h2>
-        <div style={{ display: "flex", flexDirection: "column", gap: 44 }}>
-          <div style={show(step >= 1)}><SequenceRow seq={SEQUENCES[0]} lang={lang} /></div>
-          <div style={show(step >= 2)}><SequenceRow seq={SEQUENCES[1]} lang={lang} /></div>
-        </div>
-      </div>
-    ),
-  },
-  // 11. Research stat
-  {
-    key: "stat", steps: 3,
-    render: (lang, step) => (
-      <div style={{ padding: "70px 96px", height: "100%", display: "flex", flexDirection: "column", justifyContent: "center" }}>
-        <p style={kicker}>{t("What The Research Shows", "Apa Kata Penelitian", lang)}</p>
-        <div style={{ display: "flex", alignItems: "flex-start", gap: 48, ...show(step >= 1) }}>
-          <div style={{ fontFamily: serif, fontWeight: 700, fontSize: 130, lineHeight: 1, color: orange }}>78</div>
-          <p style={{ ...body, color: ink, maxWidth: 560, marginTop: 12 }}>
-            {t("Indonesia's score on Hofstede's Power Distance Index, among the highest in the world. Disagreeing with a senior leader in public can feel face-threatening.",
-              "Skor Indonesia pada Indeks Jarak Kekuasaan Hofstede, salah satu yang tertinggi di dunia. Tidak setuju dengan pemimpin senior di depan umum bisa terasa mengancam muka.", lang)}
-          </p>
-        </div>
-        <p style={{ ...body, color: navy, fontWeight: 700, maxWidth: 900, marginTop: 30, ...show(step >= 2) }}>
-          {t("Structured dissent roles, like the Black Hat, lead groups to consider a significantly wider range of perspectives.",
-            "Peran ketidaksetujuan yang terstruktur, seperti Topi Hitam, membuat kelompok mempertimbangkan sudut pandang yang jauh lebih luas.", lang)}
-        </p>
-        <p style={{ fontFamily: sans, fontSize: 14, color: muted, marginTop: 26 }}>
-          {t("Sources: Hofstede, Hofstede & Minkov, Cultures and Organizations (2010). Nemeth, Brown & Rogers, European Journal of Social Psychology (2001).",
-            "Sumber: Hofstede, Hofstede & Minkov, Cultures and Organizations (2010). Nemeth, Brown & Rogers, European Journal of Social Psychology (2001).", lang)}
-        </p>
-      </div>
-    ),
-  },
-  // 12. Faith
-  {
-    key: "faith", steps: 4,
-    render: (lang, step) => (
-      <div style={{ padding: "70px 96px", height: "100%" }}>
-        <p style={kicker}>{t("Faith & Practice", "Iman & Praktik", lang)}</p>
-        <h2 style={midTitle}>{t("Wisdom for the process", "Kebijaksanaan untuk proses", lang)}</h2>
-        <div style={{ display: "flex", flexDirection: "column", gap: 20, maxWidth: 960 }}>
-          <div style={{ ...card(offWhite), border: `1px solid ${lightGray}`, ...show(step >= 1) }}>
-            <p style={{ fontFamily: sans, fontSize: 13, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: orange, margin: "0 0 8px" }}>
-              {t("Proverbs 15:22", "Amsal 15:22", lang)}
+    key: "name-it",
+    render: lang => (
+      <div style={{ display: "grid", gridTemplateColumns: "460px 1fr", alignItems: "center", gap: 80, width: "100%" }}>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 28 }}>
+          <div style={{ position: "relative", background: "white", borderRadius: 28, padding: "28px 34px", boxShadow: "0 16px 40px oklch(14% 0.05 260 / 0.12)" }}>
+            <p style={{ fontFamily: serif, fontStyle: "italic", fontWeight: 600, fontSize: 44, color: navy, margin: 0, lineHeight: 1.15, textAlign: "center" }}>
+              {t("“Let me put on the Black Hat.”", "“Saya pakai Topi Hitam dulu.”", lang)}
             </p>
-            <p style={{ ...body, color: ink, margin: 0 }}>
-              {t("Plans fail for lack of counsel, but with many advisers they succeed. The Black Hat is that counsel, built into the process.",
-                "Rencana gagal karena tidak ada penasihat, tetapi dengan banyak penasihat, rencana itu terlaksana. Topi Hitam adalah penasihat itu, dibangun ke dalam prosesnya.", lang)}
-            </p>
+            <span aria-hidden="true" style={{ position: "absolute", left: "50%", bottom: -18, transform: "translateX(-50%) rotate(45deg)", width: 36, height: 36, background: "white" }} />
           </div>
-          <div style={{ ...card(offWhite), border: `1px solid ${lightGray}`, ...show(step >= 2) }}>
-            <p style={{ fontFamily: sans, fontSize: 13, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: orange, margin: "0 0 8px" }}>
-              {t("Acts 15", "Kisah Para Rasul 15", lang)}
-            </p>
-            <p style={{ ...body, color: ink, margin: 0 }}>
-              {t("At the Jerusalem Council, diverse voices were heard, the process was deliberate, and the conclusion was framed as Spirit-guided discernment: Blue Hat principles in action.",
-                "Dalam Konsili Yerusalem, suara yang beragam didengar, prosesnya dijalankan dengan sengaja, dan kesimpulannya dipahami sebagai hasil pimpinan Roh: prinsip Topi Biru dalam praktik.", lang)}
-            </p>
-          </div>
-          <p style={{ ...body, color: navy, fontWeight: 700, ...show(step >= 3) }}>
-            {t("Six Thinking Hats gives structure to wisdom the Scriptures already commend.",
-              "Enam Topi Berpikir memberi struktur pada kebijaksanaan yang sudah dianjurkan dalam Kitab Suci.", lang)}
-          </p>
+          <HatIcon fill={HAT.black.fill} size={320} />
+        </div>
+        <div>
+          <p style={{ ...kicker, textAlign: "left" }}>{t("The key habit", "Kebiasaan kunci", lang)}</p>
+          <h2 style={{ ...bigTitle, textAlign: "left", fontSize: 104, margin: "12px 0 36px" }}>{t("Name the hat out loud.", "Sebutkan topinya dengan jelas.", lang)}</h2>
+          <p style={{ ...line, textAlign: "left" }}>{t("The concern belongs to the hat.", "Kekhawatiran itu milik topi.", lang)}</p>
+          <p style={{ ...line, textAlign: "left", color: orange }}>{t("Not to the person.", "Bukan milik orangnya.", lang)}</p>
         </div>
       </div>
     ),
   },
-  // 13. Start today
   {
-    key: "tips", steps: 4,
-    render: (lang, step) => (
-      <div style={{ padding: "70px 96px", height: "100%" }}>
-        <p style={kicker}>{t("Start Today", "Mulai Hari Ini", lang)}</p>
-        <h2 style={midTitle}>{t("Three ways to begin", "Tiga cara untuk memulai", lang)}</h2>
-        <div style={{ display: "flex", flexDirection: "column", gap: 20, maxWidth: 940 }}>
-          {TIPS.map((tip, n) => (
-            <div key={tip.titleEn} style={{ ...card(offWhite), border: `1px solid ${lightGray}`, ...show(step > n) }}>
-              <p style={{ fontFamily: sans, fontSize: 19, fontWeight: 700, color: navy, margin: "0 0 6px" }}>{t(tip.titleEn, tip.titleId, lang)}</p>
-              <p style={{ fontFamily: sans, fontSize: 17, color: muted, margin: 0, lineHeight: 1.5 }}>{t(tip.bodyEn, tip.bodyId, lang)}</p>
+    key: "cultures",
+    render: lang => (
+      <>
+        <p style={kicker}>{t("Why it works across cultures", "Mengapa ini berhasil lintas budaya", lang)}</p>
+        <div style={{ display: "flex", flexDirection: "column", gap: 44, marginTop: 12 }}>
+          {[
+            { k: "blue", en: "Everyone gets a turn.", id: "Setiap orang dapat giliran." },
+            { k: "black", en: "Disagreeing becomes safe.", id: "Tidak setuju jadi aman." },
+            { k: "red", en: "No one loses face.", id: "Tidak ada yang kehilangan muka." },
+          ].map(r => (
+            <div key={r.k} style={{ display: "flex", alignItems: "center", gap: 48 }}>
+              <HatIcon fill={HAT[r.k].fill} size={150} />
+              <p style={{ fontFamily: serif, fontSize: 76, fontWeight: 600, color: navy, margin: 0, lineHeight: 1 }}>{t(r.en, r.id, lang)}</p>
             </div>
           ))}
         </div>
-      </div>
+      </>
     ),
   },
-  // 14. Discussion questions
   {
-    key: "questions", dark: true, steps: 4,
-    render: (lang, step) => (
-      <div style={{ padding: "80px 96px", height: "100%", display: "flex", flexDirection: "column", justifyContent: "center" }}>
-        <p style={kicker}>{t("For Your Team", "Untuk Tim Anda", lang)}</p>
-        <h2 style={{ ...midTitle, color: offWhite }}>{t("Discuss together", "Diskusikan bersama", lang)}</h2>
-        <div style={{ display: "flex", flexDirection: "column", gap: 24, maxWidth: 980 }}>
-          {QUESTIONS.map((q, n) => (
-            <div key={q.en} style={{ display: "flex", gap: 18, alignItems: "flex-start", ...show(step > n) }}>
-              <span style={{ fontFamily: serif, fontSize: 30, fontWeight: 700, color: orange }}>{n + 1}</span>
-              <p style={{ ...body, color: offWhite, fontSize: 24, margin: 0 }}>{tp(q, lang)}</p>
+    key: "sequence",
+    render: lang => (
+      <>
+        <h2 style={midTitle}>{t("Pick the order before you start.", "Tentukan urutannya sebelum mulai.", lang)}</h2>
+        <div style={{ display: "flex", flexDirection: "column", gap: 56, marginTop: 8 }}>
+          {SEQUENCES.map(s => (
+            <div key={s.en} style={{ display: "grid", gridTemplateColumns: "400px 1fr", alignItems: "center", gap: 40 }}>
+              <p style={{ fontFamily: sans, fontSize: 36, fontWeight: 700, color: navy, margin: 0, lineHeight: 1.2 }}>{t(s.en, s.id, lang)}</p>
+              <div style={{ display: "flex", alignItems: "center", gap: 28 }}>
+                {s.order.map((k, n) => (
+                  <div key={k} style={{ display: "flex", alignItems: "center", gap: 28 }}>
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 10, width: 200 }}>
+                      <HatIcon fill={HAT[k].fill} size={150} />
+                      <span style={{ fontFamily: sans, fontSize: 24, fontWeight: 700, color: HAT[k].txt }}>{hatName(k, lang)}</span>
+                    </div>
+                    {n < s.order.length - 1 && (
+                      <svg width="56" height="32" viewBox="0 0 56 32" aria-hidden="true"><path d="M2 16h46M36 4l14 12-14 12" fill="none" stroke={orange} strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                    )}
+                  </div>
+                ))}
+              </div>
             </div>
           ))}
         </div>
+        <p style={{ ...kicker, marginTop: 8 }}>{t("The Blue Hat decides the order", "Topi Biru menentukan urutannya", lang)}</p>
+      </>
+    ),
+  },
+  {
+    key: "faith",
+    render: lang => (
+      <div style={{ width: 1240, display: "flex", flexDirection: "column", alignItems: "center", gap: 40 }}>
+        <p style={kicker}>{t("Faith anchor", "Jangkar iman", lang)}</p>
+        <p style={{ fontFamily: serif, fontStyle: "italic", fontWeight: 500, fontSize: 80, color: navy, margin: 0, lineHeight: 1.15, textAlign: "center" }}>
+          {t("“Plans fail for lack of counsel, but with many advisers they succeed.”",
+            "“Rancangan gagal kalau tidak ada pertimbangan, tetapi terlaksana kalau penasihat banyak.”", lang)}
+        </p>
+        <p style={{ fontFamily: sans, fontSize: 26, fontWeight: 700, color: orange, margin: 0 }}>{t("Proverbs 15:22 (NIV)", "Amsal 15:22 (TB)", lang)}</p>
+        {rule}
+        <p style={{ ...line, color: muted, fontWeight: 500 }}>{t("Six hats give every adviser a voice.", "Enam topi memberi suara kepada setiap penasihat.", lang)}</p>
       </div>
+    ),
+  },
+  {
+    key: "try",
+    render: lang => (
+      <>
+        <h2 style={midTitle}>{t("Try it this week", "Coba minggu ini", lang)}</h2>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 40, width: "100%", marginTop: 12 }}>
+          {[
+            { en: "Pick one real decision.", id: "Pilih satu keputusan nyata." },
+            { en: "Choose three hats.", id: "Pilih tiga topi." },
+            { en: "Wear each hat together.", id: "Pakai setiap topi bersama-sama." },
+          ].map((s, n) => (
+            <div key={s.en} style={{ background: "white", borderRadius: 24, padding: "48px 40px", minHeight: 340, display: "flex", flexDirection: "column", gap: 24, boxShadow: "0 12px 34px oklch(14% 0.05 260 / 0.08)" }}>
+              <span style={{ fontFamily: serif, fontSize: 130, fontWeight: 600, color: orange, lineHeight: 0.8 }}>{n + 1}</span>
+              <p style={{ fontFamily: sans, fontSize: 40, fontWeight: 700, color: navy, margin: 0, lineHeight: 1.2 }}>{t(s.en, s.id, lang)}</p>
+            </div>
+          ))}
+        </div>
+      </>
+    ),
+  },
+  {
+    key: "close",
+    dark: true,
+    render: lang => (
+      <>
+        <HatRow size={130} gap={32} lang={lang} />
+        <h2 style={{ ...bigTitle, color: offWhite, fontSize: 104 }}>{t("Which hat does your team forget to wear?", "Topi mana yang sering dilupakan tim Anda?", lang)}</h2>
+      </>
     ),
   },
 ];
 
-function stepsOf(index: number) {
-  return SLIDES[index]?.steps ?? 1;
-}
-
-function SlideFrame({ index, lang, step }: { index: number; lang: Lang; step: number }) {
-  const slide = SLIDES[index];
+// One slide on the 1600×900 canvas, with a quiet footer
+function SlideFrame({ index, lang }: { index: number; lang: Lang }) {
+  const s = SLIDES[index];
   const isTitle = index === 0;
   return (
-    <div
-      style={{
-        width: W, height: H, position: "relative", overflow: "hidden",
-        background: slide.dark ? navy : offWhite,
-        fontFamily: sans,
-      }}
-    >
+    <div style={{ width: W, height: H, position: "relative", background: s.dark ? navy : offWhite, overflow: "hidden", fontFamily: sans }}>
       {isTitle && (
-        <>
-          <img src={`${IMG}/hero.jpg`} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", opacity: 0.28, mixBlendMode: "luminosity", pointerEvents: "none" }} />
-          <div style={{ position: "absolute", inset: 0, background: `linear-gradient(180deg, ${navy} 0%, oklch(22% 0.10 260 / 0.75) 55%, ${navy} 100%)`, pointerEvents: "none" }} />
-        </>
+        <div aria-hidden="true" style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at 50% 38%, oklch(99% 0.01 60) 0%, transparent 60%)" }} />
       )}
-      {!slide.dark && <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 8, background: orange }} />}
-      <div style={{ position: "relative", height: "100%" }}>{slide.render(lang, step)}</div>
-      <div style={{ position: "absolute", left: 96, right: 96, bottom: 28, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <span style={{ fontFamily: sans, fontSize: 13, fontWeight: 600, letterSpacing: "0.08em", color: slide.dark ? onNavy : muted, opacity: 0.7 }}>
-          {t("Six Thinking Hats", "Enam Topi Berpikir", lang)}
-        </span>
-        <span style={{ fontFamily: sans, fontSize: 13, color: slide.dark ? onNavy : muted, opacity: 0.7 }}>
-          {index + 1} / {SLIDES.length}
-        </span>
+      <div aria-hidden="true" style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 10, background: orange }} />
+      <div style={{ position: "absolute", inset: "64px 120px 110px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 36 }}>
+        {s.render(lang)}
       </div>
+      {!isTitle && (
+        <div style={{ position: "absolute", left: 120, right: 120, bottom: 44, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <span style={{ display: "inline-flex", alignItems: "center", gap: 14, fontSize: 17, fontWeight: 600, color: s.dark ? onNavy : muted, letterSpacing: "0.04em" }}>
+            <img src="/logo-icon.png" alt="" aria-hidden="true" width={30} height={30} style={{ display: "block" }} />
+            {t("Six Thinking Hats", "Enam Topi Berpikir", lang)}
+          </span>
+          <span style={{ fontSize: 17, fontWeight: 700, color: s.dark ? onNavy : muted }}>{index + 1} / {SLIDES.length}</span>
+        </div>
+      )}
+      {isTitle && (
+        <img src="/logo-icon.png" alt="Crispy Development" width={40} height={40} style={{ position: "absolute", right: 56, bottom: 44, display: "block" }} />
+      )}
     </div>
   );
 }
 
-function Thumb({ index, lang, active }: { index: number; lang: Lang; active: boolean }) {
-  const scale = 200 / W;
-  return (
-    <div
-      style={{
-        width: 200, height: 200 * (H / W), position: "relative", overflow: "hidden", borderRadius: 8,
-        border: active ? `3px solid ${orange}` : `1px solid ${lightGray}`, cursor: "pointer", flexShrink: 0,
-      }}
-    >
-      <div style={{ width: W, height: H, transform: `scale(${scale})`, transformOrigin: "top left", pointerEvents: "none" }}>
-        <SlideFrame index={index} lang={lang} step={stepsOf(index) - 1} />
-      </div>
-    </div>
-  );
-}
-
+// ─── Player ───────────────────────────────────────────────────────────────────
 export default function PresentClient() {
-  const [lang, setLang] = useState<Lang>("en");
-  const [pos, setPos] = useState({ i: 0, s: 0 });
-  const [scale, setScale] = useState(1);
+  const { lang: ctxLang, setLang } = useLanguage();
+  const lang = (ctxLang === "id" ? "id" : "en") as Lang;
+  const [i, setI] = useState(0);
   const [isFull, setIsFull] = useState(false);
+  const [uiVisible, setUiVisible] = useState(true);
   const [overview, setOverview] = useState(false);
-  const [showUI, setShowUI] = useState(true);
+  const [blank, setBlank] = useState(false);
+  const [started, setStarted] = useState(false);
   const [tooSmall, setTooSmall] = useState(false);
-  const wrapRef = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(0.5);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
   const idleTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-
+  const touchX = useRef<number | null>(null);
   const last = SLIDES.length - 1;
 
-  const wake = useCallback(() => {
-    setShowUI(true);
-    if (idleTimer.current) clearTimeout(idleTimer.current);
-    idleTimer.current = setTimeout(() => setShowUI(false), IDLE_MS);
-  }, []);
-
-  const go = useCallback((i: number) => {
-    setPos({ i: Math.max(0, Math.min(last, i)), s: 0 });
-  }, [last]);
-
-  const next = useCallback(() => {
-    setPos(p => (p.s < stepsOf(p.i) - 1 ? { i: p.i, s: p.s + 1 } : p.i < last ? { i: p.i + 1, s: 0 } : p));
-  }, [last]);
-
-  const prev = useCallback(() => {
-    setPos(p => (p.s > 0 ? { i: p.i, s: p.s - 1 } : p.i > 0 ? { i: p.i - 1, s: Math.max(0, stepsOf(p.i - 1) - 1) } : p));
-  }, []);
+  const go = useCallback((n: number) => { setBlank(false); setI(Math.max(0, Math.min(last, n))); }, [last]);
+  const next = useCallback(() => { setBlank(false); setI(n => Math.min(last, n + 1)); }, [last]);
+  const prev = useCallback(() => { setBlank(false); setI(n => Math.max(0, n - 1)); }, []);
 
   const toggleFull = useCallback(() => {
-    if (!document.fullscreenElement) {
-      wrapRef.current?.requestFullscreen?.().then(() => setIsFull(true)).catch(() => {});
-    } else {
-      document.exitFullscreen?.().then(() => setIsFull(false)).catch(() => {});
-    }
+    if (document.fullscreenElement) document.exitFullscreen?.().catch(() => {});
+    else rootRef.current?.requestFullscreen?.().catch(() => {});
   }, []);
 
+  const wake = useCallback(() => {
+    setUiVisible(true);
+    if (idleTimer.current) clearTimeout(idleTimer.current);
+    idleTimer.current = setTimeout(() => setUiVisible(false), IDLE_MS);
+  }, []);
+
+  // Fit the 16:9 canvas into whatever space the screen gives us
+  useLayoutEffect(() => {
+    const el = stageRef.current;
+    if (!el) return;
+    const measure = () => setScale(Math.min(el.clientWidth / W, el.clientHeight / H));
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [tooSmall]);
+
   useEffect(() => {
-    const onFsChange = () => setIsFull(!!document.fullscreenElement);
-    document.addEventListener("fullscreenchange", onFsChange);
-    return () => document.removeEventListener("fullscreenchange", onFsChange);
+    const mq = window.matchMedia(`(max-width: ${MIN_WIDTH - 1}px)`);
+    const upd = () => setTooSmall(mq.matches);
+    upd();
+    mq.addEventListener("change", upd);
+    return () => mq.removeEventListener("change", upd);
   }, []);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      wake();
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      const k = e.key;
+      // Let a focused button handle its own Space press
+      if (k === " " && (e.target as HTMLElement)?.closest?.("button, a")) return;
       if (overview) {
-        if (e.key === "Escape") setOverview(false);
+        if (k === "Escape" || k === "g" || k === "G") { e.preventDefault(); setOverview(false); }
         return;
       }
-      if (e.key === "ArrowRight" || e.key === " " || e.key.toLowerCase() === "n") { e.preventDefault(); next(); }
-      else if (e.key === "ArrowLeft" || e.key.toLowerCase() === "p") { e.preventDefault(); prev(); }
-      else if (e.key === "Home") go(0);
-      else if (e.key === "End") go(last);
-      else if (e.key.toLowerCase() === "f") toggleFull();
-      else if (e.key.toLowerCase() === "g") setOverview(true);
-      else if (e.key.toLowerCase() === "l") setLang(l => (l === "en" ? "id" : "en"));
-      else if (e.key === "Escape" && isFull) toggleFull();
+      setStarted(true);
+      if (["ArrowRight", "ArrowDown", "PageDown", " ", "n", "N"].includes(k)) { e.preventDefault(); next(); }
+      else if (["ArrowLeft", "ArrowUp", "PageUp", "Backspace", "p", "P"].includes(k)) { e.preventDefault(); prev(); }
+      else if (k === "Home") { e.preventDefault(); go(0); }
+      else if (k === "End") { e.preventDefault(); go(last); }
+      else if (k === "f" || k === "F") { e.preventDefault(); toggleFull(); }
+      else if (k === "g" || k === "G") { e.preventDefault(); setOverview(true); }
+      else if (k === "b" || k === "B" || k === ".") { e.preventDefault(); setBlank(b => !b); }
+      else if (k === "l" || k === "L") { e.preventDefault(); setLang(lang === "en" ? "id" : "en"); }
+      else if (k === "Escape") setBlank(false);
+      wake();
     };
+    const onFull = () => setIsFull(!!document.fullscreenElement);
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [next, prev, go, last, overview, isFull, toggleFull, wake]);
-
-  useLayoutEffect(() => {
-    const el = wrapRef.current;
-    if (!el) return;
-    const ro = new ResizeObserver(entries => {
-      for (const entry of entries) {
-        const { width, height } = entry.contentRect;
-        setScale(Math.min(width / W, height / H));
-      }
-    });
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, []);
+    document.addEventListener("fullscreenchange", onFull);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.removeEventListener("fullscreenchange", onFull);
+    };
+  }, [overview, next, prev, go, last, toggleFull, wake, lang, setLang]);
 
   useEffect(() => {
-    const mq = window.matchMedia(`(max-width: ${MIN_WIDTH - 1}px)`);
-    const update = () => setTooSmall(mq.matches);
-    update();
-    mq.addEventListener("change", update);
-    return () => mq.removeEventListener("change", update);
-  }, []);
-
-  useEffect(() => {
-    document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = ""; };
-  }, []);
-
-  useEffect(() => {
-    const img = new Image();
-    img.src = `${IMG}/hero.jpg`;
-  }, []);
-
-  useEffect(() => {
-    idleTimer.current = setTimeout(() => setShowUI(false), IDLE_MS);
+    idleTimer.current = setTimeout(() => setUiVisible(false), IDLE_MS);
     return () => { if (idleTimer.current) clearTimeout(idleTimer.current); };
   }, [wake]);
 
-  const touchStartX = useRef(0);
-  const onTouchStart = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX; wake(); };
-  const onTouchEnd = (e: React.TouchEvent) => {
-    const dx = e.changedTouches[0].clientX - touchStartX.current;
-    if (Math.abs(dx) > 50) { if (dx < 0) next(); else prev(); }
-  };
+  // Stop the page behind from scrolling while presenting
+  useEffect(() => {
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = prevOverflow; };
+  }, []);
+
+  const moduleHref = `/resources/${SLUG}`;
+  const showUi = uiVisible || !started || overview;
 
   if (tooSmall) {
     return (
-      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: navy, padding: 24 }}>
-        <div style={{ background: offWhite, borderRadius: 16, padding: "36px 30px", maxWidth: 360, textAlign: "center", fontFamily: sans }}>
-          <p style={{ fontFamily: serif, fontSize: 26, color: navy, margin: "0 0 10px" }}>
-            {t("A bigger screen is needed", "Butuh layar yang lebih besar", lang)}
+      <div style={{ position: "fixed", inset: 0, zIndex: 1000, background: navy, display: "flex", alignItems: "center", justifyContent: "center", padding: 24, fontFamily: sans }}>
+        <div style={{ maxWidth: 360, textAlign: "center" }}>
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke={orange} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ margin: "0 auto 20px", display: "block" }}>
+            <rect x="3" y="4" width="18" height="12" rx="2" /><path d="M12 16v4M8 20h8" />
+          </svg>
+          <p style={{ fontFamily: serif, fontSize: 30, fontWeight: 600, color: offWhite, margin: "0 0 12px", lineHeight: 1.2 }}>
+            {t("Presenting needs a bigger screen", "Presentasi butuh layar yang lebih besar", lang)}
           </p>
-          <p style={{ fontSize: 15, color: muted, lineHeight: 1.6, margin: "0 0 20px" }}>
-            {t("Presentation mode works on a tablet or computer. Open this module there to show the slides.",
-              "Mode presentasi berfungsi di tablet atau komputer. Buka modul ini di sana untuk menampilkan slide.", lang)}
+          <p style={{ fontSize: 15, lineHeight: 1.6, color: "oklch(82% 0.03 80)", margin: "0 0 28px" }}>
+            {t("Open this module on a tablet or computer to show the slides to your team.",
+              "Buka modul ini di tablet atau komputer untuk menampilkan slide kepada tim Anda.", lang)}
           </p>
-          <Link href={`/resources/${SLUG}`} style={{ color: navy, fontWeight: 700, textDecoration: "underline" }}>
+          <Link href={moduleHref} style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", minHeight: 44, padding: "0 22px", borderRadius: 8, background: orange, color: "white", fontWeight: 700, fontSize: 14, textDecoration: "none" }}>
             {t("Back to the module", "Kembali ke modul", lang)}
           </Link>
         </div>
@@ -580,78 +452,127 @@ export default function PresentClient() {
     );
   }
 
+  const pill: React.CSSProperties = {
+    display: "inline-flex", alignItems: "center", justifyContent: "center", minWidth: 44, height: 44, padding: "0 12px",
+    background: "transparent", border: "none", borderRadius: 10, color: offWhite, cursor: "pointer", fontFamily: sans, fontWeight: 700, fontSize: 13,
+  };
+  const sep = <span aria-hidden="true" style={{ width: 1, height: 24, background: "oklch(100% 0 0 / 0.18)", margin: "0 4px" }} />;
+
   return (
-    <div
-      ref={wrapRef}
-      onMouseMove={wake}
-      onClick={e => { if (!overview && (e.target as HTMLElement).closest("[data-nozone]") == null) next(); }}
-      onTouchStart={onTouchStart}
-      onTouchEnd={onTouchEnd}
-      style={{ position: "fixed", inset: 0, background: ink, display: "flex", alignItems: "center", justifyContent: "center", cursor: showUI ? "default" : "none" }}
-    >
-      <div style={{ width: W * scale, height: H * scale, position: "relative" }}>
-        <div style={{ width: W, height: H, transform: `scale(${scale})`, transformOrigin: "top left" }}>
-          <SlideFrame index={pos.i} lang={lang} step={pos.s} />
+    <div ref={rootRef} onMouseMove={wake}
+      onTouchStart={e => { touchX.current = e.touches[0].clientX; wake(); }}
+      onTouchEnd={e => {
+        if (touchX.current === null || overview) return;
+        const dx = e.changedTouches[0].clientX - touchX.current;
+        if (Math.abs(dx) > 50) { setStarted(true); if (dx < 0) next(); else prev(); }
+        touchX.current = null;
+      }}
+      style={{ position: "fixed", inset: 0, zIndex: 1000, background: ink, fontFamily: sans, cursor: showUi ? "default" : "none", userSelect: "none" }}>
+      <style>{`
+        .sth-fade { animation: sthFade 0.45s ease; }
+        @keyframes sthFade { from { opacity: 0; } to { opacity: 1; } }
+        .sth-ui { transition: opacity 0.4s ease, transform 0.4s ease; }
+        .sth-pill:hover { background: oklch(100% 0 0 / 0.12) !important; }
+        .sth-pill:focus-visible, .sth-thumb:focus-visible { outline: 2px solid ${orange}; outline-offset: 2px; }
+        .sth-thumb { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .sth-thumb:hover { transform: translateY(-3px); }
+        @media (prefers-reduced-motion: reduce) { .sth-fade { animation: none; } .sth-ui, .sth-thumb { transition: none; } }
+      `}</style>
+
+      {/* Stage: the scaled slide, click right side for next, left side for back */}
+      <div ref={stageRef}
+        onClick={e => {
+          if (overview) return;
+          setStarted(true);
+          const r = (e.currentTarget as HTMLDivElement).getBoundingClientRect();
+          if (e.clientX - r.left < r.width * 0.3) prev(); else next();
+        }}
+        style={{ position: "absolute", inset: isFull ? 0 : 24, display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div aria-live="polite" aria-roledescription="slide" aria-label={`${i + 1} / ${SLIDES.length}`}
+          style={{ width: W * scale, height: H * scale, position: "relative", boxShadow: isFull ? "none" : "0 30px 80px oklch(0% 0 0 / 0.45)", borderRadius: isFull ? 0 : 6, overflow: "hidden" }}>
+          <div key={`${i}-${lang}`} className="sth-fade" style={{ width: W, height: H, transform: `scale(${scale})`, transformOrigin: "top left" }}>
+            <SlideFrame index={i} lang={lang} />
+          </div>
+          {blank && <div style={{ position: "absolute", inset: 0, background: "black" }} />}
         </div>
       </div>
 
-      {pos.i === 0 && pos.s === 0 && showUI && (
-        <div style={{ position: "absolute", bottom: "18%", left: "50%", transform: "translateX(-50%)", color: onNavy, fontFamily: sans, fontSize: 14, opacity: 0.8, pointerEvents: "none" }}>
-          {t("Click, or press the right arrow, to begin", "Klik, atau tekan panah kanan, untuk mulai", lang)}
+      {/* Start hint, shown until the presenter first moves on */}
+      {!started && !overview && (
+        <div className="sth-ui" style={{ position: "absolute", left: "50%", bottom: 104, transform: "translateX(-50%)", display: "flex", alignItems: "center", gap: 14 }}>
+          {!isFull && (
+            <button type="button" onClick={() => { setStarted(true); toggleFull(); }}
+              style={{ display: "inline-flex", alignItems: "center", gap: 10, height: 48, padding: "0 24px", borderRadius: 999, border: "none", background: orange, color: "white", fontFamily: sans, fontWeight: 700, fontSize: 15, cursor: "pointer", boxShadow: "0 10px 30px oklch(0% 0 0 / 0.35)" }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+              {t("Start full screen", "Mulai layar penuh", lang)}
+            </button>
+          )}
+          <span style={{ fontSize: 13, color: "oklch(85% 0.02 80)", background: "oklch(0% 0 0 / 0.45)", padding: "8px 14px", borderRadius: 999 }}>
+            {t("Arrow keys or clicker to move. F full screen. G all slides.", "Tombol panah atau clicker untuk pindah. F layar penuh. G semua slide.", lang)}
+          </span>
         </div>
       )}
 
-      <div
-        data-nozone
-        style={{
-          position: "absolute", left: 0, right: 0, bottom: 0, padding: "16px 28px",
-          display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16,
-          background: "linear-gradient(0deg, oklch(0% 0 0 / 0.55), transparent)",
-          opacity: showUI ? 1 : 0, transition: "opacity 0.3s ease", pointerEvents: showUI ? "auto" : "none",
-        }}
-        onClick={e => e.stopPropagation()}
-      >
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <button type="button" onClick={prev} aria-label={t("Previous", "Sebelumnya", lang)} style={navBtn}>&larr;</button>
-          <button type="button" onClick={next} aria-label={t("Next", "Berikutnya", lang)} style={navBtn}>&rarr;</button>
-          <span style={{ color: onNavy, fontFamily: sans, fontSize: 13, marginLeft: 6 }}>{pos.i + 1} / {SLIDES.length}</span>
+      {/* Control bar */}
+      <div className="sth-ui" role="toolbar" aria-label={t("Presentation controls", "Kontrol presentasi", lang)}
+        style={{ position: "absolute", left: "50%", bottom: 28, transform: `translateX(-50%) translateY(${showUi ? 0 : 16}px)`, opacity: showUi ? 1 : 0, pointerEvents: showUi ? "auto" : "none",
+          display: "flex", alignItems: "center", gap: 2, padding: 6, borderRadius: 16, background: "oklch(18% 0.05 260 / 0.88)", backdropFilter: "blur(12px)", boxShadow: "0 12px 40px oklch(0% 0 0 / 0.4)" }}>
+        <button type="button" className="sth-pill" style={{ ...pill, opacity: i === 0 ? 0.35 : 1 }} disabled={i === 0} onClick={() => { setStarted(true); prev(); }}
+          aria-label={t("Previous slide", "Slide sebelumnya", lang)}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6" /></svg>
+        </button>
+        <span style={{ minWidth: 64, textAlign: "center", fontSize: 14, fontWeight: 700, color: offWhite, fontVariantNumeric: "tabular-nums" }}>{i + 1} / {SLIDES.length}</span>
+        <button type="button" className="sth-pill" style={{ ...pill, opacity: i === last ? 0.35 : 1 }} disabled={i === last} onClick={() => { setStarted(true); next(); }}
+          aria-label={t("Next slide", "Slide berikutnya", lang)}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6" /></svg>
+        </button>
+        {sep}
+        <button type="button" className="sth-pill" style={pill} onClick={() => setOverview(o => !o)} aria-pressed={overview}
+          aria-label={t("All slides", "Semua slide", lang)} title={t("All slides (G)", "Semua slide (G)", lang)}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5" /><rect x="14" y="3" width="7" height="7" rx="1.5" /><rect x="3" y="14" width="7" height="7" rx="1.5" /><rect x="14" y="14" width="7" height="7" rx="1.5" /></svg>
+        </button>
+        <div role="group" aria-label={t("Language", "Bahasa", lang)} style={{ display: "inline-flex", gap: 2, background: "oklch(100% 0 0 / 0.08)", borderRadius: 10, padding: 2 }}>
+          {(["en", "id"] as Lang[]).map(l => (
+            <button key={l} type="button" className="sth-pill" aria-pressed={lang === l} onClick={() => setLang(l)}
+              style={{ ...pill, height: 40, minWidth: 44, background: lang === l ? orange : "transparent" }}>
+              {l.toUpperCase()}
+            </button>
+          ))}
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <button type="button" onClick={() => setOverview(true)} style={navBtn} aria-label={t("Overview", "Ringkasan", lang)}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" /><rect x="3" y="14" width="7" height="7" /><rect x="14" y="14" width="7" height="7" /></svg>
-          </button>
-          <div style={{ display: "flex", borderRadius: 8, overflow: "hidden", border: `1px solid oklch(100% 0 0 / 0.25)` }}>
-            <button type="button" onClick={() => setLang("en")} style={{ ...langBtn, background: lang === "en" ? orange : "transparent" }}>EN</button>
-            <button type="button" onClick={() => setLang("id")} style={{ ...langBtn, background: lang === "id" ? orange : "transparent" }}>ID</button>
-          </div>
-          <button type="button" onClick={toggleFull} style={navBtn} aria-label={t("Fullscreen", "Layar penuh", lang)}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" /></svg>
-          </button>
-          <Link href={`/resources/${SLUG}`} style={{ ...navBtn, textDecoration: "none", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
-            {t("Close", "Tutup", lang)}
-          </Link>
-        </div>
+        <button type="button" className="sth-pill" style={pill} onClick={toggleFull}
+          aria-label={isFull ? t("Exit full screen", "Keluar dari layar penuh", lang) : t("Full screen", "Layar penuh", lang)}
+          title={isFull ? t("Exit full screen (F)", "Keluar dari layar penuh (F)", lang) : t("Full screen (F)", "Layar penuh (F)", lang)}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            {isFull ? <path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5" /> : <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" />}
+          </svg>
+        </button>
+        {sep}
+        <Link href={moduleHref} className="sth-pill" style={{ ...pill, textDecoration: "none", gap: 6 }} aria-label={t("Close presentation", "Tutup presentasi", lang)}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+          {t("Close", "Tutup", lang)}
+        </Link>
       </div>
 
-      <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 3, background: "oklch(100% 0 0 / 0.12)" }}>
-        <div style={{ height: "100%", width: `${((pos.i + (pos.s + 1) / stepsOf(pos.i)) / SLIDES.length) * 100}%`, background: orange, transition: "width 0.3s ease" }} />
+      {/* Progress line */}
+      <div aria-hidden="true" style={{ position: "absolute", left: 0, right: 0, top: 0, height: 3, background: "oklch(100% 0 0 / 0.06)" }}>
+        <div style={{ height: "100%", width: `${((i + 1) / SLIDES.length) * 100}%`, background: orange, transition: "width 0.4s ease" }} />
       </div>
 
+      {/* Overview: every slide as a thumbnail, click to jump */}
       {overview && (
-        <div
-          data-nozone
-          role="dialog" aria-modal="true"
-          onClick={() => setOverview(false)}
-          style={{ position: "fixed", inset: 0, background: "oklch(14% 0.05 260 / 0.92)", zIndex: 20, display: "flex", alignItems: "center", justifyContent: "center", padding: 40 }}
-        >
-          <div
-            onClick={e => e.stopPropagation()}
-            style={{ display: "flex", flexWrap: "wrap", gap: 16, maxWidth: 1200, justifyContent: "center", maxHeight: "85vh", overflowY: "auto" }}
-          >
-            {SLIDES.map((s, i) => (
-              <div key={s.key} onClick={() => { go(i); setOverview(false); }}>
-                <Thumb index={i} lang={lang} active={i === pos.i} />
-              </div>
+        <div role="dialog" aria-label={t("All slides", "Semua slide", lang)}
+          style={{ position: "absolute", inset: 0, background: "oklch(12% 0.04 260 / 0.97)", overflowY: "auto", padding: "56px 48px 120px" }}>
+          <p style={{ fontFamily: serif, fontSize: 32, fontWeight: 600, color: offWhite, textAlign: "center", margin: "0 0 32px" }}>
+            {t("All slides", "Semua slide", lang)}
+          </p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: 24, maxWidth: 1280, margin: "0 auto" }}>
+            {SLIDES.map((s, n) => (
+              <button key={s.key} type="button" className="sth-thumb" onClick={() => { go(n); setOverview(false); setStarted(true); }}
+                aria-label={`${n + 1}`} aria-current={n === i}
+                style={{ padding: 0, border: "none", background: "transparent", cursor: "pointer", textAlign: "left" }}>
+                <Thumb index={n} lang={lang} active={n === i} />
+                <span style={{ display: "block", marginTop: 8, fontSize: 13, fontWeight: 700, color: n === i ? orange : "oklch(80% 0.02 80)" }}>{n + 1}</span>
+              </button>
             ))}
           </div>
         </div>
@@ -660,10 +581,24 @@ export default function PresentClient() {
   );
 }
 
-const navBtn: React.CSSProperties = {
-  width: 40, height: 40, borderRadius: 8, border: "1px solid oklch(100% 0 0 / 0.25)", background: "oklch(100% 0 0 / 0.08)",
-  color: onNavy, display: "inline-flex", alignItems: "center", justifyContent: "center", cursor: "pointer", fontSize: 16,
-};
-const langBtn: React.CSSProperties = {
-  width: 36, height: 40, border: "none", color: offWhite, fontFamily: sans, fontSize: 13, fontWeight: 700, cursor: "pointer",
-};
+function Thumb({ index, lang, active }: { index: number; lang: Lang; active: boolean }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [s, setS] = useState(0.17);
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const measure = () => setS(el.clientWidth / W);
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+  return (
+    <div ref={ref} style={{ width: "100%", aspectRatio: "16 / 9", position: "relative", overflow: "hidden", borderRadius: 8,
+      outline: active ? `3px solid ${orange}` : "1px solid oklch(100% 0 0 / 0.12)", outlineOffset: active ? 2 : 0 }}>
+      <div style={{ width: W, height: H, transform: `scale(${s})`, transformOrigin: "top left", pointerEvents: "none" }}>
+        <SlideFrame index={index} lang={lang} />
+      </div>
+    </div>
+  );
+}

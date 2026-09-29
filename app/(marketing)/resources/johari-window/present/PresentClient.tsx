@@ -503,9 +503,8 @@ function Thumb({ index, lang, active, onClick }: { index: number; lang: Lang; ac
 }
 
 export default function PresentClient() {
-  const { lang: ctxLang } = useLanguage();
-  const [override, setOverride] = useState<Lang | null>(null);
-  const lang: Lang = override ?? (ctxLang === "id" ? "id" : "en");
+  const { lang: ctxLang, setLang } = useLanguage();
+  const lang: Lang = ctxLang === "id" ? "id" : "en";
 
   const [pos, setPos] = useState({ i: 0, s: 0 });
   const [isFull, setIsFull] = useState(false);
@@ -582,6 +581,9 @@ export default function PresentClient() {
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      // Let a focused button handle its own Space press
+      if (e.key === " " && (e.target as HTMLElement)?.closest?.("button, a")) return;
       if (overview) {
         if (e.key === "Escape") setOverview(false);
         if (e.key === "g" || e.key === "G") setOverview(false);
@@ -596,7 +598,7 @@ export default function PresentClient() {
         case "End": go(last); wake(); break;
         case "f": case "F": toggleFull(); wake(); break;
         case "g": case "G": setOverview(true); break;
-        case "l": case "L": setOverride(o => (o === "id" ? "en" : o === "en" ? "id" : (lang === "id" ? "en" : "id"))); break;
+        case "l": case "L": setLang(lang === "id" ? "en" : "id"); break;
         case "Escape": if (document.fullscreenElement) document.exitFullscreen?.().catch(() => {}); break;
         default: break;
       }
@@ -667,6 +669,10 @@ export default function PresentClient() {
         .jw-ui { transition: opacity 0.3s ease; }
         .jw-pill { background: oklch(100% 0 0 / 0.08); border: 1px solid oklch(100% 0 0 / 0.18); color: ${offWhite}; border-radius: 10px; cursor: pointer; font-family: ${sans}; }
         .jw-pill:hover { background: oklch(100% 0 0 / 0.16); }
+        .jw-pill:focus-visible, .jw-tb:focus-visible { outline: 2px solid ${orange}; outline-offset: 2px; }
+        .jw-tb { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-width: 44px; height: 44px; padding: 0 12px; background: transparent; border: none; border-radius: 10px; color: ${offWhite}; cursor: pointer; font-family: ${sans}; font-weight: 700; font-size: 13px; text-decoration: none; }
+        .jw-tb:hover:not(:disabled) { background: oklch(100% 0 0 / 0.12); }
+        .jw-tb:disabled { opacity: 0.35; cursor: default; }
         .jw-bar { position: fixed; top: 0; left: 0; height: 3px; background: ${orange}; transition: width 0.3s ease; z-index: 5; }
         @media (prefers-reduced-motion: reduce) { .jw-fade, .jw-ui { animation: none !important; transition: none !important; } }
       `}</style>
@@ -676,7 +682,6 @@ export default function PresentClient() {
       <div
         ref={stageRef}
         onClick={e => {
-          if (!started) return;
           const rect = (e.currentTarget as HTMLDivElement).getBoundingClientRect();
           const x = e.clientX - rect.left;
           if (x < rect.width * 0.3) prev(); else next();
@@ -688,32 +693,59 @@ export default function PresentClient() {
         </div>
       </div>
 
-      {!started && (
-        <div style={{ position: "absolute", inset: 0, background: "oklch(10% 0.02 260 / 0.55)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-end", paddingBottom: 80, gap: 16 }}>
-          <button onClick={() => { setStarted(true); toggleFull(); }} className="jw-pill" style={{ padding: "14px 28px", fontSize: 16, fontWeight: 700 }}>
-            {lang === "id" ? "Mulai layar penuh" : "Start full screen"}
-          </button>
-          <p style={{ color: onNavy, fontSize: 13 }}>
-            {lang === "id" ? "Gunakan panah keyboard untuk berpindah slide" : "Use the arrow keys to move through the slides"}
-          </p>
+      {/* Start hint, shown until the presenter first moves on */}
+      {!started && !overview && (
+        <div style={{ position: "fixed", left: "50%", bottom: 104, transform: "translateX(-50%)", display: "flex", alignItems: "center", gap: 14, zIndex: 6 }}>
+          {!isFull && (
+            <button type="button" className="jw-pill" onClick={() => { setStarted(true); toggleFull(); }}
+              style={{ display: "inline-flex", alignItems: "center", gap: 10, height: 48, padding: "0 24px", borderRadius: 999, border: "none", background: orange, color: "white", fontWeight: 700, fontSize: 15, boxShadow: "0 10px 30px oklch(0% 0 0 / 0.35)", whiteSpace: "nowrap" }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+              {lang === "id" ? "Mulai layar penuh" : "Start full screen"}
+            </button>
+          )}
+          <span style={{ fontSize: 13, color: onNavy, background: "oklch(0% 0 0 / 0.45)", padding: "8px 14px", borderRadius: 999, whiteSpace: "nowrap" }}>
+            {lang === "id" ? "Tombol panah atau clicker untuk pindah. F layar penuh. G semua slide." : "Arrow keys or clicker to move. F full screen. G all slides."}
+          </span>
         </div>
       )}
 
-      <div className="jw-ui" style={{ position: "fixed", left: 0, right: 0, bottom: 0, padding: "14px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, opacity: showUi ? 1 : 0, pointerEvents: showUi ? "auto" : "none", background: "linear-gradient(transparent, oklch(0% 0 0 / 0.5))" }}>
-        <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-          <button className="jw-pill" onClick={prev} style={{ width: 40, height: 40 }} aria-label="Previous">&#8592;</button>
-          <button className="jw-pill" onClick={next} style={{ width: 40, height: 40 }} aria-label="Next">&#8594;</button>
-          <span style={{ color: onNavy, fontSize: 13, marginLeft: 8 }}>{pos.i + 1} / {SLIDES.length}</span>
+      {/* Control bar */}
+      <div className="jw-ui" role="toolbar" aria-label={lang === "id" ? "Kontrol presentasi" : "Presentation controls"}
+        style={{ position: "fixed", left: "50%", bottom: 28, zIndex: 6, transform: "translateX(-50%)", opacity: showUi ? 1 : 0, pointerEvents: showUi ? "auto" : "none",
+          display: "flex", alignItems: "center", gap: 2, padding: 6, borderRadius: 16, background: "oklch(18% 0.05 260 / 0.88)", backdropFilter: "blur(12px)", boxShadow: "0 12px 40px oklch(0% 0 0 / 0.4)" }}>
+        <button type="button" className="jw-tb" disabled={pos.i === 0 && pos.s === 0} onClick={() => { prev(); wake(); }}
+          aria-label={lang === "id" ? "Slide sebelumnya" : "Previous slide"}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6" /></svg>
+        </button>
+        <span style={{ minWidth: 64, textAlign: "center", fontSize: 14, fontWeight: 700, color: offWhite, fontVariantNumeric: "tabular-nums" }}>{pos.i + 1} / {SLIDES.length}</span>
+        <button type="button" className="jw-tb" disabled={atEnd} onClick={() => { next(); wake(); }}
+          aria-label={lang === "id" ? "Slide berikutnya" : "Next slide"}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6" /></svg>
+        </button>
+        <span aria-hidden="true" style={{ width: 1, height: 24, background: "oklch(100% 0 0 / 0.18)", margin: "0 4px" }} />
+        <button type="button" className="jw-tb" onClick={() => setOverview(o => !o)} aria-pressed={overview}
+          aria-label={lang === "id" ? "Semua slide" : "All slides"} title={lang === "id" ? "Semua slide (G)" : "All slides (G)"}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5" /><rect x="14" y="3" width="7" height="7" rx="1.5" /><rect x="3" y="14" width="7" height="7" rx="1.5" /><rect x="14" y="14" width="7" height="7" rx="1.5" /></svg>
+        </button>
+        <div role="group" aria-label={lang === "id" ? "Bahasa" : "Language"} style={{ display: "inline-flex", gap: 2, background: "oklch(100% 0 0 / 0.08)", borderRadius: 10, padding: 2 }}>
+          {(["en", "id"] as Lang[]).map(l => (
+            <button key={l} type="button" className="jw-tb" aria-pressed={lang === l} onClick={() => setLang(l)}
+              style={{ height: 40, background: lang === l ? orange : "transparent" }}>
+              {l.toUpperCase()}
+            </button>
+          ))}
         </div>
-        <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-          <button className="jw-pill" onClick={() => setOverride("en")} style={{ padding: "8px 14px", fontSize: 13, fontWeight: lang === "en" ? 800 : 500, opacity: lang === "en" ? 1 : 0.6 }}>EN</button>
-          <button className="jw-pill" onClick={() => setOverride("id")} style={{ padding: "8px 14px", fontSize: 13, fontWeight: lang === "id" ? 800 : 500, opacity: lang === "id" ? 1 : 0.6 }}>ID</button>
-          <button className="jw-pill" onClick={() => setOverview(true)} style={{ padding: "8px 14px", fontSize: 13 }}>{lang === "id" ? "Ringkasan" : "Overview"}</button>
-          <button className="jw-pill" onClick={toggleFull} style={{ width: 40, height: 40 }} aria-label="Fullscreen">{isFull ? "⤤" : "⤢"}</button>
-          <Link href={moduleHref} className="jw-pill" style={{ padding: "8px 14px", fontSize: 13, textDecoration: "none", display: "inline-block" }}>
-            {lang === "id" ? "Tutup" : "Close"}
-          </Link>
-        </div>
+        <button type="button" className="jw-tb" onClick={toggleFull}
+          aria-label={isFull ? (lang === "id" ? "Keluar dari layar penuh" : "Exit full screen") : (lang === "id" ? "Layar penuh" : "Full screen")}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            {isFull ? <path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5" /> : <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" />}
+          </svg>
+        </button>
+        <span aria-hidden="true" style={{ width: 1, height: 24, background: "oklch(100% 0 0 / 0.18)", margin: "0 4px" }} />
+        <Link href={moduleHref} className="jw-tb" aria-label={lang === "id" ? "Tutup presentasi" : "Close presentation"}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+          {lang === "id" ? "Tutup" : "Close"}
+        </Link>
       </div>
 
       {overview && (
@@ -731,7 +763,7 @@ export default function PresentClient() {
       )}
 
       {atEnd && showUi && !overview && (
-        <div style={{ position: "fixed", bottom: 72, left: "50%", transform: "translateX(-50%)", color: onNavy, fontSize: 13 }}>
+        <div style={{ position: "fixed", bottom: 96, left: "50%", transform: "translateX(-50%)", color: onNavy, fontSize: 13 }}>
           {lang === "id" ? "Akhir presentasi" : "End of presentation"}
         </div>
       )}
