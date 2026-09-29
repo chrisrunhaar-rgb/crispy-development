@@ -251,11 +251,11 @@ const eyebrow: React.CSSProperties = {
   color: orange, margin: "0 0 10px",
 };
 const h2: React.CSSProperties = {
-  fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(24px, 3.5vw, 32px)",
+  fontFamily: "var(--font-cormorant)", fontSize: "clamp(24px, 3.5vw, 32px)",
   fontWeight: 600, color: navy, margin: "0 0 16px", lineHeight: 1.2,
 };
 const h3: React.CSSProperties = {
-  fontFamily: "Cormorant Garamond, serif", fontSize: 22, fontWeight: 600,
+  fontFamily: "var(--font-cormorant)", fontSize: 22, fontWeight: 600,
   color: navy, margin: "0 0 10px", lineHeight: 1.25,
 };
 const p: React.CSSProperties = { fontSize: 15.5, lineHeight: 1.75, color: bodyText, margin: "0 0 16px" };
@@ -424,7 +424,7 @@ function ScenarioCard({ s, index, lang }: { s: Scenario; index: number; lang: La
             <button key={k} type="button" aria-pressed={chosen} onClick={() => setPick(k)}
               style={{
                 minHeight: 44, padding: "8px 16px", borderRadius: 999, fontSize: 14, fontWeight: 600, cursor: "pointer",
-                fontFamily: "Montserrat, sans-serif",
+                fontFamily: "var(--font-montserrat)",
                 border: `1.5px solid ${isAnswer ? orange : chosen ? navy : lightGray}`,
                 background: isAnswer ? orange : chosen ? navy : white,
                 color: isAnswer || chosen ? white : navy,
@@ -499,7 +499,7 @@ function GrowthSlider({ years, setYears, lang }: { years: number; setYears: (n: 
     <div style={{ marginBottom: 16 }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 12, marginBottom: 6 }}>
         <span style={{ fontSize: 14, fontWeight: 700, color: navy }}>{label}</span>
-        <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 30, fontWeight: 600, color, lineHeight: 1 }}>{fmt(n)}</span>
+        <span style={{ fontFamily: "var(--font-cormorant)", fontSize: 30, fontWeight: 600, color, lineHeight: 1 }}>{fmt(n)}</span>
       </div>
       <div style={{ height: 14, background: lightGray, borderRadius: 7, overflow: "hidden" }}>
         <div className="mawl-trans" style={{ width: `${Math.max(1.5, (n / 1024) * 100)}%`, height: "100%", background: color, borderRadius: 7 }} />
@@ -678,7 +678,7 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
   const foldLabel: React.CSSProperties = { fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: orange, margin: "0 0 4px" };
 
   return (
-    <div style={{ fontFamily: "Montserrat, sans-serif", background: offWhite, minHeight: "100vh" }}>
+    <div style={{ fontFamily: "var(--font-montserrat)", background: offWhite, minHeight: "100vh" }}>
       <style>{MOTION_CSS}</style>
       <LangToggle extra={
         <PresentLauncher href={`/resources/${SLUG}/present`} lang={lang}
@@ -690,10 +690,10 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
       <div style={{ background: navy, padding: "80px 24px 72px", position: "relative" }}>
         <div style={{ maxWidth: 720, margin: "0 auto" }}>
           <p style={eyebrow}>{t("Leadership", "Kepemimpinan", lang)}</p>
-          <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: offWhite, margin: "0 0 20px", lineHeight: 1.08 }}>
+          <h1 style={{ fontFamily: "var(--font-cormorant)", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: offWhite, margin: "0 0 20px", lineHeight: 1.08 }}>
             {t("Model, Assist, Watch, Launch", "Teladani, Bantu, Amati, Mandirikan", lang)}
           </h1>
-          <p style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: "clamp(17px, 2.5vw, 22px)", color: "oklch(85% 0.03 80)", maxWidth: 580, margin: "0 0 32px", lineHeight: 1.6, fontStyle: "italic" }}>
+          <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "clamp(17px, 2.5vw, 22px)", color: "oklch(85% 0.03 80)", maxWidth: 580, margin: "0 0 32px", lineHeight: 1.6, fontStyle: "italic" }}>
             {t("Many leaders want their people to take over. Often the leader is the one standing in the way.",
               "Banyak pemimpin ingin orang-orangnya mengambil alih. Sering kali justru sang pemimpin yang menghalanginya.", lang)}
           </p>
@@ -705,7 +705,7 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
             </Link>
           ) : (
             <button onClick={handleSave} disabled={isPending}
-              style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "transparent", color: "oklch(78% 0.03 80)", padding: "10px 20px", minHeight: 44, borderRadius: 8, fontWeight: 600, fontSize: 13, border: "1px solid oklch(55% 0.05 260)", cursor: isPending ? "wait" : "pointer", fontFamily: "Montserrat, sans-serif" }}>
+              style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "transparent", color: "oklch(78% 0.03 80)", padding: "10px 20px", minHeight: 44, borderRadius: 8, fontWeight: 600, fontSize: 13, border: "1px solid oklch(55% 0.05 260)", cursor: isPending ? "wait" : "pointer", fontFamily: "var(--font-montserrat)" }}>
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" /></svg>
               {isPending ? t("Saving...", "Menyimpan...", lang) : t("Save to dashboard", "Simpan ke dasbor", lang)}
             </button>
@@ -754,7 +754,7 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
               {THEORY.map((th, i) => (
                 <li key={th.key} style={{ background: i === 3 ? orange : `oklch(${22 + i * 12}% ${0.10 - i * 0.015} 260)`, color: white, borderRadius: 8, padding: "12px 14px" }}>
                   <span style={{ display: "block", fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", opacity: 0.85 }}>{i + 1}. {phaseName(th.key, lang)}</span>
-                  <span style={{ display: "block", fontFamily: "Cormorant Garamond, serif", fontSize: 20, fontWeight: 600, lineHeight: 1.25, marginTop: 4 }}>{t(th.motto.en, th.motto.id, lang)}</span>
+                  <span style={{ display: "block", fontFamily: "var(--font-cormorant)", fontSize: 20, fontWeight: 600, lineHeight: 1.25, marginTop: 4 }}>{t(th.motto.en, th.motto.id, lang)}</span>
                 </li>
               ))}
             </ol>
@@ -767,7 +767,7 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
                 return (
                   <div key={th.key} style={{ background: white, border: `1px solid ${open ? navy : lightGray}`, borderRadius: 8 }}>
                     <button type="button" aria-expanded={open} aria-controls={panelId} onClick={() => toggleTheory(th.key)}
-                      style={{ width: "100%", minHeight: 56, display: "grid", gridTemplateColumns: "36px 1fr 20px", alignItems: "center", gap: 10, padding: "12px 16px", background: "none", border: "none", cursor: "pointer", textAlign: "left", fontFamily: "Montserrat, sans-serif" }}>
+                      style={{ width: "100%", minHeight: 56, display: "grid", gridTemplateColumns: "36px 1fr 20px", alignItems: "center", gap: 10, padding: "12px 16px", background: "none", border: "none", cursor: "pointer", textAlign: "left", fontFamily: "var(--font-montserrat)" }}>
                       <span aria-hidden="true" style={{ width: 32, height: 32, borderRadius: "50%", background: open ? navy : offWhite, color: open ? white : navy, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: 14 }}>{i + 1}</span>
                       <span>
                         <span style={{ display: "block", fontSize: 16, fontWeight: 700, color: navy }}>{phaseName(th.key, lang)}</span>
@@ -823,7 +823,7 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
               width={1280} height={985}
               style={{ width: "100%", height: "auto", display: "block" }}
             />
-            <figcaption style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 20, fontStyle: "italic", color: navy, textAlign: "center", marginTop: 12 }}>
+            <figcaption style={{ fontFamily: "var(--font-cormorant)", fontSize: 20, fontStyle: "italic", color: navy, textAlign: "center", marginTop: 12 }}>
               {t("Four phases, and in each one the teacher does less.", "Empat tahap, dan di setiap tahap sang pengajar semakin sedikit terlibat.", lang)}
             </figcaption>
           </figure>
@@ -850,7 +850,7 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
               <button key={k} type="button" aria-pressed={phase === k} aria-controls="mawl-phase-panel" onClick={() => setPhase(k)}
                 style={{
                   minHeight: 44, padding: "10px 12px", borderRadius: 8, fontSize: 14, fontWeight: 700, cursor: "pointer",
-                  fontFamily: "Montserrat, sans-serif", border: `1.5px solid ${phase === k ? navy : lightGray}`,
+                  fontFamily: "var(--font-montserrat)", border: `1.5px solid ${phase === k ? navy : lightGray}`,
                   background: phase === k ? navy : white, color: phase === k ? white : navy,
                 }}>
                 {i + 1}. {phaseName(k, lang)}
@@ -990,8 +990,8 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
               return (
                 <div key={m.en} style={{ border: `1px solid ${lightGray}`, borderRadius: 8, marginBottom: 10, background: open ? offWhite : white }} className="mawl-trans">
                   <button type="button" aria-expanded={open} aria-controls={`mawl-mistake-${i}`} onClick={() => setOpenMistake(open ? null : i)}
-                    style={{ width: "100%", minHeight: 44, display: "grid", gridTemplateColumns: "32px 1fr 20px", alignItems: "center", gap: 10, padding: "12px 16px", background: "none", border: "none", cursor: "pointer", textAlign: "left", fontFamily: "Montserrat, sans-serif" }}>
-                    <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 24, fontWeight: 600, color: orange, lineHeight: 1 }}>{i + 1}</span>
+                    style={{ width: "100%", minHeight: 44, display: "grid", gridTemplateColumns: "32px 1fr 20px", alignItems: "center", gap: 10, padding: "12px 16px", background: "none", border: "none", cursor: "pointer", textAlign: "left", fontFamily: "var(--font-montserrat)" }}>
+                    <span style={{ fontFamily: "var(--font-cormorant)", fontSize: 24, fontWeight: 600, color: orange, lineHeight: 1 }}>{i + 1}</span>
                     <span style={{ fontSize: 15, fontWeight: 700, color: navy }}>{t(m.en, m.id, lang)}</span>
                     <span aria-hidden="true" style={{ fontSize: 18, color: orange, fontWeight: 700 }}>{open ? "−" : "+"}</span>
                   </button>
@@ -1023,7 +1023,7 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
             "Addition means you train people yourself, one after another. Multiplication means the people you train go on to train others. Launch is not the end of the cycle. It is where the next one begins.",
             "Penambahan berarti Anda sendiri yang melatih orang, satu demi satu. Pelipatgandaan berarti orang-orang yang Anda latih melanjutkan dengan melatih orang lain. Mandirikan bukanlah akhir siklus. Di sanalah siklus berikutnya dimulai.", lang)}</p>
           <blockquote style={{ margin: "24px 0", padding: "20px 22px", background: white, borderLeft: `4px solid ${orange}`, borderRadius: 6 }}>
-            <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 21, fontStyle: "italic", lineHeight: 1.5, color: navy, margin: "0 0 8px" }}>
+            <p style={{ fontFamily: "var(--font-cormorant)", fontSize: 21, fontStyle: "italic", lineHeight: 1.5, color: navy, margin: "0 0 8px" }}>
               {t("\"And the things you have heard me say in the presence of many witnesses entrust to reliable people who will also be qualified to teach others.\"",
                 "\"Apa yang telah engkau dengar dari padaku di depan banyak saksi, percayakanlah itu kepada orang-orang yang dapat dipercayai, yang juga cakap mengajar orang lain.\"", lang)}
             </p>
@@ -1114,7 +1114,7 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
           </ol>
 
           <blockquote style={{ margin: "0 0 24px", padding: "20px 22px", background: "oklch(28% 0.10 260)", borderRadius: 6 }}>
-            <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 21, fontStyle: "italic", lineHeight: 1.5, color: offWhite, margin: "0 0 8px" }}>
+            <p style={{ fontFamily: "var(--font-cormorant)", fontSize: 21, fontStyle: "italic", lineHeight: 1.5, color: offWhite, margin: "0 0 8px" }}>
               {t("\"Now I commit you to God and to the word of his grace, which can build you up and give you an inheritance among all those who are sanctified.\"",
                 "\"Dan sekarang aku menyerahkan kamu kepada Tuhan dan kepada firman kasih karunia-Nya, yang berkuasa membangun kamu dan menganugerahkan kepada kamu bagian yang ditentukan bagi semua orang yang telah dikuduskan-Nya.\"", lang)}
             </p>
@@ -1135,7 +1135,7 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
             {prompts.map(q => (
               <div key={q.k} style={{ background: white, border: `1px solid ${lightGray}`, borderRadius: 8, padding: "18px 18px" }}>
                 <p style={{ ...eyebrow, marginBottom: 8 }}>{phaseName(q.k, lang)}</p>
-                <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 20, lineHeight: 1.4, color: navy, margin: 0 }}>{t(q.en, q.id, lang)}</p>
+                <p style={{ fontFamily: "var(--font-cormorant)", fontSize: 20, lineHeight: 1.4, color: navy, margin: 0 }}>{t(q.en, q.id, lang)}</p>
               </div>
             ))}
           </div>
@@ -1149,7 +1149,7 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
           <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
             {takeaways.map((k, i) => (
               <li key={k.en} style={{ display: "grid", gridTemplateColumns: "40px 1fr", gap: 8, padding: "14px 0", borderTop: i ? `1px solid ${lightGray}` : "none" }}>
-                <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 28, fontWeight: 600, color: orange, lineHeight: 1 }}>{i + 1}</span>
+                <span style={{ fontFamily: "var(--font-cormorant)", fontSize: 28, fontWeight: 600, color: orange, lineHeight: 1 }}>{i + 1}</span>
                 <p style={{ ...p, margin: 0 }}>{t(k.en, k.id, lang)}</p>
               </li>
             ))}
@@ -1158,7 +1158,7 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
           {/* Research collapsible */}
           <div style={{ marginTop: 36 }}>
             <button type="button" aria-expanded={researchOpen} aria-controls="mawl-research" onClick={() => setResearchOpen(o => !o)}
-              style={{ minHeight: 44, background: "none", border: "none", padding: 0, cursor: "pointer", fontSize: 15, fontWeight: 700, color: orange, fontFamily: "Montserrat, sans-serif" }}>
+              style={{ minHeight: 44, background: "none", border: "none", padding: 0, cursor: "pointer", fontSize: 15, fontWeight: 700, color: orange, fontFamily: "var(--font-montserrat)" }}>
               {researchOpen ? t("Hide the research ↑", "Sembunyikan penelitian ↑", lang) : t("Read the research →", "Baca penelitiannya →", lang)}
             </button>
             <div id="mawl-research" role="region" aria-label={research[0]} className="mawl-trans"
