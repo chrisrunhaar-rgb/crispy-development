@@ -266,16 +266,6 @@ const SLIDES: Slide[] = [
     ),
   },
   {
-    key: "multiply",
-    render: lang => (
-      <>
-        <h2 style={midTitle}>{t("Multiply", "Lipat gandakan", lang)}</h2>
-        <RiderRow lang={lang} labels height={260} />
-        <p style={kicker}>{t("2 Timothy 2:2", "2 Timotius 2:2", lang)}</p>
-      </>
-    ),
-  },
-  {
     key: "spotlight",
     render: lang => (
       <>

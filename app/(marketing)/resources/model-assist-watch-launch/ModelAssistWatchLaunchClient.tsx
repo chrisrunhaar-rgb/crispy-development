@@ -270,7 +270,6 @@ const MOTION_CSS = `
 .mawl-trans { transition: all 0.35s ease; }
 .mawl-range { accent-color: ${orange}; width: 100%; height: 44px; cursor: pointer; }
 @media (max-width: 560px) {
-  .mawl-strip { grid-template-columns: repeat(2, 1fr) !important; }
 }
 @media (prefers-reduced-motion: reduce) {
   .mawl-trans { transition: none !important; }
@@ -450,46 +449,6 @@ function ScenarioCard({ s, index, lang }: { s: Scenario; index: number; lang: La
 
 // ─── Multiplication ───────────────────────────────────────────────────────────
 const IMG = `/images/resources/${SLUG}`;
-
-const GEN_STRIP = [
-  { src: "cut-you", w: 334, h: 400, hPx: 110, en: "You", id: "Anda", subEn: "Paul", subId: "Paulus" },
-  { src: "cut-scooter", w: 282, h: 334, hPx: 120, en: "Ana", id: "Ana", subEn: "Timothy", subId: "Timotius" },
-  { src: "cut-bigbike", w: 436, h: 418, hPx: 140, en: "Joel", id: "Joel", subEn: "Reliable people", subId: "Orang yang dapat dipercaya" },
-];
-
-function MultiplyStrip({ lang }: { lang: Lang }) {
-  const cell: React.CSSProperties = { display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-end", textAlign: "center", minWidth: 0 };
-  const name: React.CSSProperties = { fontSize: 14, fontWeight: 700, color: navy, margin: "10px 0 2px" };
-  const sub: React.CSSProperties = { fontSize: 12.5, color: muted, margin: 0 };
-  return (
-    <figure style={{ margin: "28px 0 8px" }}>
-      <div className="mawl-strip" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "24px 12px", alignItems: "end" }}>
-        {GEN_STRIP.map(g => (
-          <div key={g.src} style={cell}>
-            <img src={`${IMG}/${g.src}.webp`} alt="" aria-hidden="true" width={g.w} height={g.h}
-              style={{ height: g.hPx, width: "auto", maxWidth: "100%", display: "block" }} />
-            <p style={name}>{t(g.en, g.id, lang)}</p>
-            <p style={sub}>{t(g.subEn, g.subId, lang)}</p>
-          </div>
-        ))}
-        <div style={cell}>
-          <div aria-hidden="true" style={{ display: "flex", alignItems: "flex-end", justifyContent: "center", gap: 2, height: 140 }}>
-            {[0.55, 0.7, 0.85, 0.7].map((s, i) => (
-              <img key={i} src={`${IMG}/cut-bigbike.webp`} alt="" width={436} height={418}
-                style={{ height: 140 * s * 0.6, width: "auto", display: "block", opacity: 0.55 + i * 0.1 }} />
-            ))}
-          </div>
-          <p style={name}>{t("And beyond", "Dan seterusnya", lang)}</p>
-          <p style={sub}>{t("Others", "Orang lain", lang)}</p>
-        </div>
-      </div>
-      <figcaption style={{ fontSize: 13, color: muted, textAlign: "center", marginTop: 16 }}>
-        {t("Each generation rides a bigger motorbike than the one before. The four generations of 2 Timothy 2:2.",
-          "Setiap generasi mengendarai motor yang lebih besar daripada generasi sebelumnya. Empat generasi dalam 2 Timotius 2:2.", lang)}
-      </figcaption>
-    </figure>
-  );
-}
 
 function GrowthSlider({ years, setYears, lang }: { years: number; setYears: (n: number) => void; lang: Lang }) {
   const add = years + 1;
@@ -1134,12 +1093,6 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
           <p style={p}>{t(
             "Four generations in one verse: Paul, Timothy, reliable people, and others. The finish line is not the first person you train. It is the fourth.",
             "Empat generasi dalam satu ayat: Paulus, Timotius, orang-orang yang dapat dipercaya, dan orang lain. Garis akhirnya bukan orang pertama yang Anda latih, melainkan orang keempat.", lang)}</p>
-
-          <MultiplyStrip lang={lang} />
-
-          <p style={{ ...p, marginTop: 24 }}>{t(
-            "Picture it in Cebu. You train Ana, a nurse, to lead a health group for mothers. Ana trains Joel. Joel trains Ria. Soon mothers are being helped by people you have never met, in places you have never been.",
-            "Bayangkan di Cebu. Anda melatih Ana, seorang perawat, untuk memimpin kelompok kesehatan bagi para ibu. Ana melatih Joel. Joel melatih Ria. Tak lama kemudian para ibu ditolong oleh orang-orang yang belum pernah Anda temui, di tempat-tempat yang belum pernah Anda kunjungi.", lang)}</p>
 
           <h3 style={{ ...h3, marginTop: 36 }}>{t("Jesus with the Twelve", "Yesus bersama kedua belas murid", lang)}</h3>
           <p style={p}>{t(
