@@ -324,7 +324,7 @@ export default function FixedGrowthMindsetClient({
 
   // Shared eyebrow style
   const eyebrowStyle: React.CSSProperties = {
-    fontFamily: "Montserrat, sans-serif",
+    fontFamily: "var(--font-montserrat)",
     fontSize: "0.75rem",
     fontWeight: 700,
     letterSpacing: "0.12em",
@@ -335,7 +335,7 @@ export default function FixedGrowthMindsetClient({
 
   // Shared section h2 style (dark bg variant for navy sections)
   const sectionH2Style: React.CSSProperties = {
-    fontFamily: "Cormorant Garamond, serif",
+    fontFamily: "var(--font-cormorant)",
     fontSize: "clamp(28px, 4vw, 42px)",
     fontWeight: 600,
     color: NAVY,
@@ -353,7 +353,7 @@ export default function FixedGrowthMindsetClient({
   };
 
   return (
-    <div style={{ fontFamily: "Montserrat, sans-serif", background: OFF_WHITE, minHeight: "100vh" }}>
+    <div style={{ fontFamily: "var(--font-montserrat)", background: OFF_WHITE, minHeight: "100vh" }}>
       <LangToggle />
 
       {/* HERO */}
@@ -376,10 +376,10 @@ export default function FixedGrowthMindsetClient({
           <p style={{ ...eyebrowStyle }}>
             {t("PERSONAL DEVELOPMENT", "PENGEMBANGAN PRIBADI")}
           </p>
-          <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: OFF_WHITE, margin: "0 0 24px", lineHeight: 1.08 }}>
+          <h1 style={{ fontFamily: "var(--font-cormorant)", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: OFF_WHITE, margin: "0 0 24px", lineHeight: 1.08 }}>
             {t("Fixed vs. Growth Mindset", "Mindset Tetap vs. Pertumbuhan")}
           </h1>
-          <p style={{ fontSize: 17, color: "oklch(72% 0.05 260)", lineHeight: 1.7, maxWidth: 620, marginBottom: 40, fontStyle: "italic", fontFamily: "Cormorant Garamond, serif" }}>
+          <p style={{ fontSize: 17, color: "oklch(72% 0.05 260)", lineHeight: 1.7, maxWidth: 620, marginBottom: 40, fontStyle: "italic", fontFamily: "var(--font-cormorant)" }}>
             {t(
               "Drawing on Carol Dweck's widely studied framework, this assessment reveals where your mindset is fixed and where it's growing — across five key dimensions.",
               "Berdasarkan kerangka kerja Carol Dweck yang banyak dipelajari, penilaian ini mengungkapkan di mana mindset Anda tetap dan di mana ia berkembang — dalam lima dimensi utama."
@@ -419,7 +419,7 @@ export default function FixedGrowthMindsetClient({
             )}
             {growthScore != null && (
               <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                <span style={{ fontSize: 18, fontFamily: "Cormorant Garamond, serif", fontWeight: 700, color: getMindsetColor(growthScore) }}>
+                <span style={{ fontSize: 18, fontFamily: "var(--font-cormorant)", fontWeight: 700, color: getMindsetColor(growthScore) }}>
                   {growthScore}%
                 </span>
                 <span style={{ fontSize: 12, fontWeight: 600, color: getMindsetColor(growthScore) }}>
@@ -434,48 +434,44 @@ export default function FixedGrowthMindsetClient({
       {/* DWECK INTRO */}
       <section style={{ background: OFF_WHITE, padding: "72px 24px" }}>
         <div style={{ ...containerStyle }}>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 32, alignItems: "center" }}>
-            <div>
-              <p style={{ ...eyebrowStyle }}>{t("THE RESEARCH", "PENELITIAN")}</p>
-              <h2 style={{ ...sectionH2Style }}>
-                {t("The Research Behind It", "Penelitian di Baliknya")}
-              </h2>
-              <p style={{ fontSize: 15, lineHeight: 1.75, color: BODY_TEXT, margin: "0 0 16px" }}>
-                {t(
-                  "According to researcher Carol Dweck, there are two types of mindsets. A fixed mindset believes that qualities like intelligence or talent are innate — you have what you were given. A growth mindset holds that you can improve any quality through effort and persistence.",
-                  "Menurut peneliti Carol Dweck, ada dua jenis mindset. Mindset tetap percaya bahwa kualitas seperti kecerdasan atau bakat bersifat bawaan — Anda memiliki apa yang diberikan kepada Anda. Mindset pertumbuhan berpendapat bahwa Anda dapat meningkatkan kualitas apa pun melalui usaha dan ketekunan."
-                )}<sup style={{ fontSize: "0.65em", verticalAlign: "super", marginLeft: 1 }}>¹</sup>
-              </p>
-              <p style={{ fontSize: 15, lineHeight: 1.75, color: BODY_TEXT, margin: 0 }}>
-                {t(
-                  "Research suggests growth mindset is associated with greater persistence and more adaptive responses to failure, though effects vary significantly across individuals and cultural contexts — large-scale replication studies show more modest effects than early research suggested; the principle remains directionally sound.",
-                  "Penelitian menunjukkan bahwa mindset pertumbuhan dikaitkan dengan ketekunan yang lebih besar dan respons yang lebih adaptif terhadap kegagalan, meskipun efeknya sangat bervariasi di antara individu dan konteks budaya — studi replikasi skala besar menunjukkan efek yang lebih modest daripada yang disarankan penelitian awal; prinsipnya tetap benar secara arah."
-                )}<sup style={{ fontSize: "0.65em", verticalAlign: "super", marginLeft: 1 }}>²</sup>{" "}
-                {t(
-                  "The shift often starts with recognizing which mindset is operating in a given area of your life.",
-                  "Pergeseran ini sering dimulai dengan mengenali mindset mana yang beroperasi di area kehidupan Anda tertentu."
-                )}
-              </p>
-            </div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-              <div style={{ background: "oklch(46% 0.16 145 / 0.08)", borderRadius: 10, padding: "24px 20px", textAlign: "center" }}>
-                <div style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 20, fontWeight: 600, color: "oklch(34% 0.12 145)", marginBottom: 8 }}>
-                  {t("Growth Mindset", "Mindset Pertumbuhan")}
-                </div>
-                <div style={{ fontSize: 13, color: "oklch(38% 0.10 145)", lineHeight: 1.5 }}>
-                  {t("Defines success as gradual improvement and growth", "Mendefinisikan keberhasilan sebagai perbaikan dan pertumbuhan bertahap")}
-                </div>
+          <p style={{ ...eyebrowStyle }}>{t("THE RESEARCH", "PENELITIAN")}</p>
+          <h2 style={{ ...sectionH2Style }}>
+            {t("The Research Behind It", "Penelitian di Baliknya")}
+          </h2>
+          <p style={{ fontSize: 15, lineHeight: 1.75, color: BODY_TEXT, margin: "0 0 16px" }}>
+            {t(
+              "According to researcher Carol Dweck, there are two types of mindsets. A fixed mindset believes that qualities like intelligence or talent are innate: you have what you were given. A growth mindset holds that you can improve any quality through effort and persistence.",
+              "Menurut peneliti Carol Dweck, ada dua jenis mindset. Mindset tetap percaya bahwa kualitas seperti kecerdasan atau bakat bersifat bawaan: Anda memiliki apa yang diberikan kepada Anda. Mindset pertumbuhan berpendapat bahwa Anda dapat meningkatkan kualitas apa pun melalui usaha dan ketekunan."
+            )}<sup style={{ fontSize: "0.65em", verticalAlign: "super", marginLeft: 1 }}>¹</sup>
+          </p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 12, margin: "8px 0 24px" }}>
+            <div style={{ background: "oklch(46% 0.16 145 / 0.08)", borderRadius: 10, padding: "24px 20px", textAlign: "center" }}>
+              <div style={{ fontFamily: "var(--font-cormorant)", fontSize: 20, fontWeight: 600, color: "oklch(34% 0.12 145)", marginBottom: 8 }}>
+                {t("Growth Mindset", "Mindset Pertumbuhan")}
               </div>
-              <div style={{ background: "oklch(48% 0.18 25 / 0.08)", borderRadius: 10, padding: "24px 20px", textAlign: "center" }}>
-                <div style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 20, fontWeight: 600, color: "oklch(38% 0.14 25)", marginBottom: 8 }}>
-                  {t("Fixed Mindset", "Mindset Tetap")}
-                </div>
-                <div style={{ fontSize: 13, color: "oklch(42% 0.10 25)", lineHeight: 1.5 }}>
-                  {t("Defines success as being right and not failing", "Mendefinisikan keberhasilan sebagai benar dan tidak gagal")}
-                </div>
+              <div style={{ fontSize: 13, color: "oklch(38% 0.10 145)", lineHeight: 1.5 }}>
+                {t("Defines success as gradual improvement and growth", "Mendefinisikan keberhasilan sebagai perbaikan dan pertumbuhan bertahap")}
+              </div>
+            </div>
+            <div style={{ background: "oklch(48% 0.18 25 / 0.08)", borderRadius: 10, padding: "24px 20px", textAlign: "center" }}>
+              <div style={{ fontFamily: "var(--font-cormorant)", fontSize: 20, fontWeight: 600, color: "oklch(38% 0.14 25)", marginBottom: 8 }}>
+                {t("Fixed Mindset", "Mindset Tetap")}
+              </div>
+              <div style={{ fontSize: 13, color: "oklch(42% 0.10 25)", lineHeight: 1.5 }}>
+                {t("Defines success as being right and not failing", "Mendefinisikan keberhasilan sebagai benar dan tidak gagal")}
               </div>
             </div>
           </div>
+          <p style={{ fontSize: 15, lineHeight: 1.75, color: BODY_TEXT, margin: 0 }}>
+            {t(
+              "Research suggests growth mindset is associated with greater persistence and more adaptive responses to failure, though effects vary significantly across individuals and cultural contexts. Large-scale replication studies show more modest effects than early research suggested, but the principle remains directionally sound.",
+              "Penelitian menunjukkan bahwa mindset pertumbuhan dikaitkan dengan ketekunan yang lebih besar dan respons yang lebih adaptif terhadap kegagalan, meskipun efeknya sangat bervariasi di antara individu dan konteks budaya. Studi replikasi skala besar menunjukkan efek yang lebih kecil daripada yang disarankan penelitian awal, tetapi prinsipnya tetap benar secara arah."
+            )}<sup style={{ fontSize: "0.65em", verticalAlign: "super", marginLeft: 1 }}>²</sup>{" "}
+            {t(
+              "The shift often starts with recognizing which mindset is operating in a given area of your life.",
+              "Pergeseran ini sering dimulai dengan mengenali mindset mana yang beroperasi di area kehidupan Anda tertentu."
+            )}
+          </p>
         </div>
       </section>
 
@@ -499,7 +495,7 @@ export default function FixedGrowthMindsetClient({
                 <div key={d.key} style={{ background: "white", borderRadius: 10, overflow: "hidden" }}>
                   <div style={{ display: "grid", gridTemplateColumns: "auto 1fr 1fr", gap: 0 }}>
                     <div style={{ padding: "20px 24px", display: "flex", alignItems: "center" }}>
-                      <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 28, fontWeight: 600, color: ORANGE, lineHeight: 1, minWidth: 32 }}>{String(i + 1).padStart(2, "0")}</span>
+                      <span style={{ fontFamily: "var(--font-cormorant)", fontSize: 28, fontWeight: 600, color: ORANGE, lineHeight: 1, minWidth: 32 }}>{String(i + 1).padStart(2, "0")}</span>
                     </div>
                     <div style={{ padding: "20px 24px 20px 0", background: "oklch(46% 0.16 145 / 0.05)" }}>
                       <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(46% 0.16 145)", marginBottom: 6 }}>
@@ -590,7 +586,7 @@ export default function FixedGrowthMindsetClient({
                 <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: BODY_TEXT, marginBottom: 2 }}>
                   {t("Previous Score", "Skor Sebelumnya")}
                 </div>
-                <div style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 36, fontWeight: 700, color: getMindsetColor(growthScore), lineHeight: 1 }}>{growthScore}%</div>
+                <div style={{ fontFamily: "var(--font-cormorant)", fontSize: 36, fontWeight: 700, color: getMindsetColor(growthScore), lineHeight: 1 }}>{growthScore}%</div>
               </div>
             )}
           </div>
@@ -703,7 +699,7 @@ export default function FixedGrowthMindsetClient({
                       <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: BODY_TEXT, marginBottom: 6 }}>
                         {t("Your Mindset Score", "Skor Mindset Anda")}
                       </div>
-                      <div style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 64, fontWeight: 700, color: getMindsetColor(growthScore!), lineHeight: 1 }}>{growthScore}%</div>
+                      <div style={{ fontFamily: "var(--font-cormorant)", fontSize: 64, fontWeight: 700, color: getMindsetColor(growthScore!), lineHeight: 1 }}>{growthScore}%</div>
                       <div style={{ fontSize: 14, fontWeight: 700, color: getMindsetColor(growthScore!), marginTop: 4 }}>{getMindsetLabel(growthScore!)}</div>
                     </div>
                     <div style={{ flex: 1, minWidth: 240 }}>
@@ -721,7 +717,7 @@ export default function FixedGrowthMindsetClient({
                     const { heading, body } = getScoreApplicationText();
                     return (
                       <div style={{ background: "white", borderRadius: 10, padding: "24px 28px", marginBottom: 20 }}>
-                        <h3 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 20, fontWeight: 600, color: NAVY, margin: "0 0 10px" }}>{heading}</h3>
+                        <h3 style={{ fontFamily: "var(--font-cormorant)", fontSize: 20, fontWeight: 600, color: NAVY, margin: "0 0 10px" }}>{heading}</h3>
                         <p style={{ fontSize: 14, lineHeight: 1.7, color: BODY_TEXT, margin: 0 }}>{body}</p>
                       </div>
                     );
@@ -835,9 +831,9 @@ export default function FixedGrowthMindsetClient({
                       padding: "28px", display: "flex", gap: 14, alignItems: "flex-start", textAlign: "left",
                     }}
                   >
-                    <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 40, fontWeight: 600, color: item.color, lineHeight: 1, flexShrink: 0 }}>{item.step}</span>
+                    <span style={{ fontFamily: "var(--font-cormorant)", fontSize: 40, fontWeight: 600, color: item.color, lineHeight: 1, flexShrink: 0 }}>{item.step}</span>
                     <div style={{ flex: 1 }}>
-                      <h3 style={{ fontFamily: "Montserrat, sans-serif", fontSize: 14, fontWeight: 700, color: NAVY, margin: "0 0 8px" }}>{item.title}</h3>
+                      <h3 style={{ fontFamily: "var(--font-montserrat)", fontSize: 14, fontWeight: 700, color: NAVY, margin: "0 0 8px" }}>{item.title}</h3>
                       <p style={{ fontSize: 13, lineHeight: 1.65, color: BODY_TEXT, margin: 0 }}>{item.desc}</p>
                     </div>
                     <span style={{ flexShrink: 0, fontSize: 18, color: item.color, lineHeight: 1, paddingTop: 6, display: "inline-block", transform: isExpanded ? "rotate(180deg)" : "none", transition: "transform 0.2s ease" }}>▾</span>
@@ -899,7 +895,7 @@ export default function FixedGrowthMindsetClient({
                 "Mindset pertumbuhan, dalam terang ini, bukan tentang ambisi. Ini tentang penatalayanan. Kemampuan, pengalaman, dan panggilan yang Anda bawa telah ditempatkan di tangan Anda dengan alasan. Mengubur mereka karena Anda mungkin gagal bukan kerendahan hati. Itu adalah ketakutan yang menyamar sebagai keamanan."
               )}
             </p>
-            <p style={{ margin: 0, fontStyle: "italic", color: OFF_WHITE, fontFamily: "Cormorant Garamond, serif", fontSize: 18 }}>
+            <p style={{ margin: 0, fontStyle: "italic", color: OFF_WHITE, fontFamily: "var(--font-cormorant)", fontSize: 18 }}>
               {t(
                 "The invitation is not to be fearless. It is to be faithful.",
                 "Undangannya bukan untuk tidak takut. Ini untuk menjadi setia."
@@ -940,7 +936,7 @@ export default function FixedGrowthMindsetClient({
               },
             ].map(item => (
               <div key={item.num} style={{ display: "flex", gap: 20, alignItems: "flex-start", background: "white", borderRadius: 10, padding: "24px 28px" }}>
-                <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 32, fontWeight: 600, color: ORANGE, lineHeight: 1, flexShrink: 0, minWidth: 36 }}>{item.num}</span>
+                <span style={{ fontFamily: "var(--font-cormorant)", fontSize: 32, fontWeight: 600, color: ORANGE, lineHeight: 1, flexShrink: 0, minWidth: 36 }}>{item.num}</span>
                 <p style={{ fontSize: 15, lineHeight: 1.7, color: BODY_TEXT, margin: 0 }}>{t(item.en, item.id)}</p>
               </div>
             ))}
@@ -990,7 +986,7 @@ export default function FixedGrowthMindsetClient({
               },
             ].map(item => (
               <div key={item.num} style={{ display: "flex", gap: 20, alignItems: "flex-start", background: "white", borderRadius: 10, padding: "24px 28px", border: `1px solid ${LIGHT_GRAY}` }}>
-                <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 32, fontWeight: 600, color: ORANGE, lineHeight: 1.1, flexShrink: 0, minWidth: 24 }}>{item.num}</span>
+                <span style={{ fontFamily: "var(--font-cormorant)", fontSize: 32, fontWeight: 600, color: ORANGE, lineHeight: 1.1, flexShrink: 0, minWidth: 24 }}>{item.num}</span>
                 <p style={{ fontSize: 15, lineHeight: 1.75, color: BODY_TEXT, margin: 0 }}>{t(item.en, item.id)}</p>
               </div>
             ))}
@@ -1006,7 +1002,7 @@ export default function FixedGrowthMindsetClient({
           <p style={{ color: ORANGE, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" as const, marginBottom: 12 }}>
             Background
           </p>
-          <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: NAVY, marginBottom: 32, lineHeight: 1.2 }}>
+          <h2 style={{ fontFamily: "var(--font-montserrat)", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: NAVY, marginBottom: 32, lineHeight: 1.2 }}>
             Fixed and Growth Mindset: What the Research Says About Ability, Learning, and Leaders Who Develop
           </h2>
           <button
@@ -1016,7 +1012,7 @@ export default function FixedGrowthMindsetClient({
               marginTop: 20, marginBottom: 24, padding: "10px 20px",
               background: "transparent", border: `1.5px solid ${ORANGE}`,
               color: ORANGE, borderRadius: 12,
-              fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 700,
+              fontFamily: "var(--font-montserrat)", fontSize: 13, fontWeight: 700,
               cursor: "pointer", letterSpacing: "0.04em",
             }}
           >

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { Fragment, useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import Link from "next/link";
 
 // ── Types ──────────────────────────────────────────────────────────────────
@@ -18,8 +18,9 @@ const MUTED = "oklch(48% 0.04 260)";
 const ON_NAVY = "oklch(82% 0.025 80)";
 const GROWTH = "oklch(40% 0.14 145)";
 const FIXED = "oklch(42% 0.16 25)";
-const SERIF = "Cormorant Garamond, Georgia, serif";
-const SANS = "Montserrat, sans-serif";
+const SERIF = "var(--font-cormorant)";
+const SANS = "var(--font-montserrat)";
+const HAND = "var(--font-kalam)";
 
 const W = 1600;
 const H = 900;
@@ -31,29 +32,34 @@ const MODULE_TITLE: Pair = { en: "Fixed vs Growth Mindset", id: "Mindset Tetap v
 
 // ── Content, lifted from the module itself ────────────────────────────────
 
-const DIMENSIONS: { label: Pair; growth: Pair; fixed: Pair }[] = [
+const DIMENSIONS: { label: Pair; example: Pair; growth: Pair; fixed: Pair }[] = [
   {
     label: { en: "Challenges", id: "Tantangan" },
+    example: { en: "Saying yes to leading the meeting in a language you are still learning.", id: "Bersedia memimpin rapat dalam bahasa yang masih Anda pelajari." },
     growth: { en: "Embraces challenges.", id: "Merangkul tantangan." },
     fixed: { en: "Defaults to familiar paths to protect against visible failure.", id: "Memilih jalur yang sudah dikenal untuk melindungi diri dari kegagalan yang terlihat." },
   },
   {
     label: { en: "Skills", id: "Keterampilan" },
+    example: { en: "Practising the hard conversation instead of avoiding it.", id: "Berlatih percakapan yang sulit, bukan menghindarinya." },
     growth: { en: "Focuses on getting gradually better.", id: "Fokus pada perbaikan bertahap." },
     fixed: { en: "Believes you're either good at something or not.", id: "Percaya bahwa Anda berbakat dalam sesuatu atau tidak." },
   },
   {
     label: { en: "Obstacles", id: "Hambatan" },
+    example: { en: "The visa is delayed again. You adjust the plan and keep going.", id: "Visa tertunda lagi. Anda menyesuaikan rencana dan terus berjalan." },
     growth: { en: "Sees obstacles as an inevitable part of the process.", id: "Melihat hambatan sebagai bagian yang tak terhindarkan dari proses." },
     fixed: { en: "Gives up in the face of an obstacle.", id: "Menyerah ketika menghadapi hambatan." },
   },
   {
     label: { en: "Success of Others", id: "Kesuksesan Orang Lain" },
+    example: { en: "A colleague learns the language faster. You ask how they did it.", id: "Rekan kerja lebih cepat menguasai bahasa. Anda bertanya bagaimana caranya." },
     growth: { en: "Is inspired by the success of others.", id: "Terinspirasi oleh kesuksesan orang lain." },
     fixed: { en: "Sees others' advancement as a comment on their own worth.", id: "Melihat kemajuan orang lain sebagai komentar tentang nilai diri sendiri." },
   },
   {
     label: { en: "Effort", id: "Usaha" },
+    example: { en: "Presenting again the week after a presentation went badly.", id: "Tampil presentasi lagi seminggu setelah presentasi yang buruk." },
     growth: { en: "Sees consistent effort as fruitful, even when results are slow.", id: "Melihat usaha yang konsisten sebagai hal yang bermanfaat, bahkan ketika hasilnya lambat." },
     fixed: { en: "Does not feel motivated to put in the extra effort.", id: "Tidak merasa termotivasi untuk memberikan upaya ekstra." },
   },
@@ -80,6 +86,14 @@ const SHIFT_STEPS: { step: string; title: Pair; point: Pair; detail: Pair }[] = 
   },
 ];
 
+// Phrases shown in bold orange on the takeaways slide.
+const TAKEAWAY_HIGHLIGHTS: (Pair | undefined)[] = [
+  { en: "Recognizing them is the work.", id: "Mengenali mereka adalah pekerjaan itu." },
+  undefined,
+  { en: "faithfulness with what you have been given", id: "kesetiaan dengan apa yang telah diberikan kepada Anda" },
+  undefined,
+];
+
 const TAKEAWAYS: Pair[] = [
   { en: "Fixed mindset patterns do not make you a poor leader. They make you a human one. Recognizing them is the work.", id: "Pola mindset tetap tidak membuat Anda pemimpin yang buruk. Mereka membuat Anda manusiawi. Mengenali mereka adalah pekerjaan itu." },
   { en: "In cross-cultural settings, fear of visible failure is often a learned response to real social stakes, not a character flaw.", id: "Dalam lingkungan lintas budaya, ketakutan akan kegagalan yang terlihat sering kali respons yang dipelajari terhadap taruhan sosial nyata, bukan cacat karakter." },
@@ -94,6 +108,34 @@ const QUESTIONS: Pair[] = [
 ];
 
 // ── Small helpers ──────────────────────────────────────────────────────────
+
+// Name It = notebook + pen, Spot the Pattern = magnifying glass, Reframe It = turning arrows.
+const STEP_ICON_PATHS: Record<string, string[]> = {
+  "01": ["M13.4 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7.4", "M2 6h4", "M2 10h4", "M2 14h4", "M2 18h4", "M21.378 5.626a1 1 0 1 0-3.004-3.004l-5.01 5.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"],
+  "02": ["M11 3a8 8 0 1 0 0 16a8 8 0 1 0 0-16z", "M21 21l-4.3-4.3", "M8 11h6"],
+  "03": ["M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8", "M21 3v5h-5", "M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16", "M8 16H3v5"],
+};
+
+function StepIcon({ step, size }: { step: string; size: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={ORANGE} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      {STEP_ICON_PATHS[step].map((d) => <path key={d} d={d} />)}
+    </svg>
+  );
+}
+
+// Renders `text` with the `hl` phrase in bold orange.
+function Highlight({ text, hl }: { text: string; hl?: string }) {
+  const at = hl ? text.indexOf(hl) : -1;
+  if (!hl || at < 0) return <>{text}</>;
+  return (
+    <>
+      {text.slice(0, at)}
+      <strong style={{ fontWeight: 700, color: ORANGE }}>{hl}</strong>
+      {text.slice(at + hl.length)}
+    </>
+  );
+}
 
 function show(on: boolean): React.CSSProperties {
   return { opacity: on ? 1 : 0, transform: on ? "none" : "translateY(14px)", transition: "opacity 0.5s ease, transform 0.5s ease" };
@@ -174,16 +216,17 @@ const SLIDES: Slide[] = [
   },
   {
     key: "dimensions-preview",
-    steps: 5,
+    steps: 10,
     render: (lang, step) => (
       <div>
         <Eyebrow color={ORANGE}>{lang === "id" ? "Lima Dimensi" : "Five Dimensions"}</Eyebrow>
         <H2>{lang === "id" ? "Di Mana Mindset Muncul" : "Where Mindset Shows Up"}</H2>
         <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
           {DIMENSIONS.map((d, n) => (
-            <div key={d.label.en} style={{ ...show(step >= n), display: "flex", alignItems: "center", gap: 20, padding: "16px 0", borderBottom: n < 4 ? `1px solid ${LIGHT_GRAY}` : "none" }}>
+            <div key={d.label.en} style={{ ...show(step >= n * 2), display: "flex", alignItems: "baseline", gap: 20, padding: "14px 0", borderBottom: n < 4 ? `1px solid ${LIGHT_GRAY}` : "none" }}>
               <span style={{ fontFamily: SERIF, fontSize: 34, fontWeight: 600, color: ORANGE, minWidth: 48 }}>{String(n + 1).padStart(2, "0")}</span>
-              <span style={{ fontFamily: SANS, fontSize: 30, fontWeight: 600, color: NAVY }}>{d.label[lang]}</span>
+              <span style={{ fontFamily: SANS, fontSize: 30, fontWeight: 600, color: NAVY, minWidth: 380 }}>{d.label[lang]}</span>
+              <span style={{ ...show(step >= n * 2 + 1), fontFamily: HAND, fontSize: 28, lineHeight: 1.3, color: "oklch(38% 0.07 260)" }}>{d.example[lang]}</span>
             </div>
           ))}
         </div>
@@ -192,7 +235,7 @@ const SLIDES: Slide[] = [
   },
   {
     key: "contrast",
-    steps: 5,
+    steps: 6,
     render: (lang, step) => (
       <div>
         <Eyebrow color={ORANGE}>{lang === "id" ? "Perbandingan" : "The Contrast"}</Eyebrow>
@@ -206,114 +249,44 @@ const SLIDES: Slide[] = [
             {lang === "id" ? "Tetap" : "Fixed"}
           </div>
           {DIMENSIONS.map((d, n) => (
-            <div key={d.label.en} style={{ ...show(step > n), display: "contents" }}>
+            <Fragment key={d.label.en}>
               <div style={{ padding: "16px 20px 16px 0", fontFamily: SANS, fontSize: 20, fontWeight: 700, color: NAVY, borderTop: `1px solid ${LIGHT_GRAY}` }}>
                 {d.label[lang]}
               </div>
               <div style={{ padding: "16px 20px", background: "oklch(46% 0.16 145 / 0.06)", borderTop: `1px solid ${LIGHT_GRAY}` }}>
-                <p style={{ margin: 0, fontFamily: SANS, fontSize: 19, lineHeight: 1.4, color: "oklch(30% 0.08 145)" }}>{d.growth[lang]}</p>
+                <p style={{ ...show(step > n), margin: 0, fontFamily: SANS, fontSize: 19, lineHeight: 1.4, color: "oklch(30% 0.08 145)" }}>{d.growth[lang]}</p>
               </div>
               <div style={{ padding: "16px 20px", background: "oklch(48% 0.18 25 / 0.06)", borderTop: `1px solid ${LIGHT_GRAY}` }}>
-                <p style={{ margin: 0, fontFamily: SANS, fontSize: 19, lineHeight: 1.4, color: "oklch(32% 0.10 25)" }}>{d.fixed[lang]}</p>
+                <p style={{ ...show(step > n), margin: 0, fontFamily: SANS, fontSize: 19, lineHeight: 1.4, color: "oklch(32% 0.10 25)" }}>{d.fixed[lang]}</p>
               </div>
-            </div>
+            </Fragment>
           ))}
         </div>
       </div>
     ),
   },
   {
-    key: "field-reset",
-    dark: true,
-    steps: 3,
-    render: (lang, step) => (
-      <div>
-        <Eyebrow color={ORANGE}>{lang === "id" ? "Di Lapangan" : "In the Field"}</Eyebrow>
-        <H2 dark>{lang === "id" ? "Mindset di Lapangan" : "Mindset in the Field"}</H2>
-        <Point on={step >= 0} dark>
-          {lang === "id"
-            ? "Penelitian Dweck dilakukan di sekolah dan tempat kerja Barat. Pemimpin lintas budaya menguji kerangka kerja ini lebih jauh."
-            : "Dweck's research was conducted in schools and Western workplaces. Cross-cultural leaders stress-test it further."}
-        </Point>
-        <Point on={step >= 1} dark>
-          {lang === "id"
-            ? "Setiap kompetensi dasar direset: bahasa, kode sosial, membaca ruangan."
-            : "Every basic competency gets reset: language, social codes, reading a room."}
-        </Point>
-        <Point on={step >= 2} dark>
-          {lang === "id"
-            ? "Anda adalah pemimpin yang efektif sebelumnya. Sekarang Anda pemula lagi, dan semua orang bisa melihatnya."
-            : "You were an effective leader before. Now you are a beginner again, and everyone can see it."}
-        </Point>
-      </div>
-    ),
-  },
-  {
-    key: "field-intensify",
-    steps: 3,
-    render: (lang, step) => (
-      <div>
-        <Eyebrow color={ORANGE}>{lang === "id" ? "Di Lapangan" : "In the Field"}</Eyebrow>
-        <H2>{lang === "id" ? "Pola Tetap Menjadi Lebih Intens" : "Fixed Patterns Intensify"}</H2>
-        <Point on={step >= 0}>
-          {lang === "id" ? "Dalam keadaan itu, pola mindset tetap tidak hanya muncul. Mereka intensif." : "In that state, fixed mindset patterns do not just appear. They intensify."}
-        </Point>
-        <Point on={step >= 1}>
-          {lang === "id" ? "Tantangan menjadi: “Saya tidak siap untuk ini.”" : "Challenges becomes: “I am not equipped for this.”"}
-        </Point>
-        <Point on={step >= 2}>
-          {lang === "id"
-            ? "Kesuksesan Orang Lain menjadi rasa malu: “Mereka beradaptasi begitu cepat. Pasti ada yang salah dengan saya.”"
-            : "Success of Others becomes the shame of comparison: “They adapted so quickly. Something must be wrong with me.”"}
-        </Point>
-      </div>
-    ),
-  },
-  {
-    key: "field-face",
-    dark: true,
-    steps: 2,
-    render: (lang, step) => (
-      <div>
-        <Eyebrow color={ORANGE}>{lang === "id" ? "Lapisan Budaya" : "The Cultural Layer"}</Eyebrow>
-        <H2 dark>{lang === "id" ? "Kehilangan Muka Bukan Sekadar Gagal" : "Losing Face Is Not Just Failing"}</H2>
-        <Point on={step >= 0} dark>
-          {lang === "id"
-            ? "Kehilangan muka dalam komunitas dengan hubungan jangka panjang bukan sama dengan gagal dalam tugas. Itu kerusakan relasional."
-            : "Losing face in a community where relationships are long-term and visible is not the same as failing a task. It is relational damage."}
-        </Point>
-        <Point on={step >= 1} dark>
-          {lang === "id" ? "Ini membuat naluri menghindari risiko sangat rasional, bukan sekadar ketakutan." : "This makes the instinct to avoid risk deeply rational, not simply fearful."}
-        </Point>
-      </div>
-    ),
-  },
-  {
-    key: "field-growth",
-    steps: 1,
-    render: (lang) => (
-      <div>
-        <Eyebrow color={ORANGE}>{lang === "id" ? "Kesimpulan" : "The Point"}</Eyebrow>
-        <H2>{lang === "id" ? "Bukan Tentang Menampilkan Kepercayaan Diri" : "Not About Performing Confidence"}</H2>
-        <Point on={true}>
-          {lang === "id"
-            ? "Mindset pertumbuhan bagi pemimpin lintas budaya adalah menahan kompetensi dan ketidakmampuan bersamaan, tetap penasaran di bawah tekanan, dan memperlakukan setiap budaya baru sebagai guru, bukan ujian."
-            : "A growth mindset for a cross-cultural leader is holding competence and incompetence at the same time, staying curious under pressure, and treating each new culture as a teacher, not a test."}
-        </Point>
-      </div>
-    ),
-  },
-  {
     key: "shift-intro",
     dark: true,
-    steps: 1,
-    render: (lang) => (
+    steps: 3,
+    render: (lang, step) => (
       <div>
         <Eyebrow color={ORANGE}>{lang === "id" ? "Latihan" : "Practice"}</Eyebrow>
         <H2 dark>{lang === "id" ? "Cara Mengubah Mindset Anda" : "How to Shift Your Mindset"}</H2>
         <Point on={true} dark>
           {lang === "id" ? "Perubahan mindset bukan keputusan sekali jalan. Ini adalah latihan." : "Mindset change is not a one-time decision. It is a practice."}
         </Point>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 32, marginTop: 20 }}>
+          {SHIFT_STEPS.map((s, n) => (
+            <div key={s.step} style={{ ...show(step >= n), background: "oklch(30% 0.08 260)", borderRadius: 16, padding: "36px 32px" }}>
+              <StepIcon step={s.step} size={64} />
+              <div style={{ fontFamily: SANS, fontSize: 18, fontWeight: 700, letterSpacing: "0.12em", color: ON_NAVY, margin: "22px 0 8px" }}>
+                {lang === "id" ? `LANGKAH ${s.step}` : `STEP ${s.step}`}
+              </div>
+              <div style={{ fontFamily: SERIF, fontSize: 42, fontWeight: 600, color: OFF_WHITE, lineHeight: 1.1 }}>{s.title[lang]}</div>
+            </div>
+          ))}
+        </div>
       </div>
     ),
   },
@@ -321,44 +294,19 @@ const SLIDES: Slide[] = [
     key: `shift-${s.step}`,
     steps: 2,
     render: (lang, step) => (
-      <div>
-        <Eyebrow color={ORANGE}>{lang === "id" ? `Langkah ${s.step}` : `Step ${s.step}`}</Eyebrow>
-        <H2>{s.title[lang]}</H2>
-        <Point on={step >= 0}>{s.point[lang]}</Point>
-        <Point on={step >= 1}>{s.detail[lang]}</Point>
+      <div style={{ display: "flex", gap: 72, alignItems: "center", height: "100%", paddingBottom: 40, boxSizing: "border-box" }}>
+        <div style={{ flex: 1 }}>
+          <Eyebrow color={ORANGE}>{lang === "id" ? `Langkah ${s.step}` : `Step ${s.step}`}</Eyebrow>
+          <H2>{s.title[lang]}</H2>
+          <Point on={step >= 0}>{s.point[lang]}</Point>
+          <Point on={step >= 1}>{s.detail[lang]}</Point>
+        </div>
+        <div style={{ flexShrink: 0, width: 280, height: 280, borderRadius: "50%", background: "oklch(65% 0.15 45 / 0.1)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <StepIcon step={s.step} size={140} />
+        </div>
       </div>
     ),
   })),
-  {
-    key: "faith-anchor",
-    dark: true,
-    steps: 5,
-    render: (lang, step) => (
-      <div>
-        <Eyebrow color={ORANGE}>{lang === "id" ? "Jangkar Iman" : "Faith Anchor"}</Eyebrow>
-        <H2 dark>{lang === "id" ? "Setia dengan Apa yang Telah Diberikan" : "Faithful with What You Have Been Given"}</H2>
-        <Point on={step >= 0} dark>
-          {lang === "id"
-            ? "Dalam Matius 25, tiga hamba dipercayakan sejumlah uang. Dua menginvestasikannya. Satu menguburnya di tanah."
-            : "In Matthew 25, three servants are entrusted with a sum of money. Two invest it. One buries it in the ground."}
-        </Point>
-        <Point on={step >= 1} dark>
-          {lang === "id"
-            ? "Hamba yang mengubur talentanya tidak memiliki masalah karakter. Ia memiliki masalah ketakutan. “Aku takut,” katanya."
-            : "The servant who buried his talent did not have a character problem. He had a fear problem. “I was afraid,” he says."}
-        </Point>
-        <p style={{ ...show(step >= 2), fontFamily: SERIF, fontStyle: "italic", fontSize: 40, color: OFF_WHITE, margin: "0 0 22px", maxWidth: 1100 }}>
-          {lang === "id" ? "Itulah mindset tetap dalam pakaian alkitabiah." : "That is a fixed mindset in biblical clothing."}
-        </p>
-        <Point on={step >= 3} dark>
-          {lang === "id" ? "“Jangan abaikan karunia yang ada padamu” (1 Timotius 4:14)." : "“Do not neglect the gift you have” (1 Timothy 4:14)."}
-        </Point>
-        <p style={{ ...show(step >= 4), fontFamily: SERIF, fontStyle: "italic", fontSize: 32, color: ON_NAVY, margin: 0, maxWidth: 1100 }}>
-          {lang === "id" ? "Undangannya bukan untuk tidak takut. Ini untuk menjadi setia." : "The invitation is not to be fearless. It is to be faithful."}
-        </p>
-      </div>
-    ),
-  },
   {
     key: "takeaways",
     steps: 4,
@@ -368,9 +316,11 @@ const SLIDES: Slide[] = [
         <H2>{lang === "id" ? "Yang Perlu Dibawa" : "What to Carry Forward"}</H2>
         <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
           {TAKEAWAYS.map((t, n) => (
-            <div key={n} style={{ ...show(step >= n), display: "flex", gap: 24, alignItems: "flex-start", padding: "14px 0" }}>
-              <span style={{ fontFamily: SERIF, fontSize: 36, fontWeight: 600, color: ORANGE, lineHeight: 1, minWidth: 48 }}>{String(n + 1).padStart(2, "0")}</span>
-              <p style={{ fontFamily: SANS, fontSize: 23, lineHeight: 1.5, color: "oklch(30% 0.05 260)", margin: 0 }}>{t[lang]}</p>
+            <div key={n} style={{ ...show(step >= n), display: "flex", gap: 28, alignItems: "flex-start", padding: "12px 0" }}>
+              <span style={{ fontFamily: SERIF, fontSize: 44, fontWeight: 600, color: ORANGE, lineHeight: 1, minWidth: 56 }}>{String(n + 1).padStart(2, "0")}</span>
+              <p style={{ fontFamily: SANS, fontSize: 30, lineHeight: 1.45, color: "oklch(30% 0.05 260)", margin: 0 }}>
+                <Highlight text={t[lang]} hl={TAKEAWAY_HIGHLIGHTS[n]?.[lang]} />
+              </p>
             </div>
           ))}
         </div>
@@ -401,13 +351,13 @@ const SLIDES: Slide[] = [
     dark: true,
     steps: 1,
     render: (lang) => (
-      <div>
+      <div style={{ height: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center" }}>
         <Eyebrow color={ORANGE}>{lang === "id" ? "Langkah Selanjutnya" : "Next Steps"}</Eyebrow>
         <H2 dark>{lang === "id" ? "Mindset Anda Tidak Tetap" : "Your Mindset Is Not Fixed"}</H2>
         <Point on={true} dark>
           {lang === "id"
-            ? "Kesadaran adalah awal dari perubahan. Perhatikan di mana Anda melindungi diri, ketika Anda bisa bertumbuh."
-            : "Awareness is the beginning of change. Notice where you are protecting yourself, when you could be growing."}
+            ? "Perubahan dimulai dengan menyadari. Di mana Anda bermain aman padahal Anda bisa belajar?"
+            : "Change starts with noticing. Where are you playing it safe when you could be learning?"}
         </Point>
       </div>
     ),
