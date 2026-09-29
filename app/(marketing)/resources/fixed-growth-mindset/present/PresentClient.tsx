@@ -2,6 +2,7 @@
 
 import { Fragment, useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { useLanguage } from "@/lib/LanguageContext";
 
 // ── Types ──────────────────────────────────────────────────────────────────
 type Lang = "en" | "id";
@@ -25,6 +26,9 @@ const HAND = "var(--font-kalam)";
 const W = 1600;
 const H = 900;
 const IDLE_MS = 2500;
+const MIN_WIDTH = 768;
+
+const t = (en: string, id: string, lang: Lang) => (lang === "id" ? id : en);
 
 const MODULE_HREF = "/resources/fixed-growth-mindset";
 const IMG = "/images/resources/fixed-growth-mindset/hero.jpg";
@@ -368,69 +372,36 @@ const stepsOf = (i: number) => SLIDES[i]?.steps ?? 1;
 
 // ── Slide canvas ───────────────────────────────────────────────────────────
 
-function SlideFrame({ slide, lang, step, index, total }: { slide: Slide; lang: Lang; step: number; index: number; total: number }) {
+// One slide on the 1600×900 canvas, with a quiet footer
+function SlideFrame({ index, lang, step }: { index: number; lang: Lang; step: number }) {
+  const slide = SLIDES[index];
   const dark = !!slide.dark;
-  const isTitle = slide.key === "title";
+  const isTitle = index === 0;
   return (
-    <div style={{ position: "relative", width: W, height: H, background: dark ? NAVY : OFF_WHITE, overflow: "hidden", fontFamily: SANS }}>
+    <div style={{ width: W, height: H, position: "relative", background: dark ? NAVY : OFF_WHITE, overflow: "hidden", fontFamily: SANS }}>
       {isTitle && (
         <>
-          <div style={{ position: "absolute", inset: 0, backgroundImage: `url(${IMG})`, backgroundSize: "cover", backgroundPosition: "center", opacity: 0.18, mixBlendMode: "luminosity" }} />
-          <div style={{ position: "absolute", inset: 0, background: NAVY, opacity: 0.35 }} />
-          <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke={ORANGE} strokeWidth="1.2" style={{ position: "absolute", right: 60, bottom: 50, opacity: 0.5 }} aria-hidden="true">
-            <circle cx="12" cy="12" r="9" />
-            <path d="M8 12l2.5 2.5L16 9" />
-          </svg>
+          <img src={IMG} alt="" aria-hidden="true"
+            style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.18, mixBlendMode: "luminosity" }} />
+          <div aria-hidden="true" style={{ position: "absolute", inset: 0, background: NAVY, opacity: 0.35 }} />
         </>
       )}
-      <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 10, background: ORANGE }} />
+      <div aria-hidden="true" style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 10, background: ORANGE }} />
       <div style={{ position: "relative", zIndex: 1, padding: "90px 110px", height: "100%", boxSizing: "border-box" }}>
         {slide.render(lang, step)}
       </div>
       {!isTitle && (
-        <div style={{ position: "absolute", left: 110, right: 110, bottom: 40, display: "flex", justifyContent: "space-between", alignItems: "center", fontFamily: SANS, fontSize: 16, color: dark ? "oklch(60% 0.03 260)" : MUTED, letterSpacing: "0.04em" }}>
-          <span>{MODULE_TITLE[lang]}</span>
-          <span>{index + 1} / {total}</span>
+        <div style={{ position: "absolute", left: 120, right: 120, bottom: 44, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <span style={{ display: "inline-flex", alignItems: "center", gap: 14, fontSize: 17, fontWeight: 600, color: dark ? ON_NAVY : MUTED, letterSpacing: "0.04em" }}>
+            <img src="/logo-icon.png" alt="" aria-hidden="true" width={30} height={30} style={{ display: "block" }} />
+            {MODULE_TITLE[lang]}
+          </span>
+          <span style={{ fontSize: 17, fontWeight: 700, color: dark ? ON_NAVY : MUTED }}>{index + 1} / {SLIDES.length}</span>
         </div>
       )}
-    </div>
-  );
-}
-
-function Thumb({ index, lang, active }: { index: number; lang: Lang; active: boolean }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [scale, setScale] = useState(0.1);
-
-  useLayoutEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const ro = new ResizeObserver(() => {
-      setScale(Math.min(el.clientWidth / W, el.clientHeight / H));
-    });
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, []);
-
-  const slide = SLIDES[index];
-  const finalStep = stepsOf(index) - 1;
-
-  return (
-    <div
-      ref={ref}
-      style={{
-        position: "relative",
-        aspectRatio: `${W} / ${H}`,
-        width: "100%",
-        borderRadius: 8,
-        overflow: "hidden",
-        outline: active ? `3px solid ${ORANGE}` : `1px solid ${LIGHT_GRAY}`,
-        cursor: "pointer",
-        background: slide.dark ? NAVY : OFF_WHITE,
-      }}
-    >
-      <div style={{ position: "absolute", left: 0, top: 0, width: W, height: H, transform: `scale(${scale})`, transformOrigin: "top left" }}>
-        <SlideFrame slide={slide} lang={lang} step={finalStep} index={index} total={SLIDES.length} />
-      </div>
+      {isTitle && (
+        <img src="/logo-icon.png" alt="Crispy Development" width={40} height={40} style={{ position: "absolute", right: 56, bottom: 44, display: "block", zIndex: 1 }} />
+      )}
     </div>
   );
 }
@@ -438,51 +409,38 @@ function Thumb({ index, lang, active }: { index: number; lang: Lang; active: boo
 // ── Main component ─────────────────────────────────────────────────────────
 
 export default function PresentClient() {
-  const [lang, setLang] = useState<Lang>("en");
+  const { lang: ctxLang, setLang } = useLanguage();
+  const lang = (ctxLang === "id" ? "id" : "en") as Lang;
+  // Position = slide index plus how many builds of that slide are showing
   const [pos, setPos] = useState({ i: 0, s: 0 });
+  const { i, s: step } = pos;
   const [isFull, setIsFull] = useState(false);
   const [uiVisible, setUiVisible] = useState(true);
   const [overview, setOverview] = useState(false);
   const [blank, setBlank] = useState(false);
   const [started, setStarted] = useState(false);
   const [tooSmall, setTooSmall] = useState(false);
-  const [scale, setScale] = useState(1);
-  const stageRef = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(0.5);
   const rootRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
   const idleTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const touchX = useRef<number | null>(null);
+  const last = SLIDES.length - 1;
 
-  const total = SLIDES.length;
-  const atEnd = pos.i === total - 1 && pos.s === stepsOf(pos.i) - 1;
-  const atStart = pos.i === 0 && pos.s === 0;
-
-  const go = useCallback((i: number) => {
-    const clamped = Math.max(0, Math.min(total - 1, i));
-    setPos({ i: clamped, s: 0 });
-  }, [total]);
-
+  const atEnd = i === last && step === stepsOf(last) - 1;
+  const go = useCallback((n: number) => { setBlank(false); setPos({ i: Math.max(0, Math.min(last, n)), s: 0 }); }, [last]);
   const next = useCallback(() => {
-    setPos((p) => {
-      const max = stepsOf(p.i) - 1;
-      if (p.s < max) return { i: p.i, s: p.s + 1 };
-      if (p.i < total - 1) return { i: p.i + 1, s: 0 };
-      return p;
-    });
-  }, [total]);
-
+    setBlank(false);
+    setPos(p => p.s < stepsOf(p.i) - 1 ? { i: p.i, s: p.s + 1 } : p.i < last ? { i: p.i + 1, s: 0 } : p);
+  }, [last]);
   const prev = useCallback(() => {
-    setPos((p) => {
-      if (p.s > 0) return { i: p.i, s: p.s - 1 };
-      if (p.i > 0) return { i: p.i - 1, s: stepsOf(p.i - 1) - 1 };
-      return p;
-    });
+    setBlank(false);
+    setPos(p => p.s > 0 ? { i: p.i, s: p.s - 1 } : p.i > 0 ? { i: p.i - 1, s: stepsOf(p.i - 1) - 1 } : p);
   }, []);
 
   const toggleFull = useCallback(() => {
-    if (!document.fullscreenElement) {
-      rootRef.current?.requestFullscreen?.().catch(() => {});
-    } else {
-      document.exitFullscreen?.().catch(() => {});
-    }
+    if (document.fullscreenElement) document.exitFullscreen?.().catch(() => {});
+    else rootRef.current?.requestFullscreen?.().catch(() => {});
   }, []);
 
   const wake = useCallback(() => {
@@ -491,189 +449,219 @@ export default function PresentClient() {
     idleTimer.current = setTimeout(() => setUiVisible(false), IDLE_MS);
   }, []);
 
+  // Fit the 16:9 canvas into whatever space the screen gives us
   useLayoutEffect(() => {
     const el = stageRef.current;
     if (!el) return;
-    const ro = new ResizeObserver(() => {
-      const s = Math.min(el.clientWidth / W, el.clientHeight / H);
-      setScale(s > 0 ? s : 1);
-    });
+    const measure = () => setScale(Math.min(el.clientWidth / W, el.clientHeight / H));
+    measure();
+    const ro = new ResizeObserver(measure);
     ro.observe(el);
     return () => ro.disconnect();
+  }, [tooSmall]);
+
+  useEffect(() => {
+    const mq = window.matchMedia(`(max-width: ${MIN_WIDTH - 1}px)`);
+    const upd = () => setTooSmall(mq.matches);
+    upd();
+    mq.addEventListener("change", upd);
+    return () => mq.removeEventListener("change", upd);
   }, []);
 
   useEffect(() => {
-    const mq = window.matchMedia("(max-width: 767px)");
-    const update = () => setTooSmall(mq.matches);
-    update();
-    mq.addEventListener("change", update);
-    return () => mq.removeEventListener("change", update);
-  }, []);
-
-  useEffect(() => {
-    const onFsChange = () => setIsFull(!!document.fullscreenElement);
-    document.addEventListener("fullscreenchange", onFsChange);
-    return () => document.removeEventListener("fullscreenchange", onFsChange);
-  }, []);
-
-  useEffect(() => {
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = "";
+    const onKey = (e: KeyboardEvent) => {
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      const k = e.key;
+      // Let a focused button handle its own Space press
+      if (k === " " && (e.target as HTMLElement)?.closest?.("button, a")) return;
+      if (overview) {
+        if (k === "Escape" || k === "g" || k === "G") { e.preventDefault(); setOverview(false); }
+        return;
+      }
+      setStarted(true);
+      if (["ArrowRight", "ArrowDown", "PageDown", " ", "n", "N"].includes(k)) { e.preventDefault(); next(); }
+      else if (["ArrowLeft", "ArrowUp", "PageUp", "Backspace", "p", "P"].includes(k)) { e.preventDefault(); prev(); }
+      else if (k === "Home") { e.preventDefault(); go(0); }
+      else if (k === "End") { e.preventDefault(); go(last); }
+      else if (k === "f" || k === "F") { e.preventDefault(); toggleFull(); }
+      else if (k === "g" || k === "G") { e.preventDefault(); setOverview(true); }
+      else if (k === "b" || k === "B" || k === ".") { e.preventDefault(); setBlank(b => !b); }
+      else if (k === "l" || k === "L") { e.preventDefault(); setLang(lang === "en" ? "id" : "en"); }
+      else if (k === "Escape") setBlank(false);
+      wake();
     };
-  }, []);
+    const onFull = () => setIsFull(!!document.fullscreenElement);
+    window.addEventListener("keydown", onKey);
+    document.addEventListener("fullscreenchange", onFull);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.removeEventListener("fullscreenchange", onFull);
+    };
+  }, [overview, next, prev, go, last, toggleFull, wake, lang, setLang]);
 
   useEffect(() => {
     idleTimer.current = setTimeout(() => setUiVisible(false), IDLE_MS);
-    return () => {
-      if (idleTimer.current) clearTimeout(idleTimer.current);
-    };
+    return () => { if (idleTimer.current) clearTimeout(idleTimer.current); };
   }, [wake]);
 
+  // Preload the title image so the first slide never waits
   useEffect(() => {
-    const img = new Image();
-    img.src = IMG;
+    const im = new Image();
+    im.src = IMG;
   }, []);
 
+  // Stop the page behind from scrolling while presenting
   useEffect(() => {
-    function onKey(e: KeyboardEvent) {
-      if (["ArrowRight", "ArrowDown", "PageDown", " ", "n", "N"].includes(e.key)) { e.preventDefault(); setStarted(true); next(); }
-      else if (["ArrowLeft", "ArrowUp", "PageUp", "Backspace", "p", "P"].includes(e.key)) { e.preventDefault(); setStarted(true); prev(); }
-      else if (e.key === "Home") { setStarted(true); go(0); }
-      else if (e.key === "End") { setStarted(true); go(total - 1); }
-      else if (e.key === "f" || e.key === "F") { toggleFull(); }
-      else if (e.key === "g" || e.key === "G") { setOverview((o) => !o); }
-      else if (e.key === "b" || e.key === "B" || e.key === ".") { setBlank((b) => !b); }
-      else if (e.key === "l" || e.key === "L") { setLang((l) => (l === "en" ? "id" : "en")); }
-      else if (e.key === "Escape") { if (blank) setBlank(false); else if (overview) setOverview(false); }
-      wake();
-    }
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [next, prev, go, toggleFull, total, blank, overview, wake]);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = prevOverflow; };
+  }, []);
+
+  const showUi = uiVisible || !started || overview;
 
   if (tooSmall) {
     return (
-      <div style={{ position: "fixed", inset: 0, background: NAVY, display: "flex", alignItems: "center", justifyContent: "center", padding: 24, fontFamily: SANS, textAlign: "center" }}>
-        <div>
-          <p style={{ fontFamily: SERIF, fontSize: 30, color: OFF_WHITE, marginBottom: 14 }}>Presenting needs a bigger screen</p>
-          <p style={{ color: ON_NAVY, marginBottom: 24, fontSize: 15 }}>Open this on a tablet or computer to run the slideshow.</p>
-          <Link href={MODULE_HREF} style={{ color: ORANGE, fontWeight: 700, textDecoration: "none" }}>
-            Back to the module
+      <div style={{ position: "fixed", inset: 0, zIndex: 1000, background: NAVY, display: "flex", alignItems: "center", justifyContent: "center", padding: 24, fontFamily: SANS }}>
+        <div style={{ maxWidth: 360, textAlign: "center" }}>
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke={ORANGE} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ margin: "0 auto 20px", display: "block" }}>
+            <rect x="3" y="4" width="18" height="12" rx="2" /><path d="M12 16v4M8 20h8" />
+          </svg>
+          <p style={{ fontFamily: SERIF, fontSize: 30, fontWeight: 600, color: OFF_WHITE, margin: "0 0 12px", lineHeight: 1.2 }}>
+            {t("Presenting needs a bigger screen", "Presentasi butuh layar yang lebih besar", lang)}
+          </p>
+          <p style={{ fontSize: 15, lineHeight: 1.6, color: "oklch(82% 0.03 80)", margin: "0 0 28px" }}>
+            {t("Open this module on a tablet or computer to show the slides to your team.",
+              "Buka modul ini di tablet atau komputer untuk menampilkan slide kepada tim Anda.", lang)}
+          </p>
+          <Link href={MODULE_HREF} style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", minHeight: 44, padding: "0 22px", borderRadius: 8, background: ORANGE, color: "white", fontWeight: 700, fontSize: 14, textDecoration: "none" }}>
+            {t("Back to the module", "Kembali ke modul", lang)}
           </Link>
         </div>
       </div>
     );
   }
 
-  const slide = SLIDES[pos.i];
-  const progressPct = ((pos.i + (pos.s + 1) / stepsOf(pos.i)) / total) * 100;
+  const pill: React.CSSProperties = {
+    display: "inline-flex", alignItems: "center", justifyContent: "center", minWidth: 44, height: 44, padding: "0 12px",
+    background: "transparent", border: "none", borderRadius: 10, color: OFF_WHITE, cursor: "pointer", fontFamily: SANS, fontWeight: 700, fontSize: 13,
+  };
+  const sep = <span aria-hidden="true" style={{ width: 1, height: 24, background: "oklch(100% 0 0 / 0.18)", margin: "0 4px" }} />;
 
   return (
-    <div
-      ref={rootRef}
-      onMouseMove={wake}
-      onTouchStart={wake}
-      style={{ position: "fixed", inset: 0, background: INK, overflow: "hidden" }}
-    >
+    <div ref={rootRef} onMouseMove={wake}
+      onTouchStart={e => { touchX.current = e.touches[0].clientX; wake(); }}
+      onTouchEnd={e => {
+        if (touchX.current === null || overview) return;
+        const dx = e.changedTouches[0].clientX - touchX.current;
+        if (Math.abs(dx) > 50) { setStarted(true); if (dx < 0) next(); else prev(); }
+        touchX.current = null;
+      }}
+      style={{ position: "fixed", inset: 0, zIndex: 1000, background: INK, fontFamily: SANS, cursor: showUi ? "default" : "none", userSelect: "none" }}>
       <style>{`
-        @keyframes fgm-fade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
-        .fgm-fade { animation: fgm-fade 0.45s ease; }
-        .fgm-ui { transition: opacity 0.4s ease; }
-        .fgm-pill { transition: background 0.15s ease, transform 0.1s ease; }
-        .fgm-pill:hover { background: oklch(100% 0 0 / 0.14) !important; }
+        .fgm-fade { animation: fgmFade 0.45s ease; }
+        @keyframes fgmFade { from { opacity: 0; } to { opacity: 1; } }
+        .fgm-ui { transition: opacity 0.4s ease, transform 0.4s ease; }
+        .fgm-pill:hover { background: oklch(100% 0 0 / 0.12) !important; }
+        .fgm-pill:focus-visible, .fgm-thumb:focus-visible { outline: 2px solid ${ORANGE}; outline-offset: 2px; }
+        .fgm-thumb { transition: transform 0.2s ease, box-shadow 0.2s ease; }
         .fgm-thumb:hover { transform: translateY(-3px); }
-        .fgm-progress { transition: width 0.35s ease; }
-        @media (prefers-reduced-motion: reduce) {
-          .fgm-fade { animation: none; }
-          .fgm-ui, .fgm-pill, .fgm-thumb, .fgm-progress { transition: none; }
-        }
+        @media (prefers-reduced-motion: reduce) { .fgm-fade { animation: none; } .fgm-ui, .fgm-thumb { transition: none; } }
       `}</style>
 
-      <div ref={stageRef} style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <div style={{ width: W * scale, height: H * scale, position: "relative", cursor: blank ? "default" : "pointer" }}>
-          {!blank && (
-            <div key={pos.i} className="fgm-fade" style={{ width: W, height: H, transform: `scale(${scale})`, transformOrigin: "top left" }}>
-              <SlideFrame slide={slide} lang={lang} step={pos.s} index={pos.i} total={total} />
-            </div>
-          )}
-          {blank && <div style={{ width: "100%", height: "100%", background: INK }} />}
-          <div style={{ position: "absolute", inset: 0, display: "flex" }}>
-            <div style={{ width: "30%" }} onClick={() => { setStarted(true); prev(); }} />
-            <div style={{ width: "70%" }} onClick={() => { setStarted(true); next(); }} />
+      {/* Stage: the scaled slide, click right side for next, left side for back */}
+      <div ref={stageRef}
+        onClick={e => {
+          if (overview) return;
+          setStarted(true);
+          const r = (e.currentTarget as HTMLDivElement).getBoundingClientRect();
+          if (e.clientX - r.left < r.width * 0.3) prev(); else next();
+        }}
+        style={{ position: "absolute", inset: isFull ? 0 : 24, display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div aria-live="polite" aria-roledescription="slide" aria-label={`${i + 1} / ${SLIDES.length}`}
+          style={{ width: W * scale, height: H * scale, position: "relative", boxShadow: isFull ? "none" : "0 30px 80px oklch(0% 0 0 / 0.45)", borderRadius: isFull ? 0 : 6, overflow: "hidden" }}>
+          <div key={`${i}-${lang}`} className="fgm-fade" style={{ width: W, height: H, transform: `scale(${scale})`, transformOrigin: "top left" }}>
+            <SlideFrame index={i} lang={lang} step={step} />
           </div>
+          {blank && <div style={{ position: "absolute", inset: 0, background: "black" }} />}
         </div>
       </div>
 
-      {!started && (
-        <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", background: "oklch(14% 0.05 260 / 0.55)", flexDirection: "column", gap: 18 }}>
-          <button
-            onClick={() => { setStarted(true); toggleFull(); }}
-            style={{ background: ORANGE, color: "oklch(15% 0.05 45)", padding: "16px 36px", borderRadius: 14, fontWeight: 700, fontSize: 16, border: "none", cursor: "pointer", fontFamily: SANS }}
-          >
-            {lang === "id" ? "Mulai layar penuh" : "Start full screen"}
-          </button>
-          <p style={{ color: ON_NAVY, fontFamily: SANS, fontSize: 14 }}>
-            {lang === "id" ? "Gunakan panah atau klik untuk lanjut" : "Use the arrow keys or click to advance"}
-          </p>
+      {/* Start hint, shown until the presenter first moves on */}
+      {!started && !overview && (
+        <div className="fgm-ui" style={{ position: "absolute", left: "50%", bottom: 104, transform: "translateX(-50%)", display: "flex", alignItems: "center", gap: 14 }}>
+          {!isFull && (
+            <button type="button" onClick={() => { setStarted(true); toggleFull(); }}
+              style={{ display: "inline-flex", alignItems: "center", gap: 10, height: 48, padding: "0 24px", borderRadius: 999, border: "none", background: ORANGE, color: "white", fontFamily: SANS, fontWeight: 700, fontSize: 15, cursor: "pointer", boxShadow: "0 10px 30px oklch(0% 0 0 / 0.35)" }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+              {t("Start full screen", "Mulai layar penuh", lang)}
+            </button>
+          )}
+          <span style={{ fontSize: 13, color: "oklch(85% 0.02 80)", background: "oklch(0% 0 0 / 0.45)", padding: "8px 14px", borderRadius: 999 }}>
+            {t("Arrow keys or clicker to move. F full screen. G all slides.", "Tombol panah atau clicker untuk pindah. F layar penuh. G semua slide.", lang)}
+          </span>
         </div>
       )}
 
-      <div className="fgm-ui" style={{ position: "absolute", top: 0, left: 0, right: 0, height: 4, background: "oklch(100% 0 0 / 0.08)", opacity: uiVisible ? 1 : 0 }}>
-        <div className="fgm-progress" style={{ height: "100%", width: `${progressPct}%`, background: ORANGE }} />
+      {/* Control bar */}
+      <div className="fgm-ui" role="toolbar" aria-label={t("Presentation controls", "Kontrol presentasi", lang)}
+        style={{ position: "absolute", left: "50%", bottom: 28, transform: `translateX(-50%) translateY(${showUi ? 0 : 16}px)`, opacity: showUi ? 1 : 0, pointerEvents: showUi ? "auto" : "none",
+          display: "flex", alignItems: "center", gap: 2, padding: 6, borderRadius: 16, background: "oklch(18% 0.05 260 / 0.88)", backdropFilter: "blur(12px)", boxShadow: "0 12px 40px oklch(0% 0 0 / 0.4)" }}>
+        <button type="button" className="fgm-pill" style={{ ...pill, opacity: i === 0 ? 0.35 : 1 }} disabled={i === 0} onClick={() => { setStarted(true); prev(); }}
+          aria-label={t("Previous slide", "Slide sebelumnya", lang)}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6" /></svg>
+        </button>
+        <span style={{ minWidth: 64, textAlign: "center", fontSize: 14, fontWeight: 700, color: OFF_WHITE, fontVariantNumeric: "tabular-nums" }}>{i + 1} / {SLIDES.length}</span>
+        <button type="button" className="fgm-pill" style={{ ...pill, opacity: atEnd ? 0.35 : 1 }} disabled={atEnd} onClick={() => { setStarted(true); next(); }}
+          aria-label={t("Next slide", "Slide berikutnya", lang)}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6" /></svg>
+        </button>
+        {sep}
+        <button type="button" className="fgm-pill" style={pill} onClick={() => setOverview(o => !o)} aria-pressed={overview}
+          aria-label={t("All slides", "Semua slide", lang)} title={t("All slides (G)", "Semua slide (G)", lang)}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5" /><rect x="14" y="3" width="7" height="7" rx="1.5" /><rect x="3" y="14" width="7" height="7" rx="1.5" /><rect x="14" y="14" width="7" height="7" rx="1.5" /></svg>
+        </button>
+        <div role="group" aria-label={t("Language", "Bahasa", lang)} style={{ display: "inline-flex", gap: 2, background: "oklch(100% 0 0 / 0.08)", borderRadius: 10, padding: 2 }}>
+          {(["en", "id"] as Lang[]).map(l => (
+            <button key={l} type="button" className="fgm-pill" aria-pressed={lang === l} onClick={() => setLang(l)}
+              style={{ ...pill, height: 40, minWidth: 44, background: lang === l ? ORANGE : "transparent" }}>
+              {l.toUpperCase()}
+            </button>
+          ))}
+        </div>
+        <button type="button" className="fgm-pill" style={pill} onClick={toggleFull}
+          aria-label={isFull ? t("Exit full screen", "Keluar dari layar penuh", lang) : t("Full screen", "Layar penuh", lang)}
+          title={isFull ? t("Exit full screen (F)", "Keluar dari layar penuh (F)", lang) : t("Full screen (F)", "Layar penuh (F)", lang)}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            {isFull ? <path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5" /> : <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" />}
+          </svg>
+        </button>
+        {sep}
+        <Link href={MODULE_HREF} className="fgm-pill" style={{ ...pill, textDecoration: "none", gap: 6 }} aria-label={t("Close presentation", "Tutup presentasi", lang)}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+          {t("Close", "Tutup", lang)}
+        </Link>
       </div>
 
-      <div
-        className="fgm-ui"
-        style={{
-          position: "absolute", left: 0, right: 0, bottom: 0, padding: "16px 28px",
-          display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16,
-          opacity: uiVisible ? 1 : 0, pointerEvents: uiVisible ? "auto" : "none",
-          background: "linear-gradient(to top, oklch(0% 0 0 / 0.55), transparent)",
-        }}
-      >
-        <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-          <button className="fgm-pill" disabled={atStart} onClick={prev} style={pillStyle(atStart)}>
-            {"←"}
-          </button>
-          <button className="fgm-pill" disabled={atEnd} onClick={next} style={pillStyle(atEnd)}>
-            {"→"}
-          </button>
-          <span style={{ color: ON_NAVY, fontFamily: SANS, fontSize: 13, marginLeft: 8 }}>{pos.i + 1} / {total}</span>
-        </div>
-
-        <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-          <button className="fgm-pill" onClick={() => setOverview((o) => !o)} style={pillStyle(false)}>
-            {lang === "id" ? "Ringkasan" : "Overview"}
-          </button>
-          <div style={{ display: "flex", borderRadius: 10, overflow: "hidden", border: "1px solid oklch(100% 0 0 / 0.2)" }}>
-            <button onClick={() => setLang("en")} style={langBtnStyle(lang === "en")}>EN</button>
-            <button onClick={() => setLang("id")} style={langBtnStyle(lang === "id")}>ID</button>
-          </div>
-          <button className="fgm-pill" onClick={toggleFull} style={pillStyle(false)}>
-            {isFull ? (lang === "id" ? "Keluar" : "Exit") : (lang === "id" ? "Layar penuh" : "Fullscreen")}
-          </button>
-          <Link href={MODULE_HREF} className="fgm-pill" style={{ ...pillStyle(false), textDecoration: "none", display: "inline-flex", alignItems: "center" }}>
-            {lang === "id" ? "Tutup" : "Close"}
-          </Link>
-        </div>
+      {/* Progress line */}
+      <div aria-hidden="true" style={{ position: "absolute", left: 0, right: 0, top: 0, height: 3, background: "oklch(100% 0 0 / 0.06)" }}>
+        <div style={{ height: "100%", width: `${((i + 1) / SLIDES.length) * 100}%`, background: ORANGE, transition: "width 0.4s ease" }} />
       </div>
 
+      {/* Overview: every slide as a thumbnail, click to jump */}
       {overview && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          onClick={() => setOverview(false)}
-          style={{ position: "absolute", inset: 0, background: "oklch(10% 0.02 260 / 0.9)", zIndex: 10, padding: 40, overflowY: "auto" }}
-        >
-          <div
-            onClick={(e) => e.stopPropagation()}
-            style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: 20, maxWidth: 1400, margin: "0 auto" }}
-          >
-            {SLIDES.map((s, i) => (
-              <div key={s.key} className="fgm-thumb" onClick={() => { go(i); setOverview(false); setStarted(true); }}>
-                <Thumb index={i} lang={lang} active={i === pos.i} />
-              </div>
+        <div role="dialog" aria-label={t("All slides", "Semua slide", lang)}
+          style={{ position: "absolute", inset: 0, background: "oklch(12% 0.04 260 / 0.97)", overflowY: "auto", padding: "56px 48px 120px" }}>
+          <p style={{ fontFamily: SERIF, fontSize: 32, fontWeight: 600, color: OFF_WHITE, textAlign: "center", margin: "0 0 32px" }}>
+            {t("All slides", "Semua slide", lang)}
+          </p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: 24, maxWidth: 1280, margin: "0 auto" }}>
+            {SLIDES.map((s, n) => (
+              <button key={s.key} type="button" className="fgm-thumb" onClick={() => { go(n); setOverview(false); setStarted(true); }}
+                aria-label={`${n + 1}`} aria-current={n === i}
+                style={{ padding: 0, border: "none", background: "transparent", cursor: "pointer", textAlign: "left" }}>
+                <Thumb index={n} lang={lang} active={n === i} />
+                <span style={{ display: "block", marginTop: 8, fontSize: 13, fontWeight: 700, color: n === i ? ORANGE : "oklch(80% 0.02 80)" }}>{n + 1}</span>
+              </button>
             ))}
           </div>
         </div>
@@ -682,29 +670,24 @@ export default function PresentClient() {
   );
 }
 
-function pillStyle(disabled: boolean): React.CSSProperties {
-  return {
-    background: "oklch(100% 0 0 / 0.08)",
-    color: disabled ? "oklch(50% 0.02 260)" : ON_NAVY,
-    border: "1px solid oklch(100% 0 0 / 0.16)",
-    borderRadius: 10,
-    padding: "9px 16px",
-    fontFamily: SANS,
-    fontSize: 13,
-    fontWeight: 600,
-    cursor: disabled ? "default" : "pointer",
-  };
-}
-
-function langBtnStyle(active: boolean): React.CSSProperties {
-  return {
-    background: active ? ORANGE : "transparent",
-    color: active ? "oklch(15% 0.05 45)" : ON_NAVY,
-    border: "none",
-    padding: "9px 14px",
-    fontFamily: SANS,
-    fontSize: 13,
-    fontWeight: 700,
-    cursor: "pointer",
-  };
+function Thumb({ index, lang, active }: { index: number; lang: Lang; active: boolean }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [s, setS] = useState(0.17);
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const measure = () => setS(el.clientWidth / W);
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+  return (
+    <div ref={ref} style={{ width: "100%", aspectRatio: "16 / 9", position: "relative", overflow: "hidden", borderRadius: 8,
+      outline: active ? `3px solid ${ORANGE}` : "1px solid oklch(100% 0 0 / 0.12)", outlineOffset: active ? 2 : 0 }}>
+      <div style={{ width: W, height: H, transform: `scale(${s})`, transformOrigin: "top left", pointerEvents: "none" }}>
+        <SlideFrame index={index} lang={lang} step={stepsOf(index) - 1} />
+      </div>
+    </div>
+  );
 }
