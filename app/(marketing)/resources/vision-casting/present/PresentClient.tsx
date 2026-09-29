@@ -11,7 +11,6 @@ const navy = "oklch(22% 0.10 260)";
 const ink = "oklch(14% 0.05 260)";
 const offWhite = "oklch(96% 0.005 80)";
 const orange = "oklch(65% 0.15 45)";
-const orangeGlow = "oklch(65% 0.15 45 / 0.25)";
 const lightGray = "oklch(88% 0.008 80)";
 const muted = "oklch(48% 0.04 260)";
 const onNavy = "oklch(82% 0.025 80)";
@@ -40,6 +39,7 @@ type ChannelData = {
   tagline: Pair;
   body: Pair;
   anchorTitle: Pair;
+  anchorRef: Pair;
   anchorText: Pair;
   question: Pair;
   practice: Pair;
@@ -57,6 +57,7 @@ const CHANNELS: ChannelData[] = [
       id: "Visi dalam Kitab Suci jarang dimulai dari strategi. Ia dimulai dari kesedihan, kerinduan, atau kegelisahan yang tidak mau pergi. Gairah berbeda dari sekadar kesukaan. Kesukaan adalah apa yang Anda nikmati. Gairah adalah apa yang tidak bisa Anda tinggalkan.",
     },
     anchorTitle: { en: "Nehemiah: grief that became a mission", id: "Nehemia: kesedihan yang menjadi misi" },
+    anchorRef: { en: "Nehemiah 1:1-11", id: "Nehemia 1:1-11" },
     anchorText: {
       en: "When Nehemiah heard that Jerusalem's wall lay broken, he wept, fasted and prayed for days, long before he had a plan, permission or a team. One of Scripture's most carefully led projects began with a concern he could not release.",
       id: "Ketika Nehemia mendengar tembok Yerusalem runtuh, ia menangis, berpuasa, dan berdoa selama berhari-hari, jauh sebelum ia punya rencana, izin, atau tim. Salah satu proyek kepemimpinan paling matang dalam Kitab Suci dimulai dari kekhawatiran yang tak bisa ia lepaskan.",
@@ -81,6 +82,7 @@ const CHANNELS: ChannelData[] = [
       id: "Kitab Suci menunjukkan Allah berbicara melalui mimpi. Yusuf bermimpi tentang berkas gandum yang membungkuk padanya. Daniel menafsirkan mimpi seorang raja. Ini mimpi harfiah, tetapi juga gambaran masa depan yang muncul dalam hati yang tenang. Kitab Suci memperlakukannya sebagai data, bukan khayalan.",
     },
     anchorTitle: { en: "Joseph: the dream that cost everything", id: "Yusuf: mimpi yang menuntut segalanya" },
+    anchorRef: { en: "Genesis 37:5-11", id: "Kejadian 37:5-11" },
     anchorText: {
       en: "Joseph's dreams of sheaves and stars bowing to him cost him his brothers' trust, then years of slavery and prison. They were still from God, and came true in ways he could not have planned.",
       id: "Mimpi Yusuf tentang berkas dan bintang yang membungkuk padanya membuatnya kehilangan kepercayaan saudara-saudaranya, lalu bertahun-tahun sebagai budak dan tahanan. Mimpi itu tetap dari Allah, dan menjadi nyata dengan cara yang tak pernah ia rencanakan.",
@@ -105,6 +107,7 @@ const CHANNELS: ChannelData[] = [
       id: "Paulus menerima penglihatan seorang laki-laki Makedonia yang memohon kedatangannya, dan Injil menyeberang ke Eropa. Petrus menerima penglihatan yang membuka Injil bagi bangsa-bangsa lain. Saat-saat ini jarang, tetapi nyata. Pemimpin yang tidak menyediakan ruang bagi mereka akan melewatkannya.",
     },
     anchorTitle: { en: "Paul: a vision that redirected a continent", id: "Paulus: penglihatan yang mengubah arah benua" },
+    anchorRef: { en: "Acts 16:6-10", id: "Kisah Para Rasul 16:6-10" },
     anchorText: {
       en: "Paul was already mid-mission, planning another route, when a night vision of a Macedonian man changed his direction entirely. He did not delay: \"We got ready at once.\" Europe's church is rooted in a vision Paul received in his sleep.",
       id: "Paulus sedang di tengah misi, merencanakan arah lain, ketika penglihatan malam tentang seorang laki-laki Makedonia sepenuhnya mengubah arahnya. Ia tidak menunda: \"kami segera bersiap berangkat.\" Gereja di Eropa berakar pada penglihatan yang Paulus terima saat tidur.",
@@ -129,6 +132,7 @@ const CHANNELS: ChannelData[] = [
       id: "Ini saluran yang paling sering diremehkan. Allah jarang memberikan gambaran utuh kepada satu pemimpin saja. Setiap anggota tim melihat sebagiannya, dan pemimpin yang hanya mendengarkan gairah, mimpi, dan wahyunya sendiri membawa gambaran yang belum lengkap.",
     },
     anchorTitle: { en: "Antioch: a vision born in community", id: "Antiokhia: visi yang lahir dalam komunitas" },
+    anchorRef: { en: "Acts 13:1-3", id: "Kisah Para Rasul 13:1-3" },
     anchorText: {
       en: "While the church at Antioch worshipped and fasted, the Holy Spirit said: \"Set apart for me Barnabas and Saul for the work I have called them to.\" The call came to the community first. The first cross-cultural mission in Christian history began as shared discernment, not personal ambition.",
       id: "Saat gereja di Antiokhia beribadah dan berpuasa, Roh Kudus berkata: \"Pisahkanlah Barnabas dan Saulus bagi-Ku untuk pekerjaan yang telah Kutentukan.\" Panggilan itu datang kepada komunitas lebih dulu. Perjalanan lintas budaya pertama dalam sejarah Kekristenan dimulai dari penegasan bersama, bukan ambisi pribadi.",
@@ -200,8 +204,8 @@ const KEY_TAKEAWAYS: { lead: Pair; rest: Pair }[] = [
   {
     lead: { en: "Four channels, one vision.", id: "Empat saluran, satu visi." },
     rest: {
-      en: "God speaks through passion, dreams, revelation and others. Most leaders use one or two. The strongest visions draw from all four.",
-      id: "Allah berbicara melalui gairah, mimpi, wahyu, dan sesama. Kebanyakan pemimpin hanya memakai satu atau dua. Visi terkuat menggali dari keempat-empatnya.",
+      en: "We see God speaking through passion, dreams, revelation and others. When we listen through all four, the vision grows stronger.",
+      id: "Kita melihat Allah berbicara melalui gairah, mimpi, wahyu, dan sesama. Ketika kita mendengarkan melalui keempatnya, visi menjadi semakin kuat.",
     },
   },
   {
@@ -271,39 +275,35 @@ const show = (on: boolean): React.CSSProperties => ({
   transition: "opacity 0.5s ease, transform 0.5s ease",
 });
 
-// The compass overview, built up one channel at a time.
-// Channels before `upTo` are done, `upTo` is the one about to be unpacked.
-function CompassSlide({ upTo, lang }: { upTo: number; lang: Lang }) {
+// The compass overview, same picture as the module:
+// the Crispy logo in the centre with the four channels around it.
+function CompassSlide({ lang }: { lang: Lang }) {
   const posFor: Record<Direction, React.CSSProperties> = {
-    N: { left: "50%", top: 0, transform: "translate(-50%, -50%)" },
-    E: { left: "100%", top: "50%", transform: "translate(-50%, -50%)" },
-    S: { left: "50%", top: "100%", transform: "translate(-50%, -50%)" },
-    W: { left: 0, top: "50%", transform: "translate(-50%, -50%)" },
+    N: { left: "50%", top: 0, transform: "translateX(-50%)" },
+    E: { right: 0, top: "50%", transform: "translateY(-50%)" },
+    S: { left: "50%", bottom: 0, transform: "translateX(-50%)" },
+    W: { left: 0, top: "50%", transform: "translateY(-50%)" },
   };
   return (
     <>
       <p style={kicker}>{t("The Vision Compass", "Kompas Visi", lang)}</p>
-      <h2 style={{ ...midTitle, fontSize: 64 }}>{t("Four channels, one compass", "Empat saluran, satu kompas", lang)}</h2>
-      <div style={{ position: "relative", width: 540, height: 540 }}>
-        <div aria-hidden="true" style={{ position: "absolute", inset: 40, borderRadius: "50%", border: `2px dashed ${lightGray}` }} />
-        <div aria-hidden="true" style={{ position: "absolute", left: "50%", top: "50%", width: 16, height: 16, borderRadius: 999, background: navy, transform: "translate(-50%,-50%)" }} />
-        {CHANNELS.map((c, n) => {
-          const current = n === upTo;
-          const future = n > upTo;
-          return (
-            <div key={c.id} style={{ position: "absolute", ...posFor[c.direction] }}>
-              <span aria-hidden="true" style={{
-                width: 130, height: 130, borderRadius: 999, display: "inline-flex", alignItems: "center", justifyContent: "center",
-                background: future ? "transparent" : (current ? c.colorAccent : navy),
-                border: future ? `2px dashed ${lightGray}` : "none",
-                boxShadow: current ? `0 0 0 8px ${orangeGlow}` : "none",
-                fontFamily: sans, fontWeight: 700, fontSize: 17, color: future ? muted : "white", textAlign: "center", padding: 10, lineHeight: 1.2,
-              }}>
-                {future ? c.direction : t(c.label.en, c.label.id, lang)}
-              </span>
-            </div>
-          );
-        })}
+      <h2 style={{ ...midTitle, fontSize: 60 }}>{t("Four channels, one compass", "Empat saluran, satu kompas", lang)}</h2>
+      <div style={{ position: "relative", width: 620, height: 560 }}>
+        <img src="/logo-icon.png" alt="" aria-hidden="true" width={300} height={300}
+          style={{ position: "absolute", left: "50%", top: "50%", transform: "translate(-50%, -50%)", display: "block" }} />
+        {CHANNELS.map(c => (
+          <div key={c.id} style={{
+            position: "absolute", ...posFor[c.direction],
+            minWidth: 170, padding: "12px 26px", borderRadius: 999, background: "white",
+            border: `3px solid ${c.colorAccent}`, boxShadow: "0 4px 16px oklch(22% 0.10 260 / 0.12)",
+            display: "flex", flexDirection: "column", alignItems: "center", gap: 2,
+          }}>
+            <span style={{ fontFamily: sans, fontSize: 15, fontWeight: 700, color: c.colorAccent, letterSpacing: "0.1em" }}>{c.direction}</span>
+            <span style={{ fontFamily: sans, fontSize: 24, fontWeight: 700, color: navy, letterSpacing: "0.08em", textTransform: "uppercase" }}>
+              {t(c.label.en, c.label.id, lang)}
+            </span>
+          </div>
+        ))}
       </div>
     </>
   );
@@ -325,6 +325,7 @@ function ChannelDetailSlide({ n, lang, step }: { n: number; lang: Lang; step: nu
       <div style={{ ...card, ...show(step >= 1), borderLeft: `8px solid ${c.colorAccent}`, padding: "22px 32px" }}>
         <p style={{ fontFamily: sans, fontSize: 15, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: muted, margin: "0 0 8px" }}>
           {t(c.anchorTitle.en, c.anchorTitle.id, lang)}
+          <span style={{ color: orange, marginLeft: 14 }}>{t(c.anchorRef.en, c.anchorRef.id, lang)}</span>
         </p>
         <p style={{ fontFamily: sans, fontSize: 20, lineHeight: 1.45, color: navy, margin: 0 }}>{t(c.anchorText.en, c.anchorText.id, lang)}</p>
       </div>
@@ -389,8 +390,10 @@ const SLIDES: Slide[] = [
             "Visi adalah gambaran jelas tentang apa yang bisa terjadi, disertai keyakinan bahwa itu seharusnya terjadi. Ini bukan tujuan, bukan strategi. Ini gambaran yang menggerakkan tim menuju masa depan yang belum mereka miliki.", lang)}
         </p>
         <p style={{ ...body, ...show(step >= 1), maxWidth: 1200 }}>
-          {t("For a cross-cultural Christian leader, every team vision sits inside the Great Commission: Jesus' ongoing call to make disciples of every nation. Your vision is a small piece of a much larger one.",
-            "Bagi pemimpin Kristen lintas budaya, setiap visi tim berada di dalam Amanat Agung: panggilan Yesus yang terus berlangsung untuk menjadikan semua bangsa murid-Nya. Visi Anda adalah bagian kecil dari visi yang jauh lebih besar.", lang)}
+          {t("In a Christian context, our vision sits inside the Great Commission: Jesus' ongoing call to make disciples of every nation.",
+            "Dalam konteks Kristen, visi kita berada di dalam Amanat Agung: panggilan Yesus yang terus berlangsung untuk menjadikan semua bangsa murid-Nya.", lang)}
+          <br />
+          {t("Your vision is only a small piece of a larger one.", "Visi Anda hanyalah bagian kecil dari visi yang lebih besar.", lang)}
         </p>
       </>
     ),
@@ -398,27 +401,25 @@ const SLIDES: Slide[] = [
   {
     key: "compass-intro",
     dark: true,
-    steps: 2,
-    render: (lang, step) => (
+    render: lang => (
       <>
         <p style={kicker}>{t("The Vision Compass", "Kompas Visi", lang)}</p>
         <h2 style={{ ...midTitle, color: offWhite }}>{t("Vision rarely comes from one direction", "Visi jarang datang dari satu arah", lang)}</h2>
         <p style={{ ...body, color: onNavy, maxWidth: 1100 }}>
-          {t("God speaks vision through four channels. Each one is different. Each one is needed.",
-            "Allah berbicara visi melalui empat saluran. Masing-masing berbeda. Masing-masing diperlukan.", lang)}
-        </p>
-        <p style={{ ...body, ...show(step >= 1), color: onNavy, maxWidth: 1100 }}>
-          {t("Most leaders only use one or two. The strongest team vision draws from all four.",
-            "Kebanyakan pemimpin hanya menggunakan satu atau dua. Visi tim yang paling kuat menggali dari keempat-empatnya.", lang)}
+          {t("We see God speaking through at least four channels.",
+            "Kita melihat Allah berbicara melalui setidaknya empat saluran.", lang)}
+          <br />
+          {t("When we listen through all of them, the vision grows stronger.",
+            "Ketika kita mendengarkan melalui semuanya, visi menjadi semakin kuat.", lang)}
         </p>
       </>
     ),
   },
-  // The compass builds up: channel 1 revealed, its detail, channel 2 added, its detail, and so on
-  ...CHANNELS.flatMap((c, n): Slide[] => [
-    { key: `compass-${n + 1}`, render: lang => <CompassSlide upTo={n} lang={lang} /> },
-    { key: `channel-${n + 1}`, steps: 3, render: (lang, step) => <ChannelDetailSlide n={n} lang={lang} step={step} /> },
-  ]),
+  // The compass once, then each channel in turn
+  { key: "compass", render: lang => <CompassSlide lang={lang} /> },
+  ...CHANNELS.map((c, n): Slide => (
+    { key: `channel-${n + 1}`, steps: 3, render: (lang, step) => <ChannelDetailSlide n={n} lang={lang} step={step} /> }
+  )),
   {
     key: "five-tests-intro",
     dark: true,
@@ -451,8 +452,8 @@ const SLIDES: Slide[] = [
         <p style={kicker}>{t("Proverbs 29:18", "Amsal 29:18", lang)}</p>
         <div style={show(step >= 1)}>{rule(120)}</div>
         <p style={{ ...body, ...show(step >= 1), color: onNavy, maxWidth: 1150 }}>
-          {t("Every team vision sits inside the Great Commission: Jesus' ongoing call to make disciples of every nation. Knowing this turns leading a project into stewarding a calling.",
-            "Setiap visi tim berada di dalam Amanat Agung: panggilan Yesus yang terus berlangsung untuk menjadikan semua bangsa murid-Nya. Menyadari ini mengubah memimpin proyek menjadi menjaga sebuah panggilan.", lang)}
+          {t("In a Christian context, our vision sits inside the Great Commission: Jesus' ongoing call to make disciples of every nation. Knowing this turns leading a project into stewarding a calling.",
+            "Dalam konteks Kristen, visi kita berada di dalam Amanat Agung: panggilan Yesus yang terus berlangsung untuk menjadikan semua bangsa murid-Nya. Menyadari ini mengubah memimpin proyek menjadi menjaga sebuah panggilan.", lang)}
         </p>
       </>
     ),
@@ -466,7 +467,7 @@ const SLIDES: Slide[] = [
         <h2 style={{ ...midTitle, fontSize: 58 }}>{t("Four things to carry forward", "Empat hal untuk dibawa pulang", lang)}</h2>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 26, width: "100%" }}>
           {KEY_TAKEAWAYS.map((k, n) => (
-            <div key={n} style={{ ...card, ...show(step > n), padding: "28px 30px", borderTop: `6px solid ${orange}` }}>
+            <div key={n} style={{ ...card, ...show(step >= n), padding: "28px 30px", borderTop: `6px solid ${orange}` }}>
               <p style={{ fontFamily: sans, fontSize: 17, fontWeight: 700, color: orange, letterSpacing: "0.1em", margin: "0 0 10px" }}>{n + 1}</p>
               <p style={{ fontFamily: serif, fontSize: 25, fontWeight: 600, color: navy, margin: "0 0 10px", lineHeight: 1.25 }}>{t(k.lead.en, k.lead.id, lang)}</p>
               <p style={{ fontFamily: sans, fontSize: 17, lineHeight: 1.45, color: muted, margin: 0 }}>{t(k.rest.en, k.rest.id, lang)}</p>
@@ -485,7 +486,7 @@ const SLIDES: Slide[] = [
         <h2 style={{ ...midTitle, fontSize: 58 }}>{t("Three things to do this week", "Tiga hal untuk dilakukan minggu ini", lang)}</h2>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 28, width: "100%" }}>
           {THIS_WEEK.map((w, n) => (
-            <div key={n} style={{ ...card, ...show(step > n), padding: "32px 30px", display: "flex", flexDirection: "column", gap: 18 }}>
+            <div key={n} style={{ ...card, ...show(step >= n), padding: "32px 30px", display: "flex", flexDirection: "column", gap: 18 }}>
               <span style={{ width: 56, height: 56, borderRadius: 999, background: orange, color: "white", fontFamily: serif, fontSize: 32, fontWeight: 600, display: "inline-flex", alignItems: "center", justifyContent: "center" }}>{n + 1}</span>
               <p style={{ fontFamily: sans, fontSize: 20, lineHeight: 1.45, fontWeight: 600, color: navy, margin: 0 }}>{t(w.en, w.id, lang)}</p>
             </div>
@@ -503,7 +504,7 @@ const SLIDES: Slide[] = [
         <h2 style={{ ...midTitle, fontSize: 62 }}>{t("Questions to sit with", "Pertanyaan untuk direnungkan", lang)}</h2>
         <ol style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 20, width: 1200 }}>
           {QUESTIONS.map((q, n) => (
-            <li key={n} style={{ ...card, ...show(step > n), display: "flex", alignItems: "center", gap: 28, padding: "24px 34px" }}>
+            <li key={n} style={{ ...card, ...show(step >= n), display: "flex", alignItems: "center", gap: 28, padding: "24px 34px" }}>
               <span style={{ flexShrink: 0, fontFamily: serif, fontSize: 56, fontWeight: 600, color: orange, lineHeight: 1, width: 42 }}>{n + 1}</span>
               <span style={{ fontFamily: serif, fontSize: 30, fontWeight: 500, color: navy, lineHeight: 1.25 }}>{t(q.en, q.id, lang)}</span>
             </li>
