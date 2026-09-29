@@ -629,7 +629,7 @@ export default function PresentClient() {
   if (tooSmall) {
     return (
       <div style={{
-        position: "fixed", inset: 0, background: navy, display: "flex", flexDirection: "column",
+        position: "fixed", inset: 0, zIndex: 1000, background: navy, display: "flex", flexDirection: "column",
         alignItems: "center", justifyContent: "center", padding: 32, textAlign: "center", fontFamily: sans,
       }}>
         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke={orange} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ marginBottom: 20 }}>
@@ -661,7 +661,7 @@ export default function PresentClient() {
         if (Math.abs(dx) > 50) { if (dx < 0) next(); else prev(); }
         touchX.current = null;
       }}
-      style={{ position: "fixed", inset: 0, background: ink, fontFamily: sans }}
+      style={{ position: "fixed", inset: 0, zIndex: 1000, background: ink, fontFamily: sans }}
     >
       <style>{`
         .jw-fade { animation: jw-fade-in 0.4s ease; }
