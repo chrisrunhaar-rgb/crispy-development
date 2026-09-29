@@ -1,7 +1,6 @@
 "use client";
 import { useState, useTransition } from "react";
 import Link from "next/link";
-import { PositionalFigure, InfluentialFigure } from "./LeadershipFigures";
 import { useLanguage } from "@/lib/LanguageContext";
 import LangToggle from "@/components/LangToggle";
 import { saveResourceToDashboard } from "../actions";
@@ -608,11 +607,10 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
   ];
 
   const riderSkills: { en: string; id: string; phase: PhaseKey }[] = [
-    { en: "Starting the engine", id: "Menyalakan mesin", phase: "launch" },
-    { en: "Braking", id: "Mengerem", phase: "watch" },
-    { en: "Steering through traffic", id: "Mengarahkan di tengah lalu lintas", phase: "watch" },
-    { en: "Steep hills", id: "Tanjakan curam", phase: "assist" },
     { en: "Road rules in a busy city", id: "Aturan jalan di kota yang ramai", phase: "model" },
+    { en: "Steep hills", id: "Tanjakan curam", phase: "assist" },
+    { en: "Steering through traffic", id: "Mengarahkan di tengah lalu lintas", phase: "watch" },
+    { en: "Starting the engine", id: "Menyalakan mesin", phase: "launch" },
   ];
 
   const mistakes = [
@@ -690,11 +688,13 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
       } />
 
       {/* ── 1. HERO ─────────────────────────────────────────────────────────── */}
-      <div style={{ background: navy, padding: "80px 24px 72px", position: "relative" }}>
-        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+      <div style={{ background: navy, padding: "80px 24px 72px", position: "relative", overflow: "hidden" }}>
+        <img src={`${IMG}/spotlight.webp`} alt="" aria-hidden="true"
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "right center", opacity: 0.22, mixBlendMode: "luminosity", pointerEvents: "none" }} />
+        <div style={{ maxWidth: 720, margin: "0 auto", position: "relative" }}>
           <p style={eyebrow}>{t("Leadership", "Kepemimpinan", lang)}</p>
           <h1 style={{ fontFamily: "var(--font-cormorant)", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: offWhite, margin: "0 0 20px", lineHeight: 1.08 }}>
-            {t("Model, Assist, Watch, Launch", "Teladani, Bantu, Amati, Mandirikan", lang)}
+            {t("Model, Assist, Watch, ", "Teladani, Bantu, Amati, ", lang)}<span style={{ color: orange }}>{t("Launch", "Mandirikan", lang)}</span>
           </h1>
           <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "clamp(17px, 2.5vw, 22px)", color: "oklch(85% 0.03 80)", maxWidth: 580, margin: "0 0 32px", lineHeight: 1.6, fontStyle: "italic" }}>
             {t("Many leaders want their people to take over. Often the leader is the one standing in the way.",
@@ -779,13 +779,14 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
 
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 16, margin: "0 0 24px" }}>
               {[
-                { Fig: PositionalFigure, en: "Positional leadership", id: "Kepemimpinan posisional",
+                { src: "lead-positional", en: "Positional leadership", id: "Kepemimpinan posisional",
                   capEn: "The team works to reach the leader's goals.", capId: "Tim bekerja untuk mencapai tujuan pemimpin." },
-                { Fig: InfluentialFigure, en: "Influential leadership", id: "Kepemimpinan yang memengaruhi",
+                { src: "lead-influential", en: "Influential leadership", id: "Kepemimpinan yang memengaruhi",
                   capEn: "The leader supports the team from below. They own the goals together.", capId: "Pemimpin menopang tim dari bawah. Mereka memiliki tujuan itu bersama." },
-              ].map(({ Fig, en, id, capEn, capId }) => (
+              ].map(({ src, en, id, capEn, capId }) => (
                 <figure key={en} style={{ margin: 0, background: white, border: `1px solid ${lightGray}`, borderRadius: 8, padding: "20px 20px 18px" }}>
-                  <Fig style={{ maxWidth: 280, margin: "0 auto 14px" }} />
+                  <img src={`${IMG}/${src}.webp`} alt="" aria-hidden="true" width={1100} height={760} loading="lazy"
+                    style={{ display: "block", width: "100%", maxWidth: 300, height: "auto", margin: "0 auto 14px" }} />
                   <figcaption>
                     <span style={{ display: "block", fontSize: 15, fontWeight: 700, color: navy }}>{t(en, id, lang)}</span>
                     <span style={{ display: "block", fontSize: 14, lineHeight: 1.55, color: muted, marginTop: 4 }}>{t(capEn, capId, lang)}</span>
@@ -991,23 +992,52 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
       <section id="mc-four-stages" style={{ ...section, background: white }}>
         <div style={wrap}>
           <p style={eyebrow}>{t("Skill by skill", "Keterampilan demi keterampilan", lang)}</p>
-          <h2 style={h2}>{t("One person can be in Launch and Model at the same time", "Satu orang bisa berada di tahap Mandirikan dan Teladani sekaligus", lang)}</h2>
+          <h2 style={h2}>{t("Ready for one task, not yet for another", "Siap untuk satu tugas, belum untuk tugas lain", lang)}</h2>
           <p style={p}>{t(
-            "You move each skill through the cycle, not the whole person. Go back to the new rider. You have launched them on starting the engine. You watch their braking from the roadside. On steep hills you still walk beside them. And on the rules of a busy city road you are still riding in front, showing the way.",
-            "Yang Anda gerakkan melalui siklus ini adalah setiap keterampilan, bukan orangnya secara utuh. Kembali ke pengendara baru tadi. Untuk menyalakan mesin, Anda sudah memandirikannya. Cara ia mengerem Anda amati dari pinggir jalan. Di tanjakan curam Anda masih berjalan di sampingnya. Dan untuk aturan jalan di kota yang ramai, Anda masih berkendara di depan untuk menunjukkan jalannya.", lang)}</p>
-          <p style={p}>{t(
-            "A team leader is the same. They may run meetings on their own and still need you beside them for a hard conversation. Readiness belongs to the task, not the person.",
-            "Seorang pemimpin tim pun sama. Ia mungkin sudah bisa memimpin rapat sendiri, tetapi masih membutuhkan Anda di sampingnya untuk percakapan yang sulit. Kesiapan melekat pada tugas, bukan pada orangnya.", lang)}<Sup n="²" /></p>
-          <div style={{ background: offWhite, border: `1px solid ${lightGray}`, borderRadius: 8, overflow: "hidden", margin: "20px 0 24px" }}>
-            {riderSkills.map((s, i) => (
-              <div key={s.en} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, padding: "12px 16px", borderTop: i ? `1px solid ${lightGray}` : "none" }}>
-                <span style={{ fontSize: 14.5, color: navy }}>{t(s.en, s.id, lang)}</span>
-                <span style={{ fontSize: 12.5, fontWeight: 700, color: white, background: s.phase === "launch" ? orange : navy, opacity: s.phase === "model" ? 1 : s.phase === "assist" ? 0.85 : s.phase === "watch" ? 0.7 : 1, borderRadius: 999, padding: "4px 12px", whiteSpace: "nowrap" }}>
-                  {phaseName(s.phase, lang)}
-                </span>
+            "You move through the four phases per skill, not per person. Take a new rider. Each skill sits at its own point on the path.",
+            "Anda melewati keempat tahap per keterampilan, bukan per orang. Ambil contoh seorang pengendara baru. Setiap keterampilan berada di titiknya sendiri.", lang)}</p>
+          <figure style={{ position: "relative", margin: "20px 0 24px", background: offWhite, border: `1px solid ${lightGray}`, borderRadius: 8, padding: "18px 16px 14px" }}>
+            <div aria-hidden="true">
+              <div style={{ display: "grid", gridTemplateColumns: "minmax(92px, 1.4fr) repeat(4, 1fr)", alignItems: "end", marginBottom: 8 }}>
+                <span />
+                {PHASE_KEYS.map(k => (
+                  <span key={k} style={{ textAlign: "center", fontSize: 10.5, fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: k === "launch" ? orange : navy }}>
+                    {phaseName(k, lang)}
+                  </span>
+                ))}
               </div>
-            ))}
-          </div>
+              {riderSkills.map(s => {
+                const at = PHASE_KEYS.indexOf(s.phase);
+                const tone = s.phase === "launch" ? orange : navy;
+                return (
+                  <div key={s.en} style={{ display: "grid", gridTemplateColumns: "minmax(92px, 1.4fr) repeat(4, 1fr)", alignItems: "center", padding: "12px 0", borderTop: `1px solid ${lightGray}` }}>
+                    <span style={{ fontSize: 14, fontWeight: 600, color: navy, lineHeight: 1.3, paddingRight: 8 }}>{t(s.en, s.id, lang)}</span>
+                    <div style={{ gridColumn: "2 / span 4", position: "relative", height: 24 }}>
+                      <div style={{ position: "absolute", left: "12.5%", right: "12.5%", top: 11, height: 2, background: lightGray }} />
+                      <div style={{ position: "absolute", left: "12.5%", width: `${at * 25}%`, top: 10, height: 4, borderRadius: 2, background: tone }} />
+                      {PHASE_KEYS.map((k, j) => (
+                        <span key={k} style={{
+                          position: "absolute", left: `${12.5 + j * 25}%`, top: 12, transform: "translate(-50%, -50%)", borderRadius: "50%",
+                          width: j === at ? 18 : 8, height: j === at ? 18 : 8,
+                          background: j <= at ? tone : lightGray,
+                          boxShadow: j === at ? `0 0 0 3px ${offWhite}, 0 0 0 5px ${tone}` : "none",
+                        }} />
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            <ul style={{ position: "absolute", width: 1, height: 1, overflow: "hidden", clip: "rect(0 0 0 0)", whiteSpace: "nowrap", margin: 0, padding: 0 }}>
+              {riderSkills.map(s => <li key={s.en}>{t(s.en, s.id, lang)}: {phaseName(s.phase, lang)}</li>)}
+            </ul>
+            <figcaption style={{ fontSize: 12.5, color: muted, marginTop: 10 }}>
+              {t("One new rider. Four skills. Four different phases.", "Satu pengendara baru. Empat keterampilan. Empat tahap yang berbeda.", lang)}
+            </figcaption>
+          </figure>
+          <p style={p}>{t(
+            "The same happens in your team. Your new team leader runs meetings alone (Launch), but still needs you beside them for hard conversations (Assist).",
+            "Hal yang sama terjadi di tim Anda. Pemimpin tim Anda yang baru sudah memimpin rapat sendiri (Mandirikan), tetapi masih membutuhkan Anda di sampingnya untuk percakapan yang sulit (Bantu).", lang)}<Sup n="²" /></p>
           <div style={callout}>
             <p style={{ ...p, margin: 0 }}>{t(
               "Inside each phase your learner is also moving through the Four Stages of Competence: from not knowing what they lack, to painful awareness, to effortful skill, to ease. The painful awareness usually hits hardest in Assist. That is where people want to quit, and where your presence matters most.",

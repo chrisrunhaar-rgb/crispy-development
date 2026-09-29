@@ -2,7 +2,6 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/lib/LanguageContext";
-import { PositionalFigure, InfluentialFigure } from "../LeadershipFigures";
 
 type Lang = "en" | "id";
 const t = (en: string, id: string, lang: Lang) => (lang === "id" ? id : en);
@@ -46,11 +45,10 @@ const RIDERS = [
 ];
 
 const SKILLS: { en: string; id: string; k: PhaseKey }[] = [
-  { en: "Starting the engine", id: "Menyalakan mesin", k: "launch" },
-  { en: "Braking", id: "Mengerem", k: "watch" },
-  { en: "Steering through traffic", id: "Mengarahkan di tengah lalu lintas", k: "watch" },
-  { en: "Steep hills", id: "Tanjakan curam", k: "assist" },
   { en: "Road rules in a busy city", id: "Aturan jalan di kota yang ramai", k: "model" },
+  { en: "Steep hills", id: "Tanjakan curam", k: "assist" },
+  { en: "Steering through traffic", id: "Mengarahkan di tengah lalu lintas", k: "watch" },
+  { en: "Starting the engine", id: "Menyalakan mesin", k: "launch" },
 ];
 const phaseLabel = (k: PhaseKey, lang: Lang) => {
   const ph = PHASES.find(x => x.k === k)!;
@@ -174,26 +172,22 @@ const SLIDES: Slide[] = [
       </div>
     ),
   },
-  {
-    key: "two-ways",
+  ...[
+    { k: "positional", en: "Positional leadership", id: "Kepemimpinan posisional",
+      subEn: "The team works for the leader's goals.", subId: "Tim bekerja untuk tujuan pemimpin." },
+    { k: "influential", en: "Influential leadership", id: "Kepemimpinan yang memengaruhi",
+      subEn: "The leader supports the team to reach shared goals.", subId: "Pemimpin menopang tim untuk mencapai tujuan bersama." },
+  ].map((d): Slide => ({
+    key: d.k,
     render: lang => (
       <>
-        <h2 style={midTitle}>{t("Two ways to lead", "Dua cara memimpin", lang)}</h2>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 96, width: 1250 }}>
-          {[
-            { Fig: PositionalFigure, en: "Positional", id: "Posisional", capEn: "The team works for the leader.", capId: "Tim bekerja untuk pemimpin." },
-            { Fig: InfluentialFigure, en: "Influential", id: "Memengaruhi", capEn: "The leader lifts the team.", capId: "Pemimpin mengangkat tim." },
-          ].map(({ Fig, en, id, capEn, capId }) => (
-            <div key={en} style={{ textAlign: "center" }}>
-              <Fig style={{ width: 520, margin: "0 auto 28px" }} />
-              <p style={{ fontFamily: sans, fontSize: 36, fontWeight: 700, color: navy, margin: 0 }}>{t(en, id, lang)}</p>
-              <p style={{ fontFamily: sans, fontSize: 28, color: muted, margin: "10px 0 0" }}>{t(capEn, capId, lang)}</p>
-            </div>
-          ))}
-        </div>
+        <p style={kicker}>{t("Two ways to lead", "Dua cara memimpin", lang)}</p>
+        <img src={`${IMG}/lead-${d.k}.webp`} alt="" aria-hidden="true" width={1100} height={760} style={fit(760, 480)} />
+        <h2 style={{ ...midTitle, fontSize: 68, margin: 0 }}>{t(d.en, d.id, lang)}</h2>
+        <p style={{ fontFamily: sans, fontSize: 32, color: muted, margin: 0, textAlign: "center" }}>{t(d.subEn, d.subId, lang)}</p>
       </>
     ),
-  },
+  })),
   ...PHASES.map((ph, i): Slide => ({
     key: ph.k,
     render: lang => (
@@ -236,16 +230,38 @@ const SLIDES: Slide[] = [
     render: lang => (
       <>
         <h2 style={midTitle}>{t("Skill by skill", "Keterampilan demi keterampilan", lang)}</h2>
-        <ul style={{ listStyle: "none", padding: 0, margin: 0, width: 900, display: "flex", flexDirection: "column", gap: 16 }}>
-          {SKILLS.map(s => (
-            <li key={s.en} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 24, padding: "20px 32px", background: "white", borderRadius: 16, boxShadow: "0 1px 2px oklch(22% 0.10 260 / 0.06), 0 8px 24px oklch(22% 0.10 260 / 0.06)" }}>
-              <span style={{ fontFamily: sans, fontSize: 30, fontWeight: 600, color: navy }}>{t(s.en, s.id, lang)}</span>
-              <span style={{ fontFamily: sans, fontSize: 20, fontWeight: 700, color: "white", background: phaseTone(s.k), padding: "8px 22px", borderRadius: 999, whiteSpace: "nowrap" }}>
-                {phaseLabel(s.k, lang)}
+        <div style={{ width: 1200 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "400px repeat(4, 1fr)", alignItems: "end", marginBottom: 12 }}>
+            <span />
+            {PHASES.map(ph => (
+              <span key={ph.k} style={{ textAlign: "center", fontFamily: sans, fontSize: 22, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: ph.k === "launch" ? orange : navy }}>
+                {t(ph.en, ph.id, lang)}
               </span>
-            </li>
-          ))}
-        </ul>
+            ))}
+          </div>
+          {SKILLS.map(s => {
+            const at = PHASES.findIndex(x => x.k === s.k);
+            const tone = s.k === "launch" ? orange : navy;
+            return (
+              <div key={s.en} style={{ display: "grid", gridTemplateColumns: "400px repeat(4, 1fr)", alignItems: "center", padding: "22px 0", borderTop: `2px solid ${lightGray}` }}>
+                <span style={{ fontFamily: sans, fontSize: 30, fontWeight: 600, color: navy, lineHeight: 1.2 }}>{t(s.en, s.id, lang)}</span>
+                <div style={{ gridColumn: "2 / span 4", position: "relative", height: 44 }}>
+                  <div style={{ position: "absolute", left: "12.5%", right: "12.5%", top: 20, height: 4, background: lightGray }} />
+                  <div style={{ position: "absolute", left: "12.5%", width: `${at * 25}%`, top: 18, height: 8, borderRadius: 4, background: tone }} />
+                  {PHASES.map((ph, j) => (
+                    <span key={ph.k} style={{
+                      position: "absolute", left: `${12.5 + j * 25}%`, top: 22, transform: "translate(-50%, -50%)", borderRadius: "50%",
+                      width: j === at ? 36 : 14, height: j === at ? 36 : 14,
+                      background: j <= at ? tone : lightGray,
+                      boxShadow: j === at ? `0 0 0 5px ${offWhite}, 0 0 0 9px ${tone}` : "none",
+                    }} />
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <p style={kicker}>{t("Per skill, not per person.", "Per keterampilan, bukan per orang.", lang)}</p>
       </>
     ),
   },
