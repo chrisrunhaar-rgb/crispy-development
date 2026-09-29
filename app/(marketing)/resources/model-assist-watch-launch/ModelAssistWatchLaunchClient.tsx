@@ -782,15 +782,13 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
                 { src: "lead-positional", en: "Positional leadership", id: "Kepemimpinan posisional",
                   capEn: "The team works to reach the leader's goals.", capId: "Tim bekerja untuk mencapai tujuan pemimpin." },
                 { src: "lead-influential", en: "Influential leadership", id: "Kepemimpinan yang memengaruhi",
-                  capEn: "The leader supports the team from below. They own the goals together.", capId: "Pemimpin menopang tim dari bawah. Mereka memiliki tujuan itu bersama." },
+                  capEn: "The leader supports the team. They own the goals together.", capId: "Pemimpin menopang tim. Mereka memiliki tujuan itu bersama." },
               ].map(({ src, en, id, capEn, capId }) => (
-                <figure key={en} style={{ margin: 0, background: white, border: `1px solid ${lightGray}`, borderRadius: 8, padding: "20px 20px 18px" }}>
+                <figure key={en} style={{ margin: 0, background: white, border: `1px solid ${lightGray}`, borderRadius: 8, padding: "20px 20px 18px", textAlign: "center" }}>
+                  <p style={{ fontSize: 16, fontWeight: 700, color: navy, margin: "0 0 14px" }}>{t(en, id, lang)}</p>
                   <img src={`${IMG}/${src}.webp`} alt="" aria-hidden="true" width={1100} height={760} loading="lazy"
                     style={{ display: "block", width: "100%", maxWidth: 300, height: "auto", margin: "0 auto 14px" }} />
-                  <figcaption>
-                    <span style={{ display: "block", fontSize: 15, fontWeight: 700, color: navy }}>{t(en, id, lang)}</span>
-                    <span style={{ display: "block", fontSize: 14, lineHeight: 1.55, color: muted, marginTop: 4 }}>{t(capEn, capId, lang)}</span>
-                  </figcaption>
+                  <figcaption style={{ fontSize: 14, lineHeight: 1.55, color: muted }}>{t(capEn, capId, lang)}</figcaption>
                 </figure>
               ))}
             </div>
