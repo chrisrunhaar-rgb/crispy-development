@@ -62,7 +62,6 @@ const HATS: Hat[] = [
     fill: "oklch(50% 0.18 250)", bg: "oklch(92% 0.04 250)", txt: "oklch(45% 0.17 250)" },
 ];
 const HAT = Object.fromEntries(HATS.map(h => [h.key, h])) as Record<string, Hat>;
-const hatName = (k: string, lang: Lang) => t(HAT[k].en, HAT[k].id, lang);
 
 const SEQUENCES = [
   { en: "Solving a problem", id: "Memecahkan masalah", order: ["green", "black", "blue"] },
@@ -241,7 +240,7 @@ const SLIDES: Slide[] = [
                   <div key={k} style={{ display: "flex", alignItems: "center", gap: 28 }}>
                     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 10, width: 200 }}>
                       <HatIcon fill={HAT[k].fill} size={150} />
-                      <span style={{ fontFamily: sans, fontSize: 24, fontWeight: 700, color: HAT[k].txt }}>{hatName(k, lang)}</span>
+                      <span style={{ fontFamily: sans, fontSize: 24, fontWeight: 700, color: HAT[k].txt }}>{t(HAT[k].focusEn, HAT[k].focusId, lang)}</span>
                     </div>
                     {n < s.order.length - 1 && (
                       <svg width="56" height="32" viewBox="0 0 56 32" aria-hidden="true"><path d="M2 16h46M36 4l14 12-14 12" fill="none" stroke={orange} strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" /></svg>
@@ -296,8 +295,15 @@ const SLIDES: Slide[] = [
     dark: true,
     render: lang => (
       <>
-        <HatRow size={130} gap={32} lang={lang} />
-        <h2 style={{ ...bigTitle, color: offWhite, fontSize: 104 }}>{t("Which hat does your team forget to wear?", "Topi mana yang sering dilupakan tim Anda?", lang)}</h2>
+        <h2 style={{ ...bigTitle, color: offWhite, fontSize: 72 }}>{t("Which hat does your team forget to wear?", "Topi mana yang sering dilupakan tim Anda?", lang)}</h2>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 340px)", gap: 28 }}>
+          {HATS.map(h => (
+            <div key={h.key} style={{ background: offWhite, borderRadius: 24, padding: "26px 20px 22px", display: "flex", flexDirection: "column", alignItems: "center", gap: 14 }}>
+              <HatIcon fill={h.fill} size={120} />
+              <span style={{ fontFamily: serif, fontSize: 40, fontWeight: 600, color: h.txt, lineHeight: 1 }}>{t(h.focusEn, h.focusId, lang)}</span>
+            </div>
+          ))}
+        </div>
       </>
     ),
   },
