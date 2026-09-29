@@ -354,11 +354,12 @@ export default function FixedGrowthMindsetClient({
 
   return (
     <div style={{ fontFamily: "var(--font-montserrat)", background: OFF_WHITE, minHeight: "100vh" }}>
-      <LangToggle />
+      <LangToggle extra={
+        <PresentLauncher href="/resources/fixed-growth-mindset/present" lang={lang} title={{ en: "Teaching this to someone else?", id: "Mengajarkan ini kepada orang lain?" }} text={{ en: "Use the guided slideshow to walk your team through the difference between a fixed and a growth mindset.", id: "Gunakan slideshow terpandu untuk membawa tim Anda memahami perbedaan antara pola pikir tetap dan pola pikir bertumbuh." }} />
+      } />
 
       {/* HERO */}
       <section style={{ background: NAVY, padding: "80px 24px 72px", position: "relative", overflow: "hidden" }}>
-        <PresentLauncher href="/resources/fixed-growth-mindset/present" lang={lang} title={{ en: "Teaching this to someone else?", id: "Mengajarkan ini kepada orang lain?" }} text={{ en: "Use the guided slideshow to walk your team through the difference between a fixed and a growth mindset.", id: "Gunakan slideshow terpandu untuk membawa tim Anda memahami perbedaan antara pola pikir tetap dan pola pikir bertumbuh." }} />
         {/* Hero photo overlay */}
         <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
           <Image

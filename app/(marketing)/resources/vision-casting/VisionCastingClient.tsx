@@ -251,10 +251,7 @@ export default function VisionCastingClient({ userPathway, isSaved: initialSaved
 
   return (
     <div style={{ fontFamily: montserrat, background: offWhite, minHeight: "100vh" }}>
-      <LangToggle />
-
-      {/* ── SECTION 1: NAVY HERO ────────────────────────────────────── */}
-      <div style={{ background: navy, padding: "80px 24px 72px", textAlign: "center", position: "relative", overflow: "hidden" }}>
+      <LangToggle extra={
         <PresentLauncher
           href="/resources/vision-casting/present"
           lang={lang}
@@ -264,6 +261,10 @@ export default function VisionCastingClient({ userPathway, isSaved: initialSaved
             id: "Gunakan slideshow terpandu ini untuk memandu tim Anda memahami Kompas Visi dan cara menguji visi yang berasal dari Allah.",
           }}
         />
+      } />
+
+      {/* ── SECTION 1: NAVY HERO ────────────────────────────────────── */}
+      <div style={{ background: navy, padding: "80px 24px 72px", textAlign: "center", position: "relative", overflow: "hidden" }}>
         <img src="/images/resources/vision-casting/hero.jpg" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", opacity: 0.22, mixBlendMode: "luminosity", pointerEvents: "none" }} />
 
         <p style={{

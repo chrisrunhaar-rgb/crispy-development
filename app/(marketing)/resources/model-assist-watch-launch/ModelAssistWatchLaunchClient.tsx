@@ -680,13 +680,14 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
   return (
     <div style={{ fontFamily: "Montserrat, sans-serif", background: offWhite, minHeight: "100vh" }}>
       <style>{MOTION_CSS}</style>
-      <LangToggle />
-
-      {/* ── 1. HERO ─────────────────────────────────────────────────────────── */}
-      <div style={{ background: navy, padding: "80px 24px 72px", position: "relative" }}>
+      <LangToggle extra={
         <PresentLauncher href={`/resources/${SLUG}/present`} lang={lang}
           title={{ en: "Teaching this to someone else?", id: "Mengajarkan ini kepada orang lain?" }}
           text={{ en: "Use the guided slideshow to walk your team through the four phases.", id: "Gunakan slideshow terpandu untuk mengajak tim Anda melalui keempat tahap." }} />
+      } />
+
+      {/* ── 1. HERO ─────────────────────────────────────────────────────────── */}
+      <div style={{ background: navy, padding: "80px 24px 72px", position: "relative" }}>
         <div style={{ maxWidth: 720, margin: "0 auto" }}>
           <p style={eyebrow}>{t("Leadership", "Kepemimpinan", lang)}</p>
           <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: offWhite, margin: "0 0 20px", lineHeight: 1.08 }}>

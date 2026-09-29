@@ -155,10 +155,11 @@ export default function JohariWindowClient({ userPathway, isSaved: initialSaved,
 
   return (
     <>
-      <LangToggle />
+      <LangToggle extra={
+        <PresentLauncher href="/resources/johari-window/present" lang={lang} title={{ en: "Teaching this to someone else?", id: "Mengajarkan ini kepada orang lain?" }} text={{ en: "Use the guided slideshow to walk your team through the Johari Window, one pane at a time.", id: "Gunakan slideshow terpandu untuk membawa tim Anda memahami Jendela Johari, satu kuadran demi satu kuadran." }} />
+      } />
       {/* ── HERO ── */}
       <section style={{ background: "oklch(22% 0.10 260)", paddingTop: "clamp(2.5rem, 4vw, 4rem)", paddingBottom: "clamp(2.5rem, 4vw, 4rem)", position: "relative", overflow: "hidden" }}>
-        <PresentLauncher href="/resources/johari-window/present" lang={lang} title={{ en: "Teaching this to someone else?", id: "Mengajarkan ini kepada orang lain?" }} text={{ en: "Use the guided slideshow to walk your team through the Johari Window, one pane at a time.", id: "Gunakan slideshow terpandu untuk membawa tim Anda memahami Jendela Johari, satu kuadran demi satu kuadran." }} />
         <img src="/images/resources/johari-window/hero.jpg" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", opacity: 0.18, mixBlendMode: "luminosity", pointerEvents: "none" }} />
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "oklch(65% 0.15 45)" }} />
         <div aria-hidden="true" style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle, oklch(97% 0.005 80 / 0.04) 1px, transparent 1px)", backgroundSize: "28px 28px", pointerEvents: "none" }} />

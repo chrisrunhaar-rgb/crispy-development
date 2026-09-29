@@ -422,7 +422,11 @@ export default function HealthyConflictClient({ isSaved: initialSaved, signupBan
 
   return (
     <div style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", background: offWhite, minHeight: "100vh" }}>
-      <LangToggle langs={["en", "id"]} />
+      <LangToggle langs={["en", "id"]} extra={
+        <PresentLauncher href="/resources/healthy-conflict/present" lang={lang}
+          title={{ en: "Teaching this to someone else?", id: "Mengajarkan ini kepada orang lain?" }}
+          text={{ en: "Use the guided slideshow to walk your team through the five elements of a safe space.", id: "Gunakan slideshow terpandu untuk mengajak timmu melalui lima elemen ruang yang aman." }} />
+      } />
 
       {/* ── 1. HERO ──────────────────────────────────────────────────────────── */}
       <div style={{
@@ -440,9 +444,6 @@ export default function HealthyConflictClient({ isSaved: initialSaved, signupBan
           width: 5,
           background: amber,
         }} />
-        <PresentLauncher href="/resources/healthy-conflict/present" lang={lang}
-          title={{ en: "Teaching this to someone else?", id: "Mengajarkan ini kepada orang lain?" }}
-          text={{ en: "Use the guided slideshow to walk your team through the five elements of a safe space.", id: "Gunakan slideshow terpandu untuk mengajak timmu melalui lima elemen ruang yang aman." }} />
         <div style={{ maxWidth: 760, margin: "0 auto" }}>
           <p style={{
             fontFamily: "var(--font-montserrat), Montserrat, sans-serif",

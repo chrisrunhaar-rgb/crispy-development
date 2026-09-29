@@ -310,11 +310,12 @@ export default function FourStagesClient({ isSaved: initialSaved }: Props) {
 
   return (
     <div style={{ fontFamily: "Montserrat, sans-serif", background: offWhite, minHeight: "100vh" }}>
-      <LangToggle />
+      <LangToggle extra={
+        <PresentLauncher href="/resources/four-stages-competence/present" lang={lang} title={{ en: "Teaching this to someone else?", id: "Mengajarkan ini kepada orang lain?" }} text={{ en: "Use the guided slideshow to walk your team through the four stages of competence, step by step.", id: "Gunakan slideshow terpandu untuk membawa tim Anda memahami empat tahap kompetensi, langkah demi langkah." }} />
+      } />
 
       {/* ── 1. HERO ──────────────────────────────────────────────────────────── */}
       <div style={{ background: navy, padding: "80px 24px 72px", position: "relative", overflow: "hidden" }}>
-        <PresentLauncher href="/resources/four-stages-competence/present" lang={lang} title={{ en: "Teaching this to someone else?", id: "Mengajarkan ini kepada orang lain?" }} text={{ en: "Use the guided slideshow to walk your team through the four stages of competence, step by step.", id: "Gunakan slideshow terpandu untuk membawa tim Anda memahami empat tahap kompetensi, langkah demi langkah." }} />
         {/* Hero image */}
         <img
           src="/images/resources/four-stages-competence/hero-competence.jpg"

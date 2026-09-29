@@ -268,11 +268,12 @@ export default function SixThinkingHatsClient({ userPathway, isSaved: initialSav
 
   return (
     <div style={{ fontFamily: "Montserrat, sans-serif", background: "oklch(97% 0.005 80)", minHeight: "100vh" }}>
-      <LangToggle />
+      <LangToggle extra={
+        <PresentLauncher href="/resources/six-thinking-hats/present" lang={lang} title={{ en: "Teaching this to someone else?", id: "Mengajarkan ini kepada orang lain?" }} text={{ en: "Use the guided slideshow to walk your team through the Six Thinking Hats, one hat at a time.", id: "Gunakan slideshow terpandu untuk membawa tim Anda memahami Enam Topi Berpikir, satu topi demi satu topi." }} />
+      } />
 
       {/* HERO */}
       <section style={{ background: "oklch(22% 0.10 260)", color: "white", padding: "96px 24px 80px", position: "relative", overflow: "hidden" }}>
-        <PresentLauncher href="/resources/six-thinking-hats/present" lang={lang} title={{ en: "Teaching this to someone else?", id: "Mengajarkan ini kepada orang lain?" }} text={{ en: "Use the guided slideshow to walk your team through the Six Thinking Hats, one hat at a time.", id: "Gunakan slideshow terpandu untuk membawa tim Anda memahami Enam Topi Berpikir, satu topi demi satu topi." }} />
         <img src="/images/resources/six-thinking-hats/hero.jpg" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", opacity: 0.22, mixBlendMode: "luminosity", pointerEvents: "none" }} />
         <div style={{ position: "absolute", inset: 0, opacity: 0.06, backgroundImage: "radial-gradient(circle at 80% 30%, oklch(65% 0.15 45) 0%, transparent 60%)", pointerEvents: "none" }} />
         <div style={{ maxWidth: 760, margin: "0 auto", position: "relative" }}>

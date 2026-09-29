@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import type { ReactNode } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 
 type SupportedLang = "en" | "id";
@@ -11,9 +12,11 @@ const BACK_LABEL: Record<SupportedLang, string> = {
 
 interface LangToggleProps {
   langs?: SupportedLang[];
+  // Extra control shown beside the language switch (e.g. the slideshow launcher)
+  extra?: ReactNode;
 }
 
-export default function LangToggle({ langs = ["en", "id"] }: LangToggleProps) {
+export default function LangToggle({ langs = ["en", "id"], extra }: LangToggleProps) {
   const { lang: ctxLang, setLang } = useLanguage();
   const lang = (langs.includes(ctxLang as SupportedLang) ? ctxLang : langs[0]) as SupportedLang;
 
@@ -43,6 +46,8 @@ export default function LangToggle({ langs = ["en", "id"] }: LangToggleProps) {
         >
           ← {BACK_LABEL[lang]}
         </Link>
+        <div style={{ display: "inline-flex", alignItems: "center", gap: 10 }}>
+        {extra}
         {langs.length > 1 && (
           <div style={{ display: "inline-flex", background: "oklch(18% 0.09 260)", borderRadius: 999, padding: "4px", gap: "2px", boxShadow: "inset 0 1px 3px oklch(10% 0.05 260 / 0.4)" }}>
             {langs.map(l => (
@@ -68,6 +73,7 @@ export default function LangToggle({ langs = ["en", "id"] }: LangToggleProps) {
             ))}
           </div>
         )}
+        </div>
       </div>
     </div>
   );
