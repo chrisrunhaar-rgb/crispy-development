@@ -2,6 +2,7 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/lib/LanguageContext";
+import { PositionalFigure, InfluentialFigure } from "../LeadershipFigures";
 
 type Lang = "en" | "id";
 const t = (en: string, id: string, lang: Lang) => (lang === "id" ? id : en);
@@ -16,8 +17,8 @@ const muted = "oklch(48% 0.04 260)";
 
 const SLUG = "model-assist-watch-launch";
 const IMG = `/images/resources/${SLUG}`;
-const serif = "Cormorant Garamond, Georgia, serif";
-const sans = "Montserrat, sans-serif";
+const serif = "var(--font-cormorant)";
+const sans = "var(--font-montserrat)";
 
 // Slides are designed on a fixed 16:9 canvas and scaled to fit the screen,
 // so they look the same on a laptop, a projector or a TV.
@@ -152,6 +153,44 @@ const SLIDES: Slide[] = [
       <>
         <img src={`${IMG}/cut-you.webp`} alt="" aria-hidden="true" width={334} height={400} style={fit(600, 440)} />
         <h2 style={midTitle}>{t("Who will do this after you?", "Siapa yang akan melakukan ini setelah Anda?", lang)}</h2>
+      </>
+    ),
+  },
+  {
+    key: "empowerment",
+    render: lang => (
+      <div style={{ width: 1100 }}>
+        <h2 style={{ ...bigTitle, textAlign: "left", fontSize: 150, margin: 0 }}>{t("Empowerment", "Pemberdayaan", lang)}</h2>
+        <p style={{ fontFamily: serif, fontStyle: "italic", fontSize: 36, color: muted, margin: "6px 0 40px" }}>
+          {t("em·pow·er·ment, noun", "pem·ber·da·ya·an, nomina", lang)}
+        </p>
+        <div style={{ width: 96, height: 4, background: orange, borderRadius: 2, marginBottom: 36 }} />
+        {(lang === "id"
+          ? ["1. Proses, cara, perbuatan memberdayakan.", "2. Dari kata berdaya: berkekuatan, berkemampuan, bertenaga."]
+          : ["1. Giving someone the power or authority to do something.", "2. Giving someone more control over their own life."]
+        ).map(d => (
+          <p key={d} style={{ fontFamily: sans, fontSize: 36, fontWeight: 500, color: navy, margin: "0 0 20px", lineHeight: 1.35 }}>{d}</p>
+        ))}
+      </div>
+    ),
+  },
+  {
+    key: "two-ways",
+    render: lang => (
+      <>
+        <h2 style={midTitle}>{t("Two ways to lead", "Dua cara memimpin", lang)}</h2>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 96, width: 1250 }}>
+          {[
+            { Fig: PositionalFigure, en: "Positional", id: "Posisional", capEn: "The team works for the leader.", capId: "Tim bekerja untuk pemimpin." },
+            { Fig: InfluentialFigure, en: "Influential", id: "Memengaruhi", capEn: "The leader lifts the team.", capId: "Pemimpin mengangkat tim." },
+          ].map(({ Fig, en, id, capEn, capId }) => (
+            <div key={en} style={{ textAlign: "center" }}>
+              <Fig style={{ width: 520, margin: "0 auto 28px" }} />
+              <p style={{ fontFamily: sans, fontSize: 36, fontWeight: 700, color: navy, margin: 0 }}>{t(en, id, lang)}</p>
+              <p style={{ fontFamily: sans, fontSize: 28, color: muted, margin: "10px 0 0" }}>{t(capEn, capId, lang)}</p>
+            </div>
+          ))}
+        </div>
       </>
     ),
   },

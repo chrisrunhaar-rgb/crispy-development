@@ -1,6 +1,7 @@
 "use client";
 import { useState, useTransition } from "react";
 import Link from "next/link";
+import { PositionalFigure, InfluentialFigure } from "./LeadershipFigures";
 import { useLanguage } from "@/lib/LanguageContext";
 import LangToggle from "@/components/LangToggle";
 import { saveResourceToDashboard } from "../actions";
@@ -575,7 +576,9 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
   const research = (lang === "id" ? RESEARCH_ID : RESEARCH_EN).split("\n\n");
 
   const objectives = [
-    { en: "know the four phases and what your role is in each one", id: "mengenal keempat tahap dan peran Anda di setiap tahap" },
+    { en: "explain what empowerment means and why it helps people go further than you", id: "menjelaskan arti pemberdayaan dan mengapa hal itu menolong orang melangkah lebih jauh dari Anda" },
+    { en: "distinguish positional leadership from influential leadership", id: "membedakan kepemimpinan posisional dari kepemimpinan yang memengaruhi" },
+    { en: "name the four phases and your role in each one", id: "menyebutkan keempat tahap dan peran Anda di setiap tahap" },
     { en: "spot which phase someone is in, skill by skill", id: "mengenali tahap yang sedang dijalani seseorang, keterampilan demi keterampilan" },
     { en: "avoid the five places where the cycle usually breaks", id: "menghindari lima titik di mana siklus ini biasanya macet" },
     { en: "train for multiplication, not just one successor", id: "melatih untuk pelipatgandaan, bukan hanya untuk satu pengganti" },
@@ -725,7 +728,7 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
             "The goal is not a copy of yourself. It is a leader who can do the work without you, and in time do more than you could. Jesus trained his disciples this way, and Paul did the same in city after city.",
             "Tujuannya bukan tiruan diri Anda. Tujuannya adalah seorang pemimpin yang bisa mengerjakan tugas itu tanpa Anda, dan pada waktunya melakukan lebih banyak daripada yang bisa Anda lakukan. Yesus melatih murid-murid-Nya dengan cara ini, dan Paulus melakukan hal yang sama dari kota ke kota.", lang)}<Sup n="¹" /></p>
           <div style={{ ...callout, marginTop: 24 }}>
-            <p style={{ ...foldLabel, marginBottom: 10 }}>{t("After this module you will", "Setelah modul ini Anda akan", lang)}</p>
+            <p style={{ ...foldLabel, marginBottom: 10 }}>{t("After this module you will be able to", "Setelah modul ini Anda akan mampu", lang)}</p>
             <ul style={{ margin: 0, padding: 0, listStyle: "none" }}>
               {objectives.map(o => (
                 <li key={o.en} style={{ display: "grid", gridTemplateColumns: "22px 1fr", gap: 6, fontSize: 15, lineHeight: 1.6, color: navy, marginBottom: 6 }}>
@@ -734,6 +737,77 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
                 </li>
               ))}
             </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 2a. EMPOWERMENT + INFLUENCE ──────────────────────────────────────── */}
+      <section style={{ ...section, paddingTop: 0 }}>
+        <div style={wrap}>
+          <div style={{ borderTop: `1px solid ${lightGray}`, paddingTop: 56 }}>
+            <p style={eyebrow}>{t("Empowerment", "Pemberdayaan", lang)}</p>
+            <h2 style={h2}>{t("Making others strong", "Membuat orang lain berdaya", lang)}</h2>
+
+            {/* Dictionary entry */}
+            <div style={{ background: white, border: `1px solid ${lightGray}`, borderRadius: 8, padding: "22px 24px", margin: "0 0 24px" }}>
+              <p style={{ fontFamily: "var(--font-cormorant)", fontSize: 34, fontWeight: 600, color: navy, margin: 0, lineHeight: 1.1 }}>
+                {t("empowerment", "pemberdayaan", lang)}
+              </p>
+              <p style={{ fontSize: 13, color: muted, margin: "4px 0 14px", fontStyle: "italic" }}>
+                {t("em·pow·er·ment, noun", "pem·ber·da·ya·an, nomina", lang)}
+              </p>
+              <ol style={{ margin: 0, paddingLeft: 20, color: navy, fontSize: 15.5, lineHeight: 1.65 }}>
+                {(lang === "id"
+                  ? ["Proses, cara, perbuatan memberdayakan.", "Dari kata berdaya: berkekuatan, berkemampuan, bertenaga."]
+                  : ["Giving someone the power or authority to do something.", "Giving someone more control over their own life or situation."]
+                ).map(d => <li key={d} style={{ marginBottom: 4 }}>{d}</li>)}
+              </ol>
+              <p style={{ fontSize: 12.5, color: muted, margin: "12px 0 0" }}>
+                {t("Based on the Oxford Learner's Dictionary", "Berdasarkan Kamus Besar Bahasa Indonesia (KBBI)", lang)}<Sup n="⁸" />
+              </p>
+            </div>
+
+            <p style={p}>{t(
+              "To empower someone is to hand over real power: the skill, the confidence and the authority to act without you. Giving out tasks is not the same thing. A task can be taken back tomorrow. Empowerment changes what a person is able to do.",
+              "Memberdayakan seseorang berarti menyerahkan kuasa yang nyata: keterampilan, rasa percaya diri, dan wewenang untuk bertindak tanpa Anda. Membagi tugas tidak sama dengan itu. Tugas bisa ditarik kembali besok. Pemberdayaan mengubah apa yang sanggup dilakukan seseorang.", lang)}</p>
+            <p style={p}>{t(
+              "That is why it sits at the heart of leadership. We empower people so they can become better than we are. We walk alongside them and help them reach their dreams. A leader who empowers measures success by how far others go.",
+              "Karena itulah pemberdayaan ada di jantung kepemimpinan. Kita memberdayakan orang supaya mereka bisa menjadi lebih baik daripada kita. Kita berjalan bersama mereka dan menolong mereka meraih impian mereka. Pemimpin yang memberdayakan mengukur keberhasilan dari seberapa jauh orang lain melangkah.", lang)}</p>
+
+            <p style={{ ...eyebrow, marginTop: 48 }}>{t("Influence, not position", "Pengaruh, bukan posisi", lang)}</p>
+            <h2 style={h2}>{t("Two ways to lead a team", "Dua cara memimpin tim", lang)}</h2>
+
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 16, margin: "0 0 24px" }}>
+              {[
+                { Fig: PositionalFigure, en: "Positional leadership", id: "Kepemimpinan posisional",
+                  capEn: "The team works to reach the leader's goals.", capId: "Tim bekerja untuk mencapai tujuan pemimpin." },
+                { Fig: InfluentialFigure, en: "Influential leadership", id: "Kepemimpinan yang memengaruhi",
+                  capEn: "The leader supports the team from below. They own the goals together.", capId: "Pemimpin menopang tim dari bawah. Mereka memiliki tujuan itu bersama." },
+              ].map(({ Fig, en, id, capEn, capId }) => (
+                <figure key={en} style={{ margin: 0, background: white, border: `1px solid ${lightGray}`, borderRadius: 8, padding: "20px 20px 18px" }}>
+                  <Fig style={{ maxWidth: 280, margin: "0 auto 14px" }} />
+                  <figcaption>
+                    <span style={{ display: "block", fontSize: 15, fontWeight: 700, color: navy }}>{t(en, id, lang)}</span>
+                    <span style={{ display: "block", fontSize: 14, lineHeight: 1.55, color: muted, marginTop: 4 }}>{t(capEn, capId, lang)}</span>
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+
+            <p style={p}>{t(
+              "Positional leadership runs on the title. The leader sets the goals and the team works hard to reach them. People comply, but the goals stay the leader's. When the leader steps away, the energy drops.",
+              "Kepemimpinan posisional berjalan karena jabatan. Pemimpin menetapkan tujuan dan tim bekerja keras untuk mencapainya. Orang-orang menurut, tetapi tujuannya tetap milik pemimpin. Ketika pemimpin tidak ada, semangatnya ikut turun.", lang)}<Sup n="⁹" /></p>
+            <p style={p}>{t(
+              "Influential leadership turns the picture upside down. The leader gets to know each person and finds the personal goals that line up with the goals of the team. People then own part of those goals, so they do the work better and with more heart. It is no longer about the leader.",
+              "Kepemimpinan yang memengaruhi membalik gambaran itu. Pemimpin mengenal setiap orang dan menemukan tujuan pribadi mereka yang sejalan dengan tujuan tim. Dengan begitu mereka ikut memiliki sebagian dari tujuan itu, sehingga mereka bekerja lebih baik dan lebih sepenuh hati. Ini tidak lagi tentang pemimpin.", lang)}<Sup n="¹⁰" /></p>
+            <p style={p}>{t(
+              "Jesus described the same reversal: whoever wants to become great among you must be your servant (Mark 10:42-45).",
+              "Yesus menggambarkan pembalikan yang sama: barangsiapa ingin menjadi besar di antara kamu, hendaklah ia menjadi pelayanmu (Markus 10:42-45).", lang)}<Sup n="⁷" /></p>
+            <div style={callout}>
+              <p style={{ margin: 0, fontSize: 15, lineHeight: 1.6, color: navy, fontWeight: 600 }}>{t(
+                "Model, Assist, Watch, Launch puts this into practice. With each phase you step lower and they step higher, until they carry the work and you support them from below.",
+                "Teladani, Bantu, Amati, Mandirikan mempraktikkan hal ini. Di setiap tahap Anda turun selangkah dan mereka naik selangkah, sampai mereka memikul pekerjaan itu dan Anda menopang mereka dari bawah.", lang)}</p>
+            </div>
           </div>
         </div>
       </section>
@@ -1182,7 +1256,10 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
         "Wood, D., Bruner, J. S., & Ross, G. (1976). The role of tutoring in problem solving. Journal of Child Psychology and Psychiatry, 17(2), 89-100.",
         "Collins, A., Brown, J. S., & Newman, S. E. (1989). Cognitive apprenticeship: Teaching the crafts of reading, writing, and mathematics. In L. B. Resnick (Ed.), Knowing, learning, and instruction (pp. 453-494). Erlbaum.",
         "Pearson, P. D., & Gallagher, M. C. (1983). The instruction of reading comprehension. Contemporary Educational Psychology, 8(3), 317-344.",
-        "The Holy Bible, New International Version (2011) and Alkitab Terjemahan Baru (LAI): Mark 3:14; Luke 9-10; Matthew 28:19; Acts 17:2, 18:11, 20:17-38, 28; 2 Timothy 2:2.",
+        "The Holy Bible, New International Version (2011) and Alkitab Terjemahan Baru (LAI): Mark 3:14; Luke 9-10; Matthew 28:19; Mark 10:42-45; Acts 17:2, 18:11, 20:17-38, 28; 2 Timothy 2:2.",
+        "Oxford Learner's Dictionaries, \"empower\"; Kamus Besar Bahasa Indonesia (KBBI), Badan Pengembangan dan Pembinaan Bahasa, \"berdaya\" and \"pemberdayaan\".",
+        "Maxwell, J. C. (2011). The 5 levels of leadership: Proven steps to maximize your potential. Center Street.",
+        "Greenleaf, R. K. (1977). Servant leadership: A journey into the nature of legitimate power and greatness. Paulist Press.",
       ]} lang={lang} markerStyle="superscript" />
     </div>
   );
