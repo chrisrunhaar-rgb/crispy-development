@@ -205,30 +205,42 @@ function GenerationsSlide({ lang, step }: { lang: Lang; step: number }) {
 
 // ─── Multiplication counter ───────────────────────────────────────────────────
 // Addition (you train one leader a year) against multiplication (every leader
-// trains one a year). One click per step; same numbers as the module slider.
-const COUNTER_YEARS = [1, 2, 3, 5, 10];
-
-function CounterSlide({ lang, years }: { lang: Lang; years: number }) {
+// trains one a year). A live slider, same numbers as the module. Clicks, taps and
+// arrow keys on the slider stay on the slider and don't change slides.
+function CounterSlide({ lang }: { lang: Lang }) {
+  const [years, setYears] = useState(3);
   const add = years + 1;
   const mult = Math.pow(2, years);
   const fmt = (n: number) => n.toLocaleString(lang === "id" ? "id-ID" : "en-US");
+  const stop = (e: React.SyntheticEvent) => e.stopPropagation();
   const row = (n: number, color: string, label: string) => (
     <div style={{ width: "100%" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 14 }}>
-        <span style={{ fontFamily: sans, fontSize: 30, fontWeight: 700, color: navy }}>{label}</span>
-        <span style={{ fontFamily: serif, fontSize: 120, fontWeight: 600, color, lineHeight: 0.9 }}>{fmt(n)}</span>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 12 }}>
+        <span style={{ fontFamily: sans, fontSize: 28, fontWeight: 700, color: navy }}>{label}</span>
+        <span style={{ fontFamily: serif, fontSize: 104, fontWeight: 600, color, lineHeight: 0.9 }}>{fmt(n)}</span>
       </div>
-      <div style={{ height: 36, background: lightGray, borderRadius: 18, overflow: "hidden" }}>
-        <div style={{ width: `${Math.max(1.5, (n / 1024) * 100)}%`, height: "100%", background: color, borderRadius: 18, transition: "width 0.7s ease" }} />
+      <div style={{ height: 32, background: lightGray, borderRadius: 16, overflow: "hidden" }}>
+        <div style={{ width: `${Math.max(1.5, (n / 1024) * 100)}%`, height: "100%", background: color, borderRadius: 16, transition: "width 0.5s ease" }} />
       </div>
     </div>
   );
   return (
-    <div style={{ width: 1240, display: "flex", flexDirection: "column", alignItems: "center", gap: 48 }}>
+    <div style={{ width: 1240, display: "flex", flexDirection: "column", alignItems: "center", gap: 36 }}>
+      <style>{`
+        .mawl-yrs { -webkit-appearance: none; appearance: none; width: 100%; height: 14px; border-radius: 7px; background: ${lightGray}; outline: none; cursor: pointer; margin: 0; }
+        .mawl-yrs::-webkit-slider-thumb { -webkit-appearance: none; width: 52px; height: 52px; border-radius: 50%; background: ${orange}; border: 6px solid white; box-shadow: 0 2px 10px oklch(0% 0 0 / 0.25); }
+        .mawl-yrs::-moz-range-thumb { width: 40px; height: 40px; border-radius: 50%; background: ${orange}; border: 6px solid white; box-shadow: 0 2px 10px oklch(0% 0 0 / 0.25); }
+        .mawl-yrs:focus-visible { outline: 3px solid ${orange}; outline-offset: 10px; }
+      `}</style>
       <p style={kicker}>{t("The multiplication counter", "Penghitung pelipatgandaan", lang)}</p>
-      <h2 style={{ ...midTitle, margin: 0 }}>
-        {t("After ", "Setelah ", lang)}<span style={{ color: orange }}>{years}</span>{t(years === 1 ? " year" : " years", " tahun", lang)}
-      </h2>
+      <div onClick={stop} onTouchStart={stop} onTouchEnd={stop} style={{ width: "100%", padding: "8px 0" }}>
+        <label htmlFor="mawl-present-years" style={{ display: "block", textAlign: "center", fontFamily: serif, fontSize: 64, fontWeight: 600, color: navy, marginBottom: 22 }}>
+          {t("After ", "Setelah ", lang)}<span style={{ color: orange }}>{years}</span>{t(years === 1 ? " year" : " years", " tahun", lang)}
+        </label>
+        <input id="mawl-present-years" type="range" min={1} max={10} step={1} value={years} className="mawl-yrs"
+          onChange={e => setYears(Number(e.target.value))}
+          aria-valuetext={t(`${years} years`, `${years} tahun`, lang)} />
+      </div>
       {row(add, navy, t("Addition: you train one leader a year", "Penambahan: Anda melatih satu pemimpin setiap tahun", lang))}
       {row(mult, orange, t("Multiplication: every leader trains one a year", "Pelipatgandaan: setiap pemimpin melatih satu orang setiap tahun", lang))}
     </div>
@@ -386,10 +398,7 @@ const SLIDES: Slide[] = [
     key: `generations-${step}`,
     render: (lang: Lang) => <GenerationsSlide lang={lang} step={step} />,
   })),
-  ...COUNTER_YEARS.map(years => ({
-    key: `counter-${years}`,
-    render: (lang: Lang) => <CounterSlide lang={lang} years={years} />,
-  })),
+  { key: "counter", render: lang => <CounterSlide lang={lang} /> },
   {
     key: "start",
     render: lang => (
@@ -488,6 +497,8 @@ export default function PresentClient() {
       const k = e.key;
       // Let a focused button handle its own Space press
       if (k === " " && (e.target as HTMLElement)?.closest?.("button, a")) return;
+      // Arrow keys on the counter slider move the slider, not the slides
+      if ((e.target as HTMLElement)?.matches?.("input[type=range]") && k.startsWith("Arrow")) return;
       if (overview) {
         if (k === "Escape" || k === "g" || k === "G") { e.preventDefault(); setOverview(false); }
         return;
