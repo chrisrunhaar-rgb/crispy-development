@@ -49,7 +49,7 @@ export default function CookiesPage() {
           <p style={{ marginTop: "0.75rem" }}>None of this data is linked to your account or identity. We cannot identify individual users from Vercel Analytics data. No cookies are set. Your device is not fingerprinted. You are not tracked across other websites.</p>
 
           <p style={{ marginTop: "1.5rem" }}><strong>Crispy visit counter (no consent required)</strong></p>
-          <p style={{ marginTop: "0.5rem" }}>Our own counter records page views, the site you came from, campaign tags in the link, country and city, device type, browser, and browser language. No cookies are set and your IP address is not stored. A code that changes every day lets us count unique visitors without recognising you on another day or on other websites. The data stays in our own database and is automatically deleted after 24 months.</p>
+          <p style={{ marginTop: "0.5rem" }}>Our own counter records page views, the site you came from, campaign tags in the link, country and city, device type, browser, browser language, and the site language you read in. No cookies are set and your IP address is not stored. A code that changes every day lets us count unique visitors without recognising you on another day or on other websites. The data stays in our own database and is automatically deleted after 24 months.</p>
         </LegalSection>
 
         <LegalSection heading="3. Full Cookie and Local Storage Inventory">

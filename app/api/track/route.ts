@@ -81,6 +81,8 @@ export async function POST(req: NextRequest) {
       device: deviceOf(ua),
       browser: browserOf(ua),
       lang: clip(body.lang, 8),
+      site_lang: clip(body.siteLang, 8),
+      lang_ping: body.langPing === true,
       visitor_hash: visitorHash,
       logged_in: loggedIn,
       is_entry: isEntry,

@@ -19,6 +19,7 @@ export type VisitStats = {
   devices: Row[];
   browsers: Row[];
   languages: Row[];
+  site_langs?: Row[];
   hours: { hour: number; views: number }[];
 };
 
@@ -188,6 +189,7 @@ export default function VisitsTab({ stats, error }: { stats: VisitStats | null; 
         <BarList title="Cities" rows={stats.cities} />
         <BarList title="Devices" rows={stats.devices} format={s => s.charAt(0).toUpperCase() + s.slice(1)} />
         <BarList title="Browsers" rows={stats.browsers} />
+        <BarList title="Reading the site in" rows={stats.site_langs ?? []} format={langName} empty="Counting started 30 Sep 2026" />
         <BarList title="Browser language" rows={stats.languages} format={langName} />
         <div style={card}>
           <div style={heading}>Time of day (Malaysia time)</div>

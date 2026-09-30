@@ -54,6 +54,8 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     setLangState(l);
     localStorage.setItem("crispy-lang", l);
     setCookieLang(l);
+    // Lets the visit counter count language switches (components/VisitTracker.tsx)
+    window.dispatchEvent(new CustomEvent("crispy-lang-change", { detail: l }));
     // Persist to Supabase user metadata, then re-render server pages so they
     // pick up the new language (they read user_metadata, not client state)
     fetch("/api/set-language", {
