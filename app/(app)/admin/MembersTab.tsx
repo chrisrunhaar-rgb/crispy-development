@@ -53,6 +53,7 @@ interface MembersTabProps {
   coachData: Map<string, { coach_minutes_granted: number; subscription_active: boolean }>;
   coachMinutesUsedMap: Map<string, number>;
   teamSeatsMap: Map<string, { filled: number; max: number }>;
+  teamAccessIds: Set<string>;
 }
 
 export default function MembersTab({
@@ -62,16 +63,23 @@ export default function MembersTab({
   coachData,
   coachMinutesUsedMap,
   teamSeatsMap,
+  teamAccessIds,
 }: MembersTabProps) {
   const { toasts, dismissToast, success, error } = useToast();
   const [tableMembers, setTableMembers] = useState<Member[]>(() => {
     return users.map(u => {
       const firstName = u.user_metadata?.first_name as string ?? '';
       const lastName = u.user_metadata?.last_name as string ?? '';
-      const pathway = u.user_metadata?.pathway as string ?? 'personal';
       const testsDone = ASSESSMENT_KEYS.filter(k => !!u.user_metadata?.[k]).length;
 
       const cd = coachData.get(u.id);
+      // Label from what they actually have, not the path they clicked at
+      // signup: 'free' (shown as "Account") = signed up, nothing paid or given.
+      const pathway = teamAccessIds.has(u.id)
+        ? 'team'
+        : cd?.subscription_active
+          ? (u.user_metadata?.pathway === 'team' ? 'team' : 'personal')
+          : 'free';
       const seats = teamSeatsMap.get(u.id);
       const teamSeats = seats ? `${seats.filled}/${seats.max}` : null;
       return {

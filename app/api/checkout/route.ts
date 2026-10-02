@@ -48,6 +48,13 @@ const LIFETIME_PRICE_IDS: Record<Plan, string> = {
 // bundle and is also used for seat top-ups. Chris approved 2026-09-27 (msg 16948).
 const TEAM_SEAT_PRICE_ID = "price_1UKHMOEHeFAKCmjlkWRaJ2Pk";
 
+// Personal -> Team upgrade: someone who already paid $15 for Personal pays
+// only the $5 difference for their own seat; every other person stays $20.
+// Same product as the seat so it reads as a team seat on the invoice.
+// Chris requested 2026-10-02 (Telegram msg 17577).
+const TEAM_SEAT_PRODUCT_ID = "prod_VKxGwmNAxaj8GO";
+const UPGRADE_SEAT_AMOUNT = 500; // cents: $20 seat - $15 Personal already paid
+
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://crispyleaders.com";
 
 export async function POST(req: NextRequest) {
@@ -110,15 +117,33 @@ export async function POST(req: NextRequest) {
     if (plan === "team" && (!Number.isInteger(teamSize) || teamSize < MIN_TEAM_SIZE || teamSize > MAX_TEAM_SIZE)) {
       return NextResponse.json({ error: "invalid_quantity", checkoutUrl: null }, { status: 400 });
     }
-    const lineItem = plan === "team"
-      ? { price: TEAM_SEAT_PRICE_ID, quantity: teamSize }
-      : { price: LIFETIME_PRICE_IDS.personal, quantity: 1 };
+    const upgrade = plan === "team" && (await hasPaidPersonal(stripe, admin, user.id, customerId));
+    const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = plan !== "team"
+      ? [{ price: LIFETIME_PRICE_IDS.personal, quantity: 1 }]
+      : upgrade
+        ? [
+            {
+              price_data: { currency: "usd", product: TEAM_SEAT_PRODUCT_ID, unit_amount: UPGRADE_SEAT_AMOUNT },
+              quantity: 1,
+            },
+            { price: TEAM_SEAT_PRICE_ID, quantity: teamSize - 1 },
+          ]
+        : [{ price: TEAM_SEAT_PRICE_ID, quantity: teamSize }];
 
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       customer: customerId,
       client_reference_id: user.id,
-      line_items: [lineItem],
+      line_items: lineItems,
+      ...(upgrade
+        ? {
+            custom_text: {
+              submit: {
+                message: "You already own Personal, so your own seat is $5 (the $15 you paid counts). Each other person is $20.",
+              },
+            },
+          }
+        : {}),
       billing_address_collection: "required",
       // Same Managed Payments workaround as the subscription/minute_pack
       // flows above — our Products don't carry a tax_code, so it 400s
@@ -132,6 +157,7 @@ export async function POST(req: NextRequest) {
         lifetime: "true",
         plan,
         ...(plan === "team" ? { team_size: String(teamSize) } : {}),
+        ...(upgrade ? { personal_upgrade: "true" } : {}),
       },
     });
 
@@ -215,6 +241,28 @@ export async function POST(req: NextRequest) {
   });
 
   return NextResponse.json({ ready: true, checkoutUrl: session.url });
+}
+
+// True only for someone who actually paid for lifetime Personal: a completed,
+// paid Stripe checkout tagged lifetime/personal on their customer. Free/comped
+// accounts have no such checkout and pay full price. Someone who already leads
+// a paid team doesn't get the credit again (they add people via seat top-ups).
+async function hasPaidPersonal(stripe: Stripe, admin: AdminClient, userId: string, customerId: string) {
+  const { data: teamRow } = await admin
+    .from("teams")
+    .select("subscription_active")
+    .eq("leader_user_id", userId)
+    .maybeSingle();
+  if (teamRow?.subscription_active) return false;
+
+  const sessions = await stripe.checkout.sessions.list({ customer: customerId, status: "complete", limit: 100 });
+  return sessions.data.some(
+    (s) =>
+      s.payment_status === "paid" &&
+      s.metadata?.lifetime === "true" &&
+      s.metadata?.plan === "personal" &&
+      s.metadata?.user_id === userId,
+  );
 }
 
 // Reuse an existing Stripe Customer for this user if one exists (from a

@@ -202,7 +202,7 @@ function WaypointCell({
 }
 
 const PATHWAY_OPTIONS = [
-  { value: 'free', label: 'Free', subscriptionActive: false },
+  { value: 'free', label: 'Account', subscriptionActive: false },
   { value: 'personal', label: 'Personal', subscriptionActive: true },
   { value: 'team', label: 'Team', subscriptionActive: true },
 ] as const;
@@ -336,7 +336,7 @@ export default function AdminMembersTable({
 
     // Apply filters
     if (pathwayFilter.length > 0) {
-      result = result.filter(m => pathwayFilter.includes(m.pathway || 'personal'));
+      result = result.filter(m => pathwayFilter.includes(m.pathway || 'free'));
     }
 
     if (statusFilter.length > 0) {
@@ -553,7 +553,7 @@ export default function AdminMembersTable({
                       onChange={() => toggleFilter('pathway', p)}
                       aria-label={`Filter by ${p} pathway`}
                     />
-                    <span style={{ textTransform: 'capitalize' }}>{p}</span>
+                    <span style={{ textTransform: 'capitalize' }}>{p === 'free' ? 'Account' : p}</span>
                   </label>
                 ))}
               </div>

@@ -85,11 +85,13 @@ export default async function AdminPage({
   // wp_sessions, same Promise.all + Map-threading pattern as moduleData above.
   let coachMinutesUsedMap = new Map<string, number>();
   let teamSeatsMap = new Map<string, { filled: number; max: number }>();
+  // Users with real team access: leader of a paid team, or holding a seat on one.
+  let teamAccessIds = new Set<string>();
 
   if (activeTab === "members") {
     const [membershipResult, teamsResult, coachSessionsResult] = await Promise.all([
       admin.from("memberships").select("user_id, coach_minutes_granted, subscription_active"),
-      admin.from("teams").select("leader_user_id, max_seats, team_members(count)"),
+      admin.from("teams").select("leader_user_id, max_seats, subscription_active, team_members(user_id)"),
       admin.from("wp_sessions").select("user_id, duration_seconds").eq("status", "completed"),
     ]);
     allUsers.forEach(u => {
@@ -112,10 +114,14 @@ export default async function AdminPage({
     coachSecondsUsedMap.forEach((seconds, userId) => {
       coachMinutesUsedMap.set(userId, Math.round(seconds / 60));
     });
-    (teamsResult.data ?? []).forEach((t: { leader_user_id: string; max_seats: number | null; team_members: { count: number }[] }) => {
-      const filled = t.team_members?.[0]?.count ?? 0;
+    (teamsResult.data ?? []).forEach((t: { leader_user_id: string; max_seats: number | null; subscription_active: boolean | null; team_members: { user_id: string | null }[] }) => {
+      const filled = t.team_members?.length ?? 0;
       const max = t.max_seats ?? 7;
       teamSeatsMap.set(t.leader_user_id, { filled, max });
+      if (t.subscription_active) {
+        teamAccessIds.add(t.leader_user_id);
+        t.team_members?.forEach(tm => { if (tm.user_id) teamAccessIds.add(tm.user_id); });
+      }
     });
   }
 
@@ -389,6 +395,7 @@ export default async function AdminPage({
             coachData={coachData}
             coachMinutesUsedMap={coachMinutesUsedMap}
             teamSeatsMap={teamSeatsMap}
+            teamAccessIds={teamAccessIds}
           />
         )}
 
