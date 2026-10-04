@@ -1088,72 +1088,49 @@ export default function TeamJourney({
       {/* ── Journey header — navy ── */}
       <div style={{
         background: "oklch(30% 0.12 260)",
-        padding: "2rem 1.75rem 1.75rem",
+        padding: "1.25rem 1.5rem 1.125rem",
       }}>
+        {/* Compact header: name left, % right, step count under the bar */}
+        <p style={{
+          fontFamily: "var(--font-montserrat)",
+          fontSize: "0.68rem",
+          fontWeight: 800,
+          letterSpacing: "0.2em",
+          textTransform: "uppercase",
+          color: "oklch(65% 0.15 45)",
+          marginBottom: "0.375rem",
+        }}>
+          {ui.journeyLabel}
+        </p>
         <div style={{
           display: "flex",
           justifyContent: "space-between",
-          alignItems: "flex-start",
-          gap: "1.5rem",
-          flexWrap: "wrap",
-          marginBottom: "1.5rem",
+          alignItems: "baseline",
+          gap: "1rem",
+          marginBottom: "0.875rem",
         }}>
-          <div>
-            <p style={{
-              fontFamily: "var(--font-montserrat)",
-              fontSize: "0.72rem",
-              fontWeight: 800,
-              letterSpacing: "0.2em",
-              textTransform: "uppercase",
-              color: "oklch(65% 0.15 45)",
-              marginBottom: "0.625rem",
-            }}>
-              {ui.journeyLabel}
-            </p>
-            <h2 style={{
-              fontFamily: "var(--font-montserrat)",
-              fontWeight: 800,
-              fontSize: "1.75rem",
-              color: "oklch(97% 0.005 80)",
-              letterSpacing: "-0.025em",
-              lineHeight: 1.1,
-              marginBottom: "0.5rem",
-            }}>
-              {teamName}
-            </h2>
-            <p style={{
-              fontFamily: "var(--font-cormorant)",
-              fontStyle: "italic",
-              fontSize: "0.975rem",
-              color: "oklch(66% 0.04 260)",
-              lineHeight: 1.5,
-            }}>
-              {leaderName && <span>{ui.ledBy} {leaderName} · </span>}
-              {teamMembers.length} {teamMembers.length === 1 ? ui.member : ui.members} · {language === "id" ? `Langkah ${localCurrentStep} dari ${JOURNEY_STEPS.length}` : `Step ${localCurrentStep} of ${JOURNEY_STEPS.length}`}{selectedAssessments.length > 0 ? ` · ${selectedAssessments.length} ${selectedAssessments.length !== 1 ? ui.assessmentsAdded : ui.assessmentAdded}` : ""}
-            </p>
-          </div>
-
-          <div style={{ textAlign: "right", flexShrink: 0, paddingTop: "0.125rem" }}>
-            <p style={{
-              fontFamily: "var(--font-montserrat)",
-              fontWeight: 800,
-              fontSize: "3rem",
-              color: "oklch(97% 0.005 80)",
-              lineHeight: 1,
-              letterSpacing: "-0.03em",
-            }}>
-              {overallPct}<span style={{ fontSize: "1.25rem", fontWeight: 300, color: "oklch(55% 0.04 260)" }}>%</span>
-            </p>
-            <p style={{
-              fontFamily: "var(--font-montserrat)",
-              fontSize: "0.52rem",
-              fontWeight: 700,
-              letterSpacing: "0.14em",
-              textTransform: "uppercase",
-              color: "oklch(50% 0.04 260)",
-              marginTop: "0.25rem",
-            }}>{ui.teamProgress}</p>
-          </div>
+          <h2 style={{
+            fontFamily: "var(--font-montserrat)",
+            fontWeight: 800,
+            fontSize: "1.375rem",
+            color: "oklch(97% 0.005 80)",
+            letterSpacing: "-0.02em",
+            lineHeight: 1.15,
+            minWidth: 0,
+          }}>
+            {teamName}
+          </h2>
+          <p aria-label={`${ui.teamProgress} ${overallPct}%`} style={{
+            fontFamily: "var(--font-montserrat)",
+            fontWeight: 800,
+            fontSize: "1.375rem",
+            color: "oklch(97% 0.005 80)",
+            lineHeight: 1,
+            letterSpacing: "-0.02em",
+            flexShrink: 0,
+          }}>
+            {overallPct}<span style={{ fontSize: "0.875rem", fontWeight: 400, color: "oklch(66% 0.04 260)" }}>%</span>
+          </p>
         </div>
 
         {/* Progress bar */}
@@ -1173,6 +1150,15 @@ export default function TeamJourney({
             willChange: "transform",
           }} />
         </div>
+        <p style={{
+          fontFamily: "var(--font-montserrat)",
+          fontSize: "0.68rem",
+          fontWeight: 600,
+          color: "oklch(66% 0.04 260)",
+          marginTop: "0.5rem",
+        }}>
+          {language === "id" ? `Langkah ${localCurrentStep} dari ${JOURNEY_STEPS.length}` : `Step ${localCurrentStep} of ${JOURNEY_STEPS.length}`}
+        </p>
       </div>
 
       {/* ── Journey steps — cinematic path ── */}

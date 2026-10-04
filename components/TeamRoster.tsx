@@ -56,7 +56,9 @@ export default function TeamRoster({
   maxSeats = 7,
   language = "en",
   currentLanguage,
+  settingsHref,
 }: {
+  settingsHref?: string;
   teamId: string;
   teamName: string;
   leaderName?: string;
@@ -208,14 +210,17 @@ export default function TeamRoster({
           justifyContent: "space-between",
           alignItems: "flex-start",
           gap: "1rem",
-          padding: "1.75rem 1.75rem 1.25rem",
+          padding: isLeader ? "1.75rem 1.75rem 1.25rem" : "0.875rem 1.25rem 0.875rem 1.5rem",
           flexWrap: "wrap",
         }}>
           {/* Left: team info */}
           <div>
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 800, letterSpacing: "0.2em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.625rem" }}>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 800, letterSpacing: "0.2em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: isLeader ? "0.625rem" : 0 }}>
               {TEAM_UI[r(language)].yourTeam}
             </p>
+            {/* Name + seats only in the editable view; the dashboard shows the
+                name in the Journey block and the seats in the members row. */}
+            {isLeader && (<>
             {editingName ? (
               <div style={{ display: "flex", gap: "0.5rem", alignItems: "center", marginBottom: "0.375rem" }}>
                 <input
@@ -246,10 +251,24 @@ export default function TeamRoster({
             <p style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontSize: "0.9rem", color: isFull ? "oklch(65% 0.15 45)" : "oklch(66% 0.04 260)", lineHeight: 1.4 }}>
               {members.length} / {maxSeats} {language === "id" ? "kursi anggota" : "member seats"}{isFull ? (language === "id" ? " · Penuh" : " · Full") : ""}
             </p>
+            </>)}
           </div>
 
           {/* Right: language toggle + invite */}
           <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: "1rem" }}>
+            {settingsHref && (
+              <Link
+                href={settingsHref}
+                aria-label={language === "id" ? "Pengaturan Tim" : "Team Settings"}
+                title={language === "id" ? "Pengaturan Tim" : "Team Settings"}
+                style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "44px", height: "44px", margin: "-0.75rem -0.75rem -0.75rem 0", color: "oklch(80% 0.03 260)" }}
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ width: "20px", height: "20px" }}>
+                  <circle cx="12" cy="12" r="3" />
+                  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                </svg>
+              </Link>
+            )}
             {isLeader && currentLanguage !== undefined && (
               <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: "0.5rem" }}>
                 <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(66% 0.04 260)" }}>
@@ -383,6 +402,11 @@ export default function TeamRoster({
             >
               <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: "oklch(38% 0.008 260)", letterSpacing: "0.04em" }}>
                 {totalCount} {language === "id" ? "anggota" : totalCount === 1 ? "member" : "members"}
+                <span style={{ fontWeight: 500, color: "oklch(52% 0.008 260)" }}>
+                  {" · "}{isFull
+                    ? (language === "id" ? "semua kursi terisi" : "all seats filled")
+                    : (language === "id" ? `${maxSeats - members.length} dari ${maxSeats + 1} kursi kosong` : `${maxSeats - members.length} of ${maxSeats + 1} seats free`)}
+                </span>
               </span>
               <svg viewBox="0 0 16 16" fill="none" stroke="oklch(52% 0.008 260)" strokeWidth={1.5} strokeLinecap="round" style={{ width: "14px", height: "14px", flexShrink: 0, transform: membersOpen ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>
                 <path d="M3 6l5 5 5-5" />

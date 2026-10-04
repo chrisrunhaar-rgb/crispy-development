@@ -1054,18 +1054,6 @@ function TeamLeaderDashboard({
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
 
-      {/* Team Settings — all leader-only setup lives on its own page, so the
-          dashboard below reads the same for the leader as for members. */}
-      <div style={{ display: "flex", justifyContent: "flex-end" }}>
-        <Link
-          href="/dashboard/team-settings"
-          className="btn-primary"
-          style={{ fontSize: "0.8rem", display: "inline-flex", alignItems: "center", gap: "0.5rem", textDecoration: "none" }}
-        >
-          <span aria-hidden="true">⚙</span> {lang === "id" ? "Pengaturan Tim" : "Team Settings"}
-        </Link>
-      </div>
-
       {/* THE TEAM roster — read-only, same view members see */}
       <TeamRoster
         teamId={teamRecord.id}
@@ -1073,6 +1061,7 @@ function TeamLeaderDashboard({
         leaderName={leaderName}
         members={rosterMembers}
         isLeader={false}
+        settingsHref="/dashboard/team-settings"
         maxSeats={(teamRecord as { max_seats?: number }).max_seats ?? 7}
         language={(language as "en" | "id") || "en"}
       />
