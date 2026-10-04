@@ -402,7 +402,7 @@ export default function PricingContent({ currency }: Props) {
           },
           {
             q: "Bisakah saya beralih dari Personal ke Tim nanti?",
-            a: "Hubungi kami di hello@crispyleaders.com dan kami akan bantu Anda mengatur selisih harganya.",
+            a: `Bisa. Beli paket Tim saat masuk dengan akun Personal Anda. Tempat Anda sendiri hanya dikenai selisihnya, ${fmt(P.seat - P.personal)}. Setiap anggota tim lainnya ${fmt(P.seat)}.`,
           },
           {
             q: "Apakah akun tim bisa dialihkan ke orang lain?",
@@ -432,7 +432,7 @@ export default function PricingContent({ currency }: Props) {
           },
           {
             q: "Can I move from Personal to Team later?",
-            a: "Get in touch at hello@crispyleaders.com and we'll help you sort out the price difference.",
+            a: `Yes. Buy Team while logged in to your Personal account. Your own seat only costs the difference, ${fmt(P.seat - P.personal)}. Everyone else on the team is ${fmt(P.seat)}.`,
           },
           {
             q: "Are team accounts transferable?",

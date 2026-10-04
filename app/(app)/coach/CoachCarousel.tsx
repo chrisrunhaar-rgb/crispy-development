@@ -40,16 +40,159 @@ const COACHES = [
   { name: "Ethan", image: "/images/coaches/ethan-portrait.jpg", descriptor: "Direct · Strategic · Action-oriented" },
 ];
 
-const ADDONS: { label: string; minutes: number; bestValue: boolean; packId: MinutePackId }[] = [
-  { label: "1 Hour", minutes: 60, bestValue: false, packId: "1hr" },
-  { label: "3 Hours", minutes: 180, bestValue: false, packId: "3hr" },
-  { label: "5 Hours", minutes: 300, bestValue: true, packId: "5hr" },
+type Addon = { label: string; labelId: string; hours: number; minutes: number; discount: number; bestValue: boolean; packId: MinutePackId };
+
+// Discount labels are the ones Chris approved (10% on 3 hours, 30% on 5 hours).
+const ADDONS: Addon[] = [
+  { label: "1 hour", labelId: "1 Jam", hours: 1, minutes: 60, discount: 0, bestValue: false, packId: "1hr" },
+  { label: "3 hours", labelId: "3 Jam", hours: 3, minutes: 180, discount: 10, bestValue: false, packId: "3hr" },
+  { label: "5 hours", labelId: "5 Jam", hours: 5, minutes: 300, discount: 30, bestValue: true, packId: "5hr" },
 ];
 
 // Shown price follows the same currency the checkout route charges in
 // (locked currency > IP country > USD), resolved on the server in page.tsx.
 function packPrice(currency: Currency, packId: MinutePackId) {
   return formatPrice(currency, PRICES[currency].minutes[packId]);
+}
+
+// What the same hours cost when bought one at a time, shown struck through.
+function packWasPrice(currency: Currency, pkg: Addon) {
+  return formatPrice(currency, PRICES[currency].minutes["1hr"] * pkg.hours);
+}
+
+// Pack surfaces. The best-value pack is the one filled navy tile per screen.
+const PACK_ON_INK = "oklch(97% 0.005 80)";
+const PACK_ON_INK_MUTED = "oklch(80% 0.03 260)";
+const PACK_BADGE_BG = "oklch(94% 0.035 50)";
+const PACK_BADGE_TEXT = "oklch(45% 0.13 45)";
+const PACK_ERROR = "oklch(50% 0.18 30)";
+
+function PackButton({
+  pkg, currency, lang, layout, isPending, disabled, onBuy,
+}: {
+  pkg: Addon; currency: Currency; lang: CoachLang; layout: "tile" | "row";
+  isPending: boolean; disabled: boolean; onBuy: () => void;
+}) {
+  const s = useT(lang);
+  const id = lang === "id";
+  const best = pkg.bestValue;
+  const price = packPrice(currency, pkg.packId);
+  const was = pkg.discount > 0 ? packWasPrice(currency, pkg) : null;
+  const label = id ? pkg.labelId : pkg.label;
+  const discountLabel = pkg.discount > 0 ? (id ? `Hemat ${pkg.discount}%` : `${pkg.discount}% off`) : null;
+  const bestLabel = id ? "Paling hemat" : "Best value";
+  const minutesLabel = `${pkg.minutes} ${id ? "menit" : "minutes"}`;
+
+  const ariaLabel = id
+    ? `Beli ${label.toLowerCase()} seharga ${price}${discountLabel ? `, hemat ${pkg.discount}%, sebelumnya ${was}` : ""}${best ? `, ${bestLabel.toLowerCase()}` : ""}`
+    : `Buy ${label} for ${price}${discountLabel ? `, ${pkg.discount}% off, was ${was}` : ""}${best ? ", best value" : ""}`;
+
+  const fg = best ? PACK_ON_INK : INK;
+  const fgMuted = best ? PACK_ON_INK_MUTED : MUTED;
+
+  const badge = discountLabel && (
+    <span style={{
+      fontFamily: "var(--font-montserrat)", fontSize: "0.56rem", fontWeight: 700,
+      letterSpacing: "0.06em", textTransform: "uppercase", whiteSpace: "nowrap",
+      padding: "0.2rem 0.45rem", borderRadius: "3px", lineHeight: 1.2,
+      background: best ? ORANGE : PACK_BADGE_BG,
+      color: best ? "oklch(22% 0.08 260)" : PACK_BADGE_TEXT,
+    }}>
+      {discountLabel}
+    </span>
+  );
+
+  const bestTab = best && (
+    <span aria-hidden="true" style={{
+      position: "absolute", top: 0, left: layout === "tile" ? "50%" : "1rem",
+      transform: layout === "tile" ? "translate(-50%, -50%)" : "translateY(-50%)",
+      fontFamily: "var(--font-montserrat)", fontSize: "0.5rem", fontWeight: 700,
+      letterSpacing: "0.12em", textTransform: "uppercase", whiteSpace: "nowrap",
+      padding: "0.18rem 0.55rem", borderRadius: "100px", lineHeight: 1.2,
+      background: CARD, color: INK, border: `1px solid ${INK}`,
+    }}>
+      {bestLabel}
+    </span>
+  );
+
+  const struck = was && (
+    <s style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 500, color: fgMuted, whiteSpace: "nowrap", textDecorationThickness: "1px" }}>
+      {was}
+    </s>
+  );
+
+  const priceEl = (size: string) => (
+    <span style={{ fontFamily: "var(--font-cormorant)", fontSize: size, fontStyle: "italic", fontWeight: 600, color: fg, lineHeight: 1, whiteSpace: "nowrap" }}>
+      {price}
+    </span>
+  );
+
+  const common: React.CSSProperties = {
+    position: "relative",
+    background: best ? INK : CARD,
+    border: `1px solid ${best ? INK : RULE}`,
+    borderRadius: "6px",
+    cursor: disabled ? "default" : "pointer",
+    opacity: disabled && !isPending ? 0.45 : 1,
+    color: fg,
+  };
+
+  if (layout === "tile") {
+    return (
+      <button type="button" className="wpc-pack" onClick={onBuy} disabled={disabled}
+        aria-label={ariaLabel} aria-busy={isPending || undefined}
+        style={{
+          ...common,
+          width: "100%", minHeight: "76px",
+          padding: "0.6rem 0.75rem 0.55rem",
+          display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "0.3rem",
+          textAlign: "left",
+        }}>
+        {bestTab}
+        <span style={{ display: "flex", width: "100%", alignItems: "center", justifyContent: "space-between", gap: "0.4rem", minHeight: "1.05rem" }}>
+          <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: fgMuted, whiteSpace: "nowrap" }}>
+            {label}
+          </span>
+          {badge}
+        </span>
+        {isPending ? (
+          <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 600, color: fg, lineHeight: "1.4rem" }}>{s.processing}</span>
+        ) : priceEl("1.45rem")}
+        <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", color: fgMuted, whiteSpace: "nowrap", minHeight: "0.85rem", lineHeight: 1.3 }}>
+          {struck ?? minutesLabel}
+        </span>
+      </button>
+    );
+  }
+
+  return (
+    <button type="button" className="wpc-pack" onClick={onBuy} disabled={disabled}
+      aria-label={ariaLabel} aria-busy={isPending || undefined}
+      style={{
+        ...common,
+        width: "100%", minHeight: "68px",
+        padding: best ? "1.05rem 1rem 0.85rem" : "0.85rem 1rem",
+        display: "flex", alignItems: "center", justifyContent: "space-between", gap: "0.75rem",
+        textAlign: "left",
+      }}>
+      {bestTab}
+      <span style={{ display: "flex", flexDirection: "column", gap: "0.3rem", minWidth: 0 }}>
+        <span style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap" }}>
+          <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", fontWeight: 700, color: fg, whiteSpace: "nowrap" }}>
+            {label}
+          </span>
+          {badge}
+        </span>
+        <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.64rem", color: fgMuted }}>
+          {isPending ? s.processing : minutesLabel}
+        </span>
+      </span>
+      <span style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "0.2rem", flexShrink: 0 }}>
+        {struck}
+        {priceEl("1.6rem")}
+      </span>
+    </button>
+  );
 }
 
 async function purchaseMinutePack(packId: MinutePackId) {
@@ -323,15 +466,15 @@ function MinutesPanel({
   const size = RING_R * 2 + 20;
 
   return (
-    <div style={{
+    <div className="wpc-minpanel" style={{
       width: "100%", height: "100%",
       display: "flex", flexDirection: "column",
-      alignItems: "center", justifyContent: "center",
-      padding: "2rem 1.5rem", gap: "1.5rem",
+      alignItems: "center", justifyContent: "safe center",
+      padding: "1.75rem 1.5rem 6rem", gap: "1.25rem",
       overflowY: "auto",
     }}>
       {/* Ring */}
-      <div style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+      <div className="wpc-ring" style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
         <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
           <circle cx={RING_R + 10} cy={RING_R + 10} r={RING_R} fill="none" stroke={RULE} strokeWidth="10" />
           <circle
@@ -361,58 +504,19 @@ function MinutesPanel({
         <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, marginBottom: "0.875rem", textAlign: "center" }}>
           {s.addCoachingTime}
         </p>
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.625rem" }}>
-          {ADDONS.map(pkg => {
-            const isPending = pendingPack === pkg.packId;
-            const disabled = pendingPack !== null;
-            return (
-              <button
-                key={pkg.label}
-                onClick={() => handleBuy(pkg.packId)}
-                disabled={disabled}
-                style={{
-                  display: "flex", alignItems: "center", justifyContent: "space-between",
-                  width: "100%", textAlign: "left",
-                  padding: "0.875rem 1rem",
-                  background: pkg.bestValue ? BAND : CARD,
-                  border: `1px solid ${pkg.bestValue ? INK : RULE}`,
-                  borderRadius: 0,
-                  position: "relative",
-                  cursor: disabled ? "default" : "pointer",
-                  opacity: disabled && !isPending ? 0.5 : 1,
-                }}
-              >
-                {/* Best Value badge */}
-                {pkg.bestValue && (
-                  <span style={{
-                    position: "absolute", top: "-1px", right: "0.75rem",
-                    background: ORANGE, color: "white",
-                    fontFamily: "var(--font-montserrat)", fontSize: "0.48rem", fontWeight: 700, letterSpacing: "0.1em",
-                    padding: "0.15rem 0.5rem",
-                    textTransform: "uppercase",
-                  }}>
-                    {s.bestValue}
-                  </span>
-                )}
-                <div>
-                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: TEXT, marginBottom: "0.15rem", marginTop: pkg.bestValue ? "0.4rem" : 0 }}>
-                    {lang === "id"
-                      ? pkg.minutes === 60 ? "1 Jam" : pkg.minutes === 180 ? "3 Jam" : "5 Jam"
-                      : pkg.label}
-                  </p>
-                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", color: MUTED }}>
-                    {isPending ? s.processing : `${pkg.minutes} ${lang === "id" ? "menit" : "minutes"}`}
-                  </p>
-                </div>
-                <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "1.5rem", fontStyle: "italic", color: INK }}>
-                  {packPrice(currency, pkg.packId)}
-                </p>
-              </button>
-            );
-          })}
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+          {ADDONS.map(pkg => (
+            <PackButton
+              key={pkg.packId}
+              pkg={pkg} currency={currency} lang={lang} layout="row"
+              isPending={pendingPack === pkg.packId}
+              disabled={pendingPack !== null}
+              onBuy={() => handleBuy(pkg.packId)}
+            />
+          ))}
         </div>
         {purchaseError && (
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", color: "oklch(50% 0.18 30)", textAlign: "center", marginTop: "0.5rem" }}>
+          <p role="alert" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", color: PACK_ERROR, textAlign: "center", marginTop: "0.5rem" }}>
             {s.purchaseError}
           </p>
         )}
@@ -771,6 +875,24 @@ export default function CoachCarousel({
             padding: 1.5rem 2rem;
           }
         }
+        .wpc-pack {
+          transition: border-color 0.18s ease, background-color 0.18s ease, transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.18s ease;
+        }
+        .wpc-pack:not(:disabled):hover {
+          border-color: ${INK} !important;
+          transform: translateY(-1px);
+          box-shadow: 0 6px 16px -10px oklch(30% 0.12 260 / 0.45);
+        }
+        .wpc-pack:not(:disabled):active { transform: translateY(0); box-shadow: none; }
+        .wpc-minpanel { container-type: size; }
+        @container (max-height: 660px) { .wpc-ring { transform: scale(0.8); margin: -18px 0; } }
+        .wpc-pack-grid {
+          display: grid;
+          grid-template-columns: repeat(3, minmax(124px, 1fr));
+          gap: 0.625rem;
+          width: 100%;
+          padding-top: 0.5rem;
+        }
         .wpc-outer button:focus-visible, .wpc-outer a:focus-visible { outline: 2px solid ${ORANGE}; outline-offset: 2px; }
         @media (prefers-reduced-motion: reduce) {
           .wpc-outer *, .wpc-outer *::before { transition: none !important; }
@@ -924,30 +1046,19 @@ export default function CoachCarousel({
                   </p>
                 )}
               </div>
-              <div style={{ marginLeft: "auto", display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "0.375rem" }}>
-                <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", justifyContent: "flex-end" }}>
-                  {ADDONS.map(pkg => {
-                    const isPending = desktopPendingPack === pkg.packId;
-                    const disabled = desktopPendingPack !== null;
-                    return (
-                      <button key={pkg.label} onClick={() => handleDesktopBuy(pkg.packId)} disabled={disabled} style={{
-                        fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.05em",
-                        padding: "0.5rem 0.75rem",
-                        background: pkg.bestValue ? BAND : CARD, color: INK,
-                        border: `1px solid ${pkg.bestValue ? ORANGE : RULE}`,
-                        whiteSpace: "nowrap", position: "relative",
-                        cursor: disabled ? "default" : "pointer",
-                        opacity: disabled && !isPending ? 0.5 : 1,
-                      }}>
-                        {pkg.bestValue && <span style={{ color: ORANGE, marginRight: "0.3rem" }}>★</span>}
-                        {lang === "id"
-                          ? pkg.minutes === 60 ? "1 Jam" : pkg.minutes === 180 ? "3 Jam" : "5 Jam"
-                          : pkg.label} {isPending ? s.processing : packPrice(currency, pkg.packId)}
-                      </button>
-                    );
-                  })}
+              <div style={{ marginLeft: "auto", flex: "1 1 400px", maxWidth: "540px", display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "0.375rem" }}>
+                <div className="wpc-pack-grid">
+                  {ADDONS.map(pkg => (
+                    <PackButton
+                      key={pkg.packId}
+                      pkg={pkg} currency={currency} lang={lang} layout="tile"
+                      isPending={desktopPendingPack === pkg.packId}
+                      disabled={desktopPendingPack !== null}
+                      onBuy={() => handleDesktopBuy(pkg.packId)}
+                    />
+                  ))}
                 </div>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.52rem", color: desktopPurchaseError ? "oklch(50% 0.18 30)" : MUTED, letterSpacing: "0.04em" }}>
+                <p role={desktopPurchaseError ? "alert" : undefined} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", color: desktopPurchaseError ? PACK_ERROR : MUTED, letterSpacing: "0.04em" }}>
                   {desktopPurchaseError ? s.purchaseError : s.buyMoreMinutes}
                 </p>
               </div>

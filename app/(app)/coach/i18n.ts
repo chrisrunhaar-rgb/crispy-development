@@ -36,7 +36,7 @@ const strings = {
     bestValue: "Best Value",
     buyMoreMinutes: "Buy more minutes",
     processing: "Processing…",
-    purchaseError: "Something went wrong — please try again.",
+    purchaseError: "Something went wrong. Please try again.",
 
     // Carousel — header / misc
     backToCrispy: "← Crispy Leaders",
@@ -218,7 +218,7 @@ const strings = {
     bestValue: "Terbaik",
     buyMoreMinutes: "Beli lebih banyak menit",
     processing: "Memproses…",
-    purchaseError: "Terjadi kesalahan — silakan coba lagi.",
+    purchaseError: "Terjadi kesalahan. Silakan coba lagi.",
 
     backToCrispy: "← Crispy Leaders",
     beta: "BETA",
