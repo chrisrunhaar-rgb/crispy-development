@@ -194,11 +194,6 @@ export default function ResourceCard({
         </Link>
 
         <div className="rc-actions">
-          <Link href={path} className="rc-act" aria-label={id ? `Baca ${title}` : `Read ${title}`}>
-            <ReadIcon />
-            <span className="rc-lbl" aria-hidden="true">{id ? "Baca" : "Read"}</span>
-          </Link>
-
           {hasSlideshow ? (
             <Link
               href={presentHref}
@@ -212,6 +207,11 @@ export default function ResourceCard({
           ) : (
             <span className="rc-act rc-act-empty" aria-hidden="true" />
           )}
+
+          <Link href={path} className="rc-act" aria-label={id ? `Baca ${title}` : `Read ${title}`}>
+            <ReadIcon />
+            <span className="rc-lbl" aria-hidden="true">{id ? "Baca" : "Read"}</span>
+          </Link>
 
           <button
             type="button"
