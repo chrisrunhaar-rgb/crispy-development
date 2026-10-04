@@ -3,7 +3,7 @@
 import { useId, useRef, useState, useTransition, type CSSProperties, type ReactNode } from "react";
 import Link from "next/link";
 import { removeResourceFromDashboard, saveResourceNote, saveResourceRating, markResourceRead } from "@/app/(marketing)/resources/actions";
-import { PresentSmallScreenNotice } from "@/components/PresentLauncher";
+import { presentLinkTap } from "@/components/PresentPhone";
 import { SLIDESHOW_SLUGS } from "@/lib/slideshow-slugs";
 
 const FORMAT_ID: Record<string, string> = {
@@ -119,7 +119,6 @@ export default function ResourceCard({
   const [noteSaved, setNoteSaved] = useState(false);
   const [copied, setCopied] = useState(false);
   const [confirmRemove, setConfirmRemove] = useState(false);
-  const [smallScreen, setSmallScreen] = useState(false);
   const [removing, startRemove] = useTransition();
   const panelId = useId();
   const removeRef = useRef<HTMLButtonElement>(null);
@@ -215,7 +214,7 @@ export default function ResourceCard({
               href={presentHref}
               className="rc-act"
               aria-label={id ? `Presentasikan ${title} sebagai slideshow` : `Present ${title} as a slideshow`}
-              onClick={e => { if (window.innerWidth < 768) { e.preventDefault(); setSmallScreen(true); } }}
+              onClick={presentLinkTap}
             >
               <PresentIcon />
               <span className="rc-lbl" aria-hidden="true">{id ? "Presentasi" : "Present"}</span>
@@ -376,7 +375,6 @@ export default function ResourceCard({
         </div>
       </div>
 
-      {smallScreen && <PresentSmallScreenNotice lang={lang} onClose={() => setSmallScreen(false)} />}
     </div>
   );
 }

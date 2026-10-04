@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useLanguage } from "@/lib/LanguageContext";
 
 const STORAGE_KEY = "cookie_consent";
@@ -28,6 +29,7 @@ const COPY = {
 export default function CookieConsent({ gaId }: { gaId: string }) {
   const [visible, setVisible] = useState(false);
   const { lang } = useLanguage();
+  const pathname = usePathname();
   const t = lang === "id" ? COPY.id : COPY.en;
 
   useEffect(() => {
@@ -52,7 +54,8 @@ export default function CookieConsent({ gaId }: { gaId: string }) {
     setVisible(false);
   }
 
-  if (!visible) return null;
+  // Keep slideshows clear; the banner shows again on the next normal page
+  if (!visible || pathname?.endsWith("/present")) return null;
 
   return (
     <div

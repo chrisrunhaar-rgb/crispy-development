@@ -1,6 +1,7 @@
 "use client";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { PHONE_PORTRAIT_QUERY, PresentRotateNotice, enterPresentFullscreen, usePresentPhone } from "@/components/PresentPhone";
 import { useLanguage } from "@/lib/LanguageContext";
 
 type Lang = "en" | "id";
@@ -429,6 +430,7 @@ export default function PresentClient() {
   const [pos, setPos] = useState({ i: 0, s: 0 });
   const { i, s: step } = pos;
   const [isFull, setIsFull] = useState(false);
+  const phone = usePresentPhone(setIsFull);
   const [uiVisible, setUiVisible] = useState(true);
   const [overview, setOverview] = useState(false);
   const [blank, setBlank] = useState(false);
@@ -454,7 +456,7 @@ export default function PresentClient() {
 
   const toggleFull = useCallback(() => {
     if (document.fullscreenElement) document.exitFullscreen?.().catch(() => {});
-    else rootRef.current?.requestFullscreen?.().catch(() => {});
+    else enterPresentFullscreen(rootRef.current);
   }, []);
 
   const wake = useCallback(() => {
@@ -475,7 +477,7 @@ export default function PresentClient() {
   }, [tooSmall]);
 
   useEffect(() => {
-    const mq = window.matchMedia(`(max-width: ${MIN_WIDTH - 1}px)`);
+    const mq = window.matchMedia(PHONE_PORTRAIT_QUERY);
     const upd = () => setTooSmall(mq.matches);
     upd();
     mq.addEventListener("change", upd);
@@ -534,27 +536,7 @@ export default function PresentClient() {
   const moduleHref = `/resources/${SLUG}`;
   const showUi = uiVisible || !started || overview;
 
-  if (tooSmall) {
-    return (
-      <div style={{ position: "fixed", inset: 0, zIndex: 1000, background: navy, display: "flex", alignItems: "center", justifyContent: "center", padding: 24, fontFamily: sans }}>
-        <div style={{ maxWidth: 360, textAlign: "center" }}>
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke={orange} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ margin: "0 auto 20px", display: "block" }}>
-            <rect x="3" y="4" width="18" height="12" rx="2" /><path d="M12 16v4M8 20h8" />
-          </svg>
-          <p style={{ fontFamily: serif, fontSize: 30, fontWeight: 600, color: offWhite, margin: "0 0 12px", lineHeight: 1.2 }}>
-            {t("Presenting needs a bigger screen", "Presentasi butuh layar yang lebih besar", lang)}
-          </p>
-          <p style={{ fontSize: 15, lineHeight: 1.6, color: "oklch(82% 0.03 80)", margin: "0 0 28px" }}>
-            {t("Open this module on a tablet or computer to show the slides to your team.",
-              "Buka modul ini di tablet atau komputer untuk menampilkan slide kepada tim Anda.", lang)}
-          </p>
-          <Link href={moduleHref} style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", minHeight: 44, padding: "0 22px", borderRadius: 8, background: orange, color: "white", fontWeight: 700, fontSize: 14, textDecoration: "none" }}>
-            {t("Back to the module", "Kembali ke modul", lang)}
-          </Link>
-        </div>
-      </div>
-    );
-  }
+  if (tooSmall) return <PresentRotateNotice lang={lang} moduleHref={moduleHref} />;
 
   const pill: React.CSSProperties = {
     display: "inline-flex", alignItems: "center", justifyContent: "center", minWidth: 44, height: 44, padding: "0 12px",
@@ -593,7 +575,7 @@ export default function PresentClient() {
           const r = (e.currentTarget as HTMLDivElement).getBoundingClientRect();
           if (e.clientX - r.left < r.width * 0.3) prev(); else next();
         }}
-        style={{ position: "absolute", inset: isFull ? 0 : 24, display: "flex", alignItems: "center", justifyContent: "center" }}>
+        style={{ position: "absolute", inset: isFull || phone ? 0 : 24, display: "flex", alignItems: "center", justifyContent: "center" }}>
         <div aria-live="polite" aria-roledescription="slide" aria-label={`${i + 1} / ${SLIDES.length}`}
           style={{ width: W * scale, height: H * scale, position: "relative", boxShadow: isFull ? "none" : "0 30px 80px oklch(0% 0 0 / 0.45)", borderRadius: isFull ? 0 : 6, overflow: "hidden" }}>
           <div key={`${i}-${lang}`} className="fsc-fade" style={{ width: W, height: H, transform: `scale(${scale})`, transformOrigin: "top left" }}>
@@ -605,7 +587,7 @@ export default function PresentClient() {
 
       {/* Start hint, shown until the presenter first moves on */}
       {!started && !overview && (
-        <div className="fsc-ui" style={{ position: "absolute", left: "50%", bottom: 104, transform: "translateX(-50%)", display: "flex", alignItems: "center", gap: 14 }}>
+        <div className="fsc-ui" style={{ position: "absolute", left: "50%", bottom: 104, transform: "translateX(-50%)", display: "flex", alignItems: "center", gap: 14, whiteSpace: "nowrap" }}>
           {!isFull && (
             <button type="button" onClick={() => { setStarted(true); toggleFull(); }}
               style={{ display: "inline-flex", alignItems: "center", gap: 10, height: 48, padding: "0 24px", borderRadius: 999, border: "none", background: orange, color: "white", fontFamily: sans, fontWeight: 700, fontSize: 15, cursor: "pointer", boxShadow: "0 10px 30px oklch(0% 0 0 / 0.35)" }}>
@@ -613,8 +595,8 @@ export default function PresentClient() {
               {t("Start full screen", "Mulai layar penuh", lang)}
             </button>
           )}
-          <span style={{ fontSize: 13, color: "oklch(85% 0.02 80)", background: "oklch(0% 0 0 / 0.45)", padding: "8px 14px", borderRadius: 999 }}>
-            {t("Arrow keys or clicker to move. F full screen. G all slides.", "Tombol panah atau clicker untuk pindah. F layar penuh. G semua slide.", lang)}
+          <span style={{ fontSize: 13, color: "oklch(85% 0.02 80)", background: "oklch(15% 0.04 260 / 0.88)", padding: "8px 14px", borderRadius: 999 }}>
+            {(phone ? t("Swipe or tap the sides to move.", "Geser atau ketuk sisi layar untuk pindah.", lang) : t("Arrow keys or clicker to move. F full screen. G all slides.", "Tombol panah atau clicker untuk pindah. F layar penuh. G semua slide.", lang))}
           </span>
         </div>
       )}

@@ -2,6 +2,7 @@
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { PHONE_PORTRAIT_QUERY, PresentRotateNotice, enterPresentFullscreen, usePresentPhone } from "@/components/PresentPhone";
 import { useLanguage } from "@/lib/LanguageContext";
 
 type Lang = "en" | "id";
@@ -544,6 +545,7 @@ export default function PresentClient() {
 
   const [pos, setPos] = useState({ i: 0, s: 0 });
   const [isFull, setIsFull] = useState(false);
+  const phone = usePresentPhone(setIsFull);
   const [uiVisible, setUiVisible] = useState(true);
   const [overview, setOverview] = useState(false);
   const [started, setStarted] = useState(false);
@@ -583,7 +585,7 @@ export default function PresentClient() {
 
   function toggleFull() {
     if (!document.fullscreenElement) {
-      rootRef.current?.requestFullscreen?.().catch(() => {});
+      enterPresentFullscreen(rootRef.current);
       setIsFull(true);
     } else {
       document.exitFullscreen?.().catch(() => {});
@@ -608,7 +610,7 @@ export default function PresentClient() {
   }, []);
 
   useEffect(() => {
-    const mq = window.matchMedia(`(max-width: ${MIN_WIDTH - 1}px)`);
+    const mq = window.matchMedia(PHONE_PORTRAIT_QUERY);
     const update = () => setTooSmall(mq.matches);
     update();
     mq.addEventListener("change", update);
@@ -662,29 +664,7 @@ export default function PresentClient() {
   const moduleHref = `/resources/${SLUG}`;
   const showUi = uiVisible || !started || overview;
 
-  if (tooSmall) {
-    return (
-      <div style={{
-        position: "fixed", inset: 0, zIndex: 1000, background: navy, display: "flex", flexDirection: "column",
-        alignItems: "center", justifyContent: "center", padding: 32, textAlign: "center", fontFamily: sans,
-      }}>
-        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke={orange} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ marginBottom: 20 }}>
-          <rect x="3" y="4" width="18" height="12" rx="2" /><path d="M12 16v4M8 20h8" />
-        </svg>
-        <p style={{ fontFamily: serif, fontSize: 30, fontWeight: 600, color: offWhite, margin: "0 0 12px" }}>
-          {lang === "id" ? "Presentasi membutuhkan layar yang lebih besar" : "Presenting needs a bigger screen"}
-        </p>
-        <p style={{ fontSize: 16, color: onNavy, maxWidth: 420, lineHeight: 1.6, margin: "0 0 28px" }}>
-          {lang === "id"
-            ? "Buka modul ini di tablet atau komputer untuk menampilkan slide."
-            : "Open this module on a tablet or computer to show the slides."}
-        </p>
-        <Link href={moduleHref} style={{ color: orange, fontWeight: 700, textDecoration: "underline" }}>
-          {lang === "id" ? "Kembali ke modul" : "Back to the module"}
-        </Link>
-      </div>
-    );
-  }
+  if (tooSmall) return <PresentRotateNotice lang={lang} moduleHref={moduleHref} />;
 
   return (
     <div
@@ -731,7 +711,7 @@ export default function PresentClient() {
 
       {/* Start hint, shown until the presenter first moves on */}
       {!started && !overview && (
-        <div style={{ position: "fixed", left: "50%", bottom: 104, transform: "translateX(-50%)", display: "flex", alignItems: "center", gap: 14, zIndex: 6 }}>
+        <div style={{ position: "fixed", left: "50%", bottom: 104, transform: "translateX(-50%)", display: "flex", alignItems: "center", gap: 14, whiteSpace: "nowrap", zIndex: 6 }}>
           {!isFull && (
             <button type="button" className="jw-pill" onClick={() => { setStarted(true); toggleFull(); }}
               style={{ display: "inline-flex", alignItems: "center", gap: 10, height: 48, padding: "0 24px", borderRadius: 999, border: "none", background: orange, color: "white", fontWeight: 700, fontSize: 15, boxShadow: "0 10px 30px oklch(0% 0 0 / 0.35)", whiteSpace: "nowrap" }}>
@@ -739,8 +719,8 @@ export default function PresentClient() {
               {lang === "id" ? "Mulai layar penuh" : "Start full screen"}
             </button>
           )}
-          <span style={{ fontSize: 13, color: onNavy, background: "oklch(0% 0 0 / 0.45)", padding: "8px 14px", borderRadius: 999, whiteSpace: "nowrap" }}>
-            {lang === "id" ? "Tombol panah atau clicker untuk pindah. F layar penuh. G semua slide." : "Arrow keys or clicker to move. F full screen. G all slides."}
+          <span style={{ fontSize: 13, color: onNavy, background: "oklch(15% 0.04 260 / 0.88)", padding: "8px 14px", borderRadius: 999, whiteSpace: "nowrap" }}>
+            {phone ? (lang === "id" ? "Geser atau ketuk sisi layar untuk pindah." : "Swipe or tap the sides to move.") : (lang === "id" ? "Tombol panah atau clicker untuk pindah. F layar penuh. G semua slide." : "Arrow keys or clicker to move. F full screen. G all slides.")}
           </span>
         </div>
       )}
