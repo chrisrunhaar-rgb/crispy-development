@@ -30,10 +30,11 @@ function Icon({ children, size = 20 }: { children: ReactNode; size?: number }) {
 const ReadIcon = () => <Icon><path d="M3 5h5a4 4 0 0 1 4 4v11a3 3 0 0 0-3-3H3z" /><path d="M21 5h-5a4 4 0 0 0-4 4v11a3 3 0 0 1 3-3h6z" /></Icon>;
 const PresentIcon = () => <Icon><rect x="3" y="4" width="18" height="12" rx="2" /><path d="M12 16v4M8 20h8" /></Icon>;
 const ShareIcon = ({ size }: { size?: number }) => <Icon size={size}><path d="M8.5 10H7a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-1.5" /><path d="M12 14V3.5M8.5 7 12 3.5 15.5 7" /></Icon>;
+const RemoveIcon = () => <Icon><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3" /></Icon>;
 const CheckIcon = ({ size }: { size?: number }) => <Icon size={size}><path d="M5 12.5l4.5 4.5L19 7.5" /></Icon>;
 
 const CSS = `
-.rc-card { border: 1px solid oklch(88% 0.008 80); border-radius: 8px; background: oklch(99.5% 0.002 80); overflow: hidden; }
+.rc-card { position: relative; border: 1px solid oklch(88% 0.008 80); border-radius: 8px; background: oklch(99.5% 0.002 80); overflow: hidden; }
 .rc-card + .rc-card { margin-top: 0.75rem; }
 .rc-head { padding-inline: 1rem;
   position: relative; display: flex; flex-wrap: wrap; align-items: center; column-gap: 1rem; row-gap: 0.25rem; padding-block: 0.875rem; }
@@ -57,6 +58,12 @@ const CSS = `
 .rc-act:hover .rc-lbl { color: oklch(30% 0.06 260); }
 .rc-act-done .rc-lbl { color: oklch(42% 0.14 145); }
 
+.rc-badge { position: absolute; top: 9px; right: 10px; z-index: 2; display: inline-flex; color: oklch(30% 0.12 260); pointer-events: none; }
+.rc-tools { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; padding-top: 0.75rem; border-top: 1px solid oklch(92% 0.005 80); }
+.rc-tools-left { display: flex; align-items: center; }
+.rc-act-remove { color: oklch(48% 0.02 260); }
+.rc-act-remove:hover { background: oklch(95% 0.02 25); color: oklch(46% 0.16 25); }
+.rc-act-remove:hover .rc-lbl { color: oklch(46% 0.16 25); }
 .rc-sep { width: 1px; height: 28px; margin-inline: 4px; background: oklch(88% 0.008 80); }
 .rc-chev { width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; border: none; border-radius: 999px; background: transparent; color: oklch(48% 0.04 260); cursor: pointer; transition: background-color 0.2s ease, color 0.2s ease; -webkit-tap-highlight-color: transparent; }
 .rc-chev:hover { background: oklch(94% 0.014 260); color: oklch(22% 0.10 260); }
@@ -71,11 +78,6 @@ const CSS = `
 .rc-btn { min-height: 44px; display: inline-flex; align-items: center; gap: 0.5rem; padding: 0 0.875rem; font-family: var(--font-montserrat), Montserrat, sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; background: transparent; cursor: pointer; transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease; }
 .rc-btn:focus-visible { outline: 2px solid oklch(30% 0.12 260); outline-offset: 2px; }
 .rc-btn:disabled { cursor: default; opacity: 0.6; }
-.rc-share { border: 1px solid oklch(88% 0.008 80); color: oklch(45% 0.03 260); }
-.rc-share:hover { color: oklch(30% 0.12 260); border-color: oklch(30% 0.12 260 / 0.35); }
-.rc-share.rc-act-done { color: oklch(42% 0.14 145); }
-.rc-remove { border: 1px solid transparent; color: oklch(48% 0.02 260); padding-inline: 0.5rem; text-decoration: underline; text-decoration-color: oklch(48% 0.02 260 / 0.3); text-underline-offset: 3px; }
-.rc-remove:hover { color: oklch(46% 0.16 25); text-decoration-color: currentColor; }
 .rc-confirm { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.75rem; }
 .rc-confirm-q { font-family: var(--font-montserrat), Montserrat, sans-serif; font-size: 0.8rem; font-weight: 600; color: oklch(22% 0.005 260); }
 .rc-yes { border: 1px solid oklch(46% 0.16 25); background: oklch(46% 0.16 25); color: oklch(99% 0.003 80); }
@@ -199,6 +201,14 @@ export default function ResourceCard({
       </div>
 
 
+      {/* Slideshow marker: a hint, not a button (Present lives in the panel) */}
+      {hasSlideshow && (
+        <span className="rc-badge" title={id ? "Ada slideshow" : "Slideshow available"}>
+          <Icon size={16}><rect x="3" y="4" width="18" height="12" rx="2" /><path d="M12 16v4M8 20h8" /></Icon>
+          <span className="rc-sr">{id ? "Ada slideshow" : "Slideshow available"}</span>
+        </span>
+      )}
+
       {/* Header: the title link is stretched over the whole row, the actions sit above it */}
       <div className="rc-head" style={{ "--rc-slot": slot } as CSSProperties}>
         <Link href={path} className="rc-main">
@@ -209,34 +219,10 @@ export default function ResourceCard({
         </Link>
 
         <div className="rc-actions">
-          {hasSlideshow ? (
-            <Link
-              href={presentHref}
-              className="rc-act"
-              aria-label={id ? `Presentasikan ${title} sebagai slideshow` : `Present ${title} as a slideshow`}
-              onClick={presentLinkTap}
-            >
-              <PresentIcon />
-              <span className="rc-lbl" aria-hidden="true">{id ? "Presentasi" : "Present"}</span>
-            </Link>
-          ) : (
-            <span className="rc-act rc-act-empty" aria-hidden="true" />
-          )}
-
           <Link href={path} className="rc-act" aria-label={id ? `Baca ${title}` : `Read ${title}`}>
             <ReadIcon />
             <span className="rc-lbl" aria-hidden="true">{id ? "Baca" : "Read"}</span>
           </Link>
-
-          <button
-            type="button"
-            className={`rc-act${copied ? " rc-act-done" : ""}`}
-            onClick={handleShare}
-            aria-label={id ? `Bagikan ${title}` : `Share ${title}`}
-          >
-            {copied ? <CheckIcon /> : <ShareIcon />}
-            <span className="rc-lbl" aria-hidden="true">{copied ? (id ? "Disalin" : "Copied") : (id ? "Bagikan" : "Share")}</span>
-          </button>
 
           <span className="rc-sep" aria-hidden="true" />
 
@@ -342,21 +328,10 @@ export default function ResourceCard({
               </div>
             </div>
 
-            {/* Share + remove */}
-            <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "0.75rem", paddingTop: "1rem", borderTop: "1px solid oklch(92% 0.005 80)" }}>
-              <button
-                type="button"
-                onClick={handleShare}
-                className={`rc-btn rc-share${copied ? " rc-act-done" : ""}`}
-              >
-                {copied ? <CheckIcon size={16} /> : <ShareIcon size={16} />}
-                {copied
-                  ? (id ? "Disalin ✓" : "Copied to clipboard ✓")
-                  : (id ? "Bagikan ke teman" : "Share with a friend")}
-              </button>
-
+            {/* Present + share on the left, remove on the right */}
+            <div className="rc-tools" style={{ "--rc-slot": slot } as CSSProperties}>
               {confirmRemove ? (
-                <div className="rc-confirm" role="group" aria-label={id ? "Konfirmasi hapus" : "Confirm removal"}>
+                <div className="rc-confirm" role="group" aria-label={id ? "Konfirmasi hapus" : "Confirm removal"} style={{ minHeight: "52px" }}>
                   <span className="rc-confirm-q">{id ? "Hapus dari dasbor?" : "Remove from dashboard?"}</span>
                   <button type="button" className="rc-btn rc-yes" onClick={handleRemove} disabled={removing}>
                     {removing ? (id ? "Menghapus..." : "Removing...") : (id ? "Ya, hapus" : "Yes, remove")}
@@ -365,11 +340,40 @@ export default function ResourceCard({
                     {id ? "Batal" : "Cancel"}
                   </button>
                 </div>
-              ) : (
-                <button type="button" ref={removeRef} className="rc-btn rc-remove" onClick={openConfirm}>
-                  {id ? "Hapus dari dasbor" : "Remove from dashboard"}
+              ) : (<>
+                <div className="rc-tools-left">
+                  {hasSlideshow && (
+                    <Link
+                      href={presentHref}
+                      className="rc-act"
+                      aria-label={id ? `Presentasikan ${title} sebagai slideshow` : `Present ${title} as a slideshow`}
+                      onClick={presentLinkTap}
+                    >
+                      <PresentIcon />
+                      <span className="rc-lbl" aria-hidden="true">{id ? "Presentasi" : "Present"}</span>
+                    </Link>
+                  )}
+                  <button
+                    type="button"
+                    className={`rc-act${copied ? " rc-act-done" : ""}`}
+                    onClick={handleShare}
+                    aria-label={id ? `Bagikan ${title}` : `Share ${title}`}
+                  >
+                    {copied ? <CheckIcon /> : <ShareIcon />}
+                    <span className="rc-lbl" aria-hidden="true">{copied ? (id ? "Disalin" : "Copied") : (id ? "Bagikan" : "Share")}</span>
+                  </button>
+                </div>
+                <button
+                  type="button"
+                  ref={removeRef}
+                  className="rc-act rc-act-remove"
+                  onClick={openConfirm}
+                  aria-label={id ? `Hapus ${title} dari dasbor` : `Remove ${title} from dashboard`}
+                >
+                  <RemoveIcon />
+                  <span className="rc-lbl" aria-hidden="true">{id ? "Hapus" : "Remove"}</span>
                 </button>
-              )}
+              </>)}
             </div>
           </div>
         </div>
