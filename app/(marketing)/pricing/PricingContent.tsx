@@ -4,9 +4,12 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/lib/LanguageContext";
 import { createClient } from "@/lib/supabase/client";
+import { PRICES, formatPrice, type Currency } from "@/lib/pricing";
 
 interface Props {
-  isIndonesia: boolean;
+  // Resolved on the server (locked currency > IP country > USD), the same
+  // way api/checkout picks the currency it charges in.
+  currency: Currency;
 }
 
 // ── Path icons ───────────────────────────────────────────────────────────────
@@ -304,16 +307,16 @@ function Feature({ text, light }: { text: string; light?: boolean }) {
 }
 
 const TEAM_SIZE_KEY = "pricing_team_size";
-const TEAM_SEAT_PRICE = 20;
 const MIN_TEAM = 2;
 const MAX_TEAM = 10;
 
 // ── Main component ───────────────────────────────────────────────────────────
-export default function PricingContent({ isIndonesia }: Props) {
+export default function PricingContent({ currency }: Props) {
   const { lang } = useLanguage();
   const id = lang === "id";
-  void isIndonesia; // kept in the signature — parent page.tsx still passes it — but
-  // lifetime pricing is USD-only, so it no longer drives any price/currency logic here.
+  const P = PRICES[currency];
+  const fmt = (n: number) => formatPrice(currency, n);
+  const diff = fmt(P.seat - P.personal);
 
   // Landed here right after confirming a signup that started on this page —
   // continue that plan's checkout automatically (see app/auth/callback/route.ts).
@@ -336,7 +339,7 @@ export default function PricingContent({ isIndonesia }: Props) {
   const copy = {
     // PERSONAL ───────────────────────────────────────────────────────────
     personalLabel: "Personal",
-    personalPrice: "$15",
+    personalPrice: fmt(P.personal),
     personalPriceNote: id ? "Sekali bayar - Akses permanen" : "One-time purchase · Permanent access",
     personalFeatures: id
       ? [
@@ -354,13 +357,13 @@ export default function PricingContent({ isIndonesia }: Props) {
 
     // TEAM ───────────────────────────────────────────────────────────────
     teamLabel: id ? "Tim · 2 sampai 10 orang" : "Team · 2 to 10 people",
-    teamPrice: "$20",
+    teamPrice: fmt(P.seat),
     teamPriceSubNote: id ? "per orang, termasuk pemimpin" : "per person, leader included",
     teamSizeLabel: id ? "Ukuran tim" : "Team size",
     teamSizeValue: (n: number) => (id ? `${n} orang` : `${n} people`),
-    teamTotal: (n: number) => `Total $${n}`,
+    teamTotal: (n: number) => `Total ${fmt(n)}`,
     teamMore: id ? "Lebih dari 10 orang? Hubungi kami" : "More than 10 people? Contact us",
-    teamDiffNote: id ? "Hanya $5 lebih per orang dibanding Personal" : "Just $5 more per person than Personal",
+    teamDiffNote: id ? `Hanya ${diff} lebih per orang dibanding Personal` : `Just ${diff} more per person than Personal`,
     teamPriceNote: id ? "Sekali bayar - Akses permanen" : "One-time purchase · Permanent access",
     teamFeatures: id
       ? [
@@ -387,15 +390,15 @@ export default function PricingContent({ isIndonesia }: Props) {
           },
           {
             q: "Apa yang termasuk dalam paket Personal dan Tim?",
-            a: "Paket Personal memberikan satu orang akses permanen ke seluruh perpustakaan konten, dasbor pribadi, dan seluruh asesmen kepribadian. Paket Tim memberikan semua isi Personal kepada setiap anggota tim, ditambah Perjalanan Pertumbuhan Tim: modul yang ditulis khusus untuk pengembangan tim dan membentuk budaya tim. Anda juga mendapat hasil seluruh tim dan dasbor tim dengan kontrol untuk pemimpin. Semua itu hanya $5 lebih per orang.",
+            a: `Paket Personal memberikan satu orang akses permanen ke seluruh perpustakaan konten, dasbor pribadi, dan seluruh asesmen kepribadian. Paket Tim memberikan semua isi Personal kepada setiap anggota tim, ditambah Perjalanan Pertumbuhan Tim: modul yang ditulis khusus untuk pengembangan tim dan membentuk budaya tim. Anda juga mendapat hasil seluruh tim dan dasbor tim dengan kontrol untuk pemimpin. Semua itu hanya ${diff} lebih per orang.`,
           },
           {
             q: "Bagaimana harga paket Tim dihitung?",
-            a: "Anda membayar $20 per orang, sekali bayar, dan pemimpin tim juga dihitung. Pilih ukuran tim antara 2 dan 10 orang sebelum membayar. Tim berisi 5 orang berarti $100. Untuk tim lebih dari 10 orang, hubungi kami.",
+            a: `Anda membayar ${fmt(P.seat)} per orang, sekali bayar, dan pemimpin tim juga dihitung. Pilih ukuran tim antara 2 dan 10 orang sebelum membayar. Tim berisi 5 orang berarti ${fmt(P.seat * 5)}. Untuk tim lebih dari 10 orang, hubungi kami.`,
           },
           {
             q: "Bisakah saya menambah anggota tim nanti?",
-            a: "Bisa. Pemimpin tim dapat menambah tempat dari pengaturan tim, $20 per tempat, sampai total 10 orang.",
+            a: `Bisa. Pemimpin tim dapat menambah tempat dari pengaturan tim, ${fmt(P.seat)} per tempat, sampai total 10 orang.`,
           },
           {
             q: "Bisakah saya beralih dari Personal ke Tim nanti?",
@@ -417,15 +420,15 @@ export default function PricingContent({ isIndonesia }: Props) {
           },
           {
             q: "What's included in Personal vs Team?",
-            a: "Personal gives one person lifetime access to the full content library, a personal dashboard, and every personality assessment. Team gives everything in Personal to every person on the team, plus the Team Growth Journey: modules written for team development and shaping team culture. You also get the whole team's results and a team dashboard with leader controls. All of that for just $5 more per person.",
+            a: `Personal gives one person lifetime access to the full content library, a personal dashboard, and every personality assessment. Team gives everything in Personal to every person on the team, plus the Team Growth Journey: modules written for team development and shaping team culture. You also get the whole team's results and a team dashboard with leader controls. All of that for just ${diff} more per person.`,
           },
           {
             q: "How is Team priced?",
-            a: "You pay $20 per person, once, and the leader counts as one of the team. Pick a team size from 2 to 10 people before you pay. A team of 5 is $100. For more than 10 people, contact us.",
+            a: `You pay ${fmt(P.seat)} per person, once, and the leader counts as one of the team. Pick a team size from 2 to 10 people before you pay. A team of 5 is ${fmt(P.seat * 5)}. For more than 10 people, contact us.`,
           },
           {
             q: "Can I add people to my team later?",
-            a: "Yes. The team leader can add seats from team settings at $20 per seat, up to 10 people in total.",
+            a: `Yes. The team leader can add seats from team settings at ${fmt(P.seat)} per seat, up to 10 people in total.`,
           },
           {
             q: "Can I move from Personal to Team later?",
@@ -725,7 +728,7 @@ export default function PricingContent({ isIndonesia }: Props) {
                     +
                   </button>
                 </div>
-                <span className="pricing-team-total">{copy.teamTotal(teamSize * TEAM_SEAT_PRICE)}</span>
+                <span className="pricing-team-total">{copy.teamTotal(teamSize * P.seat)}</span>
               </div>
               <Link href="/contact" className="pricing-contact-link pricing-team-more">
                 {copy.teamMore} →

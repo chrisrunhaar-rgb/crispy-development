@@ -7,6 +7,7 @@ import { switchCoach, setCoachingStyle, setCoachingIntensity } from "./actions";
 import SessionTypeSelector from "./SessionTypeSelector";
 import type { NotebookSession } from "./SessionNotebook";
 import { useT, type CoachLang } from "./i18n";
+import { PRICES, formatPrice, type Currency, type MinutePackId } from "@/lib/pricing";
 
 // ── Panel index constants (real panels) ─────────────────────────
 const PANEL_BG = 0;
@@ -39,18 +40,18 @@ const COACHES = [
   { name: "Ethan", image: "/images/coaches/ethan-portrait.jpg", descriptor: "Direct · Strategic · Action-oriented" },
 ];
 
-type MinutePackId = "1hr" | "3hr" | "5hr";
-
-const ADDONS: { label: string; minutes: number; usd: string; bestValue: boolean; packId: MinutePackId }[] = [
-  { label: "1 Hour", minutes: 60, usd: "$10", bestValue: false, packId: "1hr" },
-  { label: "3 Hours", minutes: 180, usd: "$25", bestValue: false, packId: "3hr" },
-  { label: "5 Hours", minutes: 300, usd: "$37", bestValue: true, packId: "5hr" },
+const ADDONS: { label: string; minutes: number; bestValue: boolean; packId: MinutePackId }[] = [
+  { label: "1 Hour", minutes: 60, bestValue: false, packId: "1hr" },
+  { label: "3 Hours", minutes: 180, bestValue: false, packId: "3hr" },
+  { label: "5 Hours", minutes: 300, bestValue: true, packId: "5hr" },
 ];
 
-// Minute packs are USD-only (see app/api/checkout/route.ts) — Chris confirmed
-// IDR/Indonesia checkout is dropped entirely, so always charge and display USD
-// here regardless of the viewer's stored `currency`, rather than showing an
-// IDR price that the actual Stripe Checkout session won't honor.
+// Shown price follows the same currency the checkout route charges in
+// (locked currency > IP country > USD), resolved on the server in page.tsx.
+function packPrice(currency: Currency, packId: MinutePackId) {
+  return formatPrice(currency, PRICES[currency].minutes[packId]);
+}
+
 async function purchaseMinutePack(packId: MinutePackId) {
   const res = await fetch("/api/checkout", {
     method: "POST",
@@ -102,7 +103,7 @@ export type CoachCarouselProps = {
   trialPct: number;
   sessions: NotebookSession[];
   profile: ProfileData;
-  currency: "idr" | "usd";
+  currency: Currency;
   lang: CoachLang;
   coachingStyle: "direct" | "relational";
   coachingIntensity: "firm" | "gentle";
@@ -296,10 +297,10 @@ function CoachPanel({
 
 // ── Panel: Minutes ───────────────────────────────────────────────
 function MinutesPanel({
-  trialPct, trialExhausted, trialRemainingMinutes, trialUsedMinutes, grantedMinutes, lang,
+  trialPct, trialExhausted, trialRemainingMinutes, trialUsedMinutes, grantedMinutes, currency, lang,
 }: {
   trialPct: number; trialExhausted: boolean; trialRemainingMinutes: number;
-  trialUsedMinutes: number; grantedMinutes: number; currency: "idr" | "usd"; lang: CoachLang;
+  trialUsedMinutes: number; grantedMinutes: number; currency: Currency; lang: CoachLang;
 }) {
   const s = useT(lang);
   const [pendingPack, setPendingPack] = useState<MinutePackId | null>(null);
@@ -404,7 +405,7 @@ function MinutesPanel({
                   </p>
                 </div>
                 <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "1.5rem", fontStyle: "italic", color: INK }}>
-                  {pkg.usd}
+                  {packPrice(currency, pkg.packId)}
                 </p>
               </button>
             );
@@ -941,7 +942,7 @@ export default function CoachCarousel({
                         {pkg.bestValue && <span style={{ color: ORANGE, marginRight: "0.3rem" }}>★</span>}
                         {lang === "id"
                           ? pkg.minutes === 60 ? "1 Jam" : pkg.minutes === 180 ? "3 Jam" : "5 Jam"
-                          : pkg.label} {isPending ? s.processing : pkg.usd}
+                          : pkg.label} {isPending ? s.processing : packPrice(currency, pkg.packId)}
                       </button>
                     );
                   })}

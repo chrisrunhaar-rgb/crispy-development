@@ -6,17 +6,17 @@ import { Eye, EyeOff } from "lucide-react";
 import { signUp } from "@/app/auth/actions";
 import { useLanguage } from "@/lib/LanguageContext";
 import { trackPathwayStarted } from "@/lib/ga-events";
+import { fillPrices, type Currency } from "@/lib/pricing";
 
 type Pathway = "personal" | "team";
 const initialState = { error: "" };
 
-// Must match TEAM_SIZE_KEY / seat price / limits in app/(marketing)/pricing/PricingContent.tsx.
+// Must match TEAM_SIZE_KEY / limits in app/(marketing)/pricing/PricingContent.tsx.
 const TEAM_SIZE_KEY = "pricing_team_size";
-const TEAM_SEAT_PRICE = 20;
 const MIN_TEAM = 2;
 const MAX_TEAM = 10;
 
-export default function SignupForm({ defaultPathway = "personal", inviteToken = "", memberInviteToken = "", initialLanguage, redirectTo = "", fromPricing = false }: { defaultPathway?: Pathway; inviteToken?: string; memberInviteToken?: string; initialLanguage?: "en" | "id"; redirectTo?: string; fromPricing?: boolean }) {
+export default function SignupForm({ defaultPathway = "personal", inviteToken = "", memberInviteToken = "", initialLanguage, redirectTo = "", fromPricing = false, currency = "usd" }: { currency?: Currency; defaultPathway?: Pathway; inviteToken?: string; memberInviteToken?: string; initialLanguage?: "en" | "id"; redirectTo?: string; fromPricing?: boolean }) {
   // The plan is chosen on /pricing and arrives via ?pathway=, so there's no picker here.
   const pathway = defaultPathway;
   const [showPassword, setShowPassword] = useState(false);
@@ -99,7 +99,7 @@ export default function SignupForm({ defaultPathway = "personal", inviteToken = 
                     {s.teamSummary.replace("{n}", String(teamSize))}
                   </p>
                   <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(52% 0.008 260)" }}>
-                    {s.teamSummaryNote.replace("{total}", String(teamSize * TEAM_SEAT_PRICE))}
+                    {fillPrices(s.teamSummaryNote.replace("{total}", `{team:${teamSize}}`), currency)}
                   </p>
                 </div>
                 <Link href="/pricing" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(30% 0.12 260)", fontWeight: 600, textDecoration: "none", flexShrink: 0 }}>

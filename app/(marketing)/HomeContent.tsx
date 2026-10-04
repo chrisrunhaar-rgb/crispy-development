@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import { createClient } from "@/lib/supabase/client";
+import { fillPrices } from "@/lib/pricing";
 
 export default function HomeContent() {
   const { t, lang } = useLanguage();
@@ -107,7 +108,7 @@ export default function HomeContent() {
           {(() => {
             const pathways = [
               { href: "/personal", image: "/pathway-team.jpg", imagePosition: "center 30%", badgeLabel: h.personalBadge, heading: h.personalHeading, body: h.personalBody, features: h.personalFeatures, ctaLabel: h.personalCta },
-              { href: "/team", image: "/pathway-personal.jpg", imagePosition: "center 25%", badgeLabel: h.teamBadge, heading: h.teamHeading, body: h.teamBody, features: h.teamFeatures, ctaLabel: h.teamCta },
+              { href: "/team", image: "/pathway-personal.jpg", imagePosition: "center 25%", badgeLabel: h.teamBadge, heading: h.teamHeading, body: fillPrices(h.teamBody, "usd"), features: h.teamFeatures, ctaLabel: h.teamCta },
             ];
             const active = activeTile !== null ? pathways[activeTile] : null;
             return (

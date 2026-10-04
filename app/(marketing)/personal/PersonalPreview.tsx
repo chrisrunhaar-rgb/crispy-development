@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ChevronDown, Lock, RotateCcw } from "lucide-react";
+import { fillPrices, type Currency } from "@/lib/pricing";
 
 /* ─────────────────────────────────────────────────────────────────────────────
    Personal Pathway promo page. Same structure and visual system as the Team
@@ -107,7 +108,7 @@ const COPY = {
     },
     cta: {
       title: "Start with one assessment and one module.",
-      body: "50+ modules, all eight assessments and your own dashboard, plus new content as it launches. $15 once, with permanent access. Nothing recurring, nothing to cancel.",
+      body: "50+ modules, all eight assessments and your own dashboard, plus new content as it launches. {personal} once, with permanent access. Nothing recurring, nothing to cancel.",
       button: "Get the Personal Pathway",
       team: "Leading a team?",
       teamButton: "Get the Team Pathway",
@@ -184,7 +185,7 @@ const COPY = {
     },
     cta: {
       title: "Mulailah dengan satu asesmen dan satu modul.",
-      body: "50+ modul, kedelapan asesmen, dan dasbor pribadi Anda, ditambah konten baru saat diluncurkan. $15 sekali bayar, dengan akses permanen. Tanpa biaya berulang, tanpa perlu membatalkan langganan.",
+      body: "50+ modul, kedelapan asesmen, dan dasbor pribadi Anda, ditambah konten baru saat diluncurkan. {personal} sekali bayar, dengan akses permanen. Tanpa biaya berulang, tanpa perlu membatalkan langganan.",
       button: "Dapatkan Jalur Pribadi",
       team: "Memimpin tim?",
       teamButton: "Dapatkan Jalur Tim",
@@ -382,7 +383,7 @@ function PrimaryLink({ href, children, orange = false, outline = false }: { href
 }
 
 /* ── Main ───────────────────────────────────────────────────────────────── */
-export default function PersonalPreview({ language, ctaHref = "/pricing" }: { language: string; ctaHref?: string }) {
+export default function PersonalPreview({ language, ctaHref = "/pricing", currency = "usd" }: { language: string; ctaHref?: string; currency?: Currency }) {
   const lang = language === "id" ? "id" : "en";
   const c = COPY[lang];
   const [open, setOpen] = useState<boolean[]>(() => c.modules.groups.map((_, i) => i === 0));
@@ -604,7 +605,7 @@ export default function PersonalPreview({ language, ctaHref = "/pricing" }: { la
       <section aria-labelledby="pp-cta-title" className="pp-cta" style={{ borderTop: `1px solid ${T.navy}`, paddingTop: "clamp(2.5rem, 5vw, 3.5rem)" }}>
         <h2 id="pp-cta-title" style={{ ...h2Style(), fontSize: "clamp(2.2rem, 4.6vw, 3.4rem)", lineHeight: 1.06 }}>{c.cta.title}</h2>
         <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem", alignItems: "flex-start" }}>
-          <p style={bodyStyle}>{c.cta.body}</p>
+          <p style={bodyStyle}>{fillPrices(c.cta.body, currency)}</p>
           <PrimaryLink href={ctaHref}>{c.cta.button}</PrimaryLink>
           <p style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: "1.35rem", lineHeight: 1.3, color: T.navy, margin: "0.5rem 0 0" }}>
             {c.cta.team}

@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ChevronDown, Eye, ImageIcon, RotateCcw } from "lucide-react";
 import { type TeamLang } from "@/lib/team-i18n";
+import { fillPrices, type Currency } from "@/lib/pricing";
 
 /* ─────────────────────────────────────────────────────────────────────────────
    SCREENSHOTS
@@ -116,7 +117,7 @@ const COPY = {
     },
     cta: {
       title: "Bring your whole team along.",
-      body: "Every person on your team gets a full Personal account: their own dashboard, the complete library of 50+ modules and all eight personal assessments.\n\nOn top of that, your team gets the Team Growth Journey, written for team development, to shape how your team works together and the culture you build.\n\nPersonal is $15. Team is $20 per person. The extra $5 adds the Team Growth Journey, the shared team results and your leader dashboard. For 2 to 10 people, paid once, with permanent access.",
+      body: "Every person on your team gets a full Personal account: their own dashboard, the complete library of 50+ modules and all eight personal assessments.\n\nOn top of that, your team gets the Team Growth Journey, written for team development, to shape how your team works together and the culture you build.\n\nPersonal is {personal}. Team is {seat} per person. The extra {diff} adds the Team Growth Journey, the shared team results and your leader dashboard. For 2 to 10 people, paid once, with permanent access.",
       button: "Set up your team",
     },
     caption: {
@@ -196,7 +197,7 @@ const COPY = {
     },
     cta: {
       title: "Ajak seluruh tim Anda bertumbuh bersama.",
-      body: "Setiap orang di tim Anda mendapat akun Personal lengkap: dasbor sendiri, seluruh perpustakaan berisi 50+ modul, dan kedelapan asesmen pribadi.\n\nSelain itu, tim Anda mendapat Perjalanan Pertumbuhan Tim, yang ditulis khusus untuk pengembangan tim, untuk membentuk cara tim Anda bekerja sama dan budaya yang Anda bangun.\n\nPersonal $15. Tim $20 per orang. Tambahan $5 itu memberi Perjalanan Pertumbuhan Tim, hasil tim bersama, dan dasbor pemimpin Anda. Untuk 2 sampai 10 orang, sekali bayar, dengan akses permanen.",
+      body: "Setiap orang di tim Anda mendapat akun Personal lengkap: dasbor sendiri, seluruh perpustakaan berisi 50+ modul, dan kedelapan asesmen pribadi.\n\nSelain itu, tim Anda mendapat Perjalanan Pertumbuhan Tim, yang ditulis khusus untuk pengembangan tim, untuk membentuk cara tim Anda bekerja sama dan budaya yang Anda bangun.\n\nPersonal {personal}. Tim {seat} per orang. Tambahan {diff} itu memberi Perjalanan Pertumbuhan Tim, hasil tim bersama, dan dasbor pemimpin Anda. Untuk 2 sampai 10 orang, sekali bayar, dengan akses permanen.",
       button: "Bangun tim Anda",
     },
     caption: {
@@ -420,7 +421,7 @@ function PrimaryLink({ href, children }: { href: string; children: ReactNode }) 
 }
 
 /* ── Main ───────────────────────────────────────────────────────────────── */
-export default function TeamPreviewDashboard({ language, ctaHref = "/pricing", asPage = false }: { language: string; ctaHref?: string; asPage?: boolean }) {
+export default function TeamPreviewDashboard({ language, ctaHref = "/pricing", asPage = false, currency = "usd" }: { language: string; ctaHref?: string; asPage?: boolean; currency?: Currency }) {
   const HeroTitle = asPage ? "h1" : "h2";
   const lang: TeamLang = language === "id" ? "id" : "en";
   const c = COPY[lang];
@@ -642,7 +643,7 @@ export default function TeamPreviewDashboard({ language, ctaHref = "/pricing", a
       <section aria-labelledby="tp-cta-title" className="tp-cta" style={{ borderTop: `1px solid ${T.navy}`, paddingTop: "clamp(2.5rem, 5vw, 3.5rem)" }}>
         <h2 id="tp-cta-title" style={{ ...h2Style(), fontSize: "clamp(2.2rem, 4.6vw, 3.4rem)", lineHeight: 1.06 }}>{c.cta.title}</h2>
         <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem", alignItems: "flex-start" }}>
-          {c.cta.body.split("\n\n").map((para) => (
+          {fillPrices(c.cta.body, currency).split("\n\n").map((para) => (
             <p key={para} style={bodyStyle}>{para}</p>
           ))}
           <PrimaryLink href={ctaHref}>{c.cta.button}</PrimaryLink>

@@ -7,6 +7,7 @@ import TeamAssessmentSelector from "../TeamAssessmentSelector";
 import { renameTeam, updateTeamMemberProfile, removeTeamMember } from "../team-actions";
 import { setTeamLanguage, generateInviteAndGetUrl, sendEmailInvite, deleteInviteLink } from "../actions";
 import { TEAM_UI } from "@/lib/team-i18n";
+import { PRICES, formatPrice, type Currency } from "@/lib/pricing";
 
 export type SlotMember = {
   id: string;
@@ -27,7 +28,6 @@ export type PendingInvite = {
 
 type Lang = "en" | "id";
 
-const SEAT_PRICE_USD = 20;
 const MAX_TEAM_SIZE = 10; // people, leader included
 
 const COPY = {
@@ -70,11 +70,11 @@ const COPY = {
     tenure: "Time on the team",
     removeConfirm: (name: string) => `Remove ${name} from the team?`,
     buySection: "Need more seats?",
-    buyHint: (left: number) => `Each extra seat is $20 and adds one open slot. A team can have up to 10 people, including you. You can add ${left} more.`,
+    buyHint: (left: number, seat: string) => `Each extra seat is ${seat} and adds one open slot. A team can have up to 10 people, including you. You can add ${left} more.`,
     teamFull: "Your team has reached the maximum of 10 people, including you.",
     contactMore: "Need a bigger team? Contact us",
     seats: (n: number) => `${n} seat${n === 1 ? "" : "s"}`,
-    buy: (n: number, price: number) => `Buy ${n} seat${n === 1 ? "" : "s"} · $${price}`,
+    buy: (n: number, price: string) => `Buy ${n} seat${n === 1 ? "" : "s"} · ${price}`,
     redirecting: "Opening checkout…",
     checkoutSuccess: "Thank you! Your new seats will appear here in a minute. Refresh the page if you don't see them yet.",
     genericError: "Something went wrong. Please try again.",
@@ -118,11 +118,11 @@ const COPY = {
     tenure: "Lama di tim",
     removeConfirm: (name: string) => `Hapus ${name} dari tim?`,
     buySection: "Butuh tempat tambahan?",
-    buyHint: (left: number) => `Setiap tempat tambahan seharga $20 dan menambah satu slot kosong. Satu tim bisa berisi hingga 10 orang, termasuk Anda. Anda masih bisa menambah ${left} lagi.`,
+    buyHint: (left: number, seat: string) => `Setiap tempat tambahan seharga ${seat} dan menambah satu slot kosong. Satu tim bisa berisi hingga 10 orang, termasuk Anda. Anda masih bisa menambah ${left} lagi.`,
     teamFull: "Tim Anda sudah mencapai batas 10 orang, termasuk Anda.",
     contactMore: "Butuh tim yang lebih besar? Hubungi kami",
     seats: (n: number) => `${n} tempat`,
-    buy: (n: number, price: number) => `Beli ${n} tempat · $${price}`,
+    buy: (n: number, price: string) => `Beli ${n} tempat · ${price}`,
     redirecting: "Membuka pembayaran…",
     checkoutSuccess: "Terima kasih! Tempat baru Anda akan muncul di sini dalam satu menit. Muat ulang halaman jika belum terlihat.",
     genericError: "Terjadi kesalahan. Silakan coba lagi.",
@@ -207,6 +207,7 @@ export default function TeamSettings({
   siteUrl,
   showIntro,
   checkoutSuccess,
+  currency,
 }: {
   team: { id: string; name: string; selectedAssessments: string[] };
   teamLanguage: Lang;
@@ -217,6 +218,7 @@ export default function TeamSettings({
   siteUrl: string;
   showIntro: boolean;
   checkoutSuccess: boolean;
+  currency: Currency;
 }) {
   const router = useRouter();
   const c = COPY[teamLanguage];
@@ -588,7 +590,7 @@ export default function TeamSettings({
         {/* ── Buy more seats ── */}
         <section style={cardStyle}>
           <p style={sectionLabel}>{c.buySection}</p>
-          <p style={hintStyle}>{seatsLeft > 0 ? c.buyHint(seatsLeft) : c.teamFull}</p>
+          <p style={hintStyle}>{seatsLeft > 0 ? c.buyHint(seatsLeft, formatPrice(currency, PRICES[currency].seat)) : c.teamFull}</p>
           {checkoutSuccess && (
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.85rem", color: "oklch(40% 0.12 145)", padding: "0.875rem 1rem", background: "oklch(95% 0.03 145)", border: "1px solid oklch(80% 0.06 145)", borderRadius: "6px", marginBottom: "1.25rem" }}>
               {c.checkoutSuccess}
@@ -604,7 +606,7 @@ export default function TeamSettings({
               <button type="button" aria-label="+" onClick={() => setSeatQty(q => Math.min(seatsLeft, q + 1))} style={stepBtn}>+</button>
             </div>
             <button type="button" className="btn-primary" onClick={buySeats} disabled={buying} style={{ fontSize: "0.85rem", opacity: buying ? 0.7 : 1 }}>
-              {buying ? c.redirecting : c.buy(Math.min(seatQty, seatsLeft), Math.min(seatQty, seatsLeft) * SEAT_PRICE_USD)}
+              {buying ? c.redirecting : c.buy(Math.min(seatQty, seatsLeft), formatPrice(currency, Math.min(seatQty, seatsLeft) * PRICES[currency].seat))}
             </button>
           </div>
           ) : (

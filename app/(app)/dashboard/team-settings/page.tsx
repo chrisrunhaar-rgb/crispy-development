@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import TeamSettings, { type SlotMember, type PendingInvite } from "./TeamSettings";
+import { resolveCurrency } from "@/lib/pricing-server";
 
 export const dynamic = "force-dynamic";
 
@@ -91,6 +92,7 @@ export default async function TeamSettingsPage({
       siteUrl={siteUrl}
       showIntro={showIntro}
       checkoutSuccess={checkout === "success"}
+      currency={await resolveCurrency(user.id)}
     />
   );
 }

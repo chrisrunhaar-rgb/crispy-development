@@ -1,5 +1,6 @@
 import SignupForm from "./SignupForm";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { resolveCurrency } from "@/lib/pricing-server";
 
 export const metadata = {
   title: "Create Account — Crispy Development",
@@ -51,6 +52,7 @@ export default async function SignupPage({
       initialLanguage={initialLanguage}
       redirectTo={redirectTo ?? ""}
       fromPricing={!!pathway && !invite && !member_invite}
+      currency={await resolveCurrency()}
     />
   );
 }

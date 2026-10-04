@@ -2,11 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { PRICES, formatPrice, toStripeAmount, type Currency, type MinutePackId } from "@/lib/pricing";
+import { resolveCurrency } from "@/lib/pricing-server";
 
 type Plan = "personal" | "team";
-type Currency = "usd" | "idr";
 type BillingPeriod = "monthly" | "annual";
-type MinutePackId = "1hr" | "3hr" | "5hr";
 // A team is 2 to 10 people, leader included. Bigger teams go through "contact us".
 const MIN_TEAM_SIZE = 2;
 const MAX_TEAM_SIZE = 10;
@@ -27,41 +27,40 @@ const PRICE_IDS: Record<Plan, Record<"monthly" | "annual", string>> = {
   },
 };
 
-// One-off coaching-minute packs — mode: "payment", not "subscription".
-// Pricing confirmed by Chris via Telegram msg 15604, 2026-09-17.
-const MINUTE_PACKS: Record<MinutePackId, { priceId: string; minutes: number }> = {
-  "1hr": { priceId: "price_1UGbuLEHeFAKCmjlj2wQNnue", minutes: 60 },
-  "3hr": { priceId: "price_1UGbuNEHeFAKCmjlOjwyDrEd", minutes: 180 },
-  "5hr": { priceId: "price_1UGbuOEHeFAKCmjl8FjtI5AZ", minutes: 300 },
+// One-time purchases are charged with price_data on the existing Stripe
+// Products, in the buyer's currency, with amounts from lib/pricing.ts (prices
+// set by Chris 2026-10-04). The server picks the currency (locked currency >
+// IP country > USD), so the browser can't choose a cheaper one.
+// Product IDs are not secrets. Their old USD Prices are no longer used here.
+const PRODUCTS = {
+  personal: "prod_VJSQGIYlS50ZwZ", // Personal, permanent access
+  seat: "prod_VKxGwmNAxaj8GO", // Team seat (also seat top-ups + Personal->Team upgrade)
+} as const;
+
+// One-off coaching-minute packs.
+const MINUTE_PACKS: Record<MinutePackId, { productId: string; minutes: number }> = {
+  "1hr": { productId: "prod_VHAEGbmRpsWReQ", minutes: 60 },
+  "3hr": { productId: "prod_VHAEDrKGamJ1cp", minutes: 180 },
+  "5hr": { productId: "prod_VHAEEefJ5TovIn", minutes: 300 },
 };
 
-// One-time lifetime-access purchases — mode: "payment", replaces the
-// recurring Personal/Team subscription on the pricing page. USD-only, no
-// IDR equivalent exists for these prices. Confirmed live/active via Stripe
-// MCP before wiring, per Chris's approved spec, 2026-09-24.
-const LIFETIME_PRICE_IDS: Record<Plan, string> = {
-  personal: "price_1UIpVjEHeFAKCmjlRYPEMscj",
-  team: "price_1UIpVnEHeFAKCmjl5v9NUu4G", // retired $80 bundle, no longer sold
-};
+function priceData(currency: Currency, product: string, amount: number) {
+  return { currency, product, unit_amount: toStripeAmount(amount) };
+}
 
-// Team seat: $20 one-off per person, bought by quantity. Replaces the $80
-// bundle and is also used for seat top-ups. Chris approved 2026-09-27 (msg 16948).
-const TEAM_SEAT_PRICE_ID = "price_1UKHMOEHeFAKCmjlkWRaJ2Pk";
-
-// Personal -> Team upgrade: someone who already paid $15 for Personal pays
-// only the $5 difference for their own seat; every other person stays $20.
-// Same product as the seat so it reads as a team seat on the invoice.
-// Chris requested 2026-10-02 (Telegram msg 17577).
-const TEAM_SEAT_PRODUCT_ID = "prod_VKxGwmNAxaj8GO";
-const UPGRADE_SEAT_AMOUNT = 500; // cents: $20 seat - $15 Personal already paid
+// Non-USD sessions are already in the buyer's own currency, so Stripe's
+// Adaptive Pricing (live-rate conversion to a local currency) stays off for
+// them. USD sessions keep the account default.
+function adaptive(currency: Currency) {
+  return currency === "usd" ? {} : { adaptive_pricing: { enabled: false } };
+}
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://crispyleaders.com";
 
 export async function POST(req: NextRequest) {
   const body = await req.json().catch(() => null);
-  const { plan, currency, billingPeriod, type, packId, quantity } = (body ?? {}) as {
+  const { plan, billingPeriod, type, packId, quantity } = (body ?? {}) as {
     plan?: Plan;
-    currency?: Currency;
     billingPeriod?: BillingPeriod;
     type?: "subscription" | "minute_pack" | "lifetime" | "seat";
     packId?: MinutePackId;
@@ -82,18 +81,21 @@ export async function POST(req: NextRequest) {
   const stripe = new Stripe(restrictedKey, { apiVersion: "2026-08-26.dahlia" });
   const admin = createAdminClient();
   const customerId = await getOrCreateCustomer(stripe, admin, user);
+  const cur = await resolveCurrency(user.id);
+  const prices = PRICES[cur];
 
   if (type === "minute_pack") {
     if (!packId || !(packId in MINUTE_PACKS)) {
       return NextResponse.json({ error: "invalid_pack", checkoutUrl: null }, { status: 400 });
     }
-    const { priceId, minutes } = MINUTE_PACKS[packId];
+    const { productId, minutes } = MINUTE_PACKS[packId];
 
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       customer: customerId,
       client_reference_id: user.id,
-      line_items: [{ price: priceId, quantity: 1 }],
+      line_items: [{ price_data: priceData(cur, productId, prices.minutes[packId]), quantity: 1 }],
+      ...adaptive(cur),
       billing_address_collection: "required",
       managed_payments: { enabled: false },
       // Generates a real Stripe Invoice for this one-off purchase (not just a
@@ -118,17 +120,20 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "invalid_quantity", checkoutUrl: null }, { status: 400 });
     }
     const upgrade = plan === "team" && (await hasPaidPersonal(stripe, admin, user.id, customerId));
+    // Personal -> Team upgrade: someone who already paid for Personal pays
+    // only the difference for their own seat; every other person pays the
+    // full seat price. Same currency both times thanks to the currency lock.
+    // Chris requested 2026-10-02 (Telegram msg 17577).
+    const seatItem = (qty: number) => ({ price_data: priceData(cur, PRODUCTS.seat, prices.seat), quantity: qty });
     const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = plan !== "team"
-      ? [{ price: LIFETIME_PRICE_IDS.personal, quantity: 1 }]
+      ? [{ price_data: priceData(cur, PRODUCTS.personal, prices.personal), quantity: 1 }]
       : upgrade
         ? [
-            {
-              price_data: { currency: "usd", product: TEAM_SEAT_PRODUCT_ID, unit_amount: UPGRADE_SEAT_AMOUNT },
-              quantity: 1,
-            },
-            { price: TEAM_SEAT_PRICE_ID, quantity: teamSize - 1 },
+            { price_data: priceData(cur, PRODUCTS.seat, prices.seat - prices.personal), quantity: 1 },
+            seatItem(teamSize - 1),
           ]
-        : [{ price: TEAM_SEAT_PRICE_ID, quantity: teamSize }];
+        : [seatItem(teamSize)];
+    const fmt = (n: number) => formatPrice(cur, n);
 
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
@@ -139,11 +144,12 @@ export async function POST(req: NextRequest) {
         ? {
             custom_text: {
               submit: {
-                message: "You already own Personal, so your own seat is $5 (the $15 you paid counts). Each other person is $20.",
+                message: `You already own Personal, so your own seat is ${fmt(prices.seat - prices.personal)} (the ${fmt(prices.personal)} you paid counts). Each other person is ${fmt(prices.seat)}.`,
               },
             },
           }
         : {}),
+      ...adaptive(cur),
       billing_address_collection: "required",
       // Same Managed Payments workaround as the subscription/minute_pack
       // flows above — our Products don't carry a tax_code, so it 400s
@@ -191,7 +197,8 @@ export async function POST(req: NextRequest) {
       mode: "payment",
       customer: customerId,
       client_reference_id: user.id,
-      line_items: [{ price: TEAM_SEAT_PRICE_ID, quantity: seatCount }],
+      line_items: [{ price_data: priceData(cur, PRODUCTS.seat, prices.seat), quantity: seatCount }],
+      ...adaptive(cur),
       billing_address_collection: "required",
       managed_payments: { enabled: false },
       invoice_creation: { enabled: true },
@@ -213,11 +220,6 @@ export async function POST(req: NextRequest) {
   }
   if (!billingPeriod || !["monthly", "annual"].includes(billingPeriod)) {
     return NextResponse.json({ error: "invalid_billing_period", checkoutUrl: null }, { status: 400 });
-  }
-
-  // Indonesia/IDR checkout is explicitly parked (step 8) — not built yet.
-  if (currency === "idr") {
-    return NextResponse.json({ error: "not_available", checkoutUrl: null }, { status: 400 });
   }
 
   const priceId = PRICE_IDS[plan][billingPeriod];

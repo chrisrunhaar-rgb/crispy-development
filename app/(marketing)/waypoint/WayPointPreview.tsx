@@ -5,6 +5,7 @@ import { useLanguage } from "@/lib/LanguageContext";
 import {
   T, SERIF, SANS, KIT_CSS, Eyebrow, h2Style, bodyStyle, PrimaryLink, TextLink,
 } from "@/components/promo/PromoKit";
+import { fillPrices, type Currency } from "@/lib/pricing";
 
 /* ─────────────────────────────────────────────────────────────────────────────
    WayPoint page. Same light visual system as the home and pathway pages,
@@ -53,9 +54,9 @@ const COPY = {
       priceLabel: "Coaching hours",
       priceNote: "Buy hours once and use them whenever you like. No subscription.",
       prices: [
-        { hours: "1 hour", price: "$10", note: "" },
-        { hours: "3 hours", price: "$25", note: "" },
-        { hours: "5 hours", price: "$37", note: "Best value" },
+        { hours: "1 hour", price: "{1hr}", note: "" },
+        { hours: "3 hours", price: "{3hr}", note: "" },
+        { hours: "5 hours", price: "{5hr}", note: "Best value" },
       ],
     },
     mark: {
@@ -119,9 +120,9 @@ const COPY = {
       priceLabel: "Jam coaching",
       priceNote: "Beli jam sekali dan gunakan kapan saja. Tanpa langganan.",
       prices: [
-        { hours: "1 jam", price: "$10", note: "" },
-        { hours: "3 jam", price: "$25", note: "" },
-        { hours: "5 jam", price: "$37", note: "Paling hemat" },
+        { hours: "1 jam", price: "{1hr}", note: "" },
+        { hours: "3 jam", price: "{3hr}", note: "" },
+        { hours: "5 jam", price: "{5hr}", note: "Paling hemat" },
       ],
     },
     mark: {
@@ -164,7 +165,7 @@ const CSS = `
 }
 `;
 
-export default function WayPointPreview({ isLoggedIn }: { isLoggedIn: boolean }) {
+export default function WayPointPreview({ isLoggedIn, currency }: { isLoggedIn: boolean; currency: Currency }) {
   const { lang: rawLang } = useLanguage();
   const lang = rawLang === "id" ? "id" : "en";
   const c = COPY[lang];
@@ -271,13 +272,19 @@ export default function WayPointPreview({ isLoggedIn }: { isLoggedIn: boolean })
           <div style={{ border: `1px solid ${T.rule}`, borderTop: `3px solid ${T.orange}`, borderRadius: 2, padding: "clamp(1.5rem, 3vw, 2.25rem)", display: "flex", flexDirection: "column", gap: "1.25rem", background: T.offWhite }}>
             <h3 style={{ margin: 0, fontFamily: SANS, fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: T.muted }}>{c.how.priceLabel}</h3>
             <div className="wpp-prices">
-              {c.how.prices.map(p => (
-                <div key={p.hours} style={{ display: "flex", flexDirection: "column", gap: "0.35rem", padding: "1rem 0.75rem", border: `1px solid ${p.note ? T.orange : T.rule}`, borderRadius: 2, textAlign: "center" }}>
-                  <span style={{ fontFamily: SERIF, fontStyle: "italic", fontWeight: 500, fontSize: "clamp(1.9rem, 4vw, 2.4rem)", lineHeight: 1, color: T.navy }}>{p.price}</span>
+              {c.how.prices.map(p => {
+                const price = fillPrices(p.price, currency);
+                // Long prices ("Rp 130.000", "₹1,350") get a smaller size so
+                // they fit the three narrow columns on a phone.
+                const size = price.length > 7 ? "clamp(1.15rem, 2.4vw, 1.6rem)" : price.length > 5 ? "clamp(1.5rem, 3vw, 2rem)" : "clamp(1.9rem, 4vw, 2.4rem)";
+                return (
+                <div key={p.hours} style={{ display: "flex", flexDirection: "column", gap: "0.35rem", padding: "1rem 0.75rem", border: `1px solid ${p.note ? T.orange : T.rule}`, borderRadius: 2, textAlign: "center", minWidth: 0 }}>
+                  <span style={{ fontFamily: SERIF, fontStyle: "italic", fontWeight: 500, fontSize: size, lineHeight: 1, color: T.navy }}>{price}</span>
                   <span style={{ fontFamily: SANS, fontSize: "0.8rem", fontWeight: 600, color: T.body }}>{p.hours}</span>
                   {p.note && <span style={{ fontFamily: SANS, fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: T.orangeDeep }}>{p.note}</span>}
                 </div>
-              ))}
+                );
+              })}
             </div>
             <p style={{ ...bodyStyle, fontSize: "0.88rem" }}>{c.how.priceNote}</p>
             <div>

@@ -22,6 +22,7 @@ import GaEventTracker from "@/components/GaEventTracker";
 import { TEAM_UI, type TeamLang } from "@/lib/team-i18n";
 import AdminReplyNotification from "@/components/AdminReplyNotification";
 import RaftPlanTile from "@/components/RaftPlanTile";
+import { resolveCurrency } from "@/lib/pricing-server";
 
 export const metadata = {
   title: "Dashboard — Crispy Development",
@@ -676,7 +677,7 @@ export default async function DashboardPage({
         )}
 
         {currentTab === "team" && !isTeamLeader && !memberOfTeam && (
-          <TeamPreviewDashboard language={languagePreference} />
+          <TeamPreviewDashboard language={languagePreference} currency={await resolveCurrency(user.id)} />
         )}
 
         {currentTab === "team" && !isTeamLeader && memberOfTeam && (

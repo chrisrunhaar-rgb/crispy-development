@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
 import WayPointPreview from "./WayPointPreview";
+import { resolveCurrency } from "@/lib/pricing-server";
 
 export const metadata: Metadata = {
   title: "WayPoint: AI Voice Coaching for Cross-Cultural Leaders | Crispy Development",
@@ -14,5 +15,5 @@ export default async function WayPointPage() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  return <WayPointPreview isLoggedIn={!!user} />;
+  return <WayPointPreview isLoggedIn={!!user} currency={await resolveCurrency(user?.id)} />;
 }

@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { resolveCurrency } from "@/lib/pricing-server";
 import PersonalContent from "./PersonalContent";
 
 export const metadata = {
@@ -24,5 +25,5 @@ export default async function PersonalPathwayPage() {
     if (membership || teamMember || teamLeader) ctaHref = "/dashboard";
   }
 
-  return <PersonalContent ctaHref={ctaHref} />;
+  return <PersonalContent ctaHref={ctaHref} currency={await resolveCurrency(user?.id)} />;
 }

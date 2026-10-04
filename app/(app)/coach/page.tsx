@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import CoachCarousel from "./CoachCarousel";
+import { resolveCurrency } from "@/lib/pricing-server";
 
 export const dynamic = "force-dynamic";
 
@@ -71,8 +72,7 @@ export default async function CoachPage({
     .limit(10);
 
   const completedSessions = sessions ?? [];
-  const currency: "idr" | "usd" =
-    membership?.currency === "idr" ? "idr" : "usd";
+  const currency = await resolveCurrency(user.id);
   const lang: "en" | "id" =
     user.user_metadata?.language_preference === "id" ? "id" : "en";
 

@@ -1,4 +1,6 @@
 import PricingContent from "./PricingContent";
+import { createClient } from "@/lib/supabase/server";
+import { resolveCurrency } from "@/lib/pricing-server";
 
 export const metadata = {
   title: "Pricing — Crispy Leaders",
@@ -7,7 +9,9 @@ export const metadata = {
 };
 
 export default async function PricingPage() {
-  // IDR pricing paused 2026-09-17 (Chris: Xendit ruled out, no other Indonesia
-  // payment rail confirmed) — show USD pricing to all visitors for now.
-  return <PricingContent isIndonesia={false} />;
+  // Same currency the checkout will charge: a signed-in buyer's locked
+  // currency first, otherwise the visitor's IP country, otherwise USD.
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  return <PricingContent currency={await resolveCurrency(user?.id)} />;
 }

@@ -9,6 +9,7 @@ import {
 } from "@/app/(app)/dashboard/team-actions";
 import { generateInviteAndGetUrl, setTeamLanguage } from "@/app/(app)/dashboard/actions";
 import { TEAM_UI, type TeamLang } from "@/lib/team-i18n";
+import { PRICES, formatPrice, type Currency } from "@/lib/pricing";
 
 export type RosterMember = {
   id: string;
@@ -23,7 +24,6 @@ function r(lang: Lang): TeamLang { return lang === "id" ? "id" : "en"; }
 
 // leaderName falls back to "[LEADER_NAME]" if missing, so a bad data state is
 // obvious rather than silently reading as generic.
-const SEAT_PRICE_USD = 20;
 const MAX_TEAM_SIZE = 10; // people, leader included
 
 const SHARE_COPY: Record<Lang, (leaderName: string | undefined, teamName: string, url: string) => { title: string; text: string; whatsapp: string }> = {
@@ -57,6 +57,7 @@ export default function TeamRoster({
   language = "en",
   currentLanguage,
   settingsHref,
+  currency = "usd",
 }: {
   settingsHref?: string;
   teamId: string;
@@ -67,6 +68,7 @@ export default function TeamRoster({
   maxSeats?: number;
   language?: Lang;
   currentLanguage?: "en" | "id";
+  currency?: Currency;
 }) {
   const [members, setMembers] = useState<RosterMember[]>(initialMembers);
   const [membersOpen, setMembersOpen] = useState(false);
@@ -173,8 +175,10 @@ export default function TeamRoster({
 
   const totalCount = (leaderName ? 1 : 0) + members.length;
   const isFull = members.length >= maxSeats;
-  // Seat top-ups: $20 each, team capped at 10 people (leader + 9 member seats).
-  // Must match SEAT_PRICE_USD / MAX_TEAM_SIZE in team-settings/TeamSettings.tsx and api/checkout.
+  // Seat top-ups: PRICES[currency].seat each (lib/pricing.ts), team capped at
+  // 10 people (leader + 9 member seats). Must match MAX_TEAM_SIZE in
+  // team-settings/TeamSettings.tsx and api/checkout.
+  const seatFmt = (n: number) => formatPrice(currency, n * PRICES[currency].seat);
   const seatsLeft = Math.max(0, MAX_TEAM_SIZE - 1 - maxSeats);
   const buyQty = Math.min(seatQty, Math.max(1, seatsLeft));
 
@@ -335,8 +339,8 @@ export default function TeamRoster({
                     {seatStatus === "loading"
                       ? (language === "id" ? "Memuat…" : "Loading…")
                       : (language === "id"
-                        ? `+ Tambah ${buyQty} Kursi, $${buyQty * SEAT_PRICE_USD} ($${SEAT_PRICE_USD} per kursi)`
-                        : `+ Add ${buyQty} Seat${buyQty > 1 ? "s" : ""}, $${buyQty * SEAT_PRICE_USD} ($${SEAT_PRICE_USD} each)`)}
+                        ? `+ Tambah ${buyQty} Kursi, ${seatFmt(buyQty)} (${seatFmt(1)} per kursi)`
+                        : `+ Add ${buyQty} Seat${buyQty > 1 ? "s" : ""}, ${seatFmt(buyQty)} (${seatFmt(1)} each)`)}
                   </button>
                 </div>
               )) : (

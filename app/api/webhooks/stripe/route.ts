@@ -74,8 +74,41 @@ export async function POST(req: NextRequest) {
 
 type AdminClient = ReturnType<typeof createAdminClient>;
 
+// Currency lock (Chris, Telegram 17711): the currency of someone's first paid
+// purchase becomes theirs for every later purchase (minutes, seats, upgrade).
+// Only set while memberships.currency is still null, so it never changes once
+// locked. billing_country is refreshed on every purchase for the quarterly
+// sales-by-country VAT check.
+async function recordPaymentCurrencyAndCountry(
+  admin: AdminClient,
+  userId: string,
+  session: Stripe.Checkout.Session,
+) {
+  const billingCountry = session.customer_details?.address?.country ?? null;
+  const { error: upsertError } = await admin
+    .from("memberships")
+    .upsert(
+      { user_id: userId, ...(billingCountry ? { billing_country: billingCountry } : {}) },
+      { onConflict: "user_id" },
+    );
+  if (upsertError) console.error("billing_country save failed", session.id, upsertError);
+
+  if (session.currency) {
+    const { error } = await admin
+      .from("memberships")
+      .update({ currency: session.currency })
+      .eq("user_id", userId)
+      .is("currency", null);
+    if (error) console.error("currency lock failed", session.id, error);
+  }
+}
+
 async function handleCheckoutCompleted(admin: AdminClient, session: Stripe.Checkout.Session) {
   const userId = session.client_reference_id ?? session.metadata?.user_id;
+
+  if (session.mode === "payment" && session.payment_status === "paid" && userId) {
+    await recordPaymentCurrencyAndCountry(admin, userId, session);
+  }
 
   // One-off coaching-minute pack purchase — separate from the subscription
   // flow below. Must ADD to coach_minutes_granted, never overwrite it, or a

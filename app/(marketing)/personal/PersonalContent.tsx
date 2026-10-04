@@ -2,12 +2,13 @@
 
 import { useLanguage } from "@/lib/LanguageContext";
 import PersonalPreview from "./PersonalPreview";
+import type { Currency } from "@/lib/pricing";
 
-export default function PersonalContent({ ctaHref = "/pricing" }: { ctaHref?: string }) {
+export default function PersonalContent({ ctaHref = "/pricing", currency }: { ctaHref?: string; currency: Currency }) {
   const { lang } = useLanguage();
   return (
     <div className="container-wide" style={{ paddingBlock: "clamp(3rem, 7vw, 5.5rem)" }}>
-      <PersonalPreview language={lang} ctaHref={ctaHref} />
+      <PersonalPreview language={lang} ctaHref={ctaHref} currency={currency} />
     </div>
   );
 }
