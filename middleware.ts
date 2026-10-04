@@ -1,7 +1,25 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
+// Paths that need the auth checks below. Everything else only gets the
+// first-visit language default.
+const AUTH_PATHS = /^\/(dashboard|community|admin|account|login$|signup$|welcome$|peer-groups\/apply|resources\/.+|courses\/.+)/;
+
+// First visit from Indonesia (Vercel's IP country header) with no language
+// chosen yet: default to Indonesian. Any later choice overwrites the cookie,
+// and logged-in users keep the language saved on their account.
+const GEO_LANG_COOKIE = { path: "/", maxAge: 31536000, sameSite: "lax" } as const;
+
 export async function middleware(request: NextRequest) {
+  const geoLang = !request.cookies.has("crispy-lang") && request.headers.get("x-vercel-ip-country") === "ID";
+  if (geoLang) request.cookies.set("crispy-lang", "id");
+
+  if (!AUTH_PATHS.test(request.nextUrl.pathname)) {
+    const res = NextResponse.next({ request });
+    if (geoLang) res.cookies.set("crispy-lang", "id", GEO_LANG_COOKIE);
+    return res;
+  }
+
   // Pass through cleanly if Supabase is not yet configured
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
     return NextResponse.next({ request });
@@ -118,9 +136,12 @@ export async function middleware(request: NextRequest) {
     }
   }
 
+  if (geoLang) supabaseResponse.cookies.set("crispy-lang", "id", GEO_LANG_COOKIE);
   return supabaseResponse;
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/community/:path*", "/community", "/login", "/signup", "/peer-groups/apply", "/admin", "/admin/:path*", "/resources/:path+", "/account/:path*", "/welcome", "/courses/:path+"],
+  // All pages (the language default applies everywhere); skip API routes,
+  // Next internals and static files.
+  matcher: ["/((?!api|_next/static|_next/image|.*\\..*).*)"],
 };
