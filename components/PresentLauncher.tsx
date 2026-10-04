@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useId, useState } from "react";
 import Link from "next/link";
 
 // Small slideshow launcher. Pass it to <LangToggle extra={...} /> so it sits
@@ -42,29 +42,42 @@ export default function PresentLauncher({ href, lang, title, text }: { href: str
         </div>
       </div>
 
-      {smallScreen && (
-        <div role="dialog" aria-modal="true" aria-labelledby="present-small-title" onClick={() => setSmallScreen(false)}
-          style={{ position: "fixed", inset: 0, zIndex: 1000, background: "oklch(14% 0.05 260 / 0.6)", display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}>
-          <div onClick={e => e.stopPropagation()}
-            style={{ background: "oklch(99.5% 0.002 80)", borderRadius: 16, padding: "28px 24px", maxWidth: 340, textAlign: "center", boxShadow: "0 20px 60px oklch(0% 0 0 / 0.3)", fontFamily: "Montserrat, sans-serif" }}>
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke={amber} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ display: "block", margin: "0 auto 14px" }}>
-              <rect x="3" y="4" width="18" height="12" rx="2" /><path d="M12 16v4M8 20h8" />
-            </svg>
-            <p id="present-small-title" style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 24, fontWeight: 600, color: navy, margin: "0 0 8px", lineHeight: 1.2 }}>
-              {lang === "id" ? "Butuh layar yang lebih besar" : "A bigger screen is needed"}
-            </p>
-            <p style={{ fontSize: 14, lineHeight: 1.6, color: subText, margin: "0 0 20px" }}>
-              {lang === "id"
-                ? "Mode presentasi berfungsi di tablet atau komputer. Buka modul ini di sana untuk menampilkan slide."
-                : "Presentation mode works on a tablet or computer. Open this module there to show the slides."}
-            </p>
-            <button type="button" onClick={() => setSmallScreen(false)} autoFocus
-              style={{ minHeight: 44, padding: "0 24px", borderRadius: 8, border: "none", background: navy, color: "oklch(99.5% 0.002 80)", fontWeight: 700, fontSize: 14, cursor: "pointer", fontFamily: "Montserrat, sans-serif" }}>
-              OK
-            </button>
-          </div>
-        </div>
-      )}
+      {smallScreen && <PresentSmallScreenNotice lang={lang} onClose={() => setSmallScreen(false)} />}
     </>
+  );
+}
+
+// "A bigger screen is needed" notice for phones. Shared with the dashboard
+// ResourceCard so the copy lives in one place.
+export function PresentSmallScreenNotice({ lang, onClose }: { lang: Lang; onClose: () => void }) {
+  const titleId = useId();
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
+
+  return (
+    <div role="dialog" aria-modal="true" aria-labelledby={titleId} onClick={onClose}
+      style={{ position: "fixed", inset: 0, zIndex: 1000, background: "oklch(14% 0.05 260 / 0.6)", display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}>
+      <div onClick={e => e.stopPropagation()}
+        style={{ background: "oklch(99.5% 0.002 80)", borderRadius: 16, padding: "28px 24px", maxWidth: 340, textAlign: "center", boxShadow: "0 20px 60px oklch(0% 0 0 / 0.3)", fontFamily: "Montserrat, sans-serif" }}>
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke={amber} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ display: "block", margin: "0 auto 14px" }}>
+          <rect x="3" y="4" width="18" height="12" rx="2" /><path d="M12 16v4M8 20h8" />
+        </svg>
+        <p id={titleId} style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 24, fontWeight: 600, color: navy, margin: "0 0 8px", lineHeight: 1.2 }}>
+          {lang === "id" ? "Butuh layar yang lebih besar" : "A bigger screen is needed"}
+        </p>
+        <p style={{ fontSize: 14, lineHeight: 1.6, color: subText, margin: "0 0 20px" }}>
+          {lang === "id"
+            ? "Mode presentasi berfungsi di tablet atau komputer. Buka modul ini di sana untuk menampilkan slide."
+            : "Presentation mode works on a tablet or computer. Open this module there to show the slides."}
+        </p>
+        <button type="button" onClick={onClose} autoFocus
+          style={{ minHeight: 44, padding: "0 24px", borderRadius: 8, border: "none", background: navy, color: "oklch(99.5% 0.002 80)", fontWeight: 700, fontSize: 14, cursor: "pointer", fontFamily: "Montserrat, sans-serif" }}>
+          OK
+        </button>
+      </div>
+    </div>
   );
 }

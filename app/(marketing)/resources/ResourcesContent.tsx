@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/lib/LanguageContext";
 import { RESOURCES, Resource } from "@/lib/resources-data";
+import { SLIDESHOW_SLUGS } from "@/lib/slideshow-slugs";
 import { saveResourceToDashboard } from "./actions";
 import { trackResourceSaved } from "@/lib/ga-events";
 import { T, SERIF, SANS, KIT_CSS, Eyebrow, h2Style, bodyStyle, PrimaryLink, TextLink } from "@/components/promo/PromoKit";
@@ -92,17 +93,6 @@ function getLibraryCategory(
   if (resource.format === "Assessment") return "assessments";
   return resource.topics[0] ?? "personal-development";
 }
-
-// Modules with a presenter slideshow at /resources/<slug>/present
-const SLIDESHOW_SLUGS = new Set([
-  "fixed-growth-mindset",
-  "four-stages-competence",
-  "healthy-conflict",
-  "johari-window",
-  "model-assist-watch-launch",
-  "six-thinking-hats",
-  "vision-casting",
-]);
 
 function ResourceTile({
   resource,
