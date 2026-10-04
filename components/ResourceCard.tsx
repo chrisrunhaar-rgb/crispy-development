@@ -33,7 +33,10 @@ const ShareIcon = ({ size }: { size?: number }) => <Icon size={size}><path d="M8
 const CheckIcon = ({ size }: { size?: number }) => <Icon size={size}><path d="M5 12.5l4.5 4.5L19 7.5" /></Icon>;
 
 const CSS = `
-.rc-head { position: relative; display: flex; flex-wrap: wrap; align-items: center; column-gap: 1rem; row-gap: 0.25rem; padding-block: 0.875rem; }
+.rc-card { border: 1px solid oklch(88% 0.008 80); border-radius: 8px; background: oklch(99.5% 0.002 80); overflow: hidden; }
+.rc-card + .rc-card { margin-top: 0.75rem; }
+.rc-head { padding-inline: 1rem;
+  position: relative; display: flex; flex-wrap: wrap; align-items: center; column-gap: 1rem; row-gap: 0.25rem; padding-block: 0.875rem; }
 .rc-main { flex: 1 1 13.5rem; min-width: 0; display: flex; flex-direction: column; gap: 0.2rem; text-decoration: none; color: inherit; }
 .rc-main::after { content: ""; position: absolute; inset: 0; }
 .rc-main:focus-visible { outline: none; }
@@ -63,7 +66,7 @@ const CSS = `
 
 .rc-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.32s cubic-bezier(0.16, 1, 0.3, 1); }
 .rc-panel[data-open="true"] { grid-template-rows: 1fr; }
-.rc-panel-inner { min-height: 0; overflow: hidden; }
+.rc-panel-inner { min-height: 0; overflow: hidden; padding-inline: 1rem; }
 
 .rc-btn { min-height: 44px; display: inline-flex; align-items: center; gap: 0.5rem; padding: 0 0.875rem; font-family: var(--font-montserrat), Montserrat, sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; background: transparent; cursor: pointer; transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease; }
 .rc-btn:focus-visible { outline: 2px solid oklch(30% 0.12 260); outline-offset: 2px; }
@@ -181,8 +184,19 @@ export default function ResourceCard({
   }
 
   return (
-    <div style={{ borderTop: "1px solid oklch(88% 0.008 80)" }}>
+    <div className="rc-card">
       <style href="resource-card" precedence="default">{CSS}</style>
+
+      {/* Green progress bar: sits on the top edge so it reads as part of this card */}
+      <div style={{ height: "3px", background: "oklch(92% 0.005 80)" }}>
+        <div style={{
+          height: "100%",
+          width: `${progressPct}%`,
+          background: "oklch(55% 0.15 145)",
+          transition: "width 0.4s ease",
+        }} />
+      </div>
+
 
       {/* Header: the title link is stretched over the whole row, the actions sit above it */}
       <div className="rc-head" style={{ "--rc-slot": slot } as CSSProperties}>
@@ -242,20 +256,10 @@ export default function ResourceCard({
         <span className="rc-sr" aria-live="polite">{copied ? (id ? "Tautan disalin" : "Link copied") : ""}</span>
       </div>
 
-      {/* Green progress bar */}
-      <div style={{ height: "3px", background: "oklch(92% 0.005 80)" }}>
-        <div style={{
-          height: "100%",
-          width: `${progressPct}%`,
-          background: "oklch(55% 0.15 145)",
-          transition: "width 0.4s ease",
-        }} />
-      </div>
-
       {/* Expandable detail section */}
       <div id={panelId} className="rc-panel" data-open={expanded} inert={!expanded}>
         <div className="rc-panel-inner">
-          <div style={{ paddingBlock: "1.25rem", display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+          <div style={{ paddingBlock: "1.25rem", borderTop: "1px solid oklch(92% 0.005 80)", display: "flex", flexDirection: "column", gap: "1.25rem" }}>
 
             {/* Mark as read */}
             <div>
