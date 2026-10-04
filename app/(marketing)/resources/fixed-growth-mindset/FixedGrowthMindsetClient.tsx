@@ -24,7 +24,7 @@ const DIM_LABELS: Record<string, { en: string; id: string }> = {
   "Challenges":        { en: "Challenges",             id: "Tantangan" },
   "Skills":            { en: "Skills",                 id: "Keterampilan" },
   "Obstacles":         { en: "Obstacles",              id: "Hambatan" },
-  "Success of Others": { en: "Success of Others",      id: "Kesuksesan Orang Lain" },
+  "Success of Others": { en: "Success of Others",      id: "Keberhasilan Orang Lain" },
   "Effort":            { en: "Effort",                 id: "Usaha" },
 };
 
@@ -52,7 +52,7 @@ const QUESTIONS = [
   {
     dim: "Skills",
     en: "I believe most skills can be developed with consistent practice — intelligence and talent are starting points, not limits.",
-    id: "Saya percaya bahwa sebagian besar keterampilan dapat dikembangkan dengan latihan yang konsisten — kecerdasan dan bakat adalah titik awal, bukan batasan.",
+    id: "Saya percaya bahwa sebagian besar keterampilan dapat dikembangkan dengan latihan yang konsisten. Kecerdasan dan bakat adalah titik awal, bukan batasan.",
     type: "growth" as const,
   },
   {
@@ -96,7 +96,7 @@ const QUESTIONS = [
   {
     dim: "Success of Others",
     en: "Other people's success motivates me — it shows me what's possible.",
-    id: "Kesuksesan orang lain memotivasi saya — itu menunjukkan kepada saya apa yang mungkin.",
+    id: "Keberhasilan orang lain memotivasi saya. Itu menunjukkan apa yang mungkin.",
     type: "growth" as const,
   },
   {
@@ -109,7 +109,7 @@ const QUESTIONS = [
   {
     dim: "Effort",
     en: "I believe consistent effort is the main ingredient for long-term success.",
-    id: "Saya percaya bahwa usaha yang konsisten adalah bahan utama untuk kesuksesan jangka panjang.",
+    id: "Saya percaya bahwa usaha yang konsisten adalah bahan utama untuk keberhasilan jangka panjang.",
     type: "growth" as const,
   },
   {
@@ -142,7 +142,7 @@ const DIMENSIONS_INFO = [
     id: {
       label: "TANTANGAN",
       growth: "Merangkul tantangan. Mencari peluang untuk pertumbuhan diri. Melihat kegagalan sebagai bagian dari proses.",
-      fixed: "Memilih jalur yang sudah dikenal untuk melindungi diri dari kegagalan yang terlihat. Menghindari situasi di mana kesalahan publik mungkin terjadi. Toleransi risiko tetap rendah di bawah tekanan.",
+      fixed: "Memilih jalur yang sudah dikenal untuk melindungi diri dari kegagalan yang terlihat. Menghindari situasi di mana kesalahan publik mungkin terjadi. Saat tertekan, tetap enggan mengambil risiko.",
     },
   },
   {
@@ -179,9 +179,9 @@ const DIMENSIONS_INFO = [
       fixed: "Sees others' advancement as a comment on their own worth. Feels quietly displaced by peer recognition. Struggles to celebrate others when their own position feels insecure.",
     },
     id: {
-      label: "KESUKSESAN ORANG LAIN",
-      growth: "Terinspirasi oleh kesuksesan orang lain. Mencoba belajar dari kesuksesan mereka. Melihat kemenangan orang lain sebagai bukti apa yang mungkin.",
-      fixed: "Melihat kemajuan orang lain sebagai komentar tentang nilai diri sendiri. Merasa tersisih secara diam-diam oleh pengakuan rekan. Kesulitan merayakan orang lain ketika posisi sendiri terasa tidak aman.",
+      label: "KEBERHASILAN ORANG LAIN",
+      growth: "Terinspirasi oleh keberhasilan orang lain. Mencoba belajar dari keberhasilan mereka. Melihat keberhasilan orang lain sebagai bukti apa yang mungkin.",
+      fixed: "Melihat kemajuan orang lain seolah mengurangi nilai diri sendiri. Merasa tersisih secara diam-diam oleh pengakuan rekan. Kesulitan merayakan orang lain ketika posisi sendiri terasa tidak aman.",
     },
   },
   {
@@ -194,7 +194,7 @@ const DIMENSIONS_INFO = [
     id: {
       label: "USAHA",
       growth: "Melihat usaha yang konsisten sebagai hal yang bermanfaat, bahkan ketika hasilnya lambat atau tidak terlihat. Berkomitmen pada proses daripada menuntut bukti segera. Bertahan karena pekerjaan itu sendiri memiliki nilai.",
-      fixed: "Tidak merasa termotivasi untuk memberikan upaya ekstra. Percaya bahwa bakat seharusnya sudah cukup.",
+      fixed: "Tidak merasa termotivasi untuk berusaha lebih keras. Percaya bahwa bakat seharusnya sudah cukup.",
     },
   },
 ];
@@ -277,11 +277,11 @@ export default function FixedGrowthMindsetClient({
   const allAnswered = answeredCount === QUESTIONS.length;
 
   function getMindsetLabel(score: number): string {
-    if (score >= 80) return t("Strong Growth Mindset", "Mindset Pertumbuhan Kuat");
-    if (score >= 65) return t("Growth-Leaning Mindset", "Mindset Cenderung Bertumbuh");
-    if (score >= 45) return t("Mixed Mindset", "Mindset Campuran");
-    if (score >= 30) return t("Fixed-Leaning Mindset", "Mindset Cenderung Tetap");
-    return t("Fixed Mindset", "Mindset Tetap");
+    if (score >= 80) return t("Strong Growth Mindset", "Pola Pikir Bertumbuh Kuat");
+    if (score >= 65) return t("Growth-Leaning Mindset", "Cenderung Bertumbuh");
+    if (score >= 45) return t("Mixed Mindset", "Campuran");
+    if (score >= 30) return t("Fixed-Leaning Mindset", "Cenderung Tetap");
+    return t("Fixed Mindset", "Pola Pikir Tetap");
   }
 
   function getMindsetColor(score: number): string {
@@ -297,7 +297,7 @@ export default function FixedGrowthMindsetClient({
         heading: t("Where You Are Right Now", "Di Mana Anda Berada Saat Ini"),
         body: t(
           "Your scores suggest you are currently in a more fixed orientation. This is not a verdict — it is information. The most valuable next step is not to change your score but to get curious about what is driving these patterns. Where did they come from? What are they protecting you from? That question is worth more than a number.",
-          "Skor Anda menunjukkan bahwa saat ini Anda berada dalam orientasi yang lebih tetap. Ini bukan vonis — ini adalah informasi. Langkah selanjutnya yang paling berharga bukan mengubah skor Anda, tetapi menjadi penasaran tentang apa yang mendorong pola-pola ini. Dari mana mereka berasal? Dari apa mereka melindungi Anda? Pertanyaan itu lebih berharga dari sebuah angka."
+          "Skor Anda menunjukkan bahwa saat ini Anda berada dalam pola pikir yang cenderung tetap. Ini bukan vonis. Ini informasi. Langkah selanjutnya yang paling berharga bukan mengubah skor Anda, tetapi menjadi penasaran tentang apa yang mendorong pola-pola ini. Dari mana pola itu berasal? Dari apa pola itu melindungi Anda? Pertanyaan itu lebih berharga dari sebuah angka."
         ),
       };
     }
@@ -306,15 +306,15 @@ export default function FixedGrowthMindsetClient({
         heading: t("A Mixed Picture", "Gambaran yang Beragam"),
         body: t(
           "Your scores show a mixed picture — growth-oriented in some areas, more defended in others. This is actually where most leaders live. The question is not 'am I growth-minded' but 'where am I most likely to go fixed and why?' That specificity is where real change begins.",
-          "Skor Anda menunjukkan gambaran yang beragam — berorientasi pada pertumbuhan di beberapa area, lebih defensif di area lain. Ini sebenarnya di mana kebanyakan pemimpin berada. Pertanyaannya bukan 'apakah saya berpikiran berkembang' tetapi 'di mana saya paling mungkin menjadi tetap dan mengapa?' Kekhususan itulah tempat perubahan nyata dimulai."
+          "Skor Anda menunjukkan gambaran yang beragam: bertumbuh di beberapa area, lebih defensif di area lain. Di situlah kebanyakan pemimpin berada. Pertanyaannya bukan 'apakah pola pikir saya bertumbuh?' tetapi 'di mana pola pikir saya paling mungkin menjadi tetap, dan mengapa?' Perubahan nyata dimulai dari hal yang spesifik."
         ),
       };
     }
     return {
-      heading: t("Growth-Oriented, But Go Deeper", "Berorientasi Pertumbuhan, Tapi Pergi Lebih Dalam"),
+      heading: t("Growth-Oriented, But Go Deeper", "Sudah Bertumbuh, Mari Gali Lebih Dalam"),
       body: t(
         "Your scores reflect a broadly growth-oriented orientation. The invitation here is to go deeper than the score suggests — growth mindset can become a self-concept ('I'm the kind of person who grows') and self-concepts can be their own kind of fixed. The sharpest question for you is not where you are stuck, but where you might be coasting.",
-        "Skor Anda mencerminkan orientasi yang secara luas berorientasi pada pertumbuhan. Undangan di sini adalah pergi lebih dalam dari yang disarankan skor — mindset pertumbuhan bisa menjadi konsep diri ('Saya adalah jenis orang yang berkembang') dan konsep diri bisa menjadi jenis tetap mereka sendiri. Pertanyaan paling tajam untuk Anda bukan di mana Anda terjebak, tetapi di mana Anda mungkin melaju santai."
+        "Skor Anda menunjukkan pola pikir yang secara umum bertumbuh. Ajakannya: gali lebih dalam dari yang ditunjukkan skor. Pola pikir bertumbuh bisa menjadi gambaran diri ('Saya orang yang bertumbuh'), dan gambaran diri itu pun bisa menjadi kaku. Pertanyaan paling tajam untuk Anda bukan di mana Anda terjebak, tetapi di mana Anda merasa sudah cukup."
       ),
     };
   }
@@ -378,12 +378,12 @@ export default function FixedGrowthMindsetClient({
             {t("PERSONAL DEVELOPMENT", "PENGEMBANGAN PRIBADI")}
           </p>
           <h1 style={{ fontFamily: "var(--font-cormorant)", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: OFF_WHITE, margin: "0 0 24px", lineHeight: 1.08 }}>
-            {t("Fixed vs. Growth Mindset", "Mindset Tetap vs. Pertumbuhan")}
+            {t("Fixed vs. Growth Mindset", "Pola Pikir Tetap vs. Bertumbuh")}
           </h1>
           <p style={{ fontSize: 17, color: "oklch(72% 0.05 260)", lineHeight: 1.7, maxWidth: 620, marginBottom: 40, fontStyle: "italic", fontFamily: "var(--font-cormorant)" }}>
             {t(
               "Drawing on Carol Dweck's widely studied framework, this assessment reveals where your mindset is fixed and where it's growing — across five key dimensions.",
-              "Berdasarkan kerangka kerja Carol Dweck yang banyak dipelajari, penilaian ini mengungkapkan di mana mindset Anda tetap dan di mana ia berkembang — dalam lima dimensi utama."
+              "Berdasarkan kerangka kerja Carol Dweck yang banyak dipelajari, penilaian ini menunjukkan di mana pola pikir Anda tetap dan di mana pola pikir Anda bertumbuh, dalam lima dimensi utama."
             )}<sup style={{ fontSize: "0.65em", verticalAlign: "super", marginLeft: 1 }}>¹</sup>
           </p>
           <div style={{ display: "flex", gap: 16, flexWrap: "wrap", alignItems: "center" }}>
@@ -442,35 +442,35 @@ export default function FixedGrowthMindsetClient({
           <p style={{ fontSize: 15, lineHeight: 1.75, color: BODY_TEXT, margin: "0 0 16px" }}>
             {t(
               "According to researcher Carol Dweck, there are two types of mindsets. A fixed mindset believes that qualities like intelligence or talent are innate: you have what you were given. A growth mindset holds that you can improve any quality through effort and persistence.",
-              "Menurut peneliti Carol Dweck, ada dua jenis mindset. Mindset tetap percaya bahwa kualitas seperti kecerdasan atau bakat bersifat bawaan: Anda memiliki apa yang diberikan kepada Anda. Mindset pertumbuhan berpendapat bahwa Anda dapat meningkatkan kualitas apa pun melalui usaha dan ketekunan."
+              "Menurut peneliti Carol Dweck, ada dua jenis pola pikir. Pola pikir tetap percaya bahwa kualitas seperti kecerdasan atau bakat bersifat bawaan: Anda memiliki apa yang diberikan kepada Anda. Pola pikir bertumbuh percaya bahwa Anda dapat meningkatkan kualitas apa pun melalui usaha dan ketekunan."
             )}<sup style={{ fontSize: "0.65em", verticalAlign: "super", marginLeft: 1 }}>¹</sup>
           </p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 12, margin: "8px 0 24px" }}>
             <div style={{ background: "oklch(46% 0.16 145 / 0.08)", borderRadius: 10, padding: "24px 20px", textAlign: "center" }}>
               <div style={{ fontFamily: "var(--font-cormorant)", fontSize: 20, fontWeight: 600, color: "oklch(34% 0.12 145)", marginBottom: 8 }}>
-                {t("Growth Mindset", "Mindset Pertumbuhan")}
+                {t("Growth Mindset", "Pola Pikir Bertumbuh")}
               </div>
               <div style={{ fontSize: 13, color: "oklch(38% 0.10 145)", lineHeight: 1.5 }}>
-                {t("Defines success as gradual improvement and growth", "Mendefinisikan keberhasilan sebagai perbaikan dan pertumbuhan bertahap")}
+                {t("Defines success as gradual improvement and growth", "Menganggap berhasil berarti terus membaik sedikit demi sedikit")}
               </div>
             </div>
             <div style={{ background: "oklch(48% 0.18 25 / 0.08)", borderRadius: 10, padding: "24px 20px", textAlign: "center" }}>
               <div style={{ fontFamily: "var(--font-cormorant)", fontSize: 20, fontWeight: 600, color: "oklch(38% 0.14 25)", marginBottom: 8 }}>
-                {t("Fixed Mindset", "Mindset Tetap")}
+                {t("Fixed Mindset", "Pola Pikir Tetap")}
               </div>
               <div style={{ fontSize: 13, color: "oklch(42% 0.10 25)", lineHeight: 1.5 }}>
-                {t("Defines success as being right and not failing", "Mendefinisikan keberhasilan sebagai benar dan tidak gagal")}
+                {t("Defines success as being right and not failing", "Menganggap berhasil berarti selalu benar dan tidak pernah gagal")}
               </div>
             </div>
           </div>
           <p style={{ fontSize: 15, lineHeight: 1.75, color: BODY_TEXT, margin: 0 }}>
             {t(
               "Research suggests growth mindset is associated with greater persistence and more adaptive responses to failure, though effects vary significantly across individuals and cultural contexts. Large-scale replication studies show more modest effects than early research suggested, but the principle remains directionally sound.",
-              "Penelitian menunjukkan bahwa mindset pertumbuhan dikaitkan dengan ketekunan yang lebih besar dan respons yang lebih adaptif terhadap kegagalan, meskipun efeknya sangat bervariasi di antara individu dan konteks budaya. Studi replikasi skala besar menunjukkan efek yang lebih kecil daripada yang disarankan penelitian awal, tetapi prinsipnya tetap benar secara arah."
+              "Penelitian menunjukkan bahwa pola pikir bertumbuh dikaitkan dengan ketekunan yang lebih besar dan respons yang lebih adaptif terhadap kegagalan, meskipun efeknya sangat bervariasi di antara individu dan konteks budaya. Studi replikasi skala besar menunjukkan efek yang lebih kecil daripada yang disarankan penelitian awal, tetapi arahnya tetap benar."
             )}<sup style={{ fontSize: "0.65em", verticalAlign: "super", marginLeft: 1 }}>²</sup>{" "}
             {t(
               "The shift often starts with recognizing which mindset is operating in a given area of your life.",
-              "Pergeseran ini sering dimulai dengan mengenali mindset mana yang beroperasi di area kehidupan Anda tertentu."
+              "Pergeseran ini sering dimulai dengan mengenali pola pikir mana yang bekerja di area tertentu dalam hidup Anda."
             )}
           </p>
         </div>
@@ -486,7 +486,7 @@ export default function FixedGrowthMindsetClient({
           <p style={{ fontSize: 15, color: BODY_TEXT, marginBottom: 36, lineHeight: 1.65 }}>
             {t(
               "The assessment covers five areas where your mindset has the greatest impact on how you perform and grow.",
-              "Penilaian ini mencakup lima area di mana mindset Anda memiliki dampak terbesar pada cara Anda berkinerja dan berkembang."
+              "Penilaian ini mencakup lima area di mana pola pikir Anda paling berdampak pada cara Anda bekerja dan bertumbuh."
             )}
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
@@ -500,7 +500,7 @@ export default function FixedGrowthMindsetClient({
                     </div>
                     <div style={{ padding: "20px 24px 20px 0", background: "oklch(46% 0.16 145 / 0.05)" }}>
                       <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(46% 0.16 145)", marginBottom: 6 }}>
-                        {t("GROWTH", "PERTUMBUHAN")}: {ldata.label}
+                        {t("GROWTH", "BERTUMBUH")}: {ldata.label}
                       </div>
                       <p style={{ fontSize: 13, lineHeight: 1.6, color: "oklch(30% 0.08 145)", margin: 0 }}>{ldata.growth}</p>
                     </div>
@@ -535,31 +535,31 @@ export default function FixedGrowthMindsetClient({
             <p style={{ marginBottom: 16 }}>
               {t(
                 "When you move into a new culture, every basic competency gets reset. Language, social codes, reading a room, knowing when to speak, knowing when silence is the right move. You were an effective leader before. Now you are a beginner again, and everyone can see it. For leaders whose identity is tied to being capable, this is not just uncomfortable. It is destabilizing.",
-                "Ketika Anda pindah ke budaya baru, setiap kompetensi dasar direset. Bahasa, kode sosial, membaca ruangan, mengetahui kapan harus berbicara, mengetahui kapan diam adalah langkah yang tepat. Anda adalah pemimpin yang efektif sebelumnya. Sekarang Anda adalah pemula lagi, dan semua orang bisa melihatnya. Bagi pemimpin yang identitasnya terikat pada kemampuan, ini bukan hanya tidak nyaman. Ini destabilisasi."
+                "Ketika Anda pindah ke budaya baru, setiap kompetensi dasar direset. Bahasa, kode sosial, membaca suasana, mengetahui kapan harus berbicara, mengetahui kapan diam adalah langkah yang tepat. Anda adalah pemimpin yang efektif sebelumnya. Sekarang Anda adalah pemula lagi, dan semua orang bisa melihatnya. Bagi pemimpin yang identitasnya terikat pada kemampuan, ini bukan hanya tidak nyaman. Ini mengguncang."
               )}
             </p>
             <p style={{ marginBottom: 16 }}>
               {t(
                 "In that state, fixed mindset patterns do not just appear. They intensify.",
-                "Dalam keadaan itu, pola pikir tetap tidak hanya muncul. Mereka intensif."
+                "Dalam keadaan itu, pola pikir tetap tidak hanya muncul. Pola itu justru makin kuat."
               )}
             </p>
             <p style={{ marginBottom: 16 }}>
               {t(
                 "The Challenges dimension becomes: 'I am not equipped for this.' Obstacles stop feeling like part of the process and start feeling like confirmation of a deeper inadequacy. The Success of Others dimension stops being about inspiration and becomes about the shame of comparison: 'They adapted so quickly. Something must be wrong with me.'",
-                "Dimensi Tantangan menjadi: 'Saya tidak siap untuk ini.' Hambatan berhenti terasa seperti bagian dari proses dan mulai terasa seperti konfirmasi ketidakmampuan yang lebih dalam. Dimensi Kesuksesan Orang Lain berhenti menjadi tentang inspirasi dan menjadi tentang rasa malu dari perbandingan: 'Mereka beradaptasi begitu cepat. Pasti ada yang salah dengan saya.'"
+                "Dimensi Tantangan menjadi: 'Saya tidak siap untuk ini.' Hambatan berhenti terasa seperti bagian dari proses dan mulai terasa seperti konfirmasi ketidakmampuan yang lebih dalam. Dimensi Keberhasilan Orang Lain berhenti menjadi tentang inspirasi dan menjadi tentang rasa malu dari perbandingan: 'Mereka beradaptasi begitu cepat. Pasti ada yang salah dengan saya.'"
               )}
             </p>
             <p style={{ marginBottom: 16 }}>
               {t(
                 "There is also a cultural layer. In many of the contexts this audience works in, failure carries public weight. Losing face in a community where relationships are long-term and visible is not the same as failing a task. It is relational damage. This makes the instinct to avoid risk deeply rational, not simply fearful.",
-                "Ada juga lapisan budaya. Dalam banyak konteks di mana audiens ini bekerja, kegagalan memiliki bobot publik. Kehilangan muka dalam komunitas di mana hubungan bersifat jangka panjang dan terlihat tidak sama dengan gagal dalam tugas. Itu adalah kerusakan relasional. Ini membuat naluri untuk menghindari risiko sangat rasional, bukan sekadar ketakutan."
+                "Ada juga lapisan budaya. Dalam banyak konteks di mana pemimpin lintas budaya bekerja, kegagalan memiliki bobot publik. Kehilangan muka dalam komunitas di mana hubungan bersifat jangka panjang dan terlihat tidak sama dengan gagal dalam tugas. Itu adalah kerusakan relasional. Ini membuat naluri untuk menghindari risiko sangat rasional, bukan sekadar ketakutan."
               )}
             </p>
             <p style={{ margin: 0 }}>
               {t(
                 "A growth mindset for a cross-cultural leader is not about performing confidence. It is about holding competence and incompetence at the same time, staying curious under pressure, and treating each new culture as a teacher rather than a test.",
-                "Mindset pertumbuhan bagi seorang pemimpin lintas budaya bukan tentang menampilkan kepercayaan diri. Ini tentang menahan kompetensi dan ketidakmampuan pada saat yang sama, tetap penasaran di bawah tekanan, dan memperlakukan setiap budaya baru sebagai guru daripada ujian."
+                "Pola pikir bertumbuh bagi seorang pemimpin lintas budaya bukan tentang menampilkan kepercayaan diri. Ini tentang menerima bahwa Anda mampu dan sekaligus masih belajar, tetap penasaran di bawah tekanan, dan memperlakukan setiap budaya baru sebagai guru daripada ujian."
               )}
             </p>
           </div>
@@ -573,12 +573,12 @@ export default function FixedGrowthMindsetClient({
             <div>
               <p style={{ ...eyebrowStyle }}>{t("ASSESSMENT", "PENILAIAN")}</p>
               <h2 style={{ ...sectionH2Style }}>
-                {t("Mindset Assessment", "Penilaian Mindset")}
+                {t("Mindset Assessment", "Penilaian Pola Pikir")}
               </h2>
               <p style={{ fontSize: 15, color: BODY_TEXT, lineHeight: 1.65, margin: 0 }}>
                 {t(
                   "15 statements across 5 dimensions. This is for you, not for anyone else. Rate how you actually think and behave, not how you wish you did.",
-                  "15 pernyataan di 5 dimensi. Ini untuk Anda, bukan untuk orang lain. Nilailah bagaimana Anda benar-benar berpikir dan berperilaku, bukan bagaimana Anda berharap melakukannya."
+                  "15 pernyataan di 5 dimensi. Ini untuk Anda, bukan untuk orang lain. Nilailah bagaimana Anda benar-benar berpikir dan berperilaku, bukan apa yang Anda harapkan dari diri sendiri."
                 )}
               </p>
             </div>
@@ -600,7 +600,7 @@ export default function FixedGrowthMindsetClient({
               >
                 {growthScore != null
                   ? t("Retake Assessment", "Ulangi Penilaian")
-                  : t("Start Assessment", "Mulai Tes")}
+                  : t("Start Assessment", "Mulai Penilaian")}
               </button>
             </div>
           )}
@@ -698,7 +698,7 @@ export default function FixedGrowthMindsetClient({
                   <div style={{ display: "flex", gap: 28, alignItems: "flex-start", flexWrap: "wrap", marginBottom: 24 }}>
                     <div>
                       <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: BODY_TEXT, marginBottom: 6 }}>
-                        {t("Your Mindset Score", "Skor Mindset Anda")}
+                        {t("Your Mindset Score", "Skor Pola Pikir Anda")}
                       </div>
                       <div style={{ fontFamily: "var(--font-cormorant)", fontSize: 64, fontWeight: 700, color: getMindsetColor(growthScore!), lineHeight: 1 }}>{growthScore}%</div>
                       <div style={{ fontSize: 14, fontWeight: 700, color: getMindsetColor(growthScore!), marginTop: 4 }}>{getMindsetLabel(growthScore!)}</div>
@@ -729,7 +729,7 @@ export default function FixedGrowthMindsetClient({
                     {growthScore! >= 80
                       ? t(
                           "You demonstrate a strong growth mindset across most areas. Keep investing in the few areas where fixed thinking still shows up.",
-                          "Anda menunjukkan mindset pertumbuhan yang kuat di sebagian besar area. Terus berinvestasi pada beberapa area di mana pemikiran tetap masih muncul."
+                          "Anda menunjukkan pola pikir bertumbuh yang kuat di sebagian besar area. Terus kembangkan beberapa area di mana pola pikir tetap masih muncul."
                         )
                       : growthScore! >= 65
                       ? t(
@@ -739,11 +739,11 @@ export default function FixedGrowthMindsetClient({
                       : growthScore! >= 45
                       ? t(
                           "You have a mixed mindset — growth in some areas, fixed in others. Understanding where the fixed patterns are gives you a clear target for growth.",
-                          "Anda memiliki mindset campuran — pertumbuhan di beberapa area, tetap di area lain. Memahami di mana pola tetap berada memberikan Anda target yang jelas untuk pertumbuhan."
+                          "Pola pikir Anda campuran: bertumbuh di beberapa area, tetap di area lain. Mengetahui di mana pola pikir tetap muncul memberi Anda target yang jelas untuk bertumbuh."
                         )
                       : t(
                           "Fixed thinking is showing up across several dimensions. This awareness is the first step. Start with one dimension and commit to shifting your approach there.",
-                          "Pemikiran tetap muncul di beberapa dimensi. Kesadaran ini adalah langkah pertama. Mulailah dengan satu dimensi dan berkomitmen untuk mengubah pendekatan Anda di sana."
+                          "Pola pikir tetap muncul di beberapa dimensi. Kesadaran ini adalah langkah pertama. Mulailah dengan satu dimensi dan berkomitmen untuk mengubah pendekatan Anda di sana."
                         )}
                   </p>
                   <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
@@ -766,18 +766,18 @@ export default function FixedGrowthMindsetClient({
         <div style={{ ...containerStyle }}>
           <p style={{ ...eyebrowStyle }}>{t("PRACTICE", "LATIHAN")}</p>
           <h2 style={{ ...sectionH2Style }}>
-            {t("How to Shift Your Mindset", "Cara Mengubah Mindset Anda")}
+            {t("How to Shift Your Mindset", "Cara Mengubah Pola Pikir Anda")}
           </h2>
           <p style={{ fontSize: 15, color: BODY_TEXT, marginBottom: 16, lineHeight: 1.75 }}>
             {t(
               "Mindset change is not a one-time decision — it is a practice. Research also shows that combining a growth mindset with seeing stress as enhancing (rather than debilitating) produces significantly stronger outcomes than either approach alone. Use this three-step process for any dimension where you want to grow.",
-              "Perubahan mindset bukan keputusan sekali jalan — ini adalah latihan. Penelitian juga menunjukkan bahwa menggabungkan mindset pertumbuhan dengan melihat stres sebagai sesuatu yang meningkatkan (daripada melemahkan) menghasilkan hasil yang jauh lebih kuat daripada salah satu pendekatan saja. Gunakan proses tiga langkah ini untuk dimensi mana pun yang ingin Anda kembangkan."
+              "Mengubah pola pikir bukan keputusan sekali jadi. Ini latihan. Penelitian juga menunjukkan bahwa menggabungkan pola pikir bertumbuh dengan melihat stres sebagai sesuatu yang menguatkan, bukan melemahkan, menghasilkan hasil yang jauh lebih kuat daripada salah satu pendekatan saja. Gunakan proses tiga langkah ini untuk dimensi mana pun yang ingin Anda kembangkan."
             )}<sup style={{ fontSize: "0.65em", verticalAlign: "super", marginLeft: 1 }}>⁴</sup>
           </p>
           <p style={{ fontSize: 15, color: BODY_TEXT, marginBottom: 40, lineHeight: 1.75 }}>
             {t(
               "Most mindset patterns formed in childhood or early career — they were adaptive responses to real situations. Trying to force them away rarely works. What does work is sustained, specific noticing: catching the moment a fixed belief fires, labeling it without judgment, and choosing a different response. Tap each step to go deeper.",
-              "Sebagian besar pola mindset terbentuk di masa kecil atau awal karir — mereka adalah respons adaptif terhadap situasi nyata. Mencoba memaksanya pergi jarang berhasil. Yang berhasil adalah perhatian yang berkelanjutan dan spesifik: menangkap momen ketika keyakinan tetap muncul, memberinya label tanpa menghakimi, dan memilih respons yang berbeda. Ketuk setiap langkah untuk mendalaminya."
+              "Sebagian besar pola pikir terbentuk di masa kecil atau awal karier. Pola itu adalah cara menyesuaikan diri dengan situasi nyata. Berusaha mengusirnya jarang berhasil. Yang berhasil adalah perhatian yang berkelanjutan dan spesifik: menangkap momen ketika keyakinan pola pikir tetap muncul, memberinya label tanpa menghakimi, dan memilih respons yang berbeda. Ketuk setiap langkah untuk mendalaminya."
             )}<sup style={{ fontSize: "0.65em", verticalAlign: "super", marginLeft: 1 }}>⁵</sup>
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
@@ -787,11 +787,11 @@ export default function FixedGrowthMindsetClient({
                 title: t("Name It", "Beri Nama"),
                 desc: t(
                   "For a specific dimension, write down your current belief honestly. What do you actually think — not what you know you should think?",
-                  "Untuk dimensi tertentu, tuliskan keyakinan Anda saat ini dengan jujur. Apa yang sebenarnya Anda pikirkan — bukan apa yang Anda tahu seharusnya Anda pikirkan?"
+                  "Untuk dimensi tertentu, tuliskan keyakinan Anda saat ini dengan jujur. Apa yang sebenarnya Anda pikirkan, bukan apa yang Anda tahu seharusnya Anda pikirkan?"
                 ),
                 detail: t(
                   "Start by writing it down specifically, not vaguely. 'I avoid this' is not precise enough. 'When I'm asked to contribute in a meeting where I don't know the cultural norms, I assume anything I say will come across wrong and I go quiet' — that is specific. The more precisely you can name a belief, the less power it holds. Vague patterns are hard to interrupt. Named ones are not.",
-                  "Mulailah dengan menuliskannya secara spesifik, bukan samar-samar. 'Saya menghindari ini' tidak cukup tepat. 'Ketika diminta berkontribusi dalam rapat di mana saya tidak tahu norma budayanya, saya berasumsi apa pun yang saya katakan akan terdengar salah dan saya diam' — itu spesifik. Semakin tepat Anda dapat menamai keyakinan itu, semakin kecil kekuatannya. Pola yang samar sulit untuk dihentikan. Yang sudah diberi nama tidak demikian."
+                  "Mulailah dengan menuliskannya secara spesifik, bukan samar-samar. 'Saya menghindari ini' tidak cukup tepat. 'Ketika diminta berkontribusi dalam rapat di mana saya tidak tahu norma budayanya, saya berasumsi apa pun yang saya katakan akan terdengar salah, jadi saya diam.' Itu spesifik. Semakin tepat Anda dapat menamai keyakinan itu, semakin kecil kekuatannya. Pola yang samar sulit untuk dihentikan. Yang sudah diberi nama tidak demikian."
                 ),
               },
               {
@@ -799,23 +799,23 @@ export default function FixedGrowthMindsetClient({
                 title: t("Spot the Pattern", "Kenali Polanya"),
                 desc: t(
                   "Is this a fixed or growth belief? Do not judge — just notice. Awareness is always the first step toward change.",
-                  "Apakah ini keyakinan tetap atau pertumbuhan? Jangan menghakimi — cukup perhatikan. Kesadaran selalu menjadi langkah pertama menuju perubahan."
+                  "Apakah ini keyakinan pola pikir tetap atau bertumbuh? Jangan menghakimi, cukup perhatikan. Kesadaran selalu menjadi langkah pertama menuju perubahan."
                 ),
                 detail: t(
                   "Fixed beliefs tend to contain these words: always, never, 'not the kind of person who,' too late, not enough. Growth beliefs tend to sound like: not yet, what would I need to learn, I'm still figuring this out. The key is noticing without judging. Judgment shuts the process down. Curiosity keeps it open. Ask: where did this belief come from? Was it ever true? Is it still serving me?",
-                  "Keyakinan tetap cenderung mengandung kata-kata ini: selalu, tidak pernah, 'bukan tipe orang yang,' terlambat, tidak cukup. Keyakinan pertumbuhan cenderung terdengar seperti: belum, apa yang perlu saya pelajari, saya masih mencari tahu ini. Kuncinya adalah memperhatikan tanpa menghakimi. Penilaian menghentikan prosesnya. Rasa ingin tahu membuatnya tetap terbuka. Tanyakan: dari mana keyakinan ini berasal? Apakah pernah benar? Apakah masih bermanfaat?"
+                  "Keyakinan pola pikir tetap biasanya memakai kata-kata ini: selalu, tidak pernah, 'bukan tipe orang yang,' terlambat, tidak cukup. Keyakinan pola pikir bertumbuh biasanya terdengar seperti: belum, apa yang perlu saya pelajari, saya masih mencari tahu ini. Kuncinya adalah memperhatikan tanpa menghakimi. Menghakimi diri menghentikan prosesnya. Rasa ingin tahu membuatnya tetap terbuka. Tanyakan: dari mana keyakinan ini berasal? Apakah pernah benar? Apakah masih bermanfaat?"
                 ),
               },
               {
                 step: "03", color: "oklch(46% 0.16 145)",
-                title: t("Reframe It", "Ubah Bingkainya"),
+                title: t("Reframe It", "Ubah Sudut Pandang"),
                 desc: t(
                   "Ask: 'What would a growth-oriented version of this belief look like?' Write it down and commit to returning to it when the fixed pattern shows up.",
-                  "Tanyakan: 'Seperti apa versi keyakinan ini yang berorientasi pertumbuhan?' Tuliskan dan berkomitmenlah untuk kembali ke sana ketika pola tetap muncul."
+                  "Tanyakan: 'Seperti apa versi keyakinan ini dari pola pikir bertumbuh?' Tuliskan dan berkomitmenlah untuk kembali ke sana ketika pola pikir tetap muncul."
                 ),
                 detail: t(
                   "A reframe is not positive thinking. It is a more accurate, more complete statement of reality. 'I failed at this' becomes 'I haven't succeeded here yet, and I now know what doesn't work.' 'I don't belong here' becomes 'I'm in an unfamiliar context, and belonging takes time and repeated presence.' Write the reframe on paper. Say it aloud. Then commit to returning to it — especially when the original belief fires next time.",
-                  "Pembingkaian ulang bukan pemikiran positif. Ini adalah pernyataan yang lebih akurat dan lebih lengkap tentang realitas. 'Saya gagal dalam hal ini' menjadi 'Saya belum berhasil di sini, dan sekarang saya tahu apa yang tidak berhasil.' 'Saya tidak cocok di sini' menjadi 'Saya berada dalam konteks yang tidak familiar, dan rasa memiliki membutuhkan waktu dan kehadiran berulang.' Tuliskan pembingkaian ulang di atas kertas. Ucapkan dengan keras. Kemudian berkomitmenlah untuk kembali ke sana — terutama ketika keyakinan aslinya muncul lagi."
+                  "Mengubah sudut pandang bukan sekadar berpikir positif. Ini adalah pernyataan yang lebih akurat dan lebih lengkap tentang realitas. 'Saya gagal dalam hal ini' menjadi 'Saya belum berhasil di sini, dan sekarang saya tahu apa yang tidak berhasil.' 'Saya tidak cocok di sini' menjadi 'Saya berada dalam konteks yang tidak familiar, dan rasa memiliki membutuhkan waktu dan kehadiran berulang.' Tuliskan sudut pandang baru itu di atas kertas. Ucapkan dengan suara. Kemudian berkomitmenlah untuk kembali ke sana, terutama ketika keyakinan aslinya muncul lagi."
                 ),
               },
             ].map(item => {
@@ -869,37 +869,37 @@ export default function FixedGrowthMindsetClient({
             <p style={{ marginBottom: 16 }}>
               {t(
                 "The servant who buried his talent did not have a character problem. He had a fear problem. 'I was afraid,' he says. So he protected what he had rather than risking what he could become.",
-                "Hamba yang mengubur talentanya tidak memiliki masalah karakter. Dia memiliki masalah ketakutan. 'Aku takut,' katanya. Jadi dia melindungi apa yang dimilikinya daripada mengambil risiko tentang siapa yang bisa ia jadikan."
+                "Hamba yang mengubur talentanya tidak memiliki masalah karakter. Dia memiliki masalah ketakutan. 'Aku takut,' katanya. Jadi dia melindungi apa yang dimilikinya daripada berani mengambil risiko untuk bertumbuh."
               )}
             </p>
             <p style={{ marginBottom: 16, fontStyle: "italic", color: OFF_WHITE }}>
               {t(
                 "That is a fixed mindset in biblical clothing.",
-                "Itulah mindset tetap dalam pakaian alkitabiah."
+                "Itulah pola pikir tetap dalam kisah Alkitab."
               )}
             </p>
             <p style={{ marginBottom: 16 }}>
               {t(
                 "The servants who invested were not reckless. They were faithful. They understood that what they had been entrusted with was not theirs to hoard. It was meant to grow.",
-                "Hamba-hamba yang berinvestasi bukan tidak bertanggung jawab. Mereka setia. Mereka memahami bahwa apa yang telah dipercayakan kepada mereka bukan milik mereka untuk ditimbun. Itu dimaksudkan untuk berkembang."
+                "Hamba-hamba yang berinvestasi tidak gegabah. Mereka setia. Mereka memahami bahwa apa yang telah dipercayakan kepada mereka bukan milik mereka untuk ditimbun. Itu dimaksudkan untuk berkembang."
               )}
             </p>
             <p style={{ marginBottom: 16 }}>
               {t(
                 "Paul echoes this in his letter to Timothy: 'Do not neglect the gift you have' (1 Timothy 4:14).",
-                "Paulus menggemakan ini dalam suratnya kepada Timotius: 'Jangan abaikan karunia yang ada padamu' (1 Timotius 4:14)."
+                "Paulus menggemakan ini dalam suratnya kepada Timotius: 'Jangan lalai dalam mempergunakan karunia yang ada padamu' (1 Timotius 4:14)."
               )}
             </p>
             <p style={{ marginBottom: 16 }}>
               {t(
                 "Growth mindset, in this light, is not about ambition. It is about stewardship. The abilities, experiences, and calling you carry have been placed in your hands for a reason. Burying them because you might fail is not humility. It is fear dressed up as safety.",
-                "Mindset pertumbuhan, dalam terang ini, bukan tentang ambisi. Ini tentang penatalayanan. Kemampuan, pengalaman, dan panggilan yang Anda bawa telah ditempatkan di tangan Anda dengan alasan. Mengubur mereka karena Anda mungkin gagal bukan kerendahan hati. Itu adalah ketakutan yang menyamar sebagai keamanan."
+                "Pola pikir bertumbuh, dalam terang ini, bukan tentang ambisi. Ini tentang penatalayanan. Kemampuan, pengalaman, dan panggilan yang Anda bawa telah ditempatkan di tangan Anda dengan alasan. Mengubur mereka karena Anda mungkin gagal bukan kerendahan hati. Itu adalah ketakutan yang menyamar sebagai keamanan."
               )}
             </p>
             <p style={{ margin: 0, fontStyle: "italic", color: OFF_WHITE, fontFamily: "var(--font-cormorant)", fontSize: 18 }}>
               {t(
                 "The invitation is not to be fearless. It is to be faithful.",
-                "Undangannya bukan untuk tidak takut. Ini untuk menjadi setia."
+                "Ajakannya bukan untuk tidak pernah takut, tetapi untuk tetap setia."
               )}
             </p>
           </div>
@@ -918,17 +918,17 @@ export default function FixedGrowthMindsetClient({
               {
                 num: "01",
                 en: "Fixed mindset patterns do not make you a poor leader. They make you a human one. Recognizing them is the work.",
-                id: "Pola mindset tetap tidak membuat Anda pemimpin yang buruk. Mereka membuat Anda manusiawi. Mengenali mereka adalah pekerjaan itu.",
+                id: "Pola pikir tetap tidak membuat Anda pemimpin yang buruk. Itu tanda Anda manusia. Tugas Anda adalah mengenalinya.",
               },
               {
                 num: "02",
                 en: "In cross-cultural settings, fear of visible failure is often a learned response to real social stakes, not a character flaw to overcome quickly.",
-                id: "Dalam lingkungan lintas budaya, ketakutan akan kegagalan yang terlihat sering kali merupakan respons yang dipelajari terhadap taruhan sosial nyata, bukan cacat karakter yang harus diatasi dengan cepat.",
+                id: "Dalam lingkungan lintas budaya, ketakutan akan kegagalan yang terlihat sering kali merupakan respons yang dipelajari terhadap risiko sosial yang nyata, bukan cacat karakter yang harus diatasi dengan cepat.",
               },
               {
                 num: "03",
                 en: "Growth mindset is not about ambition or self-improvement. It is about faithfulness with what you have been given, in the context where you have been placed.",
-                id: "Mindset pertumbuhan bukan tentang ambisi atau pengembangan diri. Ini tentang kesetiaan dengan apa yang telah diberikan kepada Anda, dalam konteks di mana Anda telah ditempatkan.",
+                id: "Pola pikir bertumbuh bukan tentang ambisi atau pengembangan diri. Ini tentang kesetiaan dengan apa yang telah diberikan kepada Anda, dalam konteks di mana Anda telah ditempatkan.",
               },
               {
                 num: "04",
@@ -963,27 +963,27 @@ export default function FixedGrowthMindsetClient({
               {
                 num: 1,
                 en: "Think of a moment in cross-cultural work when you felt like you were not cut out for this. Looking back: was that a fixed-mindset moment, a legitimate limit, or something your context imposed on you? What is the difference?",
-                id: "Pikirkan momen dalam pekerjaan lintas budaya ketika Anda merasa tidak cocok untuk ini. Melihat ke belakang: apakah itu momen mindset tetap, batasan yang sah, atau sesuatu yang dipaksakan konteks Anda kepada Anda? Apa perbedaannya?",
+                id: "Pikirkan momen dalam pekerjaan lintas budaya ketika Anda merasa tidak cocok untuk ini. Melihat ke belakang: apakah itu momen pola pikir tetap, batasan yang sah, atau sesuatu yang dipaksakan konteks Anda kepada Anda? Apa perbedaannya?",
               },
               {
                 num: 2,
                 en: "In your home culture, how was failure typically handled — privately, communally, as shame, or as information? How has that cultural script shaped the voice you hear when you make a mistake in your current context?",
-                id: "Dalam budaya asal Anda, bagaimana kegagalan biasanya ditangani — secara pribadi, komunal, sebagai rasa malu, atau sebagai informasi? Bagaimana skrip budaya itu membentuk suara yang Anda dengar ketika Anda membuat kesalahan dalam konteks Anda saat ini?",
+                id: "Dalam budaya asal Anda, bagaimana kegagalan biasanya ditangani: secara pribadi, komunal, sebagai rasa malu, atau sebagai informasi? Bagaimana skrip budaya itu membentuk suara yang Anda dengar ketika Anda membuat kesalahan dalam konteks Anda saat ini?",
               },
               {
                 num: 3,
                 en: "Where in your leadership role are you most likely to go fixed — under pressure, in ambiguous situations, in front of people whose respect you need? What does that pattern cost you?",
-                id: "Di mana dalam peran kepemimpinan Anda Anda paling mungkin menjadi tetap — di bawah tekanan, dalam situasi ambigu, di depan orang-orang yang rasa hormatnya Anda butuhkan? Apa yang pola itu menelan biaya dari Anda?",
+                id: "Di mana dalam peran kepemimpinan Anda Anda paling mungkin jatuh ke pola pikir tetap: di bawah tekanan, dalam situasi ambigu, di depan orang-orang yang rasa hormatnya Anda butuhkan? Apa harga yang Anda bayar karena pola itu?",
               },
               {
                 num: 4,
                 en: "Dweck's research identifies effort as the mechanism of growth.¹ But in high-load ministry or field contexts, effort is rarely the shortage — protection is. What would it look like to protect your growth capacity the way you protect your team's wellbeing?",
-                id: "Penelitian Dweck mengidentifikasi usaha sebagai mekanisme pertumbuhan.¹ Tetapi dalam konteks pelayanan atau lapangan yang berat, usaha jarang menjadi kekurangan — perlindungan adalah. Seperti apa melindungi kapasitas pertumbuhan Anda seperti Anda melindungi kesejahteraan tim Anda?",
+                id: "Penelitian Dweck mengidentifikasi usaha sebagai mekanisme pertumbuhan.¹ Tetapi dalam konteks pelayanan atau lapangan yang berat, yang kurang jarang usaha. Yang kurang adalah perlindungan. Seperti apa jadinya jika Anda menjaga kapasitas Anda untuk bertumbuh, sama seperti Anda menjaga kesejahteraan tim Anda?",
               },
               {
                 num: 5,
                 en: "If the people you lead could see your fixed-mindset moments clearly, what would they learn from how you handle them? What do you want them to learn?",
-                id: "Jika orang-orang yang Anda pimpin dapat melihat momen mindset tetap Anda dengan jelas, apa yang akan mereka pelajari dari cara Anda menanganinya? Apa yang ingin Anda ajarkan kepada mereka?",
+                id: "Jika orang-orang yang Anda pimpin dapat melihat momen pola pikir tetap Anda dengan jelas, apa yang akan mereka pelajari dari cara Anda menanganinya? Apa yang ingin Anda ajarkan kepada mereka?",
               },
             ].map(item => (
               <div key={item.num} style={{ display: "flex", gap: 20, alignItems: "flex-start", background: "white", borderRadius: 10, padding: "24px 28px", border: `1px solid ${LIGHT_GRAY}` }}>
@@ -1052,7 +1052,7 @@ export default function FixedGrowthMindsetClient({
         <div style={{ maxWidth: 640, margin: "0 auto", textAlign: "center" }}>
           <p style={{ ...eyebrowStyle, color: ORANGE }}>{t("NEXT STEPS", "LANGKAH SELANJUTNYA")}</p>
           <h2 style={{ ...sectionH2LightStyle }}>
-            {t("Your Mindset Is Not Fixed", "Mindset Anda Tidak Tetap")}
+            {t("Your Mindset Is Not Fixed", "Pola Pikir Anda Tidak Tetap")}
           </h2>
           <p style={{ fontSize: 16, color: "oklch(72% 0.05 260)", lineHeight: 1.7, marginBottom: 40 }}>
             {t(
@@ -1067,7 +1067,7 @@ export default function FixedGrowthMindsetClient({
             >
               {growthScore != null
                 ? t("Retake Assessment", "Ulangi Penilaian")
-                : t("Start Assessment", "Mulai Tes")}
+                : t("Start Assessment", "Mulai Penilaian")}
             </button>
             <Link href="/resources" style={{ display: "inline-flex", alignItems: "center", background: "transparent", color: "oklch(85% 0.04 260)", padding: "14px 32px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", textDecoration: "none", minHeight: 44 }}>
               {t("All Resources", "Semua Sumber Daya")}

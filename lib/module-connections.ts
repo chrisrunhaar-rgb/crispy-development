@@ -239,11 +239,11 @@ export const MODULE_CONNECTIONS: ModuleConnection[] = [
     sourceSectionId: "lar-movement-1",
     targetSlug: "fixed-growth-mindset",
     targetTitle: "Fixed vs Growth Mindset",
-    targetTitle_id: "Pola Pikir Tetap vs Berkembang",
+    targetTitle_id: "Pola Pikir Tetap vs. Bertumbuh",
     topic: "identity-based habits and behaviour change",
     topic_id: "kebiasaan berbasis identitas dan perubahan perilaku",
     angle: "how your belief about who you are determines what you do — and how a growth mindset reframes the reader's identity",
-    angle_id: "bagaimana keyakinanmu tentang siapa dirimu menentukan apa yang kamu lakukan — dan bagaimana pola pikir berkembang membingkai ulang identitas pembaca",
+    angle_id: "bagaimana keyakinan Anda tentang siapa diri Anda menentukan apa yang Anda lakukan, dan bagaimana pola pikir bertumbuh mengubah cara pembaca memandang identitasnya",
   },
 
   // Managing Up → Power Distance

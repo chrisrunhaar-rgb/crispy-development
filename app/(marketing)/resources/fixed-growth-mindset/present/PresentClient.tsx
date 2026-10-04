@@ -33,7 +33,7 @@ const t = (en: string, id: string, lang: Lang) => (lang === "id" ? id : en);
 
 const MODULE_HREF = "/resources/fixed-growth-mindset";
 const IMG = "/images/resources/fixed-growth-mindset/hero.jpg";
-const MODULE_TITLE: Pair = { en: "Fixed vs Growth Mindset", id: "Mindset Tetap vs. Pertumbuhan" };
+const MODULE_TITLE: Pair = { en: "Fixed vs Growth Mindset", id: "Pola Pikir Tetap vs. Bertumbuh" };
 
 // ── Content, lifted from the module itself ────────────────────────────────
 
@@ -57,16 +57,16 @@ const DIMENSIONS: { label: Pair; example: Pair; growth: Pair; fixed: Pair }[] = 
     fixed: { en: "Gives up in the face of an obstacle.", id: "Menyerah ketika menghadapi hambatan." },
   },
   {
-    label: { en: "Success of Others", id: "Kesuksesan Orang Lain" },
+    label: { en: "Success of Others", id: "Keberhasilan Orang Lain" },
     example: { en: "A colleague learns the language faster. You ask how they did it.", id: "Rekan kerja lebih cepat menguasai bahasa. Anda bertanya bagaimana caranya." },
-    growth: { en: "Is inspired by the success of others.", id: "Terinspirasi oleh kesuksesan orang lain." },
+    growth: { en: "Is inspired by the success of others.", id: "Terinspirasi oleh keberhasilan orang lain." },
     fixed: { en: "Sees others' advancement as a comment on their own worth.", id: "Melihat kemajuan orang lain sebagai komentar tentang nilai diri sendiri." },
   },
   {
     label: { en: "Effort", id: "Usaha" },
-    example: { en: "Presenting again the week after a presentation went badly.", id: "Tampil presentasi lagi seminggu setelah presentasi yang buruk." },
+    example: { en: "Presenting again the week after a presentation went badly.", id: "Presentasi lagi seminggu setelah presentasi yang gagal." },
     growth: { en: "Sees consistent effort as fruitful, even when results are slow.", id: "Melihat usaha yang konsisten sebagai hal yang bermanfaat, bahkan ketika hasilnya lambat." },
-    fixed: { en: "Does not feel motivated to put in the extra effort.", id: "Tidak merasa termotivasi untuk memberikan upaya ekstra." },
+    fixed: { en: "Does not feel motivated to put in the extra effort.", id: "Tidak merasa termotivasi untuk berusaha lebih keras." },
   },
 ];
 
@@ -80,36 +80,36 @@ const SHIFT_STEPS: { step: string; title: Pair; point: Pair; detail: Pair }[] = 
   {
     step: "02",
     title: { en: "Spot the Pattern", id: "Kenali Polanya" },
-    point: { en: "Is this a fixed or growth belief? Do not judge, just notice.", id: "Apakah ini keyakinan tetap atau pertumbuhan? Jangan menghakimi, cukup perhatikan." },
-    detail: { en: "Fixed sounds like: always, never, too late. Growth sounds like: not yet, still figuring this out.", id: "Tetap terdengar seperti: selalu, tidak pernah, terlambat. Pertumbuhan terdengar seperti: belum, masih mencari tahu." },
+    point: { en: "Is this a fixed or growth belief? Do not judge, just notice.", id: "Apakah ini keyakinan pola pikir tetap atau bertumbuh? Jangan menghakimi, cukup perhatikan." },
+    detail: { en: "Fixed sounds like: always, never, too late. Growth sounds like: not yet, still figuring this out.", id: "Pola pikir tetap terdengar seperti: selalu, tidak pernah, terlambat. Pola pikir bertumbuh terdengar seperti: belum, masih mencari tahu." },
   },
   {
     step: "03",
-    title: { en: "Reframe It", id: "Ubah Bingkainya" },
-    point: { en: "A reframe is not positive thinking. It is a more complete statement of reality.", id: "Pembingkaian ulang bukan pemikiran positif. Ini pernyataan yang lebih lengkap tentang realitas." },
+    title: { en: "Reframe It", id: "Ubah Sudut Pandang" },
+    point: { en: "A reframe is not positive thinking. It is a more complete statement of reality.", id: "Mengubah sudut pandang bukan sekadar berpikir positif. Ini pernyataan yang lebih lengkap tentang realitas." },
     detail: { en: "“I failed at this” becomes “I haven't succeeded here yet.”", id: "“Saya gagal dalam hal ini” menjadi “Saya belum berhasil di sini.”" },
   },
 ];
 
 // Phrases shown in bold orange on the takeaways slide.
 const TAKEAWAY_HIGHLIGHTS: (Pair | undefined)[] = [
-  { en: "Recognizing them is the work.", id: "Mengenali mereka adalah pekerjaan itu." },
+  { en: "Recognizing them is the work.", id: "Tugas Anda adalah mengenalinya." },
   undefined,
   { en: "faithfulness with what you have been given", id: "kesetiaan dengan apa yang telah diberikan kepada Anda" },
   undefined,
 ];
 
 const TAKEAWAYS: Pair[] = [
-  { en: "Fixed mindset patterns do not make you a poor leader. They make you a human one. Recognizing them is the work.", id: "Pola mindset tetap tidak membuat Anda pemimpin yang buruk. Mereka membuat Anda manusiawi. Mengenali mereka adalah pekerjaan itu." },
-  { en: "In cross-cultural settings, fear of visible failure is often a learned response to real social stakes, not a character flaw.", id: "Dalam lingkungan lintas budaya, ketakutan akan kegagalan yang terlihat sering kali respons yang dipelajari terhadap taruhan sosial nyata, bukan cacat karakter." },
-  { en: "Growth mindset is not about ambition. It is about faithfulness with what you have been given, where you have been placed.", id: "Mindset pertumbuhan bukan tentang ambisi. Ini tentang kesetiaan dengan apa yang telah diberikan kepada Anda, di tempat Anda ditempatkan." },
-  { en: "The goal is not a perfect score. It is the honest question: where am I protecting myself when I could be growing?", id: "Tujuannya bukan skor sempurna. Ini pertanyaan jujur: di mana saya melindungi diri saya sendiri ketika saya bisa bertumbuh?" },
+  { en: "Fixed mindset patterns do not make you a poor leader. They make you a human one. Recognizing them is the work.", id: "Pola pikir tetap tidak membuat Anda pemimpin yang buruk. Itu tanda Anda manusia. Tugas Anda adalah mengenalinya." },
+  { en: "In cross-cultural settings, fear of visible failure is often a learned response to real social stakes, not a character flaw.", id: "Dalam lingkungan lintas budaya, ketakutan akan kegagalan yang terlihat sering kali merupakan respons yang dipelajari terhadap risiko sosial yang nyata, bukan cacat karakter." },
+  { en: "Growth mindset is not about ambition. It is about faithfulness with what you have been given, where you have been placed.", id: "Pola pikir bertumbuh bukan tentang ambisi. Ini tentang kesetiaan dengan apa yang telah diberikan kepada Anda, di tempat Anda ditempatkan." },
+  { en: "The goal is not a perfect score. It is the honest question: where am I protecting myself when I could be growing?", id: "Tujuannya bukan skor sempurna. Ini adalah pertanyaan jujur: di mana saya melindungi diri saya sendiri ketika saya bisa bertumbuh?" },
 ];
 
 const QUESTIONS: Pair[] = [
-  { en: "Think of a moment in cross-cultural work when you felt you were not cut out for this. Was that a fixed-mindset moment, a legitimate limit, or something your context imposed on you?", id: "Pikirkan momen dalam pekerjaan lintas budaya ketika Anda merasa tidak cocok untuk ini. Apakah itu momen mindset tetap, batasan yang sah, atau sesuatu yang dipaksakan konteks Anda?" },
-  { en: "Where in your leadership role are you most likely to go fixed: under pressure, in ambiguous situations, in front of people whose respect you need?", id: "Di mana dalam peran kepemimpinan Anda, Anda paling mungkin menjadi tetap: di bawah tekanan, dalam situasi ambigu, di depan orang yang rasa hormatnya Anda butuhkan?" },
-  { en: "If the people you lead could see your fixed-mindset moments clearly, what do you want them to learn from how you handle them?", id: "Jika orang yang Anda pimpin dapat melihat momen mindset tetap Anda dengan jelas, apa yang ingin Anda ajarkan dari cara Anda menanganinya?" },
+  { en: "Think of a moment in cross-cultural work when you felt you were not cut out for this. Was that a fixed-mindset moment, a legitimate limit, or something your context imposed on you?", id: "Pikirkan momen dalam pekerjaan lintas budaya ketika Anda merasa tidak cocok untuk ini. Apakah itu momen pola pikir tetap, batasan yang sah, atau sesuatu yang dipaksakan konteks Anda?" },
+  { en: "Where in your leadership role are you most likely to go fixed: under pressure, in ambiguous situations, in front of people whose respect you need?", id: "Di mana dalam peran kepemimpinan Anda, Anda paling mungkin jatuh ke pola pikir tetap: di bawah tekanan, dalam situasi ambigu, di depan orang-orang yang rasa hormatnya Anda butuhkan?" },
+  { en: "If the people you lead could see your fixed-mindset moments clearly, what do you want them to learn from how you handle them?", id: "Jika orang-orang yang Anda pimpin dapat melihat momen pola pikir tetap Anda dengan jelas, apa yang ingin Anda ajarkan kepada mereka dari cara Anda menanganinya?" },
 ];
 
 // ── Small helpers ──────────────────────────────────────────────────────────
@@ -181,11 +181,11 @@ const SLIDES: Slide[] = [
       <div>
         <Eyebrow color={ORANGE}>{lang === "id" ? "Pengembangan Pribadi" : "Personal Development"}</Eyebrow>
         <h1 style={{ fontFamily: SERIF, fontWeight: 600, fontSize: 96, lineHeight: 1.05, color: OFF_WHITE, margin: "0 0 28px" }}>
-          {lang === "id" ? "Mindset Tetap vs. Pertumbuhan" : "Fixed vs. Growth Mindset"}
+          {lang === "id" ? "Pola Pikir Tetap vs. Bertumbuh" : "Fixed vs. Growth Mindset"}
         </h1>
         <p style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: 32, color: "oklch(72% 0.05 260)", maxWidth: 900, lineHeight: 1.5 }}>
           {lang === "id"
-            ? "Berdasarkan kerangka kerja Carol Dweck, mengungkapkan di mana mindset Anda tetap dan di mana ia berkembang, dalam lima dimensi utama."
+            ? "Berdasarkan kerangka kerja Carol Dweck, menunjukkan di mana pola pikir Anda tetap dan di mana pola pikir Anda bertumbuh, dalam lima dimensi utama."
             : "Drawing on Carol Dweck's framework, revealing where your mindset is fixed and where it's growing, across five key dimensions."}
         </p>
       </div>
@@ -201,18 +201,18 @@ const SLIDES: Slide[] = [
         <div style={{ display: "flex", gap: 32, marginTop: 20 }}>
           <div style={{ ...show(step >= 0), flex: 1, background: "oklch(46% 0.16 145 / 0.08)", borderRadius: 16, padding: "36px 32px" }}>
             <div style={{ fontFamily: SERIF, fontSize: 34, fontWeight: 600, color: GROWTH, marginBottom: 14 }}>
-              {lang === "id" ? "Mindset Pertumbuhan" : "Growth Mindset"}
+              {lang === "id" ? "Pola Pikir Bertumbuh" : "Growth Mindset"}
             </div>
             <p style={{ fontFamily: SANS, fontSize: 24, lineHeight: 1.5, color: "oklch(30% 0.08 145)", margin: 0 }}>
-              {lang === "id" ? "Mendefinisikan keberhasilan sebagai perbaikan dan pertumbuhan bertahap." : "Defines success as gradual improvement and growth."}
+              {lang === "id" ? "Menganggap berhasil berarti terus membaik sedikit demi sedikit." : "Defines success as gradual improvement and growth."}
             </p>
           </div>
           <div style={{ ...show(step >= 1), flex: 1, background: "oklch(48% 0.18 25 / 0.08)", borderRadius: 16, padding: "36px 32px" }}>
             <div style={{ fontFamily: SERIF, fontSize: 34, fontWeight: 600, color: FIXED, marginBottom: 14 }}>
-              {lang === "id" ? "Mindset Tetap" : "Fixed Mindset"}
+              {lang === "id" ? "Pola Pikir Tetap" : "Fixed Mindset"}
             </div>
             <p style={{ fontFamily: SANS, fontSize: 24, lineHeight: 1.5, color: "oklch(32% 0.10 25)", margin: 0 }}>
-              {lang === "id" ? "Mendefinisikan keberhasilan sebagai benar dan tidak gagal." : "Defines success as being right and not failing."}
+              {lang === "id" ? "Menganggap berhasil berarti selalu benar dan tidak pernah gagal." : "Defines success as being right and not failing."}
             </p>
           </div>
         </div>
@@ -225,7 +225,7 @@ const SLIDES: Slide[] = [
     render: (lang, step) => (
       <div>
         <Eyebrow color={ORANGE}>{lang === "id" ? "Lima Dimensi" : "Five Dimensions"}</Eyebrow>
-        <H2>{lang === "id" ? "Di Mana Mindset Muncul" : "Where Mindset Shows Up"}</H2>
+        <H2>{lang === "id" ? "Di Mana Pola Pikir Muncul" : "Where Mindset Shows Up"}</H2>
         <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
           {DIMENSIONS.map((d, n) => (
             <div key={d.label.en} style={{ ...show(step >= n * 2), display: "flex", alignItems: "baseline", gap: 20, padding: "14px 0", borderBottom: n < 4 ? `1px solid ${LIGHT_GRAY}` : "none" }}>
@@ -244,11 +244,11 @@ const SLIDES: Slide[] = [
     render: (lang, step) => (
       <div>
         <Eyebrow color={ORANGE}>{lang === "id" ? "Perbandingan" : "The Contrast"}</Eyebrow>
-        <H2>{lang === "id" ? "Pertumbuhan vs Tetap, Dimensi demi Dimensi" : "Growth vs Fixed, Dimension by Dimension"}</H2>
+        <H2>{lang === "id" ? "Bertumbuh vs Tetap, Dimensi demi Dimensi" : "Growth vs Fixed, Dimension by Dimension"}</H2>
         <div style={{ display: "grid", gridTemplateColumns: "220px 1fr 1fr", gap: 0, marginTop: 8 }}>
           <div />
           <div style={{ fontFamily: SANS, fontSize: 18, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: GROWTH, padding: "0 20px 14px" }}>
-            {lang === "id" ? "Pertumbuhan" : "Growth"}
+            {lang === "id" ? "Bertumbuh" : "Growth"}
           </div>
           <div style={{ fontFamily: SANS, fontSize: 18, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: FIXED, padding: "0 0 14px 16px" }}>
             {lang === "id" ? "Tetap" : "Fixed"}
@@ -277,9 +277,9 @@ const SLIDES: Slide[] = [
     render: (lang, step) => (
       <div>
         <Eyebrow color={ORANGE}>{lang === "id" ? "Latihan" : "Practice"}</Eyebrow>
-        <H2 dark>{lang === "id" ? "Cara Mengubah Mindset Anda" : "How to Shift Your Mindset"}</H2>
+        <H2 dark>{lang === "id" ? "Cara Mengubah Pola Pikir Anda" : "How to Shift Your Mindset"}</H2>
         <Point on={true} dark>
-          {lang === "id" ? "Perubahan mindset bukan keputusan sekali jalan. Ini adalah latihan." : "Mindset change is not a one-time decision. It is a practice."}
+          {lang === "id" ? "Mengubah pola pikir bukan keputusan sekali jalan. Ini adalah latihan." : "Mindset change is not a one-time decision. It is a practice."}
         </Point>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 32, marginTop: 20 }}>
           {SHIFT_STEPS.map((s, n) => (
@@ -358,7 +358,7 @@ const SLIDES: Slide[] = [
     render: (lang) => (
       <div style={{ height: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center" }}>
         <Eyebrow color={ORANGE}>{lang === "id" ? "Langkah Selanjutnya" : "Next Steps"}</Eyebrow>
-        <H2 dark>{lang === "id" ? "Mindset Anda Tidak Tetap" : "Your Mindset Is Not Fixed"}</H2>
+        <H2 dark>{lang === "id" ? "Pola Pikir Anda Tidak Tetap" : "Your Mindset Is Not Fixed"}</H2>
         <Point on={true} dark>
           {lang === "id"
             ? "Perubahan dimulai dengan menyadari. Di mana Anda bermain aman padahal Anda bisa belajar?"
