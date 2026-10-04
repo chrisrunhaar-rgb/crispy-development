@@ -777,6 +777,17 @@ export default function CoachCarousel({
           display: flex;
           flex-direction: column;
         }
+        /* Phones: pin to the same frame as the fixed bottom nav. Some
+           Android browsers and installed apps count the system nav bar
+           in 100dvh, which pushed the swipe bar behind the bottom nav. */
+        @media (max-width: 1023px) {
+          .wpc-outer {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+            height: auto;
+          }
+        }
         .wpc-header {
           background: ${PAGE};
           flex-shrink: 0;
