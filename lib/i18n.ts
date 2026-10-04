@@ -53,7 +53,7 @@ export const translations = {
       personalCta: "Explore Personal Pathway",
       teamBadge: "Team",
       teamHeading: "Equip your entire team.",
-      teamBody: "For leaders of cross-cultural teams. Everything in Personal for each person, plus the Team Growth Journey, written for team development and shaping team culture. Just {diff} more per person.",
+      teamBody: "For leaders of cross-cultural teams. Everything in Personal for each person, plus the Team Growth Journey, written for team development and shaping team culture.",
       teamFeatures: [
         "A full Personal account for every team member",
         "The Team Growth Journey for your whole team",
@@ -413,7 +413,7 @@ export const translations = {
       personalCta: "Jelajahi Jalur Pribadi",
       teamBadge: "Tim",
       teamHeading: "Perlengkapi seluruh tim Anda.",
-      teamBody: "Untuk pemimpin tim lintas budaya. Semua isi Personal untuk setiap orang, ditambah Perjalanan Pertumbuhan Tim, yang ditulis khusus untuk pengembangan tim dan membentuk budaya tim. Hanya {diff} lebih per orang.",
+      teamBody: "Untuk pemimpin tim lintas budaya. Semua isi Personal untuk setiap orang, ditambah Perjalanan Pertumbuhan Tim, yang ditulis khusus untuk pengembangan tim dan membentuk budaya tim.",
       teamFeatures: [
         "Akun Personal lengkap untuk setiap anggota tim",
         "Perjalanan Pertumbuhan Tim untuk seluruh tim",
