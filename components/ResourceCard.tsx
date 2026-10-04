@@ -153,7 +153,9 @@ export default function ResourceCard({
 
   async function handleShare() {
     const url = `https://crispyleaders.com/resources/${slug}`;
-    const text = `I'm part of a leadership development journey with Crispy Development. This resource is worth your time: "${title}"`;
+    const text = id
+      ? `Saya sedang mengikuti perjalanan pengembangan kepemimpinan bersama Crispy Development. Materi ini layak dibaca: "${title}"`
+      : `I'm part of a leadership development journey with Crispy Development. This resource is worth your time: "${title}"`;
     if (navigator.share) {
       try {
         await navigator.share({ title, text, url });
