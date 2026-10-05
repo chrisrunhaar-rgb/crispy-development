@@ -5,7 +5,7 @@ import Link from "next/link";
 import { RESOURCES } from "@/lib/resources-data";
 import { saveResourcesToDashboard } from "./actions";
 import { trackResourceSaved } from "@/lib/ga-events";
-import { T, SERIF, SANS, PrimaryLink } from "@/components/promo/PromoKit";
+import { T, SERIF, SANS } from "@/components/promo/PromoKit";
 
 type Pick = { slug: string; reason: string };
 type Status = "idle" | "loading" | "done" | "crisis" | "error" | "limit";
@@ -59,12 +59,6 @@ const COPY = {
   },
 };
 
-const fieldStyle: React.CSSProperties = {
-  width: "100%", boxSizing: "border-box", padding: "0.85rem 1rem",
-  fontFamily: SANS, fontSize: "0.95rem", lineHeight: 1.5, color: T.charcoal,
-  background: "oklch(99.5% 0.002 80)", border: `1px solid ${T.rule}`, borderRadius: 2, resize: "vertical",
-};
-
 function buttonStyle(primary: boolean): React.CSSProperties {
   return {
     display: "inline-flex", alignItems: "center", justifyContent: "center", minHeight: 48,
@@ -75,18 +69,28 @@ function buttonStyle(primary: boolean): React.CSSProperties {
   };
 }
 
-// White field that grows with the text (field-sizing), orange arrow that lights up once there's enough to search
+// Rounded buttons for the results row, same family as the round arrow
+function pillStyle(primary: boolean): React.CSSProperties {
+  return {
+    display: "inline-flex", alignItems: "center", justifyContent: "center", minHeight: 48,
+    padding: "0.75rem 1.5rem", borderRadius: 999, cursor: "pointer",
+    fontFamily: SANS, fontSize: "0.85rem", fontWeight: 700,
+    background: primary ? T.orange : "transparent", color: T.navy,
+    border: primary ? `1.5px solid ${T.orange}` : `1.5px solid ${T.navy}`,
+  };
+}
+
+// White field that grows with the text (field-sizing), with a fixed brand-orange arrow centred on the right
 const BOX_CSS = `
 .lib-ai-box { position: relative; background: oklch(99.5% 0.002 80); border: 1px solid ${T.rule}; border-radius: 4px; transition: border-color 0.2s ease, box-shadow 0.2s ease; }
-.lib-ai-box:focus-within { border-color: ${T.orange}; box-shadow: 0 0 0 3px oklch(65% 0.15 45 / 0.18); }
+.lib-ai-box:focus-within { border-color: ${T.navy}; box-shadow: 0 0 0 1px ${T.navy}; }
 .lib-ai-box textarea { display: block; width: 100%; box-sizing: border-box; border: 0; outline: 0; background: transparent; resize: none;
   field-sizing: content; min-height: 3.4rem; max-height: 10rem; padding: 0.9rem 4rem 0.9rem 1rem;
   font-family: ${SANS}; font-size: 1rem; line-height: 1.5; color: ${T.charcoal}; }
 .lib-ai-box textarea::placeholder { color: ${T.muted}; }
-.lib-ai-box button { position: absolute; right: 0.5rem; bottom: 0.5rem; width: 44px; height: 44px; border-radius: 50%; border: 0; cursor: pointer;
-  display: grid; place-items: center; background: oklch(93% 0.035 45); color: ${T.orangeDeep}; transition: background-color 0.2s ease, color 0.2s ease, transform 0.15s ease; }
-.lib-ai-box button[data-ready] { background: ${T.orange}; color: ${T.navy}; }
-.lib-ai-box button[data-ready]:hover { background: oklch(60% 0.155 45); }
+.lib-ai-box button { position: absolute; right: 0.6rem; top: 50%; translate: 0 -50%; width: 44px; height: 44px; border-radius: 50%; border: 0; cursor: pointer;
+  display: grid; place-items: center; background: ${T.orange}; color: ${T.navy}; transition: background-color 0.2s ease, transform 0.15s ease; }
+.lib-ai-box button:hover { background: oklch(60% 0.155 45); }
 .lib-ai-box button:active { transform: scale(0.94); }
 .lib-ai-box button:focus-visible { outline: 2px solid ${T.navy}; outline-offset: 2px; }
 .lib-ai-spin { width: 18px; height: 18px; border-radius: 50%; border: 2.4px solid currentColor; border-right-color: transparent; animation: lib-ai-spin 0.8s linear infinite; }
@@ -205,7 +209,7 @@ export default function LibraryAiSearch({
                 onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); submitMain(); } }}
                 placeholder={c.placeholder}
               />
-              <button type="submit" aria-label={loading && !showMore ? c.finding : c.find} disabled={loading} data-ready={ready || undefined}>
+              <button type="submit" aria-label={loading && !showMore ? c.finding : c.find} disabled={loading}>
                 {loading && !showMore ? (
                   <span className="lib-ai-spin" aria-hidden="true" />
                 ) : (
@@ -246,14 +250,14 @@ export default function LibraryAiSearch({
                     </ol>
                     <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem", alignItems: "center" }}>
                       {userId ? (
-                        <button type="button" onClick={addAll} disabled={saving || allSaved} className="pk-btn" style={{ ...buttonStyle(true), opacity: saving ? 0.6 : 1, cursor: allSaved ? "default" : "pointer" }}>
+                        <button type="button" onClick={addAll} disabled={saving || allSaved} style={{ ...pillStyle(true), opacity: saving ? 0.6 : 1, cursor: allSaved ? "default" : "pointer" }}>
                           {allSaved ? `✓ ${c.added}` : saving ? c.adding : c.addAll}
                         </button>
                       ) : (
-                        <PrimaryLink href="/signup">{c.signup}</PrimaryLink>
+                        <Link href="/signup" style={{ ...pillStyle(true), textDecoration: "none" }}>{c.signup}</Link>
                       )}
                       {!showMore && (
-                        <button type="button" onClick={() => setShowMore(true)} style={buttonStyle(false)}>{c.more}</button>
+                        <button type="button" onClick={() => setShowMore(true)} style={pillStyle(false)}>{c.more}</button>
                       )}
                       <button type="button" onClick={reset} style={{ background: "none", border: "none", minHeight: 44, cursor: "pointer", fontFamily: SANS, fontSize: "0.85rem", fontWeight: 600, color: T.muted, textDecoration: "underline" }}>
                         {c.reset}
@@ -264,14 +268,29 @@ export default function LibraryAiSearch({
 
                 {showMore && (
                   <form
-                    onSubmit={(e) => { e.preventDefault(); if (extra.trim()) search(`${query}\n\n${extra}`); }}
+                    onSubmit={(e) => { e.preventDefault(); if (loading) return; if (!extra.trim()) return document.getElementById("lib-ai-more")?.focus(); search(`${query}\n\n${extra}`); }}
                     style={{ display: "flex", flexDirection: "column", gap: "0.6rem", maxWidth: "44rem" }}
                   >
                     <label htmlFor="lib-ai-more" style={{ fontFamily: SANS, fontSize: "0.85rem", fontWeight: 600, color: T.navy }}>{c.moreLabel}</label>
-                    <textarea id="lib-ai-more" className="lib-search" rows={2} maxLength={600} value={extra} onChange={(e) => setExtra(e.target.value)} placeholder={c.morePlaceholder} style={fieldStyle} />
-                    <div>
-                      <button type="submit" className="pk-btn" disabled={loading || !extra.trim()} style={{ ...buttonStyle(true), opacity: loading || !extra.trim() ? 0.6 : 1 }}>
-                        {loading ? c.finding : c.refine}
+                    <div className="lib-ai-box">
+                      <textarea
+                        id="lib-ai-more"
+                        rows={2}
+                        maxLength={600}
+                        enterKeyHint="search"
+                        value={extra}
+                        onChange={(e) => setExtra(e.target.value)}
+                        onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); e.currentTarget.form?.requestSubmit(); } }}
+                        placeholder={c.morePlaceholder}
+                      />
+                      <button type="submit" aria-label={loading ? c.finding : c.refine} disabled={loading}>
+                        {loading ? (
+                          <span className="lib-ai-spin" aria-hidden="true" />
+                        ) : (
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        )}
                       </button>
                     </div>
                   </form>
