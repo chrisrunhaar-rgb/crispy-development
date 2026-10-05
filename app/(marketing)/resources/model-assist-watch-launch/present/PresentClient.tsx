@@ -377,6 +377,17 @@ const LEADS = [
 // Slides sharing a group stay mounted between clicks, so they can morph instead of fading
 type Slide = { key: string; group?: string; render: (lang: Lang) => React.ReactNode };
 
+// The full cycle image, shown once after the phases and again after the breaks
+const cycleSlide = (key: string): Slide => ({
+  key,
+  render: lang => (
+    <img src={`${IMG}/cycle-${lang}.webp`} width={1280} height={lang === "id" ? 984 : 986}
+      alt={t("The cycle: Model, Assist, Watch, Launch, and then the new leader starts again with someone else.",
+        "Siklusnya: Teladani, Bantu, Amati, Mandirikan, lalu pemimpin baru memulai lagi dengan orang lain.", lang)}
+      style={{ ...fit(1100, 740), mixBlendMode: "multiply" }} />
+  ),
+});
+
 const SLIDES: Slide[] = [
   {
     key: "title",
@@ -466,15 +477,7 @@ const SLIDES: Slide[] = [
       </div>
     ),
   })),
-  {
-    key: "cycle",
-    render: lang => (
-      <img src={`${IMG}/cycle-${lang}.webp`} width={1280} height={lang === "id" ? 984 : 986}
-        alt={t("The cycle: Model, Assist, Watch, Launch, and then the new leader starts again with someone else.",
-          "Siklusnya: Teladani, Bantu, Amati, Mandirikan, lalu pemimpin baru memulai lagi dengan orang lain.", lang)}
-        style={{ ...fit(1100, 740), mixBlendMode: "multiply" }} />
-    ),
-  },
+  cycleSlide("cycle"),
   {
     key: "shift",
     render: lang => (
@@ -518,6 +521,7 @@ const SLIDES: Slide[] = [
       </div>
     ),
   }))),
+  cycleSlide("cycle-again"),
   ...[0, 1, 2, 3, 4].map(step => ({
     key: `generations-${step}`,
     render: (lang: Lang) => <GenerationsSlide lang={lang} step={step} />,
