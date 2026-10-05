@@ -5,7 +5,7 @@ import Link from "next/link";
 import { RESOURCES } from "@/lib/resources-data";
 import { saveResourcesToDashboard } from "./actions";
 import { trackResourceSaved } from "@/lib/ga-events";
-import { T, SERIF, SANS, Eyebrow, PrimaryLink } from "@/components/promo/PromoKit";
+import { T, SERIF, SANS, PrimaryLink } from "@/components/promo/PromoKit";
 
 type Pick = { slug: string; reason: string };
 type Status = "idle" | "loading" | "done" | "crisis" | "error" | "limit";
@@ -14,8 +14,7 @@ const COPY = {
   en: {
     eyebrow: "Ask the library",
     question: "What are you facing right now?",
-    hint: "Describe it in a sentence or two. We'll point you to the modules that fit.",
-    placeholder: "For example: my team avoids hard conversations and small issues keep growing.",
+        placeholder: "e.g. my team avoids hard conversations",
     find: "Find modules",
     finding: "Looking...",
     picksFor: "Modules that fit what you described",
@@ -38,8 +37,7 @@ const COPY = {
   id: {
     eyebrow: "Tanya perpustakaan",
     question: "Apa yang sedang Anda hadapi saat ini?",
-    hint: "Ceritakan dalam satu atau dua kalimat. Kami akan menunjukkan modul yang cocok.",
-    placeholder: "Contoh: tim saya menghindari percakapan sulit dan masalah kecil terus membesar.",
+        placeholder: "mis. tim saya menghindari percakapan sulit",
     find: "Cari modul",
     finding: "Mencari...",
     picksFor: "Modul yang cocok dengan situasi Anda",
@@ -141,9 +139,8 @@ export default function LibraryAiSearch({
   return (
     <section
       aria-label={c.eyebrow}
-      style={{ background: T.band, padding: "clamp(1.5rem, 4vw, 2.5rem)", display: "flex", flexDirection: "column", gap: "1.1rem" }}
+      style={{ background: T.band, padding: "0.9rem 1.1rem", display: "flex", flexDirection: "column", gap: "0.75rem" }}
     >
-      <Eyebrow>{c.eyebrow}</Eyebrow>
 
       {status === "crisis" ? (
         <div role="alert" style={{ display: "flex", flexDirection: "column", gap: "0.9rem", maxWidth: "44rem" }}>
@@ -163,24 +160,23 @@ export default function LibraryAiSearch({
         <>
           <form
             onSubmit={(e) => { e.preventDefault(); setShowMore(false); setExtra(""); search(query); }}
-            style={{ display: "flex", flexDirection: "column", gap: "0.75rem", maxWidth: "44rem" }}
+            style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "0.6rem 0.75rem" }}
           >
-            <label htmlFor="lib-ai-q" style={{ fontFamily: SERIF, fontStyle: "italic", fontWeight: 500, fontSize: "clamp(1.5rem, 3vw, 2rem)", color: T.navy, lineHeight: 1.15 }}>
+            <label htmlFor="lib-ai-q" style={{ fontFamily: SERIF, fontStyle: "italic", fontWeight: 500, fontSize: "1.3rem", color: T.navy, lineHeight: 1.2 }}>
               {c.question}
             </label>
-            <p style={{ fontFamily: SANS, fontSize: "0.85rem", color: T.muted, margin: 0 }}>{c.hint}</p>
-            <textarea
-              id="lib-ai-q"
-              className="lib-search"
-              rows={3}
-              maxLength={600}
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder={c.placeholder}
-              style={fieldStyle}
-            />
-            <div>
-              <button type="submit" className="pk-btn" disabled={loading || query.trim().length < 3} style={{ ...buttonStyle(true), opacity: loading || query.trim().length < 3 ? 0.6 : 1 }}>
+            <div style={{ display: "flex", gap: "0.5rem", flex: "1 1 22rem", minWidth: 0 }}>
+              <input
+                id="lib-ai-q"
+                type="text"
+                className="lib-search"
+                maxLength={600}
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder={c.placeholder}
+                style={{ ...fieldStyle, flex: 1, minWidth: 0, minHeight: 48, padding: "0 1rem", fontSize: "0.9rem" }}
+              />
+              <button type="submit" className="pk-btn" disabled={loading || query.trim().length < 3} style={{ ...buttonStyle(true), flexShrink: 0, opacity: loading || query.trim().length < 3 ? 0.6 : 1 }}>
                 {loading && !showMore ? c.finding : c.find}
               </button>
             </div>
