@@ -75,6 +75,25 @@ function buttonStyle(primary: boolean): React.CSSProperties {
   };
 }
 
+// White field that grows with the text (field-sizing), orange arrow that lights up once there's enough to search
+const BOX_CSS = `
+.lib-ai-box { position: relative; background: oklch(99.5% 0.002 80); border: 1px solid ${T.rule}; border-radius: 4px; transition: border-color 0.2s ease, box-shadow 0.2s ease; }
+.lib-ai-box:focus-within { border-color: ${T.orange}; box-shadow: 0 0 0 3px oklch(65% 0.15 45 / 0.18); }
+.lib-ai-box textarea { display: block; width: 100%; box-sizing: border-box; border: 0; outline: 0; background: transparent; resize: none;
+  field-sizing: content; min-height: 3.4rem; max-height: 10rem; padding: 0.9rem 4rem 0.9rem 1rem;
+  font-family: ${SANS}; font-size: 1rem; line-height: 1.5; color: ${T.charcoal}; }
+.lib-ai-box textarea::placeholder { color: ${T.muted}; }
+.lib-ai-box button { position: absolute; right: 0.5rem; bottom: 0.5rem; width: 44px; height: 44px; border-radius: 50%; border: 0; cursor: pointer;
+  display: grid; place-items: center; background: oklch(93% 0.035 45); color: ${T.orangeDeep}; transition: background-color 0.2s ease, color 0.2s ease, transform 0.15s ease; }
+.lib-ai-box button[data-ready] { background: ${T.orange}; color: ${T.navy}; }
+.lib-ai-box button[data-ready]:hover { background: oklch(60% 0.155 45); }
+.lib-ai-box button:active { transform: scale(0.94); }
+.lib-ai-box button:focus-visible { outline: 2px solid ${T.navy}; outline-offset: 2px; }
+.lib-ai-spin { width: 18px; height: 18px; border-radius: 50%; border: 2.4px solid currentColor; border-right-color: transparent; animation: lib-ai-spin 0.8s linear infinite; }
+@keyframes lib-ai-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .lib-ai-box, .lib-ai-box button { transition: none; } .lib-ai-spin { animation-duration: 2s; } }
+`;
+
 export default function LibraryAiSearch({
   lang,
   userId,
@@ -135,12 +154,21 @@ export default function LibraryAiSearch({
 
   const allSaved = picks.length > 0 && picks.every((p) => savedSlugs.has(p.slug));
   const loading = status === "loading";
+  const ready = query.trim().length >= 3;
+
+  function submitMain() {
+    if (!ready || loading) return document.getElementById("lib-ai-q")?.focus();
+    setShowMore(false);
+    setExtra("");
+    search(query);
+  }
 
   return (
     <section
       aria-label={c.eyebrow}
-      style={{ background: T.band, padding: "0.9rem 1.1rem", display: "flex", flexDirection: "column", gap: "0.75rem" }}
+      style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}
     >
+      <style>{BOX_CSS}</style>
 
       {status === "crisis" ? (
         <div role="alert" style={{ display: "flex", flexDirection: "column", gap: "0.9rem", maxWidth: "44rem" }}>
@@ -159,25 +187,32 @@ export default function LibraryAiSearch({
       ) : (
         <>
           <form
-            onSubmit={(e) => { e.preventDefault(); setShowMore(false); setExtra(""); search(query); }}
-            style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "0.6rem 0.75rem" }}
+            onSubmit={(e) => { e.preventDefault(); submitMain(); }}
+            style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}
           >
             <label htmlFor="lib-ai-q" style={{ fontFamily: SERIF, fontStyle: "italic", fontWeight: 500, fontSize: "1.3rem", color: T.navy, lineHeight: 1.2 }}>
               {c.question}
             </label>
-            <div style={{ display: "flex", gap: "0.5rem", flex: "1 1 22rem", minWidth: 0 }}>
-              <input
+            {/* Chat-style box: the text gets the full width, the send arrow sits in the corner */}
+            <div className="lib-ai-box">
+              <textarea
                 id="lib-ai-q"
-                type="text"
-                className="lib-search"
+                rows={2}
                 maxLength={600}
+                enterKeyHint="search"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
+                onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); submitMain(); } }}
                 placeholder={c.placeholder}
-                style={{ ...fieldStyle, flex: 1, minWidth: 0, minHeight: 48, padding: "0 1rem", fontSize: "0.9rem" }}
               />
-              <button type="submit" className="pk-btn" disabled={loading || query.trim().length < 3} style={{ ...buttonStyle(true), flexShrink: 0, opacity: loading || query.trim().length < 3 ? 0.6 : 1 }}>
-                {loading && !showMore ? c.finding : c.find}
+              <button type="submit" aria-label={loading && !showMore ? c.finding : c.find} disabled={loading} data-ready={ready || undefined}>
+                {loading && !showMore ? (
+                  <span className="lib-ai-spin" aria-hidden="true" />
+                ) : (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                )}
               </button>
             </div>
           </form>
