@@ -338,7 +338,7 @@ function CycleDiagram({ selected, onSelect, lang }: { selected: PhaseKey; onSele
       <text x={58} y={72} textAnchor="middle" fontSize={14} fontWeight={700} fill={orange}>{t("New cycle", "Siklus baru", lang)}</text>
       {/* Model and Assist go back and forth */}
       <path d="M 280 172 Q 272 126 236 118" fill="none" stroke={orange} strokeWidth={2} markerStart="url(#mawl-arrow)" markerEnd="url(#mawl-arrow)" />
-      <text x={250} y={160} textAnchor="middle" fontSize={14} fill={muted}>{t("Show again", "Contohkan lagi", lang)}</text>
+      <text x={260} y={158} textAnchor="end" fontSize={14} fill={muted}>{t("Show again", "Contohkan lagi", lang)}</text>
       <text x={200} y={200} textAnchor="middle" fontSize={14} fontWeight={600} fill={muted}>{t("Your presence", "Kehadiran Anda", lang)}</text>
       <text x={200} y={220} textAnchor="middle" fontSize={14} fontWeight={600} fill={muted}>{t("fades", "memudar", lang)}</text>
       {PHASE_KEYS.map((k, i) => {
@@ -368,11 +368,11 @@ type Scenario = {
 const SCENARIOS: Scenario[] = [
   {
     placeEn: "Nairobi, Kenya", placeId: "Nairobi, Kenya",
-    en: "Grace has run the weekly staff briefing at a Nairobi clinic for three months. Daniel, her manager, no longer attends. Every other Friday he reads her notes and asks one or two questions about the decisions she made.",
-    id: "Grace sudah memimpin rapat staf mingguan di sebuah klinik di Nairobi selama tiga bulan. Daniel, atasannya, tidak lagi hadir. Setiap dua minggu sekali pada hari Jumat ia membaca catatan Grace dan mengajukan satu atau dua pertanyaan tentang keputusan yang ia ambil.",
+    en: "Grace has run the medicine ordering and stock at a Nairobi clinic for three months. Daniel, her manager, no longer signs off each order. Every other Friday he reads her stock report and asks one or two questions about the decisions she made.",
+    id: "Grace sudah mengelola pemesanan dan stok obat di sebuah klinik di Nairobi selama tiga bulan. Daniel, atasannya, tidak lagi menyetujui setiap pesanan. Setiap dua minggu sekali pada hari Jumat ia membaca laporan stok Grace dan mengajukan satu atau dua pertanyaan tentang keputusan yang ia ambil.",
     answer: "watch",
-    explainEn: "Watch. Grace leads and Daniel checks from a distance. His questions keep the whole skill in view without taking the meeting back.",
-    explainId: "Amati. Grace memimpin dan Daniel memeriksa dari kejauhan. Pertanyaannya menjaga seluruh keterampilan tetap terlihat tanpa mengambil alih rapat itu.",
+    explainEn: "Watch. Grace leads and Daniel checks from a distance. His questions keep the whole skill in view without taking the ordering back.",
+    explainId: "Amati. Grace memimpin dan Daniel memeriksa dari kejauhan. Pertanyaannya menjaga seluruh keterampilan tetap terlihat tanpa mengambil alih pemesanan itu.",
   },
   {
     placeEn: "Lima, Peru", placeId: "Lima, Peru",
@@ -602,8 +602,8 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
     },
     {
       en: "Launching without checking the whole skill set", id: "Memandirikan tanpa memeriksa seluruh keterampilan",
-      lookEn: "They can run the meeting but have never handled a conflict in it. The gap shows up at the worst moment.",
-      lookId: "Mereka bisa memimpin rapat, tetapi belum pernah menangani konflik di dalamnya. Celah itu muncul di saat yang paling buruk.",
+      lookEn: "They can plan the outreach and lead the team on the day, but have never had to tell a volunteer the role isn't right for them. The gap shows up at the worst moment.",
+      lookId: "Mereka bisa merencanakan kegiatan pelayanan dan memimpin tim pada hari pelaksanaannya, tetapi belum pernah harus memberi tahu seorang relawan bahwa peran itu tidak cocok untuknya. Celah itu muncul di saat yang paling buruk.",
       whyEn: "You checked the skills you could see and missed the ones that only appear under pressure.",
       whyId: "Anda memeriksa keterampilan yang terlihat dan melewatkan yang baru muncul saat ada tekanan.",
       doEn: "List every skill the role needs, including the rare and hard ones, and check each one.",
@@ -681,8 +681,8 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
         <div style={wrap}>
           <h2 style={h2}>{t("Growing leaders who go further than you", "Menumbuhkan pemimpin yang melangkah lebih jauh dari Anda", lang)}</h2>
           <p style={p}>{t(
-            "Many leaders say they want their people to step up. Then they keep running the meeting, answering every question and fixing each mistake before anyone else sees it. The team learns the lesson quickly: wait, and the leader will do it.",
-            "Banyak pemimpin berkata mereka ingin orang-orangnya maju. Lalu mereka tetap memimpin setiap rapat, menjawab setiap pertanyaan, dan memperbaiki setiap kesalahan sebelum orang lain melihatnya. Tim dengan cepat menangkap pelajarannya: tunggu saja, nanti pemimpin yang mengerjakan.", lang)}</p>
+            "Many leaders say they want their people to step up. Then they keep making every decision, answering every question and fixing each mistake before anyone else sees it. The team learns the lesson quickly: wait, and the leader will do it.",
+            "Banyak pemimpin berkata mereka ingin orang-orangnya maju. Lalu mereka tetap mengambil setiap keputusan, menjawab setiap pertanyaan, dan memperbaiki setiap kesalahan sebelum orang lain melihatnya. Tim dengan cepat menangkap pelajarannya: tunggu saja, nanti pemimpin yang mengerjakan.", lang)}</p>
           <p style={p}>{t(
             "The goal is not a copy of yourself. It is a leader who can do the work without you, and in time do more than you could. Jesus trained his disciples this way, and Paul did the same in city after city.",
             "Tujuannya bukan tiruan diri Anda. Tujuannya adalah seorang pemimpin yang bisa mengerjakan tugas itu tanpa Anda, dan pada waktunya melakukan lebih banyak daripada yang bisa Anda lakukan. Yesus melatih murid-murid-Nya dengan cara ini, dan Paulus melakukan hal yang sama dari kota ke kota.", lang)}<Sup n="¹" /></p>
@@ -723,6 +723,19 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
               </ol>
               <p style={{ fontSize: 12.5, color: muted, margin: "12px 0 0" }}>
                 {t("Based on the Oxford Learner's Dictionary", "Berdasarkan Kamus Besar Bahasa Indonesia (KBBI)", lang)}<Sup n="⁸" />
+              </p>
+            </div>
+
+            {/* The module's own definition */}
+            <div style={{ background: offWhite, borderLeft: `4px solid ${orange}`, borderRadius: 8, padding: "20px 24px", margin: "0 0 28px" }}>
+              <p style={{ fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: orange, margin: "0 0 8px" }}>
+                {t("Our definition", "Definisi kami", lang)}
+              </p>
+              <p style={{ fontFamily: "var(--font-cormorant)", fontSize: 24, fontWeight: 600, color: navy, margin: 0, lineHeight: 1.35 }}>
+                {t(
+                  "Empowerment is handing over real power, the skill, the confidence and the authority, step by step, until someone can continue without you and empower others too.",
+                  "Pemberdayaan adalah menyerahkan kuasa yang nyata, yaitu keterampilan, rasa percaya diri, dan wewenang, selangkah demi selangkah, sampai seseorang mampu melanjutkan tanpa Anda dan memberdayakan orang lain juga.",
+                  lang)}
               </p>
             </div>
 
@@ -993,8 +1006,8 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
             </figcaption>
           </figure>
           <p style={p}>{t(
-            "The same happens in your team. Your new team leader runs meetings alone (Launch), but still needs you beside them for hard conversations (Assist).",
-            "Hal yang sama terjadi di tim Anda. Pemimpin tim Anda yang baru sudah memimpin rapat sendiri (Mandirikan), tetapi masih membutuhkan Anda di sampingnya untuk percakapan yang sulit (Bantu).", lang)}<Sup n="²" /></p>
+            "The same happens in your team. Your new team leader handles the budget alone (Launch), but still needs you beside them for hard conversations (Assist).",
+            "Hal yang sama terjadi di tim Anda. Pemimpin tim Anda yang baru sudah mengelola anggaran sendiri (Mandirikan), tetapi masih membutuhkan Anda di sampingnya untuk percakapan yang sulit (Bantu).", lang)}<Sup n="²" /></p>
           <div style={callout}>
             <p style={{ ...p, margin: 0 }}>{t(
               "Inside each phase your learner is also moving through the Four Stages of Competence: from not knowing what they lack, to painful awareness, to effortful skill, to ease. The painful awareness usually hits hardest in Assist. That is where people want to quit, and where your presence matters most.",

@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { PHONE_PORTRAIT_QUERY, PresentRotateNotice, enterPresentFullscreen, usePresentPhone } from "@/components/PresentPhone";
 import { useLanguage } from "@/lib/LanguageContext";
@@ -45,12 +45,6 @@ const RIDERS = [
   { src: "cut-bigbike", w: 436, h: 418, scale: 1, en: "Joel", id: "Joel", subEn: "Reliable people", subId: "Orang yang dapat dipercaya" },
 ];
 
-const SKILLS: { en: string; id: string; k: PhaseKey }[] = [
-  { en: "Road rules in a busy city", id: "Aturan jalan di kota yang ramai", k: "model" },
-  { en: "Steep hills", id: "Tanjakan curam", k: "assist" },
-  { en: "Steering through traffic", id: "Mengarahkan di tengah lalu lintas", k: "watch" },
-  { en: "Starting the engine", id: "Menyalakan mesin", k: "launch" },
-];
 const phaseLabel = (k: PhaseKey, lang: Lang) => {
   const ph = PHASES.find(x => x.k === k)!;
   return t(ph.en, ph.id, lang);
@@ -249,6 +243,133 @@ function CounterSlide({ lang }: { lang: Lang }) {
 }
 
 // ─── The slides ───────────────────────────────────────────────────────────────
+// ─── Where the cycle breaks: the module's four-circle cycle, one variant per break
+type BreakKey = "skip-assist" | "stuck-assist" | "stuck-watch" | "missing-piece" | "one-generation";
+const BREAKS: { k: BreakKey; en: string; id: string; lineEn: string[]; lineId: string[] }[] = [
+  { k: "skip-assist", en: "Skipping Assist", id: "Melewatkan tahap Bantu",
+    lineEn: ["Straight from showing to watching.", "No practice with you beside them."],
+    lineId: ["Langsung dari memberi teladan ke mengamati.", "Tanpa latihan dengan Anda di samping mereka."] },
+  { k: "stuck-assist", en: "Staying in Assist too long", id: "Terlalu lama di tahap Bantu",
+    lineEn: ["You keep helping.", "They never get to try alone."],
+    lineId: ["Anda terus membantu.", "Mereka tidak pernah mencoba sendiri."] },
+  { k: "stuck-watch", en: "Never leaving Watch", id: "Tidak pernah keluar dari tahap Amati",
+    lineEn: ["You keep checking.", "The day they lead alone never comes."],
+    lineId: ["Anda terus memeriksa.", "Hari mereka memimpin sendiri tidak pernah tiba."] },
+  { k: "missing-piece", en: "Launching without the whole skill set", id: "Memandirikan tanpa seluruh keterampilan",
+    lineEn: ["They lead on their own.", "But one piece of the skill is missing."],
+    lineId: ["Mereka memimpin sendiri.", "Tetapi satu bagian keterampilan belum ada."] },
+  { k: "one-generation", en: "Stopping at one generation", id: "Berhenti di satu generasi",
+    lineEn: ["They can lead.", "They never start the cycle with someone else."],
+    lineId: ["Mereka mampu memimpin.", "Mereka tidak pernah memulai siklus dengan orang lain."] },
+];
+const NODE_POS: Record<PhaseKey, { x: number; y: number }> = {
+  model: { x: 200, y: 70 }, assist: { x: 330, y: 200 }, watch: { x: 200, y: 330 }, launch: { x: 70, y: 200 },
+};
+const NODE_STROKE: Record<PhaseKey, { dash?: string; opacity: number }> = {
+  model: { opacity: 1 }, assist: { opacity: 0.85 }, watch: { dash: "8 6", opacity: 0.6 }, launch: { dash: "3 7", opacity: 0.45 },
+};
+const FADE = 0.18;
+// Point on a circle, angle in degrees (0 = right, 90 = down)
+const pt = (cx: number, cy: number, r: number, deg: number) => {
+  const a = (deg * Math.PI) / 180;
+  return `${(cx + r * Math.cos(a)).toFixed(1)} ${(cy + r * Math.sin(a)).toFixed(1)}`;
+};
+// A ring-shaped slice between two radii and two angles: the "missing piece"
+const ringSlice = (cx: number, cy: number, r1: number, r2: number, a1: number, a2: number) =>
+  `M ${pt(cx, cy, r1, a1)} L ${pt(cx, cy, r2, a1)} A ${r2} ${r2} 0 0 1 ${pt(cx, cy, r2, a2)} L ${pt(cx, cy, r1, a2)} A ${r1} ${r1} 0 0 0 ${pt(cx, cy, r1, a1)} Z`;
+
+function BreakCycle({ variant, lang }: { variant: BreakKey; lang: Lang }) {
+  const mk = `mawl-brk-${useId().replace(/[^a-zA-Z0-9]/g, "")}`;
+  const arrow = `url(#${mk})`;
+  const v = variant;
+  // Arcs and circles the learner never reaches fade out
+  const fadeArc = {
+    ma: v === "skip-assist" ? FADE : 1,
+    aw: v === "skip-assist" || v === "stuck-assist" ? FADE : 1,
+    wl: v === "stuck-assist" ? FADE : 1,
+    nc: v === "stuck-assist" || v === "stuck-watch" ? FADE : 1,
+  };
+  const fadeNode: Record<PhaseKey, number> = {
+    model: 1,
+    assist: v === "skip-assist" ? 0.25 : 1,
+    watch: v === "stuck-assist" ? 0.25 : 1,
+    launch: v === "stuck-assist" || v === "stuck-watch" ? 0.25 : 1,
+  };
+  const L = NODE_POS.launch;
+  return (
+    <svg viewBox="-20 -20 440 440" width={640} height={640} style={{ display: "block", overflow: "visible" }} aria-hidden="true">
+      <defs>
+        <marker id={mk} viewBox="0 0 10 10" refX={8} refY={5} markerWidth={5} markerHeight={5} orient="auto-start-reverse">
+          <path d="M0 0 L10 5 L0 10 z" fill={orange} />
+        </marker>
+      </defs>
+
+      <path d="M 257 83.2 A 130 130 0 0 1 316.8 143" fill="none" stroke={orange} strokeWidth={3} markerEnd={arrow} opacity={fadeArc.ma} />
+      <path d="M 316.8 257 A 130 130 0 0 1 257 316.8" fill="none" stroke={orange} strokeWidth={3} markerEnd={arrow} opacity={fadeArc.aw} />
+      {v === "stuck-watch" ? (
+        <>
+          {/* Watch to Launch stops short at a barrier */}
+          <path d="M 143 316.8 A 130 130 0 0 1 116.4 299.6" fill="none" stroke={orange} strokeWidth={3} />
+          <path d={`M ${pt(200, 200, 106, 138)} L ${pt(200, 200, 154, 138)}`} stroke={navy} strokeWidth={8} strokeLinecap="round" />
+          <path d="M 108 290 A 130 130 0 0 1 83.2 257" fill="none" stroke={orange} strokeWidth={3} opacity={FADE} />
+        </>
+      ) : (
+        <path d="M 143 316.8 A 130 130 0 0 1 83.2 257" fill="none" stroke={orange} strokeWidth={3} markerEnd={arrow} opacity={fadeArc.wl} />
+      )}
+      {v === "one-generation" ? (
+        <>
+          {/* The new cycle is cut off */}
+          <path d="M 83.2 143 A 130 130 0 0 1 100.9 115.6" fill="none" stroke={orange} strokeWidth={3} strokeDasharray="6 5" />
+          <path d={`M ${pt(200, 200, 116, 220)} L ${pt(200, 200, 146, 226)}`} stroke={navy} strokeWidth={4} strokeLinecap="round" />
+          <path d={`M ${pt(200, 200, 116, 226)} L ${pt(200, 200, 146, 232)}`} stroke={navy} strokeWidth={4} strokeLinecap="round" />
+          <path d="M 122.8 95.4 A 130 130 0 0 1 143 83.2" fill="none" stroke={orange} strokeWidth={3} strokeDasharray="6 5" markerEnd={arrow} opacity={FADE} />
+          <text x={50} y={66} textAnchor="middle" fontSize={15} fontWeight={700} fill={orange} opacity={0.35}>{t("New cycle", "Siklus baru", lang)}</text>
+        </>
+      ) : (
+        <>
+          <path d="M 83.2 143 A 130 130 0 0 1 143 83.2" fill="none" stroke={orange} strokeWidth={3} strokeDasharray="6 5" markerEnd={arrow} opacity={fadeArc.nc} />
+          <text x={50} y={66} textAnchor="middle" fontSize={15} fontWeight={700} fill={orange} opacity={fadeArc.nc}>{t("New cycle", "Siklus baru", lang)}</text>
+        </>
+      )}
+
+      {/* Skipping Assist: one big jump from Model to Watch */}
+      {v === "skip-assist" && (
+        <path d="M 200 124 L 200 272" fill="none" stroke={orange} strokeWidth={9} strokeLinecap="round" markerEnd={arrow} />
+      )}
+      {/* Stuck: the arrow keeps looping round the same circle */}
+      {v === "stuck-assist" && (
+        <path d={`M ${pt(330, 200, 68, -150)} A 68 68 0 1 1 ${pt(330, 200, 68, 150)}`} fill="none" stroke={orange} strokeWidth={6} markerEnd={arrow} />
+      )}
+      {v === "stuck-watch" && (
+        <path d={`M ${pt(200, 330, 68, -60)} A 68 68 0 1 1 ${pt(200, 330, 68, -120)}`} fill="none" stroke={orange} strokeWidth={6} markerEnd={arrow} />
+      )}
+
+      {PHASES.map((ph, i) => {
+        const { x, y } = NODE_POS[ph.k];
+        const st = NODE_STROKE[ph.k];
+        return (
+          <g key={ph.k} opacity={fadeNode[ph.k]}>
+            <circle cx={x} cy={y} r={48} fill="white" />
+            <circle cx={x} cy={y} r={48} fill="none" stroke={navy} strokeWidth={3} strokeDasharray={st.dash} strokeOpacity={st.opacity} />
+            <text x={x} y={y - 6} textAnchor="middle" fontSize={15} fontWeight={700} fill={muted}>{i + 1}</text>
+            <text x={x} y={y + 15} textAnchor="middle" fontSize={15} fontWeight={700} fill={navy}>{t(ph.en, ph.id, lang)}</text>
+          </g>
+        );
+      })}
+
+      {/* Launching without the whole skill set: a piece of Launch is missing */}
+      {v === "missing-piece" && (
+        <>
+          <path d={ringSlice(L.x, L.y, 26, 51, 200, 250)} fill={offWhite} stroke={navy} strokeWidth={1.5} strokeDasharray="4 4" />
+          <g transform="translate(-30 -32)">
+            <path d={ringSlice(L.x, L.y, 26, 51, 200, 250)} fill={orange} />
+          </g>
+        </>
+      )}
+    </svg>
+  );
+}
+
 type Slide = { key: string; render: (lang: Lang) => React.ReactNode };
 
 const SLIDES: Slide[] = [
@@ -287,6 +408,19 @@ const SLIDES: Slide[] = [
         ).map(d => (
           <p key={d} style={{ fontFamily: sans, fontSize: 36, fontWeight: 500, color: navy, margin: "0 0 20px", lineHeight: 1.35 }}>{d}</p>
         ))}
+      </div>
+    ),
+  },
+  {
+    key: "definition",
+    render: lang => (
+      <div style={{ width: 1180 }}>
+        <p style={{ ...kicker, textAlign: "left" }}>{t("Our definition", "Definisi kami", lang)}</p>
+        <div style={{ width: 96, height: 4, background: orange, borderRadius: 2, margin: "28px 0 36px" }} />
+        <p style={{ fontFamily: serif, fontWeight: 600, fontSize: 62, color: navy, margin: 0, lineHeight: 1.18 }}>
+          {t("Empowerment is handing over real power, the skill, the confidence and the authority, step by step, until someone can continue without you and empower others too.",
+            "Pemberdayaan adalah menyerahkan kuasa yang nyata, yaitu keterampilan, rasa percaya diri, dan wewenang, selangkah demi selangkah, sampai seseorang mampu melanjutkan tanpa Anda dan memberdayakan orang lain juga.", lang)}
+        </p>
       </div>
     ),
   },
@@ -344,46 +478,6 @@ const SLIDES: Slide[] = [
     ),
   },
   {
-    key: "skills",
-    render: lang => (
-      <>
-        <h2 style={midTitle}>{t("Skill by skill", "Keterampilan demi keterampilan", lang)}</h2>
-        <div style={{ width: 1200 }}>
-          <div style={{ display: "grid", gridTemplateColumns: "400px repeat(4, 1fr)", alignItems: "end", marginBottom: 12 }}>
-            <span />
-            {PHASES.map(ph => (
-              <span key={ph.k} style={{ textAlign: "center", fontFamily: sans, fontSize: 22, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: ph.k === "launch" ? orange : navy }}>
-                {t(ph.en, ph.id, lang)}
-              </span>
-            ))}
-          </div>
-          {SKILLS.map(s => {
-            const at = PHASES.findIndex(x => x.k === s.k);
-            const tone = s.k === "launch" ? orange : navy;
-            return (
-              <div key={s.en} style={{ display: "grid", gridTemplateColumns: "400px repeat(4, 1fr)", alignItems: "center", padding: "22px 0", borderTop: `2px solid ${lightGray}` }}>
-                <span style={{ fontFamily: sans, fontSize: 30, fontWeight: 600, color: navy, lineHeight: 1.2 }}>{t(s.en, s.id, lang)}</span>
-                <div style={{ gridColumn: "2 / span 4", position: "relative", height: 44 }}>
-                  <div style={{ position: "absolute", left: "12.5%", right: "12.5%", top: 20, height: 4, background: lightGray }} />
-                  <div style={{ position: "absolute", left: "12.5%", width: `${at * 25}%`, top: 18, height: 8, borderRadius: 4, background: tone }} />
-                  {PHASES.map((ph, j) => (
-                    <span key={ph.k} style={{
-                      position: "absolute", left: `${12.5 + j * 25}%`, top: 22, transform: "translate(-50%, -50%)", borderRadius: "50%",
-                      width: j === at ? 36 : 14, height: j === at ? 36 : 14,
-                      background: j <= at ? tone : lightGray,
-                      boxShadow: j === at ? `0 0 0 5px ${offWhite}, 0 0 0 9px ${tone}` : "none",
-                    }} />
-                  ))}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-        <p style={kicker}>{t("Per skill, not per person.", "Per keterampilan, bukan per orang.", lang)}</p>
-      </>
-    ),
-  },
-  {
     key: "spotlight",
     render: lang => (
       <>
@@ -395,6 +489,22 @@ const SLIDES: Slide[] = [
       </>
     ),
   },
+  ...BREAKS.map((b, i): Slide => ({
+    key: `break-${b.k}`,
+    render: lang => (
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 640px", alignItems: "center", gap: 60, width: "100%" }}>
+        <div>
+          <p style={{ ...kicker, textAlign: "left" }}>{t(`Where the cycle breaks · ${i + 1}/5`, `Di mana siklus ini macet · ${i + 1}/5`, lang)}</p>
+          <h2 style={{ ...midTitle, textAlign: "left", fontSize: 72, margin: "14px 0 28px" }}>{t(b.en, b.id, lang)}</h2>
+          <div style={{ width: 96, height: 4, background: orange, borderRadius: 2, marginBottom: 28 }} />
+          {(lang === "id" ? b.lineId : b.lineEn).map(line => (
+            <p key={line} style={{ fontFamily: sans, fontSize: 32, fontWeight: 500, color: navy, margin: "0 0 12px", lineHeight: 1.3 }}>{line}</p>
+          ))}
+        </div>
+        <BreakCycle variant={b.k} lang={lang} />
+      </div>
+    ),
+  })),
   ...[0, 1, 2, 3, 4].map(step => ({
     key: `generations-${step}`,
     render: (lang: Lang) => <GenerationsSlide lang={lang} step={step} />,
