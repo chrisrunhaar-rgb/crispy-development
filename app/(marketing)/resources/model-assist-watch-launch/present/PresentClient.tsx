@@ -62,6 +62,7 @@ const midTitle: React.CSSProperties = { ...bigTitle, fontSize: 76 };
 const kicker: React.CSSProperties = {
   fontFamily: sans, fontSize: 20, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: orange, margin: 0, textAlign: "center",
 };
+// Drawings with a white background use mixBlendMode "multiply" so the white takes on the slide colour
 const fit = (maxW: number, maxH: number): React.CSSProperties => ({
   display: "block", maxWidth: maxW, maxHeight: maxH, width: "auto", height: "auto", objectFit: "contain",
 });
@@ -243,24 +244,34 @@ function CounterSlide({ lang }: { lang: Lang }) {
 }
 
 // ─── The slides ───────────────────────────────────────────────────────────────
-// ─── Where the cycle breaks: the module's four-circle cycle, one variant per break
+// ─── Where the cycle breaks: the healthy cycle first, then on the next click it turns into the broken one
 type BreakKey = "skip-assist" | "stuck-assist" | "stuck-watch" | "missing-piece" | "one-generation";
-const BREAKS: { k: BreakKey; en: string; id: string; lineEn: string[]; lineId: string[] }[] = [
+const BREAKS: { k: BreakKey; en: string; id: string; lineEn: string[]; lineId: string[]; whyEn: string; whyId: string }[] = [
   { k: "skip-assist", en: "Skipping Assist", id: "Melewatkan tahap Bantu",
     lineEn: ["Straight from showing to watching.", "No practice with you beside them."],
-    lineId: ["Langsung dari memberi teladan ke mengamati.", "Tanpa latihan dengan Anda di samping mereka."] },
+    lineId: ["Langsung dari memberi teladan ke mengamati.", "Tanpa latihan dengan Anda di samping mereka."],
+    whyEn: "It feels efficient. You assume they understood because they nodded.",
+    whyId: "Rasanya efisien. Anda mengira mereka sudah paham karena mereka mengangguk." },
   { k: "stuck-assist", en: "Staying in Assist too long", id: "Terlalu lama di tahap Bantu",
     lineEn: ["You keep helping.", "They never get to try alone."],
-    lineId: ["Anda terus membantu.", "Mereka tidak pernah mencoba sendiri."] },
+    lineId: ["Anda terus membantu.", "Mereka tidak pernah mencoba sendiri."],
+    whyEn: "Stepping back feels risky, and fixing it yourself is faster.",
+    whyId: "Mundur terasa berisiko, dan memperbaikinya sendiri lebih cepat." },
   { k: "stuck-watch", en: "Never leaving Watch", id: "Tidak pernah keluar dari tahap Amati",
     lineEn: ["You keep checking.", "The day they lead alone never comes."],
-    lineId: ["Anda terus memeriksa.", "Hari mereka memimpin sendiri tidak pernah tiba."] },
+    lineId: ["Anda terus memeriksa.", "Hari mereka memimpin sendiri tidak pernah tiba."],
+    whyEn: "Being needed feels good.",
+    whyId: "Dibutuhkan itu terasa menyenangkan." },
   { k: "missing-piece", en: "Launching without the whole skill set", id: "Memandirikan tanpa seluruh keterampilan",
     lineEn: ["They lead on their own.", "But one piece of the skill is missing."],
-    lineId: ["Mereka memimpin sendiri.", "Tetapi satu bagian keterampilan belum ada."] },
+    lineId: ["Mereka memimpin sendiri.", "Tetapi satu bagian keterampilan belum ada."],
+    whyEn: "You checked the skills you could see and missed the ones that only appear under pressure.",
+    whyId: "Anda memeriksa keterampilan yang terlihat dan melewatkan yang baru muncul saat ada tekanan." },
   { k: "one-generation", en: "Stopping at one generation", id: "Berhenti di satu generasi",
     lineEn: ["They can lead.", "They never start the cycle with someone else."],
-    lineId: ["Mereka mampu memimpin.", "Mereka tidak pernah memulai siklus dengan orang lain."] },
+    lineId: ["Mereka mampu memimpin.", "Mereka tidak pernah memulai siklus dengan orang lain."],
+    whyEn: "Passing on the cycle was never part of the goal.",
+    whyId: "Meneruskan siklus ini memang tidak pernah menjadi bagian dari tujuan." },
 ];
 const NODE_POS: Record<PhaseKey, { x: number; y: number }> = {
   model: { x: 200, y: 70 }, assist: { x: 330, y: 200 }, watch: { x: 200, y: 330 }, launch: { x: 70, y: 200 },
@@ -269,6 +280,7 @@ const NODE_STROKE: Record<PhaseKey, { dash?: string; opacity: number }> = {
   model: { opacity: 1 }, assist: { opacity: 0.85 }, watch: { dash: "8 6", opacity: 0.6 }, launch: { dash: "3 7", opacity: 0.45 },
 };
 const FADE = 0.18;
+const MORPH = "opacity 0.7s ease, transform 0.7s ease";
 // Point on a circle, angle in degrees (0 = right, 90 = down)
 const pt = (cx: number, cy: number, r: number, deg: number) => {
   const a = (deg * Math.PI) / 180;
@@ -278,10 +290,10 @@ const pt = (cx: number, cy: number, r: number, deg: number) => {
 const ringSlice = (cx: number, cy: number, r1: number, r2: number, a1: number, a2: number) =>
   `M ${pt(cx, cy, r1, a1)} L ${pt(cx, cy, r2, a1)} A ${r2} ${r2} 0 0 1 ${pt(cx, cy, r2, a2)} L ${pt(cx, cy, r1, a2)} A ${r1} ${r1} 0 0 0 ${pt(cx, cy, r1, a1)} Z`;
 
-function BreakCycle({ variant, lang }: { variant: BreakKey; lang: Lang }) {
+function BreakCycle({ variant, broken, lang }: { variant: BreakKey; broken: boolean; lang: Lang }) {
   const mk = `mawl-brk-${useId().replace(/[^a-zA-Z0-9]/g, "")}`;
   const arrow = `url(#${mk})`;
-  const v = variant;
+  const v = broken ? variant : null;
   // Arcs and circles the learner never reaches fade out
   const fadeArc = {
     ma: v === "skip-assist" ? FADE : 1,
@@ -295,6 +307,7 @@ function BreakCycle({ variant, lang }: { variant: BreakKey; lang: Lang }) {
     watch: v === "stuck-assist" ? 0.25 : 1,
     launch: v === "stuck-assist" || v === "stuck-watch" ? 0.25 : 1,
   };
+  const on = (k: BreakKey) => ({ opacity: v === k ? 1 : 0, transition: MORPH });
   const L = NODE_POS.launch;
   return (
     <svg viewBox="-20 -20 440 440" width={640} height={640} style={{ display: "block", overflow: "visible" }} aria-hidden="true">
@@ -304,51 +317,37 @@ function BreakCycle({ variant, lang }: { variant: BreakKey; lang: Lang }) {
         </marker>
       </defs>
 
-      <path d="M 257 83.2 A 130 130 0 0 1 316.8 143" fill="none" stroke={orange} strokeWidth={3} markerEnd={arrow} opacity={fadeArc.ma} />
-      <path d="M 316.8 257 A 130 130 0 0 1 257 316.8" fill="none" stroke={orange} strokeWidth={3} markerEnd={arrow} opacity={fadeArc.aw} />
-      {v === "stuck-watch" ? (
-        <>
-          {/* Watch to Launch stops short at a barrier */}
-          <path d="M 143 316.8 A 130 130 0 0 1 116.4 299.6" fill="none" stroke={orange} strokeWidth={3} />
-          <path d={`M ${pt(200, 200, 106, 138)} L ${pt(200, 200, 154, 138)}`} stroke={navy} strokeWidth={8} strokeLinecap="round" />
-          <path d="M 108 290 A 130 130 0 0 1 83.2 257" fill="none" stroke={orange} strokeWidth={3} opacity={FADE} />
-        </>
-      ) : (
-        <path d="M 143 316.8 A 130 130 0 0 1 83.2 257" fill="none" stroke={orange} strokeWidth={3} markerEnd={arrow} opacity={fadeArc.wl} />
-      )}
-      {v === "one-generation" ? (
-        <>
-          {/* The new cycle is cut off */}
-          <path d="M 83.2 143 A 130 130 0 0 1 100.9 115.6" fill="none" stroke={orange} strokeWidth={3} strokeDasharray="6 5" />
-          <path d={`M ${pt(200, 200, 116, 220)} L ${pt(200, 200, 146, 226)}`} stroke={navy} strokeWidth={4} strokeLinecap="round" />
-          <path d={`M ${pt(200, 200, 116, 226)} L ${pt(200, 200, 146, 232)}`} stroke={navy} strokeWidth={4} strokeLinecap="round" />
-          <path d="M 122.8 95.4 A 130 130 0 0 1 143 83.2" fill="none" stroke={orange} strokeWidth={3} strokeDasharray="6 5" markerEnd={arrow} opacity={FADE} />
-          <text x={50} y={66} textAnchor="middle" fontSize={15} fontWeight={700} fill={orange} opacity={0.35}>{t("New cycle", "Siklus baru", lang)}</text>
-        </>
-      ) : (
-        <>
-          <path d="M 83.2 143 A 130 130 0 0 1 143 83.2" fill="none" stroke={orange} strokeWidth={3} strokeDasharray="6 5" markerEnd={arrow} opacity={fadeArc.nc} />
-          <text x={50} y={66} textAnchor="middle" fontSize={15} fontWeight={700} fill={orange} opacity={fadeArc.nc}>{t("New cycle", "Siklus baru", lang)}</text>
-        </>
-      )}
+      <path d="M 257 83.2 A 130 130 0 0 1 316.8 143" fill="none" stroke={orange} strokeWidth={3} markerEnd={arrow} style={{ opacity: fadeArc.ma, transition: MORPH }} />
+      <path d="M 316.8 257 A 130 130 0 0 1 257 316.8" fill="none" stroke={orange} strokeWidth={3} markerEnd={arrow} style={{ opacity: fadeArc.aw, transition: MORPH }} />
+      {/* Watch to Launch: whole arrow, or stopped short at a barrier */}
+      <path d="M 143 316.8 A 130 130 0 0 1 83.2 257" fill="none" stroke={orange} strokeWidth={3} markerEnd={arrow}
+        style={{ opacity: v === "stuck-watch" ? 0 : fadeArc.wl, transition: MORPH }} />
+      <g style={on("stuck-watch")}>
+        <path d="M 143 316.8 A 130 130 0 0 1 116.4 299.6" fill="none" stroke={orange} strokeWidth={3} />
+        <path d={`M ${pt(200, 200, 106, 138)} L ${pt(200, 200, 154, 138)}`} stroke={navy} strokeWidth={8} strokeLinecap="round" />
+        <path d="M 108 290 A 130 130 0 0 1 83.2 257" fill="none" stroke={orange} strokeWidth={3} opacity={FADE} />
+      </g>
+      {/* Launch back to Model: whole arrow, or cut off */}
+      <path d="M 83.2 143 A 130 130 0 0 1 143 83.2" fill="none" stroke={orange} strokeWidth={3} strokeDasharray="6 5" markerEnd={arrow}
+        style={{ opacity: v === "one-generation" ? 0 : fadeArc.nc, transition: MORPH }} />
+      <g style={on("one-generation")}>
+        <path d="M 83.2 143 A 130 130 0 0 1 100.9 115.6" fill="none" stroke={orange} strokeWidth={3} strokeDasharray="6 5" />
+        <path d={`M ${pt(200, 200, 116, 220)} L ${pt(200, 200, 146, 226)}`} stroke={navy} strokeWidth={4} strokeLinecap="round" />
+        <path d={`M ${pt(200, 200, 116, 226)} L ${pt(200, 200, 146, 232)}`} stroke={navy} strokeWidth={4} strokeLinecap="round" />
+        <path d="M 122.8 95.4 A 130 130 0 0 1 143 83.2" fill="none" stroke={orange} strokeWidth={3} strokeDasharray="6 5" markerEnd={arrow} opacity={FADE} />
+      </g>
 
       {/* Skipping Assist: one big jump from Model to Watch */}
-      {v === "skip-assist" && (
-        <path d="M 200 124 L 200 272" fill="none" stroke={orange} strokeWidth={9} strokeLinecap="round" markerEnd={arrow} />
-      )}
+      <path d="M 200 124 L 200 272" fill="none" stroke={orange} strokeWidth={9} strokeLinecap="round" markerEnd={arrow} style={on("skip-assist")} />
       {/* Stuck: the arrow keeps looping round the same circle */}
-      {v === "stuck-assist" && (
-        <path d={`M ${pt(330, 200, 68, -150)} A 68 68 0 1 1 ${pt(330, 200, 68, 150)}`} fill="none" stroke={orange} strokeWidth={6} markerEnd={arrow} />
-      )}
-      {v === "stuck-watch" && (
-        <path d={`M ${pt(200, 330, 68, -60)} A 68 68 0 1 1 ${pt(200, 330, 68, -120)}`} fill="none" stroke={orange} strokeWidth={6} markerEnd={arrow} />
-      )}
+      <path d={`M ${pt(330, 200, 68, -150)} A 68 68 0 1 1 ${pt(330, 200, 68, 150)}`} fill="none" stroke={orange} strokeWidth={6} markerEnd={arrow} style={on("stuck-assist")} />
+      <path d={`M ${pt(200, 330, 68, -60)} A 68 68 0 1 1 ${pt(200, 330, 68, -120)}`} fill="none" stroke={orange} strokeWidth={6} markerEnd={arrow} style={on("stuck-watch")} />
 
       {PHASES.map((ph, i) => {
         const { x, y } = NODE_POS[ph.k];
         const st = NODE_STROKE[ph.k];
         return (
-          <g key={ph.k} opacity={fadeNode[ph.k]}>
+          <g key={ph.k} style={{ opacity: fadeNode[ph.k], transition: MORPH }}>
             <circle cx={x} cy={y} r={48} fill="white" />
             <circle cx={x} cy={y} r={48} fill="none" stroke={navy} strokeWidth={3} strokeDasharray={st.dash} strokeOpacity={st.opacity} />
             <text x={x} y={y - 6} textAnchor="middle" fontSize={15} fontWeight={700} fill={muted}>{i + 1}</text>
@@ -357,20 +356,19 @@ function BreakCycle({ variant, lang }: { variant: BreakKey; lang: Lang }) {
         );
       })}
 
-      {/* Launching without the whole skill set: a piece of Launch is missing */}
-      {v === "missing-piece" && (
-        <>
-          <path d={ringSlice(L.x, L.y, 26, 51, 200, 250)} fill={offWhite} stroke={navy} strokeWidth={1.5} strokeDasharray="4 4" />
-          <g transform="translate(-30 -32)">
-            <path d={ringSlice(L.x, L.y, 26, 51, 200, 250)} fill={orange} />
-          </g>
-        </>
-      )}
+      {/* Launching without the whole skill set: a piece of Launch falls out */}
+      <g style={on("missing-piece")}>
+        <path d={ringSlice(L.x, L.y, 26, 51, 200, 250)} fill={offWhite} stroke={navy} strokeWidth={1.5} strokeDasharray="4 4" />
+      </g>
+      <g style={{ ...on("missing-piece"), transform: v === "missing-piece" ? "translate(-30px, -32px)" : "translate(0px, 0px)" }}>
+        <path d={ringSlice(L.x, L.y, 26, 51, 200, 250)} fill={orange} />
+      </g>
     </svg>
   );
 }
 
-type Slide = { key: string; render: (lang: Lang) => React.ReactNode };
+// Slides sharing a group stay mounted between clicks, so they can morph instead of fading
+type Slide = { key: string; group?: string; render: (lang: Lang) => React.ReactNode };
 
 const SLIDES: Slide[] = [
   {
@@ -384,33 +382,28 @@ const SLIDES: Slide[] = [
       </>
     ),
   },
-  {
-    key: "after-you",
-    render: lang => (
-      <>
-        <img src={`${IMG}/cut-you.webp`} alt="" aria-hidden="true" width={334} height={400} style={fit(600, 440)} />
-        <h2 style={midTitle}>{t("Who will do this after you?", "Siapa yang akan melakukan ini setelah Anda?", lang)}</h2>
-      </>
-    ),
-  },
-  {
-    key: "empowerment",
+  // The word alone first, then the dictionary entry on the next click
+  ...[0, 1].map((step): Slide => ({
+    key: `empowerment-${step}`,
+    group: "empowerment",
     render: lang => (
       <div style={{ width: 1100 }}>
         <h2 style={{ ...bigTitle, textAlign: "left", fontSize: 150, margin: 0 }}>{t("Empowerment", "Pemberdayaan", lang)}</h2>
-        <p style={{ fontFamily: serif, fontStyle: "italic", fontSize: 36, color: muted, margin: "6px 0 40px" }}>
-          {t("em·pow·er·ment, noun", "pem·ber·da·ya·an, nomina", lang)}
-        </p>
-        <div style={{ width: 96, height: 4, background: orange, borderRadius: 2, marginBottom: 36 }} />
-        {(lang === "id"
-          ? ["1. Proses, cara, perbuatan memberdayakan.", "2. Dari kata berdaya: berkekuatan, berkemampuan, bertenaga."]
-          : ["1. Giving someone the power or authority to do something.", "2. Giving someone more control over their own life."]
-        ).map(d => (
-          <p key={d} style={{ fontFamily: sans, fontSize: 36, fontWeight: 500, color: navy, margin: "0 0 20px", lineHeight: 1.35 }}>{d}</p>
-        ))}
+        <div style={{ opacity: step, transition: "opacity 0.7s ease" }}>
+          <p style={{ fontFamily: serif, fontStyle: "italic", fontSize: 36, color: muted, margin: "6px 0 40px" }}>
+            {t("em·pow·er·ment, noun", "pem·ber·da·ya·an, nomina", lang)}
+          </p>
+          <div style={{ width: 96, height: 4, background: orange, borderRadius: 2, marginBottom: 36 }} />
+          {(lang === "id"
+            ? ["1. Proses, cara, perbuatan memberdayakan.", "2. Dari kata berdaya: berkekuatan, berkemampuan, bertenaga."]
+            : ["1. Giving someone the power or authority to do something.", "2. Giving someone more control over their own life."]
+          ).map(d => (
+            <p key={d} style={{ fontFamily: sans, fontSize: 36, fontWeight: 500, color: navy, margin: "0 0 20px", lineHeight: 1.35 }}>{d}</p>
+          ))}
+        </div>
       </div>
     ),
-  },
+  })),
   {
     key: "definition",
     render: lang => (
@@ -455,7 +448,7 @@ const SLIDES: Slide[] = [
           </p>
         </div>
         <img src={`${IMG}/phase-${ph.k}.webp`} alt={t(ph.altEn, ph.altId, lang)} width={ph.w} height={ph.h}
-          style={{ ...fit(680, 560), justifySelf: "center", width: "100%" }} />
+          style={{ ...fit(680, 560), justifySelf: "center", width: "100%", mixBlendMode: "multiply" }} />
       </div>
     ),
   })),
@@ -465,7 +458,7 @@ const SLIDES: Slide[] = [
       <img src={`${IMG}/cycle-${lang}.webp`} width={1280} height={lang === "id" ? 984 : 986}
         alt={t("The cycle: Model, Assist, Watch, Launch, and then the new leader starts again with someone else.",
           "Siklusnya: Teladani, Bantu, Amati, Mandirikan, lalu pemimpin baru memulai lagi dengan orang lain.", lang)}
-        style={fit(1100, 740)} />
+        style={{ ...fit(1100, 740), mixBlendMode: "multiply" }} />
     ),
   },
   {
@@ -489,22 +482,28 @@ const SLIDES: Slide[] = [
       </>
     ),
   },
-  ...BREAKS.map((b, i): Slide => ({
-    key: `break-${b.k}`,
-    render: lang => (
+  // Two clicks per break: healthy cycle first, then it turns into the broken one with the reason
+  ...BREAKS.flatMap((b): Slide[] => [0, 1].map(step => ({
+    key: `break-${b.k}-${step}`,
+    group: `break-${b.k}`,
+    render: (lang: Lang) => (
       <div style={{ display: "grid", gridTemplateColumns: "1fr 640px", alignItems: "center", gap: 60, width: "100%" }}>
         <div>
-          <p style={{ ...kicker, textAlign: "left" }}>{t(`Where the cycle breaks · ${i + 1}/5`, `Di mana siklus ini macet · ${i + 1}/5`, lang)}</p>
+          <p style={{ ...kicker, textAlign: "left" }}>{t("Where the cycle breaks", "Di mana siklus ini macet", lang)}</p>
           <h2 style={{ ...midTitle, textAlign: "left", fontSize: 72, margin: "14px 0 28px" }}>{t(b.en, b.id, lang)}</h2>
           <div style={{ width: 96, height: 4, background: orange, borderRadius: 2, marginBottom: 28 }} />
           {(lang === "id" ? b.lineId : b.lineEn).map(line => (
             <p key={line} style={{ fontFamily: sans, fontSize: 32, fontWeight: 500, color: navy, margin: "0 0 12px", lineHeight: 1.3 }}>{line}</p>
           ))}
+          <div style={{ marginTop: 36, paddingLeft: 24, borderLeft: `4px solid ${orange}`, opacity: step ? 1 : 0, transition: "opacity 0.7s ease 0.3s" }}>
+            <p style={{ ...kicker, textAlign: "left", margin: "0 0 8px" }}>{t("Why it happens", "Mengapa terjadi", lang)}</p>
+            <p style={{ fontFamily: serif, fontSize: 38, fontWeight: 600, color: navy, margin: 0, lineHeight: 1.25 }}>{t(b.whyEn, b.whyId, lang)}</p>
+          </div>
         </div>
-        <BreakCycle variant={b.k} lang={lang} />
+        <BreakCycle variant={b.k} broken={step === 1} lang={lang} />
       </div>
     ),
-  })),
+  }))),
   ...[0, 1, 2, 3, 4].map(step => ({
     key: `generations-${step}`,
     render: (lang: Lang) => <GenerationsSlide lang={lang} step={step} />,
@@ -697,7 +696,7 @@ export default function PresentClient() {
         style={{ position: "absolute", inset: isFull || phone ? 0 : 24, display: "flex", alignItems: "center", justifyContent: "center" }}>
         <div aria-live="polite" aria-roledescription="slide" aria-label={`${i + 1} / ${SLIDES.length}`}
           style={{ width: W * scale, height: H * scale, position: "relative", boxShadow: isFull ? "none" : "0 30px 80px oklch(0% 0 0 / 0.45)", borderRadius: isFull ? 0 : 6, overflow: "hidden" }}>
-          <div key={`${i}-${lang}`} className="mawl-fade" style={{ width: W, height: H, transform: `scale(${scale})`, transformOrigin: "top left" }}>
+          <div key={`${SLIDES[i].group ?? i}-${lang}`} className="mawl-fade" style={{ width: W, height: H, transform: `scale(${scale})`, transformOrigin: "top left" }}>
             <SlideFrame index={i} lang={lang} />
           </div>
           {blank && <div style={{ position: "absolute", inset: 0, background: "black" }} />}
