@@ -535,7 +535,7 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
 
   const objectives = [
     { en: "explain what empowerment means and why it helps people go further than you", id: "menjelaskan arti pemberdayaan dan mengapa hal itu menolong orang melangkah lebih jauh dari Anda" },
-    { en: "distinguish positional leadership from influential leadership", id: "membedakan kepemimpinan posisional dari kepemimpinan yang memengaruhi" },
+    { en: "distinguish positional leadership from influential leadership", id: "membedakan kepemimpinan posisional dari kepemimpinan yang berpengaruh" },
     { en: "name the four phases and your role in each one", id: "menyebutkan keempat tahap dan peran Anda di setiap tahap" },
     { en: "spot which phase someone is in, skill by skill", id: "mengenali tahap yang sedang dijalani seseorang, keterampilan demi keterampilan" },
     { en: "avoid the five places where the cycle usually breaks", id: "menghindari lima titik di mana siklus ini biasanya macet" },
@@ -753,7 +753,7 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
               {[
                 { src: "lead-positional", en: "Positional leadership", id: "Kepemimpinan posisional",
                   capEn: "The team works to reach the leader's goals.", capId: "Tim bekerja untuk mencapai tujuan pemimpin." },
-                { src: "lead-influential", en: "Influential leadership", id: "Kepemimpinan yang memengaruhi",
+                { src: "lead-influential", en: "Influential leadership", id: "Kepemimpinan yang berpengaruh",
                   capEn: "The leader supports the team. They own the goals together.", capId: "Pemimpin menopang tim. Mereka memiliki tujuan itu bersama." },
               ].map(({ src, en, id, capEn, capId }) => (
                 <figure key={en} style={{ margin: 0, background: white, border: `1px solid ${lightGray}`, borderRadius: 8, padding: "20px 20px 18px", textAlign: "center" }}>
@@ -770,7 +770,7 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
               "Kepemimpinan posisional berjalan karena jabatan. Pemimpin menetapkan tujuan dan tim bekerja keras untuk mencapainya. Orang-orang menurut, tetapi tujuannya tetap milik pemimpin. Ketika pemimpin tidak ada, semangatnya ikut turun.", lang)}<Sup n="⁹" /></p>
             <p style={p}>{t(
               "Influential leadership turns the picture upside down. The leader gets to know each person and finds the personal goals that line up with the goals of the team. People then own part of those goals, so they do the work better and with more heart. It is no longer about the leader.",
-              "Kepemimpinan yang memengaruhi membalik gambaran itu. Pemimpin mengenal setiap orang dan menemukan tujuan pribadi mereka yang sejalan dengan tujuan tim. Dengan begitu mereka ikut memiliki sebagian dari tujuan itu, sehingga mereka bekerja lebih baik dan lebih sepenuh hati. Ini tidak lagi tentang pemimpin.", lang)}<Sup n="¹⁰" /></p>
+              "Kepemimpinan yang berpengaruh membalik gambaran itu. Pemimpin mengenal setiap orang dan menemukan tujuan pribadi mereka yang sejalan dengan tujuan tim. Dengan begitu mereka ikut memiliki sebagian dari tujuan itu, sehingga mereka bekerja lebih baik dan lebih sepenuh hati. Ini tidak lagi tentang pemimpin.", lang)}<Sup n="¹⁰" /></p>
             <p style={p}>{t(
               "Jesus described the same reversal: whoever wants to become great among you must be your servant (Mark 10:42-45).",
               "Yesus menggambarkan pembalikan yang sama: barangsiapa ingin menjadi besar di antara kamu, hendaklah ia menjadi pelayanmu (Markus 10:42-45).", lang)}<Sup n="⁷" /></p>

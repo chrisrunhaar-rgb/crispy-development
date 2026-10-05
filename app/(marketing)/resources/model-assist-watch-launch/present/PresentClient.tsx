@@ -367,6 +367,13 @@ function BreakCycle({ variant, broken, lang }: { variant: BreakKey; broken: bool
   );
 }
 
+// Two ways to lead: img and text are the click step at which each part appears
+const LEADS = [
+  { k: "positional", en: "Positional leadership", id: "Kepemimpinan posisional",
+    subEn: "The team works for the leader's goals.", subId: "Tim bekerja untuk tujuan pemimpin.", img: 0, text: 1 },
+  { k: "influential", en: "Influential leadership", id: "Kepemimpinan yang berpengaruh",
+    subEn: "The leader supports the team to reach shared goals.", subId: "Pemimpin menopang tim untuk mencapai tujuan bersama.", img: 2, text: 3 },
+];
 // Slides sharing a group stay mounted between clicks, so they can morph instead of fading
 type Slide = { key: string; group?: string; render: (lang: Lang) => React.ReactNode };
 
@@ -424,21 +431,17 @@ const SLIDES: Slide[] = [
     render: lang => (
       <>
         <p style={kicker}>{t("Two ways to lead", "Dua cara memimpin", lang)}</p>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, width: "100%", alignItems: "start" }}>
-          {[
-            { k: "positional", en: "Positional leadership", id: "Kepemimpinan posisional",
-              subEn: "The team works for the leader's goals.", subId: "Tim bekerja untuk tujuan pemimpin.", img: 0, text: 1 },
-            { k: "influential", en: "Influential leadership", id: "Kepemimpinan yang memengaruhi",
-              subEn: "The leader supports the team to reach shared goals.", subId: "Pemimpin menopang tim untuk mencapai tujuan bersama.", img: 2, text: 3 },
-          ].map(d => (
-            <div key={d.k} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 18 }}>
-              <img src={`${IMG}/lead-${d.k}.webp`} alt="" aria-hidden="true" width={1100} height={760}
-                style={{ ...fit(640, 440), opacity: step >= d.img ? 1 : 0, transition: "opacity 0.7s ease" }} />
-              <div style={{ opacity: step >= d.text ? 1 : 0, transition: "opacity 0.7s ease", display: "flex", flexDirection: "column", gap: 14 }}>
-                <h2 style={{ ...midTitle, fontSize: 60, margin: 0 }}>{t(d.en, d.id, lang)}</h2>
-                <p style={{ fontFamily: sans, fontSize: 30, color: muted, margin: 0, textAlign: "center" }}>{t(d.subEn, d.subId, lang)}</p>
-              </div>
-            </div>
+        {/* One grid row each for images, titles and subtitles, so the two sides line up even when a title wraps */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", columnGap: 80, rowGap: 14, width: "100%", justifyItems: "center" }}>
+          {LEADS.map(d => (
+            <img key={d.k} src={`${IMG}/lead-${d.k}.webp`} alt="" aria-hidden="true" width={1100} height={760}
+              style={{ ...fit(640, 440), alignSelf: "center", marginBottom: 4, opacity: step >= d.img ? 1 : 0, transition: "opacity 0.7s ease" }} />
+          ))}
+          {LEADS.map(d => (
+            <h2 key={d.k} style={{ ...midTitle, fontSize: 60, margin: 0, alignSelf: "end", opacity: step >= d.text ? 1 : 0, transition: "opacity 0.7s ease" }}>{t(d.en, d.id, lang)}</h2>
+          ))}
+          {LEADS.map(d => (
+            <p key={d.k} style={{ fontFamily: sans, fontSize: 30, color: muted, margin: 0, textAlign: "center", alignSelf: "start", opacity: step >= d.text ? 1 : 0, transition: "opacity 0.7s ease" }}>{t(d.subEn, d.subId, lang)}</p>
           ))}
         </div>
       </>
