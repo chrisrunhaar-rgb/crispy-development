@@ -417,19 +417,30 @@ const SLIDES: Slide[] = [
       </div>
     ),
   },
-  ...[
-    { k: "positional", en: "Positional leadership", id: "Kepemimpinan posisional",
-      subEn: "The team works for the leader's goals.", subId: "Tim bekerja untuk tujuan pemimpin." },
-    { k: "influential", en: "Influential leadership", id: "Kepemimpinan yang memengaruhi",
-      subEn: "The leader supports the team to reach shared goals.", subId: "Pemimpin menopang tim untuk mencapai tujuan bersama." },
-  ].map((d): Slide => ({
-    key: d.k,
+  // Both ways side by side, built up over four clicks: left image, left words, right image, right words
+  ...[0, 1, 2, 3].map((step): Slide => ({
+    key: `lead-${step}`,
+    group: "lead",
     render: lang => (
       <>
         <p style={kicker}>{t("Two ways to lead", "Dua cara memimpin", lang)}</p>
-        <img src={`${IMG}/lead-${d.k}.webp`} alt="" aria-hidden="true" width={1100} height={760} style={fit(760, 480)} />
-        <h2 style={{ ...midTitle, fontSize: 68, margin: 0 }}>{t(d.en, d.id, lang)}</h2>
-        <p style={{ fontFamily: sans, fontSize: 32, color: muted, margin: 0, textAlign: "center" }}>{t(d.subEn, d.subId, lang)}</p>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, width: "100%", alignItems: "start" }}>
+          {[
+            { k: "positional", en: "Positional leadership", id: "Kepemimpinan posisional",
+              subEn: "The team works for the leader's goals.", subId: "Tim bekerja untuk tujuan pemimpin.", img: 0, text: 1 },
+            { k: "influential", en: "Influential leadership", id: "Kepemimpinan yang memengaruhi",
+              subEn: "The leader supports the team to reach shared goals.", subId: "Pemimpin menopang tim untuk mencapai tujuan bersama.", img: 2, text: 3 },
+          ].map(d => (
+            <div key={d.k} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 18 }}>
+              <img src={`${IMG}/lead-${d.k}.webp`} alt="" aria-hidden="true" width={1100} height={760}
+                style={{ ...fit(640, 440), opacity: step >= d.img ? 1 : 0, transition: "opacity 0.7s ease" }} />
+              <div style={{ opacity: step >= d.text ? 1 : 0, transition: "opacity 0.7s ease", display: "flex", flexDirection: "column", gap: 14 }}>
+                <h2 style={{ ...midTitle, fontSize: 60, margin: 0 }}>{t(d.en, d.id, lang)}</h2>
+                <p style={{ fontFamily: sans, fontSize: 30, color: muted, margin: 0, textAlign: "center" }}>{t(d.subEn, d.subId, lang)}</p>
+              </div>
+            </div>
+          ))}
+        </div>
       </>
     ),
   })),
