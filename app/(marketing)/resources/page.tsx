@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { hasPaidAccess } from "@/lib/paid-access";
 import ResourcesContent from "./ResourcesContent";
 
 export const dynamic = "force-dynamic";
@@ -16,6 +17,8 @@ export default async function ResourcesPage() {
   const pathway = user?.user_metadata?.pathway ?? null;
   const isTeamLeader = user?.user_metadata?.is_leader === true;
   const savedResources = (user?.user_metadata?.saved_resources ?? []) as string[];
+
+  const isPaid = await hasPaidAccess(user?.id ?? null, user?.email);
 
   const admin = createAdminClient();
   const { data: statusRows } = await admin
@@ -41,6 +44,7 @@ export default async function ResourcesPage() {
       moduleCategories={moduleCategories}
       moduleFormats={moduleFormats}
       isAdmin={user?.email === "chris.runhaar@world-outreach.com"}
+      isPaid={isPaid}
     />
   );
 }

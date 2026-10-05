@@ -19,6 +19,7 @@ interface Props {
   moduleCategories?: Record<string, string>;
   moduleFormats?: Record<string, string[]>;
   isAdmin?: boolean;
+  isPaid?: boolean;
 }
 
 const TYPE_COLORS: Record<string, string> = {
@@ -313,6 +314,7 @@ export default function ResourcesContent({
   moduleCategories = {},
   moduleFormats = {},
   isAdmin = false,
+  isPaid = false,
 }: Props) {
   const { lang } = useLanguage();
   const [localSaved, setLocalSaved] = useState<Set<string>>(
@@ -456,12 +458,15 @@ export default function ResourcesContent({
           </div>
         </header>
 
-        <LibraryAiSearch
-          lang={lang === "id" ? "id" : "en"}
-          userId={userId}
-          savedSlugs={localSaved}
-          onSaved={(slugs) => setLocalSaved((prev) => new Set([...prev, ...slugs]))}
-        />
+        {/* AI module finder is for paid members only (Chris, 2026-10-06) */}
+        {isPaid && (
+          <LibraryAiSearch
+            lang={lang === "id" ? "id" : "en"}
+            userId={userId}
+            savedSlugs={localSaved}
+            onSaved={(slugs) => setLocalSaved((prev) => new Set([...prev, ...slugs]))}
+          />
+        )}
 
         {/* ── LIBRARY ── */}
         <section aria-label={lang === "id" ? "Modul" : "Modules"} style={{ borderTop: `1px solid ${T.navy}` }}>

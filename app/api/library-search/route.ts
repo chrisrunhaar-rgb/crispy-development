@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { GoogleGenAI, Type } from "@google/genai";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { hasPaidAccess } from "@/lib/paid-access";
 import { RESOURCES } from "@/lib/resources-data";
 
 // "What are you facing?" search for the Library. Gemini picks up to 4 live
@@ -73,6 +74,9 @@ export async function POST(request: Request) {
 
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
+  if (!(await hasPaidAccess(user?.id ?? null, user?.email))) {
+    return NextResponse.json({ error: "paid_only" }, { status: 403 });
+  }
   const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
   if (!allow(user?.id ?? `ip:${ip}`)) {
     return NextResponse.json({ error: "limit" }, { status: 429 });
