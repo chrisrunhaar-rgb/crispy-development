@@ -307,8 +307,6 @@ function ResourceTile({
 
 export default function ResourcesContent({
   userId,
-  pathway,
-  isTeamLeader,
   savedResources = [],
   moduleStatuses = {},
   moduleCategories = {},
@@ -406,11 +404,6 @@ export default function ResourcesContent({
             <h1 style={{ ...h2Style(), fontSize: "clamp(2.1rem, 4.4vw, 3.1rem)", lineHeight: 1.05 }}>
               {lang === "id" ? "Modul pelatihan untuk pemimpin lintas budaya." : "Training modules for cross-cultural leaders."}
             </h1>
-            {isTeamLeader && pathway === "team" && (
-              <div>
-                <TextLink href="/dashboard">{lang === "id" ? "Kembali ke dasbor tim" : "Back to team dashboard"}</TextLink>
-              </div>
-            )}
           </div>
           <div style={{ position: "relative", width: "100%", maxWidth: "26rem", justifySelf: "end" }}>
             <svg
