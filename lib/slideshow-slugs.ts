@@ -7,7 +7,6 @@ export const SLIDESHOW_SLUGS: ReadonlySet<string> = new Set([
   "healthy-conflict",
   "johari-window",
   "model-assist-watch-launch",
-  "red-light-green-light",
   "six-thinking-hats",
   "vision-casting",
 ]);

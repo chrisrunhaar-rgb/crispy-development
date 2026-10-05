@@ -360,10 +360,10 @@ function FiveTestsSlide({ step, lang }: { step: number; lang: Lang }) {
       <h2 style={{ ...midTitle, fontSize: 58 }}>{t("Test the vision before you cast it", "Uji visi sebelum Anda menebarkannya", lang)}</h2>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 18, width: "100%" }}>
         {TESTS.map((s, n) => (
-          <div key={s.id} style={{ ...card, ...show(step >= n), padding: "22px 18px", borderTop: `6px solid ${orange}`, display: "flex", flexDirection: "column", gap: 10 }}>
-            <p style={{ fontFamily: sans, fontSize: 15, fontWeight: 700, color: orange, letterSpacing: "0.08em", margin: 0 }}>{n + 1}</p>
-            <p style={{ fontFamily: serif, fontSize: 23, fontWeight: 600, color: navy, margin: 0, lineHeight: 1.15 }}>{t(s.title.en, s.title.id, lang)}</p>
-            <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.4, color: muted, margin: 0 }}>{t(s.question.en, s.question.id, lang)}</p>
+          <div key={s.id} style={{ ...card, ...show(step >= n), padding: "28px 24px", borderTop: `6px solid ${orange}`, display: "flex", flexDirection: "column", gap: 14 }}>
+            <p style={{ fontFamily: sans, fontSize: 18, fontWeight: 700, color: orange, letterSpacing: "0.08em", margin: 0 }}>{n + 1}</p>
+            <p style={{ fontFamily: serif, fontSize: 32, fontWeight: 600, color: navy, margin: 0, lineHeight: 1.15 }}>{t(s.title.en, s.title.id, lang)}</p>
+            <p style={{ fontFamily: sans, fontSize: 21, lineHeight: 1.45, color: muted, margin: 0 }}>{t(s.question.en, s.question.id, lang)}</p>
           </div>
         ))}
       </div>

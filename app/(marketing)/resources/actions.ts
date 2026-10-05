@@ -41,6 +41,27 @@ export async function saveResourceToDashboard(slug: string): Promise<{ error: st
   return { error: error?.message ?? null };
 }
 
+// Add several modules in one metadata write (AI search "add these" button)
+export async function saveResourcesToDashboard(slugs: string[]): Promise<{ error: string | null }> {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { error: "Not authenticated" };
+
+  const current = (user.user_metadata?.saved_resources ?? []) as string[];
+  const toAdd = slugs.filter((s) => typeof s === "string" && !current.includes(s)).slice(0, 4);
+  if (toAdd.length === 0) return { error: null };
+
+  const { error } = await supabase.auth.updateUser({
+    data: { saved_resources: [...current, ...toAdd] },
+  });
+
+  if (!error) {
+    revalidatePath("/dashboard");
+    revalidatePath("/resources");
+  }
+  return { error: error?.message ?? null };
+}
+
 export async function removeResourceFromDashboard(slug: string): Promise<void> {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
