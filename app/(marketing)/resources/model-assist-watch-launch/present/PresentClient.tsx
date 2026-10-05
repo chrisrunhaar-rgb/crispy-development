@@ -499,8 +499,9 @@ const SLIDES: Slide[] = [
       </>
     ),
   },
-  // Two clicks per break: healthy cycle first, then it turns into the broken one with the reason
-  ...BREAKS.flatMap((b): Slide[] => [0, 1].map(step => ({
+  // Two clicks per break: healthy cycle first, then it turns into the broken one with the reason.
+  // The full cycle image comes back just before the last break.
+  ...BREAKS.flatMap((b): Slide[] => [...(b.k === "one-generation" ? [cycleSlide("cycle-again")] : []), ...[0, 1].map((step): Slide => ({
     key: `break-${b.k}-${step}`,
     group: `break-${b.k}`,
     render: (lang: Lang) => (
@@ -520,8 +521,7 @@ const SLIDES: Slide[] = [
         <BreakCycle variant={b.k} broken={step === 1} lang={lang} />
       </div>
     ),
-  }))),
-  cycleSlide("cycle-again"),
+  }))]),
   ...[0, 1, 2, 3, 4].map(step => ({
     key: `generations-${step}`,
     render: (lang: Lang) => <GenerationsSlide lang={lang} step={step} />,
