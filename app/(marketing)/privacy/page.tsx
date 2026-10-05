@@ -18,11 +18,12 @@ export default function PrivacyPage() {
           <p>Crispy Development Ltd is the data controller for personal data collected through the Crispy Leaders platform.</p>
           <ul style={{ marginTop: "1rem" }}>
             <li>Company number: {companyInfo.companyNumber}</li>
+            <li>ICO registration number: {companyInfo.icoRegistration}</li>
             <li>Registered address: {companyInfo.registeredOffice}</li>
             <li>Contact: <a href="mailto:hello@crispyleaders.com" style={{ color: "oklch(30% 0.12 260)" }}>hello@crispyleaders.com</a></li>
           </ul>
           <p style={{ marginTop: "1rem" }}>The supervisory authority in the UK is the Information Commissioner's Office (ICO), Wycliffe House, Water Lane, Wilmslow, Cheshire SK9 5AF. <a href="https://ico.org.uk" style={{ color: "oklch(30% 0.12 260)" }}>ico.org.uk</a> · 0303 123 1113</p>
-          <p style={{ marginTop: "1rem" }}><em>ICO registration note: ICO registration is pending. We are in the process of registering with the ICO as required for organisations that process personal data in the UK. This will be completed before onboarding paid subscribers.</em></p>
+          <p style={{ marginTop: "1rem" }}>{companyInfo.legalName} is registered with the ICO as a data controller, registration number {companyInfo.icoRegistration}.</p>
         </LegalSection>
 
         <LegalSection heading="2. What Data We Collect">
@@ -202,7 +203,8 @@ export default function PrivacyPage() {
           <p style={{ marginTop: "1rem" }}>
             {companyInfo.legalName}<br />
             {companyInfo.registeredOffice}<br />
-            Company number: {companyInfo.companyNumber}
+            Company number: {companyInfo.companyNumber}<br />
+            ICO registration number: {companyInfo.icoRegistration}
           </p>
           <p style={{ marginTop: "1rem" }}>Supervisory authority: Information Commissioner's Office (ICO) · <a href="https://ico.org.uk" style={{ color: "oklch(30% 0.12 260)" }}>ico.org.uk</a></p>
         </LegalSection>

@@ -57,7 +57,7 @@ export default function CoachPrivacyPage() {
           </Section>
 
           <Section label="Governing law.">
-            <Body>This policy is governed by the laws of England and Wales and UK GDPR. If you have a complaint, you have the right to contact the Information Commissioner&apos;s Office (ICO) at ico.org.uk. Last updated: September 2026. Operated by {companyInfo.legalName}, company number {companyInfo.companyNumber}, registered office {companyInfo.registeredOffice}.</Body>
+            <Body>This policy is governed by the laws of England and Wales and UK GDPR. If you have a complaint, you have the right to contact the Information Commissioner&apos;s Office (ICO) at ico.org.uk. Last updated: September 2026. Operated by {companyInfo.legalName}, company number {companyInfo.companyNumber}, ICO registration number {companyInfo.icoRegistration}, registered office {companyInfo.registeredOffice}.</Body>
           </Section>
 
           <div style={{ paddingTop: "1rem" }}>

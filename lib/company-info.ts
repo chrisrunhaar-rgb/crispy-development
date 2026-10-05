@@ -8,6 +8,8 @@
 export const companyInfo = {
   legalName: "Crispy Development Ltd",
   companyNumber: "17460725",
+  // ICO data protection register, confirmed 2026-10-05
+  icoRegistration: "ZC251539",
   structure: "private limited company",
   jurisdiction: "England and Wales",
   registeredOffice: "Beren Court, Newney Green, Chelmsford, CM1 3SQ, United Kingdom",

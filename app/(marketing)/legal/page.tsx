@@ -14,6 +14,7 @@ export default function LegalPage() {
 
         <Row label="Company name" value={companyInfo.legalName} />
         <Row label="Company number" value={companyInfo.companyNumber} />
+        <Row label="ICO registration number" value={companyInfo.icoRegistration} />
         <Row label="Registered office" value={companyInfo.registeredOffice} />
         <Row label="Place of registration" value={companyInfo.jurisdiction} last />
 
