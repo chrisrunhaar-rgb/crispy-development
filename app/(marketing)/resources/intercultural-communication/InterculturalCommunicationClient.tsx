@@ -89,11 +89,11 @@ const developmentLevels = [
     actions: [
       {
         en: "End every team meeting with one question: 'Is there anything you wanted to say that we didn't get to?' This is a communication lifeline for indirect communicators who needed the group pressure to lift before they could speak. Do it consistently — the first few times nothing may surface, but the habit trains your team to trust that space.",
-        id: "Akhiri setiap rapat tim dengan satu pertanyaan: 'Apakah ada sesuatu yang ingin Anda katakan yang tidak sempat kita bahas?' Ini adalah jalur komunikasi bagi komunikator tidak langsung yang membutuhkan tekanan kelompok untuk terangkat sebelum mereka dapat berbicara.",
+        id: "Akhiri setiap rapat tim dengan satu pertanyaan: 'Apakah ada sesuatu yang ingin Anda katakan yang tidak sempat kita bahas?' Ini adalah penyelamat bagi komunikator tidak langsung yang membutuhkan tekanan kelompok untuk mereda sebelum mereka dapat berbicara.",
       },
       {
         en: "Practise 'looping back.' When you think you have received an indirect message, say it back: 'It sounds like you might be saying that... is that right?' This validates their communication style while making sure you actually understood. It builds trust with high-context communicators who often feel their signals go unnoticed.",
-        id: "Berlatihlah 'kembali melingkar.' Saat Anda pikir Anda telah menerima pesan tidak langsung, katakan kembali: 'Sepertinya Anda mungkin ingin mengatakan bahwa... apakah itu benar?' Ini memvalidasi gaya komunikasi mereka sambil memastikan Anda benar-benar memahami.",
+        id: "Berlatihlah mengulang dan memastikan. Saat Anda pikir Anda telah menerima pesan tidak langsung, katakan kembali: 'Sepertinya Anda mungkin ingin mengatakan bahwa... apakah itu benar?' Ini memvalidasi gaya komunikasi mereka sambil memastikan Anda benar-benar memahami.",
       },
     ],
   },
@@ -122,7 +122,7 @@ const reflectionQuestions = [
   {
     roman: "I",
     en: "Are you a high-context or low-context communicator? What has that cost you in cross-cultural relationships?",
-    id: "Apakah Anda komunikator konteks tinggi atau rendah? Apa yang telah itu biayai Anda dalam hubungan lintas budaya?",
+    id: "Apakah Anda komunikator konteks tinggi atau rendah? Apa harga yang harus Anda bayar karenanya dalam hubungan lintas budaya?",
   },
   {
     roman: "II",
@@ -233,7 +233,7 @@ export default function InterculturalCommunicationClient({ userPathway, isSaved:
           <p style={{ fontFamily: "var(--font-cormorant), 'Cormorant Garamond', Georgia, serif", fontSize: "clamp(19px, 2.5vw, 23px)", color: navy, lineHeight: 1.6, fontStyle: "italic" }}>
             {t(
               "Anna had not been trying to shame him. She had been trying to help him. But in Ramon's culture, written direct critique from a superior — especially on work he had put his name to — was not feedback. It was a formal record of failure.",
-              "Anna tidak mencoba mempermalukannya. Dia mencoba membantunya. Tapi dalam budaya Ramon, kritik langsung tertulis dari atasan — terutama pada pekerjaan yang telah dia beri namanya — bukan umpan balik. Itu adalah catatan formal kegagalan."
+              "Anna tidak mencoba mempermalukannya. Dia mencoba membantunya. Tapi dalam budaya Ramon, kritik langsung tertulis dari atasan — terutama pada pekerjaan yang menjadi tanggung jawabnya — bukan umpan balik. Itu adalah catatan formal kegagalan."
             )}
           </p>
         </div>
@@ -276,7 +276,7 @@ export default function InterculturalCommunicationClient({ userPathway, isSaved:
           <p style={{ color: bodyText, fontSize: 16, lineHeight: 1.75, marginBottom: 48 }}>
             {t(
               "Every cross-cultural communication breakdown can usually be traced to one of these four dimensions. Click each to go deeper.",
-              "Setiap kerusakan komunikasi lintas budaya biasanya dapat ditelusuri ke salah satu dari empat dimensi ini. Klik masing-masing untuk lebih dalam."
+              "Setiap kegagalan komunikasi lintas budaya biasanya dapat ditelusuri ke salah satu dari empat dimensi ini. Klik masing-masing untuk menelusuri lebih dalam."
             )}
           </p>
 
@@ -327,7 +327,7 @@ export default function InterculturalCommunicationClient({ userPathway, isSaved:
       {/* --- SECTION 3: FAITH ANCHOR ------------------------------------------ */}
       <div id="mc-faith-anchor" style={{ padding: "80px 24px", maxWidth: 780, margin: "0 auto" }}>
         <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 12 }}>
-          {t("Faith Anchor", "Jangkar Iman")}
+          {t("Faith Anchor", "Pegangan Iman")}
         </p>
         <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(26px, 4vw, 40px)", fontWeight: 800, color: navy, marginBottom: 32, lineHeight: 1.2 }}>
           {t("Truth Spoken in Love", "Kebenaran yang Diucapkan dengan Kasih")}

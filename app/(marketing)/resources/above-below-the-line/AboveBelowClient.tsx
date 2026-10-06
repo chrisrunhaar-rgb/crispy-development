@@ -72,7 +72,7 @@ const BIBLICAL_STORIES = [
     titleEn: "The Original Blame Shift",
     titleId: "Pergeseran Kesalahan Pertama",
     textEn: "When God confronted Adam, his response was layered: \"The woman whom you gave to be with me, she gave me fruit of the tree, and I ate.\" He displaced blame onto Eve — and subtly implicated God. Eve blamed the serpent. Neither owned what they did. This is the oldest recorded below-the-line pattern: evasion, excuse, and deflection.",
-    textId: "Ketika Allah menghadapi Adam, responsnya berlapis: \"Perempuan yang Kautempatkan di sisiku, dialah yang memberi buah pohon itu kepadaku, maka kumakan.\" Dia memindahkan kesalahan kepada Hawa — dan secara halus menyiratkan Allah. Hawa menyalahkan ular. Tidak ada yang mengakui apa yang mereka lakukan.",
+    textId: "Ketika Tuhan menghadapi Adam, responsnya berlapis: \"Perempuan yang Kautempatkan di sisiku, dialah yang memberi buah pohon itu kepadaku, maka kumakan.\" Dia memindahkan kesalahan kepada Hawa, dan secara halus juga menyalahkan Tuhan. Hawa menyalahkan ular. Tidak ada yang mengakui apa yang mereka lakukan.",
     sourceNum: 10,
   },
   {
@@ -81,7 +81,7 @@ const BIBLICAL_STORIES = [
     titleEn: "Two Leaders, Two Responses",
     titleId: "Dua Pemimpin, Dua Respons",
     textEn: "When Nathan confronted David, David said: \"I have sinned against the Lord.\" No deflection. No committee. Saul's pattern was different — denial, blame shifted to the people, reputation management. God removed Saul not because his sin was worse than David's, but because David owned it. Ownership, not perfection, is the leadership standard.",
-    textId: "Ketika Natan menghadapi Daud, Daud berkata: 'Aku telah berdosa kepada Tuhan.' Tidak ada pengalihan. Tidak ada komite. Pola Saul berbeda — penyangkalan, menyalahkan rakyat, manajemen reputasi. Allah membuang Saul bukan karena dosanya lebih besar, tetapi karena Daud mengakuinya.",
+    textId: "Ketika Natan menghadapi Daud, Daud berkata: 'Aku telah berdosa kepada Tuhan.' Tidak ada pengalihan. Tidak ada komite. Pola Saul berbeda — penyangkalan, menyalahkan rakyat, manajemen reputasi. Tuhan membuang Saul bukan karena dosanya lebih besar, tetapi karena Daud mengakuinya.",
     sourceNum: null,
   },
   {
@@ -99,7 +99,7 @@ const BIBLICAL_STORIES = [
     titleEn: "Above the Line Without Confrontation",
     titleId: "Di Atas Garis Tanpa Konfrontasi",
     textEn: "Abigail did not wait for someone else to solve a crisis she could see. She took ownership, acted wisely, and interrupted David's destructive plan through relational courage — not direct confrontation. A model for leaders in contexts where direct challenge closes the door it was meant to open.",
-    textId: "Abigail tidak menunggu orang lain memecahkan krisis yang dia lihat. Dia mengambil kepemilikan, bertindak bijaksana, dan menghentikan rencana destruktif Daud melalui keberanian relasional — bukan konfrontasi langsung.",
+    textId: "Abigail tidak menunggu orang lain memecahkan krisis yang dia lihat. Dia mengambil tanggung jawab penuh, bertindak bijaksana, dan menghentikan rencana destruktif Daud melalui keberanian relasional, bukan konfrontasi langsung.",
     sourceNum: null,
   },
 ];
@@ -110,14 +110,14 @@ const FOUR_STEPS = [
     titleEn: "See It",
     titleId: "Lihat",
     descEn: "Acknowledge reality honestly. Stop minimizing, denying, or explaining away what is actually happening. Name it clearly.",
-    descId: "Akui kenyataan dengan jujur. Berhenti meminimalkan, menyangkal, atau menjelaskan apa yang sebenarnya terjadi. Namai dengan jelas.",
+    descId: "Akui kenyataan dengan jujur. Berhenti meminimalkan, menyangkal, atau menjelaskan apa yang sebenarnya terjadi. Ungkapkan dengan jelas.",
   },
   {
     num: "02",
     titleEn: "Own It",
-    titleId: "Miliki",
+    titleId: "Ambil Tanggung Jawab",
     descEn: "Accept your contribution to the situation. No excuses. No deflection. Even if others share responsibility, own your part.",
-    descId: "Terima kontribusi Anda pada situasi tersebut. Tanpa alasan. Tanpa pengalihan. Bahkan jika orang lain berbagi tanggung jawab, miliki bagian Anda.",
+    descId: "Terima kontribusi Anda pada situasi tersebut. Tanpa alasan. Tanpa pengalihan. Bahkan jika orang lain ikut bertanggung jawab, pegang tanggung jawab atas bagian Anda.",
   },
   {
     num: "03",
@@ -136,7 +136,7 @@ const FOUR_STEPS = [
 ];
 
 const ABOVE_PHRASES = ["Ownership", "See it", "Accountable", "Seek solutions", "Take action", "Hope", "Find better ways", "Own it", "Solve", "Make choices", "Take responsibility", "Take action"];
-const ABOVE_PHRASES_ID = ["Kepemilikan", "Lihat", "Bertanggung jawab", "Cari solusi", "Ambil tindakan", "Harapan", "Temukan cara lebih baik", "Miliki", "Selesaikan", "Buat pilihan", "Ambil tanggung jawab", "Bertindak"];
+const ABOVE_PHRASES_ID = ["Rasa tanggung jawab", "Lihat", "Bertanggung jawab", "Cari solusi", "Ambil tindakan", "Harapan", "Temukan cara lebih baik", "Pegang tanggung jawab", "Selesaikan", "Buat pilihan", "Ambil tanggung jawab", "Bertindak"];
 const BELOW_PHRASES = ["See failure", "Ignore", "No control", "Wait for others", "Deny", "Excuses", "Obstacles", "Stay stuck", "Block", "Find fault", "Do nothing", "Blame"];
 const BELOW_PHRASES_ID = ["Lihat kegagalan", "Abaikan", "Tidak ada kendali", "Tunggu orang lain", "Sangkal", "Alasan", "Hambatan", "Tetap terjebak", "Blokir", "Cari kesalahan", "Tidak bertindak", "Menyalahkan"];
 
@@ -243,7 +243,7 @@ export default function AboveBelowClient(_props: {
         <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle at 70% 50%, oklch(30% 0.12 260) 0%, transparent 60%)", opacity: 0.5 }} />
         <div style={{ position: "relative", maxWidth: 780, margin: "0 auto" }}>
           <p style={{ color: orange, fontSize: 12, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 16 }}>
-            {t("Accountability & Ownership — Guide", "Akuntabilitas & Kepemilikan — Panduan", lang)}
+            {t("Accountability & Ownership — Guide", "Akuntabilitas & Tanggung Jawab Pribadi: Panduan", lang)}
           </p>
           <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: offWhite, margin: "0 0 24px", lineHeight: 1.08 }}>
             {t("Above & Below the Line", "Di Atas & Di Bawah Garis", lang)}
@@ -251,7 +251,7 @@ export default function AboveBelowClient(_props: {
           <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(16px, 2vw, 20px)", color: "oklch(85% 0.03 80)", maxWidth: 540, margin: "0 0 28px", lineHeight: 1.65, fontStyle: "italic" }}>
             {t(
               "Are you leading as a Victor — or a Victim?",
-              "Apakah Anda memimpin sebagai Pemenang — atau Korban?",
+              "Apakah Anda memimpin sebagai Orang yang Berdaya, atau sebagai Korban?",
               lang
             )}
           </p>
@@ -292,7 +292,7 @@ export default function AboveBelowClient(_props: {
           {lang === "en" ? (
             <>In 1994, Roger Connors, Tom Smith, and Craig Hickman introduced a deceptively simple idea<Ref n={1} />: there is a line. Every response you give to any situation in your life — a setback, a conflict, a failure, a difficult person — lands either above it or below it. Above the line is the territory of ownership, accountability, and agency. Below the line is the territory of blame, excuses, and waiting for rescue. The choice between them is always yours.</>
           ) : (
-            <>Pada tahun 1994, Roger Connors, Tom Smith, dan Craig Hickman memperkenalkan sebuah ide yang tampak sederhana<Ref n={1} />: ada sebuah garis. Setiap respons yang Anda berikan terhadap situasi apapun dalam hidup Anda — kemunduran, konflik, kegagalan, orang yang sulit — mendarat di atas atau di bawahnya. Di atas garis adalah wilayah kepemilikan, akuntabilitas, dan keagenan. Di bawah garis adalah wilayah menyalahkan, alasan, dan menunggu penyelamatan. Pilihan di antara keduanya selalu ada di tangan Anda.</>
+            <>Pada tahun 1994, Roger Connors, Tom Smith, dan Craig Hickman memperkenalkan sebuah ide yang tampak sederhana<Ref n={1} />: ada sebuah garis, sebut saja garis tanggung jawab. Setiap respons yang Anda berikan terhadap situasi apa pun dalam hidup Anda (kemunduran, konflik, kegagalan, orang yang sulit) berada di atas atau di bawahnya. Di atas garis adalah wilayah rasa tanggung jawab, akuntabilitas, dan keberdayaan. Di bawah garis adalah wilayah menyalahkan, alasan, dan menunggu penyelamatan. Pilihan di antara keduanya selalu ada di tangan Anda.</>
           )}
         </p>
         <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 72 }}>
@@ -379,12 +379,12 @@ export default function AboveBelowClient(_props: {
             {t("The Impact", "Dampaknya", lang)}
           </p>
           <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 48px)", fontWeight: 600, color: navy, margin: "0 0 16px" }}>
-            {t("Victor or Victim?", "Pemenang atau Korban?", lang)}
+            {t("Victor or Victim?", "Berdaya atau Korban?", lang)}
           </h2>
           <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.75, maxWidth: 620, margin: "0 0 44px" }}>
             {t(
               "Every response to a situation lands above or below the line. The pattern you repeat determines the culture you create — and the leader you become.",
-              "Setiap respons terhadap suatu situasi mendarat di atas atau di bawah garis. Pola yang Anda ulangi menentukan budaya yang Anda ciptakan — dan pemimpin seperti apa Anda.",
+              "Setiap respons terhadap suatu situasi berada di atas atau di bawah garis. Pola yang Anda ulangi menentukan budaya yang Anda ciptakan, dan pemimpin seperti apa Anda.",
               lang
             )}
           </p>
@@ -397,16 +397,16 @@ export default function AboveBelowClient(_props: {
                   {t("Above the Line", "Di Atas Garis", lang)}
                 </div>
                 <div style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 30, fontWeight: 600, color: offWhite, lineHeight: 1.1 }}>
-                  {t("The Victor", "Pemenang", lang)}
+                  {t("The Victor", "Orang yang Berdaya", lang)}
                 </div>
               </div>
               <div style={{ background: "white", padding: "28px" }}>
                 {([
-                  { en: "Takes ownership — even when it's uncomfortable", id: "Mengambil kepemilikan — bahkan ketika tidak nyaman" },
+                  { en: "Takes ownership — even when it's uncomfortable", id: "Mengambil tanggung jawab penuh, bahkan ketika tidak nyaman" },
                   { en: "Controls their response to any situation", id: "Mengendalikan respons mereka terhadap situasi apapun" },
                   { en: "Drives change rather than waiting for rescue", id: "Mendorong perubahan daripada menunggu penyelamatan" },
                   { en: "Builds credibility through consistent accountability", id: "Membangun kredibilitas melalui akuntabilitas yang konsisten" },
-                  { en: "Creates a culture others want to work in", id: "Menciptakan budaya yang ingin dimasuki orang lain" },
+                  { en: "Creates a culture others want to work in", id: "Menciptakan tim yang membuat orang betah bekerja" },
                 ] as { en: string; id: string }[]).map((item, i, arr) => (
                   <div key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start", marginBottom: i < arr.length - 1 ? 14 : 0 }}>
                     <div style={{ width: 5, height: 5, borderRadius: "50%", background: orange, marginTop: 8, flexShrink: 0 }} />
@@ -430,9 +430,9 @@ export default function AboveBelowClient(_props: {
                 {([
                   { en: "Blames circumstances — finds reasons why it's not their fault", id: "Menyalahkan keadaan — mencari alasan mengapa bukan kesalahan mereka" },
                   { en: "Feels powerless, waiting for others to solve the problem", id: "Merasa tidak berdaya, menunggu orang lain memecahkan masalah" },
-                  { en: "Points outward rather than reflecting inward", id: "Menunjuk ke luar daripada merefleksikan ke dalam" },
+                  { en: "Points outward rather than reflecting inward", id: "Menuding pihak lain alih-alih bercermin ke dalam diri" },
                   { en: "Erodes trust through excuses and denial", id: "Mengikis kepercayaan melalui alasan dan penolakan" },
-                  { en: "Creates a culture of stagnation and resentment", id: "Menciptakan budaya stagnasi dan kebencian" },
+                  { en: "Creates a culture of stagnation and resentment", id: "Menciptakan budaya stagnasi dan kepahitan" },
                 ] as { en: string; id: string }[]).map((item, i, arr) => (
                   <div key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start", marginBottom: i < arr.length - 1 ? 14 : 0 }}>
                     <div style={{ width: 5, height: 5, borderRadius: "50%", background: "oklch(55% 0.06 260)", marginTop: 8, flexShrink: 0 }} />
@@ -461,7 +461,7 @@ export default function AboveBelowClient(_props: {
                 <p style={{ fontSize: 13.5, color: "rgba(255,255,255,0.58)", lineHeight: 1.72, margin: 0 }}>
                   {t(
                     "In Culture Partners' study, 4 out of 5 people said accountability only showed up after something went wrong — a missed deadline, a failed project, a conflict. It was never framed as a practice for growth, ownership, or team health. The result: people learn to hide problems and avoid being accountable, not because they are irresponsible, but because accountability has come to mean consequence, not ownership.",
-                    "Dalam studi Culture Partners, 4 dari 5 orang mengatakan akuntabilitas hanya muncul setelah sesuatu berjalan salah — tenggat waktu yang terlewat, proyek yang gagal, konflik. Akuntabilitas tidak pernah diframing sebagai praktik untuk pertumbuhan, kepemilikan, atau kesehatan tim. Hasilnya: orang belajar menyembunyikan masalah dan menghindari akuntabilitas — bukan karena tidak bertanggung jawab, tetapi karena akuntabilitas berarti konsekuensi, bukan kepemilikan.",
+                    "Dalam studi Culture Partners, 4 dari 5 orang mengatakan akuntabilitas hanya muncul setelah sesuatu berjalan salah: tenggat waktu yang terlewat, proyek yang gagal, konflik. Akuntabilitas tidak pernah dibingkai sebagai praktik untuk pertumbuhan, rasa tanggung jawab, atau kesehatan tim. Hasilnya: orang belajar menyembunyikan masalah dan menghindari akuntabilitas, bukan karena tidak bertanggung jawab, tetapi karena akuntabilitas sudah berarti konsekuensi, bukan rasa tanggung jawab.",
                     lang
                   )}
                 </p>
@@ -478,7 +478,7 @@ export default function AboveBelowClient(_props: {
                 <p style={{ fontSize: 13.5, color: "rgba(255,255,255,0.58)", lineHeight: 1.72, margin: 0 }}>
                   {t(
                     "Training programs, values statements, and performance reviews had far less impact than how the leader responded to problems in real time. When a leader deflects, blames external factors, or avoids difficult conversations, teams learn to do the same. When a leader owns their contribution — even partially, even imperfectly — it signals that ownership is safe. The line a team lives on is most often the line the leader models.",
-                    "Program pelatihan, pernyataan nilai, dan tinjauan kinerja jauh kurang berdampak dibandingkan bagaimana pemimpin merespons masalah secara real-time. Ketika pemimpin mengalihkan, menyalahkan faktor eksternal, atau menghindari percakapan sulit, tim belajar melakukan hal yang sama. Ketika pemimpin mengakui kontribusi mereka — bahkan sebagian, bahkan tidak sempurna — itu memberi sinyal bahwa kepemilikan itu aman. Garis tempat tim hidup paling sering adalah garis yang dicontohkan pemimpin.",
+                    "Program pelatihan, pernyataan nilai, dan tinjauan kinerja jauh kurang berdampak dibandingkan bagaimana pemimpin merespons masalah secara real-time. Ketika pemimpin mengelak, menyalahkan faktor eksternal, atau menghindari percakapan sulit, tim belajar melakukan hal yang sama. Ketika pemimpin mengakui kontribusi mereka, walau hanya sebagian dan tidak sempurna, itu memberi sinyal bahwa mengambil tanggung jawab itu aman. Garis tempat tim hidup paling sering adalah garis yang dicontohkan pemimpin.",
                     lang
                   )}
                 </p>
@@ -664,7 +664,7 @@ export default function AboveBelowClient(_props: {
           <p style={{ fontSize: 15, color: bodyText, marginBottom: 48, lineHeight: 1.65 }}>
             {t(
               "Use these to process your own leadership patterns — alone or with a coach.",
-              "Gunakan ini untuk memproses pola kepemimpinan Anda sendiri — sendiri atau bersama pelatih.",
+              "Gunakan ini untuk merenungkan pola kepemimpinan Anda sendiri, secara pribadi atau bersama pelatih.",
               lang
             )}
           </p>
@@ -681,7 +681,7 @@ export default function AboveBelowClient(_props: {
               },
               {
                 qEn: "What would it look like to choose ownership in the situation you're currently facing? Walk through the four steps: See It, Own It, Solve It, Do It.",
-                qId: "Seperti apa memilih kepemilikan dalam situasi yang Anda hadapi saat ini? Telusuri empat langkah: Lihat, Miliki, Selesaikan, Lakukan.",
+                qId: "Seperti apa memilih untuk memegang tanggung jawab dalam situasi yang Anda hadapi saat ini? Telusuri empat langkah: Lihat, Ambil Tanggung Jawab, Selesaikan, Lakukan.",
               },
               {
                 qEn: "If you reframed your current challenge as a steward rather than an owner — \"I am responsible for what has been entrusted to me\" — what would you do differently today?",

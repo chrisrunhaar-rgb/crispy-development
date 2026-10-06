@@ -58,7 +58,7 @@ const SAFETY_MARKERS = [
     en_practice:
       "In practice: put the phone face-down. Ask one more question before moving on. When a child is upset, name the feeling before explaining why they shouldn't have it.",
     id_practice:
-      "Dalam praktik: letakkan telepon dengan layar menghadap ke bawah. Ajukan satu pertanyaan lagi sebelum melanjutkan. Ketika anak sedang kesal, namai perasaannya sebelum menjelaskan mengapa mereka seharusnya tidak memilikinya.",
+      "Dalam praktik: letakkan telepon dengan layar menghadap ke bawah. Ajukan satu pertanyaan lagi sebelum melanjutkan. Ketika anak sedang kesal, ungkapkan perasaannya dengan kata-kata sebelum menjelaskan mengapa mereka seharusnya tidak memilikinya.",
     icon: "?",
   },
   {
@@ -147,7 +147,7 @@ const TCK_NEEDS = [
     en_body:
       "Every international move carries accumulated losses — friends left behind, the school that finally felt familiar, a language that's fading, a version of themselves that fit somewhere and no longer does. These losses are real but often unspoken. Families who name them together grieve together. Families who don't carry the weight separately.",
     id_body:
-      "Setiap perpindahan internasional membawa kehilangan yang menumpuk — teman-teman yang ditinggalkan, sekolah yang akhirnya terasa familiar, bahasa yang memudar, versi diri yang cocok di suatu tempat dan tidak lagi demikian. Kehilangan-kehilangan ini nyata tetapi sering tidak diucapkan. Keluarga yang menamai mereka bersama berduka bersama. Keluarga yang tidak menanggung beban secara terpisah.",
+      "Setiap perpindahan internasional membawa kehilangan yang menumpuk — teman-teman yang ditinggalkan, sekolah yang akhirnya terasa familiar, bahasa yang memudar, versi diri yang cocok di suatu tempat dan tidak lagi demikian. Kehilangan-kehilangan ini nyata tetapi sering tidak diucapkan. Keluarga yang mengungkapkannya bersama-sama akan berduka bersama-sama. Keluarga yang tidak menanggung beban secara terpisah.",
   },
   {
     en_title: "Bridges Between Worlds",

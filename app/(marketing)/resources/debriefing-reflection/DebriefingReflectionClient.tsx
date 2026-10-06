@@ -13,7 +13,7 @@ const VERSES = {
   "prov-4-7": {
     en_ref: "Proverbs 4:7", id_ref: "Amsal 4:7",
     en: "The beginning of wisdom is this: Get wisdom, and whatever you get, get insight.",
-    id: "Permulaan hikmat ialah: perolehlah hikmat dan dengan segala yang kaupekatkan perolehlah pengertian.",
+    id: "Permulaan hikmat ialah: perolehlah hikmat dan dengan segala yang kauperoleh perolehlah pengertian.",
   },
   "james-1-19": {
     en_ref: "James 1:19", id_ref: "Yakobus 1:19",
@@ -533,7 +533,7 @@ export default function DebriefingReflectionClient({ userPathway, isSaved: initi
                   { time: "5—15", en: "O — Objective: What happened? Establish the shared facts.", id: "O — Objektif: Apa yang terjadi? Tetapkan fakta bersama." },
                   { time: "15—25", en: "R — Reflective: How did it feel? Surface the emotional data.", id: "R — Reflektif: Bagaimana rasanya? Ungkapkan data emosional." },
                   { time: "25—45", en: "I — Interpretive: What does it mean? This is the longest stage — hold space for multiple perspectives.", id: "I — Interpretatif: Apa artinya? Ini adalah tahap terpanjang — berikan ruang untuk berbagai perspektif." },
-                  { time: "45—55", en: "D — Decisional: What will we do? Land on 1—2 concrete actions with named owners.", id: "D — Keputusan: Apa yang akan kita lakukan? Landas pada 1—2 tindakan konkret dengan pemilik yang disebutkan." },
+                  { time: "45—55", en: "D — Decisional: What will we do? Land on 1—2 concrete actions with named owners.", id: "D — Keputusan: Apa yang akan kita lakukan? Sepakati 1-2 tindakan konkret, masing-masing dengan penanggung jawab yang ditunjuk." },
                   { time: "55—60", en: "Close: Brief gratitude round. What was useful about this conversation?", id: "Penutup: Putaran syukur singkat. Apa yang berguna dari percakapan ini?" },
                 ].map((row, i) => (
                   <div key={i} style={{ display: "flex", gap: 20, padding: "12px 0", borderBottom: i < 5 ? "1px solid oklch(92% 0.008 80)" : "none", alignItems: "flex-start" }}>

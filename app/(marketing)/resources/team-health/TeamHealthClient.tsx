@@ -52,7 +52,7 @@ const DIMENSIONS = [
     en_desc: "The team can disagree on ideas without it becoming personal or political. Healthy teams fight for the best outcome. Absence of conflict is not health — it is suppression.",
     id_desc: "Tim dapat tidak setuju pada ide tanpa menjadi pribadi atau politis. Tim yang sehat berjuang untuk hasil terbaik. Ketiadaan konflik bukan kesehatan — itu penekanan.",
     en_fix: "Introduce structured disagreement: 'Before we move on, who sees a risk we haven't named?' Making conflict a named part of process lowers the personal cost of raising it.",
-    id_fix: "Perkenalkan ketidaksetujuan terstruktur: 'Sebelum kita melanjutkan, siapa yang melihat risiko yang belum kita sebutkan?' Menjadikan konflik sebagai bagian bernama dari proses menurunkan biaya pribadi.",
+    id_fix: "Perkenalkan ketidaksetujuan terstruktur: 'Sebelum kita melanjutkan, siapa yang melihat risiko yang belum kita sebutkan?' Menjadikan konflik sebagai bagian resmi dari proses akan mengurangi harga pribadi yang harus dibayar seseorang.",
   },
   {
     en_name: "Accountability", id_name: "Akuntabilitas",
@@ -78,8 +78,8 @@ const DIMENSIONS = [
 
 const WARNING_SIGNS = [
   { en: "Conversations are cautious — people say what the leader wants to hear, not what they actually think.", id: "Percakapan berhati-hati — orang mengatakan apa yang ingin didengar pemimpin, bukan apa yang sebenarnya mereka pikirkan." },
-  { en: "The best people are quietly looking for the exit — often silent before they announce they're leaving.", id: "Orang-orang terbaik diam-diam mencari jalan keluar — sering diam sebelum mereka mengumumkan kepergian mereka." },
-  { en: "No one ever pushes back in meetings — all ideas are agreed to but not all acted upon.", id: "Tidak ada yang pernah mendorong balik dalam rapat — semua ide disetujui tetapi tidak semua dilaksanakan." },
+  { en: "The best people are quietly looking for the exit — often silent before they announce they're leaving.", id: "Orang-orang terbaik diam-diam mencari pekerjaan lain, sering kali tanpa suara sebelum mereka mengumumkan kepergian mereka." },
+  { en: "No one ever pushes back in meetings — all ideas are agreed to but not all acted upon.", id: "Tidak ada yang pernah menyanggah dalam rapat: semua ide disetujui tetapi tidak semua dilaksanakan." },
   { en: "Small tensions never get fully resolved — they accumulate into factions or quiet disengagement.", id: "Ketegangan kecil tidak pernah benar-benar terselesaikan — mereka menumpuk menjadi faksi atau ketidakterlibatan diam-diam." },
   { en: "The leader is the only one who seems energised — the team is executing, not co-creating.", id: "Pemimpinlah satu-satunya yang tampak bersemangat — tim sedang menjalankan, bukan mencipta bersama." },
 ];
@@ -172,7 +172,7 @@ export default function TeamHealthClient({ userPathway, isSaved: initialSaved }:
         <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 16, color: "oklch(78% 0.04 260)", maxWidth: 560, margin: "0 auto", lineHeight: 1.7 }}>
           {t(
             "An honest diagnosis is the most loving thing you can do for a team. Use this scan to see clearly — not to judge, but to lead better.",
-            "Diagnosis yang jujur adalah hal paling penuh kasih yang dapat Anda lakukan untuk sebuah tim. Gunakan pemindai ini untuk melihat dengan jelas — bukan untuk menghakimi, tetapi untuk memimpin lebih baik.",
+            "Diagnosis yang jujur adalah hal paling penuh kasih yang dapat Anda lakukan untuk sebuah tim. Gunakan pemeriksaan ini untuk melihat dengan jelas, bukan untuk menghakimi, tetapi untuk memimpin lebih baik.",
             "Een eerlijke diagnose is het liefdevollste wat je voor een team kunt doen. Gebruik deze scan om helder te zien — niet om te oordelen, maar om beter te leiden."
           )}
         </p>
@@ -183,7 +183,7 @@ export default function TeamHealthClient({ userPathway, isSaved: initialSaved }:
         {/* Team Health Scan */}
         <div style={{ marginTop: 52, marginBottom: 64 }}>
           <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.14em", color: orange, textTransform: "uppercase", marginBottom: 8 }}>
-            {t("The Scan", "Pemindaiannya", "De Scan")}
+            {t("The Scan", "Pemeriksaan Cepat", "De Scan")}
           </p>
           <h2 style={{ fontFamily: serif, fontSize: "clamp(24px, 3.5vw, 38px)", fontWeight: 600, color: navy, marginBottom: 12, lineHeight: 1.25 }}>
             {t("Rate your team on each dimension", "Nilai tim Anda pada setiap dimensi", "Beoordeel je team op elke dimensie")}
@@ -320,7 +320,7 @@ export default function TeamHealthClient({ userPathway, isSaved: initialSaved }:
           <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 15, color: bodyText, lineHeight: 1.8, maxWidth: 680, marginBottom: 28 }}>
             {t(
               "Paul's image of the church as a body is not just a metaphor for good teamwork. It is a theological claim: teams are not assembled for efficiency — they are assembled by God for mutual belonging, mutual service, and shared witness. The health of your team is a Kingdom matter. When it breaks down, something of the witness of God's character is diminished.",
-              "Gambaran Paulus tentang gereja sebagai tubuh bukan sekadar metafora untuk kerja tim yang baik. Ini adalah klaim teologis: tim tidak dirakit untuk efisiensi — mereka dirakit oleh Allah untuk kepemilikan bersama, pelayanan bersama, dan kesaksian bersama. Kesehatan tim Anda adalah masalah Kerajaan.",
+              "Gambaran Paulus tentang gereja sebagai tubuh bukan sekadar metafora untuk kerja tim yang baik. Ini adalah klaim teologis: tim tidak dibentuk sekadar untuk efisiensi. Mereka dibentuk oleh Tuhan untuk rasa saling memiliki, pelayanan bersama, dan kesaksian bersama. Kesehatan tim Anda adalah masalah Kerajaan.",
               "Paulus' beeld van de kerk als een lichaam is niet slechts een metafoor voor goed teamwerk. Het is een theologische claim: teams worden niet samengesteld voor effici—ntie — ze worden door God samengesteld voor wederzijdse verbondenheid en gedeeld getuigenis. De gezondheid van je team is een Koninkrijkszaak."
             )}
           </p>
@@ -386,7 +386,7 @@ export default function TeamHealthClient({ userPathway, isSaved: initialSaved }:
           <p style={{ fontFamily: serif, fontSize: 22, color: navy, lineHeight: 1.6, marginBottom: 24, fontStyle: "italic" }}>
             {t(
               "Based on this scan — what is the one thing you will do differently this month as a team leader?",
-              "Berdasarkan pemindaian ini — apa satu hal yang akan Anda lakukan secara berbeda bulan ini sebagai pemimpin tim?",
+              "Berdasarkan pemeriksaan ini, apa satu hal yang akan Anda lakukan secara berbeda bulan ini sebagai pemimpin tim?",
               "Op basis van deze scan — wat is het ene dat je deze maand als teamleider anders zult doen?"
             )}
           </p>

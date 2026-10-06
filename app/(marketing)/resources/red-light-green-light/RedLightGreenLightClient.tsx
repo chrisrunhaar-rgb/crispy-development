@@ -146,7 +146,7 @@ const STEPS = [
     num: "04",
     titleEn: "Finalize & Assign Action", titleId: "Finalisasi & Tetapkan Tindakan",
     descEn: "Choose next steps, assign responsibilities, and revisit if more clarity is needed. End with clear ownership.",
-    descId: "Pilih langkah selanjutnya, tetapkan tanggung jawab, dan tinjau kembali jika diperlukan lebih banyak kejelasan. Akhiri dengan kepemilikan yang jelas.",
+    descId: "Pilih langkah selanjutnya, tetapkan tanggung jawab, dan tinjau kembali jika diperlukan lebih banyak kejelasan. Akhiri dengan pembagian tanggung jawab yang jelas.",
   },
 ];
 
@@ -155,12 +155,12 @@ const QUIZ_STATEMENTS = [
   { en: "Which of these options best aligns with our goals and available resources?", id: "Pilihan mana yang paling sesuai dengan tujuan dan sumber daya kita?", answer: "red" as const },
   { en: "What if we tried the complete opposite of what we normally do?", id: "Bagaimana jika kita mencoba kebalikan dari apa yang biasanya kita lakukan?", answer: "green" as const },
   { en: "We need to assess the risks before committing to this direction.", id: "Kita perlu menilai risiko sebelum berkomitmen pada arah ini.", answer: "red" as const },
-  { en: "Yes, and — what if we built on that idea and took it even further?", id: "Ya, dan — bagaimana jika kita membangun di atas ide itu dan membawanya lebih jauh lagi?", answer: "green" as const },
+  { en: "Yes, and — what if we built on that idea and took it even further?", id: "Ya, dan — bagaimana jika kita mengembangkan ide itu dan membawanya lebih jauh lagi?", answer: "green" as const },
   { en: "Let's narrow this down to the two strongest options and make a decision today.", id: "Mari persempit ini menjadi dua opsi terkuat dan buat keputusan hari ini.", answer: "red" as const },
   { en: "There are no bad ideas at this stage — everything is welcome.", id: "Tidak ada ide yang buruk pada tahap ini — semuanya disambut.", answer: "green" as const },
   { en: "What evidence do we have that this approach will actually work?", id: "Bukti apa yang kita miliki bahwa pendekatan ini benar-benar akan berhasil?", answer: "red" as const },
   { en: "Let's give everyone 5 minutes to write down every idea — no matter how wild.", id: "Mari berikan semua orang 5 menit untuk menuliskan setiap ide — tidak peduli seberapa liarnya.", answer: "green" as const },
-  { en: "Before we move on, who will own this decision and be accountable for the outcome?", id: "Sebelum kita melanjutkan, siapa yang akan memiliki keputusan ini dan bertanggung jawab atas hasilnya?", answer: "red" as const },
+  { en: "Before we move on, who will own this decision and be accountable for the outcome?", id: "Sebelum kita melanjutkan, siapa yang akan memegang keputusan ini dan bertanggung jawab atas hasilnya?", answer: "red" as const },
   { en: "What would the most creative solution look like if there were no constraints at all?", id: "Seperti apa solusi paling kreatif jika tidak ada hambatan sama sekali?", answer: "green" as const },
   { en: "Let's be realistic — not all of these ideas fit our current budget or timeline.", id: "Mari realistis — tidak semua ide ini sesuai dengan anggaran atau jadwal kita saat ini.", answer: "red" as const },
   { en: "Let's suspend judgment for now and keep adding to the list.", id: "Mari tunda penilaian untuk sementara dan terus tambahkan ke daftar.", answer: "green" as const },

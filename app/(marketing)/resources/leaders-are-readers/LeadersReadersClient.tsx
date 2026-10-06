@@ -105,7 +105,7 @@ const BOOKS: Book[] = [
     whyReadEn:
       "If you lead across cultures and sometimes feel like you are speaking different languages even in the same language, this book names what is actually happening.",
     whyReadId:
-      "Jika kamu memimpin lintas budaya dan kadang merasa berbicara bahasa yang berbeda meskipun menggunakan bahasa yang sama, buku ini menamai apa yang sebenarnya terjadi.",
+      "Jika kamu memimpin lintas budaya dan kadang merasa berbicara bahasa yang berbeda meskipun menggunakan bahasa yang sama, buku ini mengungkapkan apa yang sebenarnya terjadi.",
     category: "cross-cultural",
     buyUrl: "https://www.amazon.com/dp/1610392507",
   },
@@ -122,7 +122,7 @@ const BOOKS: Book[] = [
     whyReadEn:
       "For any leader working in community, this names the human need for belonging with striking clarity. The cross-cultural tension — between individual autonomy and tribal solidarity — is at the heart of the book.",
     whyReadId:
-      "Bagi pemimpin yang bekerja dalam komunitas, buku ini menamai kebutuhan manusia akan rasa memiliki dengan kejernihan yang mencolok. Ketegangan lintas budaya antara otonomi individu dan solidaritas kelompok ada di jantung buku ini.",
+      "Bagi pemimpin yang bekerja dalam komunitas, buku ini mengungkapkan kebutuhan manusia akan rasa memiliki dengan kejernihan yang mencolok. Ketegangan lintas budaya antara otonomi individu dan solidaritas kelompok ada di jantung buku ini.",
     category: "cross-cultural",
     buyUrl: "https://www.amazon.com/dp/1455566381",
   },
@@ -174,7 +174,7 @@ const BOOKS: Book[] = [
     whyReadEn:
       "Essential for anyone navigating a difficult or uncertain season. Clinton helps you see the bigger arc of what God may be doing in your leadership journey.",
     whyReadId:
-      "Penting bagi siapa pun yang menavigasi musim yang sulit atau tidak pasti. Clinton membantumu melihat busur lebih besar dari apa yang mungkin sedang Allah kerjakan dalam perjalanan kepemimpinanmu.",
+      "Penting bagi siapa pun yang menavigasi musim yang sulit atau tidak pasti. Clinton membantumu melihat busur lebih besar dari apa yang mungkin sedang Tuhan kerjakan sepanjang masa kepemimpinanmu.",
     category: "faith",
     buyUrl: "https://www.amazon.com/dp/0891091831",
   },
@@ -205,7 +205,7 @@ const BOOKS: Book[] = [
     descriptionEn:
       "Wiseman's research shows that some leaders amplify the intelligence around them while others diminish it, often without realising it. She names the patterns of both and gives leaders practical tools to become the kind of leader who makes everyone on the team smarter.",
     descriptionId:
-      "Penelitian Wiseman menunjukkan bahwa beberapa pemimpin memperkuat kecerdasan di sekitar mereka sementara yang lain justru memperlemahnya, seringkali tanpa disadari. Ia menamai pola keduanya dan memberi alat praktis untuk menjadi pemimpin yang membuat semua orang di tim lebih cerdas.",
+      "Penelitian Wiseman menunjukkan bahwa beberapa pemimpin memperkuat kecerdasan di sekitar mereka sementara yang lain justru memperlemahnya, seringkali tanpa disadari. Ia mengungkapkan pola keduanya dan memberi alat praktis untuk menjadi pemimpin yang membuat semua orang di tim lebih cerdas.",
     whyReadEn:
       "If you ever wonder whether you are unleashing or inadvertently limiting the people around you, this book gives you the language and the tools to find out.",
     whyReadId:
@@ -747,7 +747,7 @@ export default function LeadersReadersClient({
       >
         <div className="container-wide" style={{ maxWidth: 760 }}>
           <SectionLabel>
-            {t("MOVEMENT 1", "GERAKAN 1", lang)}
+            {t("MOVEMENT 1", "BAGIAN 1", lang)}
           </SectionLabel>
           <SectionH2>
             {t("The Leader Who Reads", "Pemimpin yang Membaca", lang)}
@@ -862,7 +862,7 @@ export default function LeadersReadersClient({
       >
         <div className="container-wide" style={{ maxWidth: 760 }}>
           <SectionLabel>
-            {t("MOVEMENT 2", "GERAKAN 2", lang)}
+            {t("MOVEMENT 2", "BAGIAN 2", lang)}
           </SectionLabel>
           <SectionH2>
             {t(
@@ -914,7 +914,7 @@ export default function LeadersReadersClient({
           ) : (
             <>
               <p style={prose}>
-                Sebelum kita melanjutkan, aku ingin menamai sesuatu secara langsung, karena ini penting.
+                Sebelum kita melanjutkan, aku ingin mengungkapkan sesuatu secara langsung, karena ini penting.
               </p>
               <p style={proseSubhead}>Membaca menghormati tradisimu</p>
               <p style={prose}>
@@ -928,7 +928,7 @@ export default function LeadersReadersClient({
                 Membaca bukan pengganti pembelajaran lisan. Ini adalah perluasannya.
               </p>
               <p style={prose}>
-                Ada pemikir yang hidup berabad-abad sebelummu, di negara yang tidak akan pernah kamu kunjungi, dengan sesuatu untuk dikatakan kepada situasimu yang tidak bisa dikatakan oleh mentor lokalmu. Membaca adalah cara kamu mengakses para mentor yang jauh itu. Ini adalah bentuk pendampingan yang paling demokratis yang tersedia. Buku tidak peduli tentang statusmu, bahasamu, atau paspormu. Kamu bisa duduk bersama Agustinus, atau Chinua Achebe, atau Ada Lum, hanya dengan biaya satu sore hari.
+                Ada pemikir yang hidup berabad-abad sebelummu, di negara yang tidak akan pernah kamu kunjungi, dengan sesuatu untuk dikatakan kepada situasimu yang tidak bisa dikatakan oleh mentor lokalmu. Membaca adalah cara kamu mengakses para mentor yang jauh itu. Ini adalah bentuk pendampingan yang paling demokratis yang tersedia. Buku tidak peduli tentang statusmu, bahasamu, atau paspormu. Kamu bisa duduk bersama Agustinus, atau Chinua Achebe, atau Ada Lum, cukup dengan meluangkan satu sore saja.
               </p>
               <p style={proseSubhead}>Apa yang kamu baca membentuk cara kamu memimpin</p>
               <p style={prose}>
@@ -966,7 +966,7 @@ export default function LeadersReadersClient({
       >
         <div className="container-wide" style={{ maxWidth: 860 }}>
           <SectionLabel>
-            {t("MOVEMENT 3", "GERAKAN 3", lang)}
+            {t("MOVEMENT 3", "BAGIAN 3", lang)}
           </SectionLabel>
           <SectionH2 dark>
             {t("Building the Habit", "Membangun Kebiasaan", lang)}
@@ -975,7 +975,7 @@ export default function LeadersReadersClient({
           <p style={{ ...proseDark, maxWidth: 640, marginBottom: "3rem" }}>
             {t(
               "The identity shift is real. But it has to land somewhere practical. These four steps are where most leaders find traction.",
-              "Pergeseran identitas itu nyata. Tapi harus mendarat di suatu tempat yang praktis. Empat langkah ini adalah tempat sebagian besar pemimpin menemukan momentum.",
+              "Pergeseran identitas itu nyata. Tapi harus diwujudkan dalam hal yang praktis. Empat langkah ini adalah tempat sebagian besar pemimpin menemukan momentum.",
               lang
             )}
           </p>
@@ -1039,7 +1039,7 @@ export default function LeadersReadersClient({
                 {t("Step 2", "Langkah 2", lang)}
               </p>
               <p style={{ fontFamily: CORMORANT, fontSize: "1.3rem", fontWeight: 600, color: offWhite, marginBottom: "0.75rem", marginTop: 0, lineHeight: 1.2 }}>
-                {t("Guard the Time", "Jaga Waktunya", lang)}
+                {t("Guard the Time", "Lindungi Waktu Membaca", lang)}
               </p>
               <p style={{ fontFamily: FONT, fontSize: "0.875rem", color: "oklch(75% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
                 {t(
@@ -1069,7 +1069,7 @@ export default function LeadersReadersClient({
                 {t("Step 3", "Langkah 3", lang)}
               </p>
               <p style={{ fontFamily: CORMORANT, fontSize: "1.3rem", fontWeight: 600, color: offWhite, marginBottom: "0.75rem", marginTop: 0, lineHeight: 1.2 }}>
-                {t("Drop the Guilt Book", "Tinggalkan Buku Rasa Bersalah", lang)}
+                {t("Drop the Guilt Book", "Lepaskan Buku yang Dibaca karena Merasa Wajib", lang)}
               </p>
               <p style={{ fontFamily: FONT, fontSize: "0.875rem", color: "oklch(75% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
                 {t(
@@ -1425,7 +1425,7 @@ export default function LeadersReadersClient({
               },
               {
                 en: "What does your current reading say about your posture toward learning? Are you feeding the leader you are becoming, or staying comfortable with what you already know?",
-                id: "Apa yang bacaanmu saat ini katakan tentang sikapmu terhadap pembelajaran? Apakah kamu sedang memberi makan pemimpin yang sedang kamu jadikan, atau tetap nyaman dengan apa yang sudah kamu ketahui?",
+                id: "Apa yang bacaanmu saat ini katakan tentang sikapmu terhadap pembelajaran? Apakah kamu sedang memberi makan pemimpin yang sedang kamu tuju, atau tetap nyaman dengan apa yang sudah kamu ketahui?",
               },
             ].map((q, i) => (
               <div
@@ -1481,7 +1481,7 @@ export default function LeadersReadersClient({
       >
         <div className="container-wide" style={{ maxWidth: 760 }}>
           <SectionLabel>
-            {t("FAITH ANCHOR", "JANGKAR IMAN", lang)}
+            {t("FAITH ANCHOR", "PEGANGAN IMAN", lang)}
           </SectionLabel>
 
           <blockquote
@@ -1568,7 +1568,7 @@ export default function LeadersReadersClient({
                 Pada tahun 1760, John Wesley menulis surat kepada seorang pendeta muda. Suratnya singkat dan instruksinya langsung: &ldquo;Suka atau tidak suka, bacalah dan berdoalah setiap hari. Itu demi hidupmu.&rdquo;
               </p>
               <p style={proseDark}>
-                Yang menarik bagiku dari kalimat itu adalah Wesley menamai perlawanannya terlebih dahulu. Ia tidak mengasumsikan sang pendeta akan senang mendengar ini. Ia mengasumsikan sang pendeta akan merasa ini merepotkan, atau tidak nyaman, atau tidak relevan. Dan ia mengatakannya juga, dengan bobot pastoral.
+                Yang menarik bagiku dari kalimat itu adalah Wesley mengungkapkan penolakan yang mungkin muncul terlebih dahulu. Ia tidak mengasumsikan sang pendeta akan senang mendengar ini. Ia mengasumsikan sang pendeta akan merasa ini merepotkan, atau tidak nyaman, atau tidak relevan. Dan ia mengatakannya juga, dengan bobot pastoral.
               </p>
               <p style={proseSubhead}>Masih berlaku hari ini</p>
               <p style={proseDark}>
@@ -1809,7 +1809,7 @@ export default function LeadersReadersClient({
               {
                 quote: {
                   en: "I used to think I was just not a reader. This reframe changed everything. I started with 10 minutes a day and now I genuinely look forward to it.",
-                  id: "Dulu aku pikir aku memang bukan tipe pembaca. Bingkai ulang ini mengubah segalanya. Aku mulai dengan 10 menit sehari dan sekarang aku benar-benar menantikan waktu itu.",
+                  id: "Dulu aku pikir aku memang bukan tipe pembaca. Cara pandang baru ini mengubah segalanya. Aku mulai dengan 10 menit sehari dan sekarang aku benar-benar menantikan waktu itu.",
                 },
                 context: {
                   en: "Cross-cultural leader, Southeast Asia",

@@ -78,7 +78,7 @@ export async function encourageComfortZone(
           contents: [{
             role: "user",
             parts: [{ text: lang === "id"
-              ? "Berikan saya dorongan untuk mengambil langkah berikutnya keluar dari zona nyaman saya."
+              ? "Beri saya semangat untuk mengambil langkah berikutnya keluar dari zona nyaman saya."
               : "Encourage me to take my next step out of my comfort zone." }],
           }],
           generationConfig: {

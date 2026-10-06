@@ -64,7 +64,7 @@ const QS = [
   { en: "When a plan changes unexpectedly, you:", id: "Ketika rencana berubah secara tiba-tiba, Anda:", options: [
     { en: "Adapt quickly and find a new path forward.", id: "Beradaptasi dengan cepat dan menemukan jalan baru ke depan.", t: "D" },
     { en: "Look for the positive angle and keep the team's spirits up.", id: "Mencari sisi positifnya dan menjaga semangat tim.", t: "I" },
-    { en: "Need time to process the change before fully committing.", id: "Membutuhkan waktu untuk memproses perubahan sebelum sepenuhnya berkomitmen.", t: "S" },
+    { en: "Need time to process the change before fully committing.", id: "Membutuhkan waktu untuk mengolah perubahan sebelum sepenuhnya berkomitmen.", t: "S" },
     { en: "Want to understand fully why it changed before accepting it.", id: "Ingin memahami sepenuhnya mengapa perubahan terjadi sebelum menerimanya.", t: "C" },
   ]},
   { en: "You are most frustrated when:", id: "Anda paling frustrasi ketika:", options: [
@@ -89,7 +89,7 @@ const QS = [
     { en: "The one who sets the pace and direction.", id: "Orang yang menetapkan tempo dan arah.", t: "D" },
     { en: "The one who creates connections and builds energy.", id: "Orang yang membangun koneksi dan menciptakan energi.", t: "I" },
     { en: "The one who ensures no one is left behind.", id: "Orang yang memastikan tidak ada yang tertinggal.", t: "S" },
-    { en: "The one who catches errors and ensures quality.", id: "Orang yang menangkap kesalahan dan memastikan kwaliteit.", t: "C" },
+    { en: "The one who catches errors and ensures quality.", id: "Orang yang menangkap kesalahan dan memastikan kualitas.", t: "C" },
   ]},
   { en: "When someone on your team makes a mistake, you:", id: "Ketika seseorang di tim Anda membuat kesalahan, Anda:", options: [
     { en: "Address it quickly and directly.", id: "Menanganinya dengan cepat dan langsung.", t: "D" },
@@ -333,7 +333,7 @@ const DISC_TYPES = [
     },
     communication: {
       en: "Be accurate and prepared. Provide evidence and logical reasoning. Give them time to process and don't rush to a decision. Avoid vague language — they want specifics.",
-      id: "Bersikap akurat dan siap. Berikan bukti dan penalaran logis. Beri mereka waktu untuk memproses dan jangan terburu-buru mengambil keputusan. Hindari bahasa yang samar — mereka menginginkan hal yang spesifik.",
+      id: "Bersikap akurat dan siap. Berikan bukti dan penalaran logis. Beri mereka waktu untuk merenungkannya dan jangan terburu-buru mengambil keputusan. Hindari bahasa yang samar — mereka menginginkan hal yang spesifik.",
     },
     crossCultural: {
       en: "The C-type's need for precision is a great asset in technical or quality-focused cultures. The growth edge is learning to work with relational ambiguity — where trust is built through relationships, not systems — and to communicate warmth alongside accuracy.",
@@ -720,7 +720,7 @@ export default function DiscClient({
                     fontFamily: "Montserrat, sans-serif", fontWeight: 700, fontSize: "0.75rem",
                     letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(55% 0.04 260)", marginBottom: "0.75rem",
                   }}>
-                    {lang === "en" ? "Blind Spots" : "Titik Buta"}
+                    {lang === "en" ? "Blind Spots" : "Hal yang Tidak Disadari"}
                   </p>
                   <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                     {type.blindspots[lang].map((b, i) => (
@@ -758,7 +758,7 @@ export default function DiscClient({
                     fontFamily: "Montserrat, sans-serif", fontWeight: 700, fontSize: "0.7rem",
                     letterSpacing: "0.12em", textTransform: "uppercase", color: accentColor, marginBottom: "0.5rem",
                   }}>
-                    {lang === "en" ? "Fears" : "Ditakuti"}
+                    {lang === "en" ? "Fears" : "Ketakutan"}
                   </p>
                   <p style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 400, fontSize: "0.875rem", color: "oklch(35% 0.04 260)", lineHeight: 1.65, margin: 0 }}>
                     {tr(type.fear)}
@@ -1239,7 +1239,7 @@ export default function DiscClient({
               </>
             ) : (
               <>
-                Argumen jujur untuk DISC dalam tim lintas budaya: ini memberi tim kosakata bersama yang tidak mengancam untuk menamai perbedaan perilaku.
+                Argumen jujur untuk DISC dalam tim lintas budaya: ini memberi tim kosakata bersama yang tidak mengancam untuk menggambarkan perbedaan perilaku.
                 <span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700 }}>³</span>{" "}
                 Dalam tim di mana satu orang menginginkan keputusan sekarang dan orang lain ingin seminggu untuk memeriksa setiap detail, memiliki kata-kata untuk perbedaan itu membuat percakapan menjadi kurang personal dan lebih praktis. Kerangka ini paling kuat bukan sebagai diagnosis tetapi sebagai izin: sekarang kita punya bahasa untuk ini.
               </>
@@ -1281,7 +1281,7 @@ export default function DiscClient({
                   ]
                 : [
                     { label: "Bukan vonis", body: "Hasilmu adalah pola kecenderungan, bukan identitas tetap. Ini menggambarkan perilaku default-mu dalam kondisi biasa. Ini tidak memprediksi bagaimana kamu akan bertindak di bawah tekanan, pertumbuhan, kesedihan, atau transformasi." },
-                    { label: "Bukan prediksi", body: "DISC tidak memberitahumu apa yang akan dilakukan seseorang. Ini menamai kecenderungan perilaku. Orang beradaptasi, tumbuh, dan berperilaku berbeda dalam konteks budaya yang berbeda. Tipe-mu adalah titik awal, bukan langit-langit." },
+                    { label: "Bukan prediksi", body: "DISC tidak memberitahumu apa yang akan dilakukan seseorang. Ini menggambarkan kecenderungan perilaku. Orang beradaptasi, tumbuh, dan berperilaku berbeda dalam konteks budaya yang berbeda. Tipe-mu adalah titik awal, bukan langit-langit." },
                     { label: "Tidak dikalibrasi secara universal", body: `DISC dikembangkan terutama dalam konteks penelitian Barat yang individualis. Data Indonesia Hofstede (Indeks Jarak Kekuasaan 78, Individualisme 14) menggambarkan betapa jauhnya asumsi mendasar dari konteks di mana banyak dari kita memimpin. Label "kelemahan" tipe S — pasif, menghindari konflik, butuh persetujuan — mungkin menggambarkan perilaku yang terampil secara budaya dalam konteks Indonesia dan Asia Tenggara lainnya, bukan keterbatasan pribadi.` },
                   ]
               ).map((item) => (
@@ -1973,7 +1973,7 @@ export default function DiscClient({
               marginBottom: "1.25rem",
             }}
           >
-            {lang === "en" ? "Faith Anchor" : "Jangkar Iman"}
+            {lang === "en" ? "Faith Anchor" : "Pegangan Iman"}
           </p>
 
           {/* Heading */}
@@ -2024,7 +2024,7 @@ export default function DiscClient({
           >
             {lang === "en"
               ? "The standard leadership response to behavioral diversity is: how do we align everyone? The New Testament's response is different. Paul's argument in 1 Corinthians 12 is not that we should tolerate difference but that difference was placed in the body intentionally. The weaker parts are not liabilities to be trained out. They are essential. No single behavioral style contains all that God designed leadership to require."
-              : "Respons kepemimpinan standar terhadap keragaman perilaku adalah: bagaimana kita menyelaraskan semua orang? Respons Perjanjian Baru berbeda. Argumen Paulus dalam 1 Korintus 12 bukan bahwa kita harus mentolerir perbedaan tetapi bahwa perbedaan itu ditempatkan dalam tubuh dengan sengaja. Bagian yang lemah bukan beban yang perlu dilatih keluar. Mereka penting. Tidak ada satu gaya perilaku pun yang mengandung semua yang dirancang Allah untuk diperlukan kepemimpinan."}
+              : "Respons kepemimpinan standar terhadap keragaman perilaku adalah: bagaimana kita menyelaraskan semua orang? Respons Perjanjian Baru berbeda. Argumen Paulus dalam 1 Korintus 12 bukan bahwa kita harus mentolerir perbedaan tetapi bahwa perbedaan itu ditempatkan dalam tubuh dengan sengaja. Bagian yang lemah bukan beban yang perlu dilatih keluar. Mereka penting. Tidak ada satu gaya perilaku pun yang mengandung semua yang dirancang Tuhan untuk diperlukan kepemimpinan."}
           </p>
 
           <p
@@ -2038,7 +2038,7 @@ export default function DiscClient({
           >
             {lang === "en"
               ? "This reframes DISC entirely. The D-type leader is not the ideal that S and C types should aspire toward. The S-type's patience is not a weakness waiting to be fixed. Each orientation reflects something of the image of God in how human beings were made — rational, relational, creative, precise, bold, steadfast. 1 Corinthians 12 says you need all four around the table. Behavioral diversity is one expression of the reality that no single person fully images God — the community together carries what the individual cannot."
-              : "Ini membingkai ulang DISC sepenuhnya. Pemimpin tipe D bukan ideal yang seharusnya dicapai oleh tipe S dan C. Kesabaran tipe S bukan kelemahan yang menunggu untuk diperbaiki. Setiap orientasi mencerminkan sesuatu dari gambar Allah dalam cara manusia diciptakan — rasional, relasional, kreatif, presisi, berani, teguh. 1 Korintus 12 mengatakan kamu membutuhkan keempat tipe di sekitar meja. Keragaman perilaku adalah salah satu ungkapan dari kenyataan bahwa tidak ada satu orang pun yang sepenuhnya mencerminkan Allah — komunitas bersama-sama membawa apa yang tidak dapat dibawa oleh individu."}
+              : "Ini membingkai ulang DISC sepenuhnya. Pemimpin tipe D bukan ideal yang seharusnya dicapai oleh tipe S dan C. Kesabaran tipe S bukan kelemahan yang menunggu untuk diperbaiki. Setiap orientasi mencerminkan sesuatu dari gambar Allah dalam cara manusia diciptakan — rasional, relasional, kreatif, presisi, berani, teguh. 1 Korintus 12 mengatakan kamu membutuhkan keempat tipe di sekitar meja. Keragaman perilaku adalah salah satu ungkapan dari kenyataan bahwa tidak ada satu orang pun yang sepenuhnya mencerminkan Tuhan — komunitas bersama-sama membawa apa yang tidak dapat dibawa oleh individu."}
           </p>
 
           <p
@@ -2052,7 +2052,7 @@ export default function DiscClient({
           >
             {lang === "en"
               ? "In global teams, the tendency is to code one behavioral style as professional and the others as deficits. D-style directness gets coded as competent leadership. S-style harmony gets coded as passivity. C-style precision gets coded as over-engineering. I-style relational energy gets coded as insufficiently serious. 1 Corinthians 12 subverts all of this. The body does not get to decide which members are necessary."
-              : "Dalam tim global, kecenderungannya adalah mengkode satu gaya perilaku sebagai profesional dan yang lain sebagai kekurangan. Kecenderungan langsung tipe D dikode sebagai kepemimpinan yang kompeten. Keharmonisan tipe S dikode sebagai kepasifan. Ketepatan tipe C dikode sebagai terlalu berlebihan. Energi relasional tipe I dikode sebagai kurang serius. 1 Korintus 12 menumbangkan semua ini. Tubuh tidak berhak memutuskan anggota mana yang diperlukan."}
+              : "Dalam tim global, kecenderungannya adalah menganggap satu gaya perilaku sebagai yang profesional dan yang lain sebagai kekurangan. Kecenderungan langsung tipe D dikode sebagai kepemimpinan yang kompeten. Keharmonisan tipe S dikode sebagai kepasifan. Ketepatan tipe C dikode sebagai terlalu berlebihan. Energi relasional tipe I dikode sebagai kurang serius. 1 Korintus 12 menumbangkan semua ini. Tubuh tidak berhak memutuskan anggota mana yang diperlukan."}
           </p>
 
           {/* Reflection question */}
@@ -2126,7 +2126,7 @@ export default function DiscClient({
               : [
                   "DISC menggambarkan kecenderungan perilaku, bukan identitas tetap. Baca hasilmu sebagai pengaturan default-mu, bukan batas kemampuanmu.",
                   "Setiap tipe membawa kekuatan yang dibutuhkan tiga tipe lainnya. Pertanyaannya bukan tipe mana yang terbaik — melainkan bagaimana timmu mencakup gambaran lengkap bersama.",
-                  "Tipe-mu mendarat secara berbeda di berbagai budaya. Gaya D di Jakarta beroperasi secara berbeda dari gaya D di Amsterdam. Labelnya adalah titik awal, bukan kesimpulan.",
+                  "Tipe-mu diterima secara berbeda di berbagai budaya. Gaya D di Jakarta beroperasi secara berbeda dari gaya D di Amsterdam. Labelnya adalah titik awal, bukan kesimpulan.",
                   "Kesadaran perilaku saja tidak cukup. Yang memungkinkannya adalah kosakata bersama — yang membuat percakapan sulit menjadi kurang mengancam.",
                   "Tipe-mu bisa bertumbuh. Sejarah kepemimpinan Alkitabiah penuh dengan pemimpin yang gayanya semakin dalam dan melebar melalui gesekan, kegagalan, dan waktu.",
                 ]
@@ -2257,7 +2257,7 @@ export default function DiscClient({
                       Aplikasi Kristen dari DISC telah dikembangkan sejak Personality Plus karya Florence Littauer (1983) dan Understanding How Others Misunderstand You karya Ken Voges (1990). Karya-karya ini menghubungkan empat orientasi perilaku dengan Kitab Suci, khususnya dengan metafora tubuh Kristus Paulus dalam 1 Korintus 12, yang membingkai keragaman perilaku sebagai desain ilahi yang disengaja daripada masalah kepemimpinan yang harus diselesaikan.
                     </p>
                     <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.875rem", color: "oklch(40% 0.04 260)", lineHeight: 1.75, marginBottom: "1rem" }}>
-                      Bagi pemimpin lintas budaya, DISC memberikan kosakata bersama untuk menamai perbedaan perilaku tanpa mengatribusikan kesalahan atau patologi. Dalam tim multikultural — khususnya dalam konteks Indonesia dan Asia Tenggara — memahami bahwa perilaku pelestarian harmoni tipe S mencerminkan kompetensi budaya daripada kelemahan pribadi, dan bahwa permintaan dokumentasi tipe C mungkin terbaca sebagai ketidakpercayaan dalam budaya preferensi lisan, mengubah cara tim menavigasi konflik dan kolaborasi.
+                      Bagi pemimpin lintas budaya, DISC memberikan kosakata bersama untuk menggambarkan perbedaan perilaku tanpa mengatribusikan kesalahan atau patologi. Dalam tim multikultural — khususnya dalam konteks Indonesia dan Asia Tenggara — memahami bahwa perilaku pelestarian harmoni tipe S mencerminkan kompetensi budaya daripada kelemahan pribadi, dan bahwa permintaan dokumentasi tipe C mungkin terbaca sebagai ketidakpercayaan dalam budaya preferensi lisan, mengubah cara tim menavigasi konflik dan kolaborasi.
                     </p>
                     <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.875rem", color: "oklch(40% 0.04 260)", lineHeight: 1.75, marginBottom: "0" }}>
                       Keempat tipe DISC — D (Dominance), I (Influence), S (Steadiness), C (Conscientiousness) — bukan kotak tetapi kecenderungan perilaku. Setiap pemimpin membawa keempat orientasi dalam tingkat yang bervariasi. Penilaian mengidentifikasi orientasi mana yang paling alami dalam kondisi biasa. Pertumbuhan dalam kepemimpinan lintas budaya melibatkan perluasan rentang perilakumu — bukan meninggalkan gaya utamamu, tetapi mengembangkan kelancaran dalam tiga lainnya.

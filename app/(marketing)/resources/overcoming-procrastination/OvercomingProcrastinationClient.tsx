@@ -53,14 +53,14 @@ const DISGUISES: Record<DisguiseKey, DisguiseData> = {
     color: "oklch(42% 0.14 260)",
     intro: {
       en: "Avoidance is a protection strategy. It works in the short term: when the emotional cost of risking failure feels higher than the cost of not trying, the rational move is to not try. The problem compounds. The longer you wait, the more loaded the task becomes — and the more your sense of self gets entangled with whether you can finally do it well.",
-      id: "Penghindaran adalah strategi perlindungan. Itu berhasil dalam jangka pendek: ketika biaya emosional dari risiko kegagalan terasa lebih tinggi dari biaya tidak mencoba, keputusan yang masuk akal adalah tidak mencoba. Masalahnya terus bertambah. Semakin lama kamu menunggu, semakin berat beban tugasnya — dan semakin dalam keterkaitannya dengan rasa dirimu.",
+      id: "Penghindaran adalah strategi perlindungan. Itu berhasil dalam jangka pendek: ketika harga emosional yang harus dibayar karena berisiko gagal terasa lebih tinggi daripada harga karena tidak mencoba, keputusan yang masuk akal adalah tidak mencoba. Masalahnya terus bertambah. Semakin lama kamu menunggu, semakin berat beban tugasnya — dan semakin dalam keterkaitannya dengan rasa dirimu.",
     },
     strategies: [
       {
-        title: { en: "Name what you're protecting yourself from", id: "Beri nama apa yang sedang kamu lindungi" },
+        title: { en: "Name what you're protecting yourself from", id: "Ungkapkan dari apa kamu sedang melindungi dirimu" },
         body: {
           en: "Ask yourself: 'What am I actually afraid will happen if this doesn't go well?' Usually the answer is judgment, disappointment, or proof of inadequacy. Name it precisely. A fear named clearly loses some of its power to govern your behaviour — because you can now respond to the actual fear rather than to the fog of avoidance.",
-          id: "Tanyakan pada dirimu: 'Apa yang sebenarnya aku takutkan akan terjadi jika ini tidak berjalan baik?' Biasanya jawabannya adalah penilaian, kekecewaan, atau bukti ketidakcukupan. Beri nama dengan tepat. Ketakutan yang sudah diberi nama kehilangan sebagian kekuatannya — karena sekarang kamu bisa merespons ketakutan yang sebenarnya, bukan kabut penghindaran.",
+          id: "Tanyakan pada dirimu: 'Apa yang sebenarnya aku takutkan akan terjadi jika ini tidak berjalan baik?' Biasanya jawabannya adalah penilaian, kekecewaan, atau bukti ketidakcukupan. Ungkapkan dengan tepat. Ketakutan yang sudah diungkapkan dengan jelas kehilangan sebagian kekuatannya — karena sekarang kamu bisa merespons ketakutan yang sebenarnya, bukan kabut penghindaran.",
         },
       },
       {
@@ -706,7 +706,7 @@ export default function OvercomingProcrastinationClient({
       {/* FAITH ANCHOR */}
       <section style={{ padding: "72px 24px" }}>
         <div style={{ maxWidth: 860, margin: "0 auto" }}>
-          <p style={eyebrow}>{t("Faith Anchor", "Jangkar Iman", lang)}</p>
+          <p style={eyebrow}>{t("Faith Anchor", "Pegangan Iman", lang)}</p>
           <h2 style={sectionH2}>{t("A deeper root", "Akar yang lebih dalam", lang)}</h2>
 
           <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem", marginTop: "1.75rem" }}>
@@ -933,7 +933,7 @@ export default function OvercomingProcrastinationClient({
               },
               {
                 en: "Short-term avoidance is genuinely relieving — which is why the cycle persists. Naming the emotion behind the delay is the first step to interrupting it.",
-                id: "Penghindaran jangka pendek sungguh-sungguh memberikan kelegaan — itulah mengapa siklusnya terus berlanjut. Memberi nama emosi di balik penundaan adalah langkah pertama untuk memutusnya.",
+                id: "Penghindaran jangka pendek sungguh-sungguh memberikan kelegaan — itulah mengapa siklusnya terus berlanjut. Mengungkapkan emosi di balik penundaan adalah langkah pertama untuk memutusnya.",
               },
               {
                 en: "If-then planning produces the strongest evidence-based effect on follow-through (d = 0.65 across 642 tests).³ Specify the task, day, time, and place — before the moment arrives.",
@@ -981,7 +981,7 @@ export default function OvercomingProcrastinationClient({
           }}>
             {t(
               "What has procrastination cost you — not in productivity, but in relationships, calling, or courage? And what might faithfulness look like in the one task you have been putting off?",
-              "Apa yang telah penundaan ambil dari kamu — bukan dalam produktivitas, tetapi dalam hubungan, panggilan, atau keberanian? Dan seperti apa kesetiaan dalam satu tugas yang selama ini kamu tunda?",
+              "Apa yang telah hilang dari hidupmu karena menunda, bukan dalam produktivitas, tetapi dalam hubungan, panggilan, atau keberanian? Dan seperti apa kesetiaan dalam satu tugas yang selama ini kamu tunda?",
               lang
             )}
           </blockquote>

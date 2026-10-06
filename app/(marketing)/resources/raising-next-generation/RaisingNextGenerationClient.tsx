@@ -29,7 +29,7 @@ const PHASES = [
     en_label: "Invite", id_label: "Undang",
     en_subtitle: "Come with me", id_subtitle: "Ikutlah denganku",
     en: "Paul invited Timothy into his journey (Acts 16:3). He did not advertise a leadership programme — he identified a young person of good character and reputation, and made the invitation personal. The most powerful developmental invitation is not a form to fill in. It is a specific word, spoken to a specific person: 'I see something in you. Come and learn alongside me.'",
-    id: "Paulus mengundang Timotius ke dalam perjalanannya (Kisah 16:3). Dia tidak mengiklankan program kepemimpinan — dia mengidentifikasi orang muda dengan karakter dan reputasi yang baik, dan membuat undangan itu bersifat pribadi. Undangan pengembangan yang paling kuat bukan formulir untuk diisi. Ini adalah kata-kata spesifik, diucapkan kepada orang yang spesifik: 'Saya melihat sesuatu dalam dirimu. Mari belajar bersamaku.'",
+    id: "Paulus mengajak Timotius ikut serta dalam pelayanannya (Kisah 16:3). Dia tidak mengiklankan program kepemimpinan — dia mengidentifikasi orang muda dengan karakter dan reputasi yang baik, dan membuat undangan itu bersifat pribadi. Undangan pengembangan yang paling kuat bukan formulir untuk diisi. Ini adalah kata-kata spesifik, diucapkan kepada orang yang spesifik: 'Saya melihat sesuatu dalam dirimu. Mari belajar bersamaku.'",
   },
   {
     phaseId: 2,
@@ -54,7 +54,7 @@ const QUALITIES = [
   },
   {
     en: "Teachability — the willingness to be shaped, corrected, and stretched. A gifted person who cannot receive honest feedback will plateau early and become defensive later.",
-    id: "Kemampuan untuk diajar — kesediaan untuk dibentuk, dikoreksi, dan diregangkan. Orang yang berbakat yang tidak dapat menerima umpan balik yang jujur akan mencapai plateau lebih awal dan menjadi defensif kemudian.",
+    id: "Kemampuan untuk diajar — kesediaan untuk dibentuk, dikoreksi, dan ditantang. Orang yang berbakat yang tidak dapat menerima umpan balik yang jujur akan berhenti berkembang lebih awal dan menjadi defensif kemudian.",
   },
   {
     en: "Love for people — leadership not rooted in genuine care for others eventually becomes hollow. Look for leaders who notice people who are overlooked.",
@@ -62,14 +62,14 @@ const QUALITIES = [
   },
   {
     en: "Responsiveness to God — the leader building their own kingdom eventually becomes a problem. Look for people whose primary posture is listening, not performing.",
-    id: "Responsivitas terhadap Tuhan — pemimpin yang membangun kerajaan mereka sendiri pada akhirnya menjadi masalah. Carilah orang yang sikap utamanya mendengarkan, bukan tampil.",
+    id: "Hati yang peka terhadap Tuhan — pemimpin yang membangun kerajaan mereka sendiri pada akhirnya menjadi masalah. Carilah orang yang sikap utamanya mendengarkan, bukan tampil.",
   },
 ];
 
 const PRACTICES = [
   {
     en: "Take them with you — to meetings, conversations, and contexts they are not yet entitled to. Exposure is a form of investment.",
-    id: "Bawa mereka bersama Anda — ke rapat, percakapan, dan konteks yang belum menjadi hak mereka. Paparan adalah bentuk investasi.",
+    id: "Bawa mereka bersama Anda — ke rapat, percakapan, dan konteks yang belum menjadi hak mereka. Keterlibatan langsung adalah bentuk investasi.",
   },
   {
     en: "Debrief after experiences — ask 'What did you see? What would you have done differently?' Reflection is the engine of growth.",
@@ -85,7 +85,7 @@ const PRACTICES = [
   },
   {
     en: "Speak to their destiny, not just their task — name what you see in them that they may not yet see in themselves.",
-    id: "Berbicaralah tentang takdir mereka, bukan hanya tugas mereka — sebutkan apa yang Anda lihat dalam diri mereka yang mungkin belum mereka lihat.",
+    id: "Berbicaralah tentang panggilan hidup mereka, bukan hanya tugas mereka — sebutkan apa yang Anda lihat dalam diri mereka yang mungkin belum mereka lihat.",
   },
 ];
 
@@ -161,15 +161,15 @@ export default function RaisingNextGenerationClient({ userPathway, isSaved: init
         {/* Lineage Builder */}
         <div style={{ marginTop: 52, marginBottom: 60 }}>
           <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.14em", color: orange, textTransform: "uppercase", marginBottom: 8 }}>
-            {t("Your Lineage", "Garis Keturunan Anda", "Jouw Lijn")}
+            {t("Your Lineage", "Silsilah Kepemimpinan Anda", "Jouw Lijn")}
           </p>
           <h2 style={{ fontFamily: serif, fontSize: "clamp(26px, 4vw, 40px)", fontWeight: 600, color: navy, marginBottom: 12, lineHeight: 1.25 }}>
-            {t("Who are you investing in?", "Siapa yang Anda investasikan?", "In wie investeer jij?")}
+            {t("Who are you investing in?", "Dalam diri siapa Anda berinvestasi?", "In wie investeer jij?")}
           </h2>
           <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 15, color: bodyText, lineHeight: 1.75, marginBottom: 32, maxWidth: 600 }}>
             {t(
               "Name up to three people you are currently developing as leaders. Not who you'd like to invest in someday — who you are actively investing in today.",
-              "Sebutkan hingga tiga orang yang saat ini Anda kembangkan sebagai pemimpin. Bukan siapa yang ingin Anda investasikan suatu hari nanti — siapa yang saat ini Anda investasikan secara aktif.",
+              "Sebutkan hingga tiga orang yang saat ini Anda kembangkan sebagai pemimpin. Bukan orang yang suatu hari nanti ingin Anda kembangkan, melainkan orang yang saat ini sedang Anda kembangkan secara aktif.",
               "Noem maximaal drie mensen in wie jij momenteel leiders ontwikkelt. Niet wie je ooit zou willen investeren — wie je vandaag actief in investeert."
             )}
           </p>
@@ -459,7 +459,7 @@ export default function RaisingNextGenerationClient({ userPathway, isSaved: init
           <p style={{ fontFamily: serif, fontSize: 22, color: navy, lineHeight: 1.6, marginBottom: 24, fontStyle: "italic" }}>
             {t(
               "Name one person you will intentionally invite, invest in, or release this week — and what you'll do.",
-              "Sebutkan satu orang yang akan Anda undang, investasikan, atau lepaskan minggu ini — dan apa yang akan Anda lakukan.",
+              "Sebutkan satu orang yang akan Anda undang, bina, atau lepaskan minggu ini — dan apa yang akan Anda lakukan.",
               "Noem ——n persoon die je deze week bewust wilt uitnodigen, in wilt investeren of wilt loslaten — en wat je zult doen."
             )}
           </p>
@@ -480,7 +480,7 @@ export default function RaisingNextGenerationClient({ userPathway, isSaved: init
                 fontFamily: "Montserrat, sans-serif", fontWeight: 700, fontSize: 13,
                 cursor: commitment.trim() ? "pointer" : "default",
               }}>
-                {t("I'm Committing to This", "Saya Berkomitmen pada Ini", "Hier Verbind Ik Mij Aan")}
+                {t("I'm Committing to This", "Saya Berkomitmen Melakukannya", "Hier Verbind Ik Mij Aan")}
               </button>
             </>
           ) : (

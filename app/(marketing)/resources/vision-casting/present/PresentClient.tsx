@@ -62,11 +62,11 @@ const CHANNELS: ChannelData[] = [
     anchorRef: { en: "Nehemiah 1:1-11", id: "Nehemia 1:1-11" },
     anchorText: {
       en: "When Nehemiah heard that Jerusalem's wall lay broken, he wept, fasted and prayed for days, long before he had a plan, permission or a team. One of Scripture's most carefully led projects began with a concern he could not release.",
-      id: "Ketika Nehemia mendengar tembok Yerusalem runtuh, ia menangis, berpuasa, dan berdoa selama berhari-hari, jauh sebelum ia punya rencana, izin, atau tim. Salah satu proyek kepemimpinan paling matang dalam Kitab Suci dimulai dari kekhawatiran yang tak bisa ia lepaskan.",
+      id: "Ketika Nehemia mendengar tembok Yerusalem runtuh, ia menangis, berpuasa, dan berdoa selama berhari-hari, jauh sebelum ia punya rencana, izin, atau tim. Salah satu proyek kepemimpinan paling matang dalam Kitab Suci dimulai dari beban hati yang tak bisa ia lepaskan.",
     },
     question: {
       en: "What concern have you been carrying for more than a year that you cannot put down?",
-      id: "Kekhawatiran apa yang sudah Anda tanggung lebih dari setahun yang tidak bisa Anda tinggalkan?",
+      id: "Beban hati apa yang sudah Anda tanggung lebih dari setahun yang tidak bisa Anda tinggalkan?",
     },
     practice: {
       en: "Write down the one issue that consistently stirs or breaks your heart. Bring it to prayer for four weeks. Notice whether it grows or fades.",
@@ -81,13 +81,13 @@ const CHANNELS: ChannelData[] = [
     tagline: { en: "What stirs the imagination", id: "Apa yang menggerakkan imajinasi" },
     body: {
       en: "Scripture shows God speaking through dreams. Joseph dreams of sheaves bowing to his sheaf. Daniel interprets a king's dream. These are literal dreams, but also a picture of the future that stirs in a quiet mind. Scripture treats them as data, not fantasy.",
-      id: "Kitab Suci menunjukkan Allah berbicara melalui mimpi. Yusuf bermimpi tentang berkas gandum yang membungkuk padanya. Daniel menafsirkan mimpi seorang raja. Ini mimpi harfiah, tetapi juga gambaran masa depan yang muncul dalam hati yang tenang. Kitab Suci memperlakukannya sebagai data, bukan khayalan.",
+      id: "Kitab Suci menunjukkan Tuhan berbicara melalui mimpi. Yusuf bermimpi tentang berkas gandum yang membungkuk padanya. Daniel menafsirkan mimpi seorang raja. Ini mimpi harfiah, tetapi juga gambaran masa depan yang muncul dalam hati yang tenang. Kitab Suci memperlakukannya sebagai data, bukan khayalan.",
     },
     anchorTitle: { en: "Joseph: the dream that cost everything", id: "Yusuf: mimpi yang menuntut segalanya" },
     anchorRef: { en: "Genesis 37:5-11", id: "Kejadian 37:5-11" },
     anchorText: {
       en: "Joseph's dreams of sheaves and stars bowing to him cost him his brothers' trust, then years of slavery and prison. They were still from God, and came true in ways he could not have planned.",
-      id: "Mimpi Yusuf tentang berkas dan bintang yang membungkuk padanya membuatnya kehilangan kepercayaan saudara-saudaranya, lalu bertahun-tahun sebagai budak dan tahanan. Mimpi itu tetap dari Allah, dan menjadi nyata dengan cara yang tak pernah ia rencanakan.",
+      id: "Mimpi Yusuf tentang berkas dan bintang yang membungkuk padanya membuatnya kehilangan kepercayaan saudara-saudaranya, lalu bertahun-tahun sebagai budak dan tahanan. Mimpi itu tetap dari Tuhan, dan menjadi nyata dengan cara yang tak pernah ia rencanakan.",
     },
     question: {
       en: "What picture of the future keeps returning to you when you are quiet enough to hear it?",
@@ -103,7 +103,7 @@ const CHANNELS: ChannelData[] = [
     direction: "N",
     colorAccent: "oklch(22% 0.10 260)",
     label: { en: "Revelation", id: "Wahyu" },
-    tagline: { en: "What God speaks directly", id: "Apa yang Allah ucapkan langsung" },
+    tagline: { en: "What God speaks directly", id: "Apa yang Tuhan ucapkan langsung" },
     body: {
       en: "Paul receives a vision of a man from Macedonia begging him to come, and the gospel crosses into Europe. Peter receives a vision that opens the gospel to the Gentiles. These moments are rare, but real. A leader who leaves no room for them will miss them.",
       id: "Paulus menerima penglihatan seorang laki-laki Makedonia yang memohon kedatangannya, dan Injil menyeberang ke Eropa. Petrus menerima penglihatan yang membuka Injil bagi bangsa-bangsa lain. Saat-saat ini jarang, tetapi nyata. Pemimpin yang tidak menyediakan ruang bagi mereka akan melewatkannya.",
@@ -116,7 +116,7 @@ const CHANNELS: ChannelData[] = [
     },
     question: {
       en: "When did you last make unhurried space for God to speak, not to confirm your plan but to surprise you?",
-      id: "Kapan terakhir Anda memberi ruang tenang bagi Allah untuk berbicara, bukan untuk menegaskan rencana Anda, tetapi untuk mengejutkan Anda?",
+      id: "Kapan terakhir Anda memberi ruang tenang bagi Tuhan untuk berbicara, bukan untuk menegaskan rencana Anda, tetapi untuk mengejutkan Anda?",
     },
     practice: {
       en: "Set aside one hour this week with no agenda: no reading plan, no prayer list. Just silence, and one question: \"Lord, is there anything you want to show me?\"",
@@ -128,10 +128,10 @@ const CHANNELS: ChannelData[] = [
     direction: "W",
     colorAccent: "oklch(38% 0.12 155)",
     label: { en: "Others", id: "Sesama" },
-    tagline: { en: "What God reveals through community", id: "Apa yang Allah nyatakan melalui komunitas" },
+    tagline: { en: "What God reveals through community", id: "Apa yang Tuhan nyatakan melalui komunitas" },
     body: {
       en: "This is the most underestimated channel. God rarely gives one leader the whole picture. Each team member sees a part, and a leader who listens only to their own passion, dreams and revelation carries an incomplete picture.",
-      id: "Ini saluran yang paling sering diremehkan. Allah jarang memberikan gambaran utuh kepada satu pemimpin saja. Setiap anggota tim melihat sebagiannya, dan pemimpin yang hanya mendengarkan gairah, mimpi, dan wahyunya sendiri membawa gambaran yang belum lengkap.",
+      id: "Ini saluran yang paling sering diremehkan. Tuhan jarang memberikan gambaran utuh kepada satu pemimpin saja. Setiap anggota tim melihat sebagiannya, dan pemimpin yang hanya mendengarkan gairah, mimpi, dan wahyunya sendiri membawa gambaran yang belum lengkap.",
     },
     anchorTitle: { en: "Antioch: a vision born in community", id: "Antiokhia: visi yang lahir dalam komunitas" },
     anchorRef: { en: "Acts 13:1-3", id: "Kisah Para Rasul 13:1-3" },
@@ -166,7 +166,7 @@ const TESTS: TestData[] = [
     title: { en: "Scripture", id: "Kitab Suci" },
     question: {
       en: "Does it align with God's character and the call to make disciples of every nation?",
-      id: "Apakah visi ini selaras dengan karakter Allah dan panggilan untuk menjadikan semua bangsa murid?",
+      id: "Apakah visi ini selaras dengan karakter Tuhan dan panggilan untuk menjadikan semua bangsa murid?",
     },
   },
   {
@@ -207,7 +207,7 @@ const KEY_TAKEAWAYS: { lead: Pair; rest: Pair }[] = [
     lead: { en: "Four channels, one vision.", id: "Empat saluran, satu visi." },
     rest: {
       en: "We see God speaking through passion, dreams, revelation and others. When we listen through all four, the vision grows stronger.",
-      id: "Kita melihat Allah berbicara melalui gairah, mimpi, wahyu, dan sesama. Ketika kita mendengarkan melalui keempatnya, visi menjadi semakin kuat.",
+      id: "Kita melihat Tuhan berbicara melalui gairah, mimpi, wahyu, dan sesama. Ketika kita mendengarkan melalui keempatnya, visi menjadi semakin kuat.",
     },
   },
   {
@@ -244,7 +244,7 @@ const THIS_WEEK: Pair[] = [
 const QUESTIONS: Pair[] = [
   {
     en: "What concern have you been carrying for more than a year that you cannot put down?",
-    id: "Kekhawatiran apa yang sudah Anda tanggung lebih dari setahun yang tidak bisa Anda tinggalkan?",
+    id: "Beban hati apa yang sudah Anda tanggung lebih dari setahun yang tidak bisa Anda tinggalkan?",
   },
   {
     en: "Who on your team have you not yet asked what they see?",
@@ -421,7 +421,7 @@ const SLIDES: Slide[] = [
         <h2 style={{ ...midTitle, color: offWhite }}>{t("Vision rarely comes from one direction", "Visi jarang datang dari satu arah", lang)}</h2>
         <p style={{ ...body, color: onNavy, maxWidth: 1100 }}>
           {t("We see God speaking through at least four channels.",
-            "Kita melihat Allah berbicara melalui setidaknya empat saluran.", lang)}
+            "Kita melihat Tuhan berbicara melalui setidaknya empat saluran.", lang)}
           <br />
           {t("When we listen through all of them, the vision grows stronger.",
             "Ketika kita mendengarkan melalui semuanya, visi menjadi semakin kuat.", lang)}
@@ -443,7 +443,7 @@ const SLIDES: Slide[] = [
         <h2 style={{ ...midTitle, color: offWhite }}>{t("Not every strong feeling is vision", "Tidak setiap perasaan kuat adalah visi", lang)}</h2>
         <p style={{ ...body, color: onNavy, maxWidth: 1150 }}>
           {t("Andy Stanley's Visioneering offers five questions that help a leader tell a God-given vision apart from a good idea, a personal ambition, or a fear reaction.",
-            "Visioneering karya Andy Stanley menawarkan lima pertanyaan yang membantu pemimpin membedakan visi dari Allah dengan ide yang baik, ambisi pribadi, atau reaksi karena takut.", lang)}
+            "Visioneering karya Andy Stanley menawarkan lima pertanyaan yang membantu pemimpin membedakan visi dari Tuhan dengan ide yang baik, ambisi pribadi, atau reaksi karena takut.", lang)}
         </p>
       </>
     ),
@@ -459,7 +459,7 @@ const SLIDES: Slide[] = [
     steps: 2,
     render: (lang, step) => (
       <>
-        <p style={kicker}>{t("Faith anchor", "Jangkar iman", lang)}</p>
+        <p style={kicker}>{t("Faith anchor", "Pegangan iman", lang)}</p>
         <h2 style={{ ...bigTitle, color: offWhite, fontStyle: "italic", fontSize: 66, maxWidth: 1300 }}>
           {t('"Where there is no revelation, people cast off restraint."', '"Bila tidak ada wahyu ilahi, bangsa itu menjadi liar."', lang)}
         </h2>

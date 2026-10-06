@@ -50,7 +50,7 @@ const LEARNING_OUTCOMES = {
   ],
   id: [
     { keyword: "Mengenali", rest: " model kepercayaan bawaanmu sendiri dan mengidentifikasi bagaimana model itu mungkin tidak selaras dengan ekspektasi orang-orang dari latar belakang budaya yang berbeda." },
-    { keyword: "Membedakan", rest: " antara kepercayaan kognitif dan kepercayaan afektif, dan menjelaskan mengapa pencampuran default ini tanpa kesadaran menghasilkan jarak yang tidak bisa dinamai oleh kedua pihak." },
+    { keyword: "Membedakan", rest: " antara kepercayaan kognitif dan kepercayaan afektif, dan menjelaskan mengapa pencampuran default ini tanpa kesadaran menghasilkan jarak yang tidak bisa diungkapkan oleh kedua pihak." },
     { keyword: "Menerapkan", rest: " pergeseran dari penilaian kepercayaan yang pasif (“apakah aku mempercayai mereka?”) ke investasi kepercayaan yang aktif (“apakah aku sudah menciptakan kondisi di mana mereka bisa mempercayai aku?”) dalam setidaknya satu hubungan kepemimpinan nyata minggu ini." },
   ],
 };
@@ -76,9 +76,9 @@ const TEACHING_PARAS = {
     "Bagi banyak pemimpin — terutama mereka yang dibentuk oleh budaya kerja Eropa Barat atau Amerika Utara — jawabannya melibatkan hal-hal seperti: Apakah mereka melakukan apa yang mereka katakan? Apakah mereka tepat waktu? Apakah mereka kompeten? Apakah mereka menindaklanjuti? Ini kadang disebut kepercayaan kognitif¹. Ini berbasis tugas, dibangun melalui kinerja yang dapat diandalkan, dan paling terasa alami dalam budaya konteks rendah di mana perilaku profesional dan hubungan personal dipisahkan.",
     "Bagi banyak orang lain — pemimpin dan anggota tim yang dibentuk oleh budaya kerja Indonesia, Brasil, Nigeria, China, atau India, antara lain — pertanyaan kepercayaan terlihat sangat berbeda. Sebelum kinerja bisa berarti apa pun, hubungan harus datang lebih dulu. Apakah kita sudah menghabiskan waktu yang benar-benar bersama? Apakah orang ini mengetahui situasi keluargaku, tekananku, ceritaku? Apakah mereka benar-benar peduli padaku sebagai manusia, bukan hanya apa yang aku hasilkan? Ini adalah kepercayaan afektif¹. Ini berbasis hubungan, dibangun melalui kedekatan emosional dan pengalaman personal bersama, dan membutuhkan waktu yang sering tidak diinvestasikan secara alami oleh budaya yang berfokus pada tugas.",
     "Tidak ada model yang salah. Keduanya sangat manusiawi. Keduanya muncul dalam Kitab Suci.",
-    "Tapi ketika dua model ini bertabrakan dalam satu tim — tanpa ada yang menamai apa yang sedang terjadi — hasilnya dapat diprediksi. Pemimpin dari Belanda berpikir anggota tim dari Indonesia terlalu lambat bekerja karena dia terus ingin berbicara dan makan bersama. Anggota tim dari Indonesia berpikir pemimpin dari Belanda tidak bisa dipercaya karena dia tidak pernah meluangkan waktu untuk benar-benar mengenalmu sebelum mulai meminta sesuatu darimu. Keduanya bekerja keras. Keduanya memiliki niat baik yang tulus. Dan tidak ada satu pun yang bisa menamai apa yang sedang rusak.",
+    "Tapi ketika dua model ini bertabrakan dalam satu tim — tanpa ada yang mengungkapkan apa yang sedang terjadi — hasilnya dapat diprediksi. Pemimpin dari Belanda berpikir anggota tim dari Indonesia terlalu lambat bekerja karena dia terus ingin berbicara dan makan bersama. Anggota tim dari Indonesia berpikir pemimpin dari Belanda tidak bisa dipercaya karena dia tidak pernah meluangkan waktu untuk benar-benar mengenalmu sebelum mulai meminta sesuatu darimu. Keduanya bekerja keras. Keduanya memiliki niat baik yang tulus. Dan tidak ada satu pun yang bisa mengungkapkan apa yang sedang rusak.",
     "Ini yang disebut peneliti sebagai asimetri kepercayaan². Ini bukan cacat dalam salah satu model budaya. Ini adalah tabrakan struktural antara dua cara membangun hubungan manusia yang sama-sama sah — satu dirancang untuk efisiensi, satu dirancang untuk keamanan — yang kebanyakan orang tidak pernah harus periksa secara sadar, karena mereka hanya pernah bekerja dengan orang-orang yang berbagi default yang sama.",
-    "Asimetri menjadi berbahaya ketika tidak dinamai. Karena ketika kepercayaan mulai terkikis lintas budaya, kerusakan itu sering kali menyegel dirinya sendiri. Setiap orang menafsirkan perilaku orang lain melalui lensa budayanya sendiri. Pemimpin yang berfokus pada tugas melihat penarikan diri dan memberinya label pasif atau tidak terlibat. Anggota tim yang berfokus pada hubungan melihat tekanan dan memberinya label dingin atau tidak menghormati. Tidak ada yang melihat kegagalan kepercayaan itu dengan cukup jelas untuk menamakannya. Jadi tidak ada fondasi dari mana memulai percakapan yang nyata. Jarak semakin besar, dan tidak ada yang tahu persis mengapa.",
+    "Asimetri menjadi berbahaya ketika tidak diungkapkan. Karena ketika kepercayaan mulai terkikis lintas budaya, kerusakan itu sering kali menyegel dirinya sendiri. Setiap orang menafsirkan perilaku orang lain melalui lensa budayanya sendiri. Pemimpin yang berfokus pada tugas melihat penarikan diri dan memberinya label pasif atau tidak terlibat. Anggota tim yang berfokus pada hubungan melihat tekanan dan memberinya label dingin atau tidak menghormati. Tidak ada yang melihat kegagalan kepercayaan itu dengan cukup jelas untuk menamakannya. Jadi tidak ada fondasi dari mana memulai percakapan yang nyata. Jarak semakin besar, dan tidak ada yang tahu persis mengapa.",
     "Ini bukan terutama masalah keterampilan. Ini masalah kesadaran.",
     "Pergeseran yang diundang modul ini sederhana untuk dijelaskan dan sungguh sulit untuk dilakukan. Ini adalah langkah dari penilaian kepercayaan yang pasif ke investasi kepercayaan yang aktif.",
     "Kebanyakan pemimpin, ketika memikirkan kepercayaan dalam tim, diam-diam bertanya: “Apakah aku mempercayai orang ini?” Itu adalah penilaian pasif. Itu menempatkan kamu dalam posisi sebagai penilai, menunggu untuk melihat apakah orang lain mendapatkan kepercayaanmu.",
@@ -173,7 +173,7 @@ const SELF_ASSESSMENT_ITEMS = [
   },
   {
     en: "I can name the cultural trust default I operate from most naturally (task-based or relationship-based), and I am aware of how that default shapes my behaviour with others.",
-    id: "Aku bisa menamai default kepercayaan budaya yang paling alami aku operasikan (berbasis tugas atau berbasis hubungan), dan aku sadar bagaimana default itu membentuk perilakuku dengan orang lain.",
+    id: "Aku bisa mengenali kecenderungan kepercayaan budaya yang paling alami bagiku (berbasis tugas atau berbasis hubungan), dan aku sadar bagaimana kecenderungan itu membentuk perilakuku dengan orang lain.",
   },
   {
     en: "When I do something to build trust — spending time, asking questions, following through on commitments — I think about whether it is meaningful in the way my team member understands trust, not just in the way I understand it.",
@@ -213,7 +213,7 @@ const ASSESSMENT_RESULTS = {
     },
     id: {
       title: "Kamu lebih banyak menilai, belum berinvestasi",
-      body: "Jawabanmu menunjukkan bahwa kepercayaan dalam timmu saat ini lebih merupakan sesuatu yang kamu evaluasi daripada sesuatu yang kamu bangun. Itu bukan vonis. Itu adalah titik awal yang paling umum, dan menamainya dengan jujur sudah merupakan langkah pertama. Pilih satu hubungan di mana kepercayaan terasa tipis dan mulailah dari sana. Tindakan praktis di bawah dirancang persis untuk ini.",
+      body: "Jawabanmu menunjukkan bahwa kepercayaan dalam timmu saat ini lebih merupakan sesuatu yang kamu evaluasi daripada sesuatu yang kamu bangun. Itu bukan vonis. Itu adalah titik awal yang paling umum, dan mengungkapkannya dengan jujur sudah merupakan langkah pertama. Pilih satu hubungan di mana kepercayaan terasa tipis dan mulailah dari sana. Tindakan praktis di bawah dirancang persis untuk ini.",
     },
   },
 };
@@ -299,7 +299,7 @@ const CHECKLIST = {
       "If there is a relationship that has gone cold and you do not know why — send a message. Not to resolve anything. Just to stay present.",
     ],
     id: [
-      "Identifikasi satu hubungan dalam timmu di mana kepercayaan terasa tipis — dan namai (untuk dirimu sendiri, dengan jujur) apakah kamu telah berinvestasi dalam hubungan itu dengan cara yang masuk akal bagi orang lain.",
+      "Identifikasi satu hubungan dalam timmu di mana kepercayaan terasa tipis — dan ungkapkan (untuk dirimu sendiri, dengan jujur) apakah kamu telah berinvestasi dalam hubungan itu dengan cara yang masuk akal bagi orang lain.",
       "Dalam interaksi penting berikutnya dengan rekan kerja lintas budaya, tanyakan satu pertanyaan yang biasanya tidak kamu tanyakan — sesuatu tentang situasi mereka, keluarga mereka, atau apa yang benar-benar ada di pikiran mereka saat ini.",
       "Perhatikan ketika kamu membuat penilaian kepercayaan hari ini. Tanyakan: apakah aku mengevaluasi orang ini melalui lensa budayaku, atau lensa mereka?",
       "Pelajari konteks satu anggota tim minggu ini — bukan kinerja mereka, tetapi kehidupan mereka. Tekanan apa yang mereka tanggung? Seperti apa “minggu yang baik” bagi mereka?",
@@ -342,7 +342,7 @@ const KEY_TAKEAWAYS = [
     },
     id: {
       title: "Kenali default kepercayaanmu sendiri.",
-      body: "Kamu memiliki default budaya untuk bagaimana kepercayaan terbentuk — berbasis tugas (kognitif) atau berbasis hubungan (afektif). Kebanyakan orang tidak pernah harus memeriksanya karena mereka selalu bekerja dengan orang-orang yang berbagi default yang sama. Kepemimpinan lintas budaya mengubah itu. Default itu sendiri bukan masalahnya. Beroperasi darinya tanpa kesadaran, dalam konteks di mana orang lain beroperasi dari default yang berbeda, adalah tempat kerusakan tak kasat mata terjadi. Namai defaultmu. Kemudian tanyakan apa biayanya bagi orang-orang yang kamu pimpin.",
+      body: "Kamu memiliki default budaya untuk bagaimana kepercayaan terbentuk — berbasis tugas (kognitif) atau berbasis hubungan (afektif). Kebanyakan orang tidak pernah harus memeriksanya karena mereka selalu bekerja dengan orang-orang yang berbagi default yang sama. Kepemimpinan lintas budaya mengubah itu. Default itu sendiri bukan masalahnya. Beroperasi darinya tanpa kesadaran, dalam konteks di mana orang lain beroperasi dari default yang berbeda, adalah tempat kerusakan tak kasat mata terjadi. Ungkapkan defaultmu. Kemudian tanyakan apa harga yang harus dibayar oleh orang-orang yang kamu pimpin.",
     },
   },
   {
@@ -1127,9 +1127,9 @@ export default function BuildingTrustClient({ isSaved: initialSaved }: Props) {
       {/* 10 — Faith Anchor */}
       <div style={{ background: NAVY, padding: "80px 24px" }}>
         <div style={{ maxWidth: 720, margin: "0 auto" }}>
-          <p style={{ ...eyebrow, marginBottom: 12 }}>{t("Faith Anchor", "Jangkar Iman")}</p>
+          <p style={{ ...eyebrow, marginBottom: 12 }}>{t("Faith Anchor", "Pegangan Iman")}</p>
           <h2 style={{ fontFamily: FONT_HEADLINE, fontSize: "clamp(28px, 3.5vw, 44px)", fontStyle: "italic", fontWeight: 600, color: OFF_WHITE, lineHeight: 1.15, margin: "0 0 36px" }}>
-            {t("He Invested First", "Dia Berinvestasi Lebih Dahulu")}
+            {t("He Invested First", "Dialah yang Lebih Dahulu Memberi")}
           </h2>
 
           {lang === "id" ? (
@@ -1143,9 +1143,9 @@ export default function BuildingTrustClient({ isSaved: initialSaved }: Props) {
               <p style={proseDark}>
                 Kepercayaan manusia berbeda. Orang berubah. Konteks bergeser. Hubungan berlapis dengan sejarah, ekspektasi, asumsi budaya, dan luka. Kepercayaan manusia harus diperoleh, dibangun, dipelihara, dan kadang dibangun kembali dari nol. Itu tidak pernah otomatis. Dan dalam pengaturan lintas budaya, jalur di mana ia terbentuk tidak sama untuk semua orang. Mencampuradukkan keduanya — menggunakan kesetiaan mutlak Tuhan sebagai model untuk apa yang harus kamu harapkan dari atau tawarkan kepada orang lain — menghasilkan naivitas atau rasa bersalah yang palsu. Tidak ada yang melayani siapa pun.
               </p>
-              <p style={proseDark}>Jangkar yang lebih baik bukan apa yang Tuhan itu. Ini adalah apa yang Yesus lakukan.</p>
+              <p style={proseDark}>Pegangan yang lebih baik bukan apa yang Tuhan itu. Ini adalah apa yang Yesus lakukan.</p>
               <p style={proseDark}>
-                Dalam <span style={scriptureStyle}>Yohanes 13</span>, Yesus membasuh kaki murid-muridnya. Apa yang dikatakan teks itu sebelum tindakan itu sangat penting: “Yesus tahu bahwa Bapa telah menyerahkan segala sesuatu ke dalam tangannya dan bahwa ia datang dari Allah dan kembali kepada Allah.” Dia bertindak dari tempat keamanan yang lengkap. Dia tidak memerlukan murid-murid untuk mempercayainya terlebih dahulu. Dia tidak menahan investasi sampai hubungan itu terbukti. Dia melayani lebih dulu, dari kepastian tentang siapa dia dan milik siapa dia.
+                Dalam <span style={scriptureStyle}>Yohanes 13</span>, Yesus membasuh kaki murid-muridnya. Apa yang dikatakan teks itu sebelum tindakan itu sangat penting: “Yesus tahu, bahwa Bapa-Nya telah menyerahkan segala sesuatu kepada-Nya dan bahwa Ia datang dari Allah dan kembali kepada Allah.” Dia bertindak dari tempat keamanan yang lengkap. Dia tidak memerlukan murid-murid untuk mempercayainya terlebih dahulu. Dia tidak menunda memberi diri sampai hubungan itu terbukti. Dia melayani lebih dulu, dari kepastian tentang siapa dia dan milik siapa dia.
               </p>
               <p style={proseDark}>
                 Inilah modelnya. Bukan “aku akan mempercayaimu ketika kamu mendapatkannya.” Tapi: “Aku akan berinvestasi padamu, dengan tulus dan praktis, sebelum kepercayaan terbangun — karena aku tahu siapa aku dan aku tahu apa yang aku dipanggil untuk lakukan.”

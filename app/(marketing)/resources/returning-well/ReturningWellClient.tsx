@@ -86,7 +86,7 @@ const JOURNEY_STAGES = [
       "Name what you lost — make a list, write it down. Losses only have power when they are unnamed.",
     ],
     id_helps: [
-      "Namai apa yang Anda kehilangan — buat daftar, tuliskan. Kehilangan hanya memiliki kekuatan ketika tidak disebutkan.",
+      "Ungkapkan apa yang hilang dari Anda: buat daftar, tuliskan. Kehilangan hanya memiliki kekuatan ketika tidak disebutkan.",
     ],
     verse_key: "ps-126-5",
   },
@@ -110,7 +110,7 @@ const JOURNEY_STAGES = [
       "Idealising where you came from ('back there, everything was more real')",
     ],
     id_traps: [
-      "Mengidealisasi tempat asal ('di sana, segalanya lebih nyata')",
+      "Mengidealisasi tempat Anda bertugas dulu ('di sana, segalanya lebih nyata')",
     ],
     en_helps: [
       "Let the grief come. Grief is proof that what you had was real — don't rush past it or spiritualise it away.",
@@ -210,9 +210,9 @@ const RAFT_CARDS = [
     en_title: "Think Ahead",
     id_title: "Persiapkan Masa Depan",
     en_body: "The returning well journey has predictable stages. Knowing that Collision is coming — and that it is temporary — changes your relationship to it entirely. Naming the road ahead is not pessimism. It is wisdom that shortens the hard seasons.",
-    id_body: "Perjalanan kembali dengan baik memiliki tahapan yang dapat diprediksi. Mengetahui bahwa Benturan akan datang — dan itu sementara — mengubah hubungan Anda dengannya sepenuhnya. Menamai jalan di depan bukan pesimisme. Itu adalah kebijaksanaan yang mempersingkat musim-musim yang berat.",
+    id_body: "Proses kembali dengan baik memiliki tahapan yang dapat diprediksi. Mengetahui bahwa Benturan akan datang, dan bahwa itu sementara, mengubah cara Anda menghadapinya sepenuhnya. Mengungkapkan apa yang ada di depan bukan pesimisme. Itu adalah kebijaksanaan yang mempersingkat musim-musim yang berat.",
     en_question: "Which stage of the journey do you think is hardest for you personally — and what one thing could you put in place now to help when you arrive there?",
-    id_question: "Menurut Anda, tahap perjalanan mana yang paling sulit bagi Anda secara pribadi — dan satu hal apa yang bisa Anda siapkan sekarang untuk membantu saat Anda tiba di sana?",
+    id_question: "Menurut Anda, tahap mana dalam proses ini yang paling sulit bagi Anda secara pribadi — dan satu hal apa yang bisa Anda siapkan sekarang untuk membantu saat Anda tiba di sana?",
   },
 ];
 
@@ -220,7 +220,7 @@ const RAFT_CARDS = [
 const REFLECTION_STATEMENTS = [
   {
     en: "I have moments of genuine joy in my home culture, but they're followed by guilt — like I shouldn't be enjoying it here.",
-    id: "Saya memiliki momen-momen sukacita sejati dalam budaya asal saya, tetapi diikuti oleh rasa bersalah — seolah saya tidak seharusnya menikmatinya di sini.",
+    id: "Saya memiliki momen-momen sukacita sejati di tempat saya baru pulang ini, tetapi diikuti oleh rasa bersalah, seolah saya tidak seharusnya menikmatinya di sini.",
     en_stage: "Adjustment",
     id_stage: "Penyesuaian",
   },
@@ -232,13 +232,13 @@ const REFLECTION_STATEMENTS = [
   },
   {
     en: "I find myself constantly comparing my home culture unfavourably to where I came from — the pace, the priorities, the conversations.",
-    id: "Saya terus-menerus membandingkan budaya asal saya dengan tidak menguntungkan dibandingkan tempat asal saya — kecepatan, prioritas, percakapan.",
+    id: "Saya terus-menerus merasa tempat saya baru pulang ini lebih buruk dibandingkan tempat saya bertugas: kecepatannya, prioritasnya, percakapannya.",
     en_stage: "Collision",
     id_stage: "Benturan",
   },
   {
     en: "There are relationships I left without saying what I needed to say — and I still feel the weight of that.",
-    id: "Ada hubungan yang saya tinggalkan tanpa mengatakan apa yang perlu saya katakan — dan saya masih merasakan beratnya itu.",
+    id: "Ada hubungan yang saya tinggalkan tanpa mengatakan apa yang perlu saya katakan — dan hal itu masih terasa berat di hati saya.",
     en_stage: "Arrival",
     id_stage: "Kedatangan",
   },
@@ -458,7 +458,7 @@ export default function ReturningWellClient({ userPathway, isSaved: initialSaved
               color: orange,
               marginBottom: 20,
             }}>
-              {t("The Re-Entry Journey", "Perjalanan Kembali ke Tanah Air", "De Re-Integratiereis")}
+              {t("The Re-Entry Journey", "Proses Kembali ke Tanah Air", "De Re-Integratiereis")}
             </p>
             <h2 style={{
               fontFamily: serif,
@@ -587,7 +587,7 @@ export default function ReturningWellClient({ userPathway, isSaved: initialSaved
                     whiteSpace: "nowrap",
                   }}
                 >
-                  {t("Faith Anchor", "Jangkar Iman", "Geloofanker")} ?
+                  {t("Faith Anchor", "Pegangan Iman", "Geloofanker")} ?
                 </button>
               </div>
             </div>
@@ -1229,7 +1229,7 @@ export default function ReturningWellClient({ userPathway, isSaved: initialSaved
               }}>
                 {t(
                   `You seem to be in the ${inferredStageRaw} stage of re-entry. That's valuable information — not to label you, but to give you permission to be exactly where you are.`,
-                  `Anda tampaknya berada di tahap ${inferredStageRaw} dari kembali ke tanah air. Itu informasi yang berharga — bukan untuk memberi label Anda, tetapi untuk memberi Anda izin menjadi tepat di mana Anda berada.`,
+                  `Anda tampaknya berada di tahap ${inferredStageRaw} dari kembali ke tanah air. Itu informasi yang berharga — bukan untuk memberi label pada Anda, tetapi untuk membiarkan Anda berada di mana pun Anda sekarang.`,
                   `Je lijkt je in de ${inferredStageRaw}-fase van re-integratie te bevinden. Dat is waardevolle informatie — niet om je te labelen, maar om je toestemming te geven precies te zijn waar je bent.`
                 )}
               </p>
@@ -1370,7 +1370,7 @@ export default function ReturningWellClient({ userPathway, isSaved: initialSaved
             display: "inline-block",
           }}
         >
-          {t("All Resources", "Semua Sumber", "Alle Bronnen")}
+          {t("All Resources", "Semua Materi", "Alle Bronnen")}
         </Link>
         <Link
           href="/resources/healthy-transitions"

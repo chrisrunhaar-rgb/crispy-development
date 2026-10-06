@@ -193,11 +193,11 @@ const insightCards = [
     title: { en: "Decision Quality", id: "Kualitas Keputusan" },
     body: {
       en: "High-PD organisations are faster to decide but slower to surface problems. Low-PD organisations are slower to decide but more likely to catch errors before implementation. Neither is universally better — the right balance depends on the cost of failure. For high-stakes, low-reversal decisions — strategic, financial, medical, safety — low-PD input structures generally produce better outcomes.",
-      id: "Organisasi PD tinggi lebih cepat mengambil keputusan tetapi lebih lambat mengangkat masalah. Organisasi PD rendah lebih lambat mengambil keputusan tetapi lebih mungkin menangkap kesalahan sebelum implementasi. Tidak ada yang secara universal lebih baik — keseimbangan yang tepat bergantung pada biaya kegagalan. Untuk keputusan berisiko tinggi dan sulit dibalik — strategis, finansial, medis, keselamatan — struktur masukan PD rendah umumnya menghasilkan hasil yang lebih baik.",
+      id: "Organisasi PD tinggi lebih cepat mengambil keputusan tetapi lebih lambat mengangkat masalah. Organisasi PD rendah lebih lambat mengambil keputusan tetapi lebih mungkin menangkap kesalahan sebelum implementasi. Tidak ada yang secara universal lebih baik — keseimbangan yang tepat bergantung pada harga yang harus dibayar jika terjadi kegagalan. Untuk keputusan berisiko tinggi dan sulit dibalik — strategis, finansial, medis, keselamatan — struktur masukan PD rendah umumnya menghasilkan hasil yang lebih baik.",
     },
     implication: {
       en: "Know the cost of being wrong before you choose your decision process. Speed is not always the asset it appears to be.",
-      id: "Ketahui biaya dari kesalahan sebelum Anda memilih proses pengambilan keputusan. Kecepatan tidak selalu menjadi aset seperti yang terlihat.",
+      id: "Ketahui harga yang harus dibayar jika terjadi kesalahan sebelum Anda memilih proses pengambilan keputusan. Kecepatan tidak selalu menjadi aset seperti yang terlihat.",
     },
   },
   {
@@ -810,7 +810,7 @@ export default function PowerDistanceClient({ userPathway, isSaved: initialSaved
       <div style={{ background: lightGray, padding: "80px 24px" }}>
         <div style={{ maxWidth: 780, margin: "0 auto" }}>
           <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 12 }}>
-            {t("Where It Goes Wrong", "Di Mana Ini Salah")}
+            {t("Where It Goes Wrong", "Di Mana Masalah Muncul")}
           </p>
           <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(26px, 4vw, 40px)", fontWeight: 800, color: navy, marginBottom: 12, lineHeight: 1.2 }}>
             {t("4 Friction Points in Cross-Cultural Teams", "4 Titik Gesekan dalam Tim Lintas Budaya")}
@@ -911,7 +911,7 @@ export default function PowerDistanceClient({ userPathway, isSaved: initialSaved
       {/* --- SECTION 4: FAITH ANCHOR ------------------------------------------ */}
       <div style={{ padding: "80px 24px", maxWidth: 780, margin: "0 auto" }}>
         <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 12 }}>
-          {t("Faith Anchor", "Jangkar Iman")}
+          {t("Faith Anchor", "Pegangan Iman")}
         </p>
         <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(26px, 4vw, 40px)", fontWeight: 800, color: navy, marginBottom: 32, lineHeight: 1.2 }}>
           {t("Jesus and the Question of Power", "Yesus dan Pertanyaan tentang Kekuasaan")}
@@ -1110,7 +1110,7 @@ export default function PowerDistanceClient({ userPathway, isSaved: initialSaved
               ),
               t(
                 "Before your next team meeting, identify two or three people you will ask specific, bounded questions rather than opening the floor generally.",
-                "Sebelum rapat tim Anda berikutnya, identifikasi dua atau tiga orang yang akan Anda tanyai dengan pertanyaan spesifik dan terbatas daripada membuka lantai secara umum."
+                "Sebelum rapat tim Anda berikutnya, identifikasi dua atau tiga orang yang akan Anda tanyai dengan pertanyaan spesifik dan terbatas daripada membuka diskusi secara umum."
               ),
               t(
                 "Reflect honestly on how your own cultural background shapes your default expectations about authority — both from leaders above you and from those you lead.",

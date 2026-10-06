@@ -41,7 +41,7 @@ const PANES = [
     sub: { en: "The Arena", id: "Arena" } as Pair,
     body: {
       en: "What is known both to you and to those around you. This is the space of honest, effective collaboration. The larger your Arena, the less energy people spend guessing your motives or managing around your blind spots.",
-      id: "Apa yang diketahui baik oleh Anda maupun orang-orang di sekitar Anda. Ini adalah ruang kolaborasi yang jujur dan efektif. Semakin besar Arena Anda, semakin sedikit energi yang dihabiskan orang untuk menebak motif Anda atau mengelola sekitar titik buta Anda.",
+      id: "Apa yang diketahui baik oleh Anda maupun orang-orang di sekitar Anda. Ini adalah ruang kolaborasi yang jujur dan efektif. Semakin besar Arena Anda, semakin sedikit energi yang dihabiskan orang untuk menebak motif Anda atau menyiasati titik buta Anda.",
     } as Pair,
     cross: {
       en: "In Dutch and German contexts, the Arena tends to be large: directness and transparency are cultural defaults. In Indonesian, Filipino and many East Asian contexts, the Arena builds slowly through relational investment. Expecting a large Arena early often creates mistrust.",
@@ -73,11 +73,11 @@ const PANES = [
     sub: { en: "The Facade", id: "Fasad" } as Pair,
     body: {
       en: "What you know about yourself but have chosen not to share. Some of this is appropriate: not everything needs to be disclosed. But when the Hidden pane grows too large, the gap between your private self and your presented self creates exhaustion. You spend energy managing the gap.",
-      id: "Apa yang Anda ketahui tentang diri sendiri tetapi memilih untuk tidak dibagikan. Sebagian dari ini wajar: tidak semuanya perlu diungkapkan. Tetapi ketika pane Tersembunyi tumbuh terlalu besar, celah antara diri pribadi dan diri yang ditampilkan menciptakan kelelahan. Anda menghabiskan energi mengelola celah tersebut.",
+      id: "Apa yang Anda ketahui tentang diri sendiri tetapi memilih untuk tidak dibagikan. Sebagian dari ini wajar: tidak semuanya perlu diungkapkan. Tetapi ketika kotak Tersembunyi tumbuh terlalu besar, celah antara diri pribadi dan diri yang ditampilkan menciptakan kelelahan. Anda menghabiskan energi mengelola celah tersebut.",
     } as Pair,
     cross: {
       en: "In high-context cultures such as Indonesia, Japan and Korea, a larger Hidden pane is not dysfunction, it is social wisdom. What you share with your team leader is different from what you share with a peer. Cross-cultural leaders must read this without pathologising it.",
-      id: "Dalam budaya high-context seperti Indonesia, Jepang dan Korea, pane Tersembunyi yang lebih besar bukan disfungsi, melainkan kebijaksanaan sosial. Apa yang Anda bagikan dengan pemimpin tim berbeda dari apa yang Anda bagikan dengan rekan. Pemimpin lintas budaya harus membaca ini tanpa menjadikannya patologis.",
+      id: "Dalam budaya high-context seperti Indonesia, Jepang dan Korea, kotak Tersembunyi yang lebih besar bukan disfungsi, melainkan kebijaksanaan sosial. Apa yang Anda bagikan dengan pemimpin tim berbeda dari apa yang Anda bagikan dengan rekan. Pemimpin lintas budaya harus membaca ini tanpa menjadikannya patologis.",
     } as Pair,
   },
   {
@@ -105,7 +105,7 @@ const QUESTIONS: Pair[] = [
   },
   {
     en: "What is something true about your leadership, a struggle, a fear, a pattern, that you have never said out loud to your team?",
-    id: "Apa sesuatu yang benar tentang kepemimpinan Anda, sebuah perjuangan, ketakutan, atau pola, yang belum pernah Anda katakan dengan keras kepada tim Anda?",
+    id: "Apa sesuatu yang benar tentang kepemimpinan Anda, sebuah perjuangan, ketakutan, atau pola, yang belum pernah Anda ucapkan secara terbuka kepada tim Anda?",
   },
   {
     en: "What cross-cultural experience in the past two years has shown you something about yourself you didn't previously know?",
@@ -116,7 +116,7 @@ const QUESTIONS: Pair[] = [
 const ACTIONS: Pair[] = [
   {
     en: "Open: share one thing about how you process conflict or feedback that your team probably doesn't know.",
-    id: "Terbuka: bagikan satu hal tentang bagaimana Anda memproses konflik atau umpan balik yang mungkin tidak diketahui tim Anda.",
+    id: "Terbuka: bagikan satu hal tentang bagaimana Anda mengolah konflik atau umpan balik yang mungkin tidak diketahui tim Anda.",
   },
   {
     en: "Blind Spot: ask one person who will be honest with you: ‘What's one thing I do that makes your job harder?’ Listen without defending.",
@@ -124,7 +124,7 @@ const ACTIONS: Pair[] = [
   },
   {
     en: "Hidden: identify one thing in your Hidden pane that, shared appropriately, would help your team trust you more.",
-    id: "Tersembunyi: identifikasi satu hal dalam pane Tersembunyi Anda yang, jika dibagikan dengan tepat, akan membantu tim Anda mempercayai Anda lebih banyak.",
+    id: "Tersembunyi: identifikasi satu hal dalam kotak Tersembunyi Anda yang, jika dibagikan dengan tepat, akan membantu tim Anda mempercayai Anda lebih banyak.",
   },
   {
     en: "Unknown: step deliberately into one unfamiliar cross-cultural situation: a conversation, a meeting, a responsibility you usually avoid.",
@@ -342,7 +342,7 @@ function WindowSlide({ upTo, lang }: { upTo: number; lang: Lang }) {
   return (
     <div style={{ textAlign: "center" }}>
       <p style={kickerStyle}>{tp({ en: "The Window", id: "Jendela" }, lang)}</p>
-      <h2 style={midTitle}>{tp({ en: "Four panes of self-awareness", id: "Empat pane kesadaran diri" }, lang)}</h2>
+      <h2 style={midTitle}>{tp({ en: "Four panes of self-awareness", id: "Empat kotak kesadaran diri" }, lang)}</h2>
       {rule()}
       <figure style={{ margin: "36px auto 0", maxWidth: 900 }}>
         <WindowGrid upTo={upTo} lang={lang} />
@@ -420,7 +420,7 @@ function ThisWeekSlide({ lang, step }: { lang: Lang; step: number }) {
   return (
     <div style={{ maxWidth: 1200, margin: "0 auto" }}>
       <p style={{ ...kickerStyle, textAlign: "center" }}>{tp({ en: "This Week", id: "Minggu Ini" }, lang)}</p>
-      <h2 style={{ ...midTitle, color: offWhite }}>{tp({ en: "Pick one pane. Take one step.", id: "Pilih satu pane. Ambil satu langkah." }, lang)}</h2>
+      <h2 style={{ ...midTitle, color: offWhite }}>{tp({ en: "Pick one pane. Take one step.", id: "Pilih satu kotak. Ambil satu langkah." }, lang)}</h2>
       {rule()}
       <div style={{ display: "flex", flexDirection: "column", gap: 16, marginTop: 20 }}>
         {ACTIONS.map((a, i) => (

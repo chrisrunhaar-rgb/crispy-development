@@ -107,11 +107,11 @@ const RAPID_STEPS: {
     key: "D",
     color: "oklch(40% 0.12 295)",
     en_title: "Disposition",
-    id_title: "Disposisi",
+    id_title: "Tindak Lanjut",
     en_meaning: "Who else needs to be involved? When does your role end?",
     id_meaning: "Siapa lagi yang perlu dilibatkan? Kapan peran Anda berakhir?",
     en_desc: "Disposition is the handover — the wise decision about what happens next. Does this person need professional care? Does someone else in leadership need to be informed? Does the team need to be protected, briefed, or reassigned? The first responder's job is not to manage the entire situation indefinitely — it is to stabilise, connect, and hand off appropriately. Knowing when to stop is as important as knowing how to start.",
-    id_desc: "Disposisi adalah serah terima — keputusan bijak tentang apa yang terjadi selanjutnya. Apakah orang ini membutuhkan perawatan profesional? Apakah orang lain dalam kepemimpinan perlu diberi tahu? Apakah tim perlu dilindungi, dibriefing, atau dipindahtugaskan? Pekerjaan penolong pertama bukan untuk mengelola seluruh situasi tanpa batas — melainkan untuk menstabilkan, menghubungkan, dan menyerahkan dengan tepat. Mengetahui kapan harus berhenti sama pentingnya dengan mengetahui cara memulai.",
+    id_desc: "Tindak lanjut adalah serah terima: keputusan bijak tentang apa yang terjadi selanjutnya. Apakah orang ini membutuhkan perawatan profesional? Apakah orang lain dalam kepemimpinan perlu diberi tahu? Apakah tim perlu dilindungi, dibriefing, atau dipindahtugaskan? Pekerjaan penolong pertama bukan untuk mengelola seluruh situasi tanpa batas — melainkan untuk menstabilkan, menghubungkan, dan menyerahkan dengan tepat. Mengetahui kapan harus berhenti sama pentingnya dengan mengetahui cara memulai.",
     en_example: "\"I've heard you and I'm with you. I want to make sure you get the right support. Can I help connect you with [counsellor/doctor/supervisor]?\" Then follow through.",
     id_example: "\"Aku telah mendengarmu dan aku bersamamu. Aku ingin memastikan kamu mendapat dukungan yang tepat. Bolehkah aku membantu menghubungkanmu dengan [konselor/dokter/supervisor]?\" Kemudian tindak lanjuti.",
     en_avoid: "Don't disappear after the initial response. Don't over-commit to ongoing care if you are not equipped for it. Don't skip the handoff — leaving someone without a next step is not care, it is abandonment.",
@@ -194,7 +194,7 @@ const BOUNDARY_ITEMS: {
     en_signal: "You notice you are absorbing the crisis yourself — losing sleep, feeling responsible, unable to switch off.",
     id_signal: "Anda melihat bahwa Anda menyerap krisis itu sendiri — kehilangan tidur, merasa bertanggung jawab, tidak bisa berhenti memikirkannya.",
     en_action: "This is vicarious trauma. Name it. Seek supervision or peer support. You cannot pour from an empty vessel — and a burnt-out first responder helps no one.",
-    id_action: "Ini adalah trauma vikarius. Namai itu. Cari supervisi atau dukungan teman sejawat. Anda tidak bisa menuangkan dari bejana yang kosong — dan penolong pertama yang kelelahan tidak membantu siapa pun.",
+    id_action: "Ini adalah trauma vikarius. Ungkapkan itu. Cari supervisi atau dukungan teman sejawat. Anda tidak bisa menuangkan dari bejana yang kosong — dan penolong pertama yang kelelahan tidak membantu siapa pun.",
   },
   {
     key: "safety",
@@ -310,7 +310,7 @@ export default function PsychologicalFirstAidClient({ userPathway, isSaved: init
                 en_label: "Not Minimising",
                 id_label: "Bukan Meminimalkan",
                 en_body: "Phrases like 'At least...' or 'Others have it worse...' or 'God has a plan' — even when true — shut people down rather than opening them up. PFA begins with the full weight of what someone is carrying, not a reframe.",
-                id_body: "Frasa seperti 'Setidaknya...' atau 'Orang lain lebih menderita...' atau 'Tuhan punya rencana' — bahkan ketika benar — menutup orang daripada membukanya. PFA dimulai dengan beban penuh dari apa yang ditanggung seseorang, bukan dengan reframing.",
+                id_body: "Frasa seperti 'Setidaknya...' atau 'Orang lain lebih menderita...' atau 'Tuhan punya rencana' — bahkan ketika benar — menutup orang daripada membukanya. PFA dimulai dengan beban penuh dari apa yang ditanggung seseorang, bukan dengan cara pandang baru.",
               },
               {
                 icon: "?",
@@ -584,7 +584,7 @@ export default function PsychologicalFirstAidClient({ userPathway, isSaved: init
           <p style={{ textAlign: "center", fontSize: 15, color: bodyText, lineHeight: 1.65, maxWidth: 580, margin: "0 auto 48px" }}>
             {t(
               "A wise first responder knows their limits. Recognising when to hand over is not a failure — it is the final act of good care.",
-              "Penolong pertama yang bijak mengetahui batas mereka. Mengenali kapan harus menyerahkan bukan kegagalan — itu adalah tindakan akhir dari perawatan yang baik.",
+              "Penolong pertama yang bijak mengetahui batas mereka. Mengenali kapan harus merujuk kepada pihak yang lebih ahli bukan kegagalan — itu adalah tindakan akhir dari perawatan yang baik.",
               "Een wijze eerste hulpverlener kent zijn grenzen. Herkennen wanneer over te dragen is geen falen — het is de laatste daad van goede zorg.",
               lang
             )}

@@ -14,7 +14,7 @@ const PORTRAITS = [
     en_body:
       "He heard: go. He did not hear: where. He packed and left anyway. The destination was revealed in the walking.",
     id_body:
-      "Ia mendengar: pergi. Ia tidak mendengar: ke mana. Ia berkemas dan pergi. Tujuan diungkapkan dalam perjalanan.",
+      "Ia mendengar: pergi. Ia tidak mendengar: ke mana. Ia berkemas dan pergi. Tujuan itu baru terungkap saat ia melangkah.",
   },
   {
     en_title: "Moses",
@@ -22,7 +22,7 @@ const PORTRAITS = [
     en_body:
       "The burning bush gave him a commission, not a project plan. He asked for clarity. God gave him a next step and a companion. The rest came as he walked into it.",
     id_body:
-      "Semak yang terbakar memberinya misi, bukan rencana proyek. Ia meminta kejelasan. Allah memberinya langkah berikutnya dan seorang pendamping. Sisanya datang saat ia melangkah masuk.",
+      "Semak yang terbakar memberinya misi, bukan rencana proyek. Ia meminta kejelasan. Tuhan memberinya langkah berikutnya dan seorang pendamping. Sisanya datang saat ia melangkah masuk.",
   },
   {
     en_title: "Mary",
@@ -40,11 +40,11 @@ const SECTIONS = [
     en_label: "Roadmap vs Compass",
     id_label: "Peta Jalan vs Kompas",
     en_heading: "God Works Directionally",
-    id_heading: "Allah Bekerja Secara Terarah",
+    id_heading: "Tuhan Bekerja Secara Terarah",
     en_body:
       "Planning cultures demand full sightlines before the first step. God does not work that way. He gives direction, not detail. He points toward something rather than mapping the entire route. This is not a design flaw in how he operates. It is the design.",
     id_body:
-      "Budaya perencanaan menuntut pandangan penuh sebelum langkah pertama. Allah tidak bekerja seperti itu. Ia memberi arah, bukan detail. Ia menunjuk ke sesuatu daripada memetakan seluruh rute. Ini bukan cacat desain dalam cara Ia beroperasi. Ini adalah desainnya.",
+      "Budaya perencanaan menuntut pandangan penuh sebelum langkah pertama. Tuhan tidak bekerja seperti itu. Ia memberi arah, bukan detail. Ia menunjuk ke sesuatu daripada memetakan seluruh rute. Ini bukan cacat desain dalam cara Ia beroperasi. Ini adalah desainnya.",
   },
   {
     num: "II",
@@ -55,7 +55,7 @@ const SECTIONS = [
     en_body:
       "Abraham, Moses, Mary. None received the full picture before they moved. The pattern across Scripture is consistent: God gives enough to take the next step, and the step itself opens what comes after. Direction before detail. Movement before map.",
     id_body:
-      "Abraham, Musa, Maria. Tidak ada yang menerima gambaran lengkap sebelum mereka bergerak. Pola di seluruh Alkitab konsisten: Allah memberikan cukup untuk mengambil langkah berikutnya, dan langkah itu sendiri membuka apa yang datang setelahnya. Arah sebelum detail. Gerakan sebelum peta.",
+      "Abraham, Musa, Maria. Tidak ada yang menerima gambaran lengkap sebelum mereka bergerak. Pola di seluruh Alkitab konsisten: Tuhan memberikan cukup untuk mengambil langkah berikutnya, dan langkah itu sendiri membuka apa yang datang setelahnya. Arah sebelum detail. Gerakan sebelum peta.",
   },
   {
     num: "III",
@@ -77,7 +77,7 @@ const SECTIONS = [
     en_body:
       "Uncertainty is not God's silence. It is his invitation to trust rather than manage outcomes. The fog keeps us dependent, attentive, and moving in the right posture. A God who gave you the full plan would give you far less than a God who walks with you through each unknown step.",
     id_body:
-      "Ketidakpastian bukanlah keheningan Allah. Itu adalah undangan-Nya untuk percaya daripada mengelola hasil. Kabut membuat kita bergantung, waspada, dan bergerak dalam sikap yang benar. Allah yang memberimu rencana penuh akan memberimu jauh lebih sedikit daripada Allah yang berjalan bersamamu melalui setiap langkah yang tidak diketahui.",
+      "Ketidakpastian bukanlah keheningan Tuhan. Itu adalah undangan-Nya untuk percaya daripada mengelola hasil. Kabut membuat kita bergantung, waspada, dan bergerak dalam sikap yang benar. Tuhan yang memberimu rencana penuh akan memberimu jauh lebih sedikit daripada Tuhan yang berjalan bersamamu melalui setiap langkah yang tidak diketahui.",
   },
 ];
 
@@ -165,7 +165,7 @@ export default function CalledWithoutMapClient({ isSaved: initialSaved }: Props)
         <p style={{ fontFamily: serif, fontSize: "clamp(18px, 2.2vw, 22px)", color: bodyText, lineHeight: 1.9, fontStyle: "italic", borderLeft: `3px solid ${orange}`, paddingLeft: 28, marginBottom: 0 }}>
           {t(
             "You have been sitting with a decision for months. You have prayed. Scripture has not given you a full plan. It never does. This module is not about making the decision easier. It is about understanding why God works this way, and why that is actually good news.",
-            "Anda telah duduk dengan sebuah keputusan selama berbulan-bulan. Anda telah berdoa. Alkitab tidak memberi Anda rencana penuh. Memang tidak pernah. Modul ini bukan tentang membuat keputusan menjadi lebih mudah. Ini tentang memahami mengapa Allah bekerja seperti ini, dan mengapa itu sebenarnya kabar baik."
+            "Anda telah bergumul dengan sebuah keputusan selama berbulan-bulan. Anda telah berdoa. Alkitab tidak memberi Anda rencana penuh. Memang tidak pernah. Modul ini bukan tentang membuat keputusan menjadi lebih mudah. Ini tentang memahami mengapa Tuhan bekerja seperti ini, dan mengapa itu sebenarnya kabar baik."
           )}
         </p>
       </div>
@@ -209,7 +209,7 @@ export default function CalledWithoutMapClient({ isSaved: initialSaved }: Props)
           <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 18px)", color: bodyText, lineHeight: 1.85, marginBottom: 64 }}>
             {t(
               "The people God used most were not the ones with the clearest plans. They were the ones who trusted a clear enough direction.",
-              "Orang-orang yang paling dipakai Allah bukan yang memiliki rencana paling jelas. Mereka adalah orang-orang yang mempercayai arah yang cukup jelas."
+              "Orang-orang yang paling dipakai Tuhan bukan yang memiliki rencana paling jelas. Mereka adalah orang-orang yang mempercayai arah yang cukup jelas."
             )}
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: 56 }}>
@@ -241,12 +241,12 @@ export default function CalledWithoutMapClient({ isSaved: initialSaved }: Props)
           {t("VI. This Week", "VI. Minggu Ini")}
         </p>
         <h2 style={{ fontFamily: serif, fontSize: "clamp(26px, 3.5vw, 38px)", fontWeight: 700, color: navy, marginBottom: 20, lineHeight: 1.2, fontStyle: "italic" }}>
-          {t("Name What You Already Know", "Namai Apa yang Sudah Anda Ketahui")}
+          {t("Name What You Already Know", "Ungkapkan Apa yang Sudah Anda Ketahui")}
         </h2>
         <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 18px)", color: bodyText, lineHeight: 1.85, marginBottom: 56 }}>
           {t(
             "Name one decision you have been deferring while waiting for clarity. Work through the two columns below. Then name your next step.",
-            "Namai satu keputusan yang telah Anda tunda sambil menunggu kejelasan. Kerjakan dua kolom di bawah ini. Kemudian namai langkah berikutnya."
+            "Sebutkan satu keputusan yang telah Anda tunda sambil menunggu kejelasan. Kerjakan dua kolom di bawah ini. Lalu tuliskan langkah berikutnya."
           )}
         </p>
 
@@ -319,7 +319,7 @@ export default function CalledWithoutMapClient({ isSaved: initialSaved }: Props)
         {showAnchor && (
           <div style={{ background: navy, borderRadius: 4, padding: "44px 40px" }}>
             <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, color: orange, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 24 }}>
-              {t("Faith Anchor", "Jangkar Iman")}
+              {t("Faith Anchor", "Pegangan Iman")}
             </p>
             <p style={{ fontFamily: serif, fontSize: "clamp(20px, 2.5vw, 26px)", fontStyle: "italic", color: offWhite, lineHeight: 1.75, marginBottom: 20 }}>
               {t(
@@ -333,7 +333,7 @@ export default function CalledWithoutMapClient({ isSaved: initialSaved }: Props)
             <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 18px)", color: "oklch(76% 0.03 80)", lineHeight: 1.85, margin: 0 }}>
               {t(
                 "God called Abraham to move before the destination was named. The direction was real. The map was not yet drawn. You are in good company.",
-                "Allah memanggil Abraham untuk bergerak sebelum tujuan disebutkan. Arahnya nyata. Petanya belum tergambar. Anda berada dalam persekutuan yang baik."
+                "Tuhan memanggil Abraham untuk bergerak sebelum tujuan disebutkan. Arahnya nyata. Petanya belum tergambar. Anda tidak sendirian."
               )}
             </p>
           </div>

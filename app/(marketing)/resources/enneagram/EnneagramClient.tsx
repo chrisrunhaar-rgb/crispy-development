@@ -63,7 +63,7 @@ const QUESTIONS: { en: string; id: string; t: number }[] = [
   },
   {
     en: "I adapt my behaviour to what will make the people I care about feel good.",
-    id: "Saya menyesuaikan perilaku saya dengan apa yang akan membuat orang-orang yang saya pedulikan merasa baik.",
+    id: "Saya menyesuaikan perilaku saya dengan apa yang akan membuat orang-orang yang saya sayangi merasa baik.",
     t: 2,
   },
   {
@@ -183,7 +183,7 @@ const QUESTIONS: { en: string; id: string; t: number }[] = [
   },
   {
     en: "I find it hard to stay with discomfort or boredom for long — I tend to reframe or move on.",
-    id: "Saya kesulitan untuk bertahan dalam ketidaknyamanan atau kebosanan — saya cenderung mereframing atau beranjak.",
+    id: "Saya kesulitan untuk bertahan dalam ketidaknyamanan atau kebosanan — saya cenderung mengalihkan perhatian atau beranjak.",
     t: 7,
   },
   {
@@ -214,7 +214,7 @@ const QUESTIONS: { en: string; id: string; t: number }[] = [
   },
   {
     en: "I can be intense and others sometimes experience me as too direct, too forceful, or too much.",
-    id: "Saya bisa menjadi intens dan orang lain terkadang mengalami saya sebagai terlalu langsung, terlalu tegas, atau terlalu banyak.",
+    id: "Saya bisa menjadi intens dan orang lain terkadang mengalami saya sebagai terlalu langsung, terlalu tegas, atau terlalu berlebihan.",
     t: 8,
   },
   {
@@ -235,7 +235,7 @@ const QUESTIONS: { en: string; id: string; t: number }[] = [
   },
   {
     en: "I can lose sight of my own priorities when I am busy supporting others.",
-    id: "Saya bisa kehilangan pandangan tentang prioritas saya sendiri ketika saya sibuk mendukung orang lain.",
+    id: "Saya bisa melupakan prioritas saya sendiri ketika saya sibuk mendukung orang lain.",
     t: 9,
   },
   {
@@ -275,7 +275,7 @@ const SCALE_LABELS: T3[] = [
 const UI: Record<string, T3> = {
   personalityAssessment: { en: "Personality Assessment", id: "Penilaian Kepribadian" },
   enneagram:             { en: "Enneagram",              id: "Enneagram" },
-  startAssessment:       { en: "Start Assessment →",     id: "Mulai Tes →" },
+  startAssessment:       { en: "Start Assessment →",     id: "Mulai Penilaian →" },
   saveDashboard:         { en: "Save to Dashboard",      id: "Simpan ke Dashboard" },
   saved:                 { en: "✓ Saved to Dashboard",                id: "✓ Tersimpan di Dashboard" },
   saving:                { en: "Saving…",                id: "Menyimpan…" },
@@ -335,7 +335,7 @@ const UI: Record<string, T3> = {
 const TYPES = [
   {
     number: 1,
-    name: { en: "The Reformer", id: "Si Perfeksionis" },
+    name: { en: "The Reformer", id: "Si Pembaru" },
     tagline: { en: "Principled. Purposeful. Committed to what's right.", id: "Berprinsip. Bertujuan. Berkomitmen pada kebenaran." },
     color: "oklch(52% 0.18 250)",
     colorLight: "oklch(65% 0.14 250)",
@@ -367,7 +367,7 @@ const TYPES = [
     },
     crossCultural: {
       en: "The Type 1's strong sense of right and wrong can create friction in high-context or relationally oriented cultures where truth is navigated, not declared. Growth edge: holding conviction with grace — learning to influence through relationship and humility, not just principle.",
-      id: "Rasa benar dan salah yang kuat dari Tipe 1 dapat menciptakan gesekan dalam budaya berorientasi konteks tinggi atau relasional di mana kebenaran dinavigasi, bukan dinyatakan. Tepi pertumbuhan: memegang keyakinan dengan penuh kasih — belajar mempengaruhi melalui hubungan dan kerendahan hati, bukan hanya prinsip.",
+      id: "Rasa benar dan salah yang kuat dari Tipe 1 dapat menciptakan gesekan dalam budaya berorientasi konteks tinggi atau relasional di mana kebenaran disampaikan dengan hati-hati, bukan dilontarkan. Hal yang perlu dikembangkan: memegang keyakinan dengan penuh kasih — belajar mempengaruhi melalui hubungan dan kerendahan hati, bukan hanya prinsip.",
     },
     wing9: {
       en: "1w9 — The Idealist: More introverted and philosophical. Their convictions run deep but are held more quietly. They combine principle with patience and can seem detached from emotion.",
@@ -388,7 +388,7 @@ const TYPES = [
     bg: "oklch(18% 0.14 10)",
     overview: {
       en: "The Type 2 leader leads through relationship. They are warm, empathetic, and genuinely invested in the people around them. They are often the emotional glue of a team — present, attentive, and generous with their time and energy. Their growth edge is learning to lead from their own needs and calling, not just in response to others'.",
-      id: "Pemimpin Tipe 2 memimpin melalui hubungan. Mereka hangat, empatik, dan sungguh-sungguh peduli pada orang-orang di sekitar mereka. Mereka sering menjadi perekat emosional sebuah tim — hadir, penuh perhatian, dan murah hati dengan waktu dan energi mereka. Tepi pertumbuhan mereka adalah belajar memimpin dari kebutuhan dan panggilan mereka sendiri, bukan hanya sebagai respons terhadap orang lain.",
+      id: "Pemimpin Tipe 2 memimpin melalui hubungan. Mereka hangat, empatik, dan sungguh-sungguh peduli pada orang-orang di sekitar mereka. Mereka sering menjadi perekat emosional sebuah tim — hadir, penuh perhatian, dan murah hati dengan waktu dan energi mereka. Hal yang perlu mereka kembangkan adalah belajar memimpin dari kebutuhan dan panggilan mereka sendiri, bukan hanya sebagai respons terhadap orang lain.",
     },
     motivation: {
       en: "To be loved, needed, and appreciated — to feel that their giving makes them indispensable.",
@@ -416,7 +416,7 @@ const TYPES = [
     },
     wing1: {
       en: "2w1 — The Servant: More principled and self-demanding. They combine generous giving with a strong moral framework. Their service has a mission quality — they give because it is the right thing to do.",
-      id: "2w1 — Si Pelayan: Lebih berprinsip dan menuntut diri sendiri. Mereka memadukan kemurahan hati dengan kerangka moral yang kuat. Pelayanan mereka memiliki kualitas misi — mereka memberi karena itu adalah hal yang benar untuk dilakukan.",
+      id: "2w1 — Si Pelayan: Lebih berprinsip dan menuntut diri sendiri. Mereka memadukan kemurahan hati dengan kerangka moral yang kuat. Pelayanan mereka terasa seperti panggilan: mereka memberi karena itu adalah hal yang benar untuk dilakukan.",
     },
     wing3: {
       en: "2w3 — The Host: More image-conscious and outgoing. They love to be seen as helpful and connect helping with their public identity. Warmth meets ambition in how they serve.",
@@ -433,7 +433,7 @@ const TYPES = [
     bg: "oklch(18% 0.12 65)",
     overview: {
       en: "The Type 3 leader is a high performer who adapts, executes, and delivers. They are natural motivators who lead by example, setting the pace through visible achievement. They bring energy and efficiency to every team they join. Their growth edge is learning that who they are matters more than what they accomplish.",
-      id: "Pemimpin Tipe 3 adalah pemain tinggi yang beradaptasi, mengeksekusi, dan memberikan hasil. Mereka adalah motivator alami yang memimpin dengan teladan, menetapkan ritme melalui pencapaian yang terlihat. Mereka membawa energi dan efisiensi ke setiap tim yang mereka bergabungi. Tepi pertumbuhan mereka adalah belajar bahwa siapa mereka lebih penting daripada apa yang mereka capai.",
+      id: "Pemimpin Tipe 3 adalah pribadi berkinerja tinggi yang beradaptasi, mengeksekusi, dan memberikan hasil. Mereka adalah motivator alami yang memimpin dengan teladan, menetapkan ritme melalui pencapaian yang terlihat. Mereka membawa energi dan efisiensi ke setiap tim yang mereka bergabungi. Hal yang perlu mereka kembangkan adalah belajar bahwa siapa mereka lebih penting daripada apa yang mereka capai.",
     },
     motivation: {
       en: "To be valuable and admired — to be recognized for their accomplishments and seen as outstanding.",
@@ -457,7 +457,7 @@ const TYPES = [
     },
     crossCultural: {
       en: "The Type 3's drive and efficiency is valued in performance-oriented cultures. In relational or shame-based cultures, the pressure to appear successful can amplify unhealthy patterns. Growth edge: prioritizing authentic relationships over impressive outcomes — being known, not just admired.",
-      id: "Dorongan dan efisiensi Tipe 3 dihargai dalam budaya berorientasi kinerja. Dalam budaya relasional atau berbasis malu, tekanan untuk tampak sukses dapat memperkuat pola yang tidak sehat. Tepi pertumbuhan: memprioritaskan hubungan yang autentik daripada hasil yang mengesankan — dikenal, bukan hanya dikagumi.",
+      id: "Dorongan dan efisiensi Tipe 3 dihargai dalam budaya berorientasi kinerja. Dalam budaya relasional atau berbasis malu, tekanan untuk tampak sukses dapat memperkuat pola yang tidak sehat. Hal yang perlu dikembangkan: memprioritaskan hubungan yang autentik daripada hasil yang mengesankan — dikenal, bukan hanya dikagumi.",
     },
     wing2: {
       en: "3w2 — The Charmer: More people-focused and relational. They achieve through connection, combining effectiveness with genuine warmth. Success means winning people as much as results.",
@@ -478,11 +478,11 @@ const TYPES = [
     bg: "oklch(16% 0.18 295)",
     overview: {
       en: "The Type 4 leader brings depth, creativity, and emotional intelligence to everything they do. They long to be truly known and to express something genuine. They are drawn to meaning, beauty, and authenticity — and they help teams access the deeper 'why' behind the work. Their growth edge is finding identity in what they share with others, not just what makes them different.",
-      id: "Pemimpin Tipe 4 membawa kedalaman, kreativitas, dan kecerdasan emosional dalam segala hal yang mereka lakukan. Mereka merindukan untuk benar-benar dikenal dan mengekspresikan sesuatu yang tulus. Mereka tertarik pada makna, keindahan, dan keaslian — dan mereka membantu tim mengakses 'mengapa' yang lebih dalam di balik pekerjaan. Tepi pertumbuhan mereka adalah menemukan identitas dalam apa yang mereka bagikan dengan orang lain, bukan hanya apa yang membuat mereka berbeda.",
+      id: "Pemimpin Tipe 4 membawa kedalaman, kreativitas, dan kecerdasan emosional dalam segala hal yang mereka lakukan. Mereka merindukan untuk benar-benar dikenal dan mengekspresikan sesuatu yang tulus. Mereka tertarik pada makna, keindahan, dan keaslian — dan mereka membantu tim mengakses 'mengapa' yang lebih dalam di balik pekerjaan. Hal yang perlu mereka kembangkan adalah menemukan identitas dalam apa yang mereka bagikan dengan orang lain, bukan hanya apa yang membuat mereka berbeda.",
     },
     motivation: {
       en: "To find and express their unique identity — to be truly seen and understood for who they are at the deepest level.",
-      id: "Menemukan dan mengekspresikan identitas unik mereka — untuk benar-benar dilihat dan dipahami untuk siapa mereka pada tingkat paling dalam.",
+      id: "Menemukan dan mengekspresikan identitas unik mereka — untuk benar-benar dilihat dan dipahami sebagaimana adanya mereka pada tingkat paling dalam.",
     },
     fear: {
       en: "Having no identity or personal significance — being ordinary, flawed, or fundamentally deficient.",
@@ -498,11 +498,11 @@ const TYPES = [
     },
     communication: {
       en: "Acknowledge their uniqueness and depth. Don't rush them to 'get over it' emotionally. Create space for genuine expression. They respond to authenticity — don't be performative or shallow around them.",
-      id: "Akui keunikan dan kedalaman mereka. Jangan terburu-buru menyuruh mereka untuk 'melewatinya' secara emosional. Ciptakan ruang untuk ekspresi yang tulus. Mereka merespons keaslian — jangan berpura-pura atau dangkal di sekitar mereka.",
+      id: "Akui keunikan dan kedalaman mereka. Jangan terburu-buru menyuruh mereka untuk 'cepat pulih' secara emosional. Ciptakan ruang untuk ekspresi yang tulus. Mereka merespons keaslian — jangan berpura-pura atau dangkal di sekitar mereka.",
     },
     crossCultural: {
       en: "The Type 4's focus on individual uniqueness can clash with collectivist cultures where the group is primary. Growth edge: learning to find meaning through community and shared identity — discovering that 'we' can be just as deep as 'I'.",
-      id: "Fokus Tipe 4 pada keunikan individu bisa bertentangan dengan budaya kolektivis di mana kelompok adalah yang utama. Tepi pertumbuhan: belajar menemukan makna melalui komunitas dan identitas bersama — menemukan bahwa 'kita' bisa sama dalamnya dengan 'saya'.",
+      id: "Fokus Tipe 4 pada keunikan individu bisa bertentangan dengan budaya kolektivis di mana kelompok adalah yang utama. Hal yang perlu dikembangkan: belajar menemukan makna melalui komunitas dan identitas bersama — menemukan bahwa 'kita' bisa sama dalamnya dengan 'saya'.",
     },
     wing3: {
       en: "4w3 — The Aristocrat: More driven and image-aware. Combines depth with ambition. Wants their uniqueness to be not just felt but seen and recognised. Often highly creative and publicly expressive.",
@@ -515,7 +515,7 @@ const TYPES = [
   },
   {
     number: 5,
-    name: { en: "The Investigator", id: "Si Investigator" },
+    name: { en: "The Investigator", id: "Si Peneliti" },
     tagline: { en: "Analytical. Perceptive. Expert.", id: "Analitis. Jeli. Ahli." },
     color: "oklch(50% 0.16 195)",
     colorLight: "oklch(64% 0.12 195)",
@@ -523,7 +523,7 @@ const TYPES = [
     bg: "oklch(18% 0.12 195)",
     overview: {
       en: "The Type 5 leader is a thinker. They build deep expertise, observe before acting, and bring careful, well-researched thinking to every decision. They are often the most prepared person in the room — and they lead best when they can operate from a position of knowledge and autonomy. Their growth edge is learning to engage fully in life rather than observing from a distance.",
-      id: "Pemimpin Tipe 5 adalah pemikir. Mereka membangun keahlian yang mendalam, mengamati sebelum bertindak, dan membawa pemikiran yang hati-hati dan teriteliti ke setiap keputusan. Mereka sering menjadi orang yang paling siap di ruangan — dan mereka memimpin paling baik ketika mereka dapat beroperasi dari posisi pengetahuan dan otonomi. Tepi pertumbuhan mereka adalah belajar untuk terlibat sepenuhnya dalam kehidupan daripada mengamati dari kejauhan.",
+      id: "Pemimpin Tipe 5 adalah pemikir. Mereka membangun keahlian yang mendalam, mengamati sebelum bertindak, dan membawa pemikiran yang hati-hati dan teriteliti ke setiap keputusan. Mereka sering menjadi orang yang paling siap di ruangan — dan mereka memimpin paling baik ketika mereka dapat beroperasi dari posisi pengetahuan dan otonomi. Hal yang perlu mereka kembangkan adalah belajar untuk terlibat sepenuhnya dalam kehidupan daripada mengamati dari kejauhan.",
     },
     motivation: {
       en: "To be competent and knowledgeable — to understand the world deeply and function independently.",
@@ -547,7 +547,7 @@ const TYPES = [
     },
     crossCultural: {
       en: "The Type 5's preference for privacy and expertise-based authority can feel distant in highly relational cultures. Growth edge: learning to build trust through relationship, not just competence — and to engage emotionally even when it feels uncomfortable.",
-      id: "Preferensi Tipe 5 untuk privasi dan otoritas berbasis keahlian bisa terasa jauh dalam budaya yang sangat relasional. Tepi pertumbuhan: belajar membangun kepercayaan melalui hubungan, bukan hanya kompetensi — dan terlibat secara emosional bahkan ketika terasa tidak nyaman.",
+      id: "Preferensi Tipe 5 untuk privasi dan otoritas berbasis keahlian bisa terasa jauh dalam budaya yang sangat relasional. Hal yang perlu dikembangkan: belajar membangun kepercayaan melalui hubungan, bukan hanya kompetensi — dan terlibat secara emosional bahkan ketika terasa tidak nyaman.",
     },
     wing4: {
       en: "5w4 — The Iconoclast: More emotionally expressive and creative. Combines analytical depth with aesthetic sensibility. Often produces visionary, original thinking that challenges convention.",
@@ -568,11 +568,11 @@ const TYPES = [
     bg: "oklch(17% 0.15 240)",
     overview: {
       en: "The Type 6 leader is committed, responsible, and deeply loyal to the people and causes they believe in. They are excellent at identifying risks, testing systems, and building the trust that sustains long-term teams. Their growth edge is learning to trust themselves and act despite uncertainty — moving from anxiety to courageous faithfulness.",
-      id: "Pemimpin Tipe 6 berkomitmen, bertanggung jawab, dan sangat setia pada orang-orang dan tujuan yang mereka yakini. Mereka sangat baik dalam mengidentifikasi risiko, menguji sistem, dan membangun kepercayaan yang menopang tim jangka panjang. Tepi pertumbuhan mereka adalah belajar mempercayai diri sendiri dan bertindak meskipun ada ketidakpastian — bergerak dari kecemasan menuju kesetiaan yang berani.",
+      id: "Pemimpin Tipe 6 berkomitmen, bertanggung jawab, dan sangat setia pada orang-orang dan tujuan yang mereka yakini. Mereka sangat baik dalam mengidentifikasi risiko, menguji sistem, dan membangun kepercayaan yang menopang tim jangka panjang. Hal yang perlu mereka kembangkan adalah belajar mempercayai diri sendiri dan bertindak meskipun ada ketidakpastian — bergerak dari kecemasan menuju kesetiaan yang berani.",
     },
     motivation: {
       en: "To have security, support, and certainty — to feel that they and the people they care for are safe.",
-      id: "Memiliki keamanan, dukungan, dan kepastian — untuk merasakan bahwa mereka dan orang-orang yang mereka pedulikan aman.",
+      id: "Memiliki keamanan, dukungan, dan kepastian — untuk merasakan bahwa mereka dan orang-orang yang mereka sayangi aman.",
     },
     fear: {
       en: "Being abandoned, without support, or facing danger without allies — being left alone when it counts.",
@@ -592,7 +592,7 @@ const TYPES = [
     },
     crossCultural: {
       en: "The Type 6's focus on trust-building is universally valuable. In high-power-distance cultures, their ambivalence toward authority can cause confusion. Growth edge: distinguishing healthy accountability from anxious compliance or unnecessary rebellion.",
-      id: "Fokus Tipe 6 pada membangun kepercayaan sangat berharga secara universal. Dalam budaya jarak kekuasaan tinggi, ambivalensi mereka terhadap otoritas bisa menyebabkan kebingungan. Tepi pertumbuhan: membedakan akuntabilitas yang sehat dari kepatuhan yang cemas atau pemberontakan yang tidak perlu.",
+      id: "Fokus Tipe 6 pada membangun kepercayaan sangat berharga secara universal. Dalam budaya jarak kekuasaan tinggi, ambivalensi mereka terhadap otoritas bisa menyebabkan kebingungan. Hal yang perlu dikembangkan: membedakan akuntabilitas yang sehat dari kepatuhan yang cemas atau pemberontakan yang tidak perlu.",
     },
     wing5: {
       en: "6w5 — The Defender: More introverted and analytical. Combines loyalty with independent thinking. Tends to test authority through careful analysis rather than emotional reaction.",
@@ -600,7 +600,7 @@ const TYPES = [
     },
     wing7: {
       en: "6w7 — The Buddy: More outgoing and playful. Combines loyalty with warmth and humour. Their anxiety takes a lighter edge — they manage uncertainty through connection and optimism.",
-      id: "6w7 — Si Sahabat: Lebih ramah dan bersifat ceria. Memadukan loyalitas dengan kehangatan dan humor. Kecemasan mereka memiliki tepi yang lebih ringan — mereka mengelola ketidakpastian melalui koneksi dan optimisme.",
+      id: "6w7 — Si Sahabat: Lebih ramah dan bersifat ceria. Memadukan loyalitas dengan kehangatan dan humor. Kecemasan mereka lebih ringan: mereka mengelola ketidakpastian melalui koneksi dan optimisme.",
     },
   },
   {
@@ -613,7 +613,7 @@ const TYPES = [
     bg: "oklch(18% 0.12 30)",
     overview: {
       en: "The Type 7 leader brings energy, ideas, and irresistible forward momentum. They see possibility where others see problems and inspire teams to believe that things can be different. Their gift is keeping teams moving with joy and vision — their growth edge is learning to stay present when things are hard, rather than seeking the next new thing.",
-      id: "Pemimpin Tipe 7 membawa energi, ide, dan momentum maju yang tak tertahankan. Mereka melihat kemungkinan di mana orang lain melihat masalah dan menginspirasi tim untuk percaya bahwa sesuatu bisa berbeda. Hadiah mereka adalah menjaga tim terus bergerak dengan sukacita dan visi — tepi pertumbuhan mereka adalah belajar untuk tetap hadir ketika segala sesuatu menjadi sulit, daripada mencari hal baru berikutnya.",
+      id: "Pemimpin Tipe 7 membawa energi, ide, dan momentum maju yang tak tertahankan. Mereka melihat kemungkinan di mana orang lain melihat masalah dan menginspirasi tim untuk percaya bahwa sesuatu bisa berbeda. Hadiah mereka adalah menjaga tim terus bergerak dengan sukacita dan visi. Hal yang perlu mereka kembangkan adalah belajar untuk tetap hadir ketika segala sesuatu menjadi sulit, daripada mencari hal baru berikutnya.",
     },
     motivation: {
       en: "To be happy, stimulated, and free — to experience everything life has to offer without being trapped in pain.",
@@ -621,7 +621,7 @@ const TYPES = [
     },
     fear: {
       en: "Being deprived, trapped, or stuck in pain and limitation — missing out on what life could be.",
-      id: "Kekurangan, terjebak, atau terjebak dalam rasa sakit dan keterbatasan — melewatkan apa yang bisa ditawarkan kehidupan.",
+      id: "Kehilangan kebebasan, terkurung, atau terjebak dalam rasa sakit dan keterbatasan — melewatkan apa yang bisa ditawarkan kehidupan.",
     },
     strengths: {
       en: ["Visionary and generative with ideas", "Creates energy and enthusiasm in teams", "Connects disparate ideas creatively", "Resilient — bounces back quickly from setbacks", "Makes the future feel exciting and achievable"],
@@ -637,7 +637,7 @@ const TYPES = [
     },
     crossCultural: {
       en: "The Type 7's optimism and energy is a genuine gift across cultures. In contexts where suffering and lament are processed communally, their drive to stay positive can feel dismissive. Growth edge: learning to be fully present in pain — without immediately trying to fix it or escape it.",
-      id: "Optimisme dan energi Tipe 7 adalah anugerah nyata di berbagai budaya. Dalam konteks di mana penderitaan dan ratapan diproses secara komunal, dorongan mereka untuk tetap positif bisa terasa meremehkan. Tepi pertumbuhan: belajar untuk hadir sepenuhnya dalam rasa sakit — tanpa segera mencoba memperbaikinya atau melarikan diri darinya.",
+      id: "Optimisme dan energi Tipe 7 adalah anugerah nyata di berbagai budaya. Dalam konteks di mana penderitaan dan ratapan diproses secara komunal, dorongan mereka untuk tetap positif bisa terasa meremehkan. Hal yang perlu dikembangkan: belajar untuk hadir sepenuhnya dalam rasa sakit — tanpa segera mencoba memperbaikinya atau melarikan diri darinya.",
     },
     wing6: {
       en: "7w6 — The Entertainer: More loyal and relational. Combines enthusiasm with a commitment to community. Their energy is channelled through relationships — fun, warm, and grounding.",
@@ -658,11 +658,11 @@ const TYPES = [
     bg: "oklch(17% 0.16 25)",
     overview: {
       en: "The Type 8 leader leads with strength, decisiveness, and intensity. They take charge, protect the vulnerable, and fight for what's right. They are energised by challenge and unafraid of confrontation. Their greatest gift is their willingness to bear the weight of leadership — their growth edge is discovering that vulnerability is not weakness but the deepest form of strength.",
-      id: "Pemimpin Tipe 8 memimpin dengan kekuatan, ketegasan, dan intensitas. Mereka mengambil kendali, melindungi yang rentan, dan berjuang untuk kebenaran. Mereka mendapat energi dari tantangan dan tidak takut konfrontasi. Hadiah terbesar mereka adalah kesediaan mereka untuk menanggung beban kepemimpinan — tepi pertumbuhan mereka adalah menemukan bahwa kerentanan bukan kelemahan tetapi bentuk kekuatan yang paling dalam.",
+      id: "Pemimpin Tipe 8 memimpin dengan kekuatan, ketegasan, dan intensitas. Mereka mengambil kendali, melindungi yang rentan, dan berjuang untuk kebenaran. Mereka mendapat energi dari tantangan dan tidak takut konfrontasi. Hadiah terbesar mereka adalah kesediaan mereka untuk menanggung beban kepemimpinan. Hal yang perlu mereka kembangkan adalah menemukan bahwa kerentanan bukan kelemahan tetapi bentuk kekuatan yang paling dalam.",
     },
     motivation: {
       en: "To be self-reliant, strong, and in control of their own life — to protect themselves and those they care for.",
-      id: "Menjadi mandiri, kuat, dan mengendalikan kehidupan mereka sendiri — untuk melindungi diri mereka dan orang-orang yang mereka pedulikan.",
+      id: "Menjadi mandiri, kuat, dan mengendalikan kehidupan mereka sendiri — untuk melindungi diri mereka dan orang-orang yang mereka sayangi.",
     },
     fear: {
       en: "Being controlled, betrayed, manipulated, or losing their power and agency.",
@@ -682,7 +682,7 @@ const TYPES = [
     },
     crossCultural: {
       en: "The Type 8's directness is empowering in some cultures and deeply disrespectful in others. In shame-based or high-context cultures, their confrontational style can destroy relationships irreparably. Growth edge: learning cultural sensitivity without losing their core strength — discovering that restraint is power.",
-      id: "Ketegasan Tipe 8 memberdayakan dalam beberapa budaya dan sangat tidak hormat dalam budaya lain. Dalam budaya berbasis malu atau konteks tinggi, gaya konfrontatif mereka dapat merusak hubungan secara tidak dapat diperbaiki. Tepi pertumbuhan: belajar kepekaan budaya tanpa kehilangan kekuatan inti mereka — menemukan bahwa menahan diri adalah kekuatan.",
+      id: "Ketegasan Tipe 8 memberdayakan dalam beberapa budaya dan sangat tidak hormat dalam budaya lain. Dalam budaya berbasis malu atau konteks tinggi, gaya konfrontatif mereka dapat merusak hubungan secara tidak dapat diperbaiki. Hal yang perlu dikembangkan: belajar kepekaan budaya tanpa kehilangan kekuatan inti mereka — menemukan bahwa menahan diri adalah kekuatan.",
     },
     wing7: {
       en: "8w7 — The Maverick: More energetic and adventurous. Combines strength with enthusiasm and vision. Often charismatic, bold, and future-facing — intensity with a playful edge.",
@@ -703,7 +703,7 @@ const TYPES = [
     bg: "oklch(17% 0.10 145)",
     overview: {
       en: "The Type 9 leader is the unifying force of any team. They see all perspectives, create harmony, and hold space for everyone to be heard. Their calm, non-anxious presence is a profound gift in conflict-heavy environments. Their growth edge is claiming their own voice and leading with their full self — not just facilitating everyone else.",
-      id: "Pemimpin Tipe 9 adalah kekuatan pemersatu dari tim mana pun. Mereka melihat semua perspektif, menciptakan harmoni, dan memberi ruang bagi semua orang untuk didengar. Kehadiran mereka yang tenang dan tidak cemas adalah anugerah yang mendalam dalam lingkungan yang penuh konflik. Tepi pertumbuhan mereka adalah mengklaim suara mereka sendiri dan memimpin dengan diri penuh mereka — bukan hanya memfasilitasi semua orang lain.",
+      id: "Pemimpin Tipe 9 adalah kekuatan pemersatu dari tim mana pun. Mereka melihat semua perspektif, menciptakan harmoni, dan memberi ruang bagi semua orang untuk didengar. Kehadiran mereka yang tenang dan tidak cemas adalah anugerah yang mendalam dalam lingkungan yang penuh konflik. Hal yang perlu mereka kembangkan adalah mengklaim suara mereka sendiri dan memimpin dengan diri penuh mereka — bukan hanya memfasilitasi semua orang lain.",
     },
     motivation: {
       en: "To have inner peace and harmony — to stay connected with others and avoid separation or conflict.",
@@ -727,7 +727,7 @@ const TYPES = [
     },
     crossCultural: {
       en: "The Type 9's harmony-seeking is deeply valued in collectivist cultures. In individualistic cultures, their reluctance to assert their own view can be misread as indecision or lack of conviction. Growth edge: claiming their voice and being willing to disrupt the peace when justice or truth demands it.",
-      id: "Pencarian harmoni Tipe 9 sangat dihargai dalam budaya kolektivis. Dalam budaya individualis, keengganan mereka untuk menegaskan pandangan mereka sendiri bisa disalahartikan sebagai ketidaktegasan atau kurangnya keyakinan. Tepi pertumbuhan: mengklaim suara mereka dan bersedia mengganggu kedamaian ketika keadilan atau kebenaran menuntutnya.",
+      id: "Pencarian harmoni Tipe 9 sangat dihargai dalam budaya kolektivis. Dalam budaya individualis, keengganan mereka untuk menegaskan pandangan mereka sendiri bisa disalahartikan sebagai ketidaktegasan atau kurangnya keyakinan. Hal yang perlu dikembangkan: mengklaim suara mereka dan bersedia mengganggu kedamaian ketika keadilan atau kebenaran menuntutnya.",
     },
     wing8: {
       en: "9w8 — The Referee: More assertive and direct. Combines peacefulness with strength. Can step into conflict when necessary and advocate firmly, but always in service of harmony.",
@@ -1248,7 +1248,7 @@ export default function EnneagramClient({
                   {lang === "en"
                     ? "Biblical anchor: Moses — his gut energy confronted Pharaoh, struck the rock, and led a stiff-necked people through forty years of wilderness. His strength was God-given. His shadow was the same energy turned inward — the slow burn that cost him the Promised Land."
                     : lang === "id"
-                    ? "Jangkar alkitabiah: Musa — energinya menghadapi Firaun, memukul batu karang, dan memimpin umat yang keras kepala selama empat puluh tahun di padang gurun. Kekuatannya diberikan Tuhan. Bayangannya adalah energi yang sama yang berbalik ke dalam — bara yang perlahan yang menghalanginya memasuki Tanah Perjanjian."
+                    ? "Pegangan dari Alkitab: Musa — energinya menghadapi Firaun, memukul batu karang, dan memimpin umat yang keras kepala selama empat puluh tahun di padang gurun. Kekuatannya diberikan Tuhan. Bayangannya adalah energi yang sama yang berbalik ke dalam — bara yang perlahan yang menghalanginya memasuki Tanah Perjanjian."
                     : "Bijbels anker: Mozes — zijn instinctieve energie confronteerde Farao, sloeg de rots en leidde een hardnekkig volk door veertig jaar woestijn. Zijn kracht was door God gegeven. Zijn schaduw was diezelfde energie naar binnen gericht — de sluimerende frustratie die hem het Beloofde Land kostte."}
                 </p>
               </div>
@@ -1269,7 +1269,7 @@ export default function EnneagramClient({
                   {lang === "en"
                     ? "Biblical anchor: David — he sang the psalms, danced before the ark, wept openly, and built his identity around being a man after God's own heart. His heart energy made him Israel's most beloved king. Its shadow took him into Bathsheba and the long damage of an image he could not let fall."
                     : lang === "id"
-                    ? "Jangkar alkitabiah: Daud — ia menyanyikan mazmur, menari di hadapan tabut, menangis terbuka, dan membangun identitasnya sebagai orang yang berkenan di hati Tuhan. Energi hatinya menjadikannya raja Israel yang paling dicintai. Bayangannya membawanya ke Batsyeba dan kerusakan panjang dari citra yang tidak bisa ia biarkan jatuh."
+                    ? "Pegangan dari Alkitab: Daud — ia menyanyikan mazmur, menari di hadapan tabut, menangis terbuka, dan membangun identitasnya sebagai orang yang berkenan di hati Tuhan. Energi hatinya menjadikannya raja Israel yang paling dicintai. Bayangannya membawanya ke Batsyeba dan kerusakan panjang dari citra yang tidak bisa ia biarkan jatuh."
                     : "Bijbels anker: David — hij zong de psalmen, danste voor de ark, huilde openlijk en bouwde zijn identiteit op als een man naar Gods hart. Zijn hartenergie maakte hem Israëls meest geliefde koning. De schaduw ervan leidde hem naar Bathseba en de lange schade van een imago dat hij niet kon laten vallen."}
                 </p>
               </div>
@@ -1290,7 +1290,7 @@ export default function EnneagramClient({
                   {lang === "en"
                     ? "Biblical anchor: Solomon — he asked God for wisdom and received understanding wider than the sand of the sea. He observed, analysed, named patterns, and wrote Ecclesiastes. His head energy gave the world Proverbs. Its shadow drove him into intellectual and political compromise that fractured the kingdom."
                     : lang === "id"
-                    ? "Jangkar alkitabiah: Salomo — ia meminta hikmat kepada Tuhan dan menerima pemahaman yang lebih luas dari pasir di laut. Ia mengamati, menganalisis, menamai pola, dan menulis Pengkhotbah. Energi kepalanya memberikan dunia Amsal. Bayangannya mendorongnya ke dalam kompromi intelektual dan politik yang memecah kerajaan."
+                    ? "Pegangan dari Alkitab: Salomo — ia meminta hikmat kepada Tuhan dan menerima pemahaman yang lebih luas dari pasir di laut. Ia mengamati, menganalisis, mengenali dan menguraikan pola, dan menulis Pengkhotbah. Energi kepalanya memberikan dunia Amsal. Bayangannya mendorongnya ke dalam kompromi intelektual dan politik yang memecah kerajaan."
                     : "Bijbels anker: Salomo — hij vroeg God om wijsheid en ontving begrip wijder dan het zand der zee. Hij observeerde, analyseerde, benoemde patronen en schreef Prediker. Zijn hoofdenergie gaf de wereld Spreuken. De schaduw ervan dreef hem naar intellectuele en politieke compromissen die het koninkrijk versplinterden."}
                 </p>
               </div>

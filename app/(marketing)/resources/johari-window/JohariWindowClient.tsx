@@ -22,13 +22,13 @@ const PANES = [
     en_title: "Open", en_sub: "The Arena",
     id_title: "Terbuka", id_sub: "Arena",
     en_body: "What is known both to you and to those around you. This is the space of honest, effective collaboration. The larger your Arena, the less energy people spend guessing your motives, second-guessing your decisions, or managing around your blind spots.",
-    id_body: "Apa yang diketahui baik oleh Anda maupun orang-orang di sekitar Anda. Ini adalah ruang kolaborasi yang jujur dan efektif. Semakin besar Arena Anda, semakin sedikit energi yang dihabiskan orang untuk menebak motif Anda, meragukan keputusan Anda, atau mengelola sekitar titik buta Anda.",
+    id_body: "Apa yang diketahui baik oleh Anda maupun orang-orang di sekitar Anda. Ini adalah ruang kolaborasi yang jujur dan efektif. Semakin besar Arena Anda, semakin sedikit energi yang dihabiskan orang untuk menebak motif Anda, meragukan keputusan Anda, atau menyiasati titik buta Anda.",
     en_cross: "In Dutch and German contexts, the Arena tends to be large — directness and transparency are cultural defaults. In Indonesian, Filipino, and many East Asian contexts, the Arena builds slowly through relational investment. Expecting a large Arena early often creates mistrust.",
     id_cross: "Dalam konteks Belanda dan Jerman, Arena cenderung besar — kejujuran dan transparansi adalah default budaya. Dalam konteks Indonesia, Filipina, dan banyak konteks Asia Timur, Arena berkembang perlahan melalui investasi relasional. Mengharapkan Arena yang besar di awal sering menciptakan ketidakpercayaan.",
     en_question: "Where in your leadership relationships has the Arena shrunk — and what closed it?",
     id_question: "Di mana dalam hubungan kepemimpinan Anda Arena menyusut — dan apa yang menutupnya?",
     en_action: "This week: share one thing about how you process conflict or feedback that your team probably doesn't know. Not vulnerability for vulnerability's sake — but information that helps them work with you better.",
-    id_action: "Minggu ini: bagikan satu hal tentang bagaimana Anda memproses konflik atau umpan balik yang mungkin tidak diketahui tim Anda. Bukan kerentanan demi kerentanan — tetapi informasi yang membantu mereka bekerja lebih baik dengan Anda.",
+    id_action: "Minggu ini: bagikan satu hal tentang bagaimana Anda mengolah konflik atau umpan balik yang mungkin tidak diketahui tim Anda. Bukan kerentanan demi kerentanan — tetapi informasi yang membantu mereka bekerja lebih baik dengan Anda.",
   },
   {
     key: "blind",
@@ -56,13 +56,13 @@ const PANES = [
     en_title: "Hidden", en_sub: "The Facade",
     id_title: "Tersembunyi", id_sub: "Fasad",
     en_body: "What you know about yourself but have chosen not to share. Some of this is appropriate — not everything needs to be disclosed. But when the Hidden pane grows too large, the gap between your private self and your presented self creates exhaustion.² You spend energy managing the gap.",
-    id_body: "Apa yang Anda ketahui tentang diri sendiri tetapi memilih untuk tidak dibagikan. Sebagian dari ini wajar — tidak semuanya perlu diungkapkan. Tetapi ketika pane Tersembunyi tumbuh terlalu besar, celah antara diri pribadi dan diri yang ditampilkan menciptakan kelelahan. Anda menghabiskan energi mengelola celah tersebut.",
+    id_body: "Apa yang Anda ketahui tentang diri sendiri tetapi memilih untuk tidak dibagikan. Sebagian dari ini wajar — tidak semuanya perlu diungkapkan. Tetapi ketika kotak Tersembunyi tumbuh terlalu besar, celah antara diri pribadi dan diri yang ditampilkan menciptakan kelelahan. Anda menghabiskan energi mengelola celah tersebut.",
     en_cross: "In high-context cultures (Indonesia, Japan, Korea), a larger Hidden pane is not dysfunction — it is social wisdom. What you share with your team leader is different from what you share with a peer. Cross-cultural leaders must read this without pathologising it.",
-    id_cross: "Dalam budaya high-context (Indonesia, Jepang, Korea), pane Tersembunyi yang lebih besar bukan disfungsi — itu adalah kebijaksanaan sosial. Apa yang Anda bagikan dengan pemimpin tim berbeda dari apa yang Anda bagikan dengan rekan. Pemimpin lintas budaya harus membaca ini tanpa menjadikannya patologis.",
+    id_cross: "Dalam budaya high-context (Indonesia, Jepang, Korea), kotak Tersembunyi yang lebih besar bukan disfungsi — itu adalah kebijaksanaan sosial. Apa yang Anda bagikan dengan pemimpin tim berbeda dari apa yang Anda bagikan dengan rekan. Pemimpin lintas budaya harus membaca ini tanpa menjadikannya patologis.",
     en_question: "What is something true about your leadership — a struggle, a fear, a pattern — that you have never said out loud to your team?",
-    id_question: "Apa sesuatu yang benar tentang kepemimpinan Anda — sebuah perjuangan, ketakutan, pola — yang belum pernah Anda katakan dengan keras kepada tim Anda?",
+    id_question: "Apa sesuatu yang benar tentang kepemimpinan Anda — sebuah perjuangan, ketakutan, pola — yang belum pernah Anda ucapkan secara terbuka kepada tim Anda?",
     en_action: "This week: identify one thing in your Hidden pane that, if shared appropriately, would actually help your team trust you more. Consider whether it is time to move it toward the Open.",
-    id_action: "Minggu ini: identifikasi satu hal dalam pane Tersembunyi Anda yang, jika dibagikan dengan tepat, sebenarnya akan membantu tim Anda mempercayai Anda lebih banyak. Pertimbangkan apakah sudah waktunya untuk memindahkannya ke arah Terbuka.",
+    id_action: "Minggu ini: identifikasi satu hal dalam kotak Tersembunyi Anda yang, jika dibagikan dengan tepat, sebenarnya akan membantu tim Anda mempercayai Anda lebih banyak. Pertimbangkan apakah sudah waktunya untuk memindahkannya ke arah Terbuka.",
   },
   {
     key: "unknown",
@@ -125,7 +125,7 @@ const BIBLICAL_ANCHORS: Record<string, {
     en_title: "Abraham leaving Ur — faith into the Unknown",
     id_title: "Abraham meninggalkan Ur — iman menuju yang Tidak Diketahui",
     en_text: "Abraham left Ur without knowing where he was going. Hebrews 11 is explicit: 'He went out, not knowing where he was going.' The Unknown was not a problem to solve before departure — it was the terrain of faith itself. Every leader has a pane of self that has not yet been tested, gifts not yet summoned, strengths not yet called upon. Cross-cultural displacement is one of God's most reliable tools for shrinking the Unknown: it strips the familiar scaffolding and shows you who you are underneath. What God calls you into will always exceed what you can map in advance.",
-    id_text: "Abraham meninggalkan Ur tanpa mengetahui ke mana ia pergi. Ibrani 11 dengan jelas menyatakannya: 'Ia pergi, dan ia tidak tahu ke mana ia pergi.' Yang Tidak Diketahui bukanlah masalah yang harus diselesaikan sebelum berangkat — itu adalah medan iman itu sendiri. Setiap pemimpin memiliki aspek diri yang belum pernah diuji, karunia yang belum dipanggil, kekuatan yang belum digunakan. Perpindahan lintas budaya adalah salah satu alat Allah yang paling andal untuk menyusutkan yang Tidak Diketahui: ia melepas perancah yang familiar dan menunjukkan siapa Anda sebenarnya di dalamnya. Apa yang Allah panggil Anda ke dalamnya akan selalu melampaui apa yang dapat Anda petakan sebelumnya.",
+    id_text: "Abraham meninggalkan Ur tanpa mengetahui ke mana ia pergi. Ibrani 11 dengan jelas menyatakannya: 'Ia pergi, dan ia tidak tahu ke mana ia pergi.' Yang Tidak Diketahui bukanlah masalah yang harus diselesaikan sebelum berangkat — itu adalah medan iman itu sendiri. Setiap pemimpin memiliki aspek diri yang belum pernah diuji, karunia yang belum dipanggil, kekuatan yang belum digunakan. Perpindahan lintas budaya adalah salah satu alat Tuhan yang paling andal untuk menyusutkan yang Tidak Diketahui: ia melepas perancah yang familiar dan menunjukkan siapa Anda sebenarnya di dalamnya. Apa yang Tuhan panggil Anda ke dalamnya akan selalu melampaui apa yang dapat Anda petakan sebelumnya.",
   },
 };
 
@@ -240,7 +240,7 @@ export default function JohariWindowClient({ userPathway, isSaved: initialSaved,
               {t("Two Questions", "Dua Pertanyaan")}
             </p>
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "clamp(1rem, 1.5vw, 1.1rem)", color: "oklch(40% 0.04 260)", lineHeight: 1.65, margin: "0 0 2rem", maxWidth: "60ch" }}>
-              {t("The window is built from two simple questions. Together they give you four panes.", "Jendela ini dibangun dari dua pertanyaan sederhana. Bersama-sama, keduanya menghasilkan empat pane.")}
+              {t("The window is built from two simple questions. Together they give you four panes.", "Jendela ini dibangun dari dua pertanyaan sederhana. Bersama-sama, keduanya menghasilkan empat kotak.")}
             </p>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "clamp(1.5rem, 3vw, 2.5rem)" }}>
               {[
@@ -418,7 +418,7 @@ export default function JohariWindowClient({ userPathway, isSaved: initialSaved,
             {/* Biblical Anchor */}
             <div style={{ marginTop: "2.5rem", borderTop: `2px solid ${selected.color}30`, paddingTop: "2rem" }}>
               <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: selected.color, marginBottom: "0.5rem" }}>
-                {t("Biblical Anchor", "Jangkar Alkitab")}
+                {t("Biblical Anchor", "Pegangan dari Alkitab")}
               </p>
               <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", fontWeight: 700, color: "oklch(38% 0.05 260)", marginBottom: "1rem" }}>
                 {lang === "id" ? BIBLICAL_ANCHORS[selected.key].id_title : BIBLICAL_ANCHORS[selected.key].en_title}
@@ -445,14 +445,14 @@ export default function JohariWindowClient({ userPathway, isSaved: initialSaved,
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(72% 0.04 260)", maxWidth: "62ch", marginBottom: "1rem" }}>
             {t(
               "Psalm 139 is one of the most radical invitations in Scripture: 'Search me, God, and know my heart.' It is a prayer that deliberately opens the Blind Spot and the Unknown to God's sight — trusting that what He sees will not destroy you, but lead you.",
-              "Mazmur 139 adalah salah satu undangan paling radikal dalam Kitab Suci: 'Selidikilah aku, ya Allah, dan kenallah hatiku.' Ini adalah doa yang dengan sengaja membuka Titik Buta dan yang Tidak Diketahui kepada pandangan Allah — mempercayai bahwa apa yang Dia lihat tidak akan menghancurkan Anda, tetapi memimpin Anda.",
+              "Mazmur 139 adalah salah satu undangan paling radikal dalam Kitab Suci: 'Selidikilah aku, ya Allah, dan kenallah hatiku.' Ini adalah doa yang dengan sengaja membuka Titik Buta dan yang Tidak Diketahui kepada pandangan Tuhan — mempercayai bahwa apa yang Dia lihat tidak akan menghancurkan Anda, tetapi memimpin Anda.",
               "Psalm 139 is een van de meest radicale uitnodigingen in de Schrift: 'Doorgrond mij, God, en ken mijn hart.' Het is een gebed dat bewust de Blinde Vlek en het Onbekende opent voor Gods blik — vertrouwend dat wat Hij ziet je niet zal vernietigen, maar leiden.",
             )}
           </p>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(72% 0.04 260)", maxWidth: "62ch", marginBottom: "2.5rem" }}>
             {t(
               "Paul's words in 1 Corinthians 13 name the fundamental limit of every Johari Window: we see in part. Full self-knowledge is eschatological — something awaiting us in the presence of God. That is not an excuse for complacency. It is a call to humility: the leader who thinks they see themselves clearly is often the most dangerous one in the room.",
-              "Kata-kata Paulus dalam 1 Korintus 13 menyebutkan batas mendasar dari setiap Jendela Johari: kita melihat sebagian. Pengetahuan diri yang penuh bersifat eskatologis — sesuatu yang menanti kita di hadirat Allah. Itu bukan alasan untuk berpuas diri. Itu adalah panggilan untuk rendah hati: pemimpin yang berpikir mereka melihat diri mereka dengan jelas seringkali adalah yang paling berbahaya di ruangan.",
+              "Kata-kata Paulus dalam 1 Korintus 13 menyebutkan batas mendasar dari setiap Jendela Johari: kita melihat sebagian. Pengetahuan diri yang penuh bersifat eskatologis — sesuatu yang menanti kita di hadirat Tuhan. Itu bukan alasan untuk berpuas diri. Itu adalah panggilan untuk rendah hati: pemimpin yang berpikir mereka melihat diri mereka dengan jelas seringkali adalah yang paling berbahaya di ruangan.",
               "Paulus' woorden in 1 Korintiërs 13 benoemen de fundamentele grens van elk Johari Venster: we zien ten dele. Volledige zelfkennis is eschatologisch — iets dat ons wacht in de aanwezigheid van God. Dat is geen excuus voor zelfgenoegzaamheid. Het is een oproep tot nederigheid: de leider die denkt zichzelf duidelijk te zien is vaak de gevaarlijkste in de kamer.",
             )}
           </p>

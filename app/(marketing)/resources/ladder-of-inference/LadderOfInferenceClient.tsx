@@ -82,7 +82,7 @@ const RUNGS = [
     },
     detail: {
       en: "Once meaning is attached, it quickly solidifies into assumptions. We treat our interpretation as if it were fact. This is where the runaway logic loop begins: our assumptions feed our next data selections, which reinforce our assumptions further.",
-      id: "Setelah makna dilekatkan, dengan cepat mengeras menjadi asumsi. Kita memperlakukan interpretasi kita seolah-olah itu adalah fakta. Di sinilah loop logika tak terkendali dimulai: asumsi kita memberi makan pemilihan data berikutnya, yang semakin memperkuat asumsi kita.",
+      id: "Setelah makna dilekatkan, dengan cepat mengeras menjadi asumsi. Kita memperlakukan interpretasi kita seolah-olah itu adalah fakta. Di sinilah loop logika tak terkendali dimulai: asumsi kita memengaruhi pemilihan data berikutnya, yang semakin memperkuat asumsi kita.",
     },
     reflection: {
       en: "Am I treating my assumptions as facts? What would I need to believe for this assumption to be wrong?",
@@ -499,12 +499,12 @@ export default function LadderOfInferenceClient({
       <section style={{ background: "oklch(94% 0.008 260)", padding: "72px 24px" }}>
         <div style={{ maxWidth: 900, margin: "0 auto" }}>
           <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 12px" }}>
-            {t("The Reflexive Loop", "Lingkaran Refleksif", lang)}
+            {t("The Reflexive Loop", "Lingkaran yang Menguatkan Diri", lang)}
           </h2>
           <p style={{ fontSize: 15, color: "oklch(44% 0.06 260)", marginBottom: 32, lineHeight: 1.65, maxWidth: 680 }}>
             {t(
               "The most dangerous part of the Ladder isn't the climb — it's the loop. Our beliefs directly influence what data we pay attention to next. This means our ladder can become self-sealing: we unconsciously select data that confirms what we already believe.",
-              "Bagian paling berbahaya dari Tangga bukan pendakiannya — melainkan lingkarannya. Keyakinan kita langsung mempengaruhi data apa yang kita perhatikan selanjutnya. Ini berarti tangga kita bisa menjadi mandiri: kita secara tidak sadar memilih data yang mengkonfirmasi apa yang sudah kita percayai.",
+              "Bagian paling berbahaya dari Tangga bukan pendakiannya — melainkan lingkarannya. Keyakinan kita langsung mempengaruhi data apa yang kita perhatikan selanjutnya. Ini berarti tangga kita bisa menutup diri dari koreksi: kita secara tidak sadar memilih data yang mengkonfirmasi apa yang sudah kita percayai.",
               lang
             )}
           </p>

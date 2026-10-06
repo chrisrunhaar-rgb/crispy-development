@@ -80,7 +80,7 @@ const developmentLevels = [
     actions: [
       {
         en: "Take the Cultural Values Profile assessment at CulturalQ.com (verify current free/paid status). Don't just note your scores — sit with what surprises you. Your lowest score is your most urgent growth edge.",
-        id: "Ambil penilaian Profil Nilai Budaya di CulturalQ.com (periksa status gratis/berbayar saat ini). Jangan hanya catat skor Anda — renungkan apa yang mengejutkan Anda. Skor terendah Anda adalah tepi pertumbuhan paling mendesak.",
+        id: "Ambil penilaian Profil Nilai Budaya di CulturalQ.com (periksa status gratis/berbayar saat ini). Jangan hanya catat skor Anda — renungkan apa yang mengejutkan Anda. Skor terendah Anda menunjukkan hal yang paling mendesak untuk dikembangkan.",
       },
       {
         en: "Choose one person in your context whose cultural background significantly differs from yours. Spend 30 minutes asking them about their culture — not to analyze, but to genuinely understand. Listen more than you speak.",
@@ -102,7 +102,7 @@ const developmentLevels = [
       },
       {
         en: "Find a cultural mentor — ideally someone local to your context who respects you enough to be honest. Meet monthly. Ask explicitly: 'What am I missing? What do I get wrong that you haven't told me yet?' Honour their honesty.",
-        id: "Temukan mentor budaya — idealnya seseorang yang lokal untuk konteks Anda yang cukup menghormati Anda untuk jujur. Bertemu setiap bulan. Tanyakan secara eksplisit: 'Apa yang saya lewatkan? Apa yang saya salah yang belum Anda ceritakan?'",
+        id: "Temukan mentor budaya — idealnya seseorang yang lokal untuk konteks Anda yang cukup menghormati Anda untuk jujur. Bertemu setiap bulan. Tanyakan secara eksplisit: 'Apa yang saya lewatkan? Apa yang saya lakukan keliru yang belum Anda sampaikan?'",
       },
     ],
   },
@@ -314,7 +314,7 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
           {t("The Framework", "Kerangka Kerja")}
         </p>
         <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(26px, 4vw, 40px)", fontWeight: 800, color: navyOklch, marginBottom: 32, lineHeight: 1.2 }}>
-          {t("What CQ Actually Is — and What It Isn't", "Apa CQ Sebenarnya — dan Apa yang Bukan")}
+          {t("What CQ Actually Is — and What It Isn't", "Apa Itu CQ Sebenarnya, dan Apa yang Bukan")}
         </h2>
 
         <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 20 }}>
@@ -353,7 +353,7 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
         {/* Faith anchor: the Incarnation */}
         <div style={{ borderTop: `3px solid ${orangeOklch}`, paddingTop: 32, marginTop: 36 }}>
           <p style={{ color: orangeOklch, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 16 }}>
-            {t("Faith Anchor", "Jangkar Iman")}
+            {t("Faith Anchor", "Pegangan Iman")}
           </p>
           <h3 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 20, fontWeight: 700, color: navyOklch, marginBottom: 16 }}>
             {t("The Incarnation as the Ultimate CQ Model", "Inkarnasi sebagai Model CQ Tertinggi")}
@@ -361,13 +361,13 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
           <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 16 }}>
             {t(
               "The most profound act of cultural intelligence in history was not a leadership seminar — it was the Incarnation. God did not shout instructions from heaven. He moved into the neighbourhood. He learned the language, ate the food, understood the honour-shame dynamics of first-century Jewish culture, and communicated truth in forms his audience could receive.",
-              "Tindakan kecerdasan budaya paling mendalam dalam sejarah bukan seminar kepemimpinan — itu adalah Inkarnasi. Allah tidak berteriak instruksi dari surga. Dia pindah ke lingkungan. Dia belajar bahasa, makan makanan, memahami dinamika kehormatan-rasa malu dari budaya Yahudi abad pertama."
+              "Tindakan kecerdasan budaya paling mendalam dalam sejarah bukan seminar kepemimpinan — itu adalah Inkarnasi. Tuhan tidak berteriak memberi instruksi dari surga. Dia pindah dan tinggal di tengah-tengah kita. Dia belajar bahasa, makan makanan, memahami dinamika kehormatan-rasa malu dari budaya Yahudi abad pertama."
             )}
           </p>
           <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85 }}>
             {t(
               "In Acts 17, Paul in Athens doesn't quote the Hebrew scriptures — he quotes Greek poets. He enters the cultural conversation on its own terms before redirecting it toward truth. Paul's entire missionary method is an exercise in high CQ: 'I have become all things to all people, so that by all possible means I might save some' (1 Cor 9:22). This is not compromise. This is intelligence.",
-              "Dalam Kisah Para Rasul 17, Paulus di Athena tidak mengutip Kitab Suci Ibrani — dia mengutip penyair Yunani. Dia memasuki percakapan budaya dengan syaratnya sendiri sebelum mengarahkannya menuju kebenaran. Seluruh metode misionaris Paulus adalah latihan CQ tinggi: 'Aku menjadi semua hal bagi semua orang' (1 Kor 9:22)."
+              "Dalam Kisah Para Rasul 17, Paulus di Athena tidak mengutip Kitab Suci Ibrani — dia mengutip penyair Yunani. Dia memasuki percakapan budaya dengan syaratnya sendiri sebelum mengarahkannya menuju kebenaran. Seluruh metode pelayanan lintas budaya Paulus adalah latihan CQ tinggi: 'Aku menjadi semua hal bagi semua orang' (1 Kor 9:22)."
             )}
           </p>
         </div>
@@ -388,7 +388,7 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
           <p style={{ color: bodyText, fontSize: 16, lineHeight: 1.75, marginBottom: 48 }}>
             {t(
               "Each dimension builds on the others. A deficit in any one collapses the whole. Click each to go deeper.",
-              "Setiap dimensi dibangun di atas yang lain. Kekurangan di salah satu runtuhkan semuanya. Klik masing-masing untuk lebih dalam."
+              "Setiap dimensi dibangun di atas yang lain. Kekurangan pada satu dimensi meruntuhkan keseluruhannya. Klik masing-masing untuk lebih dalam."
             )}
           </p>
 
@@ -484,7 +484,7 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
         <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 20 }}>
           {t(
             "The foreign leader joining a local team needs CQ — to understand the culture they have stepped into. But the local team needs it too — to bridge the gap from their side, to not just wait and hope the foreigner figures it out. On a healthy cross-cultural team, everyone is moving toward each other. No one gets to stay put.",
-            "Ketika Anda adalah budaya minoritas dalam organisasi Anda, pengembangan CQ terlihat berbeda. Anda sudah melakukan pekerjaan adaptasi setiap hari — seringkali tidak terlihat, seringkali tanpa pengakuan, seringkali dengan biaya pribadi yang nyata. Kerja emosional dalam terus-menerus menerjemahkan diri Anda sangat melelahkan dengan cara yang jarang diperhatikan oleh pemimpin budaya mayoritas."
+            "Ketika Anda adalah budaya minoritas dalam organisasi Anda, pengembangan CQ terlihat berbeda. Anda sudah melakukan pekerjaan adaptasi setiap hari — seringkali tidak terlihat, seringkali tanpa pengakuan, seringkali dengan pengorbanan pribadi yang nyata. Kerja emosional dalam terus-menerus menerjemahkan diri Anda sangat melelahkan dengan cara yang jarang diperhatikan oleh pemimpin budaya mayoritas."
           )}
         </p>
         <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 20 }}>
@@ -629,13 +629,13 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
         <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 20 }}>
           {t(
             "Every culture you encounter is not an obstacle to the gospel — it is a context in which God has been at work long before you arrived. The diversity of nations is not a problem to be managed. It is, according to Acts 17, a deliberate design — God placed every people in their time and place so that they might seek him.",
-            "Setiap budaya yang Anda temui bukan penghalang bagi Injil — itu adalah konteks di mana Allah telah bekerja jauh sebelum Anda tiba. Keragaman bangsa-bangsa bukan masalah yang harus dikelola. Menurut Kisah Para Rasul 17, itu adalah desain yang disengaja — Allah menempatkan setiap orang di waktu dan tempat mereka sehingga mereka dapat mencari-Nya."
+            "Setiap budaya yang Anda temui bukan penghalang bagi Injil — itu adalah konteks di mana Tuhan telah bekerja jauh sebelum Anda tiba. Keragaman bangsa-bangsa bukan masalah yang harus dikelola. Menurut Kisah Para Rasul 17, itu adalah desain yang disengaja: Tuhan menempatkan setiap orang di waktu dan tempat mereka sehingga mereka dapat mencari-Nya."
           )}
         </p>
         <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 48 }}>
           {t(
             "This means cross-cultural intelligence is not just a professional competency. It is a form of faithfulness. When you develop your CQ, you are taking seriously the world God made — the world in which his image is distributed across every tribe and tongue and people and nation (Rev 5:9). To dismiss a culture you do not understand is, in a real sense, to dismiss part of the image of God. And to grow in CQ is to grow in your capacity to see him more fully.",
-            "Ini berarti kecerdasan lintas budaya bukan hanya kompetensi profesional. Ini adalah bentuk kesetiaan. Ketika Anda mengembangkan CQ Anda, Anda mengambil dengan serius dunia yang Allah ciptakan — dunia di mana gambar-Nya tersebar di setiap suku dan lidah dan orang dan bangsa (Why 5:9)."
+            "Ini berarti kecerdasan lintas budaya bukan hanya kompetensi profesional. Ini adalah bentuk kesetiaan. Ketika Anda mengembangkan CQ Anda, Anda mengambil dengan serius dunia yang Tuhan ciptakan — dunia di mana gambar-Nya tersebar di setiap suku dan lidah dan orang dan bangsa (Why 5:9)."
           )}
         </p>
 

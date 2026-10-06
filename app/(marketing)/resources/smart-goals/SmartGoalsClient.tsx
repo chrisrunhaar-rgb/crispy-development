@@ -39,7 +39,7 @@ const LETTERS = [
     ],
     worksheetQId: [
       { q: "Apakah tujuan ini menggambarkan dengan tepat apa yang ingin Anda capai dalam satu kalimat yang jelas?", hint: "Tujuan yang spesifik menyebutkan hasil, bukan aktivitas." },
-      { q: "Apakah tujuan ini menyebutkan siapa yang bertanggung jawab dan siapa lagi yang perlu terlibat?", hint: "Kejelasan kepemilikan mencegah tujuan menjadi kabur." },
+      { q: "Apakah tujuan ini menyebutkan siapa yang bertanggung jawab dan siapa lagi yang perlu terlibat?", hint: "Kejelasan tentang siapa yang memegang tanggung jawab mencegah tujuan menjadi kabur." },
       { q: "Apakah tujuan ini menetapkan di mana atau dalam konteks apa hal ini akan terjadi?", hint: "Konteks membumikan tujuan dalam kenyataan." },
       { q: "Apakah tujuan ini menjelaskan 'mengapa' — alasan mengapa hasil ini penting?", hint: "\"Mengapa\" yang kuat memotivasi tindakan ketika semangat memudar." },
     ],
@@ -859,7 +859,7 @@ export default function SmartGoalsClient({
           <p style={{ fontSize: 15, color: "oklch(38% 0.05 260)", lineHeight: 1.75, margin: 0 }}>
             {t(
               "James isn't telling us not to plan. He's telling us not to plan arrogantly — as if the future belongs to us. The model for this is Nehemiah: he prayed before every major move, planned every material detail (travel permits, timber supply, timeline), and rebuilt the wall in 52 days. Goals are instruments of stewardship. Hold them with diligence — and with open hands.",
-              "Yakobus tidak mengatakan kepada kita untuk tidak merencanakan. Dia mengatakan kepada kita untuk tidak merencanakan dengan sombong — seolah-olah masa depan milik kita. Model untuk ini adalah Nehemia: ia berdoa sebelum setiap langkah besar, merencanakan setiap detail material (izin perjalanan, pasokan kayu, jadwal waktu), dan membangun kembali tembok dalam 52 hari. Tujuan adalah instrumen pengelolaan. Pegang dengan ketekunan — dan dengan tangan terbuka.",
+              "Yakobus tidak mengatakan kepada kita untuk tidak merencanakan. Dia mengatakan kepada kita untuk tidak merencanakan dengan sombong — seolah-olah masa depan milik kita. Model untuk ini adalah Nehemia: ia berdoa sebelum setiap langkah besar, merencanakan setiap detail material (surat izin melintasi wilayah, pasokan kayu, jadwal waktu), dan membangun kembali tembok dalam 52 hari. Tujuan adalah instrumen pengelolaan. Peganglah dengan ketekunan, dan dengan sikap rela melepaskan.",
               "Jakobus zegt ons niet om niet te plannen. Hij zegt ons om niet arrogant te plannen — alsof de toekomst van ons is. Het model hiervoor is Nehemia: hij bad voor elke grote stap, plande elk materieel detail (reisvergunningen, houtvoorraad, tijdlijn), en herbouwde de muur in 52 dagen. Doelen zijn instrumenten van rentmeesterschap. Houd ze vast met ijver — en met open handen."
             )}
           </p>
@@ -1134,7 +1134,7 @@ export default function SmartGoalsClient({
           <p style={{ fontSize: 16, color: "oklch(72% 0.05 260)", lineHeight: 1.7, marginBottom: 40 }}>
             {t(
               "Use the SMART worksheet with your team or in your next one-on-one. Each member evaluates their own goal — you coach the gaps.",
-              "Gunakan lembar kerja SMART bersama tim Anda atau dalam sesi one-on-one berikutnya. Setiap anggota mengevaluasi tujuan mereka sendiri — Anda melatih kesenjangannya.",
+              "Gunakan lembar kerja SMART bersama tim Anda atau dalam sesi one-on-one berikutnya. Setiap anggota mengevaluasi tujuan mereka sendiri: Anda mendampingi bagian yang masih kurang.",
               "Gebruik het SMART-werkblad met jouw team of in je volgende ——n-op-——ngesprek. Elk lid evalueert zijn eigen doel — jij coacht de zwakke punten."
             )}
           </p>

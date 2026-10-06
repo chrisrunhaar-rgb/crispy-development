@@ -261,7 +261,7 @@ const SLIDES: Slide[] = [
     key: "faith",
     render: lang => (
       <div style={{ width: 1240, display: "flex", flexDirection: "column", alignItems: "center", gap: 40 }}>
-        <p style={kicker}>{t("Faith anchor", "Jangkar iman", lang)}</p>
+        <p style={kicker}>{t("Faith anchor", "Pegangan iman", lang)}</p>
         <p style={{ fontFamily: serif, fontStyle: "italic", fontWeight: 500, fontSize: 80, color: navy, margin: 0, lineHeight: 1.15, textAlign: "center" }}>
           {t("“Plans fail for lack of counsel, but with many advisers they succeed.”",
             "“Rancangan gagal kalau tidak ada pertimbangan, tetapi terlaksana kalau penasihat banyak.”", lang)}

@@ -16,13 +16,13 @@ const VERSES = {
     en_ref: "Luke 24:17",
     id_ref: "Lukas 24:17",
     en: "'What are you discussing together as you walk along?' They stood still, their faces downcast.",
-    id: "'Apakah yang kamu percakapkan sementara kamu berjalan?' Dan mereka berhenti dengan muka muram.",
+    id: "'Apakah yang kamu percakapkan sementara kamu berjalan?' Maka berhentilah mereka dengan muka muram.",
   },
   "ruth-1-16": {
     en_ref: "Ruth 1:16",
     id_ref: "Rut 1:16",
     en: "But Ruth replied, 'Don't urge me to leave you or to turn back from you. Where you go I will go, and where you stay I will stay.'",
-    id: "Tetapi kata Rut: 'Janganlah desak aku meninggalkan engkau dan pulang dengan tidak membawamu, sebab ke mana engkau pergi, ke situ jugalah aku pergi, dan di mana engkau bermalam, di situ jugalah aku bermalam.'",
+    id: "Tetapi kata Rut: 'Janganlah desak aku meninggalkan engkau dan pulang dengan tidak membawa engkau; sebab ke mana engkau pergi, ke situ jugalah aku pergi, dan di mana engkau bermalam, di situ jugalah aku bermalam.'",
   },
 };
 
@@ -45,7 +45,7 @@ const RAFT_STEPS = [
       "If the other person refuses reconciliation, that is theirs to carry. You can only be responsible for your own step toward peace.",
     ],
     id_how: [
-      "Namai hubungan yang tegang. Jangan hindari.",
+      "Sebutkan hubungan yang tegang. Jangan hindari.",
       "Ambil inisiatif. Anda yang pertama melangkah, meskipun Anda tidak yakin apakah Anda yang salah.",
       "Katakan: \"Sebelum saya pergi, saya ingin memastikan tidak ada yang belum terselesaikan di antara kita.\"",
       "Jika orang lain menolak rekonsiliasi, itu menjadi tanggung jawab mereka. Anda hanya bertanggung jawab atas langkah Anda sendiri menuju perdamaian.",
@@ -114,7 +114,7 @@ const RAFT_STEPS = [
       "Teliti konteks baru Anda sebelum tiba: budaya, tempo hidup, gaya komunikasi, apa yang normal.",
       "Identifikasi jangkar aman pertama Anda: satu hubungan, satu komunitas, satu ritme yang bisa Anda bangun segera.",
       "Beritahu diri sendiri terlebih dahulu: 3 hingga 6 bulan pertama akan terasa membingungkan. Ini normal. Ini tidak berarti Anda membuat pilihan yang salah.",
-      "Rencanakan debriefing formal atau check-in dengan seseorang yang Anda percaya pada tanda 3 bulan. Bukan untuk memperbaiki segalanya, tetapi untuk menamai apa yang Anda alami.",
+      "Rencanakan debriefing formal atau waktu berbagi kabar dengan seseorang yang Anda percaya pada bulan ketiga. Bukan untuk memperbaiki segalanya, tetapi untuk mengungkapkan apa yang Anda alami.",
     ],
   },
 ];
@@ -173,7 +173,7 @@ const PLANNER_PROMPTS = [
     letter: "T",
     id_letter: "P",
     en_question: "What do I know about the new context I am entering? What is my plan for the first 90 days, and who will I check in with at the 3-month mark?",
-    id_question: "Apa yang saya ketahui tentang konteks baru yang saya masuki? Apa rencana saya untuk 90 hari pertama, dan dengan siapa saya akan check-in pada tanda 3 bulan?",
+    id_question: "Apa yang saya ketahui tentang konteks baru yang saya masuki? Apa rencana saya untuk 90 hari pertama, dan dengan siapa saya akan berbagi kabar pada bulan ketiga?",
   },
 ];
 
@@ -321,7 +321,7 @@ export default function HealthyTransitionsClient({ userPathway, isSaved: initial
             <p style={{ marginBottom: 0 }}>
               {t(
                 "David Pollock, who spent decades working with cross-cultural families, developed the RAFT model as a widely trusted practitioner framework for doing the emotional and relational work of leaving well.¹ The four letters each name a domain of work that most leaders neglect. None of them require extraordinary courage. They require intention.",
-                "David Pollock, yang menghabiskan beberapa dekade bekerja dengan keluarga lintas budaya, mengembangkan model RPPP sebagai kerangka praktisi yang dipercaya luas untuk melakukan pekerjaan emosional dan relasional dalam pergi dengan baik.¹ Keempat huruf masing-masing menamai domain pekerjaan yang diabaikan oleh kebanyakan pemimpin. Tidak ada yang memerlukan keberanian luar biasa. Mereka memerlukan niat."
+                "David Pollock, yang menghabiskan beberapa dekade bekerja dengan keluarga lintas budaya, mengembangkan model RPPP sebagai kerangka praktisi yang dipercaya luas untuk melakukan pekerjaan emosional dan relasional dalam pergi dengan baik.¹ Keempat huruf itu masing-masing mewakili satu ranah pekerjaan yang diabaikan oleh kebanyakan pemimpin. Tidak ada yang memerlukan keberanian luar biasa. Mereka memerlukan niat."
               )}
             </p>
           </div>
@@ -391,7 +391,7 @@ export default function HealthyTransitionsClient({ userPathway, isSaved: initial
               <p style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 20px)", color: bodyText, fontStyle: "italic", lineHeight: 1.8 }}>
                 {t(
                   "Select a letter above to explore each step of the RAFT journey.",
-                  "Pilih huruf di atas untuk menjelajahi setiap langkah perjalanan RPPP."
+                  "Pilih huruf di atas untuk menjelajahi setiap langkah proses RPPP."
                 )}
               </p>
             </div>
@@ -469,12 +469,12 @@ export default function HealthyTransitionsClient({ userPathway, isSaved: initial
             {t("III. The Curve", "III. Kurva Transisi")}
           </p>
           <h2 style={{ fontFamily: serif, fontSize: "clamp(28px, 3.5vw, 40px)", fontWeight: 700, color: navy, marginBottom: 20, lineHeight: 1.2, fontStyle: "italic" }}>
-            {t("What to Expect in the Middle", "Apa yang Diharapkan di Tengah Perjalanan")}
+            {t("What to Expect in the Middle", "Apa yang Akan Terjadi di Tengah Proses")}
           </h2>
           <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 19px)", color: bodyText, lineHeight: 1.85, marginBottom: 56 }}>
             {t(
               "Knowing the curve doesn't make it easy. But it makes it less frightening, because you can name what is happening rather than being swallowed by it. These four phases are a directional normalising map drawn from transition literature³ — a way of naming common experiences, not a guaranteed sequence. Individual and cultural contexts vary considerably.",
-              "Mengetahui kurva tidak membuatnya mudah. Tetapi itu membuatnya kurang menakutkan, karena Anda bisa menamai apa yang terjadi daripada ditelan olehnya. Keempat fase ini adalah peta normalisasi arah yang diambil dari literatur transisi³ — cara untuk menamai pengalaman umum, bukan urutan yang dijamin. Konteks individu dan budaya sangat bervariasi."
+              "Mengetahui kurva tidak membuatnya mudah. Tetapi itu membuatnya kurang menakutkan, karena Anda bisa mengenali dan mengungkapkan apa yang terjadi daripada ditelan olehnya. Keempat fase ini adalah gambaran umum arah yang wajar, diambil dari literatur transisi³. Ini cara untuk mengenali pengalaman yang umum, bukan urutan yang pasti terjadi. Konteks individu dan budaya sangat bervariasi."
             )}
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
@@ -531,20 +531,20 @@ export default function HealthyTransitionsClient({ userPathway, isSaved: initial
             <p style={{ marginBottom: 28 }}>
               {t(
                 "Forward culture shock, arriving in a new country, is widely understood. You expect it. People around you name it. There is social permission to struggle.",
-                "Gegar budaya maju, tiba di negara baru, sudah banyak dipahami. Anda mengharapkannya. Orang-orang di sekitar Anda menamakannya. Ada izin sosial untuk berjuang."
+                "Gegar budaya maju, tiba di negara baru, sudah banyak dipahami. Anda sudah menduganya. Orang-orang di sekitar Anda pun membicarakannya secara terbuka. Ada izin sosial untuk berjuang."
               )}
             </p>
             <p style={{ marginBottom: 28 }}>
               {t(
                 "Reverse culture shock, returning to your home culture after an extended cross-cultural assignment, is harder precisely because it is unexpected.⁵ You expect home to feel like home. Instead, it feels foreign. Your humour doesn't land. Your references confuse people. The pace feels wrong. The conversations feel shallow. And there is almost no social permission to name this, because you are home.",
-                "Gegar budaya terbalik, kembali ke budaya asal Anda setelah penugasan lintas budaya yang panjang, lebih berat tepat karena tidak terduga.⁵ Anda mengharapkan rumah terasa seperti rumah. Sebaliknya, itu terasa asing. Humor Anda tidak mendarat. Referensi Anda membingungkan orang. Temponya terasa salah. Percakapannya terasa dangkal. Dan hampir tidak ada izin sosial untuk menamakannya, karena Anda sudah di rumah."
+                "Gegar budaya terbalik, kembali ke budaya asal Anda setelah penugasan lintas budaya yang panjang, lebih berat tepat karena tidak terduga.⁵ Anda mengira rumah akan terasa seperti rumah. Sebaliknya, itu terasa asing. Humor Anda tidak ditangkap orang. Referensi Anda membingungkan orang. Temponya terasa salah. Percakapannya terasa dangkal. Dan hampir tidak ada izin sosial untuk mengungkapkannya, karena Anda sudah di rumah."
               )}
             </p>
             <div style={{ background: "oklch(18% 0.09 260)", padding: "32px 36px", borderRadius: 12, marginBottom: 28 }}>
               <p style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 21px)", fontStyle: "italic", color: offWhite, lineHeight: 1.8, marginBottom: 12 }}>
                 {t(
                   "\"I expected to struggle in Thailand. I did not expect to struggle in the Netherlands. But I've been back for eight months and I still feel like a foreigner at my own family dinner table.\"",
-                  "\"Saya mengharapkan berjuang di Thailand. Saya tidak mengharapkan berjuang di Belanda. Tapi saya sudah kembali selama delapan bulan dan saya masih merasa seperti orang asing di meja makan keluarga saya sendiri.\""
+                  "\"Saya sudah mengira akan bergumul di Thailand. Saya tidak mengira akan bergumul di Belanda. Tapi saya sudah kembali selama delapan bulan dan saya masih merasa seperti orang asing di meja makan keluarga saya sendiri.\""
                 )}
               </p>
               <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: orange, letterSpacing: "0.08em", margin: 0 }}>
@@ -560,13 +560,13 @@ export default function HealthyTransitionsClient({ userPathway, isSaved: initial
             <p style={{ marginBottom: 28 }}>
               {t(
                 "Two specific re-entry dynamics to anticipate. Comparison: the instinct to compare your home context unfavourably with the field, or vice versa. Neither comparison produces belonging. And Invisibility: people around you often cannot see or honour the transformation you've been through. You have lived through things that don't translate in ordinary conversation. Name this to yourself. Find people who can receive it. Research on perceived social support suggests that one attuned relationship matters more than a large network with formulaic responses.⁶",
-                "Dua dinamika kepulangan spesifik yang perlu diantisipasi. Perbandingan: naluri untuk membandingkan konteks rumah Anda secara tidak menguntungkan dengan lapangan, atau sebaliknya. Tidak ada perbandingan yang menghasilkan rasa memiliki. Dan Ketidaktampakan: orang-orang di sekitar Anda sering tidak dapat melihat atau menghormati transformasi yang telah Anda jalani. Anda telah menjalani hal-hal yang tidak dapat diterjemahkan dalam percakapan biasa. Namai ini untuk diri sendiri. Temukan orang-orang yang bisa menerimanya. Penelitian tentang dukungan sosial yang dirasakan menunjukkan bahwa satu hubungan yang penuh perhatian lebih penting daripada jaringan besar dengan respons yang bersifat formula.⁶"
+                "Dua dinamika kepulangan spesifik yang perlu diantisipasi. Perbandingan: naluri untuk membandingkan konteks rumah Anda secara tidak menguntungkan dengan lapangan, atau sebaliknya. Tidak ada perbandingan yang menghasilkan rasa memiliki. Dan Ketidaktampakan: orang-orang di sekitar Anda sering tidak dapat melihat atau menghormati transformasi yang telah Anda jalani. Anda telah menjalani hal-hal yang tidak dapat diterjemahkan dalam percakapan biasa. Ungkapkan ini untuk diri sendiri. Temukan orang-orang yang bisa menerimanya. Penelitian tentang dukungan sosial yang dirasakan menunjukkan bahwa satu hubungan yang penuh perhatian lebih penting daripada jaringan besar dengan respons yang bersifat formula.⁶"
               )}
             </p>
             <p style={{ fontFamily: serif, fontSize: "clamp(18px, 2vw, 22px)", fontStyle: "italic", color: offWhite, lineHeight: 1.75, padding: "8px 0 8px 28px", borderLeft: `3px solid ${orange}` }}>
               {t(
                 "Re-entry is not a homecoming. It is another transition, and it deserves the same intentional RAFT work as any other.",
-                "Kepulangan bukan sebuah pulang ke rumah. Ini adalah transisi lain, dan layak mendapatkan pekerjaan RPPP yang disengaja yang sama seperti yang lainnya."
+                "Kembali ke budaya asal tidak otomatis terasa seperti pulang. Ini adalah transisi lain, dan layak mendapatkan pekerjaan RPPP yang disengaja yang sama seperti yang lainnya."
               )}
             </p>
           </div>
@@ -580,43 +580,43 @@ export default function HealthyTransitionsClient({ userPathway, isSaved: initial
             {t("V. Biblical Foundation", "V. Dasar Alkitab")}
           </p>
           <h2 style={{ fontFamily: serif, fontSize: "clamp(28px, 3.5vw, 40px)", fontWeight: 700, color: navy, marginBottom: 40, lineHeight: 1.2, fontStyle: "italic" }}>
-            {t("God Has Always Walked People Through Transitions", "Allah Selalu Memandu Umat-Nya Melalui Transisi")}
+            {t("God Has Always Walked People Through Transitions", "Tuhan Selalu Memandu Umat-Nya Melalui Transisi")}
           </h2>
 
           {/* Luke 24 */}
           <div style={{ marginBottom: 72 }}>
             <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: orange, letterSpacing: "0.08em", marginBottom: 8 }}>
               <VerseRef id="luke-24-17">{t("Luke 24:17", "Lukas 24:17")}</VerseRef>
-              {" "}(NIV)
+              {" "}{t("(NIV)", "(TB)")}
             </p>
             <div style={{ background: lightGray, padding: "32px 36px", borderRadius: 4, marginBottom: 28 }}>
               <p style={{ fontFamily: serif, fontSize: "clamp(18px, 2vw, 22px)", fontStyle: "italic", color: navy, lineHeight: 1.75, marginBottom: 12 }}>
                 {t(
                   "\"'What are you discussing together as you walk along?' They stood still, their faces downcast.\"",
-                  "\"'Apakah yang kamu percakapkan sementara kamu berjalan?' Dan mereka berhenti dengan muka muram.\""
+                  "\"'Apakah yang kamu percakapkan sementara kamu berjalan?' Maka berhentilah mereka dengan muka muram.\""
                 )}
               </p>
               <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: orange, letterSpacing: "0.06em", margin: 0 }}>
-                — <VerseRef id="luke-24-17">{t("Luke 24:17", "Lukas 24:17")}</VerseRef> (NIV)
+                — <VerseRef id="luke-24-17">{t("Luke 24:17", "Lukas 24:17")}</VerseRef> {t("(NIV)", "(TB)")}
               </p>
             </div>
             <div style={{ fontFamily: serif, fontSize: "clamp(17px, 1.9vw, 19px)", color: bodyText, lineHeight: 1.9 }}>
               <p style={{ marginBottom: 20 }}>
                 {t(
                   "The Road to Emmaus is a story about people in the middle of a transition they did not choose. The disciples had just lived through the crucifixion: the sudden, violent end of everything they thought was certain. They are walking away, heads down, processing out loud.",
-                  "Jalan menuju Emaus adalah kisah tentang orang-orang di tengah transisi yang tidak mereka pilih. Para murid baru saja melewati penyaliban: akhir yang tiba-tiba dan keras dari semua yang mereka pikir pasti. Mereka berjalan menjauh, kepala tertunduk, memproses dengan keras."
+                  "Jalan menuju Emaus adalah kisah tentang orang-orang di tengah transisi yang tidak mereka pilih. Para murid baru saja melewati penyaliban: akhir yang tiba-tiba dan keras dari semua yang mereka pikir pasti. Mereka berjalan menjauh, kepala tertunduk, mengolah perasaan sambil berbicara."
                 )}
               </p>
               <p style={{ marginBottom: 20 }}>
                 {t(
                   "Jesus doesn't appear with a solution. He appears with a question: what are you discussing? He walks with them in the confusion before he explains. He meets them in the grieving before he reframes the story. This is the pastoral pattern Jesus models: first the accompaniment, then the understanding.",
-                  "Yesus tidak muncul dengan solusi. Ia muncul dengan pertanyaan: apa yang kalian bicarakan? Ia berjalan bersama mereka dalam kebingungan sebelum menjelaskan. Ia menemani mereka dalam duka sebelum membingkai ulang kisahnya. Ini adalah pola pastoral yang Yesus contohkan: pertama pendampingan, kemudian pemahaman."
+                  "Yesus tidak muncul dengan solusi. Ia muncul dengan pertanyaan: apa yang kalian bicarakan? Ia berjalan bersama mereka dalam kebingungan sebelum menjelaskan. Ia menemani mereka dalam duka sebelum menafsirkan ulang kisahnya. Ini adalah pola pastoral yang Yesus contohkan: pertama pendampingan, kemudian pemahaman."
                 )}
               </p>
               <p style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 21px)", fontStyle: "italic", color: navy, lineHeight: 1.75, padding: "8px 0 8px 28px", borderLeft: `3px solid ${orange}` }}>
                 {t(
                   "The question Jesus asks, \"What things?\", is a RAFT question. He is inviting them to name their grief before offering perspective. Don't rush past the naming.",
-                  "Pertanyaan yang Yesus ajukan, 'Hal-hal apa?', adalah pertanyaan RPPP. Ia mengundang mereka untuk menamai duka mereka sebelum menawarkan perspektif. Jangan terburu-buru melewati penamaannya."
+                  "Pertanyaan yang Yesus ajukan, 'Hal-hal apa?', adalah pertanyaan RPPP. Ia mengundang mereka untuk mengungkapkan duka mereka sebelum menawarkan perspektif. Jangan terburu-buru melewati proses mengungkapkannya."
                 )}
               </p>
             </div>
@@ -628,36 +628,36 @@ export default function HealthyTransitionsClient({ userPathway, isSaved: initial
           <div>
             <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: orange, letterSpacing: "0.08em", marginBottom: 8 }}>
               <VerseRef id="ruth-1-16">{t("Ruth 1:16", "Rut 1:16")}</VerseRef>
-              {" "}(NIV)
+              {" "}{t("(NIV)", "(TB)")}
             </p>
             <div style={{ background: lightGray, padding: "32px 36px", borderRadius: 4, marginBottom: 28 }}>
               <p style={{ fontFamily: serif, fontSize: "clamp(18px, 2vw, 22px)", fontStyle: "italic", color: navy, lineHeight: 1.75, marginBottom: 12 }}>
                 {t(
                   "\"But Ruth replied, 'Don't urge me to leave you or to turn back from you. Where you go I will go, and where you stay I will stay.'\"",
-                  "\"Tetapi kata Rut: 'Janganlah desak aku meninggalkan engkau dan pulang dengan tidak membawamu, sebab ke mana engkau pergi, ke situ jugalah aku pergi, dan di mana engkau bermalam, di situ jugalah aku bermalam.'\""
+                  "\"Tetapi kata Rut: 'Janganlah desak aku meninggalkan engkau dan pulang dengan tidak membawa engkau; sebab ke mana engkau pergi, ke situ jugalah aku pergi, dan di mana engkau bermalam, di situ jugalah aku bermalam.'\""
                 )}
               </p>
               <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: orange, letterSpacing: "0.06em", margin: 0 }}>
-                — <VerseRef id="ruth-1-16">{t("Ruth 1:16", "Rut 1:16")}</VerseRef> (NIV)
+                — <VerseRef id="ruth-1-16">{t("Ruth 1:16", "Rut 1:16")}</VerseRef> {t("(NIV)", "(TB)")}
               </p>
             </div>
             <div style={{ fontFamily: serif, fontSize: "clamp(17px, 1.9vw, 19px)", color: bodyText, lineHeight: 1.9 }}>
               <p style={{ marginBottom: 20 }}>
                 {t(
                   "Ruth 1 is, among other things, a masterclass in farewell. Naomi has lost everything: her husband, her sons, her home context, and she is returning to Bethlehem. Orpah goes back. Ruth stays. But the text does not rush this scene. The three women stood together and wept aloud. There is grief before the decision. The decision comes out of the grief, not away from it.",
-                  "Rut 1 adalah, di antara hal-hal lain, kelas master dalam perpisahan. Naomi telah kehilangan segalanya: suaminya, anak-anaknya, konteks rumahnya, dan ia kembali ke Betlehem. Orpa kembali. Rut tetap tinggal. Tetapi teks tidak terburu-buru pada adegan ini. Ketiga wanita itu berdiri bersama dan menangis dengan keras. Ada kesedihan sebelum keputusan. Keputusan itu muncul dari kesedihan, bukan menjauh darinya."
+                  "Rut 1 adalah, di antara hal-hal lain, teladan yang sangat baik tentang perpisahan. Naomi telah kehilangan segalanya: suaminya, anak-anaknya, konteks rumahnya, dan ia kembali ke Betlehem. Orpa kembali. Rut tetap tinggal. Tetapi teks tidak terburu-buru pada adegan ini. Ketiga wanita itu berdiri bersama dan menangis dengan keras. Ada kesedihan sebelum keputusan. Keputusan itu muncul dari kesedihan, bukan menjauh darinya."
                 )}
               </p>
               <p style={{ marginBottom: 20 }}>
                 {t(
                   "Ruth's commitment to Naomi is not a denial of the loss. It is a loyalty chosen in full awareness of the cost. She knows she is leaving her own people, her own gods, her own culture. She names this. And then she goes. This is the RAFT model in biblical form: the grief is not bypassed, the relationship is honoured, the commitment to what comes next is made from a place of full presence.",
-                  "Komitmen Rut kepada Naomi bukan penyangkalan atas kehilangan. Itu adalah kesetiaan yang dipilih dengan penuh kesadaran akan harganya. Ia tahu ia meninggalkan orang-orangnya sendiri, dewa-dewanya sendiri, budayanya sendiri. Ia menamakannya. Dan kemudian ia pergi. Ini adalah model RPPP dalam bentuk alkitabiah: kesedihan tidak dilewati, hubungan dihormati, komitmen untuk apa yang akan datang dibuat dari tempat kehadiran penuh."
+                  "Komitmen Rut kepada Naomi bukan penyangkalan atas kehilangan. Itu adalah kesetiaan yang dipilih dengan penuh kesadaran akan harganya. Ia tahu ia meninggalkan orang-orangnya sendiri, dewa-dewanya sendiri, budayanya sendiri. Ia mengungkapkannya. Dan kemudian ia pergi. Ini adalah model RPPP dalam bentuk alkitabiah: kesedihan tidak dilewati, hubungan dihormati, komitmen untuk apa yang akan datang dibuat dari tempat kehadiran penuh."
                 )}
               </p>
               <p style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 21px)", fontStyle: "italic", color: navy, lineHeight: 1.75, padding: "8px 0 8px 28px", borderLeft: `3px solid ${orange}` }}>
                 {t(
                   "Ruth models radical affirmation: she chooses Naomi not despite the complexity of the leaving, but through it. That is what a RAFT farewell looks like at its most complete.",
-                  "Rut memodelkan peneguhan radikal: ia memilih Naomi bukan meskipun kompleksitas kepergian, tetapi melaluinya. Itulah tampilan perpisahan RPPP pada wujud paling lengkapnya."
+                  "Rut mencontohkan peneguhan radikal: ia memilih Naomi bukan meskipun kompleksitas kepergian, tetapi melaluinya. Itulah tampilan perpisahan RPPP pada wujud paling lengkapnya."
                 )}
               </p>
             </div>
@@ -783,7 +783,7 @@ export default function HealthyTransitionsClient({ userPathway, isSaved: initial
                 <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 18px)", color: navy, lineHeight: 1.8, fontStyle: "italic", margin: 0 }}>
                   {t(
                     "Take this plan into prayer. Ask God which step requires your attention first, and who might walk through it with you.",
-                    "Bawa rencana ini ke dalam doa. Tanyakan kepada Allah langkah mana yang memerlukan perhatian Anda terlebih dahulu, dan siapa yang mungkin melewatinya bersama Anda."
+                    "Bawa rencana ini ke dalam doa. Tanyakan kepada Tuhan langkah mana yang memerlukan perhatian Anda terlebih dahulu, dan siapa yang mungkin melewatinya bersama Anda."
                   )}
                 </p>
               </div>

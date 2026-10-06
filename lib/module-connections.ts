@@ -44,7 +44,7 @@ export const MODULE_CONNECTIONS: ModuleConnection[] = [
     targetTitle: "Understanding Burnout",
     targetTitle_id: "Memahami Burnout",
     topic: "the hidden cost of never stopping",
-    topic_id: "biaya tersembunyi dari tidak pernah berhenti",
+    topic_id: "harga tersembunyi yang harus dibayar karena tidak pernah berhenti",
     angle: "what unaddressed burnout actually looks like in leaders — and how to recognise it before collapse",
     angle_id: "seperti apa burnout yang tidak ditangani pada pemimpin — dan cara mengenalinya sebelum terjadi keruntuhan",
   },
@@ -131,7 +131,7 @@ export const MODULE_CONNECTIONS: ModuleConnection[] = [
     topic: "how power distance shapes cultural assumptions in DISC",
     topic_id: "bagaimana jarak kekuasaan membentuk asumsi budaya dalam DISC",
     angle: "why Hofstede's Power Distance Index reveals the cultural blindspot at the heart of DISC — and what it means for leading in high-PDI contexts",
-    angle_id: "mengapa Indeks Jarak Kekuasaan Hofstede mengungkap titik buta budaya di inti DISC — dan artinya bagi kepemimpinan dalam konteks PDI tinggi",
+    angle_id: "mengapa Indeks Jarak Kekuasaan Hofstede mengungkap hal yang tidak disadari secara budaya di inti DISC — dan artinya bagi kepemimpinan dalam konteks PDI tinggi",
   },
 
   // Cultural Intelligence → Emotional Intelligence
@@ -213,9 +213,9 @@ export const MODULE_CONNECTIONS: ModuleConnection[] = [
     targetTitle: "Power Distance in Leadership",
     targetTitle_id: "Jarak Kekuasaan dalam Kepemimpinan",
     topic: "how power distance affects upward feedback and blind spots",
-    topic_id: "bagaimana jarak kekuasaan memengaruhi umpan balik ke atas dan titik buta",
+    topic_id: "bagaimana jarak kekuasaan memengaruhi umpan balik ke atas dan hal-hal yang tidak disadari",
     angle: "why high power-distance cultures make leader blind spots larger — and what to do about it",
-    angle_id: "mengapa budaya jarak kekuasaan tinggi memperbesar titik buta pemimpin — dan apa yang harus dilakukan",
+    angle_id: "mengapa budaya jarak kekuasaan tinggi memperbesar hal-hal yang tidak disadari pemimpin — dan apa yang harus dilakukan",
   },
 
   // Leaders Are Readers → Cultural Intelligence

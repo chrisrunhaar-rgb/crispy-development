@@ -223,7 +223,7 @@ const REFRAME_ROUNDS = [
     },
     reframe: {
       en: `"Thank you for the time you put into this draft. I wonder if this section might benefit from a little more development in the analysis. Perhaps we could look at it together before the final version goes out? I want to make sure it reflects the quality I know you're capable of."`,
-      id: `"Terima kasih atas waktu yang kamu curahkan untuk draf ini. Saya bertanya-tanya apakah bagian ini mungkin mendapat manfaat dari sedikit lebih banyak pengembangan dalam analisis. Mungkin kita bisa melihatnya bersama sebelum versi final keluar? Saya ingin memastikannya mencerminkan kualitas yang saya tahu kamu mampu capai."`,
+      id: `"Terima kasih atas waktu yang kamu curahkan untuk draf ini. Saya bertanya-tanya, bagian analisis ini mungkin bisa diperdalam sedikit. Mungkin kita bisa melihatnya bersama sebelum versi final keluar? Saya ingin memastikannya mencerminkan kualitas yang saya tahu kamu mampu capai."`,
     },
     explanationLabel: { en: "What changed and why:", id: "Apa yang berubah dan mengapa:" },
     explanation: {
@@ -251,7 +251,7 @@ const REFRAME_ROUNDS = [
     explanationLabel: { en: "What changed and why:", id: "Apa yang berubah dan mengapa:" },
     explanation: {
       en: "The original protected dignity but lost the issue: nothing was named. The reframe keeps the relational opening, names the specific thing, and closes with a concrete ask.",
-      id: "Versi asli menjaga martabat tetapi kehilangan masalahnya: tidak ada yang disebutkan. Reframe mempertahankan pembukaan relasional, menyebutkan hal spesifik, dan menutup dengan permintaan konkret.",
+      id: "Versi asli menjaga martabat tetapi kehilangan masalahnya: tidak ada yang disebutkan. Bingkai ulang mempertahankan pembukaan relasional, menyebutkan hal spesifik, dan menutup dengan permintaan konkret.",
     },
   },
 ];
@@ -567,11 +567,11 @@ const KEY_TAKEAWAYS: Record<Lang, { title: string; body: string }[]> = {
     { title: "Nathan told the story first. The indirect path is what makes the direct truth land.", body: "" },
   ],
   id: [
-    { title: "Umpan balik tidak pernah netral secara budaya. Kata-kata yang sama mendarat berbeda dalam sistem logika yang berbeda.", body: "" },
+    { title: "Umpan balik tidak pernah netral secara budaya. Kata-kata yang sama diterima secara berbeda dalam sistem logika yang berbeda.", body: "" },
     { title: "Komunikasi dan Evaluasi adalah dua skala terpisah yang bergerak secara independen.", body: "" },
     { title: "Penguat mengintensifkan, pelembut memperlunak. Intensitas adalah bagian umpan balikmu yang paling bisa disesuaikan.", body: "" },
     { title: "Dalam budaya kehormatan-malu, koreksi tanpa martabat yang dipulihkan sering merusak lebih dari tanpa koreksi sama sekali.", body: "" },
-    { title: "Natan menceritakan kisahnya terlebih dahulu. Jalan tidak langsung itulah yang membuat kebenaran langsung mendarat.", body: "" },
+    { title: "Natan menceritakan kisahnya terlebih dahulu. Jalan tidak langsung itulah yang membuat kebenaran langsung tersampaikan.", body: "" },
   ],
 };
 const S2_PARAS: Record<Lang, string[]> = {
@@ -663,8 +663,8 @@ const UDRG_TABLE = {
     {
       culture: { en: "Japan", id: "Jepang" },
       pos: { en: "Highly indirect", id: "Sangat tidak langsung" },
-      lang: { en: "Strong downgraders, extensive hedging, silence", id: "Pelembut kuat, banyak perlindungan, keheningan" },
-      example: { en: "“I wonder if perhaps there might be some areas that could potentially benefit from a little more... consideration.” (followed by silence)", id: "“Saya bertanya-tanya apakah mungkin ada beberapa area yang berpotensi mendapat manfaat dari sedikit lebih banyak... pertimbangan.” (diikuti keheningan)" },
+      lang: { en: "Strong downgraders, extensive hedging, silence", id: "Pelembut kuat, banyak kata penghalus, keheningan" },
+      example: { en: "“I wonder if perhaps there might be some areas that could potentially benefit from a little more... consideration.” (followed by silence)", id: "“Saya bertanya-tanya apakah mungkin ada beberapa bagian yang barangkali bisa diperdalam sedikit... dipertimbangkan lagi.” (diikuti keheningan)" },
     },
     {
       culture: { en: "South Korea", id: "Korea Selatan" },
@@ -695,7 +695,7 @@ const S5_METHOD: Record<Lang, { intro: string; items: { lead: string; body: stri
     intro: "Metode Natan telah dipelajari dengan cermat dalam kajian kepemimpinan biblika. Ini mengikuti pola yang dapat dikenali:",
     items: [
       { lead: "Pendekatan tidak langsung melalui kisah", body: "ia menciptakan empati, membangun pemahaman, menarik Daud ke dalam logika moral sebelum penerapan tiba" },
-      { lead: "Pemahaman sebelum konfrontasi", body: "ia menunggu sampai Daud sudah mencapai vonis yang benar sebelum menamainya sebagai subjek" },
+      { lead: "Pemahaman sebelum konfrontasi", body: "ia menunggu sampai Daud sudah mencapai vonis yang benar sebelum menunjukkan bahwa dialah pokok persoalannya" },
       { lead: "Deklarasi langsung", body: `ketika pemahaman diamankan, ia menyebutkan kebenaran secara terang-terangan: "Engkau sendiri orang itu"` },
       { lead: "Akuntabilitas spesifik", body: "ia menyebutkan tindakan yang tepat dan konsekuensinya tanpa melembutkan apa yang telah Daud lakukan" },
       { lead: "Setting pribadi", body: "ini adalah percakapan empat mata, bukan tuduhan publik" },
@@ -723,7 +723,7 @@ const S5_PARAS: Record<Lang, string[]> = {
     "Sebelum kita masuk ke praktik, ada pertanyaan yang berada di bawah semua ini yang layak disebutkan secara langsung.",
     "Kamu mungkin telah membaca modul ini dan berpikir: ini semua sangat bijaksana, tetapi pada titik mana kepekaan budaya menjadi alasan untuk tidak mengatakan hal yang sulit? Jika saya terus melembutkan dan melindungi dan membungkus dalam basa-basi relasional, pada titik mana saya berhenti menyampaikan umpan balik sama sekali?",
     "Itu adalah pertanyaan yang adil. Dan tradisi biblika tidak membiarkan kamu lolos dengan jawaban sederhana.",
-    `Amsal 27:5-6 terus terang: "Teguran yang terang-terangan lebih baik daripada kasih yang tersembunyi. Dapat dipercaya tikaman seorang sahabat." Tradisi hikmat Ibrani tidak memperlakukan pengalihan tidak langsung sebagai kebaikan. Ini memperlakukan penahanan koreksi sebagai kegagalan kasih dan, luar biasa, menyamakan kegagalan itu dengan sanjungan menipu dari seorang musuh. Jika kamu peduli pada seseorang, kamu memberitahu mereka kebenaran. Itu bukan opsional.`,
+    `Amsal 27:5-6 terus terang: "Lebih baik teguran yang nyata-nyata dari pada kasih yang tersembunyi. Seorang kawan memukul dengan maksud baik, tetapi seorang lawan mencium secara berlimpah-limpah." Tradisi hikmat Ibrani tidak memperlakukan pengalihan tidak langsung sebagai kebaikan. Ini memperlakukan penahanan koreksi sebagai kegagalan kasih dan, luar biasa, menyamakan kegagalan itu dengan sanjungan menipu dari seorang musuh. Jika kamu peduli pada seseorang, kamu memberitahu mereka kebenaran. Itu bukan opsional.`,
 
     "Namun, tepat di dalam tradisi yang sama, ada seorang pria bernama Natan yang memilih untuk tidak memulai dengan pernyataan langsung.",
     `Daud telah berzinah dengan Batsyeba dan telah mengatur kematian Uria suaminya. Natan tahu. Tuhan mengutusnya untuk menghadapi raja. Dan Natan tidak berjalan masuk ke ruang takhta dan berkata, "Kamu bersalah atas perzinahan dan pembunuhan."`,
@@ -731,9 +731,9 @@ const S5_PARAS: Record<Lang, string[]> = {
     `Seorang pria kaya memiliki banyak kawanan, tetapi ketika seorang musafir datang, ia mengambil satu-satunya domba betina kesayangan orang miskin alih-alih dari kawanannya sendiri, dan menyembelihnya untuk perjamuan. Daud, mendengar kisah itu, marah besar. "Orang itu layak mati!" katanya.`,
     `"Engkau sendiri orang itu," kata Natan.`,
     "Lima kata. Tetapi perumpamaan datang terlebih dahulu.",
-    "Perumpamaan itu bukan penghindaran. Itu bukan kelemahan. Itu adalah persiapan: struktur yang membuat kebenaran langsung dapat diterima. Natan membutuhkan Daud untuk sampai pada vonis itu sendiri sebelum dapat diterapkan pada Daud. Jalan tidak langsung itulah yang membuat deklarasi langsung mendarat.",
+    "Perumpamaan itu bukan penghindaran. Itu bukan kelemahan. Itu adalah persiapan: struktur yang membuat kebenaran langsung dapat diterima. Natan membutuhkan Daud untuk sampai pada vonis itu sendiri sebelum dapat diterapkan pada Daud. Jalan tidak langsung itulah yang membuat deklarasi langsung tersampaikan.",
     "Ini bukan template yang harus diterapkan secara mekanis. Ini adalah model tentang seperti apa jadinya ketika penyampaian kebenaran dibentuk oleh pertanyaan: bagaimana orang ini perlu menerima ini agar kebenaran benar-benar sampai kepada mereka?",
-    "Prinsip Natan bukan teknik untuk menghindari ketegasan. Natan tegas, sangat tegas, ketika saatnya tiba. Prinsipnya adalah tentang persiapan yang membuat kebenaran langsung dapat diterima. Jalan tidak langsung bukan lawan dari deklarasi langsung. Itulah yang membuat deklarasi langsung mendarat.",
+    "Prinsip Natan bukan teknik untuk menghindari ketegasan. Natan tegas, sangat tegas, ketika saatnya tiba. Prinsipnya adalah tentang persiapan yang membuat kebenaran langsung dapat diterima. Jalan tidak langsung bukan lawan dari deklarasi langsung. Itulah yang membuat deklarasi langsung tersampaikan.",
   ],
 };
 const FAITH_PARAS: Record<Lang, string[]> = {
@@ -757,7 +757,7 @@ const FAITH_PARAS: Record<Lang, string[]> = {
     `Kata Yunani yang ada di balik "berkata benar dalam kasih" dalam Efesus 4:15 adalah *aletheuon*, sebuah kata yang membawa kekuatan hidup atau mewujudkan kebenaran, bukan sekadar menyatakan proposisi yang akurat. Paulus tidak sedang menulis tips komunikasi. Ia menggambarkan kehidupan bersama sebuah jemaat yang beragam di bawah tekanan, dan ia berargumen bahwa berbicara kebenaran dan kasih tidak berada dalam ketegangan. Keduanya adalah tindakan yang sama, dikejar dengan setia.`,
     "Ini penting untuk umpan balik lintas budaya karena dua distorsi yang merusak umpan balik lintas perbedaan budaya tepat memetakan dua kegagalan yang dijaga Paulus.",
     "Distorsi pertama adalah kebenaran tanpa kasih: menyampaikan koreksi yang akurat dalam bentuk yang merusak daripada memulihkan, menghilangkan martabat seseorang untuk mencapai kepatuhan perilaku. Inilah yang dilakukan manajer Jerman di Bagian 1 tanpa menyadarinya. Kontennya benar; penyampaiannya merusak.",
-    `Distorsi kedua adalah kasih tanpa kebenaran: menahan koreksi untuk mempertahankan harmoni permukaan, membiarkan masalah tumbuh karena menyebutkannya terasa berbahaya bagi hubungan. Inilah yang paling langsung disebutkan Amsal 27: "Teguran yang terang-terangan lebih baik daripada kasih yang tersembunyi. Dapat dipercaya tikaman seorang sahabat; tetapi ciuman seorang musuh sangat banyak." Menahan koreksi untuk menjaga hubungan bukan kebaikan, dalam tradisi hikmat Ibrani. Itu adalah apa yang dilakukan musuh.`,
+    `Distorsi kedua adalah kasih tanpa kebenaran: menahan koreksi untuk mempertahankan harmoni permukaan, membiarkan masalah tumbuh karena menyebutkannya terasa berbahaya bagi hubungan. Inilah yang paling langsung disebutkan Amsal 27: "Lebih baik teguran yang nyata-nyata dari pada kasih yang tersembunyi. Seorang kawan memukul dengan maksud baik, tetapi seorang lawan mencium secara berlimpah-limpah." Menahan koreksi untuk menjaga hubungan bukan kebaikan, dalam tradisi hikmat Ibrani. Itu adalah apa yang dilakukan musuh.`,
 
     `*Aletheuon en agape* (hidup dalam kebenaran dengan kasih) menolak kedua distorsi tersebut. Pertanyaan yang diajukan frasa ini kepada setiap pemimpin lintas budaya bukan "apakah saya mengatakan hal yang benar?" tetapi "apakah saya membawa hal yang benar dengan cara yang benar-benar bisa diterima orang ini?"`,
     "Amsal 27:5-6 memegang ketegangan yang tidak nyaman bagi pemimpin yang bekerja dalam budaya kehormatan-malu. Teguran yang terang-terangan (jelas, disebut, langsung) disajikan sebagai tanda persahabatan yang tulus. Namun logika budaya komunitas yang dibentuk oleh kepekaan malu dan pelestarian muka membuat teguran terbuka secara struktural merusak kecuali datang melalui jalur yang juga menawarkan martabat yang dipulihkan. Pertanyaannya bukan mana dari ini yang lebih biblika. Keduanya ada dalam teks. Pertanyaannya adalah bagaimana menghormati keduanya secara bersamaan, yang persis itulah yang dirancang metode Natan.",
@@ -767,7 +767,7 @@ const FAITH_PARAS: Record<Lang, string[]> = {
 
     "Ada benang teologis yang mengalir melalui beasiswa kehormatan-malu yang memiliki implikasi langsung tentang bagaimana koreksi dipahami dalam konteks Kristen global. Dalam budaya berorientasi malu (yang mencakup sebagian besar Asia, Afrika, Timur Tengah, dan Amerika Latin) injil mengatasi rasa malu melalui pemulihan kehormatan. Anak yang diadopsi menerima nama baru, status baru, kedudukan baru di hadapan komunitas. Koreksi dalam konteks ini, ketika berfungsi seperti injil, tidak hanya menyebutkan kegagalan dan menuntut perilaku yang berubah. Ini menyebutkan kegagalan dengan jelas, kemudian menawarkan jalur kembali ke martabat: bukan karena orang itu mendapatkannya, tetapi karena pemulihan adalah apa yang dilakukan injil.",
     "Koreksi tanpa pemulihan dalam konteks ini tidak hanya tidak lengkap secara budaya. Ini tidak lengkap secara teologis. Ini menanggalkan setengah dari injil yang paling siap dipahami oleh budaya-budaya tersebut.",
-    "Implikasi praktisnya: ketika kamu mengoreksi seseorang dalam konteks budaya dengan kepekaan malu yang tinggi, pemulihan bukan opsional. Itu adalah intinya. Jalur kembali kepada kehormatan di hadapan Allah dan komunitas bukan renungan terhadap akuntabilitas. Itu adalah apa yang membuat koreksi menjadi tindakan kasih daripada tindakan penghakiman.",
+    "Implikasi praktisnya: ketika kamu mengoreksi seseorang dalam konteks budaya dengan kepekaan malu yang tinggi, pemulihan bukan opsional. Itu adalah intinya. Jalur kembali kepada kehormatan di hadapan Tuhan dan komunitas bukan renungan terhadap akuntabilitas. Itu adalah apa yang membuat koreksi menjadi tindakan kasih daripada tindakan penghakiman.",
   ],
 };
 // ─── Section 9 From the Field ─────────────────────────────────────────────────
@@ -822,7 +822,7 @@ const FIELD_STORIES: Record<Lang, { title: string; subtitle: string; paras: stri
         "Saya memutuskan untuk mengatasinya secara langsung. Arif dan saya memiliki hubungan kerja yang baik, pikir saya. Kami bertemu setiap minggu. Ia selalu punya sesuatu yang berguna untuk ditambahkan dalam diskusi tim. Saya menariknya ke ruang rapat suatu sore dan menjelaskan apa yang saya amati: hasil-hasil spesifik yang masuk di bawah standar, tenggat waktu yang terlewat, pola yang mulai mempengaruhi output tim. Saya spesifik. Saya jelas. Saya memberitahunya apa yang perlu berubah dan kapan.",
         `Ia penuh perhatian sepanjang waktu. Mencatat. Berkata, "Ya, saya mengerti. Saya akan mengerjakan ini." Berterima kasih karena saya bersikap langsung. Saya meninggalkan pertemuan dengan perasaan bahwa itu berjalan sebaik yang bisa dilakukan percakapan yang sulit.`,
         "Dua minggu kemudian, manajer lini Arif datang kepada saya dengan pertanyaan administratif tentang periode pemberitahuan. Arif telah mengajukan pengunduran dirinya pada sore yang sama dengan pertemuan kami.",
-        "Saya tidak mengerti. Saya telah melakukan segalanya dengan benar: saya telah spesifik, pribadi, profesional. Saya tidak tidak baik. Tetapi apa yang tidak saya pahami adalah apa yang dikomunikasikan pertemuan itu kepada Arif di luar konten eksplisitnya. Fakta bahwa saya telah membuat catatan, merujuk pola selama beberapa minggu, dan menyebutkan hasil-hasil spesifik berdasarkan tanggal: semua ini memberitahunya bahwa kinerjanya sedang dilacak dan didokumentasikan pada tingkat yang, dalam logika budayanya, berarti posisinya dipertanyakan. Pertemuan itu bukan umpan balik. Itu adalah peringatan yang tidak bisa ia tanggapi tanpa kehilangan muka. Ia memprosesnya sebagai pintu yang menutup, bukan jalan yang terbuka.",
+        "Saya tidak mengerti. Saya telah melakukan segalanya dengan benar: saya telah spesifik, pribadi, profesional. Saya tidak tidak baik. Tetapi apa yang tidak saya pahami adalah apa yang dikomunikasikan pertemuan itu kepada Arif di luar konten eksplisitnya. Fakta bahwa saya telah membuat catatan, merujuk pola selama beberapa minggu, dan menyebutkan hasil-hasil spesifik berdasarkan tanggal: semua ini memberitahunya bahwa kinerjanya sedang dilacak dan didokumentasikan pada tingkat yang, dalam logika budayanya, berarti posisinya dipertanyakan. Pertemuan itu bukan umpan balik. Itu adalah peringatan yang tidak bisa ia tanggapi tanpa kehilangan muka. Ia memaknainya sebagai pintu yang menutup, bukan jalan yang terbuka.",
         `Apa yang akan saya lakukan secara berbeda: Saya tidak akan datang dengan catatan. Saya akan membuka dengan pertanyaan yang tulus ("Saya ingin memahami apa yang telah menantang selama kuartal terakhir ini") dan membiarkan ia memberitahu saya apa yang ada di jalan sebelum saya menyebutkan apa yang saya amati. Saya akan membangun kerangka korektif di sekitar masalah bersama daripada pola yang terdokumentasi. Dan saya akan memperjelas, dalam kata-kata, bahwa percakapan tersebut antara kami: bahwa saya membawa ini kepadanya terlebih dahulu karena saya percaya pada kemampuannya untuk menyelesaikannya.`,
       ],
     },
@@ -839,13 +839,13 @@ const FIELD_STORIES: Record<Lang, { title: string; subtitle: string; paras: stri
       ],
     },
     {
-      title: "Salah Melakukan Reframe (dan Kemudian Benar)",
+      title: "Salah Melakukan Bingkai Ulang (dan Kemudian Benar)",
       subtitle: "Komposit: Konteks tim Eropa Utara dan Asia Timur",
       paras: [
         "Saya orang Belanda. Saya telah bekerja dalam tim multikultural di Asia Tenggara selama hampir satu dekade, dan saya masih sering melakukan kesalahan ini sehingga saya tidak yakin pembelajaran itu pernah menjadi otomatis.",
         `Momen yang ingin saya ceritakan terjadi selama tinjauan proyek virtual. Seorang kolega Korea telah menyerahkan hasil yang sungguh-sungguh belum siap. Analisis inti kehilangan dimensi yang secara eksplisit kami setujui akan disertakan. Saya tahu ini. Pemimpin tim tahu ini. Dalam panggilan itu, saya mengatakan sesuatu seperti: "Saya pikir mungkin ada beberapa area di sini yang bisa dikembangkan sedikit lebih lanjut sebelum kita finalisasi, terutama bagian komparatif."`,
         "Saya pikir saya bersikap baik. Dalam istilah Belanda, saya hampir memalukan betapa lembutnya saya.",
-        `Kolega Korea saya mendengar, seperti yang saya pelajari kemudian, "ini belum siap dan saya telah mengatakan demikian di depan tim." "Bagian komparatif" adalah referensi yang cukup spesifik sehingga menunjuk pada celah yang jelas. "Sebelum kita finalisasi" mengimplikasikan masalah tenggat waktu. Dan "mungkin" dan "sedikit lebih lanjut" tidak cukup melembutkannya untuk mencegah elemen yang menghadap kelompok mendarat sebagai koreksi publik.`,
+        `Kolega Korea saya mendengar, seperti yang saya pelajari kemudian, "ini belum siap dan saya telah mengatakan demikian di depan tim." "Bagian komparatif" adalah referensi yang cukup spesifik sehingga menunjuk pada celah yang jelas. "Sebelum kita finalisasi" mengimplikasikan masalah tenggat waktu. Dan "mungkin" dan "sedikit lebih lanjut" tidak cukup melembutkannya untuk mencegah elemen yang menghadap kelompok diterima sebagai koreksi publik.`,
 
         `Setelah panggilan, seorang kolega bersama memberitahu saya apa yang terjadi. Saya kembali kepada kolega Korea saya secara pribadi, membuka dengan mengatakan bahwa saya menyadari cara saya mengangkat umpan balik dalam setting kelompok mungkin tidak seperti yang seharusnya, dan bertanya apakah kita bisa mengerjakan hasilnya bersama. Saya berkata (dan ini terasa penting untuk dikatakan secara eksplisit) bahwa celah dalam analisis bukan cerminan kompetensi mereka; saya mungkin tidak cukup jelas dalam arahan awal tentang apa arti "komparatif."`,
         "Ini sebagian benar dan sebagian besar strategis, tetapi tidak tidak jujur. Itu adalah gerakan pemulihan muka yang memberikan kolega saya cara untuk mengoreksi pekerjaan tanpa koreksi berada di atas kehilangan kedudukan publik.",
@@ -1618,14 +1618,14 @@ function ReframeTool({ lang }: { lang: Lang }) {
 
   return (
     <div style={containerStyle}>
-      <p style={{ ...eyebrow, marginBottom: 8 }}>{t("THE REFRAME: 3 Rounds", "THE REFRAME: 3 Babak")}</p>
+      <p style={{ ...eyebrow, marginBottom: 8 }}>{t("THE REFRAME: 3 Rounds", "BINGKAI ULANG: 3 Babak")}</p>
       <h3 style={{ fontFamily: FONT_HEADLINE, fontSize: "clamp(22px, 2.8vw, 32px)", fontWeight: 600, color: OFF_WHITE, lineHeight: 1.2, margin: "0 0 16px" }}>
-        {t("The Reframe Tool", "Alat Reframe")}
+        {t("The Reframe Tool", "Alat Bingkai Ulang")}
       </h3>
       <p style={{ ...proseDark, marginBottom: 28 }}>
         {t(
           "Same truth, different register. Try your version, then open the suggested reframe.",
-          "Kebenaran sama, register berbeda. Coba versimu, lalu buka saran reframe.",
+          "Kebenaran sama, gaya penyampaian berbeda. Coba versimu, lalu buka saran bingkai ulang.",
         )}
       </p>
 
@@ -1649,7 +1649,7 @@ function ReframeTool({ lang }: { lang: Lang }) {
               <textarea
                 value={inputs[idx]}
                 onChange={(e) => setInput(idx, e.target.value)}
-                placeholder={t("Write your reframe here...", "Tulis reframemu di sini...")}
+                placeholder={t("Write your reframe here...", "Tulis bingkai ulangmu di sini...")}
                 readOnly={revealed[idx]}
                 style={{
                   width: "100%",
@@ -1668,7 +1668,7 @@ function ReframeTool({ lang }: { lang: Lang }) {
                   display: "block",
                   marginBottom: 12,
                 }}
-                aria-label={t(`Round ${round.num}: write your reframe`, `Babak ${round.num}: tulis reframemu`)}
+                aria-label={t(`Round ${round.num}: write your reframe`, `Babak ${round.num}: tulis bingkai ulangmu`)}
               />
               <button
                 onClick={() => reveal(idx)}
@@ -1693,7 +1693,7 @@ function ReframeTool({ lang }: { lang: Lang }) {
                 }}
                 aria-live="polite"
               >
-                {t("Show suggested reframe", "Tampilkan saran reframe")}
+                {t("Show suggested reframe", "Tampilkan saran bingkai ulang")}
               </button>
             </>
           ) : (
@@ -1724,7 +1724,7 @@ function ReframeTool({ lang }: { lang: Lang }) {
                 style={revealCard}
                 aria-live="polite"
               >
-                <p style={{ fontFamily: FONT_BODY, fontSize: 11, fontWeight: 700, textTransform: "uppercase", color: ORANGE, margin: "0 0 8px" }}>{t("Suggested reframe", "Saran reframe")}</p>
+                <p style={{ fontFamily: FONT_BODY, fontSize: 11, fontWeight: 700, textTransform: "uppercase", color: ORANGE, margin: "0 0 8px" }}>{t("Suggested reframe", "Saran bingkai ulang")}</p>
                 <p style={{ fontFamily: FONT_HEADLINE, fontStyle: "italic", fontSize: "clamp(16px, 1.9vw, 19px)", color: "oklch(88% 0.03 260)", lineHeight: 1.7, margin: "0 0 16px" }}>{round.reframe[lang]}</p>
                 <div style={{ borderBottom: "1px solid oklch(28% 0.08 260)", margin: "0 0 16px" }} />
                 <p style={{ fontFamily: FONT_BODY, fontSize: 11, fontWeight: 700, textTransform: "uppercase", color: "oklch(55% 0.04 260)", margin: "0 0 8px" }}>{round.explanationLabel[lang]}</p>
@@ -1750,7 +1750,7 @@ function ReframeTool({ lang }: { lang: Lang }) {
           <p style={{ fontFamily: FONT_HEADLINE, fontStyle: "italic", fontSize: 17, color: "oklch(85% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
             {t(
               "Think of one piece of feedback you must give this month. Up or down in intensity? Draft your reframe, then test: could the person repeat back exactly what needs to change?",
-              "Pikirkan satu umpan balik yang harus kamu berikan bulan ini. Naik atau turun intensitasnya? Tulis reframe-mu, lalu uji: bisakah orang itu mengulang dengan tepat apa yang perlu berubah?",
+              "Pikirkan satu umpan balik yang harus kamu berikan bulan ini. Naik atau turun intensitasnya? Tulis bingkai ulangmu, lalu uji: bisakah orang itu mengulang dengan tepat apa yang perlu berubah?",
             )}
           </p>
         </div>
@@ -2099,7 +2099,7 @@ export default function GivingFeedbackClient({ isSaved, ...rest }: Props) {
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.22, mixBlendMode: "luminosity" }}
         />
         <div className="container-wide" style={{ position: "relative" }}>
-          <p style={{ ...eyebrow, color: ORANGE }}>{t("Cross-Cultural Module", "Lintas Budaya: Modul")}</p>
+          <p style={{ ...eyebrow, color: ORANGE }}>{t("Cross-Cultural Module", "Modul Lintas Budaya")}</p>
           <h1 style={{ fontFamily: FONT_HEADLINE, fontSize: "clamp(34px, 5vw, 62px)", fontWeight: 700, color: OFF_WHITE, lineHeight: 1.1, marginBottom: 20, marginTop: 0 }}>
             {t("Giving Feedback Across Cultures", "Memberi Umpan Balik Lintas Budaya")}
           </h1>
@@ -2137,7 +2137,7 @@ export default function GivingFeedbackClient({ isSaved, ...rest }: Props) {
           <p style={proseDark}>
             {t(
               "One manager, one email, three inboxes. To Markus the words felt clear and fair. Tap each card to see how the same message landed.",
-              "Satu manajer, satu email, tiga kotak masuk. Bagi Markus kata-katanya terasa jelas dan adil. Ketuk setiap kartu untuk melihat bagaimana pesan yang sama mendarat.",
+              "Satu manajer, satu email, tiga kotak masuk. Bagi Markus kata-katanya terasa jelas dan adil. Ketuk setiap kartu untuk melihat bagaimana pesan yang sama diterima.",
             )}
           </p>
           <InboxCards lang={lang} />
@@ -2210,7 +2210,7 @@ export default function GivingFeedbackClient({ isSaved, ...rest }: Props) {
             lang={lang}
             panelId="gf-dd-s2"
             dark={false}
-            title={{ en: "Hall, Meyer, and the research behind the two dials", id: "Hall, Meyer, dan riset di balik dua dial" }}
+            title={{ en: "Hall, Meyer, and the research behind the two dials", id: "Hall, Meyer, dan riset di balik dua skala" }}
           >
             {S2_PARAS[lang].map((p, i) => (
               <p key={i} style={{ ...prose, fontSize: "1rem", lineHeight: 1.7 }}>{p}</p>
@@ -2261,7 +2261,7 @@ export default function GivingFeedbackClient({ isSaved, ...rest }: Props) {
             lang={lang}
             panelId="gf-dd-s3"
             dark
-            title={{ en: "The full upgrader and downgrader guide", id: "Panduan lengkap upgrader dan downgrader" }}
+            title={{ en: "The full upgrader and downgrader guide", id: "Panduan lengkap penguat dan pelembut" }}
           >
             {UDRG_TABLE.rows.map((row, i) => (
               <div key={i} style={{ marginBottom: 26, paddingBottom: 22, borderBottom: i < UDRG_TABLE.rows.length - 1 ? "1px solid oklch(30% 0.08 260)" : "none" }}>
@@ -2325,7 +2325,7 @@ export default function GivingFeedbackClient({ isSaved, ...rest }: Props) {
           <p style={{ fontFamily: FONT_HEADLINE, fontStyle: "italic", fontSize: "clamp(22px, 2.6vw, 26px)", color: OFF_WHITE, lineHeight: 1.5, margin: "32px 0 28px", paddingLeft: 20, borderLeft: `3px solid ${ORANGE}` }}>
             {t(
               "\"Better is open rebuke than hidden love.\" (Proverbs 27:5)",
-              "\"Teguran yang terang-terangan lebih baik daripada kasih yang tersembunyi.\" (Amsal 27:5)",
+              "\"Lebih baik teguran yang nyata-nyata dari pada kasih yang tersembunyi.\" (Amsal 27:5)",
             )}
           </p>
           <p style={proseDark}>
@@ -2391,7 +2391,7 @@ export default function GivingFeedbackClient({ isSaved, ...rest }: Props) {
       <section style={{ background: OFF_WHITE, padding: "72px 0" }}>
         <div className="container-wide" style={{ maxWidth: 860 }}>
           <p style={eyebrow}>{t("Section 06: The Practice", "Bagian 06: Praktik")}</p>
-          <h2 style={h2Light}>{t("The Reframe in Practice", "Reframe dalam Praktik")}</h2>
+          <h2 style={h2Light}>{t("The Reframe in Practice", "Bingkai Ulang dalam Praktik")}</h2>
           <p style={prose}>
             {t(
               "The whole module compresses into four moves.",
@@ -2406,7 +2406,7 @@ export default function GivingFeedbackClient({ isSaved, ...rest }: Props) {
       {/* ── S7: Faith Anchor (NAVY) ── */}
       <section style={{ background: NAVY, padding: "72px 0" }}>
         <div className="container-wide" style={{ maxWidth: 760 }}>
-          <h2 style={h2Dark}>{t("Faith Anchor", "Jangkar Iman")}</h2>
+          <h2 style={h2Dark}>{t("Faith Anchor", "Pegangan Iman")}</h2>
           <p style={proseDark}>
             {t(
               "Paul's phrase in Ephesians 4:15, aletheuon en agape (truthing in love), refuses both distortions: truth without love, which wounds, and love without truth, which lets problems grow.",
@@ -2416,7 +2416,7 @@ export default function GivingFeedbackClient({ isSaved, ...rest }: Props) {
           <p style={{ fontFamily: FONT_HEADLINE, fontStyle: "italic", fontSize: "clamp(22px, 2.6vw, 26px)", color: OFF_WHITE, lineHeight: 1.5, margin: "32px 0 28px", paddingLeft: 20, borderLeft: `3px solid ${ORANGE}` }}>
             {t(
               "\"Faithful are the wounds of a friend.\" (Proverbs 27:6)",
-              "\"Dapat dipercaya tikaman seorang sahabat.\" (Amsal 27:6)",
+              "\"Seorang kawan memukul dengan maksud baik.\" (Amsal 27:6)",
             )}
           </p>
           <p style={{ ...proseDark, marginBottom: 0 }}>

@@ -16,7 +16,7 @@ const RESOURCE_SLUG = "karunia-rohani";
 const faqItems = [
   {
     question: "Apa itu karunia rohani dan mengapa penting bagi pemimpin Kristen?",
-    answer: "Karunia rohani adalah kemampuan yang diberikan oleh Roh Kudus kepada setiap orang percaya untuk membangun tubuh Kristus dan menggenapi misi Allah di dunia. Paulus menulis dalam 1 Korintus 12 bahwa karunia-karunia ini beragam tetapi berasal dari satu Roh, dan bahwa setiap anggota tubuh memiliki fungsi yang diperlukan oleh keseluruhan. Bagi pemimpin Kristen, memahami karunia rohani membantu mereka melayani dari kekuatan sejati, membangun tim yang saling melengkapi, dan mendelegasikan pekerjaan dengan bijak. Karunia rohani bukan tentang prestise pribadi, melainkan tentang kontribusi bagi komunitas.",
+    answer: "Karunia rohani adalah kemampuan yang diberikan oleh Roh Kudus kepada setiap orang percaya untuk membangun tubuh Kristus dan menggenapi misi Tuhan di dunia. Paulus menulis dalam 1 Korintus 12 bahwa karunia-karunia ini beragam tetapi berasal dari satu Roh, dan bahwa setiap anggota tubuh memiliki fungsi yang diperlukan oleh keseluruhan. Bagi pemimpin Kristen, memahami karunia rohani membantu mereka melayani dari kekuatan sejati, membangun tim yang saling melengkapi, dan mendelegasikan pekerjaan dengan bijak. Karunia rohani bukan tentang prestise pribadi, melainkan tentang kontribusi bagi komunitas.",
   },
   {
     question: "Apa perbedaan antara daftar karunia rohani dalam 1 Korintus 12, Roma 12, dan Efesus 4?",

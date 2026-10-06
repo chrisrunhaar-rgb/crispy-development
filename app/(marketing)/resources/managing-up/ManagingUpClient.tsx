@@ -115,7 +115,7 @@ const principles = [
     id_title: "Sesuaikan Media dengan Pesan",
     cite: undefined,
     en_body: "Some leaders want data. Some want narrative. Some need a two-minute verbal briefing; others want a bullet-point email they can read at 6am. Managing up means adapting to your leader's style, not the other way around. This is asymmetric by design: the one who is managing up carries the responsibility for the fit. Pay attention to how your leader communicates with others. What format do their own communications take? These are signals worth reading.",
-    id_body: "Sebagian pemimpin butuh data. Sebagian butuh narasi. Sebagian butuh briefing verbal dua menit; yang lain butuh email berpoin-poin yang bisa mereka baca jam 6 pagi. Mengelola ke atas berarti beradaptasi dengan gaya pemimpinmu, bukan sebaliknya. Ini asimetris secara desain: yang mengelola ke atas bertanggung jawab atas kesesuaiannya. Perhatikan cara pemimpinmu berkomunikasi dengan orang lain. Format apa yang digunakan komunikasi mereka kepada kamu? Itu adalah sinyal yang layak dibaca.",
+    id_body: "Sebagian pemimpin butuh data. Sebagian butuh narasi. Sebagian butuh briefing verbal dua menit; yang lain butuh email berpoin-poin yang bisa mereka baca jam 6 pagi. Bekerja sama dengan atasan berarti beradaptasi dengan gaya pemimpinmu, bukan sebaliknya. Ini memang tidak seimbang: kamulah yang bertanggung jawab untuk menyesuaikan diri. Perhatikan cara pemimpinmu berkomunikasi dengan orang lain. Format apa yang digunakan komunikasi mereka kepada kamu? Itu adalah sinyal yang layak dibaca.",
   },
   {
     padded: "03",
@@ -123,7 +123,7 @@ const principles = [
     id_title: "Baca Situasinya",
     cite: "⁴",
     en_body: "Timing matters more than most people realise. The same conversation, on the same topic, with the same content, lands completely differently depending on when it happens. A complex issue raised when your leader is walking between two meetings will receive a fraction of the attention it deserves. Reading your leader's energy and context is a skill. It requires observation. When in doubt, ask: 'Is now a good time?' It is a simple question that signals respect for your leader's attention, and it almost always works.",
-    id_body: "Waktu lebih penting dari yang disadari kebanyakan orang. Percakapan yang sama, tentang topik yang sama, dengan konten yang sama, mendarat sangat berbeda tergantung kapan terjadi. Isu kompleks yang diangkat ketika pemimpinmu sedang berjalan di antara dua rapat akan mendapat sebagian kecil perhatian yang layak diterimanya. Membaca energi dan konteks pemimpinmu adalah keterampilan. Ketika ragu, tanya: 'Apakah ini waktu yang tepat?' Pertanyaan sederhana yang memberi sinyal rasa hormat terhadap perhatian pemimpinmu.",
+    id_body: "Waktu lebih penting dari yang disadari kebanyakan orang. Percakapan yang sama, tentang topik yang sama, dengan konten yang sama, diterima sangat berbeda tergantung kapan terjadi. Isu kompleks yang diangkat ketika pemimpinmu sedang berjalan di antara dua rapat akan mendapat sebagian kecil perhatian yang layak diterimanya. Membaca energi dan konteks pemimpinmu adalah keterampilan. Ketika ragu, tanya: 'Apakah ini waktu yang tepat?' Pertanyaan sederhana yang memberi sinyal rasa hormat terhadap perhatian pemimpinmu.",
   },
   {
     padded: "04",
@@ -148,7 +148,7 @@ const takeaways = [
   {
     num: "1",
     en_title: "Managing up is a discipline, not a tactic.",
-    id_title: "Mengelola ke atas adalah disiplin, bukan taktik.",
+    id_title: "Bekerja sama dengan atasan adalah disiplin, bukan taktik.",
     en_body: "It's not about gaming the system or managing impressions. It's about taking honest responsibility for the quality of a relationship that shapes everything you're trying to do.",
     id_body: "Ini bukan tentang memainkan sistem atau mengelola kesan. Ini tentang mengambil tanggung jawab yang jujur atas kualitas hubungan yang membentuk semua yang Anda coba lakukan.",
   },
@@ -172,7 +172,7 @@ const takeaways = [
 const digDeeperPanels = [
   {
     en_title: "The Cross-Cultural Dimension of Managing Up",
-    id_title: "Dimensi Lintas Budaya dari Mengelola ke Atas",
+    id_title: "Dimensi Lintas Budaya dalam Bekerja Sama dengan Atasan",
     cite: "²",
     en_paras: [
       "Different cultures hold profoundly different assumptions about authority. In high power-distance contexts — common across much of Asia, the Middle East, and parts of Africa and Latin America — approaching a senior leader proactively with bad news or a contrary opinion may feel presumptuous or disrespectful. Silence in these contexts is not agreement; it is often honour.",
@@ -181,8 +181,8 @@ const digDeeperPanels = [
     ],
     id_paras: [
       "Budaya yang berbeda memiliki asumsi yang sangat berbeda tentang otoritas. Dalam konteks jarak kekuasaan yang tinggi — umum di sebagian besar Asia, Timur Tengah, dan bagian Afrika dan Amerika Latin — mendekati pemimpin senior secara proaktif dengan berita buruk atau pendapat yang berbeda mungkin terasa lancang atau tidak menghormati. Diam dalam konteks ini bukanlah persetujuan; ini sering kali merupakan penghormatan.",
-      "Dalam konteks jarak kekuasaan yang lebih rendah — Eropa Utara, sebagian besar Amerika Utara — ekspektasinya sering kali adalah anggota tim akan berbicara langsung, menawarkan pendapat dengan bebas, dan menandai masalah lebih awal. Seorang pemimpin yang harus menggali informasi dari tim mereka melihatnya sebagai tanda ketidakterlibatan atau bahkan ketidakjujuran.",
-      "Mengelola ke atas melintasi kesenjangan budaya mengharuskan Anda memahami kerangka budaya mana yang dioperasikan pemimpin Anda — tidak mengasumsikan bahwa default Anda sendiri bersifat universal. Keterampilan ini bukan tentang menghilangkan perbedaan budaya. Ini tentang menamakannya dengan hati-hati dan menemukan versi kejujuran, kejelasan, dan keandalan yang benar-benar mendarat dalam hubungan spesifik Anda.",
+      "Dalam konteks jarak kekuasaan yang lebih rendah — Eropa Utara, sebagian besar Amerika Utara — ekspektasinya sering kali adalah anggota tim akan berbicara langsung, menawarkan pendapat dengan bebas, dan melaporkan masalah lebih awal. Seorang pemimpin yang harus menggali informasi dari tim mereka melihatnya sebagai tanda ketidakterlibatan atau bahkan ketidakjujuran.",
+      "Bekerja sama dengan atasan lintas budaya mengharuskan Anda memahami kerangka budaya yang dipegang pemimpin Anda, bukan mengasumsikan bahwa kebiasaan Anda sendiri berlaku di mana saja. Keterampilan ini bukan tentang menghilangkan perbedaan budaya. Ini tentang mengungkapkan perbedaan itu dengan hati-hati dan menemukan bentuk kejujuran, kejelasan, dan keandalan yang benar-benar diterima dalam hubungan Anda yang spesifik.",
     ],
   },
   {
@@ -195,14 +195,14 @@ const digDeeperPanels = [
       "The hardest version of managing up is caring enough about your leader's success to tell them the truth — clearly, privately, respectfully — when they are heading somewhere that will hurt them or the mission. That is not insubordination. That is service.",
     ],
     id_paras: [
-      "Mengelola ke atas mengasumsikan pemimpin yang layak dikelola ke atasnya. Tapi apa yang terjadi ketika pemimpin Anda lemah, tidak aman, bermotif politis, atau sekadar tidak baik? Teologi otoritas tidak meminta Anda berpura-pura bahwa kenyataan ini tidak ada.",
-      "Ada perbedaan antara mengelola ke atas dan memungkinkan disfungsi. Mengelola ke atas berarti mengambil tanggung jawab untuk sisi Anda dari hubungan — dapat diandalkan, jelas, jujur, dan proaktif — terlepas dari bagaimana pemimpin Anda berperilaku. Itu tidak berarti menyerap pelecehan, menutupi ketidakmampuan, atau mengkhianati integritas Anda demi hubungan.",
-      "Versi paling sulit dari mengelola ke atas adalah cukup peduli dengan keberhasilan pemimpin Anda untuk memberi tahu mereka kebenaran — dengan jelas, secara pribadi, dengan hormat — ketika mereka menuju ke suatu tempat yang akan menyakiti mereka atau misi. Itu bukan pembangkangan. Itu adalah pelayanan.",
+      "Bekerja sama dengan atasan mengasumsikan atasan yang layak diajak bekerja sama. Tapi apa yang terjadi ketika pemimpin Anda lemah, tidak aman, bermotif politis, atau sekadar tidak baik? Teologi otoritas tidak meminta Anda berpura-pura bahwa kenyataan ini tidak ada.",
+      "Ada perbedaan antara bekerja sama dengan atasan dan membiarkan disfungsi. Bekerja sama dengan atasan berarti mengambil tanggung jawab untuk sisi Anda dari hubungan — dapat diandalkan, jelas, jujur, dan proaktif — terlepas dari bagaimana pemimpin Anda berperilaku. Itu tidak berarti menyerap pelecehan, menutupi ketidakmampuan, atau mengkhianati integritas Anda demi hubungan.",
+      "Bentuk paling sulit dari bekerja sama dengan atasan adalah cukup peduli dengan keberhasilan pemimpin Anda untuk memberi tahu mereka kebenaran — dengan jelas, secara pribadi, dengan hormat — ketika mereka menuju ke suatu tempat yang akan menyakiti mereka atau misi. Itu bukan pembangkangan. Itu adalah pelayanan.",
     ],
   },
   {
     en_title: "Managing Up and Whistleblowing: Where Is the Line?",
-    id_title: "Mengelola ke Atas dan Whistleblowing: Di Mana Batasnya?",
+    id_title: "Bekerja Sama dengan Atasan dan Whistleblowing: Di Mana Batasnya?",
     cite: undefined,
     en_paras: [
       "This question comes up in every high-stakes leadership context: when does loyalty to your leader cross into complicity with something wrong? The principle that guides this is not loyalty to the person, but loyalty to the mission and to truth.",
@@ -210,9 +210,9 @@ const digDeeperPanels = [
       "The threshold is not comfort. It is integrity. Most leaders will never face a true whistleblowing situation. But it is worth knowing the line exists — and that faithfulness sometimes requires crossing it, at personal cost, in service of something larger than the relationship.",
     ],
     id_paras: [
-      "Pertanyaan ini muncul dalam setiap konteks kepemimpinan yang berisiko tinggi: kapan loyalitas kepada pemimpin Anda menjadi keterlibatan dengan sesuatu yang salah? Prinsip yang memandu ini bukan loyalitas kepada orang tersebut, tetapi loyalitas kepada misi dan kebenaran.",
-      "Mengelola ke atas beroperasi dalam ruang ketidaksetujuan yang sah, umpan balik yang jujur, dan penetapan waktu yang bijaksana. Whistleblowing memasuki gambaran ketika masalahnya bukan lagi masalah gaya, penilaian, atau perbedaan budaya — tetapi kegagalan etis yang nyata: penipuan, penyalahgunaan kekuasaan, pelanggaran keuangan, kerugian bagi orang-orang.",
-      "Ambang batasnya bukan kenyamanan. Ini adalah integritas. Kebanyakan pemimpin tidak akan pernah menghadapi situasi whistleblowing yang sesungguhnya. Tetapi ada baiknya mengetahui bahwa garis itu ada — dan bahwa kesetiaan kadang-kadang mengharuskan untuk menyeberanginya, dengan biaya pribadi, demi sesuatu yang lebih besar dari hubungan.",
+      "Pertanyaan ini muncul dalam setiap konteks kepemimpinan yang berisiko tinggi: kapan loyalitas kepada pemimpin Anda menjadi persekongkolan dalam sesuatu yang salah? Prinsip yang memandu ini bukan loyalitas kepada orang tersebut, tetapi loyalitas kepada misi dan kebenaran.",
+      "Bekerja sama dengan atasan berlangsung dalam ruang ketidaksetujuan yang sah, umpan balik yang jujur, dan penetapan waktu yang bijaksana. Whistleblowing memasuki gambaran ketika masalahnya bukan lagi masalah gaya, penilaian, atau perbedaan budaya — tetapi kegagalan etis yang nyata: penipuan, penyalahgunaan kekuasaan, pelanggaran keuangan, kerugian bagi orang-orang.",
+      "Ambang batasnya bukan kenyamanan. Ini adalah integritas. Kebanyakan pemimpin tidak akan pernah menghadapi situasi whistleblowing yang sesungguhnya. Tetapi ada baiknya mengetahui bahwa garis itu ada — dan bahwa kesetiaan kadang-kadang mengharuskan untuk menyeberanginya, dengan pengorbanan pribadi, demi sesuatu yang lebih besar dari hubungan.",
     ],
   },
 ];
@@ -296,7 +296,7 @@ export default function ManagingUpClient({ userPathway, isSaved: initialSaved }:
             fontFamily: CORMORANT, fontSize: "clamp(40px, 6vw, 72px)",
             fontWeight: 600, color: OFF_WHITE, lineHeight: 1.08, margin: "0 0 24px",
           }}>
-            {t("Managing Up", "Mengelola ke Atas")}
+            {t("Managing Up", "Bekerja Sama dengan Atasan")}
           </h1>
 
           {/* Subtitle */}
@@ -317,7 +317,7 @@ export default function ManagingUpClient({ userPathway, isSaved: initialSaved }:
             disabled={saved || isPending}
             aria-label={saved
               ? t("Saved to your dashboard", "Tersimpan di dashboard Anda")
-              : t("Save this resource to your dashboard", "Simpan sumber daya ini ke dashboard Anda")}
+              : t("Save this resource to your dashboard", "Simpan materi ini ke dashboard Anda")}
             style={{
               display: "inline-flex", alignItems: "center", gap: 8,
               minHeight: 44, padding: "14px 28px", borderRadius: 12,
@@ -348,18 +348,18 @@ export default function ManagingUpClient({ userPathway, isSaved: initialSaved }:
       <div style={{ background: OFF_WHITE, padding: "72px 24px" }}>
         <div style={{ maxWidth: 720, margin: "0 auto" }}>
           <h2 style={sectionH2Light}>
-            {t("What Managing Up Actually Means", "Apa yang Sebenarnya Dimaksud dengan Mengelola ke Atas")}
+            {t("What Managing Up Actually Means", "Apa Sebenarnya Arti Bekerja Sama dengan Atasan")}
           </h2>
           <p style={proseLight}>
             {t(
               "You know someone like this. A capable, hard-working leader who keeps producing good results but can never seem to get traction with the person above them. Projects stall waiting for approval. Their ideas land flat. They feel invisible, or worse, misunderstood. The problem is rarely competence. It is almost always a relationship that hasn't been tended.",
-              "Kamu pasti kenal seseorang seperti ini. Pemimpin yang cakap, pekerja keras, terus menghasilkan hasil yang baik, tapi entah kenapa tidak pernah bisa dapat traksi dari orang di atasnya. Proyek-proyek macet menunggu persetujuan. Ide-idenya tidak mendarat. Mereka merasa tidak terlihat, atau lebih buruk lagi, disalahpahami. Masalahnya hampir tidak pernah soal kompetensi. Hampir selalu soal hubungan yang tidak pernah dirawat.",
+              "Kamu pasti kenal seseorang seperti ini. Pemimpin yang cakap, pekerja keras, terus menghasilkan hasil yang baik, tapi entah kenapa tidak pernah bisa mendapat dukungan dari orang di atasnya. Proyek-proyek macet menunggu persetujuan. Ide-idenya tidak mendapat sambutan. Mereka merasa tidak terlihat, atau lebih buruk lagi, disalahpahami. Masalahnya hampir tidak pernah soal kompetensi. Hampir selalu soal hubungan yang tidak pernah dirawat.",
             )}
           </p>
           <p style={{ ...proseLight, marginBottom: 0 }}>
             {t(
               "Managing up is not a political game. It is not flattery or self-promotion. It is the practice of leading intentionally in the upward direction: understanding what your leader needs, communicating in ways that work for them, and building the kind of trust that creates room for you to lead well. This module covers the core needs your leader has from you, and five principles for communicating upward that actually work across cultural contexts.",
-              "Mengelola ke atas bukan permainan politik. Bukan pula sanjungan atau promosi diri. Ini adalah praktik memimpin secara sengaja ke arah atas: memahami apa yang dibutuhkan pemimpin kamu, berkomunikasi dengan cara yang tepat bagi mereka, dan membangun kepercayaan yang memberi ruang untuk kamu memimpin dengan baik. Modul ini membahas kebutuhan inti pemimpin kamu dari kamu, dan lima prinsip berkomunikasi ke atas yang benar-benar berhasil lintas konteks budaya.",
+              "Bekerja sama dengan atasan bukan permainan politik. Bukan pula sanjungan atau promosi diri. Ini adalah praktik memimpin secara sengaja ke arah atas: memahami apa yang dibutuhkan pemimpin kamu, berkomunikasi dengan cara yang tepat bagi mereka, dan membangun kepercayaan yang memberi ruang untuk kamu memimpin dengan baik. Modul ini membahas kebutuhan inti pemimpin kamu dari kamu, dan lima prinsip berkomunikasi ke atas yang benar-benar berhasil lintas konteks budaya.",
             )}<span style={{ color: ORANGE, fontWeight: 700 }}>¹</span>
           </p>
         </div>
@@ -410,7 +410,7 @@ export default function ManagingUpClient({ userPathway, isSaved: initialSaved }:
                 </strong>
                 {t(
                   " a personal practice of managing up that serves your leader, the mission, and your own integrity.",
-                  " praktik pribadi mengelola ke atas yang melayani pemimpin, misi, dan integritas Anda sendiri.",
+                  " praktik pribadi bekerja sama dengan atasan yang melayani pemimpin, misi, dan integritas Anda sendiri.",
                 )}
               </p>
             </div>
@@ -542,7 +542,7 @@ export default function ManagingUpClient({ userPathway, isSaved: initialSaved }:
       ══════════════════════════════════════════════════════════════ */}
       <div style={{ background: OFF_WHITE, padding: "72px 24px" }}>
         <div style={{ maxWidth: 720, margin: "0 auto" }}>
-          <p style={eyebrow}>{t("FAITH ANCHOR", "JANGKAR IMAN")}</p>
+          <p style={eyebrow}>{t("FAITH ANCHOR", "PEGANGAN IMAN")}</p>
           <h2 style={{
             fontFamily: CORMORANT, fontStyle: "italic", fontWeight: 600,
             fontSize: "clamp(26px, 3.5vw, 44px)", color: NAVY,
@@ -571,19 +571,19 @@ export default function ManagingUpClient({ userPathway, isSaved: initialSaved }:
           <p style={proseLight}>
             {t(
               "Scripture does not treat authority as a necessary evil. It treats it as a gift — a structure God placed in creation not to constrain human flourishing, but to enable it. Romans 13 and 1 Peter 2 are not calls to passive submission to corrupt systems. They are calls to recognize that God works through human authority structures, however imperfect.",
-              "Alkitab tidak memperlakukan otoritas sebagai kejahatan yang diperlukan. Alkitab memperlakukannya sebagai anugerah — struktur yang Allah tempatkan dalam ciptaan bukan untuk membatasi kemakmuran manusia, tetapi untuk memungkinkannya. Roma 13 dan 1 Petrus 2 bukan seruan untuk tunduk secara pasif pada sistem yang korup. Ini adalah seruan untuk mengenali bahwa Allah bekerja melalui struktur otoritas manusiawi, betapapun tidak sempurnanya.",
+              "Alkitab tidak memperlakukan otoritas sebagai kejahatan yang diperlukan. Alkitab memperlakukannya sebagai anugerah: struktur yang Tuhan tempatkan dalam ciptaan bukan untuk membatasi kemakmuran manusia, tetapi untuk memungkinkannya. Roma 13 dan 1 Petrus 2 bukan seruan untuk tunduk secara pasif pada sistem yang korup. Ini adalah seruan untuk mengenali bahwa Tuhan bekerja melalui struktur otoritas manusiawi, betapapun tidak sempurnanya.",
             )}<span style={{ color: ORANGE, fontWeight: 700 }}>⁶</span>
           </p>
           <p style={proseLight}>
             {t(
               "This reframes managing up entirely. If your leader is part of the authority structure God has placed in your life — even a flawed one — then serving them well is not a political strategy. It is a spiritual discipline. The question is not how much you can extract from this relationship, but how faithfully you can serve within it.",
-              "Ini sepenuhnya mengubah bingkai mengelola ke atas. Jika pemimpin Anda adalah bagian dari struktur otoritas yang Allah tempatkan dalam hidup Anda — bahkan yang tidak sempurna — maka melayani mereka dengan baik bukanlah strategi politik. Ini adalah disiplin rohani. Pertanyaannya bukan seberapa banyak yang dapat Anda ekstrak dari hubungan ini, tetapi seberapa setia Anda dapat melayani di dalamnya.",
+              "Ini sepenuhnya mengubah cara kita memandang kerja sama dengan atasan. Jika pemimpin Anda adalah bagian dari struktur otoritas yang Tuhan tempatkan dalam hidup Anda, bahkan yang tidak sempurna, maka melayani mereka dengan baik bukanlah strategi politik. Ini adalah disiplin rohani. Pertanyaannya bukan seberapa banyak yang dapat Anda dapatkan dari hubungan ini, tetapi seberapa setia Anda dapat melayani di dalamnya.",
             )}
           </p>
           <p style={{ ...proseLight, marginBottom: 28 }}>
             {t(
               "Jesus, the ultimate example of managing up, submitted to human authority while never compromising his integrity. He paid taxes (Matthew 17:27). He respected Pilate's office even while refusing to be defined by his verdict (John 19:11). He operated within the structures of his day while embodying a different Kingdom entirely. Managing up, done with honesty and integrity, is not a betrayal of your own authority. It is the exercise of it.",
-              "Yesus, contoh utama mengelola ke atas, tunduk pada otoritas manusiawi sambil tidak pernah mengkompromikan integritasnya. Dia membayar pajak (Matius 17:27). Dia menghormati jabatan Pilatus bahkan sambil menolak untuk didefinisikan oleh putusannya (Yohanes 19:11). Dia beroperasi dalam struktur zamannya sambil mewujudkan Kerajaan yang sama sekali berbeda. Mengelola ke atas, dilakukan dengan kejujuran dan integritas, bukan pengkhianatan terhadap otoritas Anda sendiri. Ini adalah pelaksanaannya.",
+              "Yesus, teladan utama dalam bekerja sama dengan otoritas di atas-Nya, tunduk pada otoritas manusiawi sambil tidak pernah mengkompromikan integritasnya. Dia membayar pajak (Matius 17:27). Dia menghormati jabatan Pilatus bahkan sambil menolak untuk didefinisikan oleh putusannya (Yohanes 19:11). Dia beroperasi dalam struktur zamannya sambil mewujudkan Kerajaan yang sama sekali berbeda. Bekerja sama dengan atasan, bila dilakukan dengan kejujuran dan integritas, bukan pengkhianatan terhadap otoritas Anda sendiri. Ini adalah pelaksanaannya.",
             )}
           </p>
 
@@ -791,44 +791,44 @@ export default function ManagingUpClient({ userPathway, isSaved: initialSaved }:
               <div style={{ paddingBottom: 40, borderTop: "1px solid oklch(22% 0.10 260 / 0.10)" }}>
 
                 <h3 style={{ fontFamily: CORMORANT, fontSize: "clamp(18px, 2.5vw, 22px)", fontWeight: 600, color: NAVY, margin: "28px 0 12px" }}>
-                  {t("What Is Managing Up?", "Apa Itu Mengelola ke Atas?")}
+                  {t("What Is Managing Up?", "Apa Itu Bekerja Sama dengan Atasan?")}
                 </h3>
                 <p style={proseLight}>
                   {t(
                     "Managing up is the deliberate practice of improving your working relationship with your direct manager or senior leader. It is not flattery, impression management, or political maneuvering. It is about taking conscious responsibility for a relationship that significantly shapes your ability to do meaningful work. The term was first articulated by Harvard Business School professors John Gabarro and John Kotter, whose research demonstrated that the quality of the leader-manager relationship is one of the strongest predictors of individual and organisational performance. Their key finding was counterintuitive: the most effective direct reports were not necessarily the most technically skilled — they were those who actively managed the relationship itself.",
-                    "Mengelola ke atas adalah praktik yang disengaja untuk memperbaiki hubungan kerja Anda dengan manajer langsung atau pemimpin senior Anda. Ini bukan sanjungan, manajemen kesan, atau manuver politik. Ini tentang mengambil tanggung jawab yang sadar atas hubungan yang secara signifikan membentuk kemampuan Anda untuk melakukan pekerjaan yang bermakna. Istilah ini pertama kali diungkapkan oleh profesor Harvard Business School John Gabarro dan John Kotter, yang penelitiannya menunjukkan bahwa kualitas hubungan pemimpin-manajer adalah salah satu prediktor terkuat kinerja individu dan organisasi."
+                    "Bekerja sama dengan atasan adalah praktik yang disengaja untuk memperbaiki hubungan kerja Anda dengan manajer langsung atau pemimpin senior Anda. Ini bukan sanjungan, manajemen kesan, atau manuver politik. Ini tentang mengambil tanggung jawab yang sadar atas hubungan yang secara signifikan membentuk kemampuan Anda untuk melakukan pekerjaan yang bermakna. Istilah ini pertama kali diungkapkan oleh profesor Harvard Business School John Gabarro dan John Kotter, yang penelitiannya menunjukkan bahwa kualitas hubungan pemimpin-manajer adalah salah satu prediktor terkuat kinerja individu dan organisasi."
                   )}
                 </p>
 
                 <h3 style={{ fontFamily: CORMORANT, fontSize: "clamp(18px, 2.5vw, 22px)", fontWeight: 600, color: NAVY, margin: "28px 0 12px" }}>
-                  {t("Why Managing Up Matters", "Mengapa Mengelola ke Atas Penting")}
+                  {t("Why Managing Up Matters", "Mengapa Bekerja Sama dengan Atasan Itu Penting")}
                 </h3>
                 <p style={proseLight}>
                   {t(
                     "Leaders who manage up well tend to receive more resources, greater autonomy, and more developmental opportunities — not through favouritism, but because trust creates latitude. A manager who is confident that their direct report will deliver reliably, communicate honestly, and surface problems early is far more likely to delegate meaningful work, include that person in critical decisions, and advocate for them when opportunities arise. Managing up is how you earn that trust systematically, through consistent behaviour over time.",
-                    "Pemimpin yang mengelola ke atas dengan baik cenderung menerima lebih banyak sumber daya, otonomi yang lebih besar, dan lebih banyak peluang pengembangan — bukan melalui favoritisme, tetapi karena kepercayaan menciptakan keleluasaan. Seorang manajer yang yakin bawahan langsungnya akan memberikan hasil secara andal, berkomunikasi dengan jujur, dan mengangkat masalah lebih awal jauh lebih mungkin mendelegasikan pekerjaan yang bermakna dan mengadvokasi mereka ketika peluang muncul."
+                    "Pemimpin yang bekerja sama dengan atasannya dengan baik cenderung menerima lebih banyak sumber daya, otonomi yang lebih besar, dan lebih banyak peluang pengembangan — bukan melalui favoritisme, tetapi karena kepercayaan menciptakan keleluasaan. Seorang manajer yang yakin bawahan langsungnya akan memberikan hasil secara andal, berkomunikasi dengan jujur, dan mengangkat masalah lebih awal jauh lebih mungkin mendelegasikan pekerjaan yang bermakna dan mengadvokasi mereka ketika peluang muncul."
                   )}
                 </p>
                 <p style={proseLight}>
                   {t(
                     "The absence of managing-up skills creates compounding friction. When direct reports fail to communicate proactively, managers fill information gaps with assumptions — and leadership assumptions under pressure tend to be pessimistic. When bad news arrives late, confidence erodes. When communication is reactive rather than proactive, the relationship feels fragile. These small failures compound quietly over months into a dynamic where both parties are navigating by assumption rather than genuine understanding.",
-                    "Ketiadaan keterampilan mengelola ke atas menciptakan gesekan yang terus bertambah. Ketika bawahan langsung gagal berkomunikasi secara proaktif, manajer mengisi kesenjangan informasi dengan asumsi — dan asumsi kepemimpinan di bawah tekanan cenderung pesimistis. Ketika berita buruk datang terlambat, kepercayaan terkikis. Kegagalan kecil ini bertambah diam-diam selama berbulan-bulan menjadi dinamika di mana kedua pihak menavigasi berdasarkan asumsi daripada pemahaman yang tulus."
+                    "Ketiadaan keterampilan bekerja sama dengan atasan menciptakan gesekan yang terus bertambah. Ketika bawahan langsung gagal berkomunikasi secara proaktif, manajer mengisi kesenjangan informasi dengan asumsi — dan asumsi kepemimpinan di bawah tekanan cenderung pesimistis. Ketika berita buruk datang terlambat, kepercayaan terkikis. Kegagalan kecil ini bertambah diam-diam selama berbulan-bulan menjadi dinamika di mana kedua pihak menavigasi berdasarkan asumsi daripada pemahaman yang tulus."
                   )}
                 </p>
 
                 <h3 style={{ fontFamily: CORMORANT, fontSize: "clamp(18px, 2.5vw, 22px)", fontWeight: 600, color: NAVY, margin: "28px 0 12px" }}>
-                  {t("Managing Up Across Cultures", "Mengelola ke Atas Lintas Budaya")}
+                  {t("Managing Up Across Cultures", "Bekerja Sama dengan Atasan Lintas Budaya")}
                 </h3>
                 <p style={proseLight}>
                   {t(
                     "Managing up is a universal leadership challenge with culture-specific expressions. The core task — building a productive, trust-based relationship with the person above you in an organisational hierarchy — remains consistent across cultural contexts. But what that trust looks like in practice varies significantly based on cultural norms around authority, directness, and status. Geert Hofstede's research on power distance is foundational here: in high power-distance cultures — which include much of Southeast Asia, South Asia, the Middle East, and parts of Africa and Latin America — approaching a senior leader proactively with unsolicited feedback or contradictory information can feel culturally taboo. Silence in these contexts signals respect, not evasion.",
-                    "Mengelola ke atas adalah tantangan kepemimpinan universal dengan ekspresi yang spesifik budaya. Tugas inti — membangun hubungan yang produktif dan berbasis kepercayaan dengan orang di atas Anda dalam hierarki organisasi — konsisten di berbagai konteks budaya. Tetapi seperti apa kepercayaan itu dalam praktiknya sangat bervariasi berdasarkan norma budaya tentang otoritas, ketegasan, dan status. Penelitian Geert Hofstede tentang jarak kekuasaan sangat mendasar di sini: dalam budaya jarak kekuasaan tinggi, mendekati pemimpin senior secara proaktif dengan umpan balik yang tidak diminta dapat terasa tabu secara budaya. Diam dalam konteks ini menandakan rasa hormat, bukan penghindaran."
+                    "Bekerja sama dengan atasan adalah tantangan kepemimpinan universal dengan ekspresi yang spesifik budaya. Tugas inti — membangun hubungan yang produktif dan berbasis kepercayaan dengan orang di atas Anda dalam hierarki organisasi — konsisten di berbagai konteks budaya. Tetapi seperti apa kepercayaan itu dalam praktiknya sangat bervariasi berdasarkan norma budaya tentang otoritas, ketegasan, dan status. Penelitian Geert Hofstede tentang jarak kekuasaan sangat mendasar di sini: dalam budaya jarak kekuasaan tinggi, mendekati pemimpin senior secara proaktif dengan umpan balik yang tidak diminta dapat terasa tabu secara budaya. Diam dalam konteks ini menandakan rasa hormat, bukan penghindaran."
                   )}
                 </p>
                 <p style={proseLight}>
                   {t(
                     "In lower power-distance cultures — typically Northern Europe and parts of North America — the expectation runs the opposite direction. Direct reports are expected to speak up, challenge ideas constructively, and flag problems early. A manager in these contexts who rarely hears from their team interprets silence as disengagement or even dishonesty. The critical insight for cross-cultural leaders is that the same behaviour — silence — carries completely opposite meanings depending on which cultural frame is active. Effective managing up in cross-cultural contexts requires the capacity to notice when a cultural framework is shaping the interaction, and adapt accordingly without abandoning the core discipline.",
-                    "Dalam budaya jarak kekuasaan lebih rendah — biasanya Eropa Utara dan bagian Amerika Utara — ekspektasinya berjalan ke arah yang berlawanan. Bawahan langsung diharapkan untuk berbicara, menantang ide secara konstruktif, dan menandai masalah lebih awal. Wawasan kritis bagi pekerja lintas budaya adalah bahwa perilaku yang sama — keheningan — membawa makna yang berlawanan tergantung kerangka budaya mana yang aktif. Mengelola ke atas yang efektif dalam konteks lintas budaya membutuhkan kapasitas untuk memperhatikan kapan kerangka budaya membentuk interaksi, dan beradaptasi sesuai tanpa meninggalkan disiplin inti."
+                    "Dalam budaya jarak kekuasaan lebih rendah — biasanya Eropa Utara dan bagian Amerika Utara — ekspektasinya berjalan ke arah yang berlawanan. Bawahan langsung diharapkan untuk berbicara, menantang ide secara konstruktif, dan melaporkan masalah lebih awal. Wawasan kritis bagi pekerja lintas budaya adalah bahwa perilaku yang sama — keheningan — membawa makna yang berlawanan tergantung kerangka budaya mana yang aktif. Bekerja sama dengan atasan secara efektif dalam konteks lintas budaya membutuhkan kapasitas untuk memperhatikan kapan kerangka budaya membentuk interaksi, dan beradaptasi sesuai tanpa meninggalkan disiplin inti."
                   )}
                 </p>
 
@@ -838,23 +838,23 @@ export default function ManagingUpClient({ userPathway, isSaved: initialSaved }:
                 <p style={proseLight}>
                   {t(
                     "David Rock's SCARF model — which maps five social domains the brain monitors as potential threats or rewards (Status, Certainty, Autonomy, Relatedness, Fairness) — offers a useful neurological lens for understanding what leaders actually need from their direct reports. Most managers are under chronic status and certainty pressure from above. When direct reports add to that uncertainty — by delivering bad news late, failing to follow through, or going around the manager — the threat response intensifies. When direct reports reduce uncertainty — through reliable delivery, proactive communication, and honest problem-sharing — they become genuinely valuable: not just as workers, but as people who make their manager's world more manageable.",
-                    "Model SCARF David Rock — yang memetakan lima domain sosial yang dipantau otak sebagai ancaman atau penghargaan potensial (Status, Kepastian, Otonomi, Keterhubungan, Keadilan) — menawarkan lensa neurologis yang berguna untuk memahami apa yang sebenarnya dibutuhkan pemimpin dari bawahan langsung mereka. Sebagian besar manajer berada di bawah tekanan status dan kepastian yang kronis dari atas. Ketika bawahan langsung mengurangi ketidakpastian itu — melalui pengiriman yang andal, komunikasi proaktif, dan berbagi masalah yang jujur — mereka menjadi benar-benar berharga bagi pemimpin mereka."
+                    "Model SCARF David Rock — yang memetakan lima domain sosial yang dipantau otak sebagai ancaman atau penghargaan potensial (Status, Kepastian, Otonomi, Keterhubungan, Keadilan) — menawarkan lensa neurologis yang berguna untuk memahami apa yang sebenarnya dibutuhkan pemimpin dari bawahan langsung mereka. Sebagian besar manajer berada di bawah tekanan status dan kepastian yang kronis dari atas. Ketika bawahan langsung mengurangi ketidakpastian itu — melalui hasil kerja yang andal, komunikasi proaktif, dan berbagi masalah yang jujur — mereka menjadi benar-benar berharga bagi pemimpin mereka."
                   )}
                 </p>
 
                 <h3 style={{ fontFamily: CORMORANT, fontSize: "clamp(18px, 2.5vw, 22px)", fontWeight: 600, color: NAVY, margin: "28px 0 12px" }}>
-                  {t("Managing Up and the Theology of Authority", "Mengelola ke Atas dan Teologi Otoritas")}
+                  {t("Managing Up and the Theology of Authority", "Bekerja Sama dengan Atasan dan Teologi Otoritas")}
                 </h3>
                 <p style={proseLight}>
                   {t(
                     "Christian leaders working in organisational contexts — mission agencies, NGOs, churches, or marketplace organisations — sometimes wrestle with the theology of authority when it comes to managing up. How much loyalty is required? When does submission become complicity? Scripture takes a nuanced position. Romans 13 and 1 Peter 2 establish the legitimacy of authority structures — not because leaders are infallible, but because order enables mission. Yet the New Testament is equally full of principled dissent, prophetic challenge, and faithful confrontation. Paul confronts Peter publicly in Galatians 2. The apostles declare they must obey God rather than human beings in Acts 5.",
-                    "Pemimpin Kristen yang bekerja dalam konteks organisasi — lembaga misi, LSM, gereja, atau organisasi pasar — terkadang bergulat dengan teologi otoritas dalam hal mengelola ke atas. Seberapa besar loyalitas yang diperlukan? Kapan ketaatan menjadi keterlibatan? Alkitab mengambil posisi yang bernuansa. Roma 13 dan 1 Petrus 2 menetapkan legitimasi struktur otoritas — bukan karena pemimpin tidak bisa salah, tetapi karena keteraturan memungkinkan misi. Namun Perjanjian Baru juga penuh dengan perbedaan pendapat yang berprinsip dan konfrontasi yang setia."
+                    "Pemimpin Kristen yang bekerja dalam konteks organisasi — lembaga misi, LSM, gereja, atau organisasi bisnis — terkadang bergulat dengan teologi otoritas dalam hal bekerja sama dengan atasan. Seberapa besar loyalitas yang diperlukan? Kapan ketaatan menjadi persekongkolan? Alkitab mengambil posisi yang bernuansa. Roma 13 dan 1 Petrus 2 menetapkan legitimasi struktur otoritas — bukan karena pemimpin tidak bisa salah, tetapi karena keteraturan memungkinkan misi. Namun Perjanjian Baru juga penuh dengan perbedaan pendapat yang berprinsip dan konfrontasi yang setia."
                   )}
                 </p>
                 <p style={{ ...proseLight, marginBottom: 0 }}>
                   {t(
                     "Managing up, understood in this light, is not blind loyalty or strategic compliance. It is taking the authority relationship seriously enough to invest in it — honest enough to speak truth into it, courageous enough to name what needs to be named — all in service of a shared mission that is larger than either party. The discipline of managing up is, at its best, an act of faithful service.",
-                    "Mengelola ke atas, dipahami dalam cahaya ini, bukan kesetiaan buta atau kepatuhan strategis. Ini tentang menganggap hubungan otoritas cukup serius untuk berinvestasi di dalamnya — cukup jujur untuk berbicara kebenaran ke dalamnya, cukup berani untuk menyebutkan apa yang perlu disebutkan — semuanya dalam pelayanan misi bersama yang lebih besar dari kedua pihak. Disiplin mengelola ke atas, pada dasarnya, adalah tindakan pelayanan yang setia."
+                    "Bekerja sama dengan atasan, dipahami dalam terang ini, bukan kesetiaan buta atau kepatuhan strategis. Ini tentang menganggap hubungan otoritas cukup serius untuk berinvestasi di dalamnya: cukup jujur untuk menyampaikan kebenaran dalam hubungan itu, cukup berani untuk mengungkapkan apa yang perlu diungkapkan, semuanya demi melayani misi bersama yang lebih besar dari kedua pihak. Disiplin bekerja sama dengan atasan, pada dasarnya, adalah tindakan pelayanan yang setia."
                   )}
                 </p>
 
@@ -905,7 +905,7 @@ export default function ManagingUpClient({ userPathway, isSaved: initialSaved }:
               }}>
                 {t(
                   "\"I spent three years thinking my leader just didn't see my potential. When I finally started actually managing up — giving him clarity, flagging problems early, coming with solutions — everything changed within four months.\"",
-                  "\"Saya menghabiskan tiga tahun berpikir pemimpin saya tidak melihat potensi saya. Ketika saya akhirnya benar-benar mulai mengelola ke atas — memberinya kejelasan, menandai masalah lebih awal, datang dengan solusi — semuanya berubah dalam empat bulan.\"",
+                  "\"Saya menghabiskan tiga tahun berpikir pemimpin saya tidak melihat potensi saya. Ketika saya akhirnya benar-benar mulai bekerja sama dengan atasan (memberinya kejelasan, melaporkan masalah lebih awal, datang dengan solusi), semuanya berubah dalam empat bulan.\"",
                 )}
               </p>
               <cite style={{
@@ -932,7 +932,7 @@ export default function ManagingUpClient({ userPathway, isSaved: initialSaved }:
               }}>
                 {t(
                   "\"In my culture, you don't question authority. But my Western leader expected me to speak up. Learning that 'managing up' could mean speaking honestly — not disrespectfully — was genuinely freeing.\"",
-                  "\"Dalam budaya saya, Anda tidak mempertanyakan otoritas. Tetapi pemimpin Barat saya mengharapkan saya untuk berbicara. Belajar bahwa 'mengelola ke atas' bisa berarti berbicara jujur — tidak tidak menghormati — sungguh membebaskan.\"",
+                  "\"Dalam budaya saya, Anda tidak mempertanyakan otoritas. Tetapi pemimpin Barat saya mengharapkan saya untuk berbicara. Belajar bahwa 'bekerja sama dengan atasan' bisa berarti berbicara jujur, bukan bersikap tidak hormat, sungguh membebaskan.\"",
                 )}
               </p>
               <cite style={{

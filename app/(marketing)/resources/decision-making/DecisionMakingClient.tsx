@@ -48,7 +48,7 @@ const DECISIONS: {
       D: {
         en_label: "The Direct Move", id_label: "Langkah Langsung",
         en: "Contact the partner's lead directly. A short, warm message: 'I'd like to connect — can we find 30 minutes this week?'",
-        id: "Hubungi pemimpin mitra secara langsung. Pesan singkat dan hangat: 'Saya ingin terhubung — bisakah kita menemukan 30 menit minggu ini?'",
+        id: "Hubungi pemimpin mitra secara langsung. Pesan singkat dan hangat: 'Saya ingin terhubung — bisakah kita meluangkan 30 menit minggu ini?'",
       },
     },
   },
@@ -157,7 +157,7 @@ const PROFILES: Record<ProfileKey, {
     en_risk: "In cultures where process and face are part of the decision's quality, your outcome may be correct but your path costly. People may comply externally while disengaging internally.",
     id_risk: "Dalam budaya di mana proses dan menjaga muka adalah bagian dari kualitas keputusan, hasil Anda mungkin benar tetapi jalur Anda mahal. Orang mungkin mematuhi secara eksternal sambil melepaskan diri secara internal.",
     en_strength: "You cut through ambiguity. Your team knows where you stand. Decisive leadership reduces anxiety and drift — your clarity is a genuine gift to the people you lead.",
-    id_strength: "Anda memotong ambiguitas. Tim Anda tahu di mana Anda berdiri. Kepemimpinan yang tegas mengurangi kecemasan dan penyimpangan — kejelasan Anda adalah hadiah nyata bagi orang yang Anda pimpin.",
+    id_strength: "Anda memotong ambiguitas. Tim Anda tahu sikap Anda. Kepemimpinan yang tegas mengurangi kecemasan dan pergeseran arah: kejelasan Anda adalah hadiah nyata bagi orang yang Anda pimpin.",
     color: "oklch(52% 0.18 25)",
   },
   adaptive: {
@@ -282,7 +282,7 @@ export default function DecisionMakingClient({ userPathway, isSaved: initialSave
           <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.75, margin: 0 }}>
             {t(
               "You'll face a real cross-cultural leadership situation — a partnership in crisis, three weeks before a critical deadline. Make four sequential decisions. No answer is wrong. At the end, your choices reveal your default decision-making pattern and what it costs you in cross-cultural contexts.",
-              "Anda akan menghadapi situasi kepemimpinan lintas budaya yang nyata — kemitraan dalam krisis, tiga minggu sebelum tenggat waktu penting. Buat empat keputusan berurutan. Tidak ada jawaban yang salah. Di akhir, pilihan Anda mengungkapkan pola pengambilan keputusan default Anda dan apa biayanya dalam konteks lintas budaya."
+              "Anda akan menghadapi situasi kepemimpinan lintas budaya yang nyata — kemitraan dalam krisis, tiga minggu sebelum tenggat waktu penting. Buat empat keputusan berurutan. Tidak ada jawaban yang salah. Di akhir, pilihan Anda mengungkapkan pola pengambilan keputusan default Anda dan harga yang harus Anda bayar karenanya dalam konteks lintas budaya."
             )}
           </p>
         </div>
@@ -439,7 +439,7 @@ export default function DecisionMakingClient({ userPathway, isSaved: initialSave
             {t("Biblical Foundation", "Dasar Alkitabiah")}
           </p>
           <h2 style={{ fontFamily: serif, fontSize: "clamp(26px, 4vw, 40px)", fontWeight: 600, color: navy, marginBottom: 24, lineHeight: 1.25 }}>
-            {t("The Third Way: Asking God", "Jalan Ketiga: Bertanya kepada Allah")}
+            {t("The Third Way: Asking God", "Jalan Ketiga: Bertanya kepada Tuhan")}
           </h2>
           <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 15, color: bodyText, lineHeight: 1.8, maxWidth: 680, marginBottom: 20 }}>
             {t(
@@ -450,7 +450,7 @@ export default function DecisionMakingClient({ userPathway, isSaved: initialSave
           <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 15, color: bodyText, lineHeight: 1.8, maxWidth: 680, marginBottom: 36 }}>
             {t(
               "This doesn't make analysis irrelevant or relationships unimportant. It adds a prior step: before you reach for data or consult your network, bring the question to God. Not as a ritual to check off, but as a genuine admission that the pressured moment is beyond you — and that you serve a King who governs the outcome.",
-              "Ini tidak membuat analisis menjadi tidak relevan atau hubungan menjadi tidak penting. Ini menambahkan langkah sebelumnya: sebelum Anda mencari data atau berkonsultasi dengan jaringan Anda, bawa pertanyaan itu kepada Allah. Bukan sebagai ritual untuk diselesaikan, tetapi sebagai pengakuan tulus bahwa momen tertekan ini melampaui kemampuan Anda — dan bahwa Anda melayani Raja yang mengatur hasil."
+              "Ini tidak membuat analisis menjadi tidak relevan atau hubungan menjadi tidak penting. Ini menambahkan langkah sebelumnya: sebelum Anda mencari data atau berkonsultasi dengan jaringan Anda, bawa pertanyaan itu kepada Tuhan. Bukan sebagai ritual untuk diselesaikan, tetapi sebagai pengakuan tulus bahwa momen tertekan ini melampaui kemampuan Anda — dan bahwa Anda melayani Raja yang mengatur hasil."
             )}
           </p>
 
@@ -484,7 +484,7 @@ export default function DecisionMakingClient({ userPathway, isSaved: initialSave
           <p style={{ fontFamily: serif, fontSize: 22, color: navy, lineHeight: 1.6, marginBottom: 24, fontStyle: "italic" }}>
             {t(
               "Think of a high-stakes decision you're currently facing. What would it look like to bring it to God before reaching for your default pattern?",
-              "Pikirkan sebuah keputusan berisiko tinggi yang sedang Anda hadapi saat ini. Seperti apa rasanya membawanya kepada Allah sebelum mencapai pola default Anda?"
+              "Pikirkan sebuah keputusan berisiko tinggi yang sedang Anda hadapi saat ini. Seperti apa rasanya membawanya kepada Tuhan sebelum mengandalkan pola kebiasaan Anda?"
             )}
           </p>
           {!committed ? (

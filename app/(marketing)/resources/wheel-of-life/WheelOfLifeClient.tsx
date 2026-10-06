@@ -125,9 +125,9 @@ const HOW_TO_STEPS = [
   },
   {
     num: "04",
-    titleEn: "Read Your Shape", titleId: "Baca Bentuk Anda",
+    titleEn: "Read Your Shape", titleId: "Baca Bentuk Roda Anda",
     descEn: "A balanced wheel rolls smoothly. An uneven shape reveals where energy is leaking and where to invest next.",
-    descId: "Roda yang seimbang bergulir lancar. Bentuk yang tidak merata mengungkapkan di mana energi bocor dan di mana perlu investasi.",
+    descId: "Roda yang seimbang bergulir lancar. Bentuk yang tidak merata mengungkapkan di mana energi terkuras dan di mana perlu investasi.",
   },
   {
     num: "05",
@@ -303,7 +303,7 @@ export default function WheelOfLifeClient({
           <p style={{ fontSize: 17, color: "oklch(72% 0.05 260)", lineHeight: 1.7, maxWidth: 620, marginBottom: 40 }}>
             {t(
               "A holistic self-assessment covering 8 dimensions of a God-honoring life. Understand where you're thriving, where you're leaking energy, and what to do about it.",
-              "Penilaian diri holistik yang mencakup 8 dimensi kehidupan yang memuliakan Tuhan. Pahami di mana Anda berkembang, di mana energi Anda bocor, dan apa yang harus dilakukan."
+              "Penilaian diri holistik yang mencakup 8 dimensi kehidupan yang memuliakan Tuhan. Pahami di mana Anda berkembang, di mana energi Anda terkuras, dan apa yang harus dilakukan."
             )}
           </p>
           <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
@@ -501,7 +501,7 @@ export default function WheelOfLifeClient({
               questionEn: "What is your challenge, frustration, or concern?",
               questionId: "Apa tantangan, frustrasi, atau kekhawatiran Anda?",
               hintEn: "Name what's hard — clarity about the problem is the first step.",
-              hintId: "Namai apa yang sulit — kejelasan tentang masalah adalah langkah pertama.",
+              hintId: "Ungkapkan apa yang sulit — kejelasan tentang masalah adalah langkah pertama.",
             },
             {
               num: "03", color: "#3b5fa0",
@@ -877,19 +877,19 @@ export default function WheelOfLifeClient({
             ),
             t(
               "The concept of balance itself deserves cultural examination. In the individualist framework underlying the standard Wheel of Life, balance implies a managed equilibrium across all domains, achieved through deliberate personal choices about time and energy allocation. Research on life satisfaction²³ shows that the components people weight most heavily vary significantly by culture⁴. In seasonal, communal, and oral cultures, flourishing is more often understood as rhythmic rather than balanced. Periods of intense communal activity are followed by periods of rest and recovery. The Wheel of Life, applied cross-culturally, works best when it is treated as a diagnostic conversation starter rather than a prescription for equal investment in every domain simultaneously.",
-              "Konsep keseimbangan itu sendiri layak untuk diperiksa secara budaya. Dalam kerangka individualistis yang mendasari Roda Kehidupan standar, keseimbangan menyiratkan ekuilibrium yang dikelola di semua domain. Penelitian tentang kepuasan hidup²³ menunjukkan bahwa komponen yang paling penting bagi orang bervariasi secara signifikan menurut budaya⁴. Dalam budaya yang musiman, komunal, dan lisan, kemakmuran lebih sering dipahami sebagai sesuatu yang ritmis daripada seimbang. Periode aktivitas komunal yang intens diikuti oleh periode istirahat dan pemulihan. Roda Kehidupan paling baik diperlakukan sebagai pemicu percakapan diagnostik, bukan resep investasi yang sama di setiap domain sekaligus."
+              "Konsep keseimbangan itu sendiri layak untuk diperiksa secara budaya. Dalam kerangka individualistis yang mendasari Roda Kehidupan standar, keseimbangan menyiratkan ekuilibrium yang dikelola di semua domain. Penelitian tentang kepuasan hidup²³ menunjukkan bahwa komponen yang paling penting bagi orang bervariasi secara signifikan menurut budaya⁴. Dalam budaya yang musiman, komunal, dan lisan, hidup yang berkembang utuh lebih sering dipahami sebagai sesuatu yang ritmis daripada seimbang. Periode aktivitas komunal yang intens diikuti oleh periode istirahat dan pemulihan. Roda Kehidupan paling baik diperlakukan sebagai pemicu percakapan diagnostik, bukan resep investasi yang sama di setiap domain sekaligus."
             ),
             t(
               "Richard Foster's Celebration of Discipline⁷, which explores the classical Christian spiritual disciplines as pathways to freedom and wholeness, offers a framework that sits naturally alongside the Wheel of Life for leaders of faith. Foster argues that ordered patterns of life — including the disciplines of study, simplicity, solitude, and rest — are not legalistic impositions but liberating structures that create space for genuine flourishing. The Wheel of Life, completed regularly and reflectively, supports exactly the kind of honest self-examination that Foster commends.",
-              "Buku Richard Foster Celebration of Discipline⁷, yang mengeksplorasi disiplin rohani Kristen klasik sebagai jalan menuju kebebasan dan keutuhan, menawarkan kerangka yang secara alami berdampingan dengan Roda Kehidupan bagi pemimpin iman. Foster berpendapat bahwa pola hidup yang teratur — termasuk disiplin studi, kesederhanaan, kesunyian, dan istirahat — bukanlah pemaksaan legalistis tetapi struktur yang membebaskan dan menciptakan ruang bagi kemakmuran sejati."
+              "Buku Richard Foster Celebration of Discipline⁷, yang mengeksplorasi disiplin rohani Kristen klasik sebagai jalan menuju kebebasan dan keutuhan, menawarkan kerangka yang secara alami berdampingan dengan Roda Kehidupan bagi pemimpin iman. Foster berpendapat bahwa pola hidup yang teratur — termasuk disiplin studi, kesederhanaan, kesunyian, dan istirahat — bukanlah pemaksaan legalistis tetapi struktur yang membebaskan dan menciptakan ruang bagi hidup yang sungguh berkembang utuh."
             ),
             t(
               "Luke 2:52 offers a theological benchmark that the Wheel of Life, rightly adapted, aspires toward: Jesus grew 'in wisdom and stature, and in favor with God and man.' This four-dimensional portrait of human development, covering the intellectual, physical, spiritual, and relational domains, is not a prescription for equal investment in four quadrants simultaneously but a picture of whole-person growth over time. The Wheel of Life, at its best, is an instrument for noticing where growth has stalled, where depletion has set in unnoticed, and where the work of restoration needs to begin.",
-              "Lukas 2:52 menawarkan tolak ukur teologis yang menjadi aspirasi Roda Kehidupan: Yesus bertumbuh 'dalam hikmat dan statur, dan dalam kasih karunia pada Allah dan manusia.' Potret empat dimensi perkembangan manusia ini bukan resep investasi yang sama di empat kuadran sekaligus, melainkan gambaran pertumbuhan manusia seutuhnya dari waktu ke waktu. Roda Kehidupan, pada terbaiknya, adalah instrumen untuk memperhatikan di mana pertumbuhan terhenti dan di mana pemulihan perlu dimulai."
+              "Lukas 2:52 menawarkan tolak ukur teologis yang menjadi aspirasi Roda Kehidupan: Yesus 'makin bertambah besar dan bertambah hikmat-Nya dan besar-Nya, dan makin dikasihi oleh Allah dan manusia.' Potret empat dimensi perkembangan manusia ini bukan resep investasi yang sama di empat kuadran sekaligus, melainkan gambaran pertumbuhan manusia seutuhnya dari waktu ke waktu. Roda Kehidupan, pada terbaiknya, adalah instrumen untuk memperhatikan di mana pertumbuhan terhenti dan di mana pemulihan perlu dimulai."
             ),
             t(
               "The deepest theological resource for whole-life assessment is the Hebrew concept of shalom. Shalom is not simply peace in the sense of absence of conflict but comprehensive flourishing — right relationship with God, with others, with oneself, and with creation. The Wheel of Life, for a person of faith, is not primarily a productivity tool or a personal optimization exercise. It is an instrument of honest self-knowledge in the service of shalom, a way of seeing clearly where life is not yet as it was made to be, and of bringing that honesty before God and trusted community with humility, hope, and the confidence that the One who began a good work is faithfully completing it.",
-              "Sumber daya teologis terdalam untuk penilaian kehidupan secara menyeluruh adalah konsep Ibrani tentang shalom. Shalom bukan sekadar kedamaian dalam arti ketiadaan konflik tetapi kemakmuran yang komprehensif — hubungan yang benar dengan Allah, dengan sesama, dengan diri sendiri, dan dengan ciptaan. Roda Kehidupan, bagi orang beriman, bukan terutama alat produktivitas atau latihan optimasi pribadi. Ini adalah instrumen pengenalan diri yang jujur demi shalom, cara melihat dengan jelas di mana hidup belum seperti yang seharusnya."
+              "Sumber daya teologis terdalam untuk penilaian kehidupan secara menyeluruh adalah konsep Ibrani tentang shalom. Shalom bukan sekadar kedamaian dalam arti ketiadaan konflik tetapi hidup yang berkembang utuh secara menyeluruh — hubungan yang benar dengan Tuhan, dengan sesama, dengan diri sendiri, dan dengan ciptaan. Roda Kehidupan, bagi orang beriman, bukan terutama alat produktivitas atau latihan optimasi pribadi. Ini adalah instrumen pengenalan diri yang jujur demi shalom, cara melihat dengan jelas di mana hidup belum seperti yang seharusnya."
             ),
           ].map((para, i) => (
             <p key={i} style={{ fontSize: 16, color: "oklch(38% 0.05 260)", lineHeight: 1.85, marginBottom: 20 }}>

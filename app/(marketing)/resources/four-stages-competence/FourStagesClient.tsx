@@ -69,13 +69,13 @@ const stages = [
     en_label: "Unconscious Competence",
     id_label: "Kompetensi Tidak Sadar",
     en_subtitle: "Mastery — it becomes second nature",
-    id_subtitle: "Penguasaan — menjadi sifat kedua",
+    id_subtitle: "Penguasaan: menjadi kebiasaan yang mengalir alami",
     en_desc: "The skill has become automatic. You perform it effortlessly, often without thinking through each step. This is mastery — where deep practice has moved the skill from conscious control into intuition. The leadership challenge at this stage is different: you may struggle to teach others, because you no longer remember what it felt like not to know. Articulating what you now do instinctively requires deliberate reflection.",
     id_desc: "Keterampilan telah menjadi otomatis. Anda melakukannya dengan mudah, sering tanpa memikirkan setiap langkah. Ini adalah penguasaan — di mana latihan mendalam telah memindahkan keterampilan dari kontrol sadar ke intuisi. Tantangan kepemimpinan di tahap ini berbeda: Anda mungkin kesulitan mengajar orang lain, karena Anda tidak lagi ingat rasanya tidak tahu.",
     en_growth: "You have arrived at mastery in this area — but mastery in one area has a way of revealing how far you still have to go in another. The four stages repeat at every level of skill complexity. A leader who has achieved Stage 4 in their home culture and steps into a new cultural context begins again at Stage 1. That is not regression. That is the shape of a life spent learning.",
     id_growth: "Kamu telah mencapai penguasaan di area ini — tetapi penguasaan di satu area punya cara tersendiri untuk mengungkapkan seberapa jauh yang masih harus kamu tempuh di area lain. Empat tahap ini berulang di setiap tingkat kompleksitas keahlian. Seorang pemimpin yang telah mencapai Tahap 4 di budayanya sendiri dan melangkah ke konteks budaya yang baru memulai lagi dari Tahap 1. Itu bukan kemunduran. Itu adalah bentuk dari sebuah hidup yang dihabiskan untuk terus belajar.",
     en_coaching: "At Stage 4, the learning challenge is no longer about the skill itself — it is about articulation. A Stage 4 leader must learn to unpack what has become instinctive and make it visible to someone who does not yet have access to it. This requires a specific kind of reflective discipline: not just doing, but watching yourself do it and naming the micro-decisions that no longer feel like decisions. The most effective Stage 4 leaders become developers of others by learning to notice what they have stopped noticing — and then finding language for it.",
-    id_coaching: "Di Tahap 4, tantangan belajar bukan lagi tentang keahlian itu sendiri — melainkan tentang artikulasi. Seorang pemimpin Tahap 4 harus belajar untuk membongkar apa yang telah menjadi naluriah dan membuatnya terlihat bagi seseorang yang belum memiliki akses ke sana. Ini membutuhkan jenis disiplin reflektif yang spesifik: bukan hanya melakukan, tetapi mengamati diri sendiri saat melakukannya dan menamai keputusan-keputusan mikro yang tidak lagi terasa seperti keputusan. Pemimpin Tahap 4 yang paling efektif menjadi pengembang orang lain dengan belajar untuk memperhatikan apa yang telah mereka berhenti perhatikan — dan kemudian menemukan bahasa untuk mengungkapkannya.",
+    id_coaching: "Di Tahap 4, tantangan belajar bukan lagi tentang keahlian itu sendiri — melainkan tentang artikulasi. Seorang pemimpin Tahap 4 harus belajar untuk menguraikan apa yang telah menjadi naluriah dan membuatnya terlihat bagi seseorang yang belum memiliki akses ke sana. Ini membutuhkan jenis disiplin reflektif yang spesifik: bukan hanya melakukan, tetapi mengamati diri sendiri saat melakukannya dan menyebutkan satu per satu keputusan-keputusan mikro yang tidak lagi terasa seperti keputusan. Pemimpin Tahap 4 yang paling efektif menjadi pengembang orang lain dengan belajar untuk memperhatikan apa yang telah mereka berhenti perhatikan — dan kemudian menemukan bahasa untuk mengungkapkannya.",
     en_leadership: "There is a specific teaching challenge that comes with Stage 4: when a skill becomes automatic, you lose access to the memory of not knowing it. The steps that once required your full attention now happen below the level of conscious thought, which makes them nearly impossible to explain. In cross-cultural leadership, this is especially acute — the cues you read instinctively (the quality of a silence, the weight behind a deferential answer, the meaning of someone not being present) are invisible to someone who has never had to learn them. Stage 4 leaders who want to develop others must learn a different skill entirely: making their instincts visible again, narrating in real time what they do without thinking, so that someone at Stage 2 can begin to see what they cannot yet see.",
     id_leadership: "Ada tantangan pengajaran yang spesifik yang muncul bersama Tahap 4: ketika sebuah keahlian menjadi otomatis, kamu kehilangan akses pada ingatan tentang saat tidak mengetahuinya. Langkah-langkah yang dulu membutuhkan seluruh perhatianmu kini terjadi di bawah tingkat kesadaran, yang membuatnya hampir mustahil untuk dijelaskan. Dalam kepemimpinan lintas budaya, ini sangat terasa — isyarat-isyarat yang kamu baca secara naluriah (kualitas sebuah keheningan, bobot di balik jawaban yang tampak setuju, makna dari ketidakhadiran seseorang) tidak terlihat bagi seseorang yang belum pernah harus mempelajarinya. Pemimpin Tahap 4 yang ingin mengembangkan orang lain harus mempelajari keterampilan yang berbeda sepenuhnya: membuat naluri mereka terlihat kembali, menceritakan secara real time apa yang mereka lakukan tanpa berpikir, sehingga seseorang di Tahap 2 dapat mulai melihat apa yang belum bisa mereka lihat.",
     quadrant: "top-right" as const,
@@ -575,7 +575,7 @@ export default function FourStagesClient({ isSaved: initialSaved }: Props) {
             textTransform: "uppercase", color: orange,
             margin: "0 0 24px",
           }}>
-            {t("FAITH ANCHOR", "JANGKAR IMAN", lang)}
+            {t("FAITH ANCHOR", "PEGANGAN IMAN", lang)}
           </p>
           {lang === "en" ? (
             <>
@@ -634,7 +634,7 @@ export default function FourStagesClient({ isSaved: initialSaved }: Props) {
                 lineHeight: 1.7,
                 margin: "0 0 24px",
               }}>
-                &ldquo;Aku telah belajar untuk merasa cukup dalam segala keadaan yang aku hadapi.&rdquo;
+                &ldquo;Kukatakan ini bukanlah karena kekurangan, sebab aku telah belajar mencukupkan diri dalam segala keadaan.&rdquo;
               </p>
               <p style={{ fontSize: 13, color: "oklch(75% 0.03 80)", letterSpacing: "0.05em", margin: "0 0 24px" }}>
                 <button
@@ -646,14 +646,14 @@ export default function FourStagesClient({ isSaved: initialSaved }: Props) {
                     fontFamily: "Montserrat, sans-serif", letterSpacing: "0.05em",
                   }}
                 >
-                  Filipi 4:11 (NIV)
+                  Filipi 4:11 (TB)
                 </button>
               </p>
               <p style={{ fontSize: 15, lineHeight: 1.85, color: "oklch(88% 0.01 80)", margin: "0 0 16px" }}>
                 Kata Yunani yang diterjemahkan &ldquo;belajar&rdquo; di sini adalah <em>manthano</em> — bukan belajar dari buku, melainkan pengenalan yang lahir dari latihan, dari pengalaman yang diulang terus-menerus. Di ayat 12, Paulus menambahkan sesuatu yang lebih dalam lagi: <em>memuemai</em>, kata yang dipakai untuk inisiasi ke dalam sebuah misteri atau keahlian. Kecukupan hati, kata Paulus, bukan karunia yang langsung diberikan saat kamu percaya. Itu adalah kompetensi yang kamu masuki melalui pengulangan, melalui kesulitan, melalui setiap tahap pengalaman yang menambah kedalaman pada tahap sebelumnya.
               </p>
               <p style={{ fontSize: 15, lineHeight: 1.85, color: "oklch(88% 0.01 80)", margin: "0 0 16px" }}>
-                Baca perikop ini melalui lensa empat tahap. Paulus tidak selalu hidup dalam kecukupan hati. Sebelum bertemu Yesus di jalan menuju Damaskus, ia — dengan kata-katanya sendiri — &ldquo;seorang penghujat, penganiaya, dan seorang yang ganas&rdquo; (1 Timotius 1:13): yakin akan kebenarannya sendiri, tidak sadar akan jurang antara rasa percaya dirinya dan kenyataan yang belum bisa ia lihat. Itulah Tahap 1: ketidaksadaran atas ketidakmampuan dalam bentuknya yang paling berbahaya. Yang kemudian terjadi adalah empat tahap yang dijalani dalam satu kehidupan. Saat ia menulis kepada jemaat Filipi dari balik jeruji penjara, ia telah tiba di suatu tempat yang tidak bisa ia rencanakan atau paksakan: kedamaian yang sudah terlatih.
+                Baca perikop ini melalui lensa empat tahap. Paulus tidak selalu hidup dalam kecukupan hati. Sebelum bertemu Yesus di jalan menuju Damaskus, ia — dengan kata-katanya sendiri — &ldquo;seorang penghujat dan seorang penganiaya dan seorang ganas&rdquo; (1 Timotius 1:13): yakin akan kebenarannya sendiri, tidak sadar akan jurang antara rasa percaya dirinya dan kenyataan yang belum bisa ia lihat. Itulah Tahap 1: ketidaksadaran atas ketidakmampuan dalam bentuknya yang paling berbahaya. Yang kemudian terjadi adalah empat tahap yang dijalani dalam satu kehidupan. Saat ia menulis kepada jemaat Filipi dari balik jeruji penjara, ia telah tiba di suatu tempat yang tidak bisa ia rencanakan atau paksakan: kedamaian yang sudah terlatih.
               </p>
               <p style={{ fontSize: 15, lineHeight: 1.85, color: "oklch(88% 0.01 80)", margin: "0 0 24px" }}>
                 Di tahap mana kamu sekarang, dalam tantangan kepemimpinan terpentingmu? Bukan di mana kamu ingin berada — di mana kamu sebenarnya berada? Perikop ini bukan ajakan untuk melompati tahap-tahap itu. Ini adalah kesaksian bahwa mereka layak untuk dijalani.
@@ -700,7 +700,7 @@ export default function FourStagesClient({ isSaved: initialSaved }: Props) {
             ] : [
               { n: 1, bold: "Kesadaran akan ketidakmampuan adalah awal dari pertumbuhan.", rest: " Tahap yang paling berbahaya bukan Tahap 2 — melainkan Tahap 1, di mana kamu tidak tahu apa yang kamu tidak tahu. Momen ketika kamu bisa melihat celah itu adalah momen ketika pembelajaran nyata menjadi mungkin." },
               { n: 2, bold: "Ketidaknyamanan di Tahap 2 adalah sinyal, bukan peringatan.", rest: " Perasaan tidak mampu yang mengikuti kesadaran yang sesungguhnya bukan bukti bahwa sesuatu telah salah. Itu adalah bukti bahwa pembelajaran telah dimulai. Pemimpin yang berhenti di sini tidak pernah melewati celah itu; mereka yang terus maju adalah yang akhirnya tidak perlu lagi memikirkannya." },
-              { n: 3, bold: "Penguasaan Tahap 4 menciptakan tantangan pengajaran.", rest: " Ketika sebuah keahlian menjadi otomatis, menjelaskannya membutuhkan upaya yang disengaja. Kamu harus belajar untuk membongkar apa yang telah kamu berhenti perhatikan — untuk masuk kembali ke pengalaman tidak tahu — agar bisa mengembangkan orang-orang di sekitarmu yang masih ada di sana." },
+              { n: 3, bold: "Penguasaan Tahap 4 menciptakan tantangan pengajaran.", rest: " Ketika sebuah keahlian menjadi otomatis, menjelaskannya membutuhkan upaya yang disengaja. Kamu harus belajar untuk menguraikan apa yang telah kamu berhenti perhatikan — untuk masuk kembali ke pengalaman tidak tahu — agar bisa mengembangkan orang-orang di sekitarmu yang masih ada di sana." },
               { n: 4, bold: "Tahap-tahap ini berulang.", rest: " Setiap keahlian baru, setiap budaya baru, setiap konteks baru membawa seorang pemimpin kembali ke Tahap 1. Kerendahan hati bukan kebajikan untuk pemula — itu adalah prasyarat untuk pertumbuhan yang berkelanjutan di setiap tingkat penguasaan." },
             ]).map(item => (
               <div key={item.n} style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
@@ -771,14 +771,14 @@ export default function FourStagesClient({ isSaved: initialSaved }: Props) {
               fontStyle: "italic", color: navy, lineHeight: 1.7, margin: "0 0 16px",
             }}>
               &ldquo;{lang === "id"
-                ? "Aku telah belajar untuk merasa cukup dalam segala keadaan yang aku hadapi."
+                ? "Kukatakan ini bukanlah karena kekurangan, sebab aku telah belajar mencukupkan diri dalam segala keadaan."
                 : "I have learned, in whatever state I am, to be content."}&rdquo;
             </p>
             <p style={{
               fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700,
               color: orange, letterSpacing: "0.1em", margin: 0,
             }}>
-              {lang === "id" ? "FILIPI 4:11 (NIV)" : "PHILIPPIANS 4:11 (NIV)"}
+              {lang === "id" ? "FILIPI 4:11 (TB)" : "PHILIPPIANS 4:11 (NIV)"}
             </p>
           </div>
         </div>

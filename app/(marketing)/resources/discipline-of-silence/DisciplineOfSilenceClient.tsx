@@ -75,7 +75,7 @@ const personalCards: Array<{
     labelEN: "The Morning Quiet",
     labelID: "Keheningan Pagi",
     responseEN: "Before you check your phone, before you open email, before the first notification lands - sit in silence for five minutes. No agenda. No words. Just willingness. This is the smallest sustainable version of the practice. Five minutes is not ideal. It is a beginning. The Desert Fathers called the early morning hours Vigils - the time when the self is most undefended and God is most audible. You do not need to be a monk to steal five minutes from your morning before the world finds you.",
-    responseID: "Sebelum Anda memeriksa ponsel, sebelum membuka email, sebelum notifikasi pertama datang - duduklah dalam keheningan selama lima menit. Tidak ada agenda. Tidak ada kata-kata. Hanya kesediaan. Ini adalah versi terkecil dari praktik yang berkelanjutan. Lima menit tidak ideal. Ini adalah awal. Para Bapa Padang Gurun menyebut jam-jam pagi awal sebagai Vigils - waktu ketika diri paling tidak terjaga dan Allah paling terdengar.",
+    responseID: "Sebelum Anda memeriksa ponsel, sebelum membuka email, sebelum notifikasi pertama datang - duduklah dalam keheningan selama lima menit. Tidak ada agenda. Tidak ada kata-kata. Hanya kesediaan. Ini adalah versi terkecil dari praktik yang berkelanjutan. Lima menit tidak ideal. Ini adalah awal. Para Bapa Padang Gurun menyebut jam-jam pagi awal sebagai Vigils - waktu ketika diri paling tidak terjaga dan Tuhan paling terdengar.",
   },
   {
     icon: <PhoneOff size={36} strokeWidth={1.5} color={navy} />,
@@ -111,7 +111,7 @@ const personalCards: Array<{
     labelEN: "Walking Without Noise",
     labelID: "Berjalan Tanpa Kebisingan",
     responseEN: "Leave your phone behind for one commute or walk per day. No earbuds. No podcast. No audiobook. Just movement and whatever arises. This may feel wasteful at first. That feeling is data - it tells you how thoroughly the space for unstructured thought has been colonised. The research suggests that the default mode network - the part of the brain active in unfocused thought - is where creativity, self-reflection, and emotional processing happen. You do not need to fill every commute with content. Some of your most important thinking happens when you stop feeding the mind and let it breathe.",
-    responseID: "Tinggalkan ponsel Anda untuk satu perjalanan atau jalan per hari. Tidak ada earbuds. Tidak ada podcast. Tidak ada audiobook. Hanya gerakan dan apa pun yang muncul. Ini mungkin terasa sia-sia pada awalnya. Perasaan itu adalah data - itu memberi tahu Anda betapa menyeluruhnya ruang untuk pemikiran tidak terstruktur telah dikolonisasi.",
+    responseID: "Tinggalkan ponsel Anda untuk satu kali bepergian atau berjalan kaki per hari. Tidak ada earbuds. Tidak ada podcast. Tidak ada audiobook. Hanya gerakan dan apa pun yang muncul. Ini mungkin terasa sia-sia pada awalnya. Perasaan itu adalah data - itu memberi tahu Anda betapa menyeluruhnya ruang untuk pemikiran tidak terstruktur telah dikolonisasi.",
   },
 ];
 
@@ -389,7 +389,7 @@ export default function DisciplineOfSilenceClient({
           }}>
             {t(
               "In a world that is always on, intentional silence has become the rarest leadership discipline. Discover why God speaks in quiet - and how to build the practice into your life and your team.",
-              "Di dunia yang selalu hidup, keheningan yang intentional telah menjadi disiplin kepemimpinan yang paling langka. Temukan mengapa Allah berbicara dalam ketenangan - dan bagaimana membangun praktik ini dalam hidup dan tim Anda."
+              "Di dunia yang selalu terhubung, keheningan yang disengaja telah menjadi disiplin kepemimpinan yang paling langka. Temukan mengapa Tuhan berbicara dalam ketenangan - dan bagaimana membangun praktik ini dalam hidup dan tim Anda."
             )}
           </p>
           <button
@@ -710,7 +710,7 @@ export default function DisciplineOfSilenceClient({
                 color: navy,
                 marginBottom: "1.5rem",
               }}>
-                {t("The World Always On", "Dunia yang Selalu Menyala")}
+                {t("The World Always On", "Dunia yang Selalu Terhubung")}
               </h2>
 
               <p style={prose}>
@@ -776,7 +776,7 @@ export default function DisciplineOfSilenceClient({
                 color: navy,
                 marginBottom: "1.5rem",
               }}>
-                {t("God Speaks in Silence", "Allah Berbicara dalam Keheningan")}
+                {t("God Speaks in Silence", "Tuhan Berbicara dalam Keheningan")}
               </h2>
 
               <p style={prose}>
@@ -796,7 +796,7 @@ export default function DisciplineOfSilenceClient({
               <p style={prose}>
                 {t(
                   "The phrase defies easy translation. The NRSV renders it 'sound of sheer silence.' The NIV calls it 'a gentle whisper.' The KJV, 'a still small voice.' What all translations are reaching toward is the same thing: God's most intimate communication did not come in the spectacular. It came in the quiet.",
-                  "Frasa itu menolak terjemahan yang mudah. NRSV mengartikannya 'bunyi keheningan murni.' NIV menyebutnya 'bisikan lembut.' KJV, 'suara yang lembut dan kecil.' Yang ingin dicapai semua terjemahan adalah hal yang sama: komunikasi Allah yang paling intim tidak datang dalam hal-hal yang spektakuler. Datang dalam ketenangan."
+                  "Frasa itu menolak terjemahan yang mudah. NRSV mengartikannya 'bunyi keheningan murni.' NIV menyebutnya 'bisikan lembut.' KJV, 'suara yang lembut dan kecil.' Yang ingin dicapai semua terjemahan adalah hal yang sama: komunikasi Tuhan yang paling intim tidak datang dalam hal-hal yang spektakuler. Datang dalam ketenangan."
                 )}
               </p>
               <p style={prose}>
@@ -828,7 +828,7 @@ export default function DisciplineOfSilenceClient({
               <p style={prose}>
                 {t(
                   "Thomas Merton puts it plainly: 'The beginning of prayer is silence. If we really want to pray we must first learn to listen, for in the silence of the heart God speaks.'",
-                  "Thomas Merton mengatakannya dengan jelas: 'Awal doa adalah keheningan. Jika kita benar-benar ingin berdoa kita harus terlebih dahulu belajar mendengarkan, karena dalam keheningan hati Allah berbicara.'"
+                  "Thomas Merton mengatakannya dengan jelas: 'Awal doa adalah keheningan. Jika kita benar-benar ingin berdoa kita harus terlebih dahulu belajar mendengarkan, karena dalam keheningan hati Tuhan berbicara.'"
                 )}
                 <sup style={supStyle}>9</sup>
               </p>
@@ -989,7 +989,7 @@ export default function DisciplineOfSilenceClient({
                 fontWeight: 700,
                 marginBottom: "2.5rem",
               }}>
-                {t("FAITH ANCHOR", "JANGKAR IMAN")}
+                {t("FAITH ANCHOR", "PEGANGAN IMAN")}
               </p>
 
               <h2 style={{
@@ -1088,7 +1088,7 @@ export default function DisciplineOfSilenceClient({
                 color: navy,
                 marginBottom: "0.75rem",
               }}>
-                {t("Make It Personal", "Jadikan Personal")}
+                {t("Make It Personal", "Kaitkan dengan Diri Anda")}
               </h2>
               <p style={{ ...prose, marginBottom: "2.5rem" }}>
                 {t(
@@ -1239,7 +1239,7 @@ export default function DisciplineOfSilenceClient({
                 {[
                   {
                     en: "Silence is not the absence of something. It is the presence of Someone. The discipline is not about quiet for its own sake - it is about clearing the path for what God wants to say.",
-                    id: "Keheningan bukan ketiadaan sesuatu. Ini adalah kehadiran Seseorang. Disiplin ini bukan tentang ketenangan demi ketenangan itu sendiri - ini tentang membersihkan jalan untuk apa yang ingin Allah katakan.",
+                    id: "Keheningan bukan ketiadaan sesuatu. Ini adalah kehadiran Seseorang. Disiplin ini bukan tentang ketenangan demi ketenangan itu sendiri - ini tentang membersihkan jalan untuk apa yang ingin Tuhan katakan.",
                   },
                   {
                     en: "Start smaller than feels meaningful. Five minutes of intentional silence is infinitely more formative than zero minutes of planned silence. Consistency matters more than duration at the beginning.",
@@ -1247,7 +1247,7 @@ export default function DisciplineOfSilenceClient({
                   },
                   {
                     en: "Your silence shapes your team's culture. Leaders who protect space for quiet give their teams permission to do the same. You are not just building a personal discipline - you are modelling something.",
-                    id: "Keheningan Anda membentuk budaya tim Anda. Pemimpin yang melindungi ruang untuk ketenangan memberi tim mereka izin untuk melakukan hal yang sama. Anda tidak hanya membangun disiplin pribadi - Anda memodelkan sesuatu.",
+                    id: "Keheningan Anda membentuk budaya tim Anda. Pemimpin yang melindungi ruang untuk ketenangan memberi tim mereka izin untuk melakukan hal yang sama. Anda tidak hanya membangun disiplin pribadi - Anda sedang memberi teladan.",
                   },
                 ].map((item, i) => (
                   <div key={i} style={{ display: "flex", gap: "1.5rem", alignItems: "flex-start" }}>

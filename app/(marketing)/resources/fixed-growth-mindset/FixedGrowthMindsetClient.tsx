@@ -109,7 +109,7 @@ const QUESTIONS = [
   {
     dim: "Effort",
     en: "I believe consistent effort is the main ingredient for long-term success.",
-    id: "Saya percaya bahwa usaha yang konsisten adalah bahan utama untuk keberhasilan jangka panjang.",
+    id: "Saya percaya bahwa usaha yang konsisten adalah faktor utama untuk keberhasilan jangka panjang.",
     type: "growth" as const,
   },
   {
@@ -146,7 +146,7 @@ const DIMENSIONS_INFO = [
   {
     key: "obstacles",
     en: { label: "Obstacles", growth: "Treats obstacles as part of the road and looks for a way through.", fixed: "Stops at the first obstacle." },
-    id: { label: "Hambatan", growth: "Melihat hambatan sebagai bagian dari perjalanan dan mencari jalan keluarnya.", fixed: "Berhenti di hambatan pertama." },
+    id: { label: "Hambatan", growth: "Melihat hambatan sebagai bagian dari proses dan mencari jalan keluarnya.", fixed: "Berhenti di hambatan pertama." },
   },
   {
     key: "success-of-others",
@@ -865,7 +865,7 @@ export default function FixedGrowthMindsetClient({
       {/* FAITH ANCHOR */}
       <section style={{ background: NAVY, padding: "72px 24px" }}>
         <div style={{ ...containerStyle }}>
-          <p style={{ ...eyebrowStyle, color: ORANGE }}>{t("FAITH ANCHOR", "JANGKAR IMAN")}</p>
+          <p style={{ ...eyebrowStyle, color: ORANGE }}>{t("FAITH ANCHOR", "PEGANGAN IMAN")}</p>
           <h2 style={{ ...sectionH2LightStyle }}>
             {t("Faithful with What You Have Been Given", "Setia dengan Apa yang Telah Diberikan")}
           </h2>
@@ -965,7 +965,7 @@ export default function FixedGrowthMindsetClient({
           <p style={{ fontSize: 15, color: BODY_TEXT, lineHeight: 1.65, marginBottom: 32, marginTop: 8 }}>
             {t(
               "These questions are designed for cross-cultural leaders. Take your time with them.",
-              "Pertanyaan-pertanyaan ini dirancang untuk pemimpin lintas budaya. Luangkan waktu Anda dengan mereka."
+              "Pertanyaan-pertanyaan ini dirancang untuk pemimpin lintas budaya. Luangkan waktu untuk merenungkannya."
             )}
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
@@ -978,7 +978,7 @@ export default function FixedGrowthMindsetClient({
               {
                 num: 2,
                 en: "In your home culture, how was failure typically handled: privately, communally, as shame, or as information? How has that cultural script shaped the voice you hear when you make a mistake in your current context?",
-                id: "Dalam budaya asal Anda, bagaimana kegagalan biasanya ditangani: secara pribadi, komunal, sebagai rasa malu, atau sebagai informasi? Bagaimana skrip budaya itu membentuk suara yang Anda dengar ketika Anda membuat kesalahan dalam konteks Anda saat ini?",
+                id: "Dalam budaya asal Anda, bagaimana kegagalan biasanya ditangani: secara pribadi, komunal, sebagai rasa malu, atau sebagai informasi? Bagaimana pola budaya itu membentuk suara yang Anda dengar ketika Anda membuat kesalahan dalam konteks Anda saat ini?",
               },
               {
                 num: 3,
@@ -1067,7 +1067,7 @@ export default function FixedGrowthMindsetClient({
           <p style={{ fontSize: 16, color: "oklch(72% 0.05 260)", lineHeight: 1.7, marginBottom: 40 }}>
             {t(
               "Awareness is the beginning of change. Retake this assessment every few months. Not to measure yourself, but to see where you have more to give.",
-              "Kesadaran adalah awal dari perubahan. Ulangi penilaian ini setiap beberapa bulan. Bukan untuk mengukur diri Anda, tetapi untuk melihat di mana Anda memiliki lebih banyak untuk diberikan."
+              "Kesadaran adalah awal dari perubahan. Ulangi penilaian ini setiap beberapa bulan. Bukan untuk mengukur diri Anda, tetapi untuk melihat di mana Anda masih bisa bertumbuh."
             )}
           </p>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>

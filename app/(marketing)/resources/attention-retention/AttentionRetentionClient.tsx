@@ -51,7 +51,7 @@ const ANDRAGOGY = [
     titleEn: "Self-Direction", titleId: "Pengarahan Diri", titleNl: "Zelfsturing",
     subtitleEn: "Autonomy", subtitleId: "Otonomi", subtitleNl: "Autonomie",
     descEn: "Adults prefer to take ownership of their own learning journey. Offering choices, self-paced elements, and personal application options respects the adult learner's need for autonomy.",
-    descId: "Orang dewasa lebih suka mengambil kepemilikan atas perjalanan belajar mereka sendiri. Menawarkan pilihan, elemen pembelajaran mandiri, dan opsi penerapan pribadi menghormati kebutuhan peserta dewasa akan otonomi.",
+    descId: "Orang dewasa lebih suka memegang tanggung jawab atas proses belajar mereka sendiri. Menawarkan pilihan, elemen pembelajaran mandiri, dan opsi penerapan pribadi menghormati kebutuhan peserta dewasa akan otonomi.",
     descNl: "Volwassenen geven er de voorkeur aan eigenaarschap te nemen over hun eigen leertraject. Het aanbieden van keuzes, zelfbepaald leren en persoonlijke toepassingsopties respecteert de behoefte aan autonomie van de volwassen leerder.",
     color: "oklch(44% 0.10 300)",
   },

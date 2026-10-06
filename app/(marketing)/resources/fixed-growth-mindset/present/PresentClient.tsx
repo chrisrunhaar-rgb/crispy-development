@@ -55,7 +55,7 @@ const DIMENSIONS: { label: Pair; meaning: Pair; growth: Pair; fixed: Pair }[] = 
   {
     label: { en: "Obstacles", id: "Hambatan" },
     meaning: { en: "What you do when the road gets blocked or the plan falls apart.", id: "Apa yang Anda lakukan ketika jalan terhalang atau rencana berantakan." },
-    growth: { en: "Treats obstacles as part of the road and looks for a way through.", id: "Melihat hambatan sebagai bagian dari perjalanan dan mencari jalan keluarnya." },
+    growth: { en: "Treats obstacles as part of the road and looks for a way through.", id: "Melihat hambatan sebagai bagian dari proses dan mencari jalan keluarnya." },
     fixed: { en: "Stops at the first obstacle.", id: "Berhenti di hambatan pertama." },
   },
   {
@@ -403,7 +403,7 @@ const SLIDES: Slide[] = [
           {lang === "id" ? "Pola Pikir Anda Tidak Tetap" : "Your Mindset Is Not Fixed"}
         </h2>
         <p style={{ fontFamily: SANS, fontSize: 40, fontWeight: 600, color: OFF_WHITE, margin: "0 0 24px" }}>
-          {lang === "id" ? "Beri nama. Kenali polanya. Ubah sudut pandang." : "Name it. Spot it. Reframe it."}
+          {lang === "id" ? "Ungkapkan. Kenali polanya. Ubah sudut pandang." : "Name it. Spot it. Reframe it."}
         </p>
         <p style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: 32, color: ON_NAVY, margin: 0 }}>
           {lang === "id" ? "Pertumbuhan dimulai dari langkah Anda berikutnya." : "Growth starts with your next step."}

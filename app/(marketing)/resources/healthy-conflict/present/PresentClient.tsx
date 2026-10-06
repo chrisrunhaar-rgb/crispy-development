@@ -69,7 +69,7 @@ const PDI = [
 
 const ELEMENTS: { title: Pair; body: Pair; say: Pair }[] = [
   {
-    title: { en: "Name what is coming before it arrives", id: "Sebutkan apa yang akan datang sebelum ia tiba" },
+    title: { en: "Name what is coming before it arrives", id: "Ungkapkan apa yang akan datang sebelum ia tiba" },
     body: { en: "When people are not surprised by tension, they are less likely to treat it as a threat.", id: "Ketika orang tidak terkejut dengan ketegangan, mereka lebih kecil kemungkinannya menganggapnya ancaman." },
     say: { en: "I want us to expect that we are going to disagree today. That is actually the goal.", id: "Saya ingin kita semua mengharapkan bahwa kita akan berselisih pendapat hari ini. Itu sebenarnya tujuannya." },
   },
@@ -81,11 +81,11 @@ const ELEMENTS: { title: Pair; body: Pair; say: Pair }[] = [
   {
     title: { en: "The goal is a broader picture, not a winner", id: "Tujuannya gambaran yang lebih luas, bukan pemenang" },
     body: { en: "Two honest perspectives usually see something neither could see alone.", id: "Dua perspektif yang jujur biasanya melihat sesuatu yang tidak bisa dilihat masing-masing sendirian." },
-    say: { en: "Let us hold both of these views at the same time for a moment and see what we can see from there.", id: "Mari kita tahan kedua pandangan ini sekaligus sejenak dan lihat apa yang bisa kita lihat dari situ." },
+    say: { en: "Let us hold both of these views at the same time for a moment and see what we can see from there.", id: "Mari kita pertimbangkan kedua pandangan ini sekaligus sejenak dan lihat apa yang bisa kita lihat dari situ." },
   },
   {
     title: { en: "Changing your mind is a sign of strength", id: "Mengubah pikiran adalah tanda kekuatan" },
-    body: { en: "In many cultures changing position feels like losing face. Name it and reframe it before you start.", id: "Dalam banyak budaya, mengubah posisi terasa seperti kehilangan muka. Sebutkan dan bingkai ulang sebelum mulai." },
+    body: { en: "In many cultures changing position feels like losing face. Name it and reframe it before you start.", id: "Dalam banyak budaya, mengubah posisi terasa seperti kehilangan muka. Ungkapkan hal itu dan bingkai ulang sebelum mulai." },
     say: { en: "If you walk out thinking differently than you walked in, that is exactly what is supposed to happen.", id: "Jika kamu keluar dengan berpikir berbeda dari ketika kamu masuk, itulah yang seharusnya terjadi." },
   },
   {
@@ -96,7 +96,7 @@ const ELEMENTS: { title: Pair; body: Pair; say: Pair }[] = [
 ];
 
 const QUESTIONS: Pair[] = [
-  { en: "What conversation have you been avoiding, and what has that silence cost?", id: "Percakapan apa yang selama ini kamu hindari, dan apa yang sudah dibayar oleh keheningan itu?" },
+  { en: "What conversation have you been avoiding, and what has that silence cost?", id: "Percakapan apa yang selama ini kamu hindari, dan harga apa yang sudah harus dibayar akibat keheningan itu?" },
   { en: "Think of a leader who handled conflict well. What did they do that made it feel safe?", id: "Pikirkan seorang pemimpin yang menangani konflik dengan baik. Apa yang mereka lakukan sehingga terasa aman?" },
   { en: "Where in your team is polite agreement standing in for honest engagement?", id: "Di mana dalam timmu persetujuan sopan menggantikan keterlibatan yang jujur?" },
 ];
@@ -206,7 +206,7 @@ const SLIDES: Slide[] = [
         {rule(120)}
         <p style={{ fontFamily: serif, fontStyle: "italic", fontSize: 40, lineHeight: 1.35, color: onNavy, margin: 0, textAlign: "center", maxWidth: 1100 }}>
           {t("Most leaders know how to keep the peace. Fewer know how to break it in a way that builds something better.",
-            "Kebanyakan pemimpin tahu cara menjaga perdamaian. Lebih sedikit yang tahu cara memecahnya dengan cara yang membangun sesuatu yang lebih baik.", lang)}
+            "Kebanyakan pemimpin tahu cara menjaga perdamaian. Lebih sedikit yang tahu cara mengusiknya dengan cara yang membangun sesuatu yang lebih baik.", lang)}
         </p>
       </>
     ),
@@ -420,7 +420,7 @@ const SLIDES: Slide[] = [
     render: (lang, step) => (
       <>
         <h2 style={{ ...bigTitle, color: offWhite, fontStyle: "italic", fontSize: 108, maxWidth: 1300 }}>
-          &ldquo;{t("Faithful are the wounds of a friend.", "Setia adalah luka seorang sahabat.", lang)}&rdquo;
+          &ldquo;{t("Faithful are the wounds of a friend.", "Seorang kawan memukul dengan maksud baik.", lang)}&rdquo;
         </h2>
         <p style={kicker}>{t("Proverbs 27:6", "Amsal 27:6", lang)}</p>
         <div style={show(step >= 1)}>{rule(120)}</div>

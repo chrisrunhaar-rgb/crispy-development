@@ -14,7 +14,7 @@ const BIBLE_CARDS = [
     en_label: "Israel",
     id_label: "Israel",
     en_body: "God did not call one person to be his witness among the nations. He called a whole people. Their identity as a community was part of the calling itself, not the container for it.",
-    id_body: "Allah tidak memanggil satu orang untuk menjadi saksi-Nya di antara bangsa-bangsa. Ia memanggil seluruh umat. Identitas mereka sebagai komunitas adalah bagian dari panggilan itu sendiri, bukan sekadar wadahnya.",
+    id_body: "Tuhan tidak memanggil satu orang untuk menjadi saksi-Nya di antara bangsa-bangsa. Ia memanggil seluruh umat. Identitas mereka sebagai komunitas adalah bagian dari panggilan itu sendiri, bukan sekadar wadahnya.",
     en_verse: "\"You are my witnesses,\" declares the Lord, \"and my servant whom I have chosen, so that you may know and believe me and understand that I am he.\"",
     id_verse: "\"Kamu adalah saksi-saksi-Ku,\" demikianlah firman Tuhan, \"dan hamba-Ku yang telah Aku pilih, supaya kamu tahu dan percaya kepada-Ku serta mengerti, bahwa Aku tetap Dia.\"",
     en_ref: "Isaiah 43:10",
@@ -100,9 +100,9 @@ export default function CallingIsNeverSoloClient({ isSaved: initialSaved }: Prop
 
   const RESEARCH_BG_PARAS_ID = [
     `Pola panggilan komunal mengalir melalui seluruh Kitab Suci. Israel dipanggil sebagai satu umat, bukan sekadar kumpulan individu. Dalam Kisah Para Rasul 13:1–3, pengutusan Paulus dan Barnabas didahului oleh puasa, doa, dan konfirmasi bersama: seluruh jemaat menumpangkan tangan dan mengutus mereka bersama-sama. Para teolog Alkitab telah mengidentifikasi pola Antiokhia ini sebagai model normatif untuk penugasan vokasional. Keragaman etnis jemaat dan struktur tim apostolik bukan sekadar latar pengutusan, melainkan bagian konstitutifnya.`,
-    `Tradisi Reformasi memformalkan apa yang tersirat dalam Kitab Suci: perbedaan antara panggilan internal (rasa panggilan seseorang) dan panggilan eksternal (pengakuan dan konfirmasi komunitas). Panggilan internal saja dianggap tidak cukup untuk pelayanan yang sah. Bukan karena Allah tidak dapat berbicara kepada individu, tetapi karena kapasitas manusia untuk menipu diri sendiri adalah nyata. Panggilan eksternal memberikan pemeriksaan struktural. Kerangka pembentukan vokasional Fuller Seminary memperluas ini menjadi model 'locus dan fokus': locus panggilan adalah komunitas dari mana ia muncul; fokusnya adalah pekerjaan spesifik yang ditunjuknya.`,
+    `Tradisi Reformasi memformalkan apa yang tersirat dalam Kitab Suci: perbedaan antara panggilan internal (rasa panggilan seseorang) dan panggilan eksternal (pengakuan dan konfirmasi komunitas). Panggilan internal saja dianggap tidak cukup untuk pelayanan yang sah. Bukan karena Tuhan tidak dapat berbicara kepada individu, tetapi karena kapasitas manusia untuk menipu diri sendiri adalah nyata. Panggilan eksternal memberikan pemeriksaan struktural. Kerangka pembentukan vokasional Fuller Seminary memperluas ini menjadi model 'locus dan fokus': locus panggilan adalah komunitas dari mana ia muncul; fokusnya adalah pekerjaan spesifik yang ditunjuknya.`,
     `Model panggilan individualistis sebagian besar merupakan perkembangan Barat, dibentuk oleh gagasan-gagasan Pencerahan tentang identitas pribadi dan agen moral individual. Riset budaya memberi skor individualisme Indonesia sebesar 14 dan Malaysia sebesar 26, termasuk masyarakat yang paling kolektivistis secara global. Dalam konteks seperti itu, identitas dan panggilan secara alami bersifat relasional: panggilan bukan terutama penemuan pribadi, melainkan sesuatu yang komunitas lihat dalam seseorang, nyatakan dengan lantang, dan utus mereka ke dalamnya. Para misiolog telah mendokumentasikan bagaimana mengimpor kerangka panggilan Barat ke konteks kolektivistis menciptakan gesekan, sementara pendekatan komunitas-pertama yang selaras dengan Kisah Para Rasul 16:31 efektif secara missiologis dan koheren secara budaya.`,
-    `Penelitian empiris telah mengkuantifikasi biaya panggilan tanpa komunitas. Di antara para pekerja lintas budaya, Gerakan Lausanne memperkirakan sekitar 1.500 pekerja pelayanan Amerika Utara meninggalkan posisi mereka setiap bulan. Studi ReMAP II, mencakup 22 negara dan 600 lembaga, menemukan bahwa lembaga dengan kurang dari 50 pekerja kehilangan sekitar 33% pekerja lapangan mereka setiap tahun, dibandingkan hanya 6% untuk organisasi yang lebih besar. Dukungan rumah yang tidak memadai dan isolasi sesama rekan kerja secara konsisten berada di antara penyebab gesekan yang paling bisa dicegah. Pola ini juga berlaku dalam kepemimpinan sekuler: studi terhadap pemimpin senior menemukan bahwa 50% mengalami kesepian yang signifikan, dengan 61% melaporkan hal itu menghambat efektivitas mereka.`,
+    `Penelitian empiris telah mengukur harga yang harus dibayar oleh panggilan tanpa komunitas. Di antara para pekerja lintas budaya, Gerakan Lausanne memperkirakan sekitar 1.500 pekerja pelayanan Amerika Utara meninggalkan posisi mereka setiap bulan. Studi ReMAP II, mencakup 22 negara dan 600 lembaga, menemukan bahwa lembaga dengan kurang dari 50 pekerja kehilangan sekitar 33% pekerja lapangan mereka setiap tahun, dibandingkan hanya 6% untuk organisasi yang lebih besar. Dukungan rumah yang tidak memadai dan isolasi sesama rekan kerja secara konsisten berada di antara penyebab gesekan yang paling bisa dicegah. Pola ini juga berlaku dalam kepemimpinan sekuler: studi terhadap pemimpin senior menemukan bahwa 50% mengalami kesepian yang signifikan, dengan 61% melaporkan hal itu menghambat efektivitas mereka.`,
     `Perjanjian Baru tidak pernah menggambarkan panggilan terisolasi sebagai norma. Yesus mengutus tujuh puluh dua orang berdua-dua (Lukas 10:1). Paulus selalu bepergian bersama rekan-rekan kerja. Penatua diangkat dalam kelompok, tidak pernah secara individual. Henri Nouwen mengidentifikasi penangkal kepemimpinan yang terisolasi sebagai komunitas di mana "kekuasaan didesentralisasi, dibagikan, dan kaya akan kejujuran dan akuntabilitas." Hubungan akuntabilitas yang esensial bagi pekerja Kristen yang berkelanjutan mencakup dimensi moral, spiritual, keuangan, relasional, missiologis, dan organisasional. Model panggilan komunal bukan inovasi modern atau akomodasi budaya. Ia adalah pola aslinya.`,
   ];
 
@@ -124,7 +124,7 @@ export default function CallingIsNeverSoloClient({ isSaved: initialSaved }: Prop
           <p style={{ fontFamily: serif, fontSize: "clamp(19px, 2.5vw, 23px)", color: "oklch(82% 0.025 80)", lineHeight: 1.75, marginBottom: 40, fontStyle: "italic" }}>
             {t(
               "Your calling is one thread in a much larger tapestry. How God builds through communities, teams, and generations, and what it means to steward your part well.",
-              "Panggilanmu adalah satu benang dalam permadani yang jauh lebih besar. Bagaimana Allah membangun melalui komunitas, tim, dan generasi, dan apa artinya mengelola bagianmu dengan baik."
+              "Panggilanmu adalah satu benang dalam permadani yang jauh lebih besar. Bagaimana Tuhan membangun melalui komunitas, tim, dan generasi, dan apa artinya mengelola bagianmu dengan baik."
             )}
           </p>
           <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 19px)", color: "oklch(72% 0.025 80)", lineHeight: 1.75, maxWidth: 580, margin: "0 auto 48px" }}>
@@ -148,7 +148,7 @@ export default function CallingIsNeverSoloClient({ isSaved: initialSaved }: Prop
         <p style={{ fontFamily: serif, fontSize: "clamp(19px, 2.2vw, 24px)", fontStyle: "italic", color: navy, lineHeight: 1.8, padding: "0 0 0 28px", borderLeft: `3px solid ${orange}` }}>
           {t(
             "You have probably heard it said that God has a plan for your life. A personal plan. A specific calling, meant just for you, found in quiet moments alone. People who accepted this idea and people who quietly questioned it can end up in the same place: doing the work of God in growing isolation, wondering why it feels smaller than it should.",
-            "Anda mungkin pernah mendengar bahwa Allah memiliki rencana bagi hidup Anda. Rencana pribadi. Panggilan khusus, hanya untuk Anda, ditemukan dalam momen-momen sunyi sendirian. Orang yang menerima gagasan ini dan orang yang diam-diam meragukannya bisa berakhir di tempat yang sama: melakukan pekerjaan Allah dalam kesendirian yang semakin besar, bertanya-tanya mengapa rasanya lebih kecil dari seharusnya."
+            "Anda mungkin pernah mendengar bahwa Tuhan memiliki rencana bagi hidup Anda. Rencana pribadi. Panggilan khusus, hanya untuk Anda, ditemukan dalam momen-momen sunyi sendirian. Orang yang menerima gagasan ini dan orang yang diam-diam meragukannya bisa berakhir di tempat yang sama: melakukan pekerjaan Tuhan dalam kesendirian yang semakin besar, bertanya-tanya mengapa rasanya lebih kecil dari seharusnya."
           )}
         </p>
 
@@ -195,7 +195,7 @@ export default function CallingIsNeverSoloClient({ isSaved: initialSaved }: Prop
           <p style={{ marginBottom: 24 }}>
             {t(
               "It is true that God speaks to individuals. Moses heard a voice from a burning bush. Paul was stopped on a road. Samuel heard his name called in the night. These are real moments of personal encounter, and they matter.",
-              "Memang benar bahwa Allah berbicara kepada individu. Musa mendengar suara dari semak yang menyala. Paulus dihentikan di jalan. Samuel mendengar namanya dipanggil di malam hari. Ini adalah momen perjumpaan pribadi yang nyata, dan itu penting."
+              "Memang benar bahwa Tuhan berbicara kepada individu. Musa mendengar suara dari semak yang menyala. Paulus dihentikan di jalan. Samuel mendengar namanya dipanggil di malam hari. Ini adalah momen perjumpaan pribadi yang nyata, dan itu penting."
             )}
           </p>
           <p style={{ marginBottom: 24 }}>
@@ -207,7 +207,7 @@ export default function CallingIsNeverSoloClient({ isSaved: initialSaved }: Prop
           <p style={{ marginBottom: 0 }}>
             {t(
               "The idea that calling is a private experience, uniquely yours, lived out alone, needing no community to make it real, is not what we see in Scripture. It is more a product of Western, individualist thinking that has shaped how many of us read the Bible. Much of the world has always found this reading strange. In cultures where identity is naturally relational, the idea that God would speak your calling to you alone, and that you would carry it alone, feels foreign and small. They were right to notice.",
-              "Gagasan bahwa panggilan adalah pengalaman pribadi, hanya milikmu, dijalani sendirian, tidak membutuhkan komunitas untuk membuatnya nyata, bukanlah apa yang kita lihat dalam Kitab Suci. Ini lebih merupakan produk dari pemikiran Barat dan individualistis yang telah membentuk cara banyak dari kita membaca Alkitab. Sebagian besar dunia selalu merasa bacaan ini aneh. Dalam budaya di mana identitas secara alami bersifat relasional, gagasan bahwa Allah akan berbicara panggilan Anda kepada Anda sendirian, dan bahwa Anda akan membawanya sendirian, terasa asing dan kecil. Mereka benar untuk memperhatikan hal ini."
+              "Gagasan bahwa panggilan adalah pengalaman pribadi, hanya milikmu, dijalani sendirian, tidak membutuhkan komunitas untuk membuatnya nyata, bukanlah apa yang kita lihat dalam Kitab Suci. Ini lebih merupakan produk dari pemikiran Barat dan individualistis yang telah membentuk cara banyak dari kita membaca Alkitab. Sebagian besar dunia selalu merasa bacaan ini aneh. Dalam budaya di mana identitas secara alami bersifat relasional, gagasan bahwa Tuhan akan berbicara panggilan Anda kepada Anda sendirian, dan bahwa Anda akan membawanya sendirian, terasa asing dan kecil. Mereka benar untuk memperhatikan hal ini."
             )}
           </p>
         </div>
@@ -220,7 +220,7 @@ export default function CallingIsNeverSoloClient({ isSaved: initialSaved }: Prop
             {t("The Pattern", "Pola")}
           </p>
           <h2 style={{ fontFamily: serif, fontSize: "clamp(28px, 3.5vw, 40px)", fontWeight: 700, color: navy, marginBottom: 16, lineHeight: 1.2, fontStyle: "italic" }}>
-            {t("How We See God Work in the Bible", "Bagaimana Kita Melihat Allah Bekerja dalam Alkitab")}
+            {t("How We See God Work in the Bible", "Bagaimana Kita Melihat Tuhan Bekerja dalam Alkitab")}
           </h2>
           <p style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 20px)", color: bodyText, lineHeight: 1.9, marginBottom: 48 }}>
             {t(
@@ -309,7 +309,7 @@ export default function CallingIsNeverSoloClient({ isSaved: initialSaved }: Prop
           <p style={{ marginBottom: 24 }}>
             {t(
               "Unity among followers of Jesus is not simply a nice thing to have. It is, according to Jesus himself, the evidence that God sent him and loves the world. The way we work together, or fail to, is a witness to something beyond us.",
-              "Kesatuan di antara pengikut Yesus bukan sekadar hal yang baik untuk dimiliki. Menurut Yesus sendiri, itu adalah bukti bahwa Allah mengutus-Nya dan mengasihi dunia. Cara kita bekerja bersama, atau gagal melakukannya, adalah kesaksian tentang sesuatu yang melampaui kita."
+              "Kesatuan di antara pengikut Yesus bukan sekadar hal yang baik untuk dimiliki. Menurut Yesus sendiri, itu adalah bukti bahwa Tuhan mengutus-Nya dan mengasihi dunia. Cara kita bekerja bersama, atau gagal melakukannya, adalah kesaksian tentang sesuatu yang melampaui kita."
             )}
           </p>
           <p style={{ marginBottom: 0 }}>
@@ -339,25 +339,25 @@ export default function CallingIsNeverSoloClient({ isSaved: initialSaved }: Prop
           <p style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 20px)", color: "oklch(76% 0.03 80)", lineHeight: 1.9, marginBottom: 40 }}>
             {t(
               "When a leader keeps their vision separate from others, three things tend to follow: the vision grows rigid around what the leader cannot see in themselves, blind spots stay hidden until they become costly, and the fruit is real but thinner than it could have been. This is not a shame diagnosis. It is a structural one. The design was always communal.",
-              "Ketika seorang pemimpin memisahkan visi mereka dari orang lain, tiga hal cenderung terjadi: visi menjadi kaku di sekitar apa yang tidak bisa dilihat pemimpin dalam dirinya sendiri, titik buta tetap tersembunyi sampai menjadi mahal, dan buahnya nyata tetapi lebih tipis dari yang seharusnya. Ini bukan diagnosis rasa malu. Ini adalah diagnosis struktural. Rancangannya selalu bersifat komunal."
+              "Ketika seorang pemimpin memisahkan visi mereka dari orang lain, tiga hal cenderung terjadi: visi menjadi kaku di sekitar apa yang tidak bisa dilihat pemimpin dalam dirinya sendiri, hal-hal yang tidak ia sadari tetap tersembunyi sampai menimbulkan kerugian, dan hasilnya nyata tetapi lebih sedikit dari seharusnya. Ini bukan diagnosis rasa malu. Ini adalah diagnosis struktural. Rancangannya selalu bersifat komunal."
             )}
           </p>
 
           {/* Lone Wolf → Messiah Complex */}
           <div style={{ background: "oklch(18% 0.09 260)", borderRadius: 6, padding: "36px 40px", marginBottom: 40 }}>
             <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, color: orange, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
-              {t("Lone Wolf → Messiah Complex", "Lone Wolf → Messiah Complex")}
+              {t("Lone Wolf → Messiah Complex", "Serigala Penyendiri → Kompleks Mesias")}
             </p>
             <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 19px)", color: "oklch(76% 0.03 80)", lineHeight: 1.85, marginBottom: 20 }}>
               {t(
                 "The lone wolf pattern begins quietly. A gifted leader starts to feel that others slow them down, that the community doesn't fully understand the vision, that it is faster and cleaner to work alone. So they pull back. Accountability fades. Correction stops reaching them.",
-                "Pola lone wolf dimulai dengan tenang. Seorang pemimpin yang berbakat mulai merasa bahwa orang lain memperlambat mereka, bahwa komunitas tidak sepenuhnya memahami visi, bahwa lebih cepat dan lebih bersih bekerja sendiri. Jadi mereka menarik diri. Akuntabilitas memudar. Koreksi berhenti menjangkau mereka."
+                "Pola serigala penyendiri dimulai dengan tenang. Seorang pemimpin yang berbakat mulai merasa bahwa orang lain memperlambat mereka, bahwa komunitas tidak sepenuhnya memahami visi, bahwa lebih cepat dan lebih bersih bekerja sendiri. Jadi mereka menarik diri. Akuntabilitas memudar. Koreksi berhenti menjangkau mereka."
               )}
             </p>
             <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 19px)", color: "oklch(76% 0.03 80)", lineHeight: 1.85, marginBottom: 20 }}>
               {t(
                 "Left unchecked, this becomes something more dangerous: the belief, not always conscious, that only they can carry the work. The burden grows. The control tightens. The circle of trust shrinks to one. This is what is often called a Messiah Complex: the leader who believes the mission depends entirely on them staying at the centre of it.",
-                "Jika dibiarkan, ini menjadi sesuatu yang lebih berbahaya: keyakinan, tidak selalu disadari, bahwa hanya mereka yang bisa mengemban pekerjaan itu. Beban bertambah berat. Kontrol semakin ketat. Lingkaran kepercayaan menyusut menjadi satu orang. Inilah yang sering disebut Messiah Complex: pemimpin yang percaya bahwa misi sepenuhnya bergantung pada diri mereka tetap berada di pusatnya."
+                "Jika dibiarkan, ini menjadi sesuatu yang lebih berbahaya: keyakinan, tidak selalu disadari, bahwa hanya mereka yang bisa mengemban pekerjaan itu. Beban bertambah berat. Kontrol semakin ketat. Lingkaran kepercayaan menyusut menjadi satu orang. Inilah yang sering disebut Kompleks Mesias: pemimpin yang percaya bahwa misi sepenuhnya bergantung pada diri mereka tetap berada di pusatnya."
               )}
             </p>
             <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 19px)", fontStyle: "italic", color: offWhite, lineHeight: 1.85, margin: 0 }}>
@@ -454,7 +454,7 @@ export default function CallingIsNeverSoloClient({ isSaved: initialSaved }: Prop
             <p style={{ marginBottom: 0 }}>
               {t(
                 "When cross-cultural workers carry an individualist model of calling into a collectivist context, the friction is real but often invisible. They may experience their calling as something between themselves and God, confirmed perhaps by a pastor or an organisation, but ultimately personal. The people they work with may find this hard to understand, not because they lack faith, but because in their experience, a person who cannot be placed within a web of relationships and responsibilities has not yet fully arrived. The gift these cultures bring to the wider church is this: they have been living the biblical pattern of communal calling all along.",
-                "Ketika para pekerja lintas budaya membawa model panggilan yang individualistis ke dalam konteks kolektivistis, gesekan itu nyata tetapi sering tidak terlihat. Mereka mungkin mengalami panggilan mereka sebagai sesuatu antara diri mereka dan Allah, mungkin dikonfirmasi oleh seorang pendeta atau organisasi, tetapi pada akhirnya bersifat pribadi. Orang-orang yang mereka layani mungkin sulit memahami ini, bukan karena mereka kurang iman, tetapi karena dalam pengalaman mereka, seseorang yang tidak bisa ditempatkan dalam jaringan hubungan dan tanggung jawab belum sepenuhnya hadir. Karunia yang dibawa budaya-budaya ini kepada gereja yang lebih luas adalah ini: mereka telah hidup dalam pola alkitabiah tentang panggilan komunal sepanjang waktu."
+                "Ketika para pekerja lintas budaya membawa model panggilan yang individualistis ke dalam konteks kolektivistis, gesekan itu nyata tetapi sering tidak terlihat. Mereka mungkin mengalami panggilan mereka sebagai sesuatu antara diri mereka dan Tuhan, mungkin dikonfirmasi oleh seorang pendeta atau organisasi, tetapi pada akhirnya bersifat pribadi. Orang-orang yang mereka layani mungkin sulit memahami ini, bukan karena mereka kurang iman, tetapi karena dalam pengalaman mereka, seseorang yang tidak bisa ditempatkan dalam jaringan hubungan dan tanggung jawab belum sepenuhnya hadir. Karunia yang dibawa budaya-budaya ini kepada gereja yang lebih luas adalah ini: mereka telah hidup dalam pola alkitabiah tentang panggilan komunal sepanjang waktu."
               )}
             </p>
           </div>
@@ -480,7 +480,7 @@ export default function CallingIsNeverSoloClient({ isSaved: initialSaved }: Prop
             <p style={{ marginBottom: 24 }}>
               {t(
                 "After two years, something shifted. She was present but not placed. The community treated her with respect, even warmth, but she began to notice that she was known as a visiting expert rather than a member. No one seemed quite sure what they would do if she left. No one was responsible for her if things went wrong. She was not woven into any web of relationship or accountability. She floated above the community rather than within it.",
-                "Setelah dua tahun, sesuatu berubah. Ia hadir tetapi tidak ditempatkan. Komunitas memperlakukannya dengan hormat, bahkan kehangatan, tetapi ia mulai memperhatikan bahwa ia dikenal sebagai pakar tamu, bukan anggota. Tidak ada yang tampaknya tahu apa yang akan mereka lakukan jika ia pergi. Tidak ada yang bertanggung jawab atasnya jika sesuatu berjalan salah. Ia tidak terjalin ke dalam jaringan hubungan atau akuntabilitas mana pun. Ia melayang di atas komunitas, bukan di dalamnya."
+                "Setelah dua tahun, sesuatu berubah. Ia hadir tetapi belum punya tempat. Komunitas memperlakukannya dengan hormat, bahkan kehangatan, tetapi ia mulai memperhatikan bahwa ia dikenal sebagai pakar tamu, bukan anggota. Tidak ada yang tampaknya tahu apa yang akan mereka lakukan jika ia pergi. Tidak ada yang bertanggung jawab atasnya jika sesuatu berjalan salah. Ia tidak terjalin ke dalam jaringan hubungan atau akuntabilitas mana pun. Ia melayang di atas komunitas, bukan di dalamnya."
               )}
             </p>
             <p style={{ marginBottom: 24 }}>
@@ -504,7 +504,7 @@ export default function CallingIsNeverSoloClient({ isSaved: initialSaved }: Prop
             <p style={{ marginBottom: 0 }}>
               {t(
                 "The conversation that followed was not dramatic. But something settled. She described it later as the first time she felt she had fully arrived — not in the country, she had been there three years, but in the work. Her calling had not changed. It had simply been placed inside a community that could hold it.",
-                "Percakapan yang menyusul tidak dramatis. Tetapi sesuatu menetap. Ia menggambarkannya kemudian sebagai pertama kalinya ia merasa telah benar-benar tiba — bukan di negara itu, ia sudah ada di sana selama tiga tahun, tetapi dalam pekerjaan. Panggilannya tidak berubah. Ia hanya ditempatkan di dalam komunitas yang bisa menahannya."
+                "Percakapan yang menyusul tidak dramatis. Tetapi ada yang terasa mantap. Ia menggambarkannya kemudian sebagai pertama kalinya ia merasa telah benar-benar tiba — bukan di negara itu, ia sudah ada di sana selama tiga tahun, tetapi dalam pekerjaan. Panggilannya tidak berubah. Ia hanya ditempatkan di dalam komunitas yang bisa menopangnya."
               )}
             </p>
           </div>
@@ -517,7 +517,7 @@ export default function CallingIsNeverSoloClient({ isSaved: initialSaved }: Prop
       {/* ── Faith Anchor ───────────────────────────────────────────── */}
       <div style={{ padding: "80px 24px", maxWidth: 720, margin: "0 auto" }}>
         <p style={{ fontFamily: serif, fontSize: 11, fontWeight: 400, letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 24, textAlign: "center" }}>
-          {t("Faith Anchor", "Jangkar Iman")}
+          {t("Faith Anchor", "Pegangan Iman")}
         </p>
         <div style={{ background: lightGray, borderRadius: 6, padding: "44px 48px", textAlign: "center" }}>
           <p style={{ fontFamily: serif, fontSize: "clamp(20px, 2.5vw, 28px)", fontStyle: "italic", color: navy, lineHeight: 1.75, marginBottom: 20 }}>

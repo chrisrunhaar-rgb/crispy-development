@@ -193,7 +193,7 @@ export default function ConflictResolutionClient({ userPathway, isSaved: initial
     },
     collaborating: {
       en: "Your default is Collaborating. You invest deeply in working things through. Your cross-cultural risk: collaboration requires openness that many cultures cannot offer in formal settings. Don't mistake silence for agreement — check whether your team can actually voice disagreement safely.",
-      id: "Default Anda adalah Berkolaborasi. Anda berinvestasi secara mendalam dalam mengerjakan sesuatu. Risiko lintas budaya Anda: kolaborasi membutuhkan keterbukaan yang banyak budaya tidak dapat tawarkan dalam pengaturan formal.",
+      id: "Default Anda adalah Berkolaborasi. Anda berinvestasi secara mendalam untuk menyelesaikan masalah sampai tuntas. Risiko lintas budaya Anda: kolaborasi membutuhkan keterbukaan yang tidak dapat ditawarkan banyak budaya dalam situasi formal.",
     },
     compromising: {
       en: "Your default is Compromising. You're pragmatic and fair-minded. Your cross-cultural risk: visible compromise can mean public loss for both parties in face-oriented cultures. Explore whether indirect settlement through a third party achieves the same result with less cost.",
@@ -201,11 +201,11 @@ export default function ConflictResolutionClient({ userPathway, isSaved: initial
     },
     avoiding: {
       en: "Your default is Avoiding. You're patient and protect relationships well. Your cross-cultural risk: indefinite avoidance is not culturally sophisticated — it's unresolved conflict. Build a practice of setting an internal 'address by' date for every issue you're sitting on.",
-      id: "Default Anda adalah Menghindari. Anda sabar dan melindungi hubungan dengan baik. Risiko lintas budaya Anda: penghindaran tanpa batas bukanlah kecanggihan budaya — itu konflik yang tidak terselesaikan.",
+      id: "Default Anda adalah Menghindari. Anda sabar dan melindungi hubungan dengan baik. Risiko lintas budaya Anda: penghindaran tanpa batas bukanlah kematangan budaya, melainkan konflik yang tidak terselesaikan.",
     },
     accommodating: {
       en: "Your default is Accommodating. You're generous and relationally intelligent. Your cross-cultural risk: chronic accommodation can breed resentment and signal to your team that you don't actually hold a position. Make sure they know the difference between when you're giving freely and when you're being led.",
-      id: "Default Anda adalah Mengakomodasi. Anda murah hati dan cerdas secara relasional. Risiko lintas budaya Anda: akomodasi kronis dapat menumbuhkan kebencian dan memberi sinyal kepada tim Anda bahwa Anda sebenarnya tidak memegang posisi.",
+      id: "Default Anda adalah Mengakomodasi. Anda murah hati dan cerdas secara relasional. Risiko lintas budaya Anda: akomodasi kronis dapat menumbuhkan kepahitan dan memberi sinyal kepada tim Anda bahwa Anda sebenarnya tidak memiliki pendirian.",
     },
   };
 
@@ -227,7 +227,7 @@ export default function ConflictResolutionClient({ userPathway, isSaved: initial
           <p style={{ fontFamily: serif, fontSize: "clamp(16px, 2vw, 19px)", color: "oklch(82% 0.025 80)", lineHeight: 1.65, maxWidth: 580, margin: "0 0 40px" }}>
             {t(
               "Every leader has a default conflict style. In cross-cultural settings, your default may be creating problems you can't see. Explore the map — then find your range.",
-              "Setiap pemimpin memiliki gaya konflik default. Dalam pengaturan lintas budaya, default Anda mungkin menciptakan masalah yang tidak dapat Anda lihat. Jelajahi peta — lalu temukan jangkauan Anda.",
+              "Setiap pemimpin memiliki gaya konflik default. Dalam konteks lintas budaya, default Anda mungkin menciptakan masalah yang tidak dapat Anda lihat. Jelajahi peta, lalu temukan rentang gaya Anda.",
               "Elke leider heeft een standaard conflictstijl. In interculturele settings kan jouw standaard problemen cre—ren die je niet ziet. Verken de kaart — dan vind je bereik."
             )}
           </p>
@@ -377,7 +377,7 @@ export default function ConflictResolutionClient({ userPathway, isSaved: initial
                   </div>
                   <div style={{ background: offWhite, padding: "14px 16px", borderRadius: 12 }}>
                     <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, color: activeMode.color, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 6 }}>
-                      {t("Expand your range", "Perluas jangkauan Anda", "Vergroot je bereik")}
+                      {t("Expand your range", "Perluas rentang gaya Anda", "Vergroot je bereik")}
                     </p>
                     <p style={{ fontSize: 13, color: bodyText, lineHeight: 1.7, margin: 0 }}>
                       {lang === "en" ? activeMode.en_tip : lang === "id" ? activeMode.id_tip : activeMode.id_tip}
@@ -397,7 +397,7 @@ export default function ConflictResolutionClient({ userPathway, isSaved: initial
             {t("What is your default?", "Apa default Anda?", "Wat is jouw standaard?")}
           </h2>
           <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.7, textAlign: "center", marginBottom: 36 }}>
-            {t("Select the style you naturally reach for first in most conflicts.", "Pilih gaya yang secara alami Anda capai pertama kali dalam kebanyakan konflik.", "Selecteer de stijl waarnaar je van nature als eerste grijpt in de meeste conflicten.")}
+            {t("Select the style you naturally reach for first in most conflicts.", "Pilih gaya yang secara alami Anda gunakan lebih dulu dalam kebanyakan konflik.", "Selecteer de stijl waarnaar je van nature als eerste grijpt in de meeste conflicten.")}
           </p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 12, marginBottom: 36 }}>
             {MODES.map((m) => {

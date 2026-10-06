@@ -47,7 +47,7 @@ const PRACTICES = [
     domain_en: "Attention",
     domain_id: "Perhatian",
     en: "Once a day, before you open your first task, notice what is already happening inside you. Name it. Not as a performance review, but as honest observation. You cannot tend what you will not see.",
-    id: "Sekali sehari, sebelum Anda membuka tugas pertama, perhatikan apa yang sudah terjadi di dalam diri Anda. Sebutkan namanya. Bukan sebagai tinjauan kinerja, tapi sebagai pengamatan jujur. Anda tidak dapat merawat apa yang tidak Anda lihat.",
+    id: "Sekali sehari, sebelum Anda membuka tugas pertama, perhatikan apa yang sudah terjadi di dalam diri Anda. Ungkapkan dengan kata-kata. Bukan sebagai tinjauan kinerja, tapi sebagai pengamatan jujur. Anda tidak dapat merawat apa yang tidak Anda lihat.",
   },
   {
     domain_en: "Rest",
@@ -59,7 +59,7 @@ const PRACTICES = [
     domain_en: "Honesty",
     domain_id: "Kejujuran",
     en: "Tell one person the real condition of your interior life, not the managed version. This does not need to be lengthy. Even a sentence is enough. The soul needs to be known, not just observed.",
-    id: "Ceritakan kepada satu orang kondisi nyata kehidupan batin Anda, bukan versi yang dikelola. Ini tidak perlu panjang. Bahkan satu kalimat sudah cukup. Jiwa perlu dikenal, bukan sekadar diamati.",
+    id: "Ceritakan kepada satu orang kondisi nyata kehidupan batin Anda, bukan versi yang sudah dirapikan. Ini tidak perlu panjang. Bahkan satu kalimat sudah cukup. Jiwa perlu dikenal, bukan sekadar diamati.",
   },
 ];
 
@@ -232,7 +232,7 @@ export default function LeadersInnerLifeClient({ isSaved: initialSaved }: Props)
           <p style={{ marginBottom: 28 }}>
             {t(
               "You are producing results. The feedback is mostly positive. People follow you. But you notice something: the gap between what you project and what you actually feel has been widening. You navigate this gap with competence. What you are less sure about is whether your interior life, the actual condition of your soul, is keeping pace with your leadership.",
-              "Anda menghasilkan hasil. Umpan baliknya sebagian besar positif. Orang-orang mengikuti Anda. Tapi Anda menyadari sesuatu: kesenjangan antara apa yang Anda tampilkan dan apa yang sebenarnya Anda rasakan semakin melebar. Anda menavigasi kesenjangan ini dengan kompetensi. Namun yang kurang Anda yakini adalah apakah kehidupan batin Anda, kondisi jiwa Anda yang sebenarnya, mengikuti kepemimpinan Anda."
+              "Anda menghasilkan hasil. Umpan baliknya sebagian besar positif. Orang-orang mengikuti Anda. Tapi Anda menyadari sesuatu: kesenjangan antara apa yang Anda tampilkan dan apa yang sebenarnya Anda rasakan semakin melebar. Anda mengelola kesenjangan ini dengan cakap. Namun yang kurang Anda yakini adalah apakah kehidupan batin Anda, kondisi jiwa Anda yang sebenarnya, mengikuti kepemimpinan Anda."
             )}
           </p>
           <p style={{ fontFamily: serif, fontSize: "clamp(19px, 2.2vw, 24px)", fontStyle: "italic", color: navy, lineHeight: 1.75, padding: "8px 0 8px 28px", borderLeft: `3px solid ${orange}` }}>
@@ -290,7 +290,7 @@ export default function LeadersInnerLifeClient({ isSaved: initialSaved }: Props)
           <p style={{ marginBottom: 28 }}>
             {t(
               "Interior life is not spiritual performance. It is not how much you pray, how consistent your devotional habits are, or how articulate you are about your faith. It is the actual condition of your soul: what you return to when no one is watching, what sustains you in seasons of difficulty, what keeps you tethered when everything is uncertain.",
-              "Kehidupan batin bukan pertunjukan rohani. Bukan seberapa banyak Anda berdoa, seberapa konsisten kebiasaan devosi Anda, atau seberapa fasih Anda tentang iman Anda. Ini adalah kondisi jiwa Anda yang sebenarnya: apa yang Anda kembali ketika tidak ada yang memperhatikan, apa yang menopang Anda di musim-musim sulit, apa yang menjaga Anda tetap terhubung ketika segalanya tidak pasti."
+              "Kehidupan batin bukan pertunjukan rohani. Bukan seberapa banyak Anda berdoa, seberapa konsisten kebiasaan devosi Anda, atau seberapa fasih Anda tentang iman Anda. Ini adalah kondisi jiwa Anda yang sebenarnya: ke mana Anda kembali ketika tidak ada yang memperhatikan, apa yang menopang Anda di musim-musim sulit, apa yang menjaga Anda tetap terhubung ketika segalanya tidak pasti."
             )}
           </p>
           <p style={{ fontFamily: serif, fontSize: "clamp(19px, 2.2vw, 24px)", fontStyle: "italic", color: navy, lineHeight: 1.75, padding: "8px 0 8px 28px", borderLeft: `3px solid ${orange}` }}>
@@ -478,7 +478,7 @@ export default function LeadersInnerLifeClient({ isSaved: initialSaved }: Props)
           <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 19px)", color: bodyText, lineHeight: 1.85, textAlign: "left" }}>
             {t(
               "Not as a performance review. As an honest observation. Give yourself five minutes with this question before the week moves on. What you notice is enough to start with.",
-              "Bukan sebagai tinjauan kinerja. Sebagai pengamatan jujur. Berikan diri Anda lima menit dengan pertanyaan ini sebelum minggu berlanjut. Apa yang Anda perhatikan sudah cukup untuk memulai."
+              "Bukan sebagai tinjauan kinerja. Sebagai pengamatan jujur. Luangkan lima menit untuk merenungkan pertanyaan ini sebelum minggu berlanjut. Apa yang Anda perhatikan sudah cukup untuk memulai."
             )}
           </p>
         </div>
@@ -488,7 +488,7 @@ export default function LeadersInnerLifeClient({ isSaved: initialSaved }: Props)
       <div style={{ background: navy, padding: "96px 24px" }}>
         <div style={{ maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
           <p style={{ fontFamily: serif, fontSize: 11, fontWeight: 400, letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 32 }}>
-            {t("Faith Anchor", "Jangkar Iman")}
+            {t("Faith Anchor", "Pegangan Iman")}
           </p>
           <p style={{ fontFamily: serif, fontSize: "clamp(22px, 3vw, 32px)", fontStyle: "italic", color: offWhite, lineHeight: 1.75, marginBottom: 24 }}>
             {t(

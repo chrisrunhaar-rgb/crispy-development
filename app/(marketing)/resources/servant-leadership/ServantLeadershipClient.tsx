@@ -83,7 +83,7 @@ const SPEARS_DIMS: { title: Record<Lang, string>; body: Record<Lang, string> }[]
     title: { en: "Empowering", id: "Memberdayakan" },
     body: {
       en: "Gives followers genuine freedom and authority to own their work — not delegating tasks but transferring trust.",
-      id: "Memberi pengikut kebebasan dan otoritas nyata untuk memiliki pekerjaan mereka — bukan mendelegasikan tugas tetapi memindahkan kepercayaan.",
+      id: "Memberi pengikut kebebasan dan otoritas nyata untuk memegang tanggung jawab atas pekerjaan mereka, bukan sekadar mendelegasikan tugas tetapi memindahkan kepercayaan.",
     },
   },
   {
@@ -104,7 +104,7 @@ const SPEARS_DIMS: { title: Record<Lang, string>; body: Record<Lang, string> }[]
     title: { en: "Behaving Ethically", id: "Berperilaku Etis" },
     body: {
       en: "Open, honest, does the right thing especially when it costs something — the only dimension proven universal across cultures.",
-      id: "Terbuka, jujur, melakukan hal yang benar terutama ketika ada biayanya — satu-satunya dimensi yang terbukti universal lintas budaya.",
+      id: "Terbuka, jujur, melakukan hal yang benar terutama ketika itu menuntut pengorbanan, satu-satunya dimensi yang terbukti universal lintas budaya.",
     },
   },
   {
@@ -127,10 +127,10 @@ const KENOSIS_ITEMS: { title: Record<Lang, string>; body: Record<Lang, string>; 
     color: "oklch(52% 0.16 260)",
   },
   {
-    title: { en: "Receptive Learning", id: "Pembelajaran Reseptif" },
+    title: { en: "Receptive Learning", id: "Belajar dengan Terbuka" },
     body: {
       en: "Listen before prescribing. The leader enters a posture of receiving before directing. The prescription follows real understanding — not the other way around.",
-      id: "Dengarkan sebelum meresepkan. Pemimpin masuk dalam postur menerima sebelum mengarahkan. Arahan mengikuti pemahaman yang nyata — bukan sebaliknya.",
+      id: "Dengarkan sebelum memberi solusi. Pemimpin mengambil sikap menerima sebelum mengarahkan. Arahan mengikuti pemahaman yang nyata, bukan sebaliknya.",
     },
     color: "oklch(50% 0.14 155)",
   },
@@ -138,7 +138,7 @@ const KENOSIS_ITEMS: { title: Record<Lang, string>; body: Record<Lang, string>; 
     title: { en: "Power Distribution", id: "Distribusi Kuasa" },
     body: {
       en: "Withhold decisions until others can own them. Power is not hoarded but progressively transferred — the goal is competence and ownership in others, not dependence on the leader.",
-      id: "Tunda keputusan sampai orang lain bisa memilikinya. Kuasa tidak ditimbun, melainkan secara bertahap dipindahkan — tujuannya adalah kompetensi dan kepemilikan pada orang lain, bukan ketergantungan pada pemimpin.",
+      id: "Tunda keputusan sampai orang lain siap memegangnya sebagai tanggung jawab mereka. Kuasa tidak ditimbun, melainkan secara bertahap dipindahkan — tujuannya adalah kompetensi dan rasa tanggung jawab pada orang lain, bukan ketergantungan pada pemimpin.",
     },
     color: "oklch(56% 0.13 45)",
   },
@@ -250,7 +250,7 @@ const TENSIONS: TensionDef[] = [
     mid: {
       body: {
         en: "You hold the tension well — neither dominating nor disappearing. That's the hard, necessary middle ground most servant leaders struggle to find.",
-        id: "Kamu memegang ketegangan dengan baik — tidak mendominasi maupun menghilang. Itu adalah titik tengah yang sulit dan perlu.",
+        id: "Kamu mampu menjaga keseimbangan di antara keduanya, tidak mendominasi maupun menghilang. Itu adalah titik tengah yang sulit dan perlu.",
       },
       q: {
         en: "When does your authority feel like a burden rather than a resource to give?",
@@ -308,19 +308,19 @@ const TENSIONS: TensionDef[] = [
   },
   {
     id: 4,
-    title: { en: "Fulfilling vs. Costly", id: "Memenuhi vs. Berbiaya" },
+    title: { en: "Fulfilling vs. Costly", id: "Memuaskan vs. Menuntut Pengorbanan" },
     left:  { en: "Serving is sustainable and life-giving",   id: "Melayani itu berkelanjutan dan memberi kehidupan" },
-    right: { en: "Serving genuinely costs me something",     id: "Melayani benar-benar menelan biaya dari diri saya" },
-    short: { en: "Cost", id: "Biaya" },
+    right: { en: "Serving genuinely costs me something",     id: "Melayani sungguh menuntut pengorbanan dari saya" },
+    short: { en: "Cost", id: "Pengorbanan" },
     color: "oklch(52% 0.13 20)",
     low: {
       body: {
         en: "Sustainable serving is real and good — but watch for a theology that never bleeds. Mark 10 uses both diakonos and doulos — the second implies self-expenditure, not just helpfulness.",
-        id: "Pelayanan yang berkelanjutan adalah nyata dan baik — tapi waspadai teologi yang tidak pernah berdarah. Markus 10 menyiratkan pengorbanan diri, bukan sekadar keramahan.",
+        id: "Pelayanan yang berkelanjutan adalah nyata dan baik — tapi waspadai teologi yang tidak pernah menuntut pengorbanan. Markus 10 menyiratkan pengorbanan diri, bukan sekadar keramahan.",
       },
       q: {
         en: "What is serving costing you right now that you haven't named out loud?",
-        id: "Apa yang pelayanan biayai dari kamu sekarang yang belum pernah kamu ungkapkan?",
+        id: "Apa yang sedang dituntut pelayanan darimu yang belum pernah kamu ungkapkan?",
       },
     },
     mid: {
@@ -330,13 +330,13 @@ const TENSIONS: TensionDef[] = [
       },
       q: {
         en: "How do you know when the cost has become too high — and who do you tell?",
-        id: "Bagaimana kamu tahu ketika biayanya sudah terlalu tinggi — dan kepada siapa kamu bercerita?",
+        id: "Bagaimana kamu tahu ketika pengorbanannya sudah terlalu besar, dan kepada siapa kamu bercerita?",
       },
     },
     high: {
       body: {
         en: "You feel the cost clearly, and naming it is honest. Make sure it doesn't harden into a martyrdom narrative — costly serving still requires rest and replenishment.",
-        id: "Kamu merasakan biayanya dengan jelas, dan menyebutkannya itu jujur. Pastikan itu tidak mengeras menjadi narasi kemartiran — pelayanan berbiaya tetap membutuhkan istirahat.",
+        id: "Kamu merasakan pengorbanannya dengan jelas, dan mengungkapkannya itu jujur. Pastikan itu tidak mengeras menjadi narasi kemartiran. Pelayanan yang menuntut pengorbanan tetap membutuhkan istirahat.",
       },
       q: {
         en: "What rhythms of replenishment are you actually practicing, not just planning?",
@@ -426,7 +426,7 @@ const L: Record<Lang, {
   id: {
     moduleLabel: "Kepemimpinan Hamba",
     title: "Peta Ketegangan Pemimpin Hamba",
-    subtitle: "Sebagian besar pemimpin tahu bahwa mereka harus melayani. Lebih sedikit yang pernah bertanya apa sebenarnya biayanya, dari mana asalnya, atau bagaimana cara kerjanya ketika budaya di sekitar mereka tidak menghargainya.",
+    subtitle: "Sebagian besar pemimpin tahu bahwa mereka harus melayani. Lebih sedikit yang pernah bertanya apa sebenarnya harga yang harus dibayar, dari mana asalnya, atau bagaimana cara kerjanya ketika budaya di sekitar mereka tidak menghargainya.",
 
     introTitle: "Apa Itu Kepemimpinan Hamba — Sebenarnya?",
     introBody: "Sebagian besar pelatihan kepemimpinan memberi tahu kamu apa yang harus dilakukan. Modul ini menanyakan siapa kamu. Kepemimpinan hamba bukan teknik yang diterapkan — melainkan postur yang dibentuk dari waktu ke waktu. Dua tradisi berbeda membentuk gagasan ini: penelitian sosial Robert Greenleaf (1970)¹ dan model Kristologis dari Filipi 2. Keduanya menghasilkan pemimpin yang rendah hati. Namun sumber, mekanisme, dan ekspresi lintas budayanya berbeda dengan cara yang sangat penting bagi siapa pun yang memimpin lintas budaya atau dalam komunitas di mana otoritas posisional adalah norma.",
@@ -442,12 +442,12 @@ const L: Record<Lang, {
     crossBody: "Penelitian yang mencakup 59 masyarakat mengungkapkan satu temuan konsisten: integritas moral secara universal diakui sebagai kualitas kepemimpinan.⁵ Namun egalitarianisme dan perilaku memberdayakan — yang sering dianggap sebagai inti kepemimpinan hamba — adalah dimensi lintas budaya yang paling lemah. Dalam konteks jarak kuasa tinggi seperti Indonesia (skor jarak kuasa: 78/100)⁶ dan sebagian besar Asia Tenggara, memimpin dari bawah menciptakan kebingungan kecuali diungkapkan melalui otoritas moral dan investasi relasional, bukan penyetaraan posisional. Pekerti dan Sendjaya menemukan bahwa pemimpin Indonesia menekankan moralitas yang bertanggung jawab dan pengaruh transformatif daripada berbagi kuasa secara struktural.⁷ Pemimpin hamba mempertahankan otoritas — kenosis mengosongkan status, bukan kapasitas untuk memimpin.",
 
     twoTitle: "Dua Sumber Kuasa Hamba",
-    twoBody: "Model Greenleaf menempatkan kuasa dalam gerakan ke atas: otoritas yang diperoleh melalui pelayanan, dikonfirmasi oleh kepercayaan pengikut. Filipi 2 menempatkannya berbeda — kuasa mengalir ke bawah dari Allah, melalui pengosongan diri secara sukarela. Keduanya menghasilkan pemimpin yang rendah hati. Tapi sumbernya membentuk segalanya, terutama ketika melayani menjadi mahal atau ketika budaya di sekitarmu tidak menghargai kerendahan hati.",
-    twoLeft: "Fil 2 — Ke Bawah", twoLeftSub: "Kuasa dari Allah melalui kenosis",
+    twoBody: "Model Greenleaf menempatkan kuasa dalam gerakan ke atas: otoritas yang diperoleh melalui pelayanan, dikonfirmasi oleh kepercayaan pengikut. Filipi 2 menempatkannya berbeda — kuasa mengalir ke bawah dari Tuhan, melalui pengosongan diri secara sukarela. Keduanya menghasilkan pemimpin yang rendah hati. Tapi sumbernya membentuk segalanya, terutama ketika melayani menuntut pengorbanan besar atau ketika budaya di sekitarmu tidak menghargai kerendahan hati.",
+    twoLeft: "Fil 2 — Ke Bawah", twoLeftSub: "Kuasa dari Tuhan melalui kenosis",
     twoRight: "Greenleaf — Ke Atas", twoRightSub: "Kuasa dari pengikut melalui kepercayaan",
 
     mapExplainTitle: "Lima Ketegangan yang Dihadapi Setiap Pemimpin Hamba",
-    mapExplainBody: "Kepemimpinan hamba bukan posisi untuk dicapai — melainkan sekumpulan ketegangan yang terus-menerus harus dipegang. Lima ketegangan di bawah ini bukan masalah yang harus dipecahkan. Itulah ruang di mana kepemimpinan hamba sejati dibentuk. Pemimpin yang berpura-pura ketegangan ini tidak ada cenderung berayun antara ekstrem tanpa menyadarinya. Pemimpin yang menamakannya dengan jujur dapat bertumbuh melaluinya. Tempatkan dirimu pada setiap spektrum — bukan di mana kamu ingin berada, tetapi di mana kamu sejujurnya berada sekarang.",
+    mapExplainBody: "Kepemimpinan hamba bukan posisi untuk dicapai — melainkan sekumpulan ketegangan yang terus-menerus harus dipegang. Lima ketegangan di bawah ini bukan masalah yang harus dipecahkan. Itulah ruang di mana kepemimpinan hamba sejati dibentuk. Pemimpin yang berpura-pura ketegangan ini tidak ada cenderung berayun antara ekstrem tanpa menyadarinya. Pemimpin yang mengungkapkannya dengan jujur dapat bertumbuh melaluinya. Tempatkan dirimu pada setiap spektrum — bukan di mana kamu ingin berada, tetapi di mana kamu sejujurnya berada sekarang.",
 
     mapTitle: "Peta Keteganganmu",
     mapIntro: "Klik di mana saja pada setiap spektrum untuk menempatkan dirimu. Tidak ada jawaban yang benar — hanya yang jujur.",
@@ -455,14 +455,14 @@ const L: Record<Lang, {
     profileTitle: "Profilmu",
     sittingWith: "Renungkan ini:",
 
-    faithTitle: "Jangkar Iman",
-    faithBody: "Markus 10:42-45 menarik kontras yang tajam: para penguasa memerintah orang; yang terbesar di antara kamu akan menjadi pelayan (diakonos) dan hamba (doulos) dari semua. Yohanes 13 membingkai ulang pembasuhan kaki melalui lensa kehormatan-malu — Yesus melakukan pekerjaan hamba kafir, lalu berkata tuan tidak lebih besar dari hambanya. Filipi 2:5-11 menggambarkan arah gerakan: ke bawah, melalui pelepasan status, menuju pembelajaran yang reseptif dan redistribusi kuasa. Inilah kenosis — bukan penghapusan diri, tetapi pelepasan yang dipilih dari apa yang berhak dipegang.",
+    faithTitle: "Pegangan Iman",
+    faithBody: "Markus 10:42-45 menarik kontras yang tajam: para penguasa memerintah orang; yang terbesar di antara kamu akan menjadi pelayan (diakonos) dan hamba (doulos) dari semua. Yohanes 13 membingkai ulang pembasuhan kaki melalui lensa kehormatan-malu — Yesus melakukan pekerjaan hamba kafir, lalu berkata tuan tidak lebih besar dari hambanya. Filipi 2:5-11 menggambarkan arah gerakan: ke bawah, melalui pelepasan status, menuju belajar dengan terbuka dan redistribusi kuasa. Inilah kenosis — bukan penghapusan diri, tetapi pelepasan yang dipilih dari apa yang berhak dipegang.",
 
     takeawaysTitle: "Poin Utama",
     takeaways: [
       "Kepemimpinan hamba bukan teknik — melainkan identitas yang dibentuk oleh Roh, bukan hanya dipertahankan oleh kemauan.",
       "Kerendahan hati dan otoritas bukan lawan. Kenosis mengosongkan status, bukan kapasitas untuk bertindak dengan kuasa demi orang lain.",
-      "Biayanya nyata. Markus 10 menggunakan doulos — kata yang berarti pengorbanan diri, bukan sekadar pelayanan. Kepemimpinan hamba yang jujur menyebutkan ini.",
+      "Pengorbanannya nyata. Markus 10 menggunakan doulos — kata yang berarti pengorbanan diri, bukan sekadar pelayanan. Kepemimpinan hamba yang jujur menyebutkan ini.",
     ],
 
     challengeTitle: "Tanya Penasihat",
@@ -474,7 +474,7 @@ const L: Record<Lang, {
     challengeDisclaimer: "Respons mengacu pada kerangka Greenleaf dan Filipi 2 yang dibahas dalam modul ini.",
 
     bgTitle: "Latar Belakang: Fondasi Penelitian",
-    bgBody: "Kritik David Crowther (2024) membedakan integritas moral — konsisten lintas budaya — dari egalitarianisme, yang penelitian secara konsisten mengidentifikasi sebagai dimensi lintas budaya yang paling lemah dalam kepemimpinan hamba. Kerangka asli Greenleaf (1970) menempatkan ujian pada pengikut: apakah mereka yang dilayani tumbuh sebagai pribadi? Beasiswa Alkitab tentang Filipi 2 mengidentifikasi empat implikasi kenosis: pelepasan status, pembelajaran reseptif, distribusi kuasa, dan transformasi identitas. Yehezkiel 34 memberikan gambaran negatif — gembala yang gagal — di mana kepemimpinan hamba diukur.",
+    bgBody: "Kritik David Crowther (2024) membedakan integritas moral — konsisten lintas budaya — dari egalitarianisme, yang penelitian secara konsisten mengidentifikasi sebagai dimensi lintas budaya yang paling lemah dalam kepemimpinan hamba. Kerangka asli Greenleaf (1970) menempatkan ujian pada pengikut: apakah mereka yang dilayani tumbuh sebagai pribadi? Beasiswa Alkitab tentang Filipi 2 mengidentifikasi empat implikasi kenosis: pelepasan status, belajar dengan terbuka, distribusi kuasa, dan transformasi identitas. Yehezkiel 34 memberikan gambaran negatif — gembala yang gagal — di mana kepemimpinan hamba diukur.",
     readMore: "Baca latar belakang penelitian",
     readLess: "Baca lebih sedikit",
     saveDashboard: "Simpan ke Dasbor",

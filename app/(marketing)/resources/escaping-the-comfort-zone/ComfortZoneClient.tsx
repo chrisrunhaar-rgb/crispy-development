@@ -75,7 +75,7 @@ const ZONES = [
     tagEn: "Facing challenges outside your usual experience",
     tagId: "Menghadapi tantangan di luar pengalaman biasa",
     descEn: "The fear zone has a specific feeling: the exposure of not knowing. In a cross-cultural context it comes with extra weight. You may be operating in a second language. The social rules may be unfamiliar. What counts as a mistake here, and how a mistake is seen by others, may be different from anything you were trained for. Most leaders do not linger in the fear zone deliberately. But passing through it is unavoidable if anything new is going to be learned. The discomfort here is not a sign you have made a wrong turn. It is the cost of entry into what comes next.",
-    descId: "Zona ketakutan memiliki perasaan yang khas: terekspos karena tidak tahu. Dalam konteks lintas budaya, ini datang dengan beban ekstra. Kamu mungkin beroperasi dalam bahasa kedua. Aturan sosial mungkin tidak familiar. Apa yang dianggap kesalahan di sini, dan bagaimana kesalahan itu dilihat orang lain, mungkin berbeda dari apa pun yang pernah kamu pelajari. Kebanyakan pemimpin tidak tinggal di zona ketakutan dengan sengaja. Tetapi melewatinya tidak bisa dihindari jika ada sesuatu yang baru yang akan dipelajari. Ketidaknyamanan di sini bukan tanda bahwa kamu telah mengambil jalan yang salah. Ini adalah biaya masuk menuju apa yang ada di depan.",
+    descId: "Zona ketakutan memiliki perasaan yang khas: terekspos karena tidak tahu. Dalam konteks lintas budaya, ini datang dengan beban ekstra. Kamu mungkin beroperasi dalam bahasa kedua. Aturan sosial mungkin tidak familiar. Apa yang dianggap kesalahan di sini, dan bagaimana kesalahan itu dilihat orang lain, mungkin berbeda dari apa pun yang pernah kamu pelajari. Kebanyakan pemimpin tidak tinggal di zona ketakutan dengan sengaja. Tetapi melewatinya tidak bisa dihindari jika ada sesuatu yang baru yang akan dipelajari. Ketidaknyamanan di sini bukan tanda bahwa kamu telah mengambil jalan yang salah. Ini adalah harga yang harus dibayar untuk masuk ke apa yang ada di depan.",
     listEn: ["Heightened awareness of what others think", "Uncertainty about the social rules", "Temptation to retreat to what is known"],
     listId: ["Sangat peka terhadap pendapat orang lain", "Tidak yakin tentang aturan sosial", "Tergoda untuk kembali ke yang sudah dikenal"],
   },
@@ -163,7 +163,7 @@ const QUESTIONS = [
   {
     num: "03",
     en: "What are you missing out on by staying where you are? Consider not just experiences and skills, but also: the team members who are not being led into their growth because you are not modelling it. The relationships across cultural lines that are not forming. The impact that is not happening.",
-    id: "Apa yang kamu lewatkan dengan tetap di tempat kamu sekarang? Pertimbangkan bukan hanya pengalaman dan keterampilan, tetapi juga: anggota tim yang tidak dipimpin menuju pertumbuhan mereka karena kamu tidak memodelkannya. Hubungan lintas budaya yang tidak terbentuk. Dampak yang tidak terjadi.",
+    id: "Apa yang kamu lewatkan dengan tetap di tempat kamu sekarang? Pertimbangkan bukan hanya pengalaman dan keterampilan, tetapi juga: anggota tim yang tidak dipimpin menuju pertumbuhan mereka karena kamu tidak mencontohkannya. Hubungan lintas budaya yang tidak terbentuk. Dampak yang tidak terjadi.",
   },
   {
     num: "04",
@@ -315,7 +315,7 @@ export default function ComfortZoneClient({
           <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontStyle: "italic", fontSize: "clamp(17px, 2.2vw, 22px)", color: "oklch(82% 0.03 260)", lineHeight: 1.6, maxWidth: 580, marginBottom: "1.5rem", marginTop: 0 }}>
             {t(
               "Use this worksheet to name your zone, face your fear, and find your path forward.",
-              "Gunakan lembar kerja ini untuk menamai zonamu, menghadapi ketakutanmu, dan menemukan jalan ke depan.",
+              "Gunakan lembar kerja ini untuk mengungkapkan zonamu, menghadapi ketakutanmu, dan menemukan jalan ke depan.",
               lang
             )}
           </p>
@@ -453,7 +453,7 @@ export default function ComfortZoneClient({
           <p style={bodyStyle()}>
             {t(
               "The cross-cultural comfort zone often forms precisely because crossing into the fear zone carries real cost here. Getting something wrong in a high-context culture is not a small social misstep. It can damage trust that took years to build. Stepping into an unfamiliar leadership situation when you are already navigating language and cultural complexity is genuinely harder than doing the same thing in a familiar setting. The caution is rational.²",
-              "Zona nyaman lintas budaya sering terbentuk justru karena memasuki zona ketakutan membawa biaya nyata di sini. Melakukan kesalahan dalam budaya konteks tinggi bukan sekadar kesalahan sosial kecil. Ini dapat merusak kepercayaan yang membutuhkan bertahun-tahun untuk dibangun. Memasuki situasi kepemimpinan yang tidak familiar ketika kamu sudah menavigasi kompleksitas bahasa dan budaya jauh lebih sulit daripada melakukan hal yang sama dalam lingkungan yang familiar. Kehati-hatian itu masuk akal.",
+              "Zona nyaman lintas budaya sering terbentuk justru karena memasuki zona ketakutan membawa pengorbanan nyata di sini. Melakukan kesalahan dalam budaya konteks tinggi bukan sekadar kesalahan sosial kecil. Ini dapat merusak kepercayaan yang membutuhkan bertahun-tahun untuk dibangun. Memasuki situasi kepemimpinan yang tidak familiar ketika kamu sudah menavigasi kompleksitas bahasa dan budaya jauh lebih sulit daripada melakukan hal yang sama dalam lingkungan yang familiar. Kehati-hatian itu masuk akal.",
               lang
             )}
           </p>
@@ -620,7 +620,7 @@ export default function ComfortZoneClient({
 
           {/* ── ENCOURAGE ME ── */}
           <div style={{ marginTop: "2.5rem", paddingTop: "2rem", borderTop: "1px solid oklch(35% 0.08 260)" }}>
-            <p style={eyebrowStyle}>{t("AI ENCOURAGEMENT", "DORONGAN AI", lang)}</p>
+            <p style={eyebrowStyle}>{t("AI ENCOURAGEMENT", "SEMANGAT DARI AI", lang)}</p>
             <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.9375rem", color: "oklch(65% 0.04 260)", marginBottom: "1.5rem", maxWidth: "52ch", lineHeight: 1.7 }}>
               {t(
                 "Based on your zone locator result and the answers you've written above, get a personal word of encouragement to help you take your next step.",
@@ -666,7 +666,7 @@ export default function ComfortZoneClient({
                   <path d="M12 2a10 10 0 1 1 0 20A10 10 0 0 1 12 2z"/>
                   <path d="M12 6v6l4 2"/>
                 </svg>
-                {t("Encourage me", "Dorong saya", lang)}
+                {t("Encourage me", "Beri saya semangat", lang)}
               </button>
             )}
 
@@ -706,7 +706,7 @@ export default function ComfortZoneClient({
       {/* ── FAITH ANCHOR ── */}
       <section style={{ background: "oklch(15% 0.07 260)", ...sectionPadding }}>
         <div style={containerStyle}>
-          <p style={eyebrowStyle}>{t("FAITH ANCHOR", "JANGKAR IMAN", lang)}</p>
+          <p style={eyebrowStyle}>{t("FAITH ANCHOR", "PEGANGAN IMAN", lang)}</p>
           <h2 style={h2Style(true)}>
             {t("When staying put looks like faithfulness.", "Ketika tetap diam terlihat seperti kesetiaan.", lang)}
           </h2>
@@ -860,7 +860,7 @@ export default function ComfortZoneClient({
               <p style={bodyStyle(true)}>
                 {t(
                   "Tell one person about it. Not to create accountability in the performance sense, but to give the thought a landing place outside your own head. That act of naming it, out loud, to someone who knows you, is itself a step into the learning zone.",
-                  "Ceritakan kepada satu orang. Bukan untuk menciptakan akuntabilitas dalam pengertian kinerja, tetapi untuk memberi pikiran itu tempat mendarat di luar kepalamu sendiri. Tindakan menamakannya, dengan lantang, kepada seseorang yang mengenalmu, itu sendiri sudah merupakan langkah ke zona pembelajaran.",
+                  "Ceritakan kepada satu orang. Bukan untuk menciptakan akuntabilitas dalam pengertian kinerja, tetapi untuk memberi pikiran itu tempat berlabuh di luar kepalamu sendiri. Tindakan mengungkapkannya secara terbuka kepada seseorang yang mengenalmu, itu sendiri sudah merupakan langkah ke zona pembelajaran.",
                   lang
                 )}
               </p>

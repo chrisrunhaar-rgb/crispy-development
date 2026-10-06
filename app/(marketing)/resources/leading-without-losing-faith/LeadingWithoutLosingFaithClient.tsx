@@ -61,11 +61,11 @@ const DRIFTS = [
   {
     number: "01",
     en_title: "The Drift of Busyness",
-    id_title: "Hanyut karena Kesibukan",
+    id_title: "Pergeseran karena Kesibukan",
     en_subtitle: "When the work becomes the worship",
     id_subtitle: "Ketika pekerjaan menjadi ibadah",
     en_narrative: `He was a church planter who never stopped. Every week held a new vision meeting, a new outreach, a new crisis to manage. He told himself prayer could come later, once the groundwork was laid. Eighteen months in, he couldn't remember the last time he'd prayed and meant it. The work was still running. He was not. The ministry had become his identity, his proof, his offering, and somewhere along the way, the One he was serving had become background noise.`,
-    id_narrative: `Ia adalah seorang perintis jemaat yang tidak pernah berhenti. Setiap minggu ada rapat visi baru, penjangkauan baru, krisis baru yang harus dikelola. Ia berkata pada dirinya sendiri bahwa doa bisa datang kemudian, setelah fondasi diletakkan. Delapan belas bulan kemudian, ia tidak bisa mengingat kapan terakhir kali ia berdoa dengan sungguh-sungguh. Pelayanan masih berjalan. Dirinya tidak. Kementerian telah menjadi identitasnya, buktinya, persembahannya, dan di suatu tempat dalam perjalanan itu, Dia yang ia layani telah menjadi kebisingan latar belakang.`,
+    id_narrative: `Ia adalah seorang perintis jemaat yang tidak pernah berhenti. Setiap minggu ada rapat visi baru, penjangkauan baru, krisis baru yang harus dikelola. Ia berkata pada dirinya sendiri bahwa doa bisa datang kemudian, setelah fondasi diletakkan. Delapan belas bulan kemudian, ia tidak bisa mengingat kapan terakhir kali ia berdoa dengan sungguh-sungguh. Pelayanan masih berjalan. Dirinya tidak. Pelayanan telah menjadi identitasnya, buktinya, persembahannya, dan di suatu titik dalam proses itu, Dia yang ia layani telah menjadi kebisingan latar belakang.`,
     en_signs: [
       "You haven't had a slow, listening prayer in weeks, only fast, functional ones",
       "Scripture has become source material for sermons rather than nourishment for your soul",
@@ -80,7 +80,7 @@ const DRIFTS = [
     en_biblical: "Solomon",
     id_biblical: "Salomo",
     en_biblical_body: `Solomon began with a prayer so humble and right that God appeared to him twice. But as his kingdom expanded, through trade routes, alliances, a magnificent temple, the administrative demands multiplied. Gradually, the worship became institutional rather than personal. His heart drifted not suddenly but slowly, through a thousand small compromises. By 1 Kings 11, he was no longer fully the man God had called him to be. Busyness hadn't destroyed his throne; it had hollowed out his soul first.`,
-    id_biblical_body: `Salomo memulai dengan doa yang begitu rendah hati dan benar sehingga Allah menampakkan diri kepadanya dua kali. Tetapi seiring kerajaannya berkembang, melalui jalur perdagangan, aliansi, bait suci yang megah, tuntutan administratif berlipat ganda. Secara bertahap, ibadah menjadi institusional daripada pribadi. Hatinya hanyut bukan secara tiba-tiba melainkan perlahan, melalui seribu kompromi kecil. Pada 1 Raja-raja 11, ia bukan lagi sepenuhnya pria yang dipanggil Allah. Kesibukan tidak menghancurkan takhtanya; itu pertama-tama telah mengosongkan jiwanya.`,
+    id_biblical_body: `Salomo memulai dengan doa yang begitu rendah hati dan benar sehingga Tuhan menampakkan diri kepadanya dua kali. Tetapi seiring kerajaannya berkembang, melalui jalur perdagangan, aliansi, bait suci yang megah, tuntutan administratif berlipat ganda. Secara bertahap, ibadah menjadi institusional daripada pribadi. Hatinya bergeser bukan secara tiba-tiba melainkan perlahan, melalui seribu kompromi kecil. Pada 1 Raja-raja 11, ia bukan lagi sepenuhnya pria yang dipanggil Tuhan. Kesibukan tidak menghancurkan takhtanya; itu pertama-tama telah mengosongkan jiwanya.`,
     en_verse_display: `"As Solomon grew old, his wives turned his heart after other gods, and his heart was not fully devoted to the LORD his God."`,
     id_verse_display: `"Sebab pada waktu Salomo sudah tua, isteri-isterinya itu mencondongkan hatinya kepada allah-allah lain, sehingga ia tidak dengan sepenuh hati bersama dengan TUHAN, Allahnya."`,
     en_soul_question: "When did work last feel like worship, and when did worship last feel like rest?",
@@ -91,7 +91,7 @@ const DRIFTS = [
   {
     number: "02",
     en_title: "The Drift of Disillusionment",
-    id_title: "Hanyut karena Kekecewaan",
+    id_title: "Pergeseran karena Kekecewaan",
     en_subtitle: "When the gap between vision and reality breaks you",
     id_subtitle: "Ketika kesenjangan antara visi dan realitas menghancurkanmu",
     en_narrative: `She had arrived with a clear vision: a flourishing community, transformed lives, a team that shared her values. Three years later, the key leader she mentored had betrayed her trust. The church that once cheered her on had turned political. The person she poured the most into had walked away. She still showed up. She still led. But privately, she had stopped believing it would ever work, and she hadn't told anyone, including God.`,
@@ -110,7 +110,7 @@ const DRIFTS = [
     en_biblical: "Elijah",
     id_biblical: "Elia",
     en_biblical_body: `After the triumph on Mount Carmel, Elijah collapsed under a broom tree and asked God to let him die. He had poured everything out, and the results hadn't held. Jezebel's threats were as real as ever. He felt alone, spent, finished. God's response was not a rebuke for his lack of faith. It was an angel with food, rest, and a gentle question: 'What are you doing here, Elijah?' Disillusionment is not the end of the story. It is often the place where God meets the leader most tenderly.`,
-    id_biblical_body: `Setelah kemenangan di Gunung Karmel, Elia jatuh di bawah pohon arar dan meminta Allah untuk membiarkannya mati. Ia telah mencurahkan segalanya, dan hasilnya tidak bertahan. Ancaman Izebel nyata seperti sebelumnya. Ia merasa sendirian, habis, selesai. Respons Allah bukan teguran karena kurangnya iman. Itu adalah malaikat dengan makanan, istirahat, dan pertanyaan lembut: 'Apa yang kamu lakukan di sini, Elia?' Kekecewaan bukan akhir dari cerita. Ini sering kali tempat di mana Allah menemui pemimpin dengan paling penuh kasih.`,
+    id_biblical_body: `Setelah kemenangan di Gunung Karmel, Elia jatuh di bawah pohon arar dan meminta Tuhan untuk membiarkannya mati. Ia telah mencurahkan segalanya, dan hasilnya tidak bertahan. Ancaman Izebel nyata seperti sebelumnya. Ia merasa sendirian, habis, selesai. Respons Tuhan bukan teguran karena kurangnya iman. Itu adalah malaikat dengan makanan, istirahat, dan pertanyaan lembut: 'Apa yang kamu lakukan di sini, Elia?' Kekecewaan bukan akhir dari cerita. Ini sering kali tempat di mana Tuhan menemui pemimpin dengan paling penuh kasih.`,
     en_verse_display: `"He came to a broom bush, sat down under it and prayed that he might die. 'I have had enough, LORD,' he said."`,
     id_verse_display: `"Tetapi ia sendiri masuk ke padang gurun sehari perjalanan jauhnya, lalu duduk di bawah sebuah pohon arar. Kemudian ia ingin mati, katanya: 'Cukuplah itu! Sekarang, ya TUHAN, ambillah nyawaku.'"`,
     en_soul_question: "What specific hope have you quietly stopped holding, and have you brought that grief honestly before God?",
@@ -121,7 +121,7 @@ const DRIFTS = [
   {
     number: "03",
     en_title: "The Drift of Pride",
-    id_title: "Hanyut karena Kesombongan",
+    id_title: "Pergeseran karena Kesombongan",
     en_subtitle: "When success whispers that you did this",
     id_subtitle: "Ketika keberhasilan berbisik bahwa kamulah yang melakukannya",
     en_narrative: `The organisation he led had doubled in three years. He was being invited to speak internationally. His methods were studied and replicated. And slowly, almost imperceptibly, his prayers changed. They became shorter. More informational than receptive. He still thanked God publicly, but privately, the dependence had faded. He had once led from a posture of desperation. Now he led from a posture of competence. Both looked similar from the outside. They were not the same.`,
@@ -140,7 +140,7 @@ const DRIFTS = [
     en_biblical: "Saul",
     id_biblical: "Saul",
     en_biblical_body: `When Samuel anointed Saul, he was small in his own eyes, hiding among the baggage, reluctant, genuinely humble. God could work with that. But success changed Saul. Victory by victory, his dependence on God eroded. By 1 Samuel 15, he was rationalising disobedience, protecting his image, and blaming others. Samuel's haunting words cut to the core: 'When you were small in your own eyes...' The tragedy of Saul is not that he was unqualified. It is that he forgot where he came from, and who had brought him there.`,
-    id_biblical_body: `Ketika Samuel mengurapi Saul, ia kecil di matanya sendiri, bersembunyi di antara barang-barang, ragu-ragu, benar-benar rendah hati. Allah dapat bekerja dengan itu. Tetapi keberhasilan mengubah Saul. Kemenangan demi kemenangan, ketergantungannya pada Allah terkikis. Pada 1 Samuel 15, ia sedang merasionalisasi ketidaktaatan, melindungi citranya, dan menyalahkan orang lain. Kata-kata Samuel yang menghantui memotong inti: 'Ketika engkau kecil di matamu sendiri...' Tragedi Saul bukan bahwa ia tidak memenuhi syarat. Ini adalah bahwa ia melupakan dari mana ia berasal, dan siapa yang telah membawanya ke sana.`,
+    id_biblical_body: `Ketika Samuel mengurapi Saul, ia kecil di matanya sendiri, bersembunyi di antara barang-barang, ragu-ragu, benar-benar rendah hati. Tuhan dapat bekerja dengan itu. Tetapi keberhasilan mengubah Saul. Kemenangan demi kemenangan, ketergantungannya pada Tuhan terkikis. Pada 1 Samuel 15, ia sedang merasionalisasi ketidaktaatan, melindungi citranya, dan menyalahkan orang lain. Kata-kata Samuel yang menghantui memotong inti: 'Ketika engkau kecil di matamu sendiri...' Tragedi Saul bukan bahwa ia tidak memenuhi syarat. Ini adalah bahwa ia melupakan dari mana ia berasal, dan siapa yang telah membawanya ke sana.`,
     en_verse_display: `"Although you were once small in your own eyes, did you not become the head of the tribes of Israel? The LORD anointed you king over Israel."`,
     id_verse_display: `"Bukankah engkau, meskipun engkau kecil pada pemandanganmu sendiri, menjadi kepala suku-suku Israel? Dan TUHAN telah mengurapi engkau menjadi raja atas Israel."`,
     en_soul_question: "When did you last lead from a place of genuine need, and is there anything in your current season you are refusing to ask God for?",
@@ -151,11 +151,11 @@ const DRIFTS = [
   {
     number: "04",
     en_title: "The Drift of Isolation",
-    id_title: "Hanyut karena Isolasi",
+    id_title: "Pergeseran karena Isolasi",
     en_subtitle: "When leadership loneliness cuts you off from God and others",
     id_subtitle: "Ketika kesepian kepemimpinan memutusmu dari Tuhan dan sesama",
     en_narrative: `He was seen by hundreds as strong, clear, and spiritually grounded. In reality, he hadn't had a real spiritual conversation with anyone in over a year. His accountability group had drifted. His mentor had moved on. He told himself he was fine, and the evidence was his continued output. But alone at night, he knew something was wrong. He had no one he could tell the truth to. Leadership had made him an island, and the island was slowly sinking.`,
-    id_narrative: `Ia dipandang oleh ratusan orang sebagai kuat, jelas, dan berakar secara rohani. Kenyataannya, ia belum memiliki percakapan rohani yang nyata dengan siapa pun selama lebih dari setahun. Kelompok akuntabilitasnya telah hanyut. Mentornya telah pindah. Ia berkata pada dirinya sendiri bahwa ia baik-baik saja, dan buktinya adalah output-nya yang terus berlanjut. Tetapi sendirian di malam hari, ia tahu ada yang salah. Ia tidak punya siapa pun yang bisa ia ceritakan kebenaran. Kepemimpinan telah menjadikannya sebuah pulau, dan pulau itu perlahan-lahan tenggelam.`,
+    id_narrative: `Ia dipandang oleh ratusan orang sebagai kuat, jelas, dan berakar secara rohani. Kenyataannya, ia belum memiliki percakapan rohani yang nyata dengan siapa pun selama lebih dari setahun. Kelompok akuntabilitasnya perlahan bubar. Mentornya telah pindah. Ia berkata pada dirinya sendiri bahwa ia baik-baik saja, dan buktinya adalah output-nya yang terus berlanjut. Tetapi sendirian di malam hari, ia tahu ada yang salah. Ia tidak punya siapa pun yang bisa ia ceritakan kebenaran. Kepemimpinan telah menjadikannya sebuah pulau, dan pulau itu perlahan-lahan tenggelam.`,
     en_signs: [
       "You have no one in your life who knows what you are actually struggling with spiritually",
       "You process everything alone, or not at all",
@@ -163,14 +163,14 @@ const DRIFTS = [
     ],
     id_signs: [
       "Tidak ada seorang pun dalam hidup Anda yang tahu apa yang sebenarnya Anda perjuangkan secara rohani",
-      "Anda memproses segalanya sendirian, atau tidak sama sekali",
+      "Anda mengolah segalanya sendirian, atau tidak sama sekali",
       "Persona yang Anda proyeksikan telah menjadi lebih nyata bagi Anda daripada kehidupan batin Anda yang sebenarnya",
     ],
     verse_key: "ps-46-10",
     en_biblical: "Elijah (again) and the still small voice",
     id_biblical: "Elia (lagi) dan suara yang lirih",
     en_biblical_body: `After fleeing, after sleeping, after eating, God didn't lecture Elijah. He asked a question: 'What are you doing here, Elijah?' And then again, a second time. God didn't fill the silence with noise. He came in a still small voice. Isolation is often a symptom of a leader who has stopped believing anyone could actually understand. The antidote is not forcing connection, but learning to receive it: first from God, then from the two or three he places near you.`,
-    id_biblical_body: `Setelah melarikan diri, setelah tidur, setelah makan, Allah tidak mengkhotbahi Elia. Ia mengajukan pertanyaan: 'Apa yang kamu lakukan di sini, Elia?' Dan kemudian lagi, untuk kedua kalinya. Allah tidak mengisi keheningan dengan kebisingan. Ia datang dalam suara yang lirih dan halus. Isolasi sering kali merupakan gejala dari seorang pemimpin yang telah berhenti percaya bahwa ada seseorang yang benar-benar dapat memahami. Penawarnya bukan memaksakan koneksi, tetapi belajar untuk menerimanya: pertama dari Allah, kemudian dari dua atau tiga orang yang Ia tempatkan di dekat Anda.`,
+    id_biblical_body: `Setelah melarikan diri, setelah tidur, setelah makan, Tuhan tidak mengkhotbahi Elia. Ia mengajukan pertanyaan: 'Apa yang kamu lakukan di sini, Elia?' Dan kemudian lagi, untuk kedua kalinya. Tuhan tidak mengisi keheningan dengan kebisingan. Ia datang dalam suara yang lirih dan halus. Isolasi sering kali merupakan gejala dari seorang pemimpin yang telah berhenti percaya bahwa ada seseorang yang benar-benar dapat memahami. Penawarnya bukan memaksakan koneksi, tetapi belajar untuk menerimanya: pertama dari Tuhan, kemudian dari dua atau tiga orang yang Ia tempatkan di dekat Anda.`,
     en_verse_display: `"Be still, and know that I am God; I will be exalted among the nations, I will be exalted in the earth."`,
     id_verse_display: `"Diamlah dan ketahuilah, bahwa Akulah Allah! Aku ditinggikan di antara bangsa-bangsa, ditinggikan di bumi."`,
     en_soul_question: "Who actually knows you: not your role, not your output, but the interior state of your soul right now?",
@@ -181,7 +181,7 @@ const DRIFTS = [
   {
     number: "05",
     en_title: "The Drift of Syncretism",
-    id_title: "Hanyut karena Sinkretisme",
+    id_title: "Pergeseran karena Sinkretisme",
     en_subtitle: "When you slowly absorb the values of the culture you lead in",
     id_subtitle: "Ketika kamu perlahan menyerap nilai-nilai budaya yang kamu pimpin",
     en_narrative: `She had been in Southeast Asia for seven years. She had learned the language, adapted her communication style, eaten the food, celebrated the festivals. All of that was good. But somewhere in the process, she had also absorbed other things: an ethic of saving face that made her avoid hard truths; a hierarchy of honour that made her reluctant to challenge those above her; a prosperity theology that had slowly seeped into her preaching. She hadn't chosen any of it consciously. It had seeped in through the cracks of unexamined living.`,
@@ -221,11 +221,11 @@ const RESEARCH_BG_PARAS_EN = [
 ];
 
 const RESEARCH_BG_PARAS_ID = [
-  `Attrisi kepemimpinan bukanlah hal yang langka; ini adalah sesuatu yang dapat diprediksi secara struktural. Survei Barna Group terhadap 510 pendeta Protestan menemukan bahwa 42% telah mempertimbangkan untuk meninggalkan pelayanan penuh waktu dalam dua belas bulan sebelumnya, naik dari 29% setahun sebelumnya. Pendorong utamanya bukan keraguan teologis melainkan tekanan yang tak henti-hentinya: 56% menyebut stres pekerjaan yang luar biasa, 43% menyebut kesepian dan isolasi. Selama tujuh tahun yang sama, proporsi yang menerima dukungan rohani rutin dari rekan atau mentor turun dari 37% menjadi 22%, kehancuran struktural dalam hubungan yang paling melindungi dari hanyut. Pekerja lintas budaya menghadapi tekanan berlipat ganda di atas ini: perpindahan linguistik, disorientasi budaya, jarak dari jaringan dukungan rumah, dan seringkali ketiadaan komunitas gereja yang beribadah dalam register yang familiar.`,
+  `Attrisi kepemimpinan bukanlah hal yang langka; ini adalah sesuatu yang dapat diprediksi secara struktural. Survei Barna Group terhadap 510 pendeta Protestan menemukan bahwa 42% telah mempertimbangkan untuk meninggalkan pelayanan penuh waktu dalam dua belas bulan sebelumnya, naik dari 29% setahun sebelumnya. Pendorong utamanya bukan keraguan teologis melainkan tekanan yang tak henti-hentinya: 56% menyebut stres pekerjaan yang luar biasa, 43% menyebut kesepian dan isolasi. Selama tujuh tahun yang sama, proporsi yang menerima dukungan rohani rutin dari rekan atau mentor turun dari 37% menjadi 22%, kehancuran struktural dalam hubungan yang paling melindungi dari pergeseran iman. Pekerja lintas budaya menghadapi tekanan berlipat ganda di atas ini: perpindahan linguistik, disorientasi budaya, jarak dari jaringan dukungan rumah, dan seringkali ketiadaan komunitas gereja yang beribadah dalam register yang familiar.`,
   `Para peneliti telah membedakan antara kelelahan umum dan sesuatu yang lebih spesifik: kekeringan rohani. Büssing et al. (2013) mengembangkan Skala Kekeringan Rohani dan menerapkannya pada 425 imam Katolik. Hingga 40% mengalami kekeringan rohani kadang-kadang; 13% melaporkannya sering atau secara teratur. Yang krusial, beban kerja (jam kerja, ukuran jemaat, tanggung jawab) tidak memprediksi kekeringan rohani. Bantuan struktural saja tidak dapat menyelesaikan masalah rohani. Kekeringan menjelaskan 44% varians dalam pengalaman rohani sehari-hari dan 30% gejala depresi, menjadikannya faktor risiko panggilan yang signifikan, bukan ketidaknyamanan kecil.`,
   `Studi retensi memperkuat pola ini. Studi ReMAP I (Taylor, 1997) mensurvei 551 organisasi misi di 14 negara dan menemukan sekitar 5,1% pekerja lintas budaya pergi setiap tahun, dengan 71% dari kepergian tersebut dapat dicegah. Penyebab paling umum adalah persiapan rohani yang tidak memadai, kurangnya dukungan rekan, dan masalah pribadi yang tidak terselesaikan. Studi ReMAP II lanjutan menemukan bahwa lembaga dengan retensi tinggi rata-rata 17 tahun masa kerja sementara lembaga retensi rendah hanya rata-rata 7 tahun, perbedaan sepuluh tahun yang didorong terutama oleh kesehatan relasional, bukan strategi. Compass Asia mengidentifikasi siklus rasa malu yang spesifik untuk Asia Tenggara: keyakinan bahwa "jika iman saya lebih kuat, saya tidak akan berjuang" menciptakan keheningan yang mencegah pekerja mencari perawatan yang dapat menopang mereka.`,
-  `Enam fondasi melindungi pemimpin pelayanan dari kelelahan, menurut NCLS Research (2024) berdasarkan data dari 20+ denominasi Australia: praktik rohani pribadi, kejelasan panggilan, rasa diri yang tidak bergantung pada peran atau persetujuan, keselarasan antara karunia dan tugas, hubungan dekat yang mendukung, dan batasan yang jelas. Dari keenam ini, kejelasan panggilan secara konsisten mengurangi kelelahan emosional, menunjukkan bahwa pengakaran panggilan, bukan hanya keterampilan atau dukungan, adalah faktor pelindung inti. Studi Engage! (Missio Nexus, 2010) menemukan bahwa hubungan komunitas lapangan yang sehat berada di antara lima faktor retensi teratas bagi pekerja lintas budaya. Penawar terhadap hanyut bukan disiplin heroik individual; ini adalah relasional dan komunal.`,
-  `Tradisi Kristen selalu mengenali ini. Studi teologis oleh Afaradi (2025) tentang 1 Raja-raja 19 mengidentifikasi tiga penyebab krisis Elia: tekanan psikologis, keputusasaan dari kegagalan pelayanan yang dirasakan, dan isolasi yang mendalam, keyakinan bahwa hanya ia yang tetap setia. Pemulihan Allah mengikuti urutan yang disengaja: perawatan fisik sebelum instruksi rohani, kehadiran yang penuh kasih daripada teguran, dan komisi baru dengan pengaturan suksesi. Ruth Haley Barton mendiagnosis kelelahan kepemimpinan melalui Musa: ketika seorang pemimpin menjadi "lelah membantu orang lain menikmati Tuhan," jiwa memberi sinyal bahwa kinerja telah menggantikan kehadiran. Henri Nouwen berpendapat bahwa pelayanan yang otentik mengalir bukan dari kompetensi profesional tetapi dari kerentanan yang diakui: "pelayanan kita tidak akan dianggap otentik kecuali datang dari hati yang terluka oleh penderitaan yang kita bicarakan." Ini bukan pelunakan terapeutik dari panggilan. Ini adalah persyaratan strukturalnya.`,
+  `Enam fondasi melindungi pemimpin pelayanan dari kelelahan, menurut NCLS Research (2024) berdasarkan data dari 20+ denominasi Australia: praktik rohani pribadi, kejelasan panggilan, rasa diri yang tidak bergantung pada peran atau persetujuan, keselarasan antara karunia dan tugas, hubungan dekat yang mendukung, dan batasan yang jelas. Dari keenam ini, kejelasan panggilan secara konsisten mengurangi kelelahan emosional, menunjukkan bahwa pengakaran panggilan, bukan hanya keterampilan atau dukungan, adalah faktor pelindung inti. Studi Engage! (Missio Nexus, 2010) menemukan bahwa hubungan komunitas lapangan yang sehat berada di antara lima faktor retensi teratas bagi pekerja lintas budaya. Penawar terhadap pergeseran iman bukan disiplin heroik individual; ini adalah relasional dan komunal.`,
+  `Tradisi Kristen selalu mengenali ini. Studi teologis oleh Afaradi (2025) tentang 1 Raja-raja 19 mengidentifikasi tiga penyebab krisis Elia: tekanan psikologis, keputusasaan dari kegagalan pelayanan yang dirasakan, dan isolasi yang mendalam, keyakinan bahwa hanya ia yang tetap setia. Pemulihan dari Tuhan mengikuti urutan yang disengaja: perawatan fisik sebelum instruksi rohani, kehadiran yang penuh kasih daripada teguran, dan komisi baru dengan pengaturan suksesi. Ruth Haley Barton mendiagnosis kelelahan kepemimpinan melalui Musa: ketika seorang pemimpin menjadi "lelah membantu orang lain menikmati Tuhan," jiwa memberi sinyal bahwa kinerja telah menggantikan kehadiran. Henri Nouwen berpendapat bahwa pelayanan yang otentik mengalir bukan dari kompetensi profesional tetapi dari kerentanan yang diakui: "pelayanan kita tidak akan dianggap otentik kecuali datang dari hati yang terluka oleh penderitaan yang kita bicarakan." Ini bukan pelunakan terapeutik dari panggilan. Ini adalah persyaratan strukturalnya.`,
 ];
 
 // --- TYPES & PROPS ------------------------------------------------------------
@@ -304,7 +304,7 @@ export default function LeadingWithoutLosingFaithClient({ userPathway, isSaved: 
           <p style={{ fontFamily: serif, fontSize: "clamp(18px, 2.4vw, 22px)", color: "oklch(82% 0.025 80)", lineHeight: 1.8, marginBottom: 40, fontStyle: "italic", maxWidth: 580, marginLeft: "auto", marginRight: "auto" }}>
             {t(
               "Leadership has a way of slowly eroding the very thing that gave it meaning. Five drift threats, and the practices that protect the leader's soul.",
-              "Kepemimpinan memiliki cara untuk perlahan mengikis hal yang justru memberinya makna. Lima ancaman hanyut, dan praktik-praktik yang melindungi jiwa pemimpin."
+              "Kepemimpinan memiliki cara untuk perlahan mengikis hal yang justru memberinya makna. Lima ancaman yang diam-diam menggeser iman, dan praktik-praktik yang melindungi jiwa pemimpin."
             )}
           </p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
@@ -320,7 +320,7 @@ export default function LeadingWithoutLosingFaithClient({ userPathway, isSaved: 
         <p style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 20px)", color: bodyText, lineHeight: 1.9, marginBottom: 28 }}>
           {t(
             "Faith rarely disappears in a single dramatic moment. It drifts. Quietly. Through seasons of high demand, complex relationships, repeated disappointments, and the slow absorption of the culture around us. Most leaders who lose their faith don't choose to. They simply stop noticing it happening.",
-            "Iman jarang menghilang dalam satu momen dramatis. Ia hanyut. Diam-diam. Melalui musim permintaan tinggi, hubungan yang kompleks, kekecewaan berulang, dan penyerapan lambat budaya di sekitar kita. Kebanyakan pemimpin yang kehilangan iman mereka tidak memilihnya. Mereka hanya berhenti memperhatikan itu terjadi."
+            "Iman jarang menghilang dalam satu momen dramatis. Ia bergeser. Diam-diam. Melalui musim permintaan tinggi, hubungan yang kompleks, kekecewaan berulang, dan penyerapan lambat budaya di sekitar kita. Kebanyakan pemimpin yang kehilangan iman mereka tidak memilihnya. Mereka hanya berhenti memperhatikan itu terjadi."
           )}
         </p>
         <p style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 20px)", color: bodyText, lineHeight: 1.9, marginBottom: 28 }}>
@@ -332,7 +332,7 @@ export default function LeadingWithoutLosingFaithClient({ userPathway, isSaved: 
         <p style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 20px)", color: bodyText, lineHeight: 1.9, margin: 0 }}>
           {t(
             "What follows are five of the most common drift threats for cross-cultural leaders. Each one is real, slow-moving, and dangerous precisely because it masquerades as faithfulness. Read each section with your own story in mind.",
-            "Berikut ini adalah lima ancaman hanyut paling umum bagi pemimpin lintas budaya. Masing-masing nyata, bergerak lambat, dan berbahaya justru karena menyamar sebagai kesetiaan. Baca setiap bagian dengan cerita Anda sendiri di benak Anda."
+            "Berikut ini adalah lima ancaman paling umum yang diam-diam menggeser iman pemimpin lintas budaya. Masing-masing nyata, bergerak lambat, dan berbahaya justru karena menyamar sebagai kesetiaan. Baca setiap bagian dengan cerita Anda sendiri di benak Anda."
           )}
         </p>
       </div>
@@ -418,7 +418,7 @@ export default function LeadingWithoutLosingFaithClient({ userPathway, isSaved: 
               {/* Biblical counter */}
               <div style={{ background: navy, padding: "48px 40px", borderRadius: 4, marginBottom: 48 }}>
                 <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, color: orange, letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 16 }}>
-                  {t("Biblical counter", "Tandingan Alkitabiah")} — {lang === "id" ? drift.id_biblical : drift.en_biblical}
+                  {t("Biblical counter", "Penawar dari Alkitab")} — {lang === "id" ? drift.id_biblical : drift.en_biblical}
                 </p>
                 <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 19px)", color: "oklch(80% 0.025 80)", lineHeight: 1.9, marginBottom: 0 }}>
                   {lang === "id" ? drift.id_biblical_body : drift.en_biblical_body}
@@ -460,7 +460,7 @@ export default function LeadingWithoutLosingFaithClient({ userPathway, isSaved: 
               {/* Returning practice */}
               <div style={{ background: navy, borderRadius: 4, padding: "32px 40px" }}>
                 <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, color: orange, letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 16 }}>
-                  {t("Returning practice", "Praktik kembali")}
+                  {t("Returning practice", "Latihan untuk kembali")}
                 </p>
                 <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 19px)", color: "oklch(80% 0.025 80)", lineHeight: 1.9, margin: 0, fontStyle: "italic" }}>
                   {lang === "id" ? drift.id_practice : drift.en_practice}
@@ -502,7 +502,7 @@ export default function LeadingWithoutLosingFaithClient({ userPathway, isSaved: 
             <p style={{ marginBottom: 24 }}>
               {t(
                 "He took five days away. Not a holiday, not quite a retreat. He read slowly, slept more than he had in years, and walked in the mornings. On the fourth day, he wrote in his journal: \"I think I have been working for God instead of with him.\"",
-                "Ia mengambil lima hari pergi. Bukan liburan, bukan retreat juga. Ia membaca dengan lambat, tidur lebih banyak dari yang ia lakukan dalam bertahun-tahun, dan berjalan di pagi hari. Pada hari keempat, ia menulis dalam jurnalnya: \"Saya pikir saya telah bekerja untuk Tuhan alih-alih bersama-Nya.\""
+                "Ia menyingkir selama lima hari. Bukan liburan, bukan retreat juga. Ia membaca dengan lambat, tidur lebih banyak dari yang ia lakukan dalam bertahun-tahun, dan berjalan di pagi hari. Pada hari keempat, ia menulis dalam jurnalnya: \"Saya pikir saya telah bekerja untuk Tuhan alih-alih bersama-Nya.\""
               )}
             </p>
             <p style={{ marginBottom: 0 }}>
@@ -522,7 +522,7 @@ export default function LeadingWithoutLosingFaithClient({ userPathway, isSaved: 
       <div style={{ background: lightGray, padding: "80px 24px" }}>
         <div style={{ maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
           <p style={{ fontFamily: serif, fontSize: 11, fontWeight: 400, letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 24 }}>
-            {t("Faith Anchor", "Jangkar Iman")}
+            {t("Faith Anchor", "Pegangan Iman")}
           </p>
           <p style={{ fontFamily: serif, fontSize: "clamp(20px, 2.5vw, 28px)", fontStyle: "italic", color: navy, lineHeight: 1.75, marginBottom: 20 }}>
             {t(
@@ -536,7 +536,7 @@ export default function LeadingWithoutLosingFaithClient({ userPathway, isSaved: 
           <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 19px)", color: bodyText, lineHeight: 1.85, margin: 0 }}>
             {t(
               "Five drifts, five pressures, one promise that holds across all of them. Your strength is not the variable. His faithfulness is. The leader who returns to this, not as a slogan but as a lived dependence, finds that the wellspring does not run dry.",
-              "Lima hanyut, lima tekanan, satu janji yang berlaku di semuanya. Kekuatanmu bukan variabelnya. Kesetiaan-Nya yang tetap. Pemimpin yang kembali ke ini, bukan sebagai slogan tetapi sebagai ketergantungan yang dihidupi, menemukan bahwa sumber mata air tidak pernah kering."
+              "Lima pergeseran, lima tekanan, satu janji yang berlaku di semuanya. Kekuatanmu bukan variabelnya. Kesetiaan-Nya yang tetap. Pemimpin yang kembali ke ini, bukan sebagai slogan tetapi sebagai ketergantungan yang dihidupi, menemukan bahwa sumber mata air tidak pernah kering."
             )}
           </p>
         </div>
@@ -593,7 +593,7 @@ export default function LeadingWithoutLosingFaithClient({ userPathway, isSaved: 
             <p style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 20px)", color: "oklch(80% 0.025 80)", lineHeight: 1.9, margin: 0 }}>
               {t(
                 "The five drifts described in this module are not character flaws. They are the natural gravitational pull of every demanding leadership role. What protects you is not greater willpower. It is a daily, honest, returning. Back to the vine. Back to the One who holds you and the work in his hands.",
-                "Lima hanyut yang dijelaskan dalam modul ini bukan cacat karakter. Mereka adalah tarikan gravitasi alami dari setiap peran kepemimpinan yang menuntut. Yang melindungi Anda bukan kemauan yang lebih besar. Ini adalah kembali yang sehari-hari, jujur. Kembali ke pokok anggur. Kembali kepada Dia yang memegang Anda dan pekerjaan di tangan-Nya."
+                "Lima pergeseran yang dijelaskan dalam modul ini bukan cacat karakter. Mereka adalah tarikan gravitasi alami dari setiap peran kepemimpinan yang menuntut. Yang melindungi Anda bukan kemauan yang lebih besar. Ini adalah kembali yang sehari-hari, jujur. Kembali ke pokok anggur. Kembali kepada Dia yang memegang Anda dan pekerjaan di tangan-Nya."
               )}
             </p>
           </div>
@@ -629,7 +629,7 @@ export default function LeadingWithoutLosingFaithClient({ userPathway, isSaved: 
               <p style={{ fontFamily: serif, fontSize: "clamp(18px, 2.2vw, 22px)", fontStyle: "italic", color: "oklch(90% 0.02 80)", lineHeight: 1.9, margin: 0 }}>
                 {t(
                   `Lord, I am more tired than I have admitted. More discouraged than I have let on. More proud, at times, than I have recognised. I have drifted in ways I did not notice until now.\n\nI return. Not with great strength, just with the little I have. I bring the work to you. I bring the people to you. I bring the gaps between my vision and my reality, and I lay them in your hands.\n\nKeep me rooted. Not in my platform, not in my performance, not in what people think of me, but in you. Remind me, today, why I said yes in the first place. And give me one more day of faithfulness in the vine.\n\nAmen.`,
-                  `Tuhan, saya lebih lelah dari yang telah saya akui. Lebih patah semangat dari yang telah saya biarkan terlihat. Lebih sombong, terkadang, dari yang telah saya sadari. Saya telah hanyut dengan cara yang tidak saya sadari hingga sekarang.\n\nSaya kembali. Bukan dengan kekuatan yang besar, hanya dengan sedikit yang saya miliki. Saya membawa pekerjaan kepada-Mu. Saya membawa orang-orang kepada-Mu. Saya membawa kesenjangan antara visi saya dan realitas saya, dan saya meletakkannya di tangan-Mu.\n\nJagalah saya berakar. Bukan dalam platform saya, bukan dalam kinerja saya, bukan dalam apa yang orang pikirkan tentang saya, tetapi dalam-Mu. Ingatkan saya, hari ini, mengapa saya berkata ya pada awalnya. Dan beri saya satu hari lagi kesetiaan dalam pokok anggur.\n\nAmin.`
+                  `Tuhan, saya lebih lelah dari yang telah saya akui. Lebih patah semangat dari yang telah saya biarkan terlihat. Lebih sombong, terkadang, dari yang telah saya sadari. Saya telah bergeser dengan cara yang tidak saya sadari hingga sekarang.\n\nSaya kembali. Bukan dengan kekuatan yang besar, hanya dengan sedikit yang saya miliki. Saya membawa pekerjaan kepada-Mu. Saya membawa orang-orang kepada-Mu. Saya membawa kesenjangan antara visi saya dan realitas saya, dan saya meletakkannya di tangan-Mu.\n\nJagalah saya berakar. Bukan dalam platform saya, bukan dalam kinerja saya, bukan dalam apa yang orang pikirkan tentang saya, tetapi dalam-Mu. Ingatkan saya, hari ini, mengapa saya berkata ya pada awalnya. Dan beri saya satu hari lagi kesetiaan dalam pokok anggur.\n\nAmin.`
                 ).split("\n\n").map((para, pi) => (
                   <span key={pi}>
                     {pi > 0 && <><br /><br /></>}
@@ -656,10 +656,10 @@ export default function LeadingWithoutLosingFaithClient({ userPathway, isSaved: 
               "Recovery rarely begins with effort. Elijah's restoration started with food and rest, not rebuke. God's first move toward the depleted leader is usually care, not demand.",
               "The goal is not to lead well and then stop. It is to finish with your soul intact. That is what Paul counted when it was over.",
             ] : [
-              "Hanyut iman tidak dramatis. Ia bergerak diam-diam melalui kesibukan, kekecewaan, kesombongan, isolasi, dan sinkretisme — masing-masing mampu menyamar sebagai kesetiaan.",
+              "Pergeseran iman tidak dramatis. Ia bergerak diam-diam melalui kesibukan, kekecewaan, kesombongan, isolasi, dan sinkretisme, masing-masing mampu menyamar sebagai kesetiaan.",
               "Penelitian mengkonfirmasi bahwa beban kerja saja tidak menyebabkan kekeringan rohani, dan bantuan struktural saja tidak dapat menyembuhkannya. Masalahnya bersifat rohani, dan membutuhkan respons rohani.",
-              "Tinggal dalam Kristus selagi memimpin tidak berarti menarik diri. Ini berarti membawa beban nyata pekerjaan kembali ke hadirat Allah: ketakutan, kelelahan, kekecewaan, dan harapan.",
-              "Pemulihan jarang dimulai dengan usaha. Pemulihan Elia dimulai dengan makanan dan istirahat, bukan teguran. Langkah pertama Allah kepada pemimpin yang kelelahan biasanya adalah kepedulian, bukan tuntutan.",
+              "Tinggal dalam Kristus selagi memimpin tidak berarti menarik diri. Ini berarti membawa beban nyata pekerjaan kembali ke hadirat Tuhan: ketakutan, kelelahan, kekecewaan, dan harapan.",
+              "Pemulihan jarang dimulai dengan usaha. Pemulihan Elia dimulai dengan makanan dan istirahat, bukan teguran. Langkah pertama Tuhan kepada pemimpin yang kelelahan biasanya adalah kepedulian, bukan tuntutan.",
               "Tujuannya bukan memimpin dengan baik lalu berhenti. Tujuannya adalah menyelesaikan dengan jiwa yang utuh. Itulah yang Paulus hitung ketika semuanya berakhir.",
             ]).map((item, i) => (
               <div key={i} style={{ background: offWhite, border: `1.5px solid oklch(90% 0.008 80)`, borderLeft: `4px solid ${orange}`, borderRadius: "0 8px 8px 0", padding: "18px 24px" }}>

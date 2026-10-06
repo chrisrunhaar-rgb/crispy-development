@@ -28,7 +28,7 @@ const VERSES = {
     en_ref: "Acts 15:39",
     id_ref: "Kisah Para Rasul 15:39",
     en: "They had such a sharp disagreement that they parted company.",
-    id: "Hal itu menimbulkan pertentangan yang tajam, sehingga mereka berpisah.",
+    id: "Hal itu menimbulkan perselisihan yang tajam, sehingga mereka berpisah.",
     en_version: "NIV",
     id_version: "TB",
   },
@@ -158,7 +158,7 @@ const SKILLS: {
     en_better:
       "When the signal is ignored, one of two things happens: the unaddressed tension calcifies into resentment (the relationship slowly dies), or it erupts later at a higher intensity — often in the wrong context. The critical response window is between signal and escalation. A skilled leader names what they have noticed — not the conflict itself, but the pattern. Privately, gently, specifically: \"I've noticed you've been quieter recently. Is there something I should be aware of?\"",
     id_better:
-      "Ketika sinyal diabaikan, salah satu dari dua hal terjadi: ketegangan yang tidak ditangani mengeras menjadi kebencian (hubungan perlahan mati), atau meledak kemudian dengan intensitas lebih tinggi — sering dalam konteks yang salah. Jendela respons kritis berada antara sinyal dan eskalasi. Seorang pemimpin terampil menyebutkan apa yang mereka perhatikan — bukan konfliknya sendiri, tapi polanya. Secara pribadi, dengan lembut, dan spesifik: \"Saya perhatikan Anda lebih pendiam belakangan ini. Apakah ada sesuatu yang harus saya ketahui?\"",
+      "Ketika sinyal diabaikan, salah satu dari dua hal terjadi: ketegangan yang tidak ditangani mengeras menjadi kepahitan (hubungan perlahan mati), atau meledak kemudian dengan intensitas lebih tinggi — sering dalam konteks yang salah. Jendela respons kritis berada antara sinyal dan eskalasi. Seorang pemimpin terampil menyebutkan apa yang mereka perhatikan — bukan konfliknya sendiri, tapi polanya. Secara pribadi, dengan lembut, dan spesifik: \"Saya perhatikan Anda lebih pendiam belakangan ini. Apakah ada sesuatu yang harus saya ketahui?\"",
     en_technique_heading: "Stage 3 — Resolution",
     id_technique_heading: "Tahap 3 — Resolusi",
     en_technique_steps: [
@@ -186,7 +186,7 @@ const SKILLS: {
       },
       {
         label: "Jangan menunggu krisis",
-        body: "Navigasi konflik yang paling efektif terjadi jauh sebelum peristiwa tunggal apa pun — dengan membangun budaya tim di mana ketegangan kecil disebutkan lebih awal, di mana pertanyaan aman untuk diajukan, dan di mana pemimpin memodelkan kerentanan dengan mengatakan: \"Saya pikir ada sesuatu yang tidak beres di antara kita. Bisakah kita bicara?\" Pencegahan bukan ketidakhadiran konflik. Itu adalah budaya di mana konflik bergerak cepat ke permukaan daripada membusuk di bawah.",
+        body: "Navigasi konflik yang paling efektif terjadi jauh sebelum peristiwa tunggal apa pun — dengan membangun budaya tim di mana ketegangan kecil disebutkan lebih awal, di mana pertanyaan aman untuk diajukan, dan di mana pemimpin memberi teladan keterbukaan dengan mengatakan: \"Saya pikir ada sesuatu yang tidak beres di antara kita. Bisakah kita bicara?\" Pencegahan bukan ketidakhadiran konflik. Itu adalah budaya di mana konflik bergerak cepat ke permukaan daripada membusuk di bawah.",
       },
     ],
   },
@@ -196,13 +196,13 @@ const SKILLS: {
     accentBg: "oklch(42% 0.12 290 / 0.08)",
     icon: "??",
     en_label: "Skill 3 — Processing Loss Together",
-    id_label: "Keterampilan 3 — Memproses Kehilangan Bersama",
+    id_label: "Keterampilan 3 — Mengolah Kehilangan Bersama",
     en_subtitle: "The unique grief of cross-cultural life",
     id_subtitle: "Duka unik kehidupan lintas budaya",
     en_intro:
       "Cross-cultural workers don't just experience losses — they accumulate them. Every departure, every transition, every goodbye is a small grief that rarely gets named, let alone processed. Missionary families and international team workers often live with compacted grief: the losses stack up faster than they can be processed, and the culture of the field can make it feel inappropriate to grieve at all. This is where relational breakdown often begins — not in conflict, but in unexpressed loss.",
     id_intro:
-      "Pekerja lintas budaya tidak hanya mengalami kehilangan — mereka mengumpulkannya. Setiap kepergian, setiap transisi, setiap perpisahan adalah duka kecil yang jarang disebutkan, apalagi diproses. Keluarga misionaris dan pekerja tim internasional sering hidup dengan duka yang tertekan: kehilangan menumpuk lebih cepat dari yang bisa diproses, dan budaya lapangan dapat membuat segalanya terasa tidak pantas untuk berduka sama sekali. Di sinilah kerusakan relasional sering dimulai — bukan dalam konflik, tetapi dalam kehilangan yang tidak terungkapkan.",
+      "Pekerja lintas budaya tidak hanya mengalami kehilangan — mereka mengumpulkannya. Setiap kepergian, setiap transisi, setiap perpisahan adalah duka kecil yang jarang disebutkan, apalagi diolah. Keluarga pekerja lapangan dan pekerja tim internasional sering hidup dengan duka yang tertekan: kehilangan menumpuk lebih cepat dari yang bisa diolah, dan budaya lapangan dapat membuat segalanya terasa tidak pantas untuk berduka sama sekali. Di sinilah kerusakan relasional sering dimulai — bukan dalam konflik, tetapi dalam kehilangan yang tidak terungkapkan.",
     en_scenario_heading: "What accumulated loss looks like",
     id_scenario_heading: "Seperti apa akumulasi kehilangan",
     en_scenario:
@@ -214,9 +214,9 @@ const SKILLS: {
     en_typical:
       "Teams that function well operationally often have no language for grief. The debrief focuses on tasks, logistics, and forward planning — never: \"What have we lost this season? What do we need to grieve before we move on?\" The cost of not naming loss is high: disengagement, resentment toward leadership, compassion fatigue, and — most commonly — premature departure.",
     id_typical:
-      "Tim yang berfungsi baik secara operasional sering tidak memiliki bahasa untuk kesedihan. Debriefing berfokus pada tugas, logistik, dan perencanaan ke depan — tidak pernah: \"Apa yang telah kita kehilangan musim ini? Apa yang perlu kita ratapi sebelum kita melanjutkan?\" Biaya tidak menyebutkan kehilangan itu tinggi: ketidakterlibatan, kebencian terhadap kepemimpinan, kelelahan welas asih, dan — paling umum — kepergian prematur.",
+      "Tim yang berfungsi baik secara operasional sering tidak memiliki bahasa untuk kesedihan. Debriefing berfokus pada tugas, logistik, dan perencanaan ke depan — tidak pernah: \"Apa yang telah kita kehilangan musim ini? Apa yang perlu kita ratapi sebelum kita melanjutkan?\" Harga yang harus dibayar karena tidak mengungkapkan kehilangan itu tinggi: ketidakterlibatan, kepahitan terhadap kepemimpinan, kelelahan welas asih, dan — paling umum — kepergian prematur.",
     en_better_label: "How to create space for loss",
-    id_better_label: "Cara menciptakan ruang untuk kehilangan",
+    id_better_label: "Cara memberi tempat bagi duka",
     en_better:
       "It starts with the leader naming their own losses first. Not as a performance of vulnerability, but as genuine modelling: \"Before we look at the quarter ahead, I want to name something we've lost. Sarah leaving took something from this team. I miss working with her. Does anyone else want to name what they've been carrying?\" This simple act — naming, inviting, and not rushing past — creates the relational safety that keeps people on the field.",
     id_better:
@@ -248,7 +248,7 @@ const SKILLS: {
       },
       {
         label: "Inventaris kehilangan pribadi",
-        body: "Sebagai pemimpin, secara rutin tanyakan kepada anggota tim Anda secara individual: \"Bagaimana beban transisi ini duduk denganmu saat ini?\" Bukan 'bagaimana kabarmu?' (yang mendapat jawaban sosial) tetapi undangan yang spesifik dan jujur. Pekerja lintas budaya sering membawa kehilangan dalam diam karena tidak ada yang pernah bertanya. Anda bertanya mengubah itu.",
+        body: "Sebagai pemimpin, secara rutin tanyakan kepada anggota tim Anda secara individual: \"Bagaimana Anda merasakan beban transisi ini saat ini?\" Bukan 'apa kabar?' (yang mendapat jawaban sosial) tetapi undangan yang spesifik dan jujur. Pekerja lintas budaya sering membawa kehilangan dalam diam karena tidak ada yang pernah bertanya. Pertanyaan Anda mengubahnya.",
       },
     ],
   },

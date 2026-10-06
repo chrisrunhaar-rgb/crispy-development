@@ -145,7 +145,7 @@ const THEORY: Theory[] = [
     whySup: "⁵",
     elements: [
       { en: "Real situations, not a staged demonstration", id: "Situasi nyata, bukan peragaan yang diatur" },
-      { en: "Think out loud: name what you notice and why you choose", id: "Berpikir dengan suara keras: sebutkan apa yang Anda perhatikan dan mengapa Anda memilih" },
+      { en: "Think out loud: name what you notice and why you choose", id: "Ucapkan pikiran Anda: sebutkan apa yang Anda perhatikan dan mengapa Anda memilih" },
       { en: "Let them see your mistakes and how you recover", id: "Biarkan mereka melihat kesalahan Anda dan cara Anda memperbaikinya" },
       { en: "Keep it short. A few times is usually enough", id: "Buatlah singkat. Beberapa kali biasanya sudah cukup" },
     ],
@@ -240,7 +240,7 @@ const THEORY: Theory[] = [
     },
     scripture: {
       en: "Before he left Ephesus, Paul gathered the elders, entrusted the church to them and committed them to God (Acts 20:17-38). He then asked Timothy to pass on what he had learned to reliable people who could teach others (2 Timothy 2:2).",
-      id: "Sebelum meninggalkan Efesus, Paulus mengumpulkan para penatua, mempercayakan jemaat kepada mereka, dan menyerahkan mereka kepada Allah (Kisah Para Rasul 20:17-38). Kemudian ia meminta Timotius meneruskan apa yang telah ia pelajari kepada orang-orang yang dapat dipercaya, yang cakap mengajar orang lain (2 Timotius 2:2).",
+      id: "Sebelum meninggalkan Efesus, Paulus mengumpulkan para penatua, mempercayakan jemaat kepada mereka, dan menyerahkan mereka kepada Tuhan (Kisah Para Rasul 20:17-38). Kemudian ia meminta Timotius meneruskan apa yang telah ia pelajari kepada orang-orang yang dapat dipercaya, yang cakap mengajar orang lain (2 Timotius 2:2).",
     },
   },
 ];
@@ -287,7 +287,7 @@ function RoleShiftChart({ selected, lang }: { selected: PhaseKey; lang: Lang }) 
     <svg viewBox="0 0 400 230" width="100%" style={{ maxWidth: 560, display: "block", margin: "0 auto" }}
       role="img" aria-label={t(
         "Line chart. Your involvement falls from 95 percent in Model to 5 percent in Launch. Their ownership rises from 10 percent to 100 percent. The lines cross between Assist and Watch.",
-        "Grafik garis. Keterlibatan Anda turun dari 95 persen di tahap Teladani menjadi 5 persen di tahap Mandirikan. Kepemilikan mereka naik dari 10 persen menjadi 100 persen. Kedua garis bersilangan di antara Bantu dan Amati.", lang)}>
+        "Grafik garis. Keterlibatan Anda turun dari 95 persen di tahap Teladani menjadi 5 persen di tahap Mandirikan. Rasa tanggung jawab mereka naik dari 10 persen menjadi 100 persen. Kedua garis bersilangan di antara Bantu dan Amati.", lang)}>
       {[0, 50, 100].map(v => (
         <line key={v} x1={30} x2={390} y1={y(v)} y2={y(v)} stroke={lightGray} strokeWidth={1} />
       ))}
@@ -404,7 +404,7 @@ const SCENARIOS: Scenario[] = [
     id: "Anke sudah menyusun anggaran tim di Rotterdam selama delapan belas bulan. Namun setiap tahun Pieter masih menulis ulang separuhnya pada malam sebelum tenggat. Anke tidak lagi berusaha keras untuk drafnya.",
     answer: "assist",
     explainEn: "Assist, but it should be Watch by now. Pieter is still holding the handlebar. After eighteen months Anke needs him to step back, review, and let her own the result.",
-    explainId: "Bantu, padahal seharusnya sudah Amati. Pieter masih memegang setang. Setelah delapan belas bulan, Anke membutuhkan Pieter untuk mundur, meninjau, dan membiarkan ia memiliki hasilnya.",
+    explainId: "Bantu, padahal seharusnya sudah Amati. Pieter masih memegang setang. Setelah delapan belas bulan, Anke membutuhkan Pieter untuk mundur, meninjau, dan membiarkan ia memegang tanggung jawab atas hasilnya.",
   },
 ];
 
@@ -754,7 +754,7 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
                 { src: "lead-positional", en: "Positional leadership", id: "Kepemimpinan posisional",
                   capEn: "The team works to reach the leader's goals.", capId: "Tim bekerja untuk mencapai tujuan pemimpin." },
                 { src: "lead-influential", en: "Influential leadership", id: "Kepemimpinan yang berpengaruh",
-                  capEn: "The leader supports the team. They own the goals together.", capId: "Pemimpin menopang tim. Mereka memiliki tujuan itu bersama." },
+                  capEn: "The leader supports the team. They own the goals together.", capId: "Pemimpin menopang tim. Mereka bersama-sama memegang tanggung jawab atas tujuan itu." },
               ].map(({ src, en, id, capEn, capId }) => (
                 <figure key={en} style={{ margin: 0, background: white, border: `1px solid ${lightGray}`, borderRadius: 8, padding: "20px 20px 18px", textAlign: "center" }}>
                   <p style={{ fontSize: 16, fontWeight: 700, color: navy, margin: "0 0 14px" }}>{t(en, id, lang)}</p>
@@ -770,7 +770,7 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
               "Kepemimpinan posisional berjalan karena jabatan. Pemimpin menetapkan tujuan dan tim bekerja keras untuk mencapainya. Orang-orang menurut, tetapi tujuannya tetap milik pemimpin. Ketika pemimpin tidak ada, semangatnya ikut turun.", lang)}<Sup n="⁹" /></p>
             <p style={p}>{t(
               "Influential leadership turns the picture upside down. The leader gets to know each person and finds the personal goals that line up with the goals of the team. People then own part of those goals, so they do the work better and with more heart. It is no longer about the leader.",
-              "Kepemimpinan yang berpengaruh membalik gambaran itu. Pemimpin mengenal setiap orang dan menemukan tujuan pribadi mereka yang sejalan dengan tujuan tim. Dengan begitu mereka ikut memiliki sebagian dari tujuan itu, sehingga mereka bekerja lebih baik dan lebih sepenuh hati. Ini tidak lagi tentang pemimpin.", lang)}<Sup n="¹⁰" /></p>
+              "Kepemimpinan yang berpengaruh membalik gambaran itu. Pemimpin mengenal setiap orang dan menemukan tujuan pribadi mereka yang sejalan dengan tujuan tim. Dengan begitu mereka ikut memegang tanggung jawab atas sebagian dari tujuan itu, sehingga mereka bekerja lebih baik dan lebih sepenuh hati. Ini tidak lagi tentang pemimpin.", lang)}<Sup n="¹⁰" /></p>
             <p style={p}>{t(
               "Jesus described the same reversal: whoever wants to become great among you must be your servant (Mark 10:42-45).",
               "Yesus menggambarkan pembalikan yang sama: barangsiapa ingin menjadi besar di antara kamu, hendaklah ia menjadi pelayanmu (Markus 10:42-45).", lang)}<Sup n="⁷" /></p>
@@ -939,10 +939,10 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
           <h3 style={{ ...h3, marginTop: 48 }}>{t("How your role shifts", "Bagaimana peran Anda bergeser", lang)}</h3>
           <p style={p}>{t(
             "Your involvement goes down as their ownership goes up. Somewhere between Assist and Watch the lines cross, and the work becomes more theirs than yours.",
-            "Keterlibatan Anda turun seiring naiknya rasa kepemilikan mereka. Di antara tahap Bantu dan Amati kedua garis itu bersilangan, dan pekerjaan itu menjadi lebih milik mereka daripada milik Anda.", lang)}</p>
+            "Keterlibatan Anda turun seiring naiknya rasa tanggung jawab mereka. Di antara tahap Bantu dan Amati kedua garis itu bersilangan, dan pekerjaan itu menjadi lebih milik mereka daripada milik Anda.", lang)}</p>
           <div style={{ display: "flex", gap: 18, flexWrap: "wrap", fontSize: 13, color: bodyText, marginBottom: 10 }}>
             <span><span aria-hidden="true" style={{ display: "inline-block", width: 18, height: 4, borderRadius: 2, background: navy, marginRight: 6, verticalAlign: "middle" }} />{t("Your involvement", "Keterlibatan Anda", lang)}</span>
-            <span><span aria-hidden="true" style={{ display: "inline-block", width: 18, height: 4, borderRadius: 2, background: orange, marginRight: 6, verticalAlign: "middle" }} />{t("Their ownership", "Kepemilikan mereka", lang)}</span>
+            <span><span aria-hidden="true" style={{ display: "inline-block", width: 18, height: 4, borderRadius: 2, background: orange, marginRight: 6, verticalAlign: "middle" }} />{t("Their ownership", "Rasa tanggung jawab mereka", lang)}</span>
           </div>
           <div style={{ background: white, border: `1px solid ${lightGray}`, borderRadius: 8, padding: "16px 12px 8px" }}>
             <RoleShiftChart selected={phase} lang={lang} />
@@ -1092,7 +1092,7 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
       <section style={section}>
         <div style={wrap}>
           <p style={eyebrow}>{t("Multiplication through generations", "Pelipatgandaan lintas generasi", lang)}</p>
-          <h2 style={h2}>{t("The game changer: they go further than you", "Pengubah permainan: mereka melangkah lebih jauh dari Anda", lang)}</h2>
+          <h2 style={h2}>{t("The game changer: they go further than you", "Yang mengubah segalanya: mereka melangkah lebih jauh dari Anda", lang)}</h2>
           <p style={p}>{t(
             "Addition means you train people yourself, one after another. Multiplication means the people you train go on to train others. Launch is not the end of the cycle. It is where the next one begins.",
             "Penambahan berarti Anda sendiri yang melatih orang, satu demi satu. Pelipatgandaan berarti orang-orang yang Anda latih melanjutkan dengan melatih orang lain. Mandirikan bukanlah akhir siklus. Di sanalah siklus berikutnya dimulai.", lang)}</p>
@@ -1127,21 +1127,21 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
           </div>
           <p style={{ ...p, margin: 0 }}>{t(
             "This is the game changer. They learned on your small scooter. They ride off on a bigger motorbike and do more than you ever could. That is not a threat to your leadership. It is the fruit of it.",
-            "Inilah pengubah permainannya. Mereka belajar dengan skuter kecil Anda. Mereka melaju dengan sepeda motor yang lebih besar dan melakukan lebih banyak daripada yang pernah bisa Anda lakukan. Itu bukan ancaman bagi kepemimpinan Anda. Itulah buahnya.", lang)}</p>
+            "Inilah yang mengubah segalanya. Mereka belajar dengan skuter kecil Anda. Mereka melaju dengan sepeda motor yang lebih besar dan melakukan lebih banyak daripada yang pernah bisa Anda lakukan. Itu bukan ancaman bagi kepemimpinan Anda. Itulah buahnya.", lang)}</p>
         </div>
       </section>
 
       {/* ── 9. FAITH ANCHOR ─────────────────────────────────────────────────── */}
       <section style={{ ...section, background: navy }}>
         <div style={wrap}>
-          <p style={eyebrow}>{t("Faith anchor", "Jangkar iman", lang)}</p>
+          <p style={eyebrow}>{t("Faith anchor", "Pegangan iman", lang)}</p>
           <h2 style={{ ...h2, color: offWhite }}>{t("Entrusted, not held", "Dipercayakan, bukan digenggam", lang)}</h2>
           <p style={{ ...p, color: "oklch(85% 0.02 260)" }}>{t(
             "Jesus appointed the twelve \"that they might be with him and that he might send them out\".",
             "Yesus menetapkan dua belas murid \"untuk menyertai Dia dan untuk diutus-Nya\".", lang)}<Sup n="⁷" />{t(
             " Being with him came first. Sending came second. They watched him heal and teach, tried it with him nearby, went out in pairs and came back to report (Luke 9 and 10). At the end he handed them the whole mission.",
             " Menyertai lebih dulu, diutus kemudian. Mereka melihat Dia menyembuhkan dan mengajar, mencobanya sendiri dengan Dia di dekat mereka, diutus berdua-dua lalu kembali untuk melapor (Lukas 9 dan 10). Pada akhirnya Ia menyerahkan seluruh misi kepada mereka.", lang)}</p>
-          <p style={{ ...p, color: "oklch(85% 0.02 260)" }}>{t("Paul followed the same shape:", "Paulus mengikuti bentuk yang sama:", lang)}</p>
+          <p style={{ ...p, color: "oklch(85% 0.02 260)" }}>{t("Paul followed the same shape:", "Paulus mengikuti pola yang sama:", lang)}</p>
 
           <ol style={{ listStyle: "none", margin: "8px 0 28px", padding: 0 }}>
             {[

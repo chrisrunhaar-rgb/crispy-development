@@ -31,7 +31,7 @@ const DOMAINS = [
     en_title: "Self-Regulation",
     id_title: "Regulasi Diri",
     en_scenario: "Your team member has missed a clear deadline — again. You feel frustration rising. You have two choices: react from the frustration, or pause, process, and respond from a grounded place.",
-    id_scenario: "Anggota tim Anda melewatkan tenggat waktu yang jelas — lagi. Anda merasakan frustrasi meningkat. Anda memiliki dua pilihan: bereaksi dari frustrasi, atau berhenti sejenak, memproses, dan merespons dari tempat yang lebih tenang.",
+    id_scenario: "Anggota tim Anda melewatkan tenggat waktu yang jelas — lagi. Anda merasakan frustrasi meningkat. Anda memiliki dua pilihan: bereaksi dari frustrasi, atau berhenti sejenak, mengolahnya, dan merespons dari tempat yang lebih tenang.",
     en_question: "How consistently do you pause before reacting and respond from calm rather than impulse?",
     id_question: "Seberapa konsisten Anda berhenti sejenak sebelum bereaksi dan merespons dari ketenangan daripada impuls?",
   },
@@ -141,7 +141,7 @@ export default function EmotionalIntelligenceClient({ userPathway, isSaved: init
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "clamp(1rem, 1.5vw, 1.1rem)", color: "oklch(72% 0.04 260)", maxWidth: "50ch", marginBottom: "2rem", lineHeight: 1.65 }}>
             {t(
               "Not a definition. A scan. Five real leadership moments — your honest response to each will reveal more than any textbook.",
-              "Bukan definisi. Sebuah pemindaian. Lima momen kepemimpinan nyata — respons jujur Anda untuk setiap momen akan mengungkapkan lebih dari buku teks mana pun.",
+              "Bukan definisi. Sebuah pemeriksaan. Lima momen kepemimpinan nyata — respons jujur Anda untuk setiap momen akan mengungkapkan lebih dari buku teks mana pun.",
             )}
           </p>
 
@@ -173,7 +173,7 @@ export default function EmotionalIntelligenceClient({ userPathway, isSaved: init
       <section style={{ paddingBlock: "clamp(3rem, 5vw, 5rem)", background: "oklch(97% 0.005 80)" }}>
         <div className="container-wide">
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.75rem" }}>
-            {t("The EQ Scan", "Pemindaian EQ")}
+            {t("The EQ Scan", "Pemeriksaan EQ")}
           </p>
           <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "clamp(1.4rem, 2.5vw, 2rem)", color: "oklch(22% 0.10 260)", marginBottom: "0.75rem" }}>
             {t("Five scenarios. One honest question each.", "Lima skenario. Satu pertanyaan jujur untuk masing-masing.")}
@@ -372,7 +372,7 @@ export default function EmotionalIntelligenceClient({ userPathway, isSaved: init
           <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", color: "oklch(22% 0.10 260)", marginBottom: "1rem" }}>
             {allScored
               ? t("Based on your lowest domain:", "Berdasarkan domain terendah Anda:")
-              : t("Complete the scan to get your next step.", "Selesaikan pemindaian untuk mendapatkan langkah berikutnya.")}
+              : t("Complete the scan to get your next step.", "Selesaikan pemeriksaan untuk mendapatkan langkah berikutnya.")}
           </h2>
 
           {allScored && lowestDomain && (
@@ -387,7 +387,7 @@ export default function EmotionalIntelligenceClient({ userPathway, isSaved: init
                 )}
                 {lowestDomain.id === "sr" && t(
                   "This week: identify one recurring trigger that makes you react before you think. Name it. The next time it happens, say the trigger's name in your mind before you speak. That gap is self-regulation.",
-                  "Minggu ini: identifikasi satu pemicu berulang yang membuat Anda bereaksi sebelum berpikir. Namai. Lain kali itu terjadi, ucapkan nama pemicunya dalam pikiran sebelum berbicara. Jeda itulah regulasi diri.",
+                  "Minggu ini: identifikasi satu pemicu berulang yang membuat Anda bereaksi sebelum berpikir. Ungkapkan. Lain kali itu terjadi, ucapkan nama pemicunya dalam pikiran sebelum berbicara. Jeda itulah regulasi diri.",
                 )}
                 {lowestDomain.id === "mo" && t(
                   "This week: write down the one sentence that captures WHY this leadership work matters to you — beyond titles, salaries, or expectations. Read it each morning. That sentence is your motivational anchor.",

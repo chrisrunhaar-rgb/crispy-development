@@ -33,9 +33,9 @@ const dm1Options = [
   },
   {
     label: `"I rest fine personally, but my team doesn't see me model it."`,
-    labelID: `"Secara pribadi aku istirahat cukup baik, tapi timku tidak melihat aku memodelkannya."`,
+    labelID: `"Secara pribadi aku istirahat cukup baik, tapi timku tidak melihat aku mencontohkannya."`,
     response: `That awareness is already leadership. You've noticed the gap between your private practice and your public posture. Station 2 has something important for you about what modelling rest actually costs, and what it gives.`,
-    responseID: `Kesadaran itu sudah merupakan kepemimpinan. Kamu sudah memperhatikan kesenjangan antara praktik pribadi dan postur publikmu. Pos 2 punya sesuatu yang penting untukmu tentang apa yang sebenarnya dipertaruhkan saat memodelkan istirahat, dan apa yang diberikannya.`,
+    responseID: `Kesadaran itu sudah merupakan kepemimpinan. Kamu sudah memperhatikan kesenjangan antara praktik pribadi dan postur publikmu. Pos 2 punya sesuatu yang penting untukmu tentang apa yang sebenarnya dipertaruhkan saat memberi teladan dalam beristirahat, dan apa yang diberikannya.`,
   },
 ];
 
@@ -65,7 +65,7 @@ const dm3Options = [
     label: `"Naming a Sabbath day and communicating it to my team."`,
     labelID: `"Menetapkan hari Sabat dan mengkomunikasikannya kepada timku."`,
     response: `This is the structural step. Naming it makes it real. Communicating it makes it protected. Use the SRDC cards below to fill the day in. Start with the S: decide when it ends, and tell someone before this week is over.`,
-    responseID: `Ini adalah langkah struktural. Menamakannya membuatnya nyata. Mengkomunikasikannya membuatnya terlindungi. Gunakan kartu SRDC di bawah untuk mengisi hari itu. Mulai dengan S: putuskan kapan berakhirnya, dan beritahu seseorang sebelum minggu ini selesai.`,
+    responseID: `Ini adalah langkah struktural. Mengungkapkannya membuatnya nyata. Mengkomunikasikannya membuatnya terlindungi. Gunakan kartu SRDC di bawah untuk mengisi hari itu. Mulai dengan S: putuskan kapan berakhirnya, dan beritahu seseorang sebelum minggu ini selesai.`,
   },
   {
     label: `"Disconnecting from work communication for one full day each week."`,
@@ -95,7 +95,7 @@ const srdcCards = [
       `Write "Sabbath" in your calendar as a meeting. Protect it with the same firmness you would protect a meeting with your supervisor or a donor conversation. If something tries to displace it, treat that as a scheduling conflict to be renegotiated, not a reason to cancel the Sabbath.`,
     ],
     practicesID: [
-      `Tetapkan waktu berhenti yang spesifik pada hari Sabatmu yang dipilih dan namai itu sebagai komitmen perjanjian, bukan preferensi. Beritahu satu orang waktu pastinya sebelum hari dimulai. Akuntabilitas membuat penghentian bersifat struktural daripada hanya harapan.`,
+      `Tetapkan waktu berhenti yang spesifik pada hari Sabatmu yang dipilih dan nyatakan itu sebagai komitmen perjanjian, bukan preferensi. Beritahu satu orang waktu pastinya sebelum hari dimulai. Akuntabilitas membuat penghentian bersifat struktural daripada hanya harapan.`,
       `Mulailah Sabatmu 30 menit lebih awal dari hari itu sendiri. Gunakan 30 menit itu hanya untuk transisi: tutup laptopmu, matikan notifikasi pekerjaan, dan biarkan sistem sarafmu menyesuaikan diri sebelum hari dimulai. Penghentian keras setelah intensitas yang berkelanjutan sulit secara neurologis. Jendela transisi adalah penyangga yang membuat penghentian menjadi nyata.`,
       `Tulis "Sabat" di kalendermu sebagai pertemuan. Lindungi dengan ketegasan yang sama seperti kamu melindungi pertemuan dengan atasanmu atau percakapan dengan donor. Jika ada sesuatu yang mencoba memindahkannya, perlakukan itu sebagai konflik jadwal yang perlu dinegosiasi ulang, bukan alasan untuk membatalkan Sabat.`,
     ],
@@ -115,7 +115,7 @@ const srdcCards = [
     practicesID: [
       `Tidur lebih lama di hari Sabatmu tanpa rasa bersalah. Bukan sebagai kesenangan diri, melainkan sebagai tindakan kepercayaan. Jika pekerjaan akan berlanjut tanpa kamu di hari lain, itu akan berlanjut saat kamu tidur. Tubuhmu bukan mesin yang bisa kamu jalankan tanpa batas tanpa perawatan. Provisi pertama Elia adalah tidur sebelum makan.`,
       `Makan satu kali makan yang lambat dan tidak terburu-buru. Duduk. Bukan di mejamu. Bukan sambil memeriksa ponselmu. Ambil waktumu. Di dunia di mana bahkan waktu makan telah dikolonisasi oleh produktivitas, makan yang lambat adalah tindakan perlawanan kecil.`,
-      `Ketika sesuatu terasa seperti pekerjaan, perlakukan itu sebagai pekerjaan, dan tinggalkan untuk besok. Ini termasuk menjawab "hanya satu email." Kerja kompulsif didefinisikan tepatnya oleh ketidakmampuan untuk berhenti bahkan selama waktu yang secara nominal bebas. Namai dorongan itu ketika datang. Kemudian letakkan.`,
+      `Ketika sesuatu terasa seperti pekerjaan, perlakukan itu sebagai pekerjaan, dan tinggalkan untuk besok. Ini termasuk menjawab "hanya satu email." Kerja kompulsif didefinisikan tepatnya oleh ketidakmampuan untuk berhenti bahkan selama waktu yang secara nominal bebas. Kenali dan ungkapkan dorongan itu ketika datang. Kemudian letakkan.`,
     ],
   },
   {
@@ -151,7 +151,7 @@ const srdcCards = [
     practicesID: [
       `Baca satu bagian Kitab Suci yang pendek dengan perlahan. Baca tiga kali. Setelah bacaan ketiga, tanya dirimu: kata atau frasa apa yang menarik perhatianku? Diamlah dengan kata itu selama lima menit tanpa menjelaskannya. Biarkan beristirahat. Ini adalah praktik yang disebut tradisi Kristen sebagai lectio divina (bacaan sakral) dan ini adalah salah satu alat tertua untuk mendengar apa yang datang dalam keheningan.`,
       `Tulis satu kalimat dalam jurnal: "Hari ini aku bersyukur untuk..." Biarkan menjadi doa sebelum kamu menutup halaman. Rasa syukur bukan trik produktivitas. Ini adalah reorientasi perhatian: dari apa yang kurang ke apa yang telah diberikan. Penelitian secara konsisten menghubungkan praktik rasa syukur dengan peningkatan energi dan berkurangnya kecemasan. Yang lebih penting, itu adalah disposisi Sabat: menerima apa yang telah Tuhan berikan.`,
-      `Lakukan perjalanan 20 menit tanpa ponsel, tanpa earphone, dan tanpa tujuan. Biarkan langkah kakimu menjadi ritme. Biarkan pikiranmu beristirahat. Dalam banyak tradisi Kristen, ini disebut "prayer walk," tapi intinya bukan mengisi perjalanan dengan kata-kata. Ini adalah untuk mencapai ketenangan. Momen Elia adalah keheningan setelah angin, gempa bumi, dan api. Keheningan butuh waktu untuk dicapai.`,
+      `Berjalan kakilah selama 20 menit tanpa ponsel, tanpa earphone, dan tanpa tujuan. Biarkan langkah kakimu menjadi ritme. Biarkan pikiranmu beristirahat. Dalam banyak tradisi Kristen, ini disebut "prayer walk," tapi intinya bukan mengisi waktu berjalan itu dengan kata-kata. Ini adalah untuk mencapai ketenangan. Momen Elia adalah keheningan setelah angin, gempa bumi, dan api. Keheningan butuh waktu untuk dicapai.`,
     ],
   },
 ];
@@ -253,16 +253,16 @@ function RecoveryParadoxSVG({ lang }: { lang: Lang }) {
           {t("MORE DEPLETION", "KELELAHAN BERTAMBAH")}
         </text>
         <text x="285" y="38" textAnchor="middle" fontFamily={svgFont} fontSize="8" fill={orange} opacity="0.6">
-          {t("(feeds back)", "(umpan balik)")}
+          {t("(feeds back)", "(menguatkan kembali)")}
         </text>
 
         {/* Callout box */}
         <rect x="351" y="158" width="130" height="38" rx="4" fill="white" stroke={orange} strokeWidth="1" opacity="0.95" />
         <text x="416" y="174" textAnchor="middle" fontFamily={svgFont} fontSize="10" fill={navy}>
-          {t("Can't Detach", "Tidak Bisa")}
+          {t("Can't Detach", "Sulit Melepaskan Diri")}
         </text>
         <text x="416" y="188" textAnchor="middle" fontFamily={svgFont} fontSize="10" fill={navy}>
-          {t("to Rest", "Beristirahat")}
+          {t("to Rest", "untuk Beristirahat")}
         </text>
 
         {/* Leader line to callout */}
@@ -696,13 +696,13 @@ export default function SabbathLeaderClient({
           <p style={prose}>
             {t(
               "On the seventh day, God rested. Not because creation had worn Him out, but because rest was built into the fabric of what He made. Genesis 2:2-3 describes God ceasing from His work and blessing the seventh day, setting it apart. Rest was not an afterthought. It was the completion of creation.",
-              "Pada hari ketujuh, Tuhan beristirahat. Bukan karena penciptaan telah melelahkan-Nya, tetapi karena istirahat ditenun ke dalam kain dari apa yang Dia ciptakan. Kejadian 2:2-3 menggambarkan Allah berhenti dari pekerjaan-Nya dan memberkati hari ketujuh, mengkhususkannya. Istirahat bukanlah renungan. Itu adalah kesempurnaan penciptaan."
+              "Pada hari ketujuh, Tuhan beristirahat. Bukan karena penciptaan telah melelahkan-Nya, tetapi karena istirahat tertanam dalam hakikat ciptaan-Nya. Kejadian 2:2-3 menggambarkan Tuhan berhenti dari pekerjaan-Nya dan memberkati hari ketujuh, mengkhususkannya. Istirahat bukan sesuatu yang dipikirkan belakangan. Itu adalah kesempurnaan penciptaan."
             )}
           </p>
           <p style={prose}>
             {t(
               "Centuries later, God gave Israel the Ten Commandments. The Sabbath was among them, not a recommendation but a command. Exodus 20:8-11 grounds the Sabbath in creation itself: \"For in six days the LORD made the heavens and the earth... but he rested on the seventh day. Therefore the LORD blessed the Sabbath day and made it holy.\" The rhythm God kept at creation, He commanded His people to keep.",
-              "Berabad-abad kemudian, Allah memberikan Israel Sepuluh Perintah. Sabat ada di antaranya, bukan rekomendasi melainkan perintah. Keluaran 20:8-11 mendasarkan Sabat pada penciptaan itu sendiri: \"Sebab enam hari lamanya TUHAN menjadikan langit dan bumi... tetapi pada hari ketujuh Ia berhenti bekerja dan beristirahat. Itulah sebabnya TUHAN memberkati hari Sabat dan menguduskannya.\" Ritme yang Allah jaga saat penciptaan, Dia perintahkan kepada umat-Nya untuk dijaga."
+              "Berabad-abad kemudian, Tuhan memberikan Israel Sepuluh Perintah. Sabat ada di antaranya, bukan rekomendasi melainkan perintah. Keluaran 20:8-11 mendasarkan Sabat pada penciptaan itu sendiri: \"Sebab enam hari lamanya TUHAN menjadikan langit dan bumi... tetapi pada hari ketujuh Ia berhenti bekerja dan beristirahat. Itulah sebabnya TUHAN memberkati hari Sabat dan menguduskannya.\" Ritme yang Tuhan jaga saat penciptaan, Dia perintahkan kepada umat-Nya untuk dijaga."
             )}
           </p>
           <p style={prose}>
@@ -735,7 +735,7 @@ export default function SabbathLeaderClient({
           <p style={{ ...prose, marginBottom: 0 }}>
             {t(
               "For cross-cultural leaders who pour themselves into mission, language, culture, and community, this reclaims something important: Sabbath is not a luxury you earn when the work allows. It is the rhythm God designed for people who do the kind of work that does not stop.",
-              "Bagi pemimpin lintas budaya yang mencurahkan diri untuk misi, bahasa, budaya, dan komunitas, ini merebut kembali sesuatu yang penting: Sabat bukan kemewahan yang kamu peroleh ketika pekerjaan mengizinkan. Itu adalah ritme yang Allah rancang untuk orang-orang yang melakukan pekerjaan yang tidak berhenti."
+              "Bagi pemimpin lintas budaya yang mencurahkan diri untuk misi, bahasa, budaya, dan komunitas, ini merebut kembali sesuatu yang penting: Sabat bukan kemewahan yang kamu peroleh ketika pekerjaan mengizinkan. Itu adalah ritme yang Tuhan rancang untuk orang-orang yang melakukan pekerjaan yang tidak berhenti."
             )}
           </p>
         </div>
@@ -772,7 +772,7 @@ export default function SabbathLeaderClient({
               {[
                 {
                   en: "Articulate the biblical foundation for Sabbath rest: why God built rest into creation, what the commandment establishes, and what Jesus clarified about it.",
-                  id: "Menjelaskan landasan alkitabiah istirahat Sabat: mengapa Allah membangun istirahat ke dalam penciptaan, apa yang ditetapkan perintah itu, dan apa yang Yesus klarifikasi tentangnya.",
+                  id: "Menjelaskan landasan alkitabiah istirahat Sabat: mengapa Tuhan membangun istirahat ke dalam penciptaan, apa yang ditetapkan perintah itu, dan apa yang Yesus klarifikasi tentangnya.",
                 },
                 {
                   en: "Describe the psychological mechanism that makes rest hardest when it is most needed (the recovery paradox) and why willpower alone cannot solve it.",
@@ -1048,7 +1048,7 @@ export default function SabbathLeaderClient({
                 },
                 {
                   en: "They role-model boundary-keeping as an organizational norm, communicating that rest is not disloyal.",
-                  id: "Mereka memodelkan pemeliharaan batas sebagai norma organisasi, mengkomunikasikan bahwa istirahat bukanlah ketidaksetiaan.",
+                  id: "Mereka mencontohkan cara menjaga batas sebagai norma organisasi, mengkomunikasikan bahwa istirahat bukanlah ketidaksetiaan.",
                 },
               ].map((item, i) => (
                 <li key={i} style={{ fontFamily: FONT, fontSize: "0.875rem", color: bodyText, lineHeight: 1.7, marginBottom: "0.5rem" }}>
@@ -1059,7 +1059,7 @@ export default function SabbathLeaderClient({
             <p style={{ ...prose, marginBottom: 0 }}>
               {t(
                 "Critically, leader detachment was a stronger predictor of employee recovery than the quality of the leader-supervisor relationship itself. A leader who models rest does more for their team's wellbeing than a leader who maintains a warm and consistent relationship but never stops.",
-                "Yang kritis, pelepasan pemimpin adalah prediktor pemulihan karyawan yang lebih kuat dibanding kualitas hubungan pemimpin-supervisor itu sendiri. Pemimpin yang memodelkan istirahat melakukan lebih banyak untuk kesejahteraan timnya dibanding pemimpin yang mempertahankan hubungan yang hangat dan konsisten tapi tidak pernah berhenti."
+                "Yang kritis, pelepasan pemimpin adalah prediktor pemulihan karyawan yang lebih kuat dibanding kualitas hubungan pemimpin-supervisor itu sendiri. Pemimpin yang mencontohkan istirahat melakukan lebih banyak untuk kesejahteraan timnya dibanding pemimpin yang mempertahankan hubungan yang hangat dan konsisten tapi tidak pernah berhenti."
               )}
             </p>
           </DigDeeper>
@@ -1091,7 +1091,7 @@ export default function SabbathLeaderClient({
           <p style={prose}>
             {t(
               "The angel came back a second time. \"Get up and eat, for the pathway is too much for you.\" Elijah slept. He ate. He slept again. He ate again. And then he walked forty days and forty nights on the strength of that one meal.",
-              "Malaikat datang kembali untuk kedua kalinya. \"Bangun dan makanlah, karena prosesnya terlalu berat bagimu.\" Elia tidur. Dia makan. Dia tidur lagi. Dia makan lagi. Dan kemudian dia berjalan empat puluh hari empat puluh malam dari kekuatan satu kali makan itu."
+              "Malaikat datang kembali untuk kedua kalinya. \"Bangun dan makanlah, karena proses yang ada di depanmu terlalu berat bagimu.\" Elia tidur. Dia makan. Dia tidur lagi. Dia makan lagi. Dan kemudian dia berjalan empat puluh hari empat puluh malam dari kekuatan satu kali makan itu."
             )}
           </p>
           <p style={prose}>
@@ -1103,7 +1103,7 @@ export default function SabbathLeaderClient({
           <p style={prose}>
             {t(
               "This is why Scazzero calls Sabbath a formation practice rather than a recovery strategy. Recovery is about returning to baseline. Formation is about being made into something. The forty days of Elijah's walking were not powered by Elijah's resolve. They were powered by what God had given him in a single night of care.",
-              "Itulah mengapa Scazzero menyebut Sabat sebagai praktik pembentukan daripada strategi pemulihan. Pemulihan adalah tentang kembali ke titik dasar. Pembentukan adalah tentang dibentuk menjadi sesuatu. Empat puluh hari perjalanan Elia tidak didorong oleh tekad Elia. Itu didorong oleh apa yang Tuhan berikan kepadanya dalam satu malam kepedulian."
+              "Itulah mengapa Scazzero menyebut Sabat sebagai praktik pembentukan daripada strategi pemulihan. Pemulihan adalah tentang kembali ke titik dasar. Pembentukan adalah tentang dibentuk menjadi sesuatu. Empat puluh hari Elia berjalan kaki tidak didorong oleh tekadnya sendiri. Itu didorong oleh apa yang Tuhan berikan kepadanya dalam satu malam kepedulian."
             )}
           </p>
           <p style={prose}>
@@ -1277,7 +1277,7 @@ export default function SabbathLeaderClient({
           <p style={prose}>
             {t(
               "Calling it \"self-care\" does not land well with leaders who have given everything to a cause. But reframing it as stewardship (of the mission, of the team, of the calling) changes the logic entirely.",
-              "Menyebutnya \"perawatan diri\" tidak terdengar baik bagi pemimpin yang telah memberikan segalanya untuk sebuah tujuan. Tapi merangkainya sebagai penatalayanan (dari misi, dari tim, dari panggilan) mengubah logikanya sepenuhnya."
+              "Menyebutnya \"perawatan diri\" tidak diterima dengan baik oleh pemimpin yang telah memberikan segalanya untuk sebuah tujuan. Tapi memandangnya sebagai penatalayanan (dari misi, dari tim, dari panggilan) mengubah logikanya sepenuhnya."
             )}
           </p>
           <p style={prose}>
@@ -1288,7 +1288,7 @@ export default function SabbathLeaderClient({
             <sup style={supStyle}>3</sup>
             {" "}{t(
               "Leaders who model relentless availability teach their teams that rest is disloyal. Leaders who model Sabbath give their teams organizational permission to stop.",
-              " Pemimpin yang memodelkan ketersediaan tanpa henti mengajari tim mereka bahwa istirahat itu tidak setia. Pemimpin yang memodelkan Sabat memberi tim mereka izin organisasi untuk berhenti."
+              " Pemimpin yang mencontohkan ketersediaan tanpa henti mengajari tim mereka bahwa istirahat itu tidak setia. Pemimpin yang mencontohkan Sabat memberi tim mereka izin organisasi untuk berhenti."
             )}
           </p>
           <p style={{ ...prose, marginBottom: 0 }}>
@@ -1502,7 +1502,7 @@ export default function SabbathLeaderClient({
             color: navy,
             marginBottom: "1.5rem",
           }}>
-            {t("The cost is higher than most leaders realise.", "Biayanya lebih tinggi dari yang kebanyakan pemimpin sadari.")}
+            {t("The cost is higher than most leaders realise.", "Harga yang harus dibayar lebih tinggi dari yang disadari kebanyakan pemimpin.")}
           </h2>
 
           <p style={prose}>
@@ -1519,7 +1519,7 @@ export default function SabbathLeaderClient({
           <p style={{ ...prose, marginBottom: 0 }}>
             {t(
               "Sabbath is not merely helpful for leaders. It is protective. The data tracks what Scripture already established: without it, the work consumes the worker.",
-              "Sabat tidak sekadar berguna bagi pemimpin. Itu bersifat protektif. Data melacak apa yang sudah ditetapkan Kitab Suci: tanpanya, pekerjaan mengonsumsi pekerja."
+              "Sabat tidak sekadar berguna bagi pemimpin. Itu bersifat protektif. Data sejalan dengan apa yang sudah ditetapkan Kitab Suci: tanpanya, pekerjaan menguras habis pekerjanya."
             )}
           </p>
         </div>
@@ -1538,7 +1538,7 @@ export default function SabbathLeaderClient({
             fontWeight: 700,
             marginBottom: "2.5rem",
           }}>
-            {t("FAITH ANCHOR", "JANGKAR IMAN")}
+            {t("FAITH ANCHOR", "PEGANGAN IMAN")}
           </p>
 
           {/* Scripture 1 */}
@@ -1607,7 +1607,7 @@ export default function SabbathLeaderClient({
           {[
             {
               en: "What God said to Elijah on that hillside was not a correction. It was a provision. The burned-out prophet asked to die. God's response was food and sleep. Not explanation. Not vision. Not rebuke for the collapse that followed Carmel. Just: here is bread. Here is water. Eat. Sleep. The pathway ahead is too much for you as you are. Let me give you what you need before you go.",
-              id: "Apa yang dikatakan Tuhan kepada Elia di atas bukit itu bukan teguran. Itu adalah provisi. Nabi yang kelelahan itu meminta untuk mati. Respons Tuhan adalah makanan dan tidur. Bukan penjelasan. Bukan penglihatan. Bukan teguran atas keruntuhan yang mengikuti Karmel. Hanya: ini rotinya. Ini airnya. Makan. Tidur. Prosesnya terlalu berat bagimu seperti ini. Biarkan Aku memberimu apa yang kamu butuhkan sebelum kamu pergi.",
+              id: "Apa yang dikatakan Tuhan kepada Elia di atas bukit itu bukan teguran. Itu adalah provisi. Nabi yang kelelahan itu meminta untuk mati. Respons Tuhan adalah makanan dan tidur. Bukan penjelasan. Bukan penglihatan. Bukan teguran atas keruntuhan yang mengikuti Karmel. Hanya: ini rotinya. Ini airnya. Makan. Tidur. Proses yang ada di depan terlalu berat bagimu dalam keadaanmu sekarang. Biarkan Aku memberimu apa yang kamu butuhkan sebelum kamu pergi.",
             },
             {
               en: "The writers of Scripture return to this pattern across the centuries. The Hebrews 4 text introduces a word that appears only once in the New Testament: sabbatismos. A Sabbath-rest. The author's argument is not simply that weekly rest is good practice. It is that there is a rest that remains: an eschatological reality into which believers are already entering, and which has not yet fully arrived. The Sabbath is both present and future. Both practice and promise.",
@@ -1662,11 +1662,11 @@ export default function SabbathLeaderClient({
               },
               {
                 en: "Your Sabbath protects more than you. When leaders model rest, teams gain organizational permission to stop. The research is clear: leader detachment during leisure time predicts team wellbeing more strongly than the quality of the relationship itself. Sustainable leadership is not a private discipline. It shapes the culture around you.",
-                id: "Sabatmu melindungi lebih dari sekadar dirimu. Ketika pemimpin memodelkan istirahat, tim mendapat izin organisasi untuk berhenti. Penelitian jelas: pelepasan pemimpin selama waktu luang memprediksi kesejahteraan tim lebih kuat dibanding kualitas hubungan itu sendiri. Kepemimpinan berkelanjutan bukan disiplin pribadi. Ini membentuk budaya di sekitarmu.",
+                id: "Sabatmu melindungi lebih dari sekadar dirimu. Ketika pemimpin mencontohkan istirahat, tim mendapat izin organisasi untuk berhenti. Penelitian jelas: pelepasan pemimpin selama waktu luang memprediksi kesejahteraan tim lebih kuat dibanding kualitas hubungan itu sendiri. Kepemimpinan berkelanjutan bukan disiplin pribadi. Ini membentuk budaya di sekitarmu.",
               },
               {
                 en: "Sabbath is not a recovery strategy. It is a formation practice. It is how leaders are reminded, week by week, that they are not defined by their output, and that there is a rest still coming. Elijah was fed once and walked forty days. The provision is always scaled to what the calling requires. Your job is to stop long enough to receive it.",
-                id: "Sabat bukan strategi pemulihan. Ini adalah praktik pembentukan. Ini adalah cara pemimpin diingatkan, minggu demi minggu, bahwa mereka tidak didefinisikan oleh hasilnya, dan bahwa ada istirahat yang masih akan datang. Elia diberi makan sekali dan berjalan empat puluh hari. Provisi selalu diskalakan sesuai dengan apa yang dibutuhkan panggilan. Tugasmu adalah berhenti cukup lama untuk menerimanya.",
+                id: "Sabat bukan strategi pemulihan. Ini adalah praktik pembentukan. Ini adalah cara pemimpin diingatkan, minggu demi minggu, bahwa mereka tidak didefinisikan oleh hasilnya, dan bahwa ada istirahat yang masih akan datang. Elia diberi makan sekali dan berjalan empat puluh hari. Provisi selalu disesuaikan dengan apa yang dibutuhkan panggilan. Tugasmu adalah berhenti cukup lama untuk menerimanya.",
               },
             ].map((item, i) => (
               <div key={i} style={{ display: "flex", gap: "1.5rem", alignItems: "flex-start" }}>

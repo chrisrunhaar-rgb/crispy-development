@@ -54,7 +54,7 @@ const FLIP_CARDS: FlipCard[] = [
     },
     back: {
       en: "God speaks vision through four channels: Passion (what you cannot put down), Dreams (what stirs your imagination), Revelation (what God speaks directly), and Others (what your team sees that you cannot). Most leaders only use one or two. The strongest visions draw from all four.",
-      id: "Allah berbicara visi melalui empat saluran: Gairah (yang tidak bisa Anda tinggalkan), Mimpi (yang menggerakkan imajinasi Anda), Wahyu (apa yang Allah ucapkan langsung), dan Sesama (apa yang tim Anda lihat yang tidak bisa Anda lihat). Visi terkuat menggali dari keempat-empatnya.",
+      id: "Tuhan berbicara visi melalui empat saluran: Gairah (yang tidak bisa Anda tinggalkan), Mimpi (yang menggerakkan imajinasi Anda), Wahyu (apa yang Tuhan ucapkan langsung), dan Sesama (apa yang tim Anda lihat yang tidak bisa Anda lihat). Visi terkuat menggali dari keempat-empatnya.",
     },
   },
   {
@@ -64,7 +64,7 @@ const FLIP_CARDS: FlipCard[] = [
     },
     back: {
       en: "For a cross-cultural Christian leader, every team vision sits inside the Great Commission — Jesus' ongoing call to make disciples of every nation. Your specific vision is a small piece of God's larger vision for the world. Knowing this is the difference between leading a project and stewarding a calling.",
-      id: "Bagi seorang pemimpin Kristen lintas budaya, setiap visi tim berada di dalam Amanat Agung — panggilan Yesus yang terus-menerus untuk menjadikan semua bangsa murid-Nya. Visi spesifik Anda adalah bagian kecil dari visi Allah yang lebih besar untuk dunia.",
+      id: "Bagi seorang pemimpin Kristen lintas budaya, setiap visi tim berada di dalam Amanat Agung — panggilan Yesus yang terus-menerus untuk menjadikan semua bangsa murid-Nya. Visi spesifik Anda adalah bagian kecil dari visi Tuhan yang lebih besar untuk dunia.",
     },
   },
   {
@@ -74,7 +74,7 @@ const FLIP_CARDS: FlipCard[] = [
     },
     back: {
       en: "Not every strong feeling is God-given vision. Five tests help distinguish a God-originated vision from a good idea or personal ambition: Time (does it survive months of prayer?), Scripture (does it align with God's character?), Community (have trusted people confirmed it?), Sacrifice (are you willing to pay the cost?), and Fruit (what is it producing?).",
-      id: "Tidak setiap perasaan kuat adalah visi yang diberikan Allah. Lima pengujian membantu membedakan visi yang berasal dari Allah: Waktu, Kitab Suci, Komunitas, Pengorbanan, dan Buah.",
+      id: "Tidak setiap perasaan kuat adalah visi yang diberikan Tuhan. Lima pengujian membantu membedakan visi yang berasal dari Tuhan: Waktu, Kitab Suci, Komunitas, Pengorbanan, dan Buah.",
     },
   },
   {
@@ -258,7 +258,7 @@ export default function VisionCastingClient({ userPathway, isSaved: initialSaved
           title={{ en: "Teaching this to someone else?", id: "Mengajarkan ini kepada orang lain?" }}
           text={{
             en: "Use the guided slideshow to walk your team through the Vision Compass and how to test a God-given vision.",
-            id: "Gunakan slideshow terpandu ini untuk memandu tim Anda memahami Kompas Visi dan cara menguji visi yang berasal dari Allah.",
+            id: "Gunakan slideshow terpandu ini untuk memandu tim Anda memahami Kompas Visi dan cara menguji visi yang berasal dari Tuhan.",
           }}
         />
       } />
@@ -895,7 +895,7 @@ export default function VisionCastingClient({ userPathway, isSaved: initialSaved
                 lang === "en"
                   ? "Describe the vision, concern, or calling you are testing…"
                   : lang === "id"
-                  ? "Jelaskan visi, kekhawatiran, atau panggilan yang Anda uji…"
+                  ? "Jelaskan visi, beban hati, atau panggilan yang Anda uji…"
                   : "Beschrijf de visie, bezorgdheid of roeping die u test…"
               }
               style={{

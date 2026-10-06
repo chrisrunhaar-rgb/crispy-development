@@ -82,18 +82,18 @@ const GIFTS: Record<string, GiftData> = {
     label: "Bahasa Roh", en: "Tongues",
     desc: "Kamu telah menerima karunia untuk berkomunikasi dalam bahasa rohani yang belum pernah dipelajari.",
     descEn: "The Spirit-given ability to communicate in a spiritual language not previously learned.",
-    realLife: "Dalam kehidupan nyata: Saat berdoa atau menyembah, kamu mengungkapkan dirimu dalam bahasa yang tidak kamu pelajari, merasakan komunikasi yang lebih dalam dengan Allah yang melampaui kata-kata yang kamu pahami.",
+    realLife: "Dalam kehidupan nyata: Saat berdoa atau menyembah, kamu mengungkapkan dirimu dalam bahasa yang tidak kamu pelajari, merasakan komunikasi yang lebih dalam dengan Tuhan yang melampaui kata-kata yang kamu pahami.",
     realLifeEn: "In real life: During prayer or worship, you express yourself in a language you have not learned, experiencing a depth of communication with God that transcends words you understand.",
-    longDesc: "Karunia Bahasa Roh (glossolalia) disebutkan dalam 1 Korintus 12-14 sebagai salah satu manifestasi Roh. Ini adalah kemampuan untuk berdoa atau berbicara kepada Allah dalam bahasa yang tidak dipelajari — baik untuk penggunaan pribadi dalam berdoa, atau untuk pesan kepada jemaat (yang kemudian membutuhkan tafsiran). Rasul Paulus menghargai karunia ini sambil menekankan bahwa kasih harus memandu ekspresinya, dan bahwa tafsiran diperlukan bila digunakan di depan umum. Karunia ini mempertajam kehidupan doa dan keintiman dengan Roh.",
+    longDesc: "Karunia Bahasa Roh (glossolalia) disebutkan dalam 1 Korintus 12-14 sebagai salah satu manifestasi Roh. Ini adalah kemampuan untuk berdoa atau berbicara kepada Tuhan dalam bahasa yang tidak dipelajari — baik untuk penggunaan pribadi dalam berdoa, atau untuk pesan kepada jemaat (yang kemudian membutuhkan tafsiran). Rasul Paulus menghargai karunia ini sambil menekankan bahwa kasih harus memandu ekspresinya, dan bahwa tafsiran diperlukan bila digunakan di depan umum. Karunia ini mempertajam kehidupan doa dan keintiman dengan Roh.",
     longDescEn: "The gift of Tongues (glossolalia) is mentioned in 1 Corinthians 12-14 as one of the Spirit's manifestations. It is the ability to pray or speak to God in a language not learned — either for personal prayer use, or as a message to the congregation (which then requires interpretation). Paul valued this gift while emphasising that love must guide its expression, and that interpretation is required when used publicly. This gift sharpens prayer life and intimacy with the Spirit.",
   },
   menyembuhkan: {
     label: "Menyembuhkan", en: "Healing",
-    desc: "Allah memakai doa-doamu sebagai sarana untuk kesembuhan fisik, emosi, atau rohani bagi orang lain.",
+    desc: "Tuhan memakai doa-doamu sebagai sarana untuk kesembuhan fisik, emosi, atau rohani bagi orang lain.",
     descEn: "God uses your prayers as a channel for physical, emotional, or spiritual healing.",
-    realLife: "Dalam kehidupan nyata: Kamu mendapati dirimu berdoa untuk orang yang sakit dengan keyakinan yang tulus — dan kamu telah menyaksikan Allah bekerja melalui doa-doa itu dengan cara yang tidak dapat dijelaskan secara medis.",
+    realLife: "Dalam kehidupan nyata: Kamu mendapati dirimu berdoa untuk orang yang sakit dengan keyakinan yang tulus — dan kamu telah menyaksikan Tuhan bekerja melalui doa-doa itu dengan cara yang tidak dapat dijelaskan secara medis.",
     realLifeEn: "In real life: You find yourself praying for the sick with genuine conviction — and you have witnessed God work through those prayers in ways that cannot be medically explained.",
-    longDesc: "Karunia Menyembuhkan (iama) adalah karunia di mana Allah bekerja melalui seseorang sebagai saluran kesembuhan — fisik, emosional, atau rohani. Kesembuhan selalu merupakan tindakan Allah; orang yang memiliki karunia ini adalah alat, bukan sumber. Karunia ini dinyatakan dalam 1 Korintus 12 dan dilakukan dalam pelayanan Yesus dan para rasul. Dalam konteks budaya yang beragam, karunia ini sering menjadi kesaksian yang kuat tentang kuasa dan belas kasihan Allah yang melampaui batas.",
+    longDesc: "Karunia Menyembuhkan (iama) adalah karunia di mana Tuhan bekerja melalui seseorang sebagai saluran kesembuhan — fisik, emosional, atau rohani. Kesembuhan selalu merupakan tindakan Tuhan; orang yang memiliki karunia ini adalah alat, bukan sumber. Karunia ini dinyatakan dalam 1 Korintus 12 dan dilakukan dalam pelayanan Yesus dan para rasul. Dalam konteks budaya yang beragam, karunia ini sering menjadi kesaksian yang kuat tentang kuasa dan belas kasihan Tuhan yang melampaui batas.",
     longDescEn: "The gift of Healing (iama) is a gift in which God works through a person as a channel of healing — physical, emotional, or spiritual. Healing is always God's act; the person with this gift is the instrument, not the source. This gift is listed in 1 Corinthians 12 and demonstrated throughout Jesus's ministry and the apostles'. In diverse cultural contexts, this gift often becomes a powerful testimony to God's power and compassion that transcends boundaries.",
   },
   menguatkan: {
@@ -111,12 +111,12 @@ const GIFTS: Record<string, GiftData> = {
     descEn: "A wholehearted willingness to use personal resources generously for ministry needs.",
     realLife: "Dalam kehidupan nyata: Ketika kamu mendengar tentang kebutuhan nyata, responmu pertama adalah berpikir tentang bagaimana kamu bisa membantu secara finansial atau material — dan kamu melakukannya dengan sukacita, bukan dengan berat hati.",
     realLifeEn: "In real life: When you hear about a genuine need, your first response is to think about how you can help financially or materially — and you do so with joy, not reluctance.",
-    longDesc: "Karunia Memberi (metadidomi) disebutkan dalam Roma 12:8 dengan arahan untuk melakukannya 'dengan kemurahan hati'. Ini bukan hanya tentang kemampuan finansial — ini adalah kesiapan hati untuk menggunakan apa yang Allah percayakan dengan kemurahan hati demi memajukan Kerajaan-Nya. Mereka yang memiliki karunia ini sering memiliki kemampuan khusus untuk menghasilkan, mengelola, dan mendistribusikan sumber daya dengan bijaksana. Mereka memberi dengan cara yang tidak menarik perhatian kepada diri mereka sendiri tetapi kepada kebutuhan yang dipenuhi.",
+    longDesc: "Karunia Memberi (metadidomi) disebutkan dalam Roma 12:8 dengan arahan untuk melakukannya 'dengan kemurahan hati'. Ini bukan hanya tentang kemampuan finansial — ini adalah kesiapan hati untuk menggunakan apa yang Tuhan percayakan dengan kemurahan hati demi memajukan Kerajaan-Nya. Mereka yang memiliki karunia ini sering memiliki kemampuan khusus untuk menghasilkan, mengelola, dan mendistribusikan sumber daya dengan bijaksana. Mereka memberi dengan cara yang tidak menarik perhatian kepada diri mereka sendiri tetapi kepada kebutuhan yang dipenuhi.",
     longDescEn: "The gift of Giving (metadidomi) is listed in Romans 12:8 with the direction to do it 'with generosity'. It is not merely about financial capacity — it is a heart readiness to use what God has entrusted generously for the advance of His Kingdom. Those with this gift often have a special ability to generate, manage, and distribute resources wisely. They give in ways that draw attention not to themselves but to the need being met.",
   },
   hikmat: {
     label: "Hikmat", en: "Wisdom",
-    desc: "Kamu mampu melihat situasi dengan sudut pandang Allah dan memberikan arah yang bijak kepada orang lain.",
+    desc: "Kamu mampu melihat situasi dengan sudut pandang Tuhan dan memberikan arah yang bijak kepada orang lain.",
     descEn: "The ability to see situations from God's perspective and give wise, God-centred direction.",
     realLife: "Dalam kehidupan nyata: Orang datang kepadamu ketika mereka menghadapi keputusan besar karena saran-saranmu cenderung memotong kerumitan dan menemukan apa yang benar-benar penting — secara praktis dan rohani.",
     realLifeEn: "In real life: People seek you out when facing big decisions because your counsel tends to cut through complexity and find what truly matters — practically and spiritually.",
@@ -125,7 +125,7 @@ const GIFTS: Record<string, GiftData> = {
   },
   pengetahuan: {
     label: "Pengetahuan", en: "Knowledge",
-    desc: "Kamu menerima pemahaman supranatural tentang firman Allah atau situasi tertentu yang relevan bagi pelayanan.",
+    desc: "Kamu menerima pemahaman supranatural tentang firman Tuhan atau situasi tertentu yang relevan bagi pelayanan.",
     descEn: "Supernatural understanding of God's word or specific situations relevant to ministry.",
     realLife: "Dalam kehidupan nyata: Kamu memiliki pemahaman mendalam tentang Alkitab yang datang dari studi serius — dan terkadang kamu menerima wawasan tentang seseorang atau situasi yang tidak dapat kamu jelaskan secara rasional, yang kemudian terbukti tepat.",
     realLifeEn: "In real life: You have a deep grasp of Scripture that comes from serious study — and sometimes you receive insight about a person or situation you cannot rationally explain, which later proves accurate.",
@@ -134,11 +134,11 @@ const GIFTS: Record<string, GiftData> = {
   },
   iman: {
     label: "Iman", en: "Faith",
-    desc: "Kamu memiliki keyakinan yang kuat bahwa Allah akan bekerja bahkan dalam situasi yang tampaknya mustahil.",
+    desc: "Kamu memiliki keyakinan yang kuat bahwa Tuhan akan bekerja bahkan dalam situasi yang tampaknya mustahil.",
     descEn: "An extraordinary conviction that God will act even when circumstances seem impossible.",
-    realLife: "Dalam kehidupan nyata: Ketika orang lain melihat hambatan, kamu melihat peluang. Kehadiranmu dalam sebuah tim mengubah atmosfer dari ketakutan menjadi kepercayaan — bukan karena kamu mengabaikan realita, tetapi karena kamu sungguh percaya Allah lebih besar dari realita.",
+    realLife: "Dalam kehidupan nyata: Ketika orang lain melihat hambatan, kamu melihat peluang. Kehadiranmu dalam sebuah tim mengubah atmosfer dari ketakutan menjadi kepercayaan — bukan karena kamu mengabaikan realita, tetapi karena kamu sungguh percaya Tuhan lebih besar dari realita.",
     realLifeEn: "In real life: When others see obstacles, you see opportunities. Your presence in a team shifts the atmosphere from fear to trust — not because you ignore reality, but because you genuinely believe God is bigger than the reality.",
-    longDesc: "Karunia Iman (pistis) yang disebutkan dalam 1 Korintus 12 bukan sekedar iman penyelamatan yang dimiliki semua orang Kristen — ini adalah manifestasi khusus dari Roh di mana seseorang menerima keyakinan yang luar biasa bahwa Allah akan bertindak dalam cara tertentu. Ini adalah iman yang menggerakkan gunung. Mereka yang memiliki karunia ini menjadi jangkar komunitas di saat krisis, ketidakpastian, atau saat proyek besar tampaknya tidak mungkin. Iman mereka menular dan memobilisasi orang lain untuk bertindak.",
+    longDesc: "Karunia Iman (pistis) yang disebutkan dalam 1 Korintus 12 bukan sekedar iman penyelamatan yang dimiliki semua orang Kristen — ini adalah manifestasi khusus dari Roh di mana seseorang menerima keyakinan yang luar biasa bahwa Tuhan akan bertindak dalam cara tertentu. Ini adalah iman yang menggerakkan gunung. Mereka yang memiliki karunia ini menjadi jangkar komunitas di saat krisis, ketidakpastian, atau saat proyek besar tampaknya tidak mungkin. Iman mereka menular dan memobilisasi orang lain untuk bertindak.",
     longDescEn: "The gift of Faith (pistis) listed in 1 Corinthians 12 is not merely the saving faith every Christian has — it is a specific Spirit manifestation in which a person receives extraordinary conviction that God will act in a specific way. This is the faith that moves mountains. Those with this gift become anchors for community in crisis, uncertainty, or when a large vision seems impossible. Their faith is contagious and mobilises others to act.",
   },
   kerasulan: {
@@ -161,11 +161,11 @@ const GIFTS: Record<string, GiftData> = {
   },
   bernubuat: {
     label: "Bernubuat", en: "Prophecy",
-    desc: "Kamu menerima dan menyampaikan pesan dari Allah yang menguatkan, mengingatkan, atau menantang jemaat.",
+    desc: "Kamu menerima dan menyampaikan pesan dari Tuhan yang menguatkan, mengingatkan, atau menantang jemaat.",
     descEn: "Receiving and delivering messages from God that strengthen, warn, or challenge the community.",
     realLife: "Dalam kehidupan nyata: Kamu sering merasakan dorongan untuk menyampaikan sesuatu kepada komunitas atau individu — dan ketika kamu melakukannya dalam kerendahan hati, pesanmu beresonansi dengan cara yang melampaui apa yang bisa kamu ketahui sendiri.",
     realLifeEn: "In real life: You often sense an urge to speak something to a community or individual — and when you do so in humility, your message resonates in ways that go beyond what you could have known on your own.",
-    longDesc: "Karunia Bernubuat (propheteia) dalam Perjanjian Baru terutama bersifat forthtelling (menyampaikan) daripada foretelling (meramalkan). Paulus menggambarkannya sebagai membawa 'penguatan, dorongan, dan penghiburan' (1 Kor 14:3). Mereka yang memiliki karunia ini menerima pesan dari Allah yang relevan dengan kebutuhan saat ini komunitas dan menyampaikannya dengan otoritas yang direndahkan. Karunia ini bukan tentang membuat prediksi pribadi; ini tentang menjadi mulut Allah bagi umat-Nya. Semua nubuat harus diuji terhadap Kitab Suci dan komunitas.",
+    longDesc: "Karunia Bernubuat (propheteia) dalam Perjanjian Baru terutama bersifat forthtelling (menyampaikan) daripada foretelling (meramalkan). Paulus menggambarkannya sebagai membawa 'penguatan, dorongan, dan penghiburan' (1 Kor 14:3). Mereka yang memiliki karunia ini menerima pesan dari Tuhan yang relevan dengan kebutuhan saat ini komunitas dan menyampaikannya dengan otoritas yang direndahkan. Karunia ini bukan tentang membuat prediksi pribadi; ini tentang menjadi mulut Tuhan bagi umat-Nya. Semua nubuat harus diuji terhadap Kitab Suci dan komunitas.",
     longDescEn: "The gift of Prophecy (propheteia) in the New Testament is primarily forthtelling rather than foretelling. Paul describes it as bringing 'strengthening, encouragement, and comfort' (1 Cor 14:3). Those with this gift receive messages from God relevant to the present needs of the community and deliver them with humble authority. This gift is not about making personal predictions; it is about being God's voice to His people. All prophecy should be tested against Scripture and community.",
   },
   mengajar: {
@@ -188,11 +188,11 @@ const GIFTS: Record<string, GiftData> = {
   },
   memimpin: {
     label: "Memimpin", en: "Leadership",
-    desc: "Kamu mampu menggerakkan, menginspirasi, dan membawa orang lain bersama-sama menuju tujuan yang Allah tetapkan.",
+    desc: "Kamu mampu menggerakkan, menginspirasi, dan membawa orang lain bersama-sama menuju tujuan yang Tuhan tetapkan.",
     descEn: "The ability to mobilize, inspire, and unite people toward God-appointed goals.",
     realLife: "Dalam kehidupan nyata: Ketika ada kekosongan kepemimpinan dalam sebuah kelompok, orang-orang secara alami melihat ke arahmu. Kamu menemukan cara untuk menyatukan orang dengan latar belakang berbeda di belakang tujuan bersama.",
     realLifeEn: "In real life: When there is a leadership vacuum in a group, people naturally look to you. You find ways to unite people from different backgrounds behind a shared goal.",
-    longDesc: "Karunia Memimpin (proistemi — 'berdiri di depan') dalam Roma 12:8 diarahkan untuk dilakukan 'dengan rajin'. Pemimpin rohani tidak memimpin untuk kekuasaan tetapi untuk melayani tujuan Allah. Mereka memiliki kemampuan untuk memvisionkan ke mana komunitas perlu pergi, menyelaraskan sumber daya dan orang, dan memotivasi orang lain untuk bergerak bersama. Dalam konteks lintas budaya, pemimpin yang efektif belajar bagaimana memimpin dengan cara yang menghormati nilai-nilai budaya yang beragam sambil tetap setia pada misi.",
+    longDesc: "Karunia Memimpin (proistemi — 'berdiri di depan') dalam Roma 12:8 diarahkan untuk dilakukan 'dengan rajin'. Pemimpin rohani tidak memimpin untuk kekuasaan tetapi untuk melayani tujuan Tuhan. Mereka memiliki kemampuan untuk memvisionkan ke mana komunitas perlu pergi, menyelaraskan sumber daya dan orang, dan memotivasi orang lain untuk bergerak bersama. Dalam konteks lintas budaya, pemimpin yang efektif belajar bagaimana memimpin dengan cara yang menghormati nilai-nilai budaya yang beragam sambil tetap setia pada misi.",
     longDescEn: "The gift of Leadership (proistemi — 'to stand before') in Romans 12:8 is directed to be done 'with diligence'. Spiritual leaders lead not for power but to serve God's purposes. They have the ability to vision where the community needs to go, align resources and people, and motivate others to move together. In cross-cultural contexts, effective leaders learn to lead in ways that honour diverse cultural values while remaining faithful to the mission.",
   },
   administrasi: {
@@ -206,11 +206,11 @@ const GIFTS: Record<string, GiftData> = {
   },
   mukjizat: {
     label: "Mukjizat", en: "Miracles",
-    desc: "Allah menyatakan kuasa-Nya melalui hidupmu dalam cara-cara yang melampaui penjelasan manusia.",
+    desc: "Tuhan menyatakan kuasa-Nya melalui hidupmu dalam cara-cara yang melampaui penjelasan manusia.",
     descEn: "God reveals His power through your life in ways that surpass natural explanation.",
-    realLife: "Dalam kehidupan nyata: Kamu telah menyaksikan atau menjadi bagian dari situasi di mana Allah bertindak dengan cara yang tidak dapat dijelaskan secara alami — jawaban doa yang dramatis, pemulihan yang tidak terduga, atau kejadian yang terlalu tepat waktu untuk menjadi kebetulan.",
+    realLife: "Dalam kehidupan nyata: Kamu telah menyaksikan atau menjadi bagian dari situasi di mana Tuhan bertindak dengan cara yang tidak dapat dijelaskan secara alami — jawaban doa yang dramatis, pemulihan yang tidak terduga, atau kejadian yang terlalu tepat waktu untuk menjadi kebetulan.",
     realLifeEn: "In real life: You have witnessed or been part of situations where God acted in ways that cannot be naturally explained — dramatic answers to prayer, unexpected restorations, or events too perfectly timed to be coincidence.",
-    longDesc: "Karunia Mukjizat (dunamis — 'kuasa') adalah karunia di mana Allah bekerja melalui seseorang untuk melakukan hal-hal yang melampaui hukum alam. Disebutkan dalam 1 Korintus 12, karunia ini berfungsi sebagai tanda yang menunjuk kepada realitas Kerajaan Allah. Mereka yang memiliki karunia ini bukanlah penampil mukjizat — mereka adalah saluran yang rendah hati melalui mana kuasa Allah mengalir. Dalam konteks di mana Injil sedang disampaikan untuk pertama kalinya, mukjizat sering menjadi sarana utama melalui mana hati dibuka.",
+    longDesc: "Karunia Mukjizat (dunamis — 'kuasa') adalah karunia di mana Tuhan bekerja melalui seseorang untuk melakukan hal-hal yang melampaui hukum alam. Disebutkan dalam 1 Korintus 12, karunia ini berfungsi sebagai tanda yang menunjuk kepada realitas Kerajaan Allah. Mereka yang memiliki karunia ini bukanlah penampil mukjizat — mereka adalah saluran yang rendah hati melalui mana kuasa Tuhan mengalir. Dalam konteks di mana Injil sedang disampaikan untuk pertama kalinya, mukjizat sering menjadi sarana utama melalui mana hati dibuka.",
     longDescEn: "The gift of Miracles (dunamis — 'power') is a gift in which God works through a person to do things beyond natural law. Listed in 1 Corinthians 12, this gift functions as a sign pointing to the reality of God's Kingdom. Those with this gift are not performers of miracles — they are humble channels through which God's power flows. In contexts where the Gospel is being presented for the first time, miracles often become a primary means through which hearts are opened.",
   },
   tafsir_bahasa_roh: {
@@ -252,9 +252,9 @@ const QUESTIONS: { id: string; en: string }[] = [
   { id: "Aku selalu mengundang orang-orang ke rumahku.", en: "I always invite people to my home." },
   { id: "Aku percaya bahwa aku mempunyai kemampuan supranatural dalam berdoa.", en: "I believe I have a supernatural ability in prayer." },
   { id: "Aku pernah berdoa memohon kesembuhan seseorang, dan orang itu menjadi sembuh.", en: "I have prayed for someone's healing, and that person was healed." },
-  { id: "Aku senang mendorong orang-orang yang putus asa agar mereka bisa melihat betapa Allah mengasihi mereka.", en: "I enjoy encouraging discouraged people so they can see how much God loves them." },
+  { id: "Aku senang mendorong orang-orang yang putus asa agar mereka bisa melihat betapa Tuhan mengasihi mereka.", en: "I enjoy encouraging discouraged people so they can see how much God loves them." },
   { id: "Aku merasa terpanggil untuk memberikan sebagian besar yang kumiliki demi kebutuhan pelayanan.", en: "I feel called to give most of what I have to ministry needs." },
-  { id: "Aku punya kemampuan untuk melihat situasi-situasi sulit dengan sudut pandang Allah.", en: "I have the ability to view difficult situations from God's perspective." },
+  { id: "Aku punya kemampuan untuk melihat situasi-situasi sulit dengan sudut pandang Tuhan.", en: "I have the ability to view difficult situations from God's perspective." },
   { id: "Aku dapat mendengar firman Tuhan secara langsung yang bisa diterapkan pada situasi-situasi tertentu.", en: "I can hear God's word directly and apply it to specific situations." },
   { id: "Aku percaya bahwa hal-hal mustahil menjadi mungkin karena iman.", en: "I believe impossible things become possible through faith." },
   { id: "Aku membaktikan diri untuk memimpin pertumbuhan pelayanan dalam komunitas yang berbeda-beda atau negara lain.", en: "I dedicate myself to leading ministry growth in different communities or other countries." },
@@ -262,38 +262,38 @@ const QUESTIONS: { id: string; en: string }[] = [
   { id: "Aku mendapat kesan-kesan dari Tuhan tentang situasi-situasi yang terjadi dalam kehidupan orang lain.", en: "I receive impressions from God about situations in other people's lives." },
   { id: "Aku senang mempersiapkan dan menyampaikan pesan-pesan Alkitab.", en: "I enjoy preparing and delivering biblical messages." },
   { id: "Aku merasa bertanggung jawab dan peduli terhadap pertumbuhan spiritual orang lain.", en: "I feel responsible and care about the spiritual growth of others." },
-  { id: "Aku suka mengambil tanggung jawab dan memimpin orang-orang supaya tujuan yang ditetapkan oleh Allah bisa tercapai.", en: "I like to take responsibility and lead people so that God's purpose can be achieved." },
+  { id: "Aku suka mengambil tanggung jawab dan memimpin orang-orang supaya tujuan yang ditetapkan oleh Tuhan bisa tercapai.", en: "I like to take responsibility and lead people so that God's purpose can be achieved." },
   { id: "Aku lebih suka merencanakan, mengorganisasi dan menargetkan sesuatu sebelum memulai sebuah proyek.", en: "I prefer to plan, organise, and set targets before starting a project." },
-  { id: "Aku percaya Allah bermaksud untuk memakaiku untuk melakukan mukjizat.", en: "I believe God intends to use me to perform miracles." },
-  { id: "Aku merasa bahwa Allah telah menunjukku untuk menafsirkan pesan-pesan yang disampaikan dalam Bahasa Roh.", en: "I feel that God has appointed me to interpret messages spoken in Tongues." },
+  { id: "Aku percaya Tuhan bermaksud untuk memakaiku untuk melakukan mukjizat.", en: "I believe God intends to use me to perform miracles." },
+  { id: "Aku merasa bahwa Tuhan telah menunjukku untuk menafsirkan pesan-pesan yang disampaikan dalam Bahasa Roh.", en: "I feel that God has appointed me to interpret messages spoken in Tongues." },
   { id: "Aku melayani orang lain melalui perbuatan-perbuatan yang sederhana dan praktis.", en: "I serve others through simple and practical deeds." },
   { id: "Aku merasakan kebutuhan untuk memperhatikan orang-orang yang sakit dan yang terluka secara emosi.", en: "I feel the need to care for people who are sick or emotionally wounded." },
   { id: "Aku merasa tidak nyaman ketika orang asing atau pendatang baru tidak mendapatkan sambutan yang baik.", en: "I feel uncomfortable when strangers or newcomers don't receive a warm welcome." },
-  { id: "Aku percaya Allah memakaiku untuk berbicara dalam Bahasa Roh.", en: "I believe God uses me to speak in Tongues." },
+  { id: "Aku percaya Tuhan memakaiku untuk berbicara dalam Bahasa Roh.", en: "I believe God uses me to speak in Tongues." },
   { id: "Aku memiliki kerinduan yang mendalam untuk mendoakan orang-orang yang sakit agar mereka menjadi sembuh.", en: "I have a deep longing to pray for sick people so they will be healed." },
   { id: "Aku merasa terdorong untuk memberikan semangat kepada mereka yang kecil hati.", en: "I feel compelled to give encouragement to those who are discouraged." },
   { id: "Aku sering memberikan lebih dari persepuluhan dalam pengeluaran anggaranku.", en: "I often give more than a tithe in my financial budget." },
   { id: "Orang sering meminta nasihatku ketika mereka menghadapi keputusan-keputusan penting.", en: "People often ask for my advice when facing important decisions." },
   { id: "Aku percaya Tuhan memberiku pengetahuan secara supranatural tentang seseorang atau situasi tertentu.", en: "I believe God gives me supernatural knowledge about a person or specific situation." },
-  { id: "Aku percaya kepada Allah karena sering mengalami kejadian-kejadian supranatural.", en: "I believe in God because I often experience supernatural events." },
+  { id: "Aku percaya kepada Tuhan karena sering mengalami kejadian-kejadian supranatural.", en: "I believe in God because I often experience supernatural events." },
   { id: "Aku merasa nyaman saat berada di antara orang-orang yang berbeda ras, bahasa, dan budaya.", en: "I feel comfortable among people of different races, languages, and cultures." },
   { id: "Aku sering memikirkan cara-cara kreatif untuk menceritakan tentang Yesus kepada orang yang tidak percaya.", en: "I often think of creative ways to tell others about Jesus." },
-  { id: "Aku percaya Allah kadang-kadang memakaiku untuk menyampaikan pesan-pesan profetis bagi komunitasku.", en: "I believe God sometimes uses me to deliver prophetic messages to my community." },
+  { id: "Aku percaya Tuhan kadang-kadang memakaiku untuk menyampaikan pesan-pesan profetis bagi komunitasku.", en: "I believe God sometimes uses me to deliver prophetic messages to my community." },
   { id: "Aku suka menjelaskan kebenaran-kebenaran alkitabiah dengan cara yang mudah dimengerti orang lain.", en: "I enjoy explaining biblical truths in ways that others can easily understand." },
-  { id: "Aku senang membimbing dan memelihara sekelompok orang dalam perjalanan iman mereka.", en: "I enjoy guiding and nurturing a group of people in their faith journey." },
+  { id: "Aku senang membimbing dan memelihara sekelompok orang dalam pertumbuhan iman mereka.", en: "I enjoy guiding and nurturing a group of people in their faith journey." },
   { id: "Aku bisa menetapkan tujuan dan merencanakan cara paling efektif untuk mencapainya.", en: "I can set goals and plan the most effective way to achieve them." },
   { id: "Aku senang mengatur detail-detail proyek agar berjalan dengan lancar dan efisien.", en: "I enjoy organising project details so they run smoothly and efficiently." },
-  { id: "Aku telah menyaksikan kekuatan Allah yang ajaib dalam kehidupan seseorang sebagai jawaban atas doaku.", en: "I have witnessed God's amazing power in someone's life as an answer to my prayer." },
+  { id: "Aku telah menyaksikan kekuatan Tuhan yang ajaib dalam kehidupan seseorang sebagai jawaban atas doaku.", en: "I have witnessed God's amazing power in someone's life as an answer to my prayer." },
   { id: "Aku pernah menafsirkan pesan bahasa roh dalam sebuah pertemuan ibadah.", en: "I have interpreted a tongue message in a worship gathering." },
   { id: "Aku merasa terpanggil untuk membantu orang lain dalam pekerjaan dan kebutuhan mereka sehari-hari.", en: "I feel called to help others in their work and daily needs." },
   { id: "Aku biasanya meluangkan waktu untuk menunjukkan kepedulian kepada orang yang sedang berduka.", en: "I usually take time to show care to someone who is grieving." },
   { id: "Aku senang membuat orang lain merasa nyaman dan diterima di rumahku atau di lingkunganku.", en: "I enjoy making others feel comfortable and accepted in my home or environment." },
   { id: "Aku pernah berbicara dalam bahasa yang tidak kupelajari ketika sedang berdoa atau beribadah.", en: "I have spoken in a language I did not learn while praying or worshipping." },
-  { id: "Aku percaya Allah bermaksud untuk menggunakan doa-doaku untuk menyembuhkan orang yang sakit.", en: "I believe God intends to use my prayers to heal the sick." },
-  { id: "Aku senang menolong orang melihat kebaikan Allah dalam situasi sulit yang mereka hadapi.", en: "I enjoy helping people see God's goodness in difficult situations." },
+  { id: "Aku percaya Tuhan bermaksud untuk menggunakan doa-doaku untuk menyembuhkan orang yang sakit.", en: "I believe God intends to use my prayers to heal the sick." },
+  { id: "Aku senang menolong orang melihat kebaikan Tuhan dalam situasi sulit yang mereka hadapi.", en: "I enjoy helping people see God's goodness in difficult situations." },
   { id: "Aku dengan senang hati memberikan uang atau waktuku ketika melihat kebutuhan nyata di sekelilingku.", en: "I willingly give my money or time when I see a real need around me." },
   { id: "Aku biasanya dapat memberi saran yang tepat dan berwawasan jauh ketika diminta.", en: "I can usually give accurate and insightful advice when asked." },
-  { id: "Aku sering mendapatkan pemahaman baru tentang firman Tuhan yang terasa langsung dari Allah.", en: "I often receive new understanding of God's word that feels directly from Him." },
+  { id: "Aku sering mendapatkan pemahaman baru tentang firman Tuhan yang terasa langsung dari-Nya.", en: "I often receive new understanding of God's word that feels directly from Him." },
   { id: "Aku memiliki keyakinan teguh bahwa doa yang sungguh-sungguh dapat mengubah situasi yang tampak mustahil.", en: "I have a firm conviction that sincere prayer can change seemingly impossible situations." },
   { id: "Aku beradaptasi dengan mudah terhadap hal-hal baru.", en: "I adapt easily to new things." },
   { id: "Aku berbagi dengan orang lain saat mereka telah menerima Kristus.", en: "I share with others when they have received Christ." },
@@ -308,21 +308,21 @@ const QUESTIONS: { id: string; en: string }[] = [
   { id: "Aku suka mengunjungi rumah peristirahatan dan panti-panti lainnya tempat orang-orang kesepian dan membutuhkan kunjungan.", en: "I like to visit rest homes and other places where lonely people need a visit." },
   { id: "Aku suka menyiapkan makanan dan menyediakan tempat tinggal bagi mereka yang membutuhkan.", en: "I enjoy preparing food and providing shelter for those in need." },
   { id: "Orang lain telah menafsirkan bahasa rohku.", en: "Others have interpreted my tongue message." },
-  { id: "Allah menyembuhkan orang lain melalui aku.", en: "God heals others through me." },
+  { id: "Tuhan menyembuhkan orang lain melalui aku.", en: "God heals others through me." },
   { id: "Aku dikenal karena sering memberi dorongan kepada orang lain.", en: "I am known for often encouraging others." },
   { id: "Aku senang memberikan uangku.", en: "I enjoy giving my money." },
-  { id: "Allah telah memberikan kemampuan kepadaku untuk memberi bimbingan dan nasihat kepada orang lain.", en: "God has given me the ability to guide and counsel others." },
+  { id: "Tuhan telah memberikan kemampuan kepadaku untuk memberi bimbingan dan nasihat kepada orang lain.", en: "God has given me the ability to guide and counsel others." },
   { id: "Aku cenderung memakai wawasan alkitabiah ketika sedang berdiskusi dengan orang lain.", en: "I tend to use biblical insights when discussing with others." },
   { id: "Cukup mudah bagiku untuk berdoa dengan cara yang luar biasa.", en: "It is fairly easy for me to pray in an extraordinary way." },
   { id: "Aku memiliki kerinduan yang mendalam untuk melihat orang-orang di negara lain untuk menjadi pengikut Kristus.", en: "I have a deep longing to see people in other countries become followers of Christ." },
   { id: "Aku selalu memikirkan cara-cara baru supaya aku bisa berbagi dengan teman-teman non Kristen.", en: "I am always thinking of new ways I can share with my non-Christian friends." },
-  { id: "Aku ingin menyampaikan firman Allah yang akan menantang orang untuk berubah.", en: "I want to deliver God's word that will challenge people to change." },
-  { id: "Allah memakaiku untuk membantu orang lain agar lebih paham makna menjadi orang Kristen.", en: "God uses me to help others better understand what it means to be a Christian." },
+  { id: "Aku ingin menyampaikan firman Tuhan yang akan menantang orang untuk berubah.", en: "I want to deliver God's word that will challenge people to change." },
+  { id: "Tuhan memakaiku untuk membantu orang lain agar lebih paham makna menjadi orang Kristen.", en: "God uses me to help others better understand what it means to be a Christian." },
   { id: "Aku bisa melihat diriku bertanggung jawab atas perkembangan spiritual orang lain.", en: "I can see myself being responsible for the spiritual development of others." },
   { id: "Saat berada dalam sebuah kelompok, aku biasanya menjadi pemimpin atau mengambil alih kepemimpinan.", en: "When in a group, I usually become the leader or take over leadership." },
   { id: "Meskipun aku cukup mampu melakukan sesuatu sendirian, aku suka mengajak orang lain untuk membantu mengatur pekerjaan kami.", en: "Although capable alone, I prefer to involve others in organising our work." },
-  { id: "Aku sudah menyaksikan kekuatan Allah yang ajaib dan dalam melalui hidupku.", en: "I have witnessed the deep and amazing power of God through my life." },
-  { id: "Allah memakai karuniaku dalam menafsirkan bahasa roh untuk menyampaikan firman kepada orang lain.", en: "God uses my gift of interpretation of tongues to deliver His word to others." },
+  { id: "Aku sudah menyaksikan kekuatan Tuhan yang ajaib dan dalam melalui hidupku.", en: "I have witnessed the deep and amazing power of God through my life." },
+  { id: "Tuhan memakai karuniaku dalam menafsirkan bahasa roh untuk menyampaikan firman kepada orang lain.", en: "God uses my gift of interpretation of tongues to deliver His word to others." },
 ];
 
 const TOTAL_QUESTIONS = 76;
@@ -512,7 +512,7 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
               </h1>
               <p style={{ fontSize: "0.9375rem", color: "oklch(78% 0.008 80)", lineHeight: 1.7, margin: 0 }}>
                 {lang === "id"
-                  ? "Berdasarkan jawabanmu, berikut adalah karunia rohani utama yang Allah berikan kepadamu."
+                  ? "Berdasarkan jawabanmu, berikut adalah karunia rohani utama yang Tuhan berikan kepadamu."
                  
                   : "Based on your answers, here are the primary spiritual gifts God has given you."}
               </p>
@@ -856,7 +856,7 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
           </h1>
           <p style={{ fontSize: "0.9375rem", color: "oklch(78% 0.008 80)", lineHeight: 1.7, marginBottom: "1.5rem" }}>
             {lang === "id"
-              ? "Temukan karunia rohani yang Allah berikan kepadamu — dan bagaimana karunia itu bisa dimaksimalkan dalam pelayanan dan kepemimpinan."
+              ? "Temukan karunia rohani yang Tuhan berikan kepadamu — dan bagaimana karunia itu bisa dimaksimalkan dalam pelayanan dan kepemimpinan."
              
               : "Discover the spiritual gifts God has given you — and how they can be maximised in service and leadership."}
           </p>
@@ -947,13 +947,13 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
               </p>
               <p style={{ fontSize: "0.9375rem", color: "oklch(35% 0.008 260)", lineHeight: 1.8, margin: "0 0 0.875rem" }}>
                 {lang === "id"
-                  ? "Penilaian ini membantu kamu menemukan karunia rohani yang Allah berikan kepadamu untuk melayani Tubuh Kristus. Didasarkan pada tiga bagian utama Perjanjian Baru — Roma 12, 1 Korintus 12, dan Efesus 4 — tes ini mensurvei rasa panggilan, keyakinan, dan pengalamanmu di seluruh 19 karunia yang diakui."
+                  ? "Penilaian ini membantu kamu menemukan karunia rohani yang Tuhan berikan kepadamu untuk melayani Tubuh Kristus. Didasarkan pada tiga bagian utama Perjanjian Baru — Roma 12, 1 Korintus 12, dan Efesus 4 — tes ini mensurvei rasa panggilan, keyakinan, dan pengalamanmu di seluruh 19 karunia yang diakui."
                  
                   : "This assessment helps you discover the spiritual gifts God has given you for serving the body of Christ. Based on three primary New Testament passages — Romans 12, 1 Corinthians 12, and Ephesians 4 — the test surveys your sense of calling, conviction, and recent experience across 19 recognised gifts."}
               </p>
               <p style={{ fontSize: "0.9375rem", color: "oklch(35% 0.008 260)", lineHeight: 1.8, margin: 0 }}>
                 {lang === "id"
-                  ? "Karunia rohani berbeda dari bakat alami. Bakat alami adalah bagian dari cara Allah menciptakanmu; karunia rohani diberikan oleh Roh Kudus secara khusus untuk membangun Tubuh Kristus. Beberapa karunia tumpang tindih dengan kemampuan alami — seorang pengajar yang berbakat mungkin selalu menyukai menjelaskan sesuatu — tetapi karunia rohani adalah kemampuan yang diberdayakan Roh untuk menggunakan kemampuan itu bagi Kerajaan."
+                  ? "Karunia rohani berbeda dari bakat alami. Bakat alami adalah bagian dari cara Tuhan menciptakanmu; karunia rohani diberikan oleh Roh Kudus secara khusus untuk membangun Tubuh Kristus. Beberapa karunia tumpang tindih dengan kemampuan alami — seorang pengajar yang berbakat mungkin selalu menyukai menjelaskan sesuatu — tetapi karunia rohani adalah kemampuan yang diberdayakan Roh untuk menggunakan kemampuan itu bagi Kerajaan."
                  
                   : "Spiritual gifts are not natural talents. A natural talent is part of how God made you; a spiritual gift is given by the Holy Spirit specifically for building up the body of Christ. Some gifts overlap with natural ability — a gifted teacher may have always loved explaining things — but the spiritual gift is the Spirit-empowered capacity to use that ability for the Kingdom."}
               </p>
@@ -1023,7 +1023,7 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
       <div style={{ background: "white", padding: "4rem 1.5rem" }}>
         <div style={{ maxWidth: "720px", margin: "0 auto" }}>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", color: PRIMARY, textTransform: "uppercase" as const, margin: "0 0 0.625rem" }}>
-            {lang === "id" ? "Tokoh Alkitab" : "Scripture in Focus"}
+            {lang === "id" ? "Sorotan Firman" : "Scripture in Focus"}
           </p>
           <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(1.5rem, 3.5vw, 2rem)", fontWeight: 600, color: "oklch(18% 0.05 260)", lineHeight: 1.15, marginBottom: "2.5rem" }}>
             {lang === "id"
@@ -1049,7 +1049,7 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
                 ref: { en: "Acts 18", id: "Kisah 18" },
                 reflection: {
                   en: "Apollos arrived in Ephesus an eloquent man, mighty in the Scriptures (Acts 18). Priscilla and Aquila took him aside and explained the way of God more accurately — and his gift grew through correction. He went on to water what Paul had planted in Corinth, refuting the Jews publicly with the Scriptures. Speaking-gift leaders learn from Apollos: eloquence is a real gift, but it is shaped by submission to those who know more, not by self-assurance.",
-                  id: "Apolos tiba di Efesus sebagai seorang yang fasih berbicara, mahir dalam Kitab Suci (Kisah Para Rasul 18). Priskila dan Akwila membawanya ke samping dan menjelaskan jalan Allah dengan lebih tepat — dan karunianya bertumbuh melalui koreksi. Ia kemudian menyirami apa yang Paulus telah tanam di Korintus, menyangkal orang-orang Yahudi di muka umum dengan Kitab Suci. Pemimpin dengan karunia berbicara belajar dari Apolos: kefasihan adalah karunia nyata, tetapi ia dibentuk oleh ketundukan kepada mereka yang lebih tahu, bukan oleh kepercayaan diri sendiri.",
+                  id: "Apolos tiba di Efesus sebagai seorang yang fasih berbicara, mahir dalam Kitab Suci (Kisah Para Rasul 18). Priskila dan Akwila mengajaknya bicara secara pribadi dan menjelaskan jalan Tuhan dengan lebih tepat — dan karunianya bertumbuh melalui koreksi. Ia kemudian menyirami apa yang Paulus telah tanam di Korintus, menyangkal orang-orang Yahudi di muka umum dengan Kitab Suci. Pemimpin dengan karunia berbicara belajar dari Apolos: kefasihan adalah karunia nyata, tetapi ia dibentuk oleh ketundukan kepada mereka yang lebih tahu, bukan oleh kepercayaan diri sendiri.",
                 },
               },
               {
@@ -1067,7 +1067,7 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
                 ref: { en: "Nehemiah 1Ã¢â‚¬â€œ6", id: "Nehemia 1Ã¢â‚¬â€œ6" },
                 reflection: {
                   en: "Nehemiah is the leading-gift anchor. He cast vision (rebuild the wall), administrated work crews by family group, mobilised resources from the king of Persia, taught the people their covenant alongside Ezra, shepherded morale through opposition, and stayed long enough to see the work consolidated. His gift mix covers leadership and administration in equal measure. Leading-gift leaders learn from Nehemiah: vision without administration is wishful, administration without vision is bureaucracy.",
-                  id: "Nehemia adalah jangkar karunia memimpin. Ia menyampaikan visi (membangun kembali tembok), mengadministrasikan tim kerja per kelompok keluarga, memobilisasi sumber daya dari raja Persia, mengajarkan perjanjian kepada umat bersama Ezra, memimpin semangat di tengah tentangan, dan tinggal cukup lama untuk melihat pekerjaan terkonsolidasi. Perpaduan karunianya mencakup kepemimpinan dan administrasi secara setara. Pemimpin dengan karunia memimpin belajar dari Nehemia: visi tanpa administrasi hanya angan-angan, administrasi tanpa visi adalah birokrasi.",
+                  id: "Nehemia adalah teladan utama karunia memimpin. Ia menyampaikan visi (membangun kembali tembok), mengadministrasikan tim kerja per kelompok keluarga, memobilisasi sumber daya dari raja Persia, mengajarkan perjanjian kepada umat bersama Ezra, memimpin semangat di tengah tentangan, dan tinggal cukup lama untuk melihat pekerjaan terkonsolidasi. Perpaduan karunianya mencakup kepemimpinan dan administrasi secara setara. Pemimpin dengan karunia memimpin belajar dari Nehemia: visi tanpa administrasi hanya angan-angan, administrasi tanpa visi adalah birokrasi.",
                 },
               },
             ].map(({ cat, figure, ref, reflection }) => (

@@ -95,7 +95,7 @@ const ALTITUDES = [
     strengths: ["Broad organizational influence", "Systemic problem solving", "Multi-team coordination"],
     strengthsId: ["Pengaruh organisasi yang luas", "Pemecahan masalah sistemik", "Koordinasi multi-tim"],
     weaknesses: ["Distance from front-line reality", "Risk of bureaucratic drift", "Slow to respond to local needs"],
-    weaknessesId: ["Jarak dari realitas garis depan", "Risiko penyimpangan birokrasi", "Lambat merespons kebutuhan lokal"],
+    weaknessesId: ["Jarak dari realitas garis depan", "Risiko pergeseran ke arah birokrasi", "Lambat merespons kebutuhan lokal"],
     opportunities: ["Systemic change with lasting impact", "Shape organizational DNA", "Develop national leaders"],
     opportunitiesId: ["Perubahan sistemik dengan dampak bertahan lama", "Membentuk DNA organisasi", "Mengembangkan pemimpin nasional"],
     threats: ["Losing touch with ground-level reality", "Organizational complexity overwhelming", "Political dynamics fragmenting unity"],
@@ -127,7 +127,7 @@ const ALTITUDES = [
     opportunities: ["Shape strategy across multiple nations", "Build cross-cultural leadership pipelines", "Resolve systemic barriers to mission"],
     opportunitiesId: ["Membentuk strategi di berbagai negara", "Membangun jalur kepemimpinan lintas budaya", "Menyelesaikan hambatan sistemik terhadap misi"],
     threats: ["Burnout from complexity overload", "Cultural blind spots causing damage", "Isolation at senior level"],
-    threatsId: ["Kelelahan akibat kelebihan kompleksitas", "Titik buta budaya menyebabkan kerusakan", "Isolasi di tingkat senior"],
+    threatsId: ["Kelelahan akibat kelebihan kompleksitas", "Hal budaya yang tidak disadari menimbulkan kerusakan", "Isolasi di tingkat senior"],
   },
   {
     num: "05",
@@ -155,7 +155,7 @@ const ALTITUDES = [
     opportunities: ["Catalyze global movements", "Create lasting institutional frameworks", "Shape the next generation of leaders"],
     opportunitiesId: ["Mengkatalisis gerakan global", "Menciptakan kerangka institusional yang bertahan lama", "Membentuk generasi pemimpin berikutnya"],
     threats: ["Loss of ground-level credibility", "Organizational drift from original mission", "Leadership succession failures"],
-    threatsId: ["Kehilangan kredibilitas tingkat dasar", "Penyimpangan organisasi dari misi asal", "Kegagalan suksesi kepemimpinan"],
+    threatsId: ["Kehilangan kredibilitas tingkat dasar", "Organisasi mulai bergeser dari misi awal", "Kegagalan suksesi kepemimpinan"],
   },
 ];
 
@@ -165,7 +165,7 @@ const PRINCIPLES = [
     titleEn: "Understand Your Altitude",
     titleId: "Pahami Ketinggian Anda",
     descEn: "Know what altitude you're currently operating at — and what that demands of you. Each level has unique responsibilities, blind spots, and growth edges.",
-    descId: "Ketahui ketinggian mana yang sedang Anda operasikan — dan apa yang itu tuntut dari Anda. Setiap level memiliki tanggung jawab, titik buta, dan tantangan pertumbuhan yang unik.",
+    descId: "Ketahui di ketinggian mana Anda sedang bekerja, dan apa tuntutannya bagi Anda. Setiap level memiliki tanggung jawab, hal-hal yang tidak Anda sadari, dan hal yang perlu dikembangkan, yang khas untuk level itu.",
   },
   {
     num: "02",
@@ -212,7 +212,7 @@ const PITFALLS = [
   },
   {
     en: "Confusing busyness with effectiveness — activity at the wrong altitude wastes everyone's energy",
-    id: "Mengacaukan kesibukan dengan efektivitas — aktivitas di ketinggian yang salah membuang energi semua orang",
+    id: "Menyamakan kesibukan dengan efektivitas: aktivitas di ketinggian yang salah membuang energi semua orang",
   },
 ];
 
@@ -223,7 +223,7 @@ const REFLECTION = [
   { roman: "IV", en: "Where am I feeling the most stress or confusion — and what altitude does that suggest?", id: "Di mana saya paling banyak merasakan stres atau kebingungan — dan ketinggian apa yang itu tunjukkan?" },
   { roman: "V", en: "Do I have clarity on why we're doing what we're doing at this altitude?", id: "Apakah saya memiliki kejelasan tentang mengapa kita melakukan apa yang kita lakukan di ketinggian ini?" },
   { roman: "VI", en: "Am I trusting others enough to lead at their altitudes?", id: "Apakah saya cukup mempercayai orang lain untuk memimpin di ketinggian mereka?" },
-  { roman: "VII", en: "Where does my work align with the larger mission — and where is there drift?", id: "Di mana pekerjaan saya selaras dengan misi yang lebih besar — dan di mana ada penyimpangan?" },
+  { roman: "VII", en: "Where does my work align with the larger mission — and where is there drift?", id: "Di mana pekerjaan saya selaras dengan misi yang lebih besar, dan di mana pekerjaan saya mulai bergeser dari arah?" },
   { roman: "VIII", en: "Am I collaborating effectively with leaders at different altitudes?", id: "Apakah saya berkolaborasi secara efektif dengan pemimpin di ketinggian yang berbeda?" },
   { roman: "IX", en: "What am I holding onto that I should be delegating?", id: "Apa yang saya pegang yang seharusnya saya delegasikan?" },
   { roman: "X", en: "How effectively am I communicating vision and direction to those at lower altitudes?", id: "Seberapa efektif saya mengkomunikasikan visi dan arah kepada mereka yang berada di ketinggian lebih rendah?" },
@@ -488,7 +488,7 @@ export default function LeadershipAltitudesClient({ userPathway, isSaved: initia
           <p style={{ fontSize: 16, lineHeight: 1.75, color: "oklch(75% 0.04 260)" }}>
             {t(
               "The danger is when a leader becomes stuck — either micromanaging at a level too low for their role,⁴ or flying too high and losing touch with reality. Self-awareness and consistent feedback are the corrective mechanisms.⁵",
-              "Bahayanya adalah ketika seorang pemimpin terjebak — entah mengelola secara mikro pada level yang terlalu rendah untuk peran mereka,⁴ atau terbang terlalu tinggi dan kehilangan kontak dengan realitas. Kesadaran diri dan umpan balik yang konsisten adalah mekanisme korektif.⁵"
+              "Bahayanya adalah ketika seorang pemimpin terjebak: entah mengatur terlalu terperinci pada level yang terlalu rendah untuk peran mereka,⁴ atau terbang terlalu tinggi dan kehilangan kontak dengan realitas. Kesadaran diri dan umpan balik yang konsisten adalah mekanisme korektif.⁵"
             )}
           </p>
         </div>
@@ -627,7 +627,7 @@ export default function LeadershipAltitudesClient({ userPathway, isSaved: initia
           <p style={{ fontSize: 16, color: "oklch(72% 0.05 260)", lineHeight: 1.7, marginBottom: 40 }}>
             {t(
               "The Leadership Altitudes framework is one of many tools in the Crispy Leaders training library — built for field workers and cross-cultural leaders.",
-              "Kerangka Ketinggian Kepemimpinan adalah salah satu dari banyak alat di perpustakaan pelatihan Crispy Leaders — dibangun untuk pekerja lintas budaya dan pemimpin lintas budaya."
+              "Kerangka Ketinggian Kepemimpinan adalah salah satu dari banyak alat di perpustakaan pelatihan Crispy Leaders, dibangun untuk pekerja lapangan dan pemimpin lintas budaya."
             )}
           </p>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>

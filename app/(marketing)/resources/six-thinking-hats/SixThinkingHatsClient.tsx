@@ -243,7 +243,7 @@ const USE_CASES = [
   {
     titleEn: "Self-Reflection", titleId: "Refleksi Diri",
     descEn: "Use all six hats individually to explore your thoughts, emotions, and ideas from multiple angles. Uncover blind spots and ensure a well-rounded understanding of personal challenges.",
-    descId: "Gunakan keenam topi secara individual untuk mengeksplorasi pikiran, emosi, dan ide Anda dari berbagai sudut pandang. Temukan titik buta dan pastikan pemahaman yang menyeluruh tentang tantangan pribadi.",
+    descId: "Gunakan keenam topi secara individual untuk mengeksplorasi pikiran, emosi, dan ide Anda dari berbagai sudut pandang. Temukan hal-hal yang tidak Anda sadari dan pastikan pemahaman yang menyeluruh tentang tantangan pribadi.",
   },
 ];
 
@@ -546,7 +546,7 @@ export default function SixThinkingHatsClient({ userPathway, isSaved: initialSav
             {[
               {
                 en: { n: "01", title: "Name the hat out loud", body: "\"I'm putting on my Black Hat.\" That phrase does real work — it separates the concern from the person raising it, which makes honest thinking safe." },
-                id: { n: "01", title: "Sebutkan topi dengan lantang", body: "\"Saya memakai Topi Hitam.\" Kalimat itu bekerja nyata — ia memisahkan kekhawatiran dari orang yang menyampaikannya, sehingga berpikir jujur menjadi aman." },
+                id: { n: "01", title: "Sebutkan topi secara terbuka", body: "\"Saya memakai Topi Hitam.\" Kalimat itu bekerja nyata — ia memisahkan kekhawatiran dari orang yang menyampaikannya, sehingga berpikir jujur menjadi aman." },
               },
               {
                 en: { n: "02", title: "Switch hats when you need to", body: "You're not locked in. If new information surfaces mid-discussion, name it and move. Flexibility is part of the design." },
@@ -558,7 +558,7 @@ export default function SixThinkingHatsClient({ userPathway, isSaved: initialSav
               },
               {
                 en: { n: "04", title: "Notice your team's default hat", body: "Most people gravitate to one hat naturally — the cautious thinker goes to Black, the visionary to Green or Yellow. Once your team names this, meetings become more self-aware. The facilitator knows whose voice to draw out." },
-                id: { n: "04", title: "Perhatikan topi default tim Anda", body: "Kebanyakan orang secara alami condong ke satu topi — pemikir hati-hati ke Hitam, visioner ke Hijau atau Kuning. Begitu tim Anda menamai ini, rapat menjadi lebih sadar diri. Fasilitator tahu suara siapa yang perlu dimunculkan." },
+                id: { n: "04", title: "Perhatikan topi default tim Anda", body: "Kebanyakan orang secara alami condong ke satu topi — pemikir hati-hati ke Hitam, visioner ke Hijau atau Kuning. Begitu tim Anda berani mengungkapkan ini, rapat menjadi lebih sadar diri. Fasilitator tahu suara siapa yang perlu dimunculkan." },
               },
             ].map((tip) => {
               const d = lang === "id" ? tip.id : tip.en;

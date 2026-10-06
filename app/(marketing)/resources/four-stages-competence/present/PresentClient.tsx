@@ -76,7 +76,7 @@ const STAGES: StageData[] = [
   {
     number: 4,
     label: { en: "Unconscious Competence", id: "Kompetensi Tidak Sadar" },
-    subtitle: { en: "Mastery, it becomes second nature", id: "Penguasaan, menjadi sifat kedua" },
+    subtitle: { en: "Mastery, it becomes second nature", id: "Penguasaan, menjadi kebiasaan yang mengalir alami" },
     desc: { en: "The skill has become automatic. Deep practice has moved it from conscious control into intuition.",
       id: "Keterampilan itu telah menjadi otomatis. Latihan mendalam telah memindahkannya dari kontrol sadar ke intuisi." },
     extraLabel: { en: "A leadership note", id: "Catatan kepemimpinan" },
@@ -93,7 +93,7 @@ const KEY_TAKEAWAYS: { lead: Pair; rest: Pair }[] = [
   { lead: { en: "Discomfort in Stage 2 is a signal, not a warning.", id: "Ketidaknyamanan di Tahap 2 adalah sinyal, bukan peringatan." },
     rest: { en: "It means learning has begun, not that something has gone wrong.", id: "Itu berarti pembelajaran telah dimulai, bukan bahwa ada yang salah." } },
   { lead: { en: "Stage 4 mastery creates a teaching challenge.", id: "Penguasaan Tahap 4 menciptakan tantangan mengajar." },
-    rest: { en: "You must learn to unpack what you have stopped noticing.", id: "Kamu harus belajar membongkar apa yang telah kamu berhenti perhatikan." } },
+    rest: { en: "You must learn to unpack what you have stopped noticing.", id: "Kamu harus belajar menguraikan apa yang telah kamu berhenti perhatikan." } },
   { lead: { en: "The stages repeat.", id: "Tahap-tahap ini berulang." },
     rest: { en: "Every new skill and every new culture returns a leader to Stage 1.", id: "Setiap keahlian baru dan setiap budaya baru membawa seorang pemimpin kembali ke Tahap 1." } },
 ];
@@ -317,11 +317,11 @@ const SLIDES: Slide[] = [
     steps: 3,
     render: (lang, step) => (
       <>
-        <p style={kicker}>{t("Faith anchor", "Jangkar iman", lang)}</p>
+        <p style={kicker}>{t("Faith anchor", "Pegangan iman", lang)}</p>
         <h2 style={{ ...bigTitle, color: offWhite, fontStyle: "italic", fontSize: 74, maxWidth: 1300 }}>
-          &ldquo;{t("I have learned, in whatever state I am, to be content.", "Aku telah belajar untuk merasa cukup dalam segala keadaan yang aku hadapi.", lang)}&rdquo;
+          &ldquo;{t("I have learned, in whatever state I am, to be content.", "Aku telah belajar mencukupkan diri dalam segala keadaan.", lang)}&rdquo;
         </h2>
-        <p style={kicker}>{t("Philippians 4:11", "Filipi 4:11", lang)}</p>
+        <p style={kicker}>{t("Philippians 4:11", "Filipi 4:11 (TB)", lang)}</p>
         <div style={show(step >= 1)}>{rule(120)}</div>
         <p style={{ ...body, ...show(step >= 1), color: onNavy, maxWidth: 1150 }}>
           {t("The Greek word for \"learned\" is manthano: not book-learning, but knowing that comes from doing.",

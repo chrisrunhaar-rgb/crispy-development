@@ -124,7 +124,7 @@ const LANG_DATA_ID: Record<ScoreKey, {
     name: "Hadiah Konkret",
     color: "oklch(68% 0.15 10)",
     colorLight: "oklch(96% 0.02 10)",
-    desc: "Kamu merasa dihargai ketika seseorang membawakan sesuatu yang dipilih khusus untukmu. Nilainya bukan harganya — melainkan bukti bahwa seseorang memikirkanmu ketika kamu tidak ada. Sebuah kenang-kenangan kecil yang dibawa dari perjalanan bisa lebih bermakna dari hadiah mahal yang tidak personal.",
+    desc: "Kamu merasa dihargai ketika seseorang membawakan sesuatu yang dipilih khusus untukmu. Nilainya bukan harganya — melainkan bukti bahwa seseorang memikirkanmu ketika kamu tidak ada. Sebuah kenang-kenangan kecil yang dibawa sepulang bepergian bisa lebih bermakna dari hadiah mahal yang tidak personal.",
     notMeans: "Ini bukan berarti kamu materialistis. Kamu membaca hadiah sebagai simbol perhatian. Hadiah yang penuh pertimbangan namun murah harganya dari seseorang yang mengenalmu jauh lebih berharga dari hadiah mahal dari seseorang yang tidak.",
     crossCultural: "Hadiah Konkret membawa makna kuat dalam banyak budaya Asia, Afrika, dan Amerika Latin, dan bisa terasa transaksional dalam konteks Eropa Utara. Di beberapa budaya, apa yang kamu berikan menandakan nilai hubungannya. Pelajari tata bahasa pemberian hadiah setempat.",
     biblical: "Maria dari Betani memecahkan buli-buli nard murni — senilai upah setahun — dan menuangkannya ke kaki Yesus (Markus 14:3–9). Para murid menyebutnya pemborosan. Yesus menyebutnya indah: 'Ia telah melakukan suatu perbuatan yang indah padaku — di mana pun Injil diberitakan di seluruh dunia, apa yang dilakukannya ini akan disebut-sebut juga untuk mengenang dia.' Hadiah itu dengan sengaja berlebihan. Pemimpin Hadiah Konkret belajar dari Maria: hadiah yang penuh pertimbangan, diberikan pada saat yang tepat, membawa bobot yang tidak bisa dibawa oleh kata-kata.",
@@ -200,7 +200,7 @@ const RECEIVING_PAIRS_ID: Pair[] = [
   { a: "A", b: "C", textA: "Kata-kata terima kasih yang spesifik setelah tugas yang berat paling mengena bagiku.", textB: "Bantuan praktis yang spesifik setelah tugas yang berat paling mengena bagiku." },
   { a: "A", b: "D", textA: "Pengakuan verbal yang spesifik dari atasanku lebih berarti bagiku dari sebuah bonus.", textB: "Hadiah kecil yang penuh pertimbangan dari atasanku lebih berarti dari bonus yang tidak personal." },
   { a: "A", b: "D", textA: "Aku menyimpan email-email penuh semangat dalam folder yang aku baca di hari-hari yang berat.", textB: "Aku menyimpan hadiah-hadiah kecil dari rekan tim di mejaku sebagai pengingat bahwa aku dikasihi." },
-  { a: "A", b: "D", textA: "Aku merasa dihargai ketika seseorang meluangkan waktu untuk menulis apa yang mereka apresiasi tentang aku.", textB: "Aku merasa dihargai ketika seseorang membawakan oleh-oleh kecil dari perjalanan mereka." },
+  { a: "A", b: "D", textA: "Aku merasa dihargai ketika seseorang meluangkan waktu untuk menulis apa yang mereka apresiasi tentang aku.", textB: "Aku merasa dihargai ketika seseorang membawakan oleh-oleh kecil sepulang bepergian." },
   { a: "A", b: "D", textA: "Aku sangat menghargai catatan-catatan penuh pemikiran dari rekan tim.", textB: "Aku sangat menghargai benda-benda kecil yang penuh pemikiran dari rekan tim." },
   { a: "A", b: "E", textA: "Kata-kata afirmasi dari seorang pemimpin bertahan lama dalam pikiranku.", textB: "Jabatan tangan yang hangat atau tangan di bahu yang tepat secara budaya dari seorang pemimpin bertahan lama dalam ingatanku." },
   { a: "A", b: "E", textA: "Ketika aku telah melakukan sesuatu dengan baik, aku ingin hal itu diungkapkan dengan jelas.", textB: "Ketika aku telah melakukan sesuatu dengan baik, aku ingin sebuah tos atau tepukan hangat di bahu." },
@@ -227,7 +227,7 @@ const RECEIVING_PAIRS_ID: Pair[] = [
   { a: "C", b: "E", textA: "Pelayanan yang dilakukan diam-diam berbicara lebih keras dari gerak-gerik lainnya.", textB: "Salam fisik yang hangat berbicara lebih keras dari kebanyakan kata-kata." },
   { a: "C", b: "E", textA: "Bantuan praktis yang diam-diam menunjukkan kasih yang nyata kepadaku.", textB: "Salam fisik yang hangat (jabatan tangan, pelukan samping, tangan di bahu) menunjukkan kasih yang nyata kepadaku." },
   { a: "D", b: "E", textA: "Hadiah kecil yang penuh pemikiran mengatakan banyak hal tentang bagaimana rekan timku melihat aku.", textB: "Salam fisik yang hangat mengatakan banyak hal tentang bagaimana rekan timku melihat aku." },
-  { a: "D", b: "E", textA: "Membawakan aku oleh-oleh kecil dari perjalanan sangat berarti.", textB: "Menyambutku dengan pelukan atau jabatan tangan hangat setelah pulang dari perjalanan sangat berarti." },
+  { a: "D", b: "E", textA: "Membawakan aku oleh-oleh kecil sepulang bepergian sangat berarti.", textB: "Menyambutku dengan pelukan atau jabatan tangan hangat setelah pulang bepergian sangat berarti." },
   { a: "D", b: "E", textA: "Menerima hadiah yang penuh pemikiran mengejutkanku dengan sukacita.", textB: "Menerima salam fisik yang hangat mengejutkanku dengan sukacita." },
   { a: "D", b: "E", textA: "Hadiah kecil yang diingat dari percakapan sebelumnya adalah kepedulian yang paling dalam.", textB: "Pelukan hangat setelah lama tidak bertemu adalah kepedulian yang paling dalam." },
 ];
@@ -283,7 +283,7 @@ const GIVING_PAIRS_ID: Pair[] = [
   { a: "A", b: "B", textA: "Ketika rekan tim telah melakukan sesuatu dengan baik, aku mengirimkan afirmasi tertulis yang spesifik.", textB: "Ketika rekan tim telah melakukan sesuatu dengan baik, aku mengajak mereka makan tanpa terburu-buru." },
   { a: "A", b: "B", textA: "Naluri pertamaku ketika seseorang putus asa adalah mengucapkan kata-kata semangat.", textB: "Naluri pertamaku ketika seseorang putus asa adalah duduk bersama mereka dan mendengarkan." },
   { a: "A", b: "B", textA: "Aku menunjukkan apresiasi dengan mengatakan secara spesifik apa yang aku hargai dari seseorang.", textB: "Aku menunjukkan apresiasi dengan meluangkan jadwalku untuk menghabiskan waktu bersama mereka." },
-  { a: "A", b: "B", textA: "Aku check-in dengan rekan tim dengan mengirimkan pesan yang menyemangati.", textB: "Aku check-in dengan rekan tim dengan membuat janji ngopi bersama." },
+  { a: "A", b: "B", textA: "Aku menanyakan kabar rekan tim dengan mengirimkan pesan yang menyemangati.", textB: "Aku menanyakan kabar rekan tim dengan membuat janji ngopi bersama." },
   { a: "A", b: "C", textA: "Ketika kolega sedang berjuang, aku menuliskan catatan dorongan yang spesifik untuknya.", textB: "Ketika kolega sedang berjuang, aku mengambil alih satu tugasnya tanpa diminta." },
   { a: "A", b: "C", textA: "Cara aku berterima kasih kepada seseorang adalah dengan kata-kata.", textB: "Cara aku berterima kasih kepada seseorang adalah dengan tindakan." },
   { a: "A", b: "C", textA: "Ketika aku ingin mendorong anggota tim junior, aku memberitahu secara spesifik apa yang aku lihat dalam diri mereka.", textB: "Ketika aku ingin mendorong anggota tim junior, aku memudahkan pekerjaan mereka secara praktis." },
@@ -349,7 +349,7 @@ function getInterpretation(
       ? "Kamu mendapat skor merata di berbagai bahasa dalam kedua tes. Kepekaan adalah luas — tidak ada satu bahasa yang mendominasi. Ini jarang tapi sah."
       : "You scored evenly across multiple languages in both tests. Your sensitivity is broad — no single language dominates. This is rare but legitimate.",
     action: lang === "id"
-      ? "Sebutkan dua bahasa teratasmu di setiap tes dan beritahu tim bahwa keduanya mendarat baik untukmu."
+      ? "Sebutkan dua bahasa teratasmu di setiap tes dan beritahu tim bahwa keduanya tersampaikan dengan baik kepadamu."
       : "Name your top two languages in each test and tell your team that either lands well for you.",
   };
   if (rPrimary === gPrimary) return {
@@ -366,10 +366,10 @@ function getInterpretation(
     label: lang === "id" ? "Dua Bahasa" : "Two Languages",
     labelColor: "oklch(62% 0.14 235)",
     text: lang === "id"
-      ? "Bahasa menerima dan memberimu berbeda — pola yang paling mengungkapkan. Kamu membawa kemampuan alami dalam dua bahasa: bagaimana kamu terhubung untuk menerima kepedulian, dan bagaimana kamu terhubung untuk memberikannya. Risikonya: timmu mungkin tidak tahu apa yang kamu butuhkan secara pribadi."
+      ? "Bahasa menerima dan memberimu berbeda — pola yang paling mengungkapkan. Kamu membawa kemampuan alami dalam dua bahasa: bagaimana kamu secara alami cenderung menerima kepedulian, dan bagaimana kamu secara alami cenderung memberikannya. Risikonya: timmu mungkin tidak tahu apa yang kamu butuhkan secara pribadi."
       : "Your receiving and giving languages differ — the most insightful pattern. You carry natural fluency in two languages: how you are wired to receive care, and how you are wired to give it. The risk: your team may not know what you personally need.",
     action: lang === "id"
-      ? `Beritahu timmu kedua bahasa dengan lantang: "Apa yang membuat aku merasa diperhatikan adalah ${LD[rPrimary].name}. Yang paling alami aku berikan adalah ${LD[gPrimary].name}."`
+      ? `Beritahukan kedua bahasamu kepada timmu secara terbuka: "Apa yang membuat aku merasa diperhatikan adalah ${LD[rPrimary].name}. Yang paling alami aku berikan adalah ${LD[gPrimary].name}."`
       : `Tell your team both languages out loud: "What makes me feel cared for is ${LD[rPrimary].name}. What I most naturally give is ${LD[gPrimary].name}."`,
   };
 }
@@ -644,7 +644,7 @@ export default function FiveLanguagesClient({
 
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(35% 0.008 260)", lineHeight: 1.75, maxWidth: 720, marginBottom: "2.5rem" }}>
               {lang === "id"
-                ? "Kebanyakan tim menganggap kepedulian ya kepedulian — bahwa apa yang kamu berikan mendarat sesuai niatmu. Jarang sekali begitu. Aturan Emas meleset: seorang pemimpin yang terhubung untuk Kata-Kata menuangkan afirmasi kepada rekan yang membutuhkan Tindakan Pelayanan, dan keduanya tidak mengerti mengapa tidak berhasil. Hasilmu akan menunjukkan salah satu dari tiga pola — Cocok, Dua Bahasa, atau Luas. Masing-masing memiliki langkah praktis yang berbeda. Langkah paling berdampak adalah yang paling sederhana: beritahu timmu kedua bahasa dengan lantang."
+                ? "Kebanyakan tim menganggap kepedulian ya kepedulian — bahwa apa yang kamu berikan diterima seperti yang kamu maksudkan. Jarang sekali begitu. Aturan Emas meleset: seorang pemimpin yang secara alami cenderung pada Kata-Kata menuangkan afirmasi kepada rekan yang membutuhkan Tindakan Pelayanan, dan keduanya tidak mengerti mengapa tidak berhasil. Hasilmu akan menunjukkan salah satu dari tiga pola — Cocok, Dua Bahasa, atau Luas. Masing-masing memiliki langkah praktis yang berbeda. Langkah paling berdampak adalah yang paling sederhana: beritahukan kedua bahasamu kepada timmu secara terbuka."
                 : "Most teams assume care is care — that what you give lands the way you intend it. It rarely does. The Golden Rule misfires: a leader wired for Words pours affirmation over a teammate who needs Acts of Service, and neither understands why it is not working. Your results will show one of three patterns — Match, Two Languages, or Broad. Each has a different practical move. The highest-leverage step is the simplest: tell your team both languages out loud."
               }
             </p>
@@ -785,7 +785,7 @@ export default function FiveLanguagesClient({
                           </div>
                           <div style={{ background: langItem.colorLight, borderRadius: "8px", padding: "1rem 1.1rem", borderLeft: `3px solid ${langItem.color}` }}>
                             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: langItem.color, marginBottom: "0.4rem" }}>
-                              {lang === "id" ? "Jangkar Alkitab · " : "Biblical anchor · "}{langItem.biblicalAnchor}
+                              {lang === "id" ? "Pegangan dari Alkitab · " : "Biblical anchor · "}{langItem.biblicalAnchor}
                             </p>
                             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(25% 0.08 260)", lineHeight: 1.7, margin: 0 }}>
                               {langItem.biblical}
@@ -1241,7 +1241,7 @@ export default function FiveLanguagesClient({
                   </div>
                   <div style={{ background: langProfile.colorLight, borderRadius: "8px", padding: "1rem", borderLeft: `3px solid ${langProfile.color}` }}>
                     <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: langProfile.color, marginBottom: "0.5rem" }}>
-                      {lang === "id" ? "Jangkar Alkitab · " : "Biblical anchor · "}{langProfile.biblicalAnchor}
+                      {lang === "id" ? "Pegangan dari Alkitab · " : "Biblical anchor · "}{langProfile.biblicalAnchor}
                     </p>
                     <p style={{ fontSize: "14px", color: "oklch(25% 0.08 260)", lineHeight: 1.7 }}>{langProfile.biblical}</p>
                   </div>

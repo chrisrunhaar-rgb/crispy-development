@@ -462,7 +462,7 @@ const TYPE_DATA_ID: Record<string, {
     strengths: ["Secara alami menginspirasi dan memotivasi", "Investasi mendalam dalam pertumbuhan dan pengembangan orang lain", "Komunikator yang sangat baik — jelas, hangat, dan visioner", "Membawa harmoni dan arah secara bersamaan", "Melihat potensi dalam diri orang yang dilewatkan orang lain"],
     blindspots: ["Terlalu banyak memberi demi kebutuhan orang lain", "Bisa terlalu fokus pada konsensus — kesulitan dengan konflik yang diperlukan", "Mengambil kritik atau penolakan secara pribadi", "Bisa mengabaikan kebutuhan dan batasan diri sendiri"],
     communication: "Bersikaplah hangat, personal, dan berorientasi tujuan. Akui investasi mereka dalam orang. Libatkan visi mereka dengan tulus. Jangan bersikap dingin atau transaksional — itu langsung melepaskan keterlibatan mereka.",
-    crossCultural: "Kehangatan dan fokus relasional ENFJ adalah karunia dalam hampir setiap konteks budaya. Dalam budaya yang lebih individualistis, penekanan mereka pada komunitas dan harmoni bisa diremehkan. Area pertumbuhan: memegang keyakinan mereka ketika biaya relasional tinggi.",
+    crossCultural: "Kehangatan dan fokus relasional ENFJ adalah karunia dalam hampir setiap konteks budaya. Dalam budaya yang lebih individualistis, penekanan mereka pada komunitas dan harmoni bisa diremehkan. Area pertumbuhan: memegang keyakinan mereka ketika harga yang harus dibayar dalam hubungan tinggi.",
     leadership: "ENFJ adalah di antara pemimpin orang paling efektif dalam kerangka apapun. Area pertumbuhan mereka adalah belajar memimpin dengan kejelasan dan struktur serta kehangatan — dan menjaga batasan diri sendiri ketika mereka memberi begitu murah hati kepada orang lain.",
   },
   ENFP: {
@@ -599,7 +599,7 @@ const MINISTRY_BENEFITS_ID = [
   },
   {
     title: "Membantu pemimpin mengelola diri mereka sendiri",
-    body: "Pelayanan lintas budaya jangka panjang meminta orang untuk terus memberi. Mengetahui tipe Anda sendiri menunjukkan konteks mana yang menguras Anda paling cepat, keputusan mana yang mungkin paling sulit, dan di mana titik buta Anda paling sering berada. Ini adalah pengelolaan yang baik dari pribadi yang telah Allah panggil dan bentuk.",
+    body: "Pelayanan lintas budaya jangka panjang meminta orang untuk terus memberi. Mengetahui tipe Anda sendiri menunjukkan konteks mana yang menguras Anda paling cepat, keputusan mana yang mungkin paling sulit, dan di mana hal-hal yang tidak Anda sadari paling sering muncul. Ini adalah pengelolaan yang baik dari pribadi yang telah Tuhan panggil dan bentuk.",
     color: "oklch(45% 0.16 200)",
   },
 ];
@@ -608,7 +608,7 @@ const DIMENSIONS_ID = [
   {
     a: "E — Ekstraversi", b: "I — Introversi",
     question: "Ke mana Anda mengarahkan energi Anda?",
-    body: "Ekstravert mendapat energi dari berada di sekitar orang, mendiskusikan ide dengan lantang, dan terlibat dengan dunia luar. Introvert mendapat energi dari ketenangan, refleksi batin, dan kedalaman daripada keluasan dalam hubungan mereka. Keduanya bisa memimpin dengan baik. Alkitab menampung keduanya — Petrus, yang berbicara pertama dan berpikir kemudian, dan Maria, yang menyimpan segala sesuatu dan merenungkannya dalam hatinya.",
+    body: "Ekstravert mendapat energi dari berada di sekitar orang, mendiskusikan ide secara terbuka, dan terlibat dengan dunia luar. Introvert mendapat energi dari ketenangan, refleksi batin, dan kedalaman daripada keluasan dalam hubungan mereka. Keduanya bisa memimpin dengan baik. Alkitab menampung keduanya — Petrus, yang berbicara pertama dan berpikir kemudian, dan Maria, yang menyimpan segala sesuatu dan merenungkannya dalam hatinya.",
     color: "oklch(62% 0.18 52)",
   },
   {
@@ -667,7 +667,7 @@ const SEO_PARAS_ID = [
   "Dimensi Berpikir/Merasakan menghadirkan tantangan serupa dalam pengaturan lintas budaya. Dalam banyak budaya yang relasional dan high-context, pengambilan keputusan publik menekankan harmoni dan menjaga wajah, yang mungkin dibaca oleh instrumen MBTI sebagai preferensi untuk Merasakan daripada Berpikir. Tetapi seorang pemimpin dari budaya semacam itu mungkin secara pribadi bernalar dengan cara yang sangat analitis sambil secara publik mengekspresikan perhatian relasional — bukan karena Merasakan mendominasi tetapi karena konteks budaya mereka menuntut kepekaan relasional sebagai register yang dapat diterima secara sosial. Mereduksi kompleksitas ini menjadi satu huruf melewatkan nuansa yang dibutuhkan kompetensi lintas budaya.",
   "Tidak ada yang berarti MBTI harus ditinggalkan dalam konteks multikultural. Digunakan dengan hati-hati, ini masih bisa menghasilkan refleksi dan percakapan yang produktif. Kuncinya adalah memposisikannya sebagai undangan untuk pengungkapan diri daripada putusan yang otoritatif. Ketika tim dari lima negara yang berbeda mengeksplorasi kepribadian bersama menggunakan MBTI, output paling berharga bukan satu set kode empat huruf tetapi percakapan yang diprovokasi oleh kode-kode tersebut: inilah cara saya cenderung mendekati konflik — apakah ini sesuai dengan apa yang Anda amati? Percakapan-percakapan itu, dipandu dengan baik, memunculkan perbedaan yang meningkatkan kolaborasi terlepas dari apakah kategori tipe yang mendasarinya tepat secara budaya.",
   "Bagi pekerja lintas budaya, satu implikasi praktis adalah menolak menerapkan hasil MBTI dari satu konteks budaya untuk memprediksi perilaku dalam konteks lain. Seseorang yang dinilai sebagai Ekstravert dalam konteks rumah mereka mungkin tampil sangat berbeda saat menavigasi budaya baru di mana gaya ekspresif alami mereka dibaca sebagai tidak pantas atau agresif. Adaptasi adalah keterampilan, bukan pergeseran kepribadian, dan alat penilaian tidak boleh digunakan untuk menandai seseorang sebagai tidak konsisten hanya karena perilaku mereka bergeser di berbagai lingkungan budaya.",
-  "Dari perspektif iman, kerangka kepribadian seperti MBTI paling baik berada dalam teologi penciptaan dan komunitas. Metafora yang diperluas Rasul Paulus tentang tubuh Kristus dalam 1 Korintus 12 menegaskan perbedaan nyata yang diberikan Allah dalam cara orang berfungsi: mata tidak bisa berkata kepada tangan, Aku tidak membutuhkanmu. Memahami bagaimana rekan tim berpikir, memproses, dan memimpin adalah tindakan kepedulian — ini memungkinkan pemimpin menugaskan pekerjaan dengan bijaksana, berkomunikasi dengan cara yang tepat sasaran, dan membangun tim di mana kontribusi yang berbeda benar-benar dihargai.",
+  "Dari perspektif iman, kerangka kepribadian seperti MBTI paling baik berada dalam teologi penciptaan dan komunitas. Metafora yang diperluas Rasul Paulus tentang tubuh Kristus dalam 1 Korintus 12 menegaskan perbedaan nyata yang diberikan Tuhan dalam cara orang berfungsi: mata tidak bisa berkata kepada tangan, Aku tidak membutuhkanmu. Memahami bagaimana rekan tim berpikir, memproses, dan memimpin adalah tindakan kepedulian — ini memungkinkan pemimpin menugaskan pekerjaan dengan bijaksana, berkomunikasi dengan cara yang tepat sasaran, dan membangun tim di mana kontribusi yang berbeda benar-benar dihargai.",
   "Pada saat yang sama, Mazmur 139 menetapkan batas pada apa yang bisa diklaim oleh penilaian mana pun: Engkau membentuk aku dalam kandungan ibuku — aku dijadikan dengan ajaib dan dengan penuh hormat. Tidak ada kode empat huruf yang mengandung misteri penuh seseorang yang diciptakan dalam gambar Allah. Alat kepribadian adalah pelayan yang berguna dan tuan yang buruk. Digunakan dengan kerendahan hati budaya, landasan teologis, dan kemauan untuk memegang hasil dengan longgar, kerangka 16 tipe dapat membantu pemimpin tumbuh dalam kesadaran diri, meningkatkan dinamika tim, dan terlibat dengan lebih bijak di seluruh keragaman tubuh Kristus global yang kompleks dan indah.",
 ];
 
@@ -855,7 +855,7 @@ export default function Personalities16Client({
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
               {[
                 { title: lang === "id" ? "Kekuatan" : "Strengths", items: mStr, color: "oklch(52% 0.18 155)", bg: "oklch(96% 0.03 155)" },
-                { title: lang === "id" ? "Titik Buta" : "Blindspots", items: mBli, color: "oklch(52% 0.18 35)", bg: "oklch(97% 0.03 35)" },
+                { title: lang === "id" ? "Hal yang Tidak Disadari" : "Blindspots", items: mBli, color: "oklch(52% 0.18 35)", bg: "oklch(97% 0.03 35)" },
               ].map(section => (
                 <div key={section.title} style={{ background: "white", borderRadius: 12, overflow: "hidden", border: "1px solid oklch(92% 0.04 260)" }}>
                   <div style={{ padding: "12px 16px", background: section.bg }}>
@@ -945,12 +945,12 @@ export default function Personalities16Client({
             </h2>
             <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 16, lineHeight: 1.75, color: "oklch(30% 0.06 260)", marginBottom: 14 }}>
               {lang === "id"
-                ? "Kerangka 16 Kepribadian memberi setiap anggota tim Anda singkatan empat huruf yang menangkap bagaimana mereka secara alami disusun. Ini tidak mengukur seberapa terampil Anda, seberapa dewasa Anda dalam iman, atau seberapa efektif Anda sebagai pemimpin. Ini memetakan standar Anda: dari mana energi Anda berasal, bagaimana Anda menerima informasi, bagaimana Anda menimbang keputusan, dan bagaimana Anda lebih suka mengorganisir dunia di sekitar Anda."
+                ? "Kerangka 16 Kepribadian memberi setiap anggota tim Anda singkatan empat huruf yang menangkap bagaimana mereka secara alami dibentuk. Ini tidak mengukur seberapa terampil Anda, seberapa dewasa Anda dalam iman, atau seberapa efektif Anda sebagai pemimpin. Ini memetakan kecenderungan bawaan Anda: dari mana energi Anda berasal, bagaimana Anda menerima informasi, bagaimana Anda menimbang keputusan, dan bagaimana Anda lebih suka mengorganisir dunia di sekitar Anda."
                 : "The 16 Personalities framework gives every member of your team a four-letter shorthand that captures how they are naturally wired. It does not measure how skilled you are, how mature you are in faith, or how effective you are as a leader. It maps your defaults: where your energy comes from, how you take in information, how you weigh decisions, and how you prefer to organise the world around you."}
             </p>
             <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 16, lineHeight: 1.75, color: "oklch(30% 0.06 260)", marginBottom: 14 }}>
               {lang === "id"
-                ? "Masing-masing dari empat area ini berada di spektrum. Anda selalu memiliki akses ke kedua ujung. Huruf tersebut hanya menyebutkan sisi mana yang terasa lebih mudah dan lebih alami ketika Anda tidak secara sadar meregangkan diri."
+                ? "Masing-masing dari empat area ini berada di spektrum. Anda selalu memiliki akses ke kedua ujung. Huruf tersebut hanya menyebutkan sisi mana yang terasa lebih mudah dan lebih alami ketika Anda tidak secara sadar memaksakan diri keluar dari kebiasaan."
                 : "Each of these four areas sits on a spectrum. You always have access to both ends. The letter simply names which side feels easier and more natural when you are not consciously stretching."}
             </p>
             <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 16, lineHeight: 1.75, color: "oklch(30% 0.06 260)" }}>
@@ -970,7 +970,7 @@ export default function Personalities16Client({
             <div style={{ padding: "24px 28px" }}>
               <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 15, lineHeight: 1.75, color: "oklch(30% 0.06 260)", marginBottom: 24 }}>
                 {lang === "id"
-                  ? "Dalam pekerjaan Kristen lintas budaya, tim sering kecil, pekerjaan intens, dan kepribadian bisa bergesekan dengan cara yang terasa spiritual tetapi sebenarnya struktural. Tanpa bahasa untuk menamai perbedaan-perbedaan ini, tim bisa mengspiritualkannya — melabeli seseorang \"tidak taat\" padahal mereka hanya memproses secara berbeda. Kerangka 16 Kepribadian memberi tim pelayanan empat manfaat praktis:"
+                  ? "Dalam pekerjaan Kristen lintas budaya, tim sering kecil, pekerjaan intens, dan kepribadian bisa bergesekan dengan cara yang terasa spiritual tetapi sebenarnya struktural. Tanpa bahasa untuk membahas perbedaan-perbedaan ini, tim bisa membuatnya tampak sebagai masalah rohani, misalnya melabeli seseorang \"tidak taat\" padahal mereka hanya memproses secara berbeda. Kerangka 16 Kepribadian memberi tim pelayanan empat manfaat praktis:"
                   : "In cross-cultural Christian work, teams are often small, the work is intense, and personalities can rub against each other in ways that feel spiritual but are actually structural. Without language to name these differences, teams can spiritualise them — labelling someone \"unsubmissive\" when they are simply processing differently. The 16 Personalities framework gives ministry teams four practical gains:"}
               </p>
               {(lang === "id" ? MINISTRY_BENEFITS_ID : [
@@ -1139,7 +1139,7 @@ export default function Personalities16Client({
               ))}
               <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, lineHeight: 1.75, color: "oklch(35% 0.06 260)", marginTop: 20, marginBottom: 0, fontStyle: "italic" }}>
                 {lang === "id"
-                  ? "Digunakan dalam semangat ini, kerangka 16 Kepribadian menjadi satu lagi cara tim Anda belajar mengasihi satu sama lain dengan baik — mengakui cara berbeda Allah telah memprogram setiap anggota, dan membangun budaya di mana setiap tipe dibutuhkan, diberi nama, dan disambut."
+                  ? "Digunakan dalam semangat ini, kerangka 16 Kepribadian menjadi satu lagi cara tim Anda belajar mengasihi satu sama lain dengan baik — mengakui cara berbeda Tuhan telah merancang setiap anggota, dan membangun budaya di mana setiap tipe dibutuhkan, dikenali, dan disambut."
                   : "Used in this spirit, the 16 Personalities framework becomes one more way your team learns to love one another well — recognising the different ways God has wired each member, and building a culture where every type is needed, named, and welcome."}
               </p>
             </div>
@@ -1413,7 +1413,7 @@ export default function Personalities16Client({
         <section style={{ marginBottom: 40, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
           {[
             { title: lang === "id" ? "Kekuatan" : "Strengths", items: lang === "id" ? typeDataId.strengths : typeData.strengths, color: "oklch(52% 0.18 155)", bg: "oklch(96% 0.03 155)" },
-            { title: lang === "id" ? "Titik Buta" : "Blindspots", items: lang === "id" ? typeDataId.blindspots : typeData.blindspots, color: "oklch(52% 0.18 35)", bg: "oklch(97% 0.03 35)" },
+            { title: lang === "id" ? "Hal yang Tidak Disadari" : "Blindspots", items: lang === "id" ? typeDataId.blindspots : typeData.blindspots, color: "oklch(52% 0.18 35)", bg: "oklch(97% 0.03 35)" },
           ].map(section => (
             <div key={section.title} style={{ background: "white", borderRadius: 16, overflow: "hidden", border: "1px solid oklch(92% 0.04 260)" }}>
               <div style={{ padding: "16px 20px", background: section.bg }}>

@@ -153,7 +153,7 @@ const CONCEPT_CARDS = [
     number: 1,
     title: {
       en: "Name what is coming before it arrives",
-      id: "Sebutkan apa yang akan datang sebelum ia tiba",
+      id: "Ungkapkan apa yang akan datang sebelum ia tiba",
     },
     body: {
       en: "Before any difficult conversation, tell the people in the room that conflict is going to happen and that it is supposed to. When people are not surprised by tension, they are less likely to react to it as a threat.",
@@ -191,7 +191,7 @@ const CONCEPT_CARDS = [
     },
     script: {
       en: "\"Let us hold both of these views at the same time for a moment and see what we can see from that position.\"",
-      id: "\"Mari kita tahan kedua pandangan ini sekaligus sejenak dan lihat apa yang bisa kita lihat dari posisi itu.\"",
+      id: "\"Mari kita pertimbangkan kedua pandangan ini sekaligus sejenak dan lihat apa yang bisa kita lihat dari posisi itu.\"",
     },
   },
   {
@@ -202,7 +202,7 @@ const CONCEPT_CARDS = [
     },
     body: {
       en: "In many cultural contexts, publicly changing your position feels like a loss of face. A good leader names this directly and reframes it before the conversation starts.",
-      id: "Dalam banyak konteks budaya, mengubah posisi secara terbuka terasa seperti kehilangan muka. Seorang pemimpin yang baik menyebutkan ini secara langsung dan membingkainya kembali sebelum percakapan dimulai.",
+      id: "Dalam banyak konteks budaya, mengubah posisi secara terbuka terasa seperti kehilangan muka. Seorang pemimpin yang baik mengungkapkan hal ini secara langsung dan membingkainya ulang sebelum percakapan dimulai.",
     },
     script: {
       en: "\"If you walk out of this conversation thinking differently than you walked in, that is exactly what is supposed to happen. That is not weakness. That is what it looks like when two people actually think together.\"",
@@ -259,7 +259,7 @@ const FIELD_STORY_PARAGRAPHS = [
   },
   {
     en: "He set some ground rules. Not a long list. Just enough to name what kind of conversation this was going to be.",
-    id: "Ia menetapkan beberapa aturan dasar. Bukan daftar yang panjang. Cukup untuk menamai jenis percakapan apa ini yang akan terjadi.",
+    id: "Ia menetapkan beberapa aturan dasar. Bukan daftar yang panjang. Cukup untuk menjelaskan percakapan seperti apa yang akan terjadi.",
     climax: false,
   },
   {
@@ -332,7 +332,7 @@ const FAITH_ANCHOR_PARAGRAPHS = [
 const REFLECTION_QUESTIONS = [
   {
     en: "What conversation have you been avoiding, and what has that silence cost? Not in theory, but specifically: what has it cost the person, the relationship, the team, or the work?",
-    id: "Percakapan apa yang selama ini kamu hindari, dan apa yang sudah dibayar oleh keheningan itu? Bukan secara teori, tapi secara konkret: apa yang sudah dibayarnya pada orang tersebut, hubungan, tim, atau pekerjaan?",
+    id: "Percakapan apa yang selama ini kamu hindari, dan harga apa yang sudah harus dibayar akibat keheningan itu? Bukan secara teori, tapi secara konkret: harga apa yang sudah ditanggung oleh orang tersebut, hubungan, tim, atau pekerjaan?",
   },
   {
     en: "Think of a leader you have seen handle conflict well. What did they do that made it feel different from destructive conflict? What can you apply from how they handled it?",
@@ -347,7 +347,7 @@ const REFLECTION_QUESTIONS = [
 const KEY_TAKEAWAYS = [
   {
     en: "Name the problem out loud to your team before your next difficult conversation: \"We are going to disagree in this conversation, and that is the goal.\"",
-    id: "Sebutkan dengan lantang kepada timmu sebelum percakapan sulit berikutnya: \"Kita akan berselisih dalam percakapan ini, dan itulah tujuannya.\"",
+    id: "Ungkapkan masalah itu secara terbuka kepada timmu sebelum percakapan sulit berikutnya: \"Kita akan berselisih dalam percakapan ini, dan itulah tujuannya.\"",
   },
   {
     en: "Identify one relationship in your current team where silence has become the default, and ask for a real conversation this week, not to resolve everything, but to begin.",
@@ -368,12 +368,12 @@ const RESEARCH_CALLOUTS = [
   {
     source: "Hofstede — Power Distance Index",
     en: "Geert Hofstede's³ research across 90 countries found wide variation in how cultures relate to authority and disagreement. High power-distance countries such as Indonesia (78), Malaysia (100), and the Philippines (94) place a premium on hierarchy and deference. Low power-distance countries such as the Netherlands (38) and Germany (35) normalise pushback and open challenge. In high-PDI settings, silence is not disengagement. It is the culturally appropriate signal of respect.",
-    id: "Penelitian Geert Hofstede³ di 90 negara menemukan variasi besar dalam cara budaya berhubungan dengan otoritas dan ketidaksetujuan. Negara dengan jarak kekuasaan tinggi seperti Indonesia (78), Malaysia (100), dan Filipina (94) mengutamakan hierarki dan kepatuhan. Negara dengan jarak kekuasaan rendah seperti Belanda (38) dan Jerman (35) menormalkan penolakan dan tantangan terbuka. Dalam konteks PDI tinggi, diam bukan berarti tidak terlibat. Itu adalah sinyal rasa hormat yang tepat secara budaya.",
+    id: "Penelitian Geert Hofstede³ di 90 negara menemukan variasi besar dalam cara budaya berhubungan dengan otoritas dan ketidaksetujuan. Negara dengan jarak kekuasaan tinggi seperti Indonesia (78), Malaysia (100), dan Filipina (94) mengutamakan hierarki dan kepatuhan. Negara dengan jarak kekuasaan rendah seperti Belanda (38) dan Jerman (35) menganggap wajar bantahan dan tantangan terbuka. Dalam konteks PDI tinggi, diam bukan berarti tidak terlibat. Itu adalah sinyal rasa hormat yang tepat secara budaya.",
   },
   {
     source: "Patrick Lencioni — The Five Dysfunctions of a Team, 2002",
     en: "Lencioni's⁴ widely read practitioner framework identifies fear of conflict as the second of five dysfunctions that commonly undermine team performance. Teams which avoid genuine debate do not eliminate tension — they redirect it into politics, passive resistance, and quiet resentment. Note: this model is a practitioner account, not a peer-reviewed finding. For empirically grounded team research, Hackman's⁵ six conditions (explaining 50–74% of variance in team effectiveness) provide the stronger evidence base. The absence of productive conflict is not peace. It is the postponement of a harder conversation.",
-    id: "Kerangka praktisi Lencioni⁴ yang banyak dibaca mengidentifikasi ketakutan terhadap konflik sebagai disfungsi kedua dari lima yang umum merusak kinerja tim. Tim yang menghindari debat yang tulus tidak menghilangkan ketegangan — mereka mengalihkannya ke dalam politik, resistensi pasif, dan kebencian yang diam. Catatan: model ini adalah akun praktisi, bukan temuan peer-reviewed. Untuk penelitian tim yang berdasar secara empiris, enam kondisi Hackman⁵ (menjelaskan 50–74% varians dalam efektivitas tim) memberikan dasar bukti yang lebih kuat. Tidak adanya konflik yang produktif bukan berarti damai. Itu adalah penundaan dari percakapan yang lebih berat.",
+    id: "Kerangka praktisi Lencioni⁴ yang banyak dibaca mengidentifikasi ketakutan terhadap konflik sebagai disfungsi kedua dari lima yang umum merusak kinerja tim. Tim yang menghindari debat yang tulus tidak menghilangkan ketegangan, mereka mengalihkannya ke dalam politik, resistensi pasif, dan kepahitan yang terpendam. Catatan: model ini adalah akun praktisi, bukan temuan peer-reviewed. Untuk penelitian tim yang berdasar secara empiris, enam kondisi Hackman⁵ (menjelaskan 50–74% varians dalam efektivitas tim) memberikan dasar bukti yang lebih kuat. Tidak adanya konflik yang produktif bukan berarti damai. Itu adalah penundaan dari percakapan yang lebih berat.",
   },
 ];
 
@@ -483,7 +483,7 @@ export default function HealthyConflictClient({ isSaved: initialSaved, signupBan
           }}>
             {t(
               "Most leaders know how to keep the peace. Fewer know how to break it in a way that builds something better.",
-              "Kebanyakan pemimpin tahu cara menjaga perdamaian. Lebih sedikit yang tahu cara memecahnya dengan cara yang membangun sesuatu yang lebih baik.",
+              "Kebanyakan pemimpin tahu cara menjaga perdamaian. Lebih sedikit yang tahu cara mengusiknya dengan cara yang membangun sesuatu yang lebih baik.",
             )}
           </p>
 
@@ -537,7 +537,7 @@ export default function HealthyConflictClient({ isSaved: initialSaved, signupBan
           }}>
             {t(
               "Underneath that silence is usually a conversation that never happened. A disagreement that no one named. A frustration that went underground instead of onto the table.",
-              "Di balik keheningan itu biasanya ada percakapan yang tidak pernah terjadi. Ketidaksetujuan yang tidak pernah disebutkan siapa pun. Frustrasi yang masuk ke bawah tanah alih-alih ke atas meja.",
+              "Di balik keheningan itu biasanya ada percakapan yang tidak pernah terjadi. Ketidaksetujuan yang tidak pernah diungkapkan siapa pun. Frustrasi yang masuk ke bawah tanah alih-alih ke atas meja.",
             )}
           </p>
 
@@ -1071,7 +1071,7 @@ export default function HealthyConflictClient({ isSaved: initialSaved, signupBan
               lineHeight: 1.3,
               textAlign: "center",
             }}>
-              &ldquo;{t("Faithful are the wounds of a friend.", "Setia adalah luka seorang sahabat.")}&rdquo;
+              &ldquo;{t("Faithful are the wounds of a friend.", "Seorang kawan memukul dengan maksud baik, tetapi seorang lawan mencium secara berlimpah-limpah.")}&rdquo;
             </p>
             <p style={{
               fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
@@ -1097,7 +1097,7 @@ export default function HealthyConflictClient({ isSaved: initialSaved, signupBan
           }}>
             {t(
               "A friend who only tells you what you want to hear is not actually serving you. In leadership, the most loving thing you can sometimes do for a colleague is to say the thing that is true, even when it is uncomfortable. That is what faithful wounds look like.",
-              "Seorang teman yang hanya memberitahumu apa yang ingin kamu dengar sebenarnya tidak melayanimu. Dalam kepemimpinan, hal paling penuh kasih yang kadang bisa kamu lakukan untuk seorang rekan adalah mengatakan hal yang benar, bahkan ketika itu tidak nyaman. Itulah yang dimaksud dengan luka yang setia.",
+              "Seorang teman yang hanya memberitahumu apa yang ingin kamu dengar sebenarnya tidak melayanimu. Dalam kepemimpinan, hal paling penuh kasih yang kadang bisa kamu lakukan untuk seorang rekan adalah mengatakan hal yang benar, bahkan ketika itu tidak nyaman. Itulah arti seorang kawan yang memukul dengan maksud baik.",
             )}
           </p>
         </div>
@@ -1115,7 +1115,7 @@ export default function HealthyConflictClient({ isSaved: initialSaved, signupBan
             color: amber,
             marginBottom: 12,
           }}>
-            {t("Faith Anchor", "Jangkar Iman")}
+            {t("Faith Anchor", "Pegangan Iman")}
           </p>
 
           <h2 style={{
@@ -1125,7 +1125,7 @@ export default function HealthyConflictClient({ isSaved: initialSaved, signupBan
             color: navy,
             marginBottom: 36,
           }}>
-            {t("Sharpened by Honest Contact", "Diasah oleh Kontak yang Jujur")}
+            {t("Sharpened by Honest Contact", "Diasah oleh Perjumpaan yang Jujur")}
           </h2>
 
           {FAITH_ANCHOR_PARAGRAPHS.map((para, pi) => (
