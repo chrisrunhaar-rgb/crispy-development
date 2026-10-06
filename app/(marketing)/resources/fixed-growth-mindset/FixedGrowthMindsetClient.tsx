@@ -430,20 +430,20 @@ export default function FixedGrowthMindsetClient({
             )}<sup style={{ fontSize: "0.65em", verticalAlign: "super", marginLeft: 1 }}>¹</sup>
           </p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 12, margin: "8px 0 24px" }}>
-            <div style={{ background: "oklch(46% 0.16 145 / 0.08)", borderRadius: 10, padding: "24px 20px", textAlign: "center" }}>
-              <div style={{ fontFamily: "var(--font-cormorant)", fontSize: 20, fontWeight: 600, color: "oklch(34% 0.12 145)", marginBottom: 8 }}>
-                {t("Growth Mindset", "Pola Pikir Bertumbuh")}
-              </div>
-              <div style={{ fontSize: 13, color: "oklch(38% 0.10 145)", lineHeight: 1.5 }}>
-                {t("Defines success as gradual improvement and growth", "Menganggap berhasil berarti terus membaik sedikit demi sedikit")}
-              </div>
-            </div>
             <div style={{ background: "oklch(48% 0.18 25 / 0.08)", borderRadius: 10, padding: "24px 20px", textAlign: "center" }}>
               <div style={{ fontFamily: "var(--font-cormorant)", fontSize: 20, fontWeight: 600, color: "oklch(38% 0.14 25)", marginBottom: 8 }}>
                 {t("Fixed Mindset", "Pola Pikir Tetap")}
               </div>
               <div style={{ fontSize: 13, color: "oklch(42% 0.10 25)", lineHeight: 1.5 }}>
                 {t("Defines success as being right and not failing", "Menganggap berhasil berarti selalu benar dan tidak pernah gagal")}
+              </div>
+            </div>
+            <div style={{ background: "oklch(46% 0.16 145 / 0.08)", borderRadius: 10, padding: "24px 20px", textAlign: "center" }}>
+              <div style={{ fontFamily: "var(--font-cormorant)", fontSize: 20, fontWeight: 600, color: "oklch(34% 0.12 145)", marginBottom: 8 }}>
+                {t("Growth Mindset", "Pola Pikir Bertumbuh")}
+              </div>
+              <div style={{ fontSize: 13, color: "oklch(38% 0.10 145)", lineHeight: 1.5 }}>
+                {t("Defines success as gradual improvement and growth", "Menganggap berhasil berarti terus membaik sedikit demi sedikit")}
               </div>
             </div>
           </div>
@@ -478,8 +478,8 @@ export default function FixedGrowthMindsetClient({
             <div className="fgm-dims-row">
               <div className="fgm-dims-headlabel" />
               {[
-                { icon: "icon-growth.svg", label: t("GROWTH MINDSET", "POLA PIKIR BERTUMBUH"), ink: GROWTH_INK, bg: GROWTH_TINT },
                 { icon: "icon-fixed.svg", label: t("FIXED MINDSET", "POLA PIKIR TETAP"), ink: FIXED_INK, bg: FIXED_TINT },
+                { icon: "icon-growth.svg", label: t("GROWTH MINDSET", "POLA PIKIR BERTUMBUH"), ink: GROWTH_INK, bg: GROWTH_TINT },
               ].map(h => (
                 <div key={h.icon} style={{ background: h.bg, padding: "20px 12px 14px", display: "flex", flexDirection: "column", alignItems: "center", gap: 6, textAlign: "center" }}>
                   <Image src={`/images/resources/fixed-growth-mindset/${h.icon}`} alt="" aria-hidden="true" width={64} height={64} unoptimized />
@@ -495,11 +495,11 @@ export default function FixedGrowthMindsetClient({
                     <span style={{ fontFamily: "var(--font-cormorant)", fontSize: 28, fontWeight: 600, color: ORANGE, lineHeight: 1 }}>{String(i + 1).padStart(2, "0")}</span>
                     <span style={{ fontSize: 14, fontWeight: 700, color: NAVY, lineHeight: 1.3 }}>{ldata.label}</span>
                   </div>
-                  <div style={{ padding: "18px 18px", background: GROWTH_TINT }}>
-                    <p style={{ fontSize: 14, lineHeight: 1.6, color: "oklch(30% 0.08 145)", margin: 0 }}>{ldata.growth}</p>
-                  </div>
                   <div style={{ padding: "18px 18px", background: FIXED_TINT }}>
                     <p style={{ fontSize: 14, lineHeight: 1.6, color: "oklch(32% 0.10 25)", margin: 0 }}>{ldata.fixed}</p>
+                  </div>
+                  <div style={{ padding: "18px 18px", background: GROWTH_TINT }}>
+                    <p style={{ fontSize: 14, lineHeight: 1.6, color: "oklch(30% 0.08 145)", margin: 0 }}>{ldata.growth}</p>
                   </div>
                 </div>
               );

@@ -211,13 +211,6 @@ const SLIDES: Slide[] = [
             ? "Berdasarkan kerangka kerja Carol Dweck, menunjukkan di mana pola pikir Anda tetap dan di mana pola pikir Anda bertumbuh, dalam lima dimensi utama."
             : "Drawing on Carol Dweck's framework, revealing where your mindset is fixed and where it's growing, across five key dimensions."}
         </p>
-        <div style={{ display: "flex", justifyContent: "center", gap: 36, marginTop: 44 }}>
-          {(["fixed", "growth"] as const).map((k) => (
-            <div key={k} style={{ width: 190, height: 190, borderRadius: "50%", background: OFF_WHITE, display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <MindsetIcon kind={k} size={158} />
-            </div>
-          ))}
-        </div>
       </div>
     ),
   },
@@ -237,12 +230,12 @@ const SLIDES: Slide[] = [
         </p>
         <div style={{ display: "flex", gap: 32 }}>
           {([
-            { k: "growth" as const, on: step >= 0, bg: "oklch(46% 0.16 145 / 0.08)", head: GROWTH, ink: "oklch(30% 0.08 145)",
-              name: { en: "Growth Mindset", id: "Pola Pikir Bertumbuh" },
-              text: { en: "Believes ability can grow through effort, learning and good help. Defines success as gradual improvement.", id: "Percaya kemampuan bisa bertumbuh lewat usaha, belajar, dan bantuan yang tepat. Menganggap berhasil berarti terus membaik sedikit demi sedikit." } },
-            { k: "fixed" as const, on: step >= 1, bg: "oklch(48% 0.18 25 / 0.08)", head: FIXED, ink: "oklch(32% 0.10 25)",
+            { k: "fixed" as const, on: step >= 0, bg: "oklch(48% 0.18 25 / 0.08)", head: FIXED, ink: "oklch(32% 0.10 25)",
               name: { en: "Fixed Mindset", id: "Pola Pikir Tetap" },
               text: { en: "Believes ability is set from the start: you have it or you don't. Defines success as being right and not failing.", id: "Percaya kemampuan sudah ditetapkan sejak awal: Anda punya atau tidak. Menganggap berhasil berarti selalu benar dan tidak pernah gagal." } },
+            { k: "growth" as const, on: step >= 1, bg: "oklch(46% 0.16 145 / 0.08)", head: GROWTH, ink: "oklch(30% 0.08 145)",
+              name: { en: "Growth Mindset", id: "Pola Pikir Bertumbuh" },
+              text: { en: "Believes ability can grow through effort, learning and good help. Defines success as gradual improvement.", id: "Percaya kemampuan bisa bertumbuh lewat usaha, belajar, dan bantuan yang tepat. Menganggap berhasil berarti terus membaik sedikit demi sedikit." } },
           ]).map((c) => (
             <div key={c.k} style={{ ...show(c.on), flex: 1, background: c.bg, borderRadius: 16, padding: "28px 40px 32px", display: "flex", flexDirection: "column", alignItems: "center" }}>
               <div style={{ fontFamily: SERIF, fontSize: 38, fontWeight: 600, color: c.head }}>{c.name[lang]}</div>
@@ -251,7 +244,7 @@ const SLIDES: Slide[] = [
           ))}
         </div>
         <div style={{ display: "flex", gap: 32, marginTop: 20 }}>
-          {([{ k: "growth" as const, on: step >= 0 }, { k: "fixed" as const, on: step >= 1 }]).map((c) => (
+          {([{ k: "fixed" as const, on: step >= 0 }, { k: "growth" as const, on: step >= 1 }]).map((c) => (
             <div key={c.k} style={{ ...show(c.on), flex: 1, display: "flex", justifyContent: "center" }}>
               <MindsetIcon kind={c.k} size={200} />
             </div>
@@ -285,25 +278,25 @@ const SLIDES: Slide[] = [
     render: (lang, step) => (
       <div>
         <Eyebrow color={ORANGE}>{lang === "id" ? "Perbandingan" : "The Contrast"}</Eyebrow>
-        <H2>{lang === "id" ? "Bertumbuh vs Tetap, Dimensi demi Dimensi" : "Growth vs Fixed, Dimension by Dimension"}</H2>
+        <H2>{lang === "id" ? "Tetap vs Bertumbuh, Dimensi demi Dimensi" : "Fixed vs Growth, Dimension by Dimension"}</H2>
         <div style={{ display: "grid", gridTemplateColumns: "220px 1fr 1fr", gap: 0, marginTop: 8 }}>
           <div />
+          <div style={{ fontFamily: SANS, fontSize: 18, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: FIXED, padding: "0 20px 14px" }}>
+            {lang === "id" ? "Tetap" : "Fixed"}
+          </div>
           <div style={{ fontFamily: SANS, fontSize: 18, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: GROWTH, padding: "0 20px 14px" }}>
             {lang === "id" ? "Bertumbuh" : "Growth"}
-          </div>
-          <div style={{ fontFamily: SANS, fontSize: 18, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: FIXED, padding: "0 0 14px 16px" }}>
-            {lang === "id" ? "Tetap" : "Fixed"}
           </div>
           {DIMENSIONS.map((d, n) => (
             <Fragment key={d.label.en}>
               <div style={{ padding: "16px 20px 16px 0", fontFamily: SANS, fontSize: 20, fontWeight: 700, color: NAVY, borderTop: `1px solid ${LIGHT_GRAY}` }}>
                 {d.label[lang]}
               </div>
-              <div style={{ padding: "16px 20px", background: "oklch(46% 0.16 145 / 0.06)", borderTop: `1px solid ${LIGHT_GRAY}` }}>
-                <p style={{ ...show(step > n), margin: 0, fontFamily: SANS, fontSize: 19, lineHeight: 1.4, color: "oklch(30% 0.08 145)" }}>{d.growth[lang]}</p>
-              </div>
               <div style={{ padding: "16px 20px", background: "oklch(48% 0.18 25 / 0.06)", borderTop: `1px solid ${LIGHT_GRAY}` }}>
                 <p style={{ ...show(step > n), margin: 0, fontFamily: SANS, fontSize: 19, lineHeight: 1.4, color: "oklch(32% 0.10 25)" }}>{d.fixed[lang]}</p>
+              </div>
+              <div style={{ padding: "16px 20px", background: "oklch(46% 0.16 145 / 0.06)", borderTop: `1px solid ${LIGHT_GRAY}` }}>
+                <p style={{ ...show(step > n), margin: 0, fontFamily: SANS, fontSize: 19, lineHeight: 1.4, color: "oklch(30% 0.08 145)" }}>{d.growth[lang]}</p>
               </div>
             </Fragment>
           ))}
