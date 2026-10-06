@@ -131,73 +131,57 @@ const SCALE_LABELS = {
   id: ["Sangat Tidak Setuju", "Tidak Setuju", "Netral", "Setuju", "Sangat Setuju"],
 };
 
+// Same lines as slide 4 of the presentation: keep the two in sync.
 const DIMENSIONS_INFO = [
   {
     key: "challenges",
-    en: {
-      label: "CHALLENGES",
-      growth: "Embraces challenges. Looks for opportunities for self-growth. Sees failure as part of the process.",
-      fixed: "Defaults to familiar paths to protect against visible failure. Avoids situations where public mistakes are possible. Risk tolerance stays low under pressure.",
-    },
-    id: {
-      label: "TANTANGAN",
-      growth: "Merangkul tantangan. Mencari peluang untuk pertumbuhan diri. Melihat kegagalan sebagai bagian dari proses.",
-      fixed: "Memilih jalur yang sudah dikenal untuk melindungi diri dari kegagalan yang terlihat. Menghindari situasi di mana kesalahan publik mungkin terjadi. Saat tertekan, tetap enggan mengambil risiko.",
-    },
+    en: { label: "Challenges", growth: "Takes on challenges to keep growing and keeps learning from them.", fixed: "Avoids challenges so they never look like a failure." },
+    id: { label: "Tantangan", growth: "Menerima tantangan untuk terus bertumbuh dan terus belajar darinya.", fixed: "Menghindari tantangan agar tidak pernah terlihat gagal." },
   },
   {
     key: "skills",
-    en: {
-      label: "SKILLS",
-      growth: "Focuses on getting gradually better. Believes in constantly learning new skills. Sees failures as temporary setbacks.",
-      fixed: "Believes that you're either good at something or not. Has excuses for why new things can't be learned.",
-    },
-    id: {
-      label: "KETERAMPILAN",
-      growth: "Fokus pada perbaikan bertahap. Percaya pada pembelajaran keterampilan baru secara terus-menerus. Melihat kegagalan sebagai kemunduran sementara.",
-      fixed: "Percaya bahwa Anda berbakat dalam sesuatu atau tidak. Punya alasan mengapa hal-hal baru tidak bisa dipelajari.",
-    },
+    en: { label: "Skills", growth: "Believes skills grow with practice, so keeps practising.", fixed: "Believes you either have the talent or you don't." },
+    id: { label: "Keterampilan", growth: "Percaya keterampilan tumbuh lewat latihan, jadi terus berlatih.", fixed: "Percaya bahwa bakat itu ada atau tidak ada." },
   },
   {
     key: "obstacles",
-    en: {
-      label: "OBSTACLES",
-      growth: "Sees obstacles as an inevitable part of the process. Knows that all problems have solutions. Persists through difficulty.",
-      fixed: "Gives up in the face of an obstacle. Sees obstacles as the limit of their own abilities. Feels stuck and powerless.",
-    },
-    id: {
-      label: "HAMBATAN",
-      growth: "Melihat hambatan sebagai bagian yang tak terhindarkan dari proses. Tahu bahwa semua masalah memiliki solusi. Bertahan melalui kesulitan.",
-      fixed: "Menyerah ketika menghadapi hambatan. Melihat hambatan sebagai batas kemampuan sendiri. Merasa terjebak dan tidak berdaya.",
-    },
+    en: { label: "Obstacles", growth: "Treats obstacles as part of the road and looks for a way through.", fixed: "Stops at the first obstacle." },
+    id: { label: "Hambatan", growth: "Melihat hambatan sebagai bagian dari perjalanan dan mencari jalan keluarnya.", fixed: "Berhenti di hambatan pertama." },
   },
   {
     key: "success-of-others",
-    en: {
-      label: "SUCCESS OF OTHERS",
-      growth: "Is inspired by the success of others. Tries to learn from their success. Sees others' wins as evidence of what's possible.",
-      fixed: "Sees others' advancement as a comment on their own worth. Feels quietly displaced by peer recognition. Struggles to celebrate others when their own position feels insecure.",
-    },
-    id: {
-      label: "KEBERHASILAN ORANG LAIN",
-      growth: "Terinspirasi oleh keberhasilan orang lain. Mencoba belajar dari keberhasilan mereka. Melihat keberhasilan orang lain sebagai bukti apa yang mungkin.",
-      fixed: "Melihat kemajuan orang lain seolah mengurangi nilai diri sendiri. Merasa tersisih secara diam-diam oleh pengakuan rekan. Kesulitan merayakan orang lain ketika posisi sendiri terasa tidak aman.",
-    },
+    en: { label: "Success of Others", growth: "Is inspired by others' success and asks what they can learn from it.", fixed: "Feels threatened when others succeed." },
+    id: { label: "Keberhasilan Orang Lain", growth: "Terinspirasi oleh keberhasilan orang lain dan bertanya apa yang bisa dipelajari darinya.", fixed: "Merasa terancam saat orang lain berhasil." },
   },
   {
     key: "effort",
-    en: {
-      label: "EFFORT",
-      growth: "Sees consistent effort as fruitful, even when results are slow or invisible. Commits to the process rather than demanding immediate proof. Persists because the work itself has value.",
-      fixed: "Does not feel motivated to put in the extra effort. Believes that talent should be enough.",
-    },
-    id: {
-      label: "USAHA",
-      growth: "Melihat usaha yang konsisten sebagai hal yang bermanfaat, bahkan ketika hasilnya lambat atau tidak terlihat. Berkomitmen pada proses daripada menuntut bukti segera. Bertahan karena pekerjaan itu sendiri memiliki nilai.",
-      fixed: "Tidak merasa termotivasi untuk berusaha lebih keras. Percaya bahwa bakat seharusnya sudah cukup.",
-    },
+    en: { label: "Effort", growth: "Sees effort as the path to mastery, even when results come slowly.", fixed: "Sees effort as proof they're not good enough." },
+    id: { label: "Usaha", growth: "Melihat usaha sebagai jalan menuju keahlian, meski hasilnya datang perlahan.", fixed: "Melihat usaha sebagai bukti bahwa dirinya tidak cukup baik." },
   },
 ];
+
+const GROWTH_TINT = "oklch(46% 0.16 145 / 0.08)";
+const FIXED_TINT = "oklch(48% 0.18 25 / 0.08)";
+const GROWTH_INK = "oklch(40% 0.14 145)";
+const FIXED_INK = "oklch(42% 0.16 25)";
+
+// Name It = notebook + pen, Spot the Pattern = magnifying glass, Reframe It = turning arrows (same as the slides)
+const STEP_ICON_PATHS: Record<string, string[]> = {
+  "01": ["M13.4 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7.4", "M2 6h4", "M2 10h4", "M2 14h4", "M2 18h4", "M21.378 5.626a1 1 0 1 0-3.004-3.004l-5.01 5.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"],
+  "02": ["M11 3a8 8 0 1 0 0 16a8 8 0 1 0 0-16z", "M21 21l-4.3-4.3", "M8 11h6"],
+  "03": ["M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8", "M21 3v5h-5", "M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16", "M8 16H3v5"],
+};
+
+// Mobile layout for the dimensions table (inline styles can't hold media queries)
+const DIMS_CSS = `
+.fgm-dims-row{display:grid;grid-template-columns:150px 1fr 1fr}
+.fgm-dims-label{display:flex;flex-direction:column;gap:4px;padding:18px 16px 18px 20px}
+@media (max-width:640px){
+  .fgm-dims-row{grid-template-columns:1fr 1fr}
+  .fgm-dims-label{grid-column:1 / -1;flex-direction:row;align-items:baseline;gap:10px;padding:16px 16px 8px}
+  .fgm-dims-headlabel{display:none}
+}
+`;
 
 // ── Helper functions ──────────────────────────────────────────────────────────
 
@@ -239,7 +223,7 @@ export default function FixedGrowthMindsetClient({
   const [growthScore, setGrowthScore] = useState<number | null>(savedScore ?? null);
   const [scoreSaved, setScoreSaved] = useState(savedScore != null);
   const [isSavingScore, startSaveScore] = useTransition();
-  const [expandedStep, setExpandedStep] = useState<string | null>(null);
+  const [expandedStep, setExpandedStep] = useState<string>("01");
   const [bgOpen, setBgOpen] = useState(false);
 
   const t = (en: string, id: string) => lang === "id" ? id : en;
@@ -489,27 +473,33 @@ export default function FixedGrowthMindsetClient({
               "Penilaian ini mencakup lima area di mana pola pikir Anda paling berdampak pada cara Anda bekerja dan bertumbuh."
             )}
           </p>
-          <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+          <style>{DIMS_CSS}</style>
+          <div style={{ background: "white", borderRadius: 12, overflow: "hidden" }}>
+            <div className="fgm-dims-row">
+              <div className="fgm-dims-headlabel" />
+              {[
+                { icon: "icon-growth.svg", label: t("GROWTH MINDSET", "POLA PIKIR BERTUMBUH"), ink: GROWTH_INK, bg: GROWTH_TINT },
+                { icon: "icon-fixed.svg", label: t("FIXED MINDSET", "POLA PIKIR TETAP"), ink: FIXED_INK, bg: FIXED_TINT },
+              ].map(h => (
+                <div key={h.icon} style={{ background: h.bg, padding: "20px 12px 14px", display: "flex", flexDirection: "column", alignItems: "center", gap: 6, textAlign: "center" }}>
+                  <Image src={`/images/resources/fixed-growth-mindset/${h.icon}`} alt="" aria-hidden="true" width={64} height={64} unoptimized />
+                  <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", color: h.ink }}>{h.label}</span>
+                </div>
+              ))}
+            </div>
             {DIMENSIONS_INFO.map((d, i) => {
               const ldata = d[lang];
               return (
-                <div key={d.key} style={{ background: "white", borderRadius: 10, overflow: "hidden" }}>
-                  <div style={{ display: "grid", gridTemplateColumns: "auto 1fr 1fr", gap: 0 }}>
-                    <div style={{ padding: "20px 24px", display: "flex", alignItems: "center" }}>
-                      <span style={{ fontFamily: "var(--font-cormorant)", fontSize: 28, fontWeight: 600, color: ORANGE, lineHeight: 1, minWidth: 32 }}>{String(i + 1).padStart(2, "0")}</span>
-                    </div>
-                    <div style={{ padding: "20px 24px 20px 0", background: "oklch(46% 0.16 145 / 0.05)" }}>
-                      <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(46% 0.16 145)", marginBottom: 6 }}>
-                        {t("GROWTH", "BERTUMBUH")}: {ldata.label}
-                      </div>
-                      <p style={{ fontSize: 13, lineHeight: 1.6, color: "oklch(30% 0.08 145)", margin: 0 }}>{ldata.growth}</p>
-                    </div>
-                    <div style={{ padding: "20px 24px 20px 16px", background: "oklch(48% 0.18 25 / 0.05)" }}>
-                      <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(48% 0.18 25)", marginBottom: 6 }}>
-                        {t("FIXED", "TETAP")}: {ldata.label}
-                      </div>
-                      <p style={{ fontSize: 13, lineHeight: 1.6, color: "oklch(32% 0.10 25)", margin: 0 }}>{ldata.fixed}</p>
-                    </div>
+                <div key={d.key} className="fgm-dims-row" style={{ borderTop: `1px solid ${LIGHT_GRAY}` }}>
+                  <div className="fgm-dims-label">
+                    <span style={{ fontFamily: "var(--font-cormorant)", fontSize: 28, fontWeight: 600, color: ORANGE, lineHeight: 1 }}>{String(i + 1).padStart(2, "0")}</span>
+                    <span style={{ fontSize: 14, fontWeight: 700, color: NAVY, lineHeight: 1.3 }}>{ldata.label}</span>
+                  </div>
+                  <div style={{ padding: "18px 18px", background: GROWTH_TINT }}>
+                    <p style={{ fontSize: 14, lineHeight: 1.6, color: "oklch(30% 0.08 145)", margin: 0 }}>{ldata.growth}</p>
+                  </div>
+                  <div style={{ padding: "18px 18px", background: FIXED_TINT }}>
+                    <p style={{ fontSize: 14, lineHeight: 1.6, color: "oklch(32% 0.10 25)", margin: 0 }}>{ldata.fixed}</p>
                   </div>
                 </div>
               );
@@ -770,35 +760,35 @@ export default function FixedGrowthMindsetClient({
           </h2>
           <p style={{ fontSize: 15, color: BODY_TEXT, marginBottom: 16, lineHeight: 1.75 }}>
             {t(
-              "Mindset change is not a one-time decision — it is a practice. Research also shows that combining a growth mindset with seeing stress as enhancing (rather than debilitating) produces significantly stronger outcomes than either approach alone. Use this three-step process for any dimension where you want to grow.",
+              "Mindset change is not a one-time decision. It is a practice. Research also shows that combining a growth mindset with seeing stress as enhancing (rather than debilitating) produces significantly stronger outcomes than either approach alone. Use this three-step process for any dimension where you want to grow.",
               "Mengubah pola pikir bukan keputusan sekali jadi. Ini latihan. Penelitian juga menunjukkan bahwa menggabungkan pola pikir bertumbuh dengan melihat stres sebagai sesuatu yang menguatkan, bukan melemahkan, menghasilkan hasil yang jauh lebih kuat daripada salah satu pendekatan saja. Gunakan proses tiga langkah ini untuk dimensi mana pun yang ingin Anda kembangkan."
             )}<sup style={{ fontSize: "0.65em", verticalAlign: "super", marginLeft: 1 }}>⁴</sup>
           </p>
           <p style={{ fontSize: 15, color: BODY_TEXT, marginBottom: 40, lineHeight: 1.75 }}>
             {t(
-              "Most mindset patterns formed in childhood or early career — they were adaptive responses to real situations. Trying to force them away rarely works. What does work is sustained, specific noticing: catching the moment a fixed belief fires, labeling it without judgment, and choosing a different response. Tap each step to go deeper.",
-              "Sebagian besar pola pikir terbentuk di masa kecil atau awal karier. Pola itu adalah cara menyesuaikan diri dengan situasi nyata. Berusaha mengusirnya jarang berhasil. Yang berhasil adalah perhatian yang berkelanjutan dan spesifik: menangkap momen ketika keyakinan pola pikir tetap muncul, memberinya label tanpa menghakimi, dan memilih respons yang berbeda. Ketuk setiap langkah untuk mendalaminya."
+              "Most mindset patterns formed in childhood or early career. They were adaptive responses to real situations. Trying to force them away rarely works. What does work is sustained, specific noticing: catching the moment a fixed belief fires, labeling it without judgment, and choosing a different response. Tap each step to see how it works.",
+              "Sebagian besar pola pikir terbentuk di masa kecil atau awal karier. Pola itu adalah cara menyesuaikan diri dengan situasi nyata. Berusaha mengusirnya jarang berhasil. Yang berhasil adalah perhatian yang berkelanjutan dan spesifik: menangkap momen ketika keyakinan pola pikir tetap muncul, memberinya label tanpa menghakimi, dan memilih respons yang berbeda. Ketuk setiap langkah untuk melihat cara kerjanya."
             )}<sup style={{ fontSize: "0.65em", verticalAlign: "super", marginLeft: 1 }}>⁵</sup>
           </p>
-          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-            {[
+          {(() => {
+            const steps = [
               {
-                step: "01", color: "oklch(42% 0.14 260)",
+                step: "01",
                 title: t("Name It", "Beri Nama"),
                 desc: t(
-                  "For a specific dimension, write down your current belief honestly. What do you actually think — not what you know you should think?",
+                  "For a specific dimension, write down your current belief honestly. What do you actually think, not what you know you should think?",
                   "Untuk dimensi tertentu, tuliskan keyakinan Anda saat ini dengan jujur. Apa yang sebenarnya Anda pikirkan, bukan apa yang Anda tahu seharusnya Anda pikirkan?"
                 ),
                 detail: t(
-                  "Start by writing it down specifically, not vaguely. 'I avoid this' is not precise enough. 'When I'm asked to contribute in a meeting where I don't know the cultural norms, I assume anything I say will come across wrong and I go quiet' — that is specific. The more precisely you can name a belief, the less power it holds. Vague patterns are hard to interrupt. Named ones are not.",
+                  "Start by writing it down specifically, not vaguely. 'I avoid this' is not precise enough. 'When I'm asked to contribute in a meeting where I don't know the cultural norms, I assume anything I say will come across wrong and I go quiet.' That is specific. The more precisely you can name a belief, the less power it holds. Vague patterns are hard to interrupt. Named ones are not.",
                   "Mulailah dengan menuliskannya secara spesifik, bukan samar-samar. 'Saya menghindari ini' tidak cukup tepat. 'Ketika diminta berkontribusi dalam rapat di mana saya tidak tahu norma budayanya, saya berasumsi apa pun yang saya katakan akan terdengar salah, jadi saya diam.' Itu spesifik. Semakin tepat Anda dapat menamai keyakinan itu, semakin kecil kekuatannya. Pola yang samar sulit untuk dihentikan. Yang sudah diberi nama tidak demikian."
                 ),
               },
               {
-                step: "02", color: "oklch(48% 0.18 25)",
+                step: "02",
                 title: t("Spot the Pattern", "Kenali Polanya"),
                 desc: t(
-                  "Is this a fixed or growth belief? Do not judge — just notice. Awareness is always the first step toward change.",
+                  "Is this a fixed or growth belief? Do not judge. Just notice. Awareness is always the first step toward change.",
                   "Apakah ini keyakinan pola pikir tetap atau bertumbuh? Jangan menghakimi, cukup perhatikan. Kesadaran selalu menjadi langkah pertama menuju perubahan."
                 ),
                 detail: t(
@@ -807,48 +797,68 @@ export default function FixedGrowthMindsetClient({
                 ),
               },
               {
-                step: "03", color: "oklch(46% 0.16 145)",
+                step: "03",
                 title: t("Reframe It", "Ubah Sudut Pandang"),
                 desc: t(
                   "Ask: 'What would a growth-oriented version of this belief look like?' Write it down and commit to returning to it when the fixed pattern shows up.",
                   "Tanyakan: 'Seperti apa versi keyakinan ini dari pola pikir bertumbuh?' Tuliskan dan berkomitmenlah untuk kembali ke sana ketika pola pikir tetap muncul."
                 ),
                 detail: t(
-                  "A reframe is not positive thinking. It is a more accurate, more complete statement of reality. 'I failed at this' becomes 'I haven't succeeded here yet, and I now know what doesn't work.' 'I don't belong here' becomes 'I'm in an unfamiliar context, and belonging takes time and repeated presence.' Write the reframe on paper. Say it aloud. Then commit to returning to it — especially when the original belief fires next time.",
+                  "A reframe is not positive thinking. It is a more accurate, more complete statement of reality. 'I failed at this' becomes 'I haven't succeeded here yet, and I now know what doesn't work.' 'I don't belong here' becomes 'I'm in an unfamiliar context, and belonging takes time and repeated presence.' Write the reframe on paper. Say it aloud. Then commit to returning to it, especially when the original belief fires next time.",
                   "Mengubah sudut pandang bukan sekadar berpikir positif. Ini adalah pernyataan yang lebih akurat dan lebih lengkap tentang realitas. 'Saya gagal dalam hal ini' menjadi 'Saya belum berhasil di sini, dan sekarang saya tahu apa yang tidak berhasil.' 'Saya tidak cocok di sini' menjadi 'Saya berada dalam konteks yang tidak familiar, dan rasa memiliki membutuhkan waktu dan kehadiran berulang.' Tuliskan sudut pandang baru itu di atas kertas. Ucapkan dengan suara. Kemudian berkomitmenlah untuk kembali ke sana, terutama ketika keyakinan aslinya muncul lagi."
                 ),
               },
-            ].map(item => {
-              const isExpanded = expandedStep === item.step;
-              return (
-                <div
-                  key={item.step}
-                  style={{ background: "white", borderRadius: 10, border: `1px solid ${isExpanded ? item.color : LIGHT_GRAY}`, overflow: "hidden", transition: "border-color 0.2s ease" }}
-                >
-                  <button
-                    onClick={() => setExpandedStep(isExpanded ? null : item.step)}
-                    style={{
-                      width: "100%", background: "none", border: "none", cursor: "pointer",
-                      padding: "28px", display: "flex", gap: 14, alignItems: "flex-start", textAlign: "left",
-                    }}
-                  >
-                    <span style={{ fontFamily: "var(--font-cormorant)", fontSize: 40, fontWeight: 600, color: item.color, lineHeight: 1, flexShrink: 0 }}>{item.step}</span>
-                    <div style={{ flex: 1 }}>
-                      <h3 style={{ fontFamily: "var(--font-montserrat)", fontSize: 14, fontWeight: 700, color: NAVY, margin: "0 0 8px" }}>{item.title}</h3>
-                      <p style={{ fontSize: 13, lineHeight: 1.65, color: BODY_TEXT, margin: 0 }}>{item.desc}</p>
-                    </div>
-                    <span style={{ flexShrink: 0, fontSize: 18, color: item.color, lineHeight: 1, paddingTop: 6, display: "inline-block", transform: isExpanded ? "rotate(180deg)" : "none", transition: "transform 0.2s ease" }}>▾</span>
-                  </button>
-                  {isExpanded && (
-                    <div style={{ padding: "0 28px 28px", paddingLeft: "82px" }}>
-                      <div style={{ height: 1, background: LIGHT_GRAY, marginBottom: 20 }} />
-                      <p style={{ fontSize: 14, lineHeight: 1.8, color: BODY_TEXT, margin: 0 }}>{item.detail}</p>
-                    </div>
-                  )}
+            ];
+            const circle = "clamp(80px, 21vw, 150px)";
+            const active = steps.find(s => s.step === expandedStep) ?? steps[0];
+            return (
+              <>
+                <div style={{ display: "flex", justifyContent: "center", alignItems: "flex-start", gap: "clamp(6px, 2vw, 18px)" }}>
+                  {steps.map((item, n) => {
+                    const on = item.step === active.step;
+                    return (
+                      <div key={item.step} style={{ display: "contents" }}>
+                        {n > 0 && (
+                          <svg width="28" height="18" viewBox="0 0 28 18" fill="none" stroke={ORANGE} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"
+                            style={{ flexShrink: 0, marginTop: `calc(${circle} / 2 - 9px)`, width: "clamp(18px, 4vw, 28px)" }}>
+                            <path d="M3 9h20" />
+                            <path d="M17 3l6 6-6 6" />
+                          </svg>
+                        )}
+                        <div style={{ width: circle, display: "flex", flexDirection: "column", alignItems: "center", gap: 10 }}>
+                          <button
+                            onClick={() => setExpandedStep(item.step)}
+                            aria-pressed={on}
+                            aria-label={`${t("Step", "Langkah")} ${item.step}: ${item.title}`}
+                            style={{
+                              width: circle, height: circle, borderRadius: "50%", cursor: "pointer",
+                              background: on ? NAVY : "white", border: `1px solid ${on ? NAVY : LIGHT_GRAY}`,
+                              display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 6,
+                              boxShadow: on ? "0 6px 18px oklch(22% 0.10 260 / 0.18)" : "none",
+                              transition: "background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease",
+                            }}
+                          >
+                            <svg viewBox="0 0 24 24" fill="none" stroke={ORANGE} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ width: "36%", height: "36%" }}>
+                              {STEP_ICON_PATHS[item.step].map(d => <path key={d} d={d} />)}
+                            </svg>
+                            <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", color: on ? "oklch(82% 0.025 80)" : NAVY }}>{item.step}</span>
+                          </button>
+                          <span style={{ fontSize: 13, fontWeight: 700, color: NAVY, textAlign: "center", lineHeight: 1.3 }}>{item.title}</span>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
-              );
-            })}
-          </div>
+                <div aria-live="polite" style={{ marginTop: 28, background: "white", borderRadius: 12, border: `1px solid ${LIGHT_GRAY}`, padding: "28px clamp(20px, 4vw, 36px)" }}>
+                  <p style={{ ...eyebrowStyle, marginBottom: 6 }}>{t("STEP", "LANGKAH")} {active.step}</p>
+                  <h3 style={{ fontFamily: "var(--font-cormorant)", fontSize: 28, fontWeight: 600, color: NAVY, margin: "0 0 10px", lineHeight: 1.15 }}>{active.title}</h3>
+                  <p style={{ fontSize: 15, lineHeight: 1.7, color: NAVY, margin: 0 }}>{active.desc}</p>
+                  <div style={{ height: 1, background: LIGHT_GRAY, margin: "20px 0" }} />
+                  <p style={{ fontSize: 14, lineHeight: 1.8, color: BODY_TEXT, margin: 0 }}>{active.detail}</p>
+                </div>
+              </>
+            );
+          })()}
         </div>
       </section>
 
@@ -922,8 +932,8 @@ export default function FixedGrowthMindsetClient({
               },
               {
                 num: "02",
-                en: "In cross-cultural settings, fear of visible failure is often a learned response to real social stakes, not a character flaw to overcome quickly.",
-                id: "Dalam lingkungan lintas budaya, ketakutan akan kegagalan yang terlihat sering kali merupakan respons yang dipelajari terhadap risiko sosial yang nyata, bukan cacat karakter yang harus diatasi dengan cepat.",
+                en: "Across cultures, failing in public can mean something different. Not knowing how others will see it makes us afraid. That fear is learned. It is not who you are.",
+                id: "Di berbagai budaya, gagal di depan umum bisa punya arti yang berbeda. Tidak tahu bagaimana orang lain akan melihatnya membuat kita takut. Rasa takut itu dipelajari. Itu bukan diri Anda yang sebenarnya.",
               },
               {
                 num: "03",

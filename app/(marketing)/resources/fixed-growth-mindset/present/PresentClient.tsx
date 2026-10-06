@@ -22,7 +22,6 @@ const GROWTH = "oklch(40% 0.14 145)";
 const FIXED = "oklch(42% 0.16 25)";
 const SERIF = "var(--font-cormorant)";
 const SANS = "var(--font-montserrat)";
-const HAND = "var(--font-kalam)";
 
 const W = 1600;
 const H = 900;
@@ -33,44 +32,47 @@ const t = (en: string, id: string, lang: Lang) => (lang === "id" ? id : en);
 
 const MODULE_HREF = "/resources/fixed-growth-mindset";
 const IMG = "/images/resources/fixed-growth-mindset/hero.jpg";
+const ICON_GROWTH = "/images/resources/fixed-growth-mindset/icon-growth.svg";
+const ICON_FIXED = "/images/resources/fixed-growth-mindset/icon-fixed.svg";
 const MODULE_TITLE: Pair = { en: "Fixed vs Growth Mindset", id: "Pola Pikir Tetap vs. Bertumbuh" };
 
 // ── Content, lifted from the module itself ────────────────────────────────
 
-const DIMENSIONS: { label: Pair; example: Pair; growth: Pair; fixed: Pair }[] = [
+const DIMENSIONS: { label: Pair; meaning: Pair; growth: Pair; fixed: Pair }[] = [
   {
     label: { en: "Challenges", id: "Tantangan" },
-    example: { en: "Saying yes to leading the meeting in a language you are still learning.", id: "Bersedia memimpin rapat dalam bahasa yang masih Anda pelajari." },
-    growth: { en: "Embraces challenges.", id: "Merangkul tantangan." },
-    fixed: { en: "Defaults to familiar paths to protect against visible failure.", id: "Memilih jalur yang sudah dikenal untuk melindungi diri dari kegagalan yang terlihat." },
+    meaning: { en: "How you respond when something new or hard is asked of you.", id: "Cara Anda merespons ketika diminta melakukan sesuatu yang baru atau sulit." },
+    growth: { en: "Takes on challenges to keep growing and keeps learning from them.", id: "Menerima tantangan untuk terus bertumbuh dan terus belajar darinya." },
+    fixed: { en: "Avoids challenges so they never look like a failure.", id: "Menghindari tantangan agar tidak pernah terlihat gagal." },
   },
   {
     label: { en: "Skills", id: "Keterampilan" },
-    example: { en: "Practising the hard conversation instead of avoiding it.", id: "Berlatih percakapan yang sulit, bukan menghindarinya." },
-    growth: { en: "Focuses on getting gradually better.", id: "Fokus pada perbaikan bertahap." },
-    fixed: { en: "Believes you're either good at something or not.", id: "Percaya bahwa Anda berbakat dalam sesuatu atau tidak." },
+    meaning: { en: "What you believe about where ability comes from, and whether it can grow.", id: "Apa yang Anda yakini tentang asal kemampuan, dan apakah kemampuan itu bisa bertumbuh." },
+    growth: { en: "Believes skills grow with practice, so keeps practising.", id: "Percaya keterampilan tumbuh lewat latihan, jadi terus berlatih." },
+    fixed: { en: "Believes you either have the talent or you don't.", id: "Percaya bahwa bakat itu ada atau tidak ada." },
   },
   {
     label: { en: "Obstacles", id: "Hambatan" },
-    example: { en: "The visa is delayed again. You adjust the plan and keep going.", id: "Visa tertunda lagi. Anda menyesuaikan rencana dan terus berjalan." },
-    growth: { en: "Sees obstacles as an inevitable part of the process.", id: "Melihat hambatan sebagai bagian yang tak terhindarkan dari proses." },
-    fixed: { en: "Gives up in the face of an obstacle.", id: "Menyerah ketika menghadapi hambatan." },
+    meaning: { en: "What you do when the road gets blocked or the plan falls apart.", id: "Apa yang Anda lakukan ketika jalan terhalang atau rencana berantakan." },
+    growth: { en: "Treats obstacles as part of the road and looks for a way through.", id: "Melihat hambatan sebagai bagian dari perjalanan dan mencari jalan keluarnya." },
+    fixed: { en: "Stops at the first obstacle.", id: "Berhenti di hambatan pertama." },
   },
   {
     label: { en: "Success of Others", id: "Keberhasilan Orang Lain" },
-    example: { en: "A colleague learns the language faster. You ask how they did it.", id: "Rekan kerja lebih cepat menguasai bahasa. Anda bertanya bagaimana caranya." },
-    growth: { en: "Is inspired by the success of others.", id: "Terinspirasi oleh keberhasilan orang lain." },
-    fixed: { en: "Sees others' advancement as a comment on their own worth.", id: "Melihat kemajuan orang lain sebagai komentar tentang nilai diri sendiri." },
+    meaning: { en: "How you feel and react when people around you do well.", id: "Apa yang Anda rasakan dan lakukan ketika orang di sekitar Anda berhasil." },
+    growth: { en: "Is inspired by others' success and asks what they can learn from it.", id: "Terinspirasi oleh keberhasilan orang lain dan bertanya apa yang bisa dipelajari darinya." },
+    fixed: { en: "Feels threatened when others succeed.", id: "Merasa terancam saat orang lain berhasil." },
   },
   {
     label: { en: "Effort", id: "Usaha" },
-    example: { en: "Presenting again the week after a presentation went badly.", id: "Presentasi lagi seminggu setelah presentasi yang gagal." },
-    growth: { en: "Sees consistent effort as fruitful, even when results are slow.", id: "Melihat usaha yang konsisten sebagai hal yang bermanfaat, bahkan ketika hasilnya lambat." },
-    fixed: { en: "Does not feel motivated to put in the extra effort.", id: "Tidak merasa termotivasi untuk berusaha lebih keras." },
+    meaning: { en: "What hard work means to you while results are still out of sight.", id: "Arti kerja keras bagi Anda ketika hasilnya belum terlihat." },
+    growth: { en: "Sees effort as the path to mastery, even when results come slowly.", id: "Melihat usaha sebagai jalan menuju keahlian, meski hasilnya datang perlahan." },
+    fixed: { en: "Sees effort as proof they're not good enough.", id: "Melihat usaha sebagai bukti bahwa dirinya tidak cukup baik." },
   },
 ];
 
-const SHIFT_STEPS: { step: string; title: Pair; point: Pair; detail: Pair }[] = [
+// detail2, when present, sits on its own line under detail
+const SHIFT_STEPS: { step: string; title: Pair; point: Pair; detail: Pair; detail2?: Pair }[] = [
   {
     step: "01",
     title: { en: "Name It", id: "Beri Nama" },
@@ -81,7 +83,8 @@ const SHIFT_STEPS: { step: string; title: Pair; point: Pair; detail: Pair }[] = 
     step: "02",
     title: { en: "Spot the Pattern", id: "Kenali Polanya" },
     point: { en: "Is this a fixed or growth belief? Do not judge, just notice.", id: "Apakah ini keyakinan pola pikir tetap atau bertumbuh? Jangan menghakimi, cukup perhatikan." },
-    detail: { en: "Fixed sounds like: always, never, too late. Growth sounds like: not yet, still figuring this out.", id: "Pola pikir tetap terdengar seperti: selalu, tidak pernah, terlambat. Pola pikir bertumbuh terdengar seperti: belum, masih mencari tahu." },
+    detail: { en: "Fixed sounds like: always, never, too late.", id: "Pola pikir tetap terdengar seperti: selalu, tidak pernah, terlambat." },
+    detail2: { en: "Growth sounds like: not yet, still figuring this out.", id: "Pola pikir bertumbuh terdengar seperti: belum, masih mencari tahu." },
   },
   {
     step: "03",
@@ -101,15 +104,19 @@ const TAKEAWAY_HIGHLIGHTS: (Pair | undefined)[] = [
 
 const TAKEAWAYS: Pair[] = [
   { en: "Fixed mindset patterns do not make you a poor leader. They make you a human one. Recognizing them is the work.", id: "Pola pikir tetap tidak membuat Anda pemimpin yang buruk. Itu tanda Anda manusia. Tugas Anda adalah mengenalinya." },
-  { en: "In cross-cultural settings, fear of visible failure is often a learned response to real social stakes, not a character flaw.", id: "Dalam lingkungan lintas budaya, ketakutan akan kegagalan yang terlihat sering kali merupakan respons yang dipelajari terhadap risiko sosial yang nyata, bukan cacat karakter." },
+  { en: "Across cultures, failing in public can mean something different. Not knowing how others will see it makes us afraid. That fear is learned. It is not who you are.", id: "Di berbagai budaya, gagal di depan umum bisa punya arti yang berbeda. Tidak tahu bagaimana orang lain akan melihatnya membuat kita takut. Rasa takut itu dipelajari. Itu bukan diri Anda yang sebenarnya." },
   { en: "Growth mindset is not about ambition. It is about faithfulness with what you have been given, where you have been placed.", id: "Pola pikir bertumbuh bukan tentang ambisi. Ini tentang kesetiaan dengan apa yang telah diberikan kepada Anda, di tempat Anda ditempatkan." },
   { en: "The goal is not a perfect score. It is the honest question: where am I protecting myself when I could be growing?", id: "Tujuannya bukan skor sempurna. Ini adalah pertanyaan jujur: di mana saya melindungi diri saya sendiri ketika saya bisa bertumbuh?" },
 ];
 
-const QUESTIONS: Pair[] = [
-  { en: "Think of a moment in cross-cultural work when you felt you were not cut out for this. Was that a fixed-mindset moment, a legitimate limit, or something your context imposed on you?", id: "Pikirkan momen dalam pekerjaan lintas budaya ketika Anda merasa tidak cocok untuk ini. Apakah itu momen pola pikir tetap, batasan yang sah, atau sesuatu yang dipaksakan konteks Anda?" },
-  { en: "Where in your leadership role are you most likely to go fixed: under pressure, in ambiguous situations, in front of people whose respect you need?", id: "Di mana dalam peran kepemimpinan Anda, Anda paling mungkin jatuh ke pola pikir tetap: di bawah tekanan, dalam situasi ambigu, di depan orang-orang yang rasa hormatnya Anda butuhkan?" },
-  { en: "If the people you lead could see your fixed-mindset moments clearly, what do you want them to learn from how you handle them?", id: "Jika orang-orang yang Anda pimpin dapat melihat momen pola pikir tetap Anda dengan jelas, apa yang ingin Anda ajarkan kepada mereka dari cara Anda menanganinya?" },
+const QUESTION: Pair = { en: "Where do you show a growth mindset, and where do you go fixed?", id: "Di mana Anda menunjukkan pola pikir bertumbuh, dan di mana Anda jatuh ke pola pikir tetap?" };
+
+const AREAS: Pair[] = [
+  { en: "Learning a new language or culture", id: "Belajar bahasa atau budaya baru" },
+  { en: "Receiving feedback", id: "Menerima umpan balik" },
+  { en: "Leading people who are different from you", id: "Memimpin orang yang berbeda dari Anda" },
+  { en: "When a plan fails", id: "Ketika rencana gagal" },
+  { en: "When a colleague does better than you", id: "Ketika rekan kerja lebih berhasil dari Anda" },
 ];
 
 // ── Small helpers ──────────────────────────────────────────────────────────
@@ -125,6 +132,21 @@ function StepIcon({ step, size }: { step: string; size: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={ORANGE} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       {STEP_ICON_PATHS[step].map((d) => <path key={d} d={d} />)}
+    </svg>
+  );
+}
+
+// Growth / fixed mindset icons (navy circle, orange arrow, transparent background)
+function MindsetIcon({ kind, size }: { kind: "growth" | "fixed"; size: number }) {
+  return <img src={kind === "growth" ? ICON_GROWTH : ICON_FIXED} alt="" aria-hidden="true" width={size} height={size} style={{ display: "block" }} />;
+}
+
+// Small orange arrow linking the circles on the practice slide
+function StepArrow({ on }: { on: boolean }) {
+  return (
+    <svg width="56" height="24" viewBox="0 0 56 24" fill="none" stroke={ORANGE} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ ...show(on), flexShrink: 0 }}>
+      <path d="M4 12h44" />
+      <path d="M40 4l8 8-8 8" />
     </svg>
   );
 }
@@ -179,6 +201,13 @@ const SLIDES: Slide[] = [
     steps: 1,
     render: (lang) => (
       <div>
+        <div style={{ display: "flex", gap: 22, marginBottom: 40 }}>
+          {(["fixed", "growth"] as const).map((k) => (
+            <div key={k} style={{ width: 140, height: 140, borderRadius: "50%", background: OFF_WHITE, display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <MindsetIcon kind={k} size={116} />
+            </div>
+          ))}
+        </div>
         <Eyebrow color={ORANGE}>{lang === "id" ? "Pengembangan Pribadi" : "Personal Development"}</Eyebrow>
         <h1 style={{ fontFamily: SERIF, fontWeight: 600, fontSize: 96, lineHeight: 1.05, color: OFF_WHITE, margin: "0 0 28px" }}>
           {lang === "id" ? "Pola Pikir Tetap vs. Bertumbuh" : "Fixed vs. Growth Mindset"}
@@ -195,43 +224,48 @@ const SLIDES: Slide[] = [
     key: "two-mindsets",
     steps: 2,
     render: (lang, step) => (
-      <div>
+      <div style={{ textAlign: "center" }}>
         <Eyebrow color={ORANGE}>{lang === "id" ? "Penelitian" : "The Research"}</Eyebrow>
-        <H2>{lang === "id" ? "Dua Cara Melihat Kemampuan" : "Two Ways of Seeing Ability"}</H2>
-        <div style={{ display: "flex", gap: 32, marginTop: 20 }}>
-          <div style={{ ...show(step >= 0), flex: 1, background: "oklch(46% 0.16 145 / 0.08)", borderRadius: 16, padding: "36px 32px" }}>
-            <div style={{ fontFamily: SERIF, fontSize: 34, fontWeight: 600, color: GROWTH, marginBottom: 14 }}>
-              {lang === "id" ? "Pola Pikir Bertumbuh" : "Growth Mindset"}
+        <h2 style={{ fontFamily: SERIF, fontWeight: 600, fontSize: 72, lineHeight: 1.05, color: NAVY, margin: "0 0 16px" }}>
+          {lang === "id" ? "Dua Cara Melihat Kemampuan" : "Two Ways of Seeing Ability"}
+        </h2>
+        <p style={{ fontFamily: SANS, fontSize: 23, lineHeight: 1.5, color: MUTED, margin: "0 auto 34px", maxWidth: 1100 }}>
+          {lang === "id"
+            ? "Carol Dweck menemukan bahwa orang memegang salah satu dari dua keyakinan tentang kemampuan. Keyakinan itu membentuk cara mereka belajar, memimpin, dan menghadapi kegagalan."
+            : "Carol Dweck found that people hold one of two beliefs about ability. That belief shapes how they learn, lead and handle failure."}
+        </p>
+        <div style={{ display: "flex", gap: 32 }}>
+          {([
+            { k: "growth" as const, on: step >= 0, bg: "oklch(46% 0.16 145 / 0.08)", head: GROWTH, ink: "oklch(30% 0.08 145)",
+              name: { en: "Growth Mindset", id: "Pola Pikir Bertumbuh" },
+              text: { en: "Believes ability can grow through effort, learning and good help. Defines success as gradual improvement.", id: "Percaya kemampuan bisa bertumbuh lewat usaha, belajar, dan bantuan yang tepat. Menganggap berhasil berarti terus membaik sedikit demi sedikit." } },
+            { k: "fixed" as const, on: step >= 1, bg: "oklch(48% 0.18 25 / 0.08)", head: FIXED, ink: "oklch(32% 0.10 25)",
+              name: { en: "Fixed Mindset", id: "Pola Pikir Tetap" },
+              text: { en: "Believes ability is set from the start: you have it or you don't. Defines success as being right and not failing.", id: "Percaya kemampuan sudah ditetapkan sejak awal: Anda punya atau tidak. Menganggap berhasil berarti selalu benar dan tidak pernah gagal." } },
+          ]).map((c) => (
+            <div key={c.k} style={{ ...show(c.on), flex: 1, background: c.bg, borderRadius: 16, padding: "28px 40px 32px", display: "flex", flexDirection: "column", alignItems: "center" }}>
+              <div style={{ fontFamily: SERIF, fontSize: 38, fontWeight: 600, color: c.head }}>{c.name[lang]}</div>
+              <div style={{ margin: "4px 0 8px" }}><MindsetIcon kind={c.k} size={120} /></div>
+              <p style={{ fontFamily: SANS, fontSize: 22, lineHeight: 1.5, color: c.ink, margin: 0, maxWidth: 580 }}>{c.text[lang]}</p>
             </div>
-            <p style={{ fontFamily: SANS, fontSize: 24, lineHeight: 1.5, color: "oklch(30% 0.08 145)", margin: 0 }}>
-              {lang === "id" ? "Menganggap berhasil berarti terus membaik sedikit demi sedikit." : "Defines success as gradual improvement and growth."}
-            </p>
-          </div>
-          <div style={{ ...show(step >= 1), flex: 1, background: "oklch(48% 0.18 25 / 0.08)", borderRadius: 16, padding: "36px 32px" }}>
-            <div style={{ fontFamily: SERIF, fontSize: 34, fontWeight: 600, color: FIXED, marginBottom: 14 }}>
-              {lang === "id" ? "Pola Pikir Tetap" : "Fixed Mindset"}
-            </div>
-            <p style={{ fontFamily: SANS, fontSize: 24, lineHeight: 1.5, color: "oklch(32% 0.10 25)", margin: 0 }}>
-              {lang === "id" ? "Menganggap berhasil berarti selalu benar dan tidak pernah gagal." : "Defines success as being right and not failing."}
-            </p>
-          </div>
+          ))}
         </div>
       </div>
     ),
   },
   {
     key: "dimensions-preview",
-    steps: 10,
+    steps: 5,
     render: (lang, step) => (
       <div>
         <Eyebrow color={ORANGE}>{lang === "id" ? "Lima Dimensi" : "Five Dimensions"}</Eyebrow>
         <H2>{lang === "id" ? "Di Mana Pola Pikir Muncul" : "Where Mindset Shows Up"}</H2>
         <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
           {DIMENSIONS.map((d, n) => (
-            <div key={d.label.en} style={{ ...show(step >= n * 2), display: "flex", alignItems: "baseline", gap: 20, padding: "14px 0", borderBottom: n < 4 ? `1px solid ${LIGHT_GRAY}` : "none" }}>
+            <div key={d.label.en} style={{ ...show(step >= n), display: "flex", alignItems: "baseline", gap: 20, padding: "14px 0", borderBottom: n < 4 ? `1px solid ${LIGHT_GRAY}` : "none" }}>
               <span style={{ fontFamily: SERIF, fontSize: 34, fontWeight: 600, color: ORANGE, minWidth: 48 }}>{String(n + 1).padStart(2, "0")}</span>
-              <span style={{ fontFamily: SANS, fontSize: 30, fontWeight: 600, color: NAVY, minWidth: 380 }}>{d.label[lang]}</span>
-              <span style={{ ...show(step >= n * 2 + 1), fontFamily: HAND, fontSize: 28, lineHeight: 1.3, color: "oklch(38% 0.07 260)" }}>{d.example[lang]}</span>
+              <span style={{ fontFamily: SANS, fontSize: 28, fontWeight: 600, color: NAVY, width: 400, flexShrink: 0 }}>{d.label[lang]}</span>
+              <span style={{ fontFamily: SANS, fontSize: 24, lineHeight: 1.4, color: MUTED }}>{d.meaning[lang]}</span>
             </div>
           ))}
         </div>
@@ -281,15 +315,18 @@ const SLIDES: Slide[] = [
         <Point on={true} dark>
           {lang === "id" ? "Mengubah pola pikir bukan keputusan sekali jalan. Ini adalah latihan." : "Mindset change is not a one-time decision. It is a practice."}
         </Point>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 32, marginTop: 20 }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 32, marginTop: 4 }}>
           {SHIFT_STEPS.map((s, n) => (
-            <div key={s.step} style={{ ...show(step >= n), background: "oklch(30% 0.08 260)", borderRadius: 16, padding: "36px 32px" }}>
-              <StepIcon step={s.step} size={64} />
-              <div style={{ fontFamily: SANS, fontSize: 18, fontWeight: 700, letterSpacing: "0.12em", color: ON_NAVY, margin: "22px 0 8px" }}>
-                {lang === "id" ? `LANGKAH ${s.step}` : `STEP ${s.step}`}
+            <Fragment key={s.step}>
+              {n > 0 && <StepArrow on={step >= n} />}
+              <div style={{ ...show(step >= n), width: 320, height: 320, flexShrink: 0, borderRadius: "50%", background: "oklch(30% 0.08 260)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center" }}>
+                <StepIcon step={s.step} size={56} />
+                <div style={{ fontFamily: SANS, fontSize: 17, fontWeight: 700, letterSpacing: "0.12em", color: ON_NAVY, margin: "18px 0 8px" }}>
+                  {lang === "id" ? `LANGKAH ${s.step}` : `STEP ${s.step}`}
+                </div>
+                <div style={{ fontFamily: SERIF, fontSize: 36, fontWeight: 600, color: OFF_WHITE, lineHeight: 1.1, maxWidth: 230 }}>{s.title[lang]}</div>
               </div>
-              <div style={{ fontFamily: SERIF, fontSize: 42, fontWeight: 600, color: OFF_WHITE, lineHeight: 1.1 }}>{s.title[lang]}</div>
-            </div>
+            </Fragment>
           ))}
         </div>
       </div>
@@ -304,7 +341,10 @@ const SLIDES: Slide[] = [
           <Eyebrow color={ORANGE}>{lang === "id" ? `Langkah ${s.step}` : `Step ${s.step}`}</Eyebrow>
           <H2>{s.title[lang]}</H2>
           <Point on={step >= 0}>{s.point[lang]}</Point>
-          <Point on={step >= 1}>{s.detail[lang]}</Point>
+          <Point on={step >= 1}>
+            {s.detail[lang]}
+            {s.detail2 && <><br />{s.detail2[lang]}</>}
+          </Point>
         </div>
         <div style={{ flexShrink: 0, width: 280, height: 280, borderRadius: "50%", background: "oklch(65% 0.15 45 / 0.1)", display: "flex", alignItems: "center", justifyContent: "center" }}>
           <StepIcon step={s.step} size={140} />
@@ -335,16 +375,19 @@ const SLIDES: Slide[] = [
   {
     key: "discussion",
     dark: true,
-    steps: 3,
+    steps: 5,
     render: (lang, step) => (
       <div>
         <Eyebrow color={ORANGE}>{lang === "id" ? "Diskusi" : "Discussion"}</Eyebrow>
-        <H2 dark>{lang === "id" ? "Pertanyaan yang Layak Direnungkan" : "Questions Worth Sitting With"}</H2>
-        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-          {QUESTIONS.map((q, n) => (
-            <div key={n} style={{ ...show(step >= n), display: "flex", gap: 24, alignItems: "flex-start", padding: "12px 0" }}>
-              <span style={{ fontFamily: SERIF, fontSize: 34, fontWeight: 600, color: ORANGE, lineHeight: 1, minWidth: 40 }}>{n + 1}</span>
-              <p style={{ fontFamily: SANS, fontSize: 24, lineHeight: 1.5, color: ON_NAVY, margin: 0 }}>{q[lang]}</p>
+        <H2 dark>{QUESTION[lang]}</H2>
+        <p style={{ fontFamily: SANS, fontSize: 18, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: ON_NAVY, margin: "-8px 0 10px" }}>
+          {lang === "id" ? "Pikirkan area-area ini:" : "Think about these areas:"}
+        </p>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          {AREAS.map((a, n) => (
+            <div key={a.en} style={{ ...show(step >= n), display: "flex", gap: 22, alignItems: "center", padding: "12px 0" }}>
+              <span aria-hidden="true" style={{ width: 12, height: 12, borderRadius: "50%", background: ORANGE, flexShrink: 0 }} />
+              <p style={{ fontFamily: SANS, fontSize: 28, lineHeight: 1.35, color: OFF_WHITE, margin: 0 }}>{a[lang]}</p>
             </div>
           ))}
         </div>
@@ -357,13 +400,15 @@ const SLIDES: Slide[] = [
     steps: 1,
     render: (lang) => (
       <div style={{ height: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center" }}>
-        <Eyebrow color={ORANGE}>{lang === "id" ? "Langkah Selanjutnya" : "Next Steps"}</Eyebrow>
-        <H2 dark>{lang === "id" ? "Pola Pikir Anda Tidak Tetap" : "Your Mindset Is Not Fixed"}</H2>
-        <Point on={true} dark>
-          {lang === "id"
-            ? "Perubahan dimulai dengan menyadari. Di mana Anda bermain aman padahal Anda bisa belajar?"
-            : "Change starts with noticing. Where are you playing it safe when you could be learning?"}
-        </Point>
+        <h2 style={{ fontFamily: SERIF, fontWeight: 600, fontSize: 120, lineHeight: 1.02, color: ORANGE, margin: "0 0 44px", maxWidth: 1300 }}>
+          {lang === "id" ? "Pola Pikir Anda Tidak Tetap" : "Your Mindset Is Not Fixed"}
+        </h2>
+        <p style={{ fontFamily: SANS, fontSize: 40, fontWeight: 600, color: OFF_WHITE, margin: "0 0 24px" }}>
+          {lang === "id" ? "Beri nama. Kenali polanya. Ubah sudut pandang." : "Name it. Spot it. Reframe it."}
+        </p>
+        <p style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: 32, color: ON_NAVY, margin: 0 }}>
+          {lang === "id" ? "Pertumbuhan dimulai dari langkah Anda berikutnya." : "Growth starts with your next step."}
+        </p>
       </div>
     ),
   },
