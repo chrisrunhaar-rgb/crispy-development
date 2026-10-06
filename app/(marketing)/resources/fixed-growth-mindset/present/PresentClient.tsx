@@ -4,6 +4,7 @@ import { Fragment, useCallback, useEffect, useLayoutEffect, useRef, useState } f
 import Link from "next/link";
 import { PHONE_PORTRAIT_QUERY, PresentRotateNotice, enterPresentFullscreen, usePresentPhone } from "@/components/PresentPhone";
 import { useLanguage } from "@/lib/LanguageContext";
+import { saveResume, takeResume } from "@/lib/present-resume";
 
 // ── Types ──────────────────────────────────────────────────────────────────
 type Lang = "en" | "id";
@@ -201,13 +202,6 @@ const SLIDES: Slide[] = [
     steps: 1,
     render: (lang) => (
       <div>
-        <div style={{ display: "flex", gap: 22, marginBottom: 40 }}>
-          {(["fixed", "growth"] as const).map((k) => (
-            <div key={k} style={{ width: 140, height: 140, borderRadius: "50%", background: OFF_WHITE, display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <MindsetIcon kind={k} size={116} />
-            </div>
-          ))}
-        </div>
         <Eyebrow color={ORANGE}>{lang === "id" ? "Pengembangan Pribadi" : "Personal Development"}</Eyebrow>
         <h1 style={{ fontFamily: SERIF, fontWeight: 600, fontSize: 96, lineHeight: 1.05, color: OFF_WHITE, margin: "0 0 28px" }}>
           {lang === "id" ? "Pola Pikir Tetap vs. Bertumbuh" : "Fixed vs. Growth Mindset"}
@@ -217,6 +211,13 @@ const SLIDES: Slide[] = [
             ? "Berdasarkan kerangka kerja Carol Dweck, menunjukkan di mana pola pikir Anda tetap dan di mana pola pikir Anda bertumbuh, dalam lima dimensi utama."
             : "Drawing on Carol Dweck's framework, revealing where your mindset is fixed and where it's growing, across five key dimensions."}
         </p>
+        <div style={{ display: "flex", justifyContent: "center", gap: 36, marginTop: 44 }}>
+          {(["fixed", "growth"] as const).map((k) => (
+            <div key={k} style={{ width: 190, height: 190, borderRadius: "50%", background: OFF_WHITE, display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <MindsetIcon kind={k} size={158} />
+            </div>
+          ))}
+        </div>
       </div>
     ),
   },
@@ -245,8 +246,14 @@ const SLIDES: Slide[] = [
           ]).map((c) => (
             <div key={c.k} style={{ ...show(c.on), flex: 1, background: c.bg, borderRadius: 16, padding: "28px 40px 32px", display: "flex", flexDirection: "column", alignItems: "center" }}>
               <div style={{ fontFamily: SERIF, fontSize: 38, fontWeight: 600, color: c.head }}>{c.name[lang]}</div>
-              <div style={{ margin: "4px 0 8px" }}><MindsetIcon kind={c.k} size={120} /></div>
-              <p style={{ fontFamily: SANS, fontSize: 22, lineHeight: 1.5, color: c.ink, margin: 0, maxWidth: 580 }}>{c.text[lang]}</p>
+              <p style={{ fontFamily: SANS, fontSize: 22, lineHeight: 1.5, color: c.ink, margin: "12px 0 0", maxWidth: 580 }}>{c.text[lang]}</p>
+            </div>
+          ))}
+        </div>
+        <div style={{ display: "flex", gap: 32, marginTop: 20 }}>
+          {([{ k: "growth" as const, on: step >= 0 }, { k: "fixed" as const, on: step >= 1 }]).map((c) => (
+            <div key={c.k} style={{ ...show(c.on), flex: 1, display: "flex", justifyContent: "center" }}>
+              <MindsetIcon kind={c.k} size={200} />
             </div>
           ))}
         </div>
@@ -373,21 +380,20 @@ const SLIDES: Slide[] = [
     ),
   },
   {
-    key: "discussion",
+    key: "reflection",
     dark: true,
-    steps: 5,
+    steps: 2,
     render: (lang, step) => (
-      <div>
-        <Eyebrow color={ORANGE}>{lang === "id" ? "Diskusi" : "Discussion"}</Eyebrow>
+      <div style={{ height: "100%", display: "flex", flexDirection: "column" }}>
+        <Eyebrow color={ORANGE}>{lang === "id" ? "Refleksi" : "Reflection"}</Eyebrow>
         <H2 dark>{QUESTION[lang]}</H2>
         <p style={{ fontFamily: SANS, fontSize: 18, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: ON_NAVY, margin: "-8px 0 10px" }}>
           {lang === "id" ? "Pikirkan area-area ini:" : "Think about these areas:"}
         </p>
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          {AREAS.map((a, n) => (
-            <div key={a.en} style={{ ...show(step >= n), display: "flex", gap: 22, alignItems: "center", padding: "12px 0" }}>
-              <span aria-hidden="true" style={{ width: 12, height: 12, borderRadius: "50%", background: ORANGE, flexShrink: 0 }} />
-              <p style={{ fontFamily: SANS, fontSize: 28, lineHeight: 1.35, color: OFF_WHITE, margin: 0 }}>{a[lang]}</p>
+        <div style={{ ...show(step >= 1), flex: 1, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          {AREAS.map((a) => (
+            <div key={a.en} style={{ width: 250, height: 250, borderRadius: "50%", border: `3px solid ${ORANGE}`, background: "oklch(100% 0 0 / 0.06)", display: "flex", alignItems: "center", justifyContent: "center", padding: 30, boxSizing: "border-box" }}>
+              <p style={{ fontFamily: SANS, fontSize: 24, fontWeight: 600, lineHeight: 1.3, color: OFF_WHITE, margin: 0, textAlign: "center" }}>{a[lang]}</p>
             </div>
           ))}
         </div>
@@ -474,6 +480,15 @@ export default function PresentClient() {
   const touchX = useRef<number | null>(null);
   const last = SLIDES.length - 1;
 
+  // Remember the slide across a language switch, in case the page reloads
+  const here = useRef({ i: 0, s: 0 });
+  here.current = { i: pos.i, s: pos.s };
+  const switchLang = (l: Lang) => { saveResume(here.current.i, here.current.s); setLang(l); };
+  useEffect(() => {
+    const r = takeResume(last);
+    if (r) { setPos(r); setStarted(true); }
+  }, [last]);
+
   const atEnd = i === last && step === stepsOf(last) - 1;
   const go = useCallback((n: number) => { setBlank(false); setPos({ i: Math.max(0, Math.min(last, n)), s: 0 }); }, [last]);
   const next = useCallback(() => {
@@ -533,7 +548,7 @@ export default function PresentClient() {
       else if (k === "f" || k === "F") { e.preventDefault(); toggleFull(); }
       else if (k === "g" || k === "G") { e.preventDefault(); setOverview(true); }
       else if (k === "b" || k === "B" || k === ".") { e.preventDefault(); setBlank(b => !b); }
-      else if (k === "l" || k === "L") { e.preventDefault(); setLang(lang === "en" ? "id" : "en"); }
+      else if (k === "l" || k === "L") { e.preventDefault(); switchLang(lang === "en" ? "id" : "en"); }
       else if (k === "Escape") setBlank(false);
       wake();
     };
@@ -631,7 +646,7 @@ export default function PresentClient() {
 
       {/* Control bar */}
       <div className="fgm-ui" role="toolbar" aria-label={t("Presentation controls", "Kontrol presentasi", lang)}
-        style={{ position: "absolute", left: "50%", bottom: 28, transform: `translateX(-50%) translateY(${showUi ? 0 : 16}px)`, opacity: showUi ? 1 : 0, pointerEvents: showUi ? "auto" : "none",
+        style={{ position: "absolute", left: "50%", bottom: 28, transform: "translateX(-50%)",
           display: "flex", alignItems: "center", gap: 2, padding: 6, borderRadius: 16, background: "oklch(18% 0.05 260 / 0.88)", backdropFilter: "blur(12px)", boxShadow: "0 12px 40px oklch(0% 0 0 / 0.4)" }}>
         <button type="button" className="fgm-pill" style={{ ...pill, opacity: i === 0 ? 0.35 : 1 }} disabled={i === 0} onClick={() => { setStarted(true); prev(); }}
           aria-label={t("Previous slide", "Slide sebelumnya", lang)}>
@@ -649,7 +664,7 @@ export default function PresentClient() {
         </button>
         <div role="group" aria-label={t("Language", "Bahasa", lang)} style={{ display: "inline-flex", gap: 2, background: "oklch(100% 0 0 / 0.08)", borderRadius: 10, padding: 2 }}>
           {(["en", "id"] as Lang[]).map(l => (
-            <button key={l} type="button" className="fgm-pill" aria-pressed={lang === l} onClick={() => setLang(l)}
+            <button key={l} type="button" className="fgm-pill" aria-pressed={lang === l} onClick={() => switchLang(l)}
               style={{ ...pill, height: 40, minWidth: 44, background: lang === l ? ORANGE : "transparent" }}>
               {l.toUpperCase()}
             </button>

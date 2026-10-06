@@ -4,6 +4,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { PHONE_PORTRAIT_QUERY, PresentRotateNotice, enterPresentFullscreen, usePresentPhone } from "@/components/PresentPhone";
 import { useLanguage } from "@/lib/LanguageContext";
+import { saveResume, takeResume } from "@/lib/present-resume";
 
 type Lang = "en" | "id";
 type Pair = { en: string; id: string };
@@ -496,7 +497,7 @@ function SlideFrame({ index, lang, step }: { index: number; lang: Lang; step: nu
           color: dark ? "oklch(60% 0.03 260)" : muted,
         }}>
           <span style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <img src="/images/logo-icon.png" alt="" aria-hidden="true" style={{ width: 22, height: 22, opacity: 0.8 }} />
+            <img src="/logo-icon.png" alt="" aria-hidden="true" style={{ width: 22, height: 22, opacity: 0.8 }} />
             {tp({ en: "The Johari Window", id: "Jendela Johari" }, lang)}
           </span>
           <span>{index + 1} / {SLIDES.length}</span>
@@ -558,6 +559,15 @@ export default function PresentClient() {
   const touchX = useRef<number | null>(null);
 
   const last = SLIDES.length - 1;
+
+  // Remember the slide across a language switch, in case the page reloads
+  const here = useRef({ i: 0, s: 0 });
+  here.current = { i: pos.i, s: pos.s };
+  const switchLang = (l: Lang) => { saveResume(here.current.i, here.current.s); setLang(l); };
+  useEffect(() => {
+    const r = takeResume(last);
+    if (r) { setPos(r); setStarted(true); }
+  }, [last]);
   const atEnd = pos.i === last && pos.s === stepsOf(last) - 1;
 
   function go(n: number) {
@@ -636,7 +646,7 @@ export default function PresentClient() {
         case "End": go(last); wake(); break;
         case "f": case "F": toggleFull(); wake(); break;
         case "g": case "G": setOverview(true); break;
-        case "l": case "L": setLang(lang === "id" ? "en" : "id"); break;
+        case "l": case "L": switchLang(lang === "id" ? "en" : "id"); break;
         case "Escape": if (document.fullscreenElement) document.exitFullscreen?.().catch(() => {}); break;
         default: break;
       }
@@ -727,7 +737,7 @@ export default function PresentClient() {
 
       {/* Control bar */}
       <div className="jw-ui" role="toolbar" aria-label={lang === "id" ? "Kontrol presentasi" : "Presentation controls"}
-        style={{ position: "fixed", left: "50%", bottom: 28, zIndex: 6, transform: "translateX(-50%)", opacity: showUi ? 1 : 0, pointerEvents: showUi ? "auto" : "none",
+        style={{ position: "fixed", left: "50%", bottom: 28, zIndex: 6, transform: "translateX(-50%)",
           display: "flex", alignItems: "center", gap: 2, padding: 6, borderRadius: 16, background: "oklch(18% 0.05 260 / 0.88)", backdropFilter: "blur(12px)", boxShadow: "0 12px 40px oklch(0% 0 0 / 0.4)" }}>
         <button type="button" className="jw-tb" disabled={pos.i === 0 && pos.s === 0} onClick={() => { prev(); wake(); }}
           aria-label={lang === "id" ? "Slide sebelumnya" : "Previous slide"}>
@@ -745,7 +755,7 @@ export default function PresentClient() {
         </button>
         <div role="group" aria-label={lang === "id" ? "Bahasa" : "Language"} style={{ display: "inline-flex", gap: 2, background: "oklch(100% 0 0 / 0.08)", borderRadius: 10, padding: 2 }}>
           {(["en", "id"] as Lang[]).map(l => (
-            <button key={l} type="button" className="jw-tb" aria-pressed={lang === l} onClick={() => setLang(l)}
+            <button key={l} type="button" className="jw-tb" aria-pressed={lang === l} onClick={() => switchLang(l)}
               style={{ height: 40, background: lang === l ? orange : "transparent" }}>
               {l.toUpperCase()}
             </button>

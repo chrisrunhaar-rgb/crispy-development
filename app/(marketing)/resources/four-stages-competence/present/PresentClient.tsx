@@ -3,6 +3,7 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react
 import Link from "next/link";
 import { PHONE_PORTRAIT_QUERY, PresentRotateNotice, enterPresentFullscreen, usePresentPhone } from "@/components/PresentPhone";
 import { useLanguage } from "@/lib/LanguageContext";
+import { saveResume, takeResume } from "@/lib/present-resume";
 
 type Lang = "en" | "id";
 const t = (en: string, id: string, lang: Lang) => (lang === "id" ? id : en);
@@ -443,6 +444,15 @@ export default function PresentClient() {
   const touchX = useRef<number | null>(null);
   const last = SLIDES.length - 1;
 
+  // Remember the slide across a language switch, in case the page reloads
+  const here = useRef({ i: 0, s: 0 });
+  here.current = { i: pos.i, s: pos.s };
+  const switchLang = (l: Lang) => { saveResume(here.current.i, here.current.s); setLang(l); };
+  useEffect(() => {
+    const r = takeResume(last);
+    if (r) { setPos(r); setStarted(true); }
+  }, [last]);
+
   const atEnd = i === last && step === stepsOf(last) - 1;
   const go = useCallback((n: number) => { setBlank(false); setPos({ i: Math.max(0, Math.min(last, n)), s: 0 }); }, [last]);
   const next = useCallback(() => {
@@ -502,7 +512,7 @@ export default function PresentClient() {
       else if (k === "f" || k === "F") { e.preventDefault(); toggleFull(); }
       else if (k === "g" || k === "G") { e.preventDefault(); setOverview(true); }
       else if (k === "b" || k === "B" || k === ".") { e.preventDefault(); setBlank(b => !b); }
-      else if (k === "l" || k === "L") { e.preventDefault(); setLang(lang === "en" ? "id" : "en"); }
+      else if (k === "l" || k === "L") { e.preventDefault(); switchLang(lang === "en" ? "id" : "en"); }
       else if (k === "Escape") setBlank(false);
       wake();
     };
@@ -603,7 +613,7 @@ export default function PresentClient() {
 
       {/* Control bar */}
       <div className="fsc-ui" role="toolbar" aria-label={t("Presentation controls", "Kontrol presentasi", lang)}
-        style={{ position: "absolute", left: "50%", bottom: 28, transform: `translateX(-50%) translateY(${showUi ? 0 : 16}px)`, opacity: showUi ? 1 : 0, pointerEvents: showUi ? "auto" : "none",
+        style={{ position: "absolute", left: "50%", bottom: 28, transform: "translateX(-50%)",
           display: "flex", alignItems: "center", gap: 2, padding: 6, borderRadius: 16, background: "oklch(18% 0.05 260 / 0.88)", backdropFilter: "blur(12px)", boxShadow: "0 12px 40px oklch(0% 0 0 / 0.4)" }}>
         <button type="button" className="fsc-pill" style={{ ...pill, opacity: i === 0 ? 0.35 : 1 }} disabled={i === 0} onClick={() => { setStarted(true); prev(); }}
           aria-label={t("Previous slide", "Slide sebelumnya", lang)}>
@@ -621,7 +631,7 @@ export default function PresentClient() {
         </button>
         <div role="group" aria-label={t("Language", "Bahasa", lang)} style={{ display: "inline-flex", gap: 2, background: "oklch(100% 0 0 / 0.08)", borderRadius: 10, padding: 2 }}>
           {(["en", "id"] as Lang[]).map(l => (
-            <button key={l} type="button" className="fsc-pill" aria-pressed={lang === l} onClick={() => setLang(l)}
+            <button key={l} type="button" className="fsc-pill" aria-pressed={lang === l} onClick={() => switchLang(l)}
               style={{ ...pill, height: 40, minWidth: 44, background: lang === l ? orange : "transparent" }}>
               {l.toUpperCase()}
             </button>
