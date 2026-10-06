@@ -767,21 +767,21 @@ export default function FixedGrowthMindsetClient({
           <p style={{ fontSize: 15, color: BODY_TEXT, marginBottom: 40, lineHeight: 1.75 }}>
             {t(
               "Most mindset patterns formed in childhood or early career. They were adaptive responses to real situations. Trying to force them away rarely works. What does work is sustained, specific noticing: catching the moment a fixed belief fires, labeling it without judgment, and choosing a different response. Tap each step to see how it works.",
-              "Sebagian besar pola pikir terbentuk di masa kecil atau awal karier. Pola itu adalah cara menyesuaikan diri dengan situasi nyata. Berusaha mengusirnya jarang berhasil. Yang berhasil adalah perhatian yang berkelanjutan dan spesifik: menangkap momen ketika keyakinan pola pikir tetap muncul, memberinya label tanpa menghakimi, dan memilih respons yang berbeda. Ketuk setiap langkah untuk melihat cara kerjanya."
+              "Sebagian besar pola pikir terbentuk di masa kecil atau awal karier. Pola itu adalah cara menyesuaikan diri dengan situasi nyata. Berusaha mengusirnya jarang berhasil. Yang berhasil adalah perhatian yang berkelanjutan dan spesifik: menangkap momen ketika keyakinan pola pikir tetap muncul, mengungkapkannya tanpa menghakimi, dan memilih respons yang berbeda. Ketuk setiap langkah untuk melihat cara kerjanya."
             )}<sup style={{ fontSize: "0.65em", verticalAlign: "super", marginLeft: 1 }}>⁵</sup>
           </p>
           {(() => {
             const steps = [
               {
                 step: "01",
-                title: t("Name It", "Beri Nama"),
+                title: t("Name It", "Ungkapkan"),
                 desc: t(
                   "For a specific dimension, write down your current belief honestly. What do you actually think, not what you know you should think?",
                   "Untuk dimensi tertentu, tuliskan keyakinan Anda saat ini dengan jujur. Apa yang sebenarnya Anda pikirkan, bukan apa yang Anda tahu seharusnya Anda pikirkan?"
                 ),
                 detail: t(
                   "Start by writing it down specifically, not vaguely. 'I avoid this' is not precise enough. 'When I'm asked to contribute in a meeting where I don't know the cultural norms, I assume anything I say will come across wrong and I go quiet.' That is specific. The more precisely you can name a belief, the less power it holds. Vague patterns are hard to interrupt. Named ones are not.",
-                  "Mulailah dengan menuliskannya secara spesifik, bukan samar-samar. 'Saya menghindari ini' tidak cukup tepat. 'Ketika diminta berkontribusi dalam rapat di mana saya tidak tahu norma budayanya, saya berasumsi apa pun yang saya katakan akan terdengar salah, jadi saya diam.' Itu spesifik. Semakin tepat Anda dapat menamai keyakinan itu, semakin kecil kekuatannya. Pola yang samar sulit untuk dihentikan. Yang sudah diberi nama tidak demikian."
+                  "Mulailah dengan menuliskannya secara spesifik, bukan samar-samar. 'Saya menghindari ini' tidak cukup tepat. 'Ketika diminta berkontribusi dalam rapat di mana saya tidak tahu norma budayanya, saya berasumsi apa pun yang saya katakan akan terdengar salah, jadi saya diam.' Itu spesifik. Semakin tepat Anda mengungkapkan keyakinan itu, semakin kecil kekuatannya. Pola yang samar sulit dihentikan. Pola yang sudah diungkapkan dengan jelas jauh lebih mudah dihentikan."
                 ),
               },
               {

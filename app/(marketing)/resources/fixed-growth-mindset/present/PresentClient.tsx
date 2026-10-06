@@ -76,7 +76,7 @@ const DIMENSIONS: { label: Pair; meaning: Pair; growth: Pair; fixed: Pair }[] = 
 const SHIFT_STEPS: { step: string; title: Pair; point: Pair; detail: Pair; detail2?: Pair }[] = [
   {
     step: "01",
-    title: { en: "Name It", id: "Beri Nama" },
+    title: { en: "Name It", id: "Ungkapkan" },
     point: { en: "Write down your current belief honestly.", id: "Tuliskan keyakinan Anda saat ini dengan jujur." },
     detail: { en: "What do you actually think, not what you know you should think?", id: "Apa yang sebenarnya Anda pikirkan, bukan apa yang Anda tahu seharusnya Anda pikirkan?" },
   },
