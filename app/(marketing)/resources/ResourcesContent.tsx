@@ -6,7 +6,7 @@ import { useLanguage } from "@/lib/LanguageContext";
 import { RESOURCES, Resource } from "@/lib/resources-data";
 import { SLIDESHOW_SLUGS } from "@/lib/slideshow-slugs";
 import { saveResourceToDashboard } from "./actions";
-import LibraryAiSearch from "./LibraryAiSearch";
+import LibraryAiSearch, { LibraryAiTeaser } from "./LibraryAiSearch";
 import { trackResourceSaved } from "@/lib/ga-events";
 import { T, SERIF, SANS, KIT_CSS, Eyebrow, h2Style, bodyStyle, PrimaryLink, TextLink } from "@/components/promo/PromoKit";
 
@@ -458,14 +458,16 @@ export default function ResourcesContent({
           </div>
         </header>
 
-        {/* AI module finder is for paid members only (Chris, 2026-10-06) */}
-        {isPaid && (
+        {/* AI module finder is for paid members only; everyone else sees a locked teaser (Chris, 2026-10-06) */}
+        {isPaid ? (
           <LibraryAiSearch
             lang={lang === "id" ? "id" : "en"}
             userId={userId}
             savedSlugs={localSaved}
             onSaved={(slugs) => setLocalSaved((prev) => new Set([...prev, ...slugs]))}
           />
+        ) : (
+          <LibraryAiTeaser lang={lang === "id" ? "id" : "en"} />
         )}
 
         {/* ── LIBRARY ── */}

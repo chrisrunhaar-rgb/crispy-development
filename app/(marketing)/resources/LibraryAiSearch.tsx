@@ -303,3 +303,45 @@ export default function LibraryAiSearch({
     </section>
   );
 }
+
+const TEASER_COPY = {
+  en: {
+    note: "Describe what you're facing and the library picks the modules that fit. Included with full access.",
+    cta: "See full access",
+    locked: "Locked",
+  },
+  id: {
+    note: "Ceritakan apa yang Anda hadapi, dan perpustakaan memilih modul yang cocok. Termasuk dalam akses penuh.",
+    cta: "Lihat akses penuh",
+    locked: "Terkunci",
+  },
+};
+
+// Locked preview for free and logged-out visitors: same look, no API calls, the whole box leads to pricing
+export function LibraryAiTeaser({ lang }: { lang: "en" | "id" }) {
+  const c = COPY[lang];
+  const t = TEASER_COPY[lang];
+  return (
+    <section aria-label={c.eyebrow} style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
+      <style>{BOX_CSS}</style>
+      <p style={{ fontFamily: SERIF, fontStyle: "italic", fontWeight: 500, fontSize: "1.3rem", color: T.navy, lineHeight: 1.2, margin: 0 }}>
+        {c.question}
+      </p>
+      <Link href="/pricing" aria-label={`${c.question} ${t.locked}. ${t.cta}`} className="lib-ai-box" style={{ display: "block", textDecoration: "none" }}>
+        <span style={{ display: "block", minHeight: "3.4rem", padding: "0.9rem 4rem 0.9rem 1rem", fontFamily: SANS, fontSize: "1rem", lineHeight: 1.5, color: T.muted, opacity: 0.7 }}>
+          {c.placeholder}
+        </span>
+        <span aria-hidden="true" style={{ position: "absolute", right: "0.6rem", top: "50%", translate: "0 -50%", width: 44, height: 44, borderRadius: "50%", display: "grid", placeItems: "center", background: T.rule, color: T.navy }}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <rect x="5" y="11" width="14" height="10" rx="2" stroke="currentColor" strokeWidth="2.2" />
+            <path d="M8 11V8a4 4 0 0 1 8 0v3" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+          </svg>
+        </span>
+      </Link>
+      <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "0.75rem 1.25rem" }}>
+        <p style={{ fontFamily: SANS, fontSize: "0.9rem", lineHeight: 1.5, color: T.body, margin: 0, flex: "1 1 18rem" }}>{t.note}</p>
+        <Link href="/pricing" style={{ ...pillStyle(true), textDecoration: "none" }}>{t.cta}</Link>
+      </div>
+    </section>
+  );
+}
