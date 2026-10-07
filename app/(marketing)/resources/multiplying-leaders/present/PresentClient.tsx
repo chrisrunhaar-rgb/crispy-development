@@ -459,6 +459,16 @@ const SLIDES: Slide[] = [
       </>
     ),
   })),
+  {
+    key: "process",
+    render: lang => (
+      <>
+        <h2 style={{ ...bigTitle, fontSize: 112 }}>{t("The Process of Empowerment", "Proses Pemberdayaan", lang)}</h2>
+        <div style={{ width: 120, height: 4, background: orange, borderRadius: 2 }} />
+        <p style={{ ...kicker, fontSize: 26 }}>{t("Model, Assist, Watch, Launch", "Teladani, Bantu, Amati, Mandirikan", lang)}</p>
+      </>
+    ),
+  },
   ...PHASES.map((ph, i): Slide => ({
     key: ph.k,
     render: lang => (
