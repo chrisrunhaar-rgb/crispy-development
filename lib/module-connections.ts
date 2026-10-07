@@ -301,9 +301,9 @@ export const MODULE_CONNECTIONS: ModuleConnection[] = [
     angle: "when managing up becomes managing conflict — and how to speak truth to power without burning the relationship",
     angle_id: "ketika mengelola ke atas menjadi mengelola konflik — dan cara berbicara kebenaran kepada yang berkuasa tanpa membakar hubungan",
   },
-  // Model, Assist, Watch, Launch -> Four Stages of Competence
+  // Multiplying Leaders -> Four Stages of Competence
   {
-    sourceSlug: "model-assist-watch-launch",
+    sourceSlug: "multiplying-leaders",
     sourceSectionId: "mc-four-stages",
     targetSlug: "four-stages-competence",
     targetTitle: "Four Stages of Competence",

@@ -5,10 +5,10 @@ import PresentClient from "./PresentClient";
 
 export const dynamic = "force-dynamic";
 
-const RESOURCE_SLUG = "model-assist-watch-launch";
+const RESOURCE_SLUG = "multiplying-leaders";
 
 export const metadata: Metadata = {
-  title: "Present: Model, Assist, Watch, Launch",
+  title: "Present: Multiplying Leaders",
   robots: { index: false, follow: false },
 };
 

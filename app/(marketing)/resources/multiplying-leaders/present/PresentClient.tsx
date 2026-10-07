@@ -16,7 +16,7 @@ const orange = "oklch(65% 0.15 45)";
 const lightGray = "oklch(88% 0.008 80)";
 const muted = "oklch(48% 0.04 260)";
 
-const SLUG = "model-assist-watch-launch";
+const SLUG = "multiplying-leaders";
 const IMG = `/images/resources/${SLUG}`;
 const serif = "var(--font-cormorant)";
 const sans = "var(--font-montserrat)";
@@ -396,7 +396,7 @@ const SLIDES: Slide[] = [
       <>
         <RiderRow lang={lang} labels={false} height={330} />
         <div style={{ width: 120, height: 4, background: orange, borderRadius: 2 }} />
-        <h1 style={{ ...bigTitle, fontSize: 132 }}>{t("Multiplying leaders", "Melipatgandakan pemimpin", lang)}</h1>
+        <h1 style={{ ...bigTitle, fontSize: 132 }}>{t("Multiplying Leaders", "Melipatgandakan Pemimpin", lang)}</h1>
         <p style={kicker}>{t("Model, Assist, Watch, Launch", "Teladani, Bantu, Amati, Mandirikan", lang)}</p>
       </>
     ),
@@ -556,7 +556,7 @@ function SlideFrame({ index, lang }: { index: number; lang: Lang }) {
         <div style={{ position: "absolute", left: 120, right: 120, bottom: 44, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <span style={{ display: "inline-flex", alignItems: "center", gap: 14, fontSize: 17, fontWeight: 600, color: muted, letterSpacing: "0.04em" }}>
             <img src="/logo-icon.png" alt="" aria-hidden="true" width={30} height={30} style={{ display: "block" }} />
-            {t("Model, Assist, Watch, Launch", "Teladani, Bantu, Amati, Mandirikan", lang)}
+            {t("Multiplying Leaders", "Melipatgandakan Pemimpin", lang)}
           </span>
           <span style={{ fontSize: 17, fontWeight: 700, color: muted }}>{index + 1} / {SLIDES.length}</span>
         </div>

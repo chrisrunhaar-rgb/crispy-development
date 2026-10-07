@@ -6,7 +6,7 @@ export const SLIDESHOW_SLUGS: ReadonlySet<string> = new Set([
   "four-stages-competence",
   "healthy-conflict",
   "johari-window",
-  "model-assist-watch-launch",
+  "multiplying-leaders",
   "six-thinking-hats",
   "vision-casting",
 ]);

@@ -6,11 +6,11 @@ import Breadcrumb from "@/components/Breadcrumb";
 import RelatedResources from "@/components/RelatedResources";
 import ModuleComments from "@/components/ModuleComments";
 import ModuleConnector from "@/components/ModuleConnector";
-import ModelAssistWatchLaunchClient from "./ModelAssistWatchLaunchClient";
+import MultiplyingLeadersClient from "./MultiplyingLeadersClient";
 
 export const dynamic = "force-dynamic";
 
-const RESOURCE_SLUG = "model-assist-watch-launch";
+const RESOURCE_SLUG = "multiplying-leaders";
 
 export const metadata = generateResourceMetadata(RESOURCE_SLUG);
 
@@ -35,7 +35,7 @@ export default async function ResourcePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(generateResourceArticleSchema(RESOURCE_SLUG)) }}
       />
       <Script
-        id="faq-model-assist-watch-launch"
+        id="faq-multiplying-leaders"
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(generateFAQSchema([
@@ -76,7 +76,7 @@ export default async function ResourcePage() {
             items={[
               { label: "Home", href: "/" },
               { label: "Resources", href: "/resources" },
-              { label: "Model, Assist, Watch, Launch" },
+              { label: "Multiplying Leaders" },
             ]}
           />
         </div>
@@ -87,7 +87,7 @@ export default async function ResourcePage() {
         savedResources={savedResources}
         isLoggedIn={!!user}
       />
-      <ModelAssistWatchLaunchClient isSaved={isSaved} />
+      <MultiplyingLeadersClient isSaved={isSaved} />
 
       <div className="bg-gray-50 border-t border-gray-200 py-12">
         <div className="container-wide">

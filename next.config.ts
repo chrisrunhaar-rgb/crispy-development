@@ -9,6 +9,8 @@ const nextConfig: NextConfig = {
         destination: "/resources/escaping-the-comfort-zone",
         permanent: true,
       },
+      // Renamed 2026-10-07; old links in posts and search land on the new page (and slideshow)
+      { source: "/resources/model-assist-watch-launch/:path*", destination: "/resources/multiplying-leaders/:path*", permanent: true },
       // Old 60-day challenge retired; links in past posts land on the journey
       { source: "/challenge", destination: "/journey", permanent: true },
       // Old Team Pathway "coming soon" page retired; the /team page covers it

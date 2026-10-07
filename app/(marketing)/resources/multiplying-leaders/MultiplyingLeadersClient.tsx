@@ -21,7 +21,7 @@ const calloutBg = "oklch(97% 0.010 50)";
 const calloutBorder = "oklch(88% 0.030 50)";
 const white = "oklch(99.5% 0.002 80)";
 
-const SLUG = "model-assist-watch-launch";
+const SLUG = "multiplying-leaders";
 
 const Sup = ({ n }: { n: string }) => (
   <span style={{ color: orange, fontWeight: 700 }}>{n}</span>
@@ -509,7 +509,7 @@ Penelitian sepakat tentang dua hal yang sering dilewatkan pemimpin. Dukungan har
 // ─── Main component ───────────────────────────────────────────────────────────
 type Props = { isSaved: boolean };
 
-export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: Props) {
+export default function MultiplyingLeadersClient({ isSaved: initialSaved }: Props) {
   const { lang: ctxLang } = useLanguage();
   const lang = (ctxLang === "id" ? "id" : "en") as Lang;
   const [saved, setSaved] = useState(initialSaved);
@@ -653,7 +653,7 @@ export default function ModelAssistWatchLaunchClient({ isSaved: initialSaved }: 
         <div style={{ maxWidth: 720, margin: "0 auto", position: "relative" }}>
           <p style={eyebrow}>{t("Leadership", "Kepemimpinan", lang)}</p>
           <h1 style={{ fontFamily: "var(--font-cormorant)", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: offWhite, margin: "0 0 20px", lineHeight: 1.08 }}>
-            {t("Model, Assist, Watch, ", "Teladani, Bantu, Amati, ", lang)}<span style={{ color: orange }}>{t("Launch", "Mandirikan", lang)}</span>
+            {t("Multiplying ", "Melipatgandakan ", lang)}<span style={{ color: orange }}>{t("Leaders", "Pemimpin", lang)}</span>
           </h1>
           <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "clamp(17px, 2.5vw, 22px)", color: "oklch(85% 0.03 80)", maxWidth: 580, margin: "0 0 32px", lineHeight: 1.6, fontStyle: "italic" }}>
             {t("Many leaders want their people to take over. Often the leader is the one standing in the way.",

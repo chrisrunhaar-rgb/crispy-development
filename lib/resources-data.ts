@@ -282,10 +282,10 @@ export const RESOURCES: Resource[] = [
     keywords: ["story", "narrative", "communicate", "persuade", "inspire", "anecdote", "illustration", "hook", "public speaking", "presentation", "bercerita", "storytelling"],
   },
   {
-    id: "model-assist-watch-launch",
-    slug: "model-assist-watch-launch",
-    title: "Model, Assist, Watch, Launch",
-    titleId: "Teladani, Bantu, Amati, Mandirikan",
+    id: "multiplying-leaders",
+    slug: "multiplying-leaders",
+    title: "Multiplying Leaders",
+    titleId: "Melipatgandakan Pemimpin",
     description: "Your people will not take over until you make room for them. A four-phase cycle for training leaders skill by skill, from showing them once to stepping away.",
     descriptionId: "Orang-orang Anda tidak akan mengambil alih sampai Anda memberi mereka ruang. Siklus empat tahap untuk melatih pemimpin keterampilan demi keterampilan, dari memberi contoh hingga melangkah pergi.",
     time: "20 min",
@@ -293,7 +293,7 @@ export const RESOURCES: Resource[] = [
     languages: ["en", "id"],
     gated: true,
     topics: ["leadership"],
-    keywords: ["training cycle", "model", "assist", "watch", "launch", "delegation", "delegate", "mentoring", "discipleship", "multiplication", "generations", "2 Timothy 2:2", "handover", "succession", "gradual release", "scaffolding", "teladani", "bantu", "amati", "mandirikan", "melatih", "pemuridan", "pendelegasian", "generasi"],
+    keywords: ["multiplying leaders", "melipatgandakan pemimpin", "model assist watch launch", "training cycle", "model", "assist", "watch", "launch", "delegation", "delegate", "mentoring", "discipleship", "multiplication", "generations", "2 Timothy 2:2", "handover", "succession", "gradual release", "scaffolding", "teladani", "bantu", "amati", "mandirikan", "melatih", "pemuridan", "pendelegasian", "generasi"],
   },
   // ── TEAM & FACILITATION ────────────────────────────────────────────────────
   {
