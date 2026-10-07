@@ -1,4 +1,7 @@
-const CACHE = "crispy-v3";
+const CACHE = "crispy-v4";
+// Modules a member saved with "Save offline" on the dashboard. Filled by
+// lib/offline-save.ts, never cleared on update, so a saved module keeps working.
+const OFFLINE = "crispy-offline-v1";
 const PRECACHE = ["/", "/dashboard", "/personal", "/team", "/resources", "/login", "/signup"];
 
 self.addEventListener("install", (e) => {
@@ -9,7 +12,7 @@ self.addEventListener("install", (e) => {
 self.addEventListener("activate", (e) => {
   e.waitUntil(
     caches.keys().then((keys) =>
-      Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k)))
+      Promise.all(keys.filter((k) => k !== CACHE && k !== OFFLINE).map((k) => caches.delete(k)))
     )
   );
   self.clients.claim();
@@ -61,7 +64,9 @@ self.addEventListener("notificationclick", (e) => {
 
 self.addEventListener("fetch", (e) => {
   if (e.request.method !== "GET") return;
-  // Navigation requests: network-first, fallback to cache
+  const url = new URL(e.request.url);
+  // Navigation requests: network-first; offline, a saved module first, then
+  // whatever was last seen
   if (e.request.mode === "navigate") {
     e.respondWith(
       fetch(e.request)
@@ -70,13 +75,22 @@ self.addEventListener("fetch", (e) => {
           caches.open(CACHE).then((c) => c.put(e.request, clone));
           return res;
         })
-        .catch(() => caches.match(e.request))
+        .catch(async () => {
+          const saved = await caches.open(OFFLINE).then((c) => c.match(url.pathname, { ignoreSearch: true, ignoreVary: true }));
+          return saved || caches.match(e.request, { ignoreVary: true });
+        })
     );
     return;
   }
+  // Only same-origin static files are cached. Page data (RSC), API calls and
+  // other sites (Supabase, Stripe) always go to the network so they stay fresh.
+  if (url.origin !== self.location.origin) return;
+  const isStatic = url.pathname.startsWith("/_next/static/") || url.pathname.startsWith("/_next/image")
+    || url.pathname.startsWith("/images/") || /\.(png|jpe?g|webp|svg|ico|woff2?|css|js)$/.test(url.pathname);
+  if (!isStatic || e.request.headers.get("RSC")) return;
   // Static assets: cache-first
   e.respondWith(
-    caches.match(e.request).then((cached) => {
+    caches.match(e.request, { ignoreVary: true }).then((cached) => {
       if (cached) return cached;
       return fetch(e.request).then((res) => {
         if (res.ok) {

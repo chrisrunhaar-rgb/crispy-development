@@ -1,10 +1,11 @@
 "use client";
 
-import { useId, useRef, useState, useTransition, type CSSProperties, type ReactNode } from "react";
+import { useEffect, useId, useRef, useState, useTransition, type CSSProperties, type ReactNode } from "react";
 import Link from "next/link";
 import { removeResourceFromDashboard, saveResourceNote, saveResourceRating, markResourceRead } from "@/app/(marketing)/resources/actions";
 import { presentLinkTap } from "@/components/PresentPhone";
 import { SLIDESHOW_SLUGS } from "@/lib/slideshow-slugs";
+import { isSavedOffline, offlineSupported, removeOffline, saveOffline } from "@/lib/offline-save";
 
 const FORMAT_ID: Record<string, string> = {
   "Guide": "Panduan",
@@ -31,6 +32,7 @@ const ReadIcon = () => <Icon><path d="M3 5h5a4 4 0 0 1 4 4v11a3 3 0 0 0-3-3H3z" 
 const PresentIcon = () => <Icon><rect x="3" y="4" width="18" height="12" rx="2" /><path d="M12 16v4M8 20h8" /></Icon>;
 const ShareIcon = ({ size }: { size?: number }) => <Icon size={size}><path d="M8.5 10H7a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-1.5" /><path d="M12 14V3.5M8.5 7 12 3.5 15.5 7" /></Icon>;
 const RemoveIcon = () => <Icon><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3" /></Icon>;
+const OfflineIcon = () => <Icon><path d="M12 4v11M7.5 10.5 12 15l4.5-4.5" /><path d="M5 19h14" /></Icon>;
 const CheckIcon = ({ size }: { size?: number }) => <Icon size={size}><path d="M5 12.5l4.5 4.5L19 7.5" /></Icon>;
 
 const CSS = `
@@ -52,6 +54,7 @@ const CSS = `
 .rc-act:hover { background: oklch(94% 0.014 260); color: oklch(22% 0.10 260); }
 .rc-act:active { transform: translateY(1px); }
 .rc-act:focus-visible { outline: 2px solid oklch(30% 0.12 260); outline-offset: 0; }
+.rc-act-busy { cursor: progress; opacity: 0.7; }
 .rc-act-empty { pointer-events: none; cursor: default; }
 .rc-act-done { color: oklch(42% 0.14 145); }
 .rc-lbl { font-family: var(--font-montserrat), Montserrat, sans-serif; font-size: 0.5625rem; font-weight: 700; letter-spacing: 0.08em; line-height: 1; text-transform: uppercase; color: oklch(45% 0.03 260); white-space: nowrap; }
@@ -124,6 +127,8 @@ export default function ResourceCard({
   const [removing, startRemove] = useTransition();
   const panelId = useId();
   const removeRef = useRef<HTMLButtonElement>(null);
+  // "Save offline": idle, saving, saved, error. Hidden where the browser can't.
+  const [offline, setOffline] = useState<"none" | "idle" | "saving" | "saved" | "error">("none");
   const cancelRef = useRef<HTMLButtonElement>(null);
 
   const id = lang === "id";
@@ -132,6 +137,22 @@ export default function ResourceCard({
   // Every tile in a list shares one language, so one slot width keeps the
   // icons aligned in columns down the dashboard. ID labels run longer.
   const slot = id ? "4.25rem" : "3.5rem";
+
+  useEffect(() => {
+    if (!offlineSupported()) return;
+    isSavedOffline(path).then(saved => setOffline(saved ? "saved" : "idle")).catch(() => setOffline("idle"));
+  }, [path]);
+
+  async function handleSaveOffline() {
+    if (offline === "saving") return;
+    setOffline("saving");
+    try {
+      const { failed } = await saveOffline(slug, path, hasSlideshow);
+      setOffline(failed ? "error" : "saved");
+    } catch {
+      setOffline("error");
+    }
+  }
 
   // Progress: 100% when content is read/completed
   const progressPct = isRead ? 100 : 0;
@@ -182,6 +203,7 @@ export default function ResourceCard({
 
   function handleRemove() {
     startRemove(async () => {
+      await removeOffline(slug, path).catch(() => {});
       await removeResourceFromDashboard(slug);
     });
   }
@@ -240,7 +262,11 @@ export default function ResourceCard({
           </button>
         </div>
 
-        <span className="rc-sr" aria-live="polite">{copied ? (id ? "Tautan disalin" : "Link copied") : ""}</span>
+        <span className="rc-sr" aria-live="polite">
+          {copied ? (id ? "Tautan disalin" : "Link copied")
+            : offline === "saved" ? (id ? "Tersimpan untuk offline" : "Saved for offline use")
+            : offline === "error" ? (id ? "Gagal menyimpan, coba lagi" : "Could not save, try again") : ""}
+        </span>
       </div>
 
       {/* Expandable detail section */}
@@ -362,6 +388,28 @@ export default function ResourceCard({
                     {copied ? <CheckIcon /> : <ShareIcon />}
                     <span className="rc-lbl" aria-hidden="true">{copied ? (id ? "Disalin" : "Copied") : (id ? "Bagikan" : "Share")}</span>
                   </button>
+                  {offline !== "none" && (
+                    <button
+                      type="button"
+                      className={`rc-act${offline === "saved" ? " rc-act-done" : ""}${offline === "saving" ? " rc-act-busy" : ""}`}
+                      onClick={handleSaveOffline}
+                      aria-busy={offline === "saving"}
+                      aria-label={offline === "saved"
+                        ? (id ? `${title} tersimpan untuk offline. Ketuk untuk memperbarui` : `${title} is saved for offline use. Tap to update`)
+                        : (id ? `Simpan ${title} untuk dipakai offline` : `Save ${title} for offline use`)}
+                      title={offline === "saved"
+                        ? (id ? "Tersimpan di perangkat ini. Ketuk untuk memperbarui." : "Saved on this device. Tap to update.")
+                        : (id ? "Simpan modul ini (dan slideshow) untuk dipakai tanpa internet" : "Save this module (and its slideshow) to use without internet")}
+                    >
+                      {offline === "saved" ? <CheckIcon /> : <OfflineIcon />}
+                      <span className="rc-lbl" aria-hidden="true">
+                        {offline === "saving" ? (id ? "Menyimpan" : "Saving")
+                          : offline === "saved" ? (id ? "Tersimpan" : "Saved")
+                          : offline === "error" ? (id ? "Ulangi" : "Retry")
+                          : "Offline"}
+                      </span>
+                    </button>
+                  )}
                 </div>
                 <button
                   type="button"
