@@ -18,6 +18,18 @@ self.addEventListener("activate", (e) => {
   self.clients.claim();
 });
 
+// Shown offline for a page that was never saved or visited
+function offlinePage() {
+  const html = `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Offline</title></head>
+<body style="margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#f7f5f0;font-family:Montserrat,system-ui,sans-serif;color:#1c2333;padding:24px;box-sizing:border-box">
+<div style="max-width:420px;text-align:center"><img src="/logo-icon.png" width="48" height="48" alt="">
+<h1 style="font-size:1.25rem;margin:16px 0 8px">You're offline</h1>
+<p style="line-height:1.6;margin:0 0 6px">This page isn't saved on this device. Modules you saved with <b>Offline</b> on your dashboard still work.</p>
+<p style="line-height:1.6;margin:0 0 20px;color:#5b6475">Anda sedang offline. Halaman ini belum disimpan di perangkat ini. Modul yang disimpan dengan <b>Offline</b> di dasbor tetap bisa dibuka.</p>
+<a href="/dashboard" style="display:inline-block;padding:12px 20px;background:#1a2a5c;color:#fff;text-decoration:none;font-weight:700;border-radius:6px">Dashboard / Dasbor</a></div></body></html>`;
+  return new Response(html, { headers: { "Content-Type": "text/html; charset=utf-8" } });
+}
+
 // ── Push Notifications ────────────────────────────────────────────────────
 
 self.addEventListener("push", (e) => {
@@ -77,7 +89,7 @@ self.addEventListener("fetch", (e) => {
         })
         .catch(async () => {
           const saved = await caches.open(OFFLINE).then((c) => c.match(url.pathname, { ignoreSearch: true, ignoreVary: true }));
-          return saved || caches.match(e.request, { ignoreVary: true });
+          return saved || (await caches.match(e.request, { ignoreVary: true })) || offlinePage();
         })
     );
     return;

@@ -404,7 +404,7 @@ export default function ResourceCard({
                       {offline === "saved" ? <CheckIcon /> : <OfflineIcon />}
                       <span className="rc-lbl" aria-hidden="true">
                         {offline === "saving" ? (id ? "Menyimpan" : "Saving")
-                          : offline === "saved" ? (id ? "Tersimpan" : "Saved")
+                          : offline === "saved" ? "Offline"
                           : offline === "error" ? (id ? "Ulangi" : "Retry")
                           : "Offline"}
                       </span>
