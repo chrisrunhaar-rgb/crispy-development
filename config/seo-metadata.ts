@@ -252,8 +252,8 @@ export const resourceMetadata: Record<string, { title: string; description: stri
   },
 
   "healthy-conflict": {
-    title: "Creating Healthy Conflict — An Underrated Leadership Skill — Crispy Development",
-    description: "Healthy conflict in teams is a leadership skill, not a personality trait. Learn how to surface tension in high-context, multicultural teams before it hardens.",
+    title: "Healthy Conflict: Five Rules for a Safe Place — Crispy Development",
+    description: "Conflict that is not named does not go away. Learn what healthy conflict is, why it feels unsafe, and five rules leaders can use to create a safe place to face it.",
   },
   "four-stages-competence": {
     title: "Four Stages of Competence — Crispy Development",

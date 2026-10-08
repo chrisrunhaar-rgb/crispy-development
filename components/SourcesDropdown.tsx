@@ -77,6 +77,7 @@ export default function SourcesDropdown({
                 <p style={{
                   fontFamily: "Montserrat, sans-serif",
                   fontSize: 12, color: bodyText, lineHeight: 1.75, margin: 0,
+                  minWidth: 0, overflowWrap: "anywhere",
                 }}>
                   {src.replace(/^[¹²³⁴⁵⁶⁷⁸⁹]\s*/, "")}
                 </p>

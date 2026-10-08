@@ -78,17 +78,43 @@ export const MODULE_CONNECTIONS: ModuleConnection[] = [
   },
 
   // Healthy Conflict → Power Distance
-  // (Research section explicitly cites Hofstede's Power Distance Index with country scores)
+  // ("Conflict feels unsafe" section: people stay silent when it does not feel safe to speak up)
   {
     sourceSlug: "healthy-conflict",
-    sourceSectionId: "mc-research",
+    sourceSectionId: "mc-unsafe",
     targetSlug: "power-distance",
-    targetTitle: "Power Distance in Leadership",
-    targetTitle_id: "Jarak Kekuasaan dalam Kepemimpinan",
-    topic: "how power distance shapes conflict and silence",
-    topic_id: "bagaimana jarak kekuasaan membentuk konflik dan keheningan",
-    angle: "Hofstede's framework for understanding why silence in high-PDI cultures is not disengagement — it is respect",
-    angle_id: "kerangka Hofstede untuk memahami mengapa keheningan dalam budaya PDI tinggi bukan ketidaktertarikan — melainkan rasa hormat",
+    targetTitle: "Power Distance",
+    targetTitle_id: "Jarak Kekuasaan",
+    topic: "why teams go quiet when the leader is in the room",
+    topic_id: "mengapa tim menjadi diam ketika pemimpin hadir di ruangan",
+    angle: "how power distance shapes who feels safe to disagree, and why silence is not the same as agreement",
+    angle_id: "bagaimana jarak kekuasaan menentukan siapa yang merasa aman untuk tidak setuju, dan mengapa diam tidak sama dengan setuju",
+  },
+  // Healthy Conflict → Understanding High-Context Cultures
+  // ("Conflict, culture and face" accordion: naming conflict indirectly)
+  {
+    sourceSlug: "healthy-conflict",
+    sourceSectionId: "mc-face",
+    targetSlug: "understanding-high-context",
+    targetTitle: "Understanding High-Context Cultures",
+    targetTitle_id: "Memahami Budaya Konteks Tinggi",
+    topic: "face and indirect communication in conflict",
+    topic_id: "muka dan komunikasi tidak langsung dalam konflik",
+    angle: "why people say less but mean more, and how to read a conflict that is never said out loud",
+    angle_id: "mengapa orang berbicara lebih sedikit tetapi bermaksud lebih banyak, dan cara membaca konflik yang tidak pernah diucapkan",
+  },
+  // Healthy Conflict → Building Trust Across Cultures
+  // ("Five rules" section: rule 1, trust is a decision)
+  {
+    sourceSlug: "healthy-conflict",
+    sourceSectionId: "mc-rules",
+    targetSlug: "building-trust-across-cultures",
+    targetTitle: "Building Trust Across Cultures",
+    targetTitle_id: "Membangun Kepercayaan Lintas Budaya",
+    topic: "the trust that healthy conflict needs",
+    topic_id: "kepercayaan yang dibutuhkan oleh konflik yang sehat",
+    angle: "how trust is built across cultures, so the five rules have something to stand on",
+    angle_id: "bagaimana kepercayaan dibangun lintas budaya, supaya kelima aturan itu punya dasar",
   },
 
   // DISC → Big Five

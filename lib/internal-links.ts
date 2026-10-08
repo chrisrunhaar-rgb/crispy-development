@@ -14,6 +14,12 @@ export interface LinkedResource {
 export const internalLinkMap: Record<string, LinkedResource[]> = {
   // ── Assessments ────────────────────────────────────────────────────────────
 
+  'healthy-conflict': [
+    { slug: 'understanding-high-context', title: 'Understanding High-Context Cultures', reason: 'Why people say less but mean more, and how that shapes conflict' },
+    { slug: 'power-distance', title: 'Power Distance', reason: 'Why some team members go quiet when the leader is in the room' },
+    { slug: 'building-trust-across-cultures', title: 'Building Trust Across Cultures', reason: 'Healthy conflict needs trust. This module shows how to build it' },
+    { slug: 'giving-feedback-across-cultures', title: 'Giving Feedback Across Cultures', reason: 'How to say hard things so the other person can hear them' },
+  ],
   disc: [
     { slug: 'intercultural-communication', title: 'Intercultural Communication', reason: 'Adapt your communication style across cultures' },
     { slug: 'leadership-altitudes', title: 'Leadership Altitudes', reason: 'Apply DISC insights at every leadership level' },

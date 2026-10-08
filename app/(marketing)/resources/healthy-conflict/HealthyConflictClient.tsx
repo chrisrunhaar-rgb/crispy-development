@@ -1,10 +1,9 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useState, useTransition, useEffect } from "react";
+import { useState, useTransition, useEffect, Fragment } from "react";
 import { trackResourceViewed, trackResourceSaved } from "@/lib/ga-events";
 import { useLanguage } from "@/lib/LanguageContext";
-import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
 import LangToggle from "@/components/LangToggle";
 import SourcesDropdown from "@/components/SourcesDropdown";
@@ -13,369 +12,649 @@ import PresentLauncher from "@/components/PresentLauncher";
 // ── LANGUAGE ───────────────────────────────────────────────────────────────────
 
 type Lang = "en" | "id";
+type T = { en: string; id: string };
 
 const tFn = (en: string, id: string, lang: Lang): string =>
   lang === "id" ? id : en;
 
-// ── BRAND TOKENS ───────────────────────────────────────────────────────────────
+// ── RICH TEXT ──────────────────────────────────────────────────────────────────
+// **bold**  *italic*  ^n^ = amber superscript  ~~ref~~ = amber bold verse ref
 
-const navy        = "oklch(22% 0.10 260)";
-const navyDeep    = "oklch(18% 0.10 260)";
-const amber       = "oklch(65% 0.15 45)";
-const amberDim    = "oklch(65% 0.15 45 / 0.12)";
-const offWhite    = "oklch(96% 0.005 80)";
-const lightGray   = "oklch(95% 0.008 80)";
-const mutedGray   = "oklch(93% 0.008 80)";
-const bodyText    = "oklch(38% 0.05 260)";
-const subText     = "oklch(52% 0.008 260)";
-const dimOnNavy   = "oklch(76% 0.03 80)";
-const lightOnNavy = "oklch(88% 0.02 80)";
-const serif       = "var(--font-cormorant), 'Cormorant Garamond', Georgia, serif";
+function rich(text: string): ReactNode {
+  const parts = text.split(/(\*\*[^*]+\*\*|\*[^*]+\*|\^[^^]+\^|~~[^~]+~~)/g);
+  return parts.map((p, i) => {
+    if (p.startsWith("**") && p.endsWith("**")) return <strong key={i}>{p.slice(2, -2)}</strong>;
+    if (p.startsWith("~~") && p.endsWith("~~")) return <span key={i} className="hc-verse">{p.slice(2, -2)}</span>;
+    if (p.startsWith("^") && p.endsWith("^") && p.length > 2) return <sup key={i} className="hc-sup">{p.slice(1, -1)}</sup>;
+    if (p.startsWith("*") && p.endsWith("*") && p.length > 2) return <em key={i}>{p.slice(1, -1)}</em>;
+    return <Fragment key={i}>{p}</Fragment>;
+  });
+}
 
-// ── CONTENT DATA ───────────────────────────────────────────────────────────────
+// ── CONTENT ────────────────────────────────────────────────────────────────────
 
-const CONTRAST_AVOIDANCE = [
-  "The meeting ends but nothing is actually decided.",
-  "You sense tension but no one names it.",
-  "You walk on eggshells because you have learned that honesty has a cost.",
-  "Frustration builds quietly over months until something breaks.",
-  "Relationships feel polite but never quite close.",
-];
-
-const CONTRAST_HEALTHY = [
-  "Disagreement comes to the surface before it becomes a crisis.",
-  "People say what they actually think, and the team hears it.",
-  "Trust deepens because people know where they actually stand.",
-  "Decisions stick because everyone had a real voice in them.",
-  "Relationships are honest enough to be genuinely close.",
-];
-
-const TEACHING_SECTIONS = [
+const INTRO: T[] = [
   {
-    title: { en: "Why we avoid it", id: "Mengapa kita menghindarinya" },
-    bg: offWhite,
-    paragraphs: [
-      {
-        en: "Conflict avoidance is not laziness. It is usually an intelligent, culturally rational response to a real social risk.",
-        id: "Menghindari konflik bukan bentuk kemalasan. Biasanya itu adalah respons cerdas yang masuk akal secara budaya terhadap risiko sosial yang nyata.",
-        pullQuote: false,
-      },
-      {
-        en: "In high-context cultures, and this includes most of the contexts where cross-cultural workers operate, direct confrontation can rupture the very things a person is trying to protect: relationship, respect, belonging, face. Staying silent is not passive. It is an active strategy for preserving what matters. A team member who goes quiet in a meeting is not necessarily disengaged. They may be doing exactly what their culture has taught them to do: protect the group by not introducing a point of tension.",
-        id: "Dalam budaya high-context, dan ini mencakup sebagian besar konteks di mana pekerja lintas budaya beroperasi, konfrontasi langsung dapat merusak hal-hal yang justru ingin dilindungi seseorang: hubungan, rasa hormat, rasa memiliki, dan kehormatan diri. Diam bukanlah sikap pasif. Itu adalah strategi aktif untuk menjaga apa yang penting. Anggota tim yang diam dalam rapat belum tentu tidak peduli. Mereka mungkin sedang melakukan persis apa yang diajarkan budayanya: melindungi kelompok dengan tidak memunculkan titik ketegangan.",
-        pullQuote: false,
-      },
-      {
-        en: "The problem is not the instinct. The problem is when that instinct operates in every situation, including ones where the silence is slowly poisoning the team.",
-        id: "Masalahnya bukan pada instingnya. Masalahnya adalah ketika insting itu bekerja di setiap situasi, termasuk situasi di mana diam itu pelan-pelan meracuni tim.",
-        pullQuote: false,
-      },
+    en: "Every team has conflict. People who work closely together will see things differently, and that is normal. What matters is what the team does with it.",
+    id: "Setiap tim pernah mengalami konflik. Orang yang bekerja berdekatan pasti punya cara pandang yang berbeda, dan itu wajar. Yang penting adalah apa yang dilakukan tim dengan perbedaan itu.",
+  },
+  {
+    en: "When a team names a conflict and works through it with respect, it becomes healthy conflict. Healthy conflict does not divide a team. It brings people closer together and helps them move forward as one.",
+    id: "Ketika sebuah tim mengungkapkan konflik dan menyelesaikannya dengan saling menghormati, konflik itu menjadi konflik yang sehat. Konflik yang sehat tidak memecah belah tim. Konflik itu mendekatkan orang dan membantu mereka melangkah maju sebagai satu kesatuan.",
+  },
+  {
+    en: "This module explains what healthy conflict is, why conflict often feels unsafe, and how to create a safe place where a team can face it.",
+    id: "Modul ini menjelaskan apa itu konflik yang sehat, mengapa konflik sering terasa tidak aman, dan bagaimana menciptakan tempat yang aman agar tim dapat menghadapinya.",
+  },
+];
+
+const OBJECTIVES: T[] = [
+  { en: "Explain the difference between conflict and healthy conflict.", id: "Menjelaskan perbedaan antara konflik dan konflik yang sehat." },
+  { en: "Recognise why conflict feels unsafe for people who have been hurt by unhealthy conflict in the past.", id: "Memahami mengapa konflik terasa tidak aman bagi orang yang pernah terluka oleh konflik yang tidak sehat." },
+  { en: "Distinguish between giving way and avoiding, using three simple questions.", id: "Membedakan antara mengalah dan menghindar dengan tiga pertanyaan sederhana." },
+  { en: "Describe the five rules for healthy conflict and what each one asks of you.", id: "Menjelaskan lima aturan untuk konflik yang sehat dan apa yang diminta oleh setiap aturan dari Anda." },
+  { en: "Apply the rules to one conflict you have avoided, by naming it in a safe place this week.", id: "Menerapkan aturan itu pada satu konflik yang selama ini Anda hindari, dengan mengungkapkannya di tempat yang aman minggu ini." },
+];
+
+const DEFINITIONS: { src: T; quote: T; focus: T }[] = [
+  {
+    src: { en: "Merriam-Webster dictionary^1^", id: "Kamus Merriam-Webster^1^" },
+    quote: {
+      en: "Opposing action of incompatibles (as of divergent ideas, interests, or persons).",
+      id: "Tindakan yang saling berlawanan antara hal-hal yang tidak dapat disatukan (misalnya gagasan, kepentingan, atau orang yang berbeda). (terjemahan bebas)",
+    },
+    focus: { en: "Focus: action. Conflict is something people do.", id: "Fokus: tindakan. Konflik adalah sesuatu yang dilakukan orang." },
+  },
+  {
+    src: { en: "Kenneth Thomas (1992), as commonly paraphrased^2^", id: "Kenneth Thomas (1992), seperti yang umum dikutip secara ringkas^2^" },
+    quote: {
+      en: "A process that begins when one party perceives that another party has negatively affected, or is about to negatively affect, something that the first party cares about.",
+      id: "Sebuah proses yang dimulai ketika satu pihak merasa bahwa pihak lain telah merugikan, atau akan merugikan, sesuatu yang dipedulikan pihak pertama. (terjemahan bebas)",
+    },
+    focus: { en: "Focus: perception. Conflict starts inside one person.", id: "Fokus: cara pandang. Konflik dimulai di dalam diri satu orang." },
+  },
+  {
+    src: { en: "M. Afzalur Rahim (2002)^3^", id: "M. Afzalur Rahim (2002)^3^" },
+    quote: {
+      en: "An interactive process manifested in incompatibility, disagreement, or dissonance within or between social entities.",
+      id: "Sebuah proses yang melibatkan interaksi dan tampak dalam ketidakcocokan, ketidaksepakatan, atau ketidakselarasan di dalam atau di antara pihak-pihak dalam masyarakat. (terjemahan bebas)",
+    },
+    focus: { en: "Focus: interaction. Conflict happens between people or groups.", id: "Fokus: interaksi. Konflik terjadi di antara orang atau kelompok." },
+  },
+];
+
+const WHY_DEF: { title: T; body: T }[] = [
+  {
+    title: { en: "People who depend on each other", id: "Orang-orang yang saling bergantung" },
+    body: {
+      en: "In a team, the work connects people. A difference between them affects the work. That is why it cannot be ignored.",
+      id: "Dalam sebuah tim, pekerjaan menghubungkan orang-orang. Perbedaan di antara mereka memengaruhi pekerjaan. Karena itu perbedaan itu tidak bisa diabaikan.",
+    },
+  },
+  {
+    title: { en: "See their goals, needs or views as opposed", id: "Merasa tujuan, kebutuhan, atau pandangan mereka saling bertentangan" },
+    body: {
+      en: "Conflict depends on how people see the difference.^2^ It can exist before anyone says a word.",
+      id: "Konflik bergantung pada cara orang memandang perbedaan itu.^2^ Konflik bisa sudah ada sebelum ada yang mengucapkan sepatah kata pun.",
+    },
+  },
+  {
+    title: { en: "At least one of them feels it", id: "Setidaknya salah satu dari mereka merasakannya" },
+    body: {
+      en: "Researchers describe a stage called \"felt conflict\", when the difference starts to affect a person's emotions.^4^ Conflict can be one-sided. One person can carry it while the other does not know. It is still conflict, and it still affects the team.",
+      id: "Para peneliti menyebut satu tahap sebagai \"konflik yang dirasakan\", yaitu ketika perbedaan mulai memengaruhi perasaan seseorang.^4^ Konflik bisa terjadi sepihak. Satu orang menanggungnya, sementara yang lain tidak tahu. Itu tetap konflik, dan tetap memengaruhi tim.",
+    },
+  },
+];
+
+const GAINS: { title: T; body: T }[] = [
+  { title: { en: "Unity", id: "Kesatuan" }, body: { en: "The relationship is still whole. People are on the same side again.", id: "Hubungan tetap utuh. Orang kembali berada di pihak yang sama." } },
+  { title: { en: "Clarity", id: "Kejelasan" }, body: { en: "People understand the problem and each other better than before.", id: "Orang memahami masalahnya dan memahami satu sama lain lebih baik daripada sebelumnya." } },
+  { title: { en: "Trust", id: "Kepercayaan" }, body: { en: "People know they can disagree and still stay together.", id: "Orang tahu bahwa mereka boleh berbeda pendapat dan tetap bersama." } },
+];
+
+const UNSAFE: T[] = [
+  {
+    en: "Many people have lived through unhealthy conflict. It may have happened in a family, a school, a church or an earlier team. The conflict ended in shouting, blame or silence. A relationship broke. Someone lost a position or a place in the group.",
+    id: "Banyak orang pernah mengalami konflik yang tidak sehat. Mungkin terjadi di keluarga, sekolah, gereja, atau tim sebelumnya. Konflik itu berakhir dengan teriakan, saling menyalahkan, atau diam. Sebuah hubungan rusak. Seseorang kehilangan jabatan atau tempatnya di dalam kelompok.",
+  },
+  {
+    en: "People remember this. When a new conflict starts, the old fear comes back. They feel unsafe and afraid, even when the new team is different. So they stay quiet. To them, silence feels safer than speaking.",
+    id: "Orang mengingat hal ini. Ketika konflik baru muncul, rasa takut yang lama kembali. Mereka merasa tidak aman dan takut, bahkan ketika tim yang baru berbeda. Maka mereka diam. Bagi mereka, diam terasa lebih aman daripada bicara.",
+  },
+  {
+    en: "Research on teams supports this. Teams learn and grow when members believe it is safe to take risks with each other.^6^ When people think leaders do not welcome disagreement, they hold back their concerns.^7^ Many people hold back even when no one in their current team has punished them for speaking. They follow unspoken rules, such as \"do not embarrass the leader\". The risk is assumed, not experienced.^8^",
+    id: "Penelitian tentang tim mendukung hal ini. Tim belajar dan bertumbuh ketika anggotanya yakin bahwa aman untuk mengambil risiko di depan satu sama lain.^6^ Ketika orang mengira pemimpin tidak menyambut perbedaan pendapat, mereka menahan kekhawatiran mereka.^7^ Banyak orang menahan diri, meskipun tidak ada yang pernah menghukum mereka di tim yang sekarang karena berbicara. Mereka mengikuti aturan tak tertulis, seperti \"jangan mempermalukan pemimpin\". Risikonya hanya dibayangkan, bukan dialami.^8^",
+  },
+  {
+    en: "This is why a leader cannot only tell people to speak up. The fear is real, even when the danger is not. People need to see that this place is safe before they will name a conflict.",
+    id: "Karena itu, seorang pemimpin tidak cukup hanya menyuruh orang untuk berbicara. Rasa takutnya nyata, meskipun bahayanya tidak. Orang perlu melihat sendiri bahwa tempat ini aman sebelum mereka mau mengungkapkan konflik.",
+  },
+];
+
+const PILES: T = {
+  en: "Conflict that is not named does not disappear. Small conflicts pile up. When emotions run high, they come out together, often over something small. Counsellors use the term \"gunnysacking\" for this: storing complaints in a sack until it bursts.^9^",
+  id: "Konflik yang tidak diungkapkan tidak hilang. Konflik-konflik kecil menumpuk. Ketika emosi memuncak, semuanya keluar sekaligus, sering kali karena hal yang sepele. Para konselor menyebutnya \"gunnysacking\": menyimpan keluhan di dalam karung sampai karung itu robek.^9^",
+};
+
+const GROWS: T[] = [
+  {
+    en: "One model, used widely by mediators, describes conflict growing in nine stages.^10^ In the early stages, opinions harden, but people still want both sides to win. In the middle stages, each person wants to win and the other to lose. In the last stages, both sides are willing to lose, as long as the other side loses more. After a certain point, people cannot solve it alone. They need outside help.",
+    id: "Satu model yang banyak dipakai para mediator menggambarkan konflik membesar dalam sembilan tahap.^10^ Pada tahap awal, pendapat mulai mengeras, tetapi kedua pihak masih ingin keduanya menang. Pada tahap tengah, masing-masing ingin menang dan ingin pihak lain kalah. Pada tahap akhir, kedua pihak rela rugi, asalkan pihak lain rugi lebih besar. Setelah titik tertentu, orang tidak dapat menyelesaikannya sendiri. Mereka membutuhkan bantuan dari luar.",
+  },
+  {
+    en: "People who have lived through the later stages carry that memory. This is one reason why conflict feels unsafe. Healthy conflict names a difference in the early stages, while both people still want each other to win.",
+    id: "Orang yang pernah mengalami tahap-tahap akhir membawa ingatan itu. Inilah salah satu alasan mengapa konflik terasa tidak aman. Konflik yang sehat mengungkapkan perbedaan pada tahap awal, ketika kedua pihak masih ingin satu sama lain menang.",
+  },
+];
+
+type Block = { kind: "p" | "h4"; text: T } | { kind: "ul"; items: T[] };
+
+type AccItem = { id: string; anchorId?: string; tag: T; title: T; blocks: Block[] };
+
+const DIG_DEEPER: T = { en: "Dig deeper", id: "Pelajari lebih dalam" };
+
+const UNSAFE_ACCORDIONS: AccItem[] = [
+  {
+    id: "giving-way",
+    tag: DIG_DEEPER,
+    title: { en: "Giving way is different from avoiding", id: "Mengalah berbeda dari menghindar" },
+    blocks: [
+      { kind: "p", text: {
+        en: "From the outside, giving way and avoiding look the same. In both, a person stays quiet and lets the matter go. Conflict research shows that the reasons behind them are different.^11^",
+        id: "Dari luar, mengalah dan menghindar tampak sama. Dalam keduanya, seseorang diam dan membiarkan persoalan berlalu. Penelitian tentang konflik menunjukkan bahwa alasan di baliknya berbeda.^11^",
+      } },
+      { kind: "p", text: {
+        en: "**Giving way** comes from care for the other person. You choose to let the matter go, and it is settled for you. In many cultures, giving way is a sign of maturity and respect. It is a good thing, and it keeps many teams healthy.",
+        id: "**Mengalah** lahir dari kepedulian terhadap orang lain. Anda memilih untuk melepaskan persoalan itu, dan bagi Anda persoalan itu selesai. Di banyak budaya, mengalah adalah tanda kedewasaan dan rasa hormat. Itu hal yang baik, dan menjaga banyak tim tetap sehat.",
+      } },
+      { kind: "p", text: {
+        en: "**Avoiding** comes from fear or from wanting to escape. You stay silent, but the matter is still there. It stays with you and adds to the pile.",
+        id: "**Menghindar** lahir dari rasa takut atau keinginan untuk lari. Anda diam, tetapi persoalannya masih ada. Persoalan itu tetap tinggal dalam diri Anda dan menambah tumpukan.",
+      } },
+      { kind: "h4", text: { en: "Three questions to tell them apart", id: "Tiga pertanyaan untuk membedakannya" } },
+      { kind: "ul", items: [
+        { en: "Was the matter named, at least to yourself and in prayer?", id: "Apakah persoalan itu sudah diungkapkan, setidaknya kepada diri sendiri dan dalam doa?" },
+        { en: "Is it finished, with no bad feeling left?", id: "Apakah sudah selesai, tanpa rasa tidak enak yang tersisa?" },
+        { en: "Has it stayed away, with no need to bring it back?", id: "Apakah persoalan itu tidak muncul lagi, tanpa perlu diungkit kembali?" },
+      ] },
+      { kind: "p", text: {
+        en: "If the answer to all three is yes, you gave way. If the matter keeps coming back, or the bad feeling stays, it was avoiding. That conflict still needs to be named.",
+        id: "Jika jawaban untuk ketiganya ya, Anda mengalah. Jika persoalan itu terus kembali, atau rasa tidak enak itu tetap ada, berarti Anda menghindar. Konflik itu masih perlu diungkapkan.",
+      } },
     ],
   },
   {
-    title: { en: "What avoidance actually costs", id: "Apa yang sebenarnya hilang dari penghindaran" },
-    bg: navy,
-    dark: true,
-    paragraphs: [
-      {
-        en: "Unaddressed conflict does not disappear. It relocates.",
-        id: "Konflik yang tidak ditangani tidak hilang. Ia berpindah tempat.",
-        pullQuote: false,
-      },
-      {
-        en: "It moves from the meeting room into side conversations. From side conversations into fixed positions. From fixed positions into a quiet, steady erosion of trust. The team learns that honest disagreement is not safe. So they stop offering it. They give you their public agreement and keep their real opinions private. And at that point, you lose access to the best thinking of the people you are leading.",
-        id: "Ia berpindah dari ruang rapat ke percakapan di balik layar. Dari percakapan di balik layar menjadi posisi yang mengeras. Dari posisi yang mengeras menjadi erosi kepercayaan yang sunyi dan terus-menerus. Tim belajar bahwa ketidaksetujuan yang jujur itu tidak aman. Maka mereka berhenti menawarkannya. Mereka memberimu persetujuan di depan, tapi menyimpan pendapat asli mereka sendiri. Dan pada titik itu, kamu kehilangan akses ke pemikiran terbaik dari orang-orang yang kamu pimpin.",
-        pullQuote: false,
-      },
-      {
-        en: "The cost is not just relational. It is strategic. Decisions made without honest input are weaker decisions. A direction that everyone nodded at but no one believed in will not hold under pressure. And in cross-cultural ministry contexts, where the pressures are real and the stakes are high, weak alignment breaks down at exactly the worst moment.",
-        id: "Kerugiannya bukan hanya soal hubungan. Ini juga soal strategi. Keputusan yang dibuat tanpa masukan yang jujur adalah keputusan yang lemah. Arah yang semua orang angguki tapi tak ada yang sungguh-sungguh percayai tidak akan bertahan di bawah tekanan. Dan dalam konteks pelayanan lintas budaya, di mana tekanan itu nyata dan taruhannya tinggi, keselarasan yang lemah akan runtuh tepat di saat yang paling buruk.",
-        pullQuote: false,
-      },
+    id: "face",
+    anchorId: "mc-face",
+    tag: DIG_DEEPER,
+    title: { en: "Conflict, culture and face", id: "Konflik, budaya, dan muka" },
+    blocks: [
+      { kind: "p", text: {
+        en: "\"Face\" is the respect and standing a person has in the eyes of others. In many cultures, direct confrontation in front of others causes loss of face for both people.",
+        id: "\"Muka\" adalah kehormatan dan kedudukan seseorang di mata orang lain. Di banyak budaya, menghadapi orang secara langsung di depan orang lain membuat kedua pihak kehilangan muka.",
+      } },
+      { kind: "p", text: {
+        en: "Face-negotiation theory studies how people protect face during conflict.^12^ In cultures that value the group, people often protect the other person's face. When they avoid conflict or give way, it often comes from concern for the other person. It does not come from a lack of care.",
+        id: "Teori negosiasi muka (face-negotiation theory) mempelajari bagaimana orang menjaga muka selama konflik.^12^ Dalam budaya yang mengutamakan kelompok, orang sering menjaga muka orang lain. Ketika mereka menghindari konflik atau mengalah, hal itu sering lahir dari kepedulian terhadap orang lain. Bukan karena tidak peduli.",
+      } },
+      { kind: "p", text: {
+        en: "This matters for leaders who work across cultures. A team member who stays quiet in a meeting may be protecting the group. Asking for open debate in front of everyone may feel unsafe to them.",
+        id: "Hal ini penting bagi pemimpin yang bekerja lintas budaya. Anggota tim yang diam dalam rapat mungkin sedang menjaga kelompok. Meminta perdebatan terbuka di depan semua orang bisa terasa tidak aman bagi mereka.",
+      } },
+      { kind: "h4", text: { en: "Indirect naming is still naming", id: "Mengungkapkan secara tidak langsung tetap mengungkapkan" } },
+      { kind: "p", text: {
+        en: "Naming conflict does not have to be direct. It can happen in a private conversation, through a question, a story, or a trusted third person. The prophet Nathan named David's sin through a story (2 Samuel 12). What matters is that the conflict is named and not left hidden.",
+        id: "Mengungkapkan konflik tidak harus dilakukan secara langsung. Bisa lewat percakapan pribadi, lewat pertanyaan, cerita, atau orang ketiga yang dipercaya. Nabi Natan mengungkapkan dosa Daud melalui sebuah cerita (2 Samuel 12). Yang penting, konflik itu diungkapkan dan tidak dibiarkan tersembunyi.",
+      } },
     ],
   },
   {
-    title: { en: "The reframe", id: "Mengubah sudut pandang" },
-    bg: offWhite,
-    paragraphs: [
-      {
-        en: "Here is the shift that changes everything: conflict is not the opposite of harmony. It is often the path to it.",
-        id: "Inilah pergeseran yang mengubah segalanya: konflik bukan lawan dari keharmonisan. Justru seringkali konflik adalah jalannya.",
-        pullQuote: true,
-      },
-      {
-        en: "Real unity is not the absence of disagreement. It is the result of working through disagreement in a way that leaves people feeling heard, respected, and genuinely part of a shared decision. The team that has never had an honest argument is not a close team. It is a careful team. There is a difference.",
-        id: "Persatuan yang sejati bukan berarti tidak ada ketidaksetujuan. Itu adalah hasil dari melewati ketidaksetujuan dengan cara yang membuat orang merasa didengar, dihormati, dan benar-benar menjadi bagian dari keputusan bersama. Tim yang tidak pernah berselisih secara jujur bukan tim yang dekat. Itu tim yang berhati-hati. Ada bedanya.",
-        pullQuote: false,
-      },
-      {
-        en: "Peace that has not been tested is fragile. Peace that has come through honest conflict has weight to it. It can hold when the environment gets difficult, because the people involved have already proven to each other that they can handle hard conversations without the relationship falling apart.",
-        id: "Damai yang belum diuji itu rapuh. Damai yang lahir melalui konflik yang jujur memiliki bobot. Ia dapat bertahan ketika situasi menjadi sulit, karena orang-orang yang terlibat sudah membuktikan satu sama lain bahwa mereka bisa menangani percakapan yang berat tanpa hubungan itu hancur.",
-        pullQuote: false,
-      },
-    ],
-  },
-  {
-    title: { en: "What good conflict looks like", id: "Seperti apa konflik yang sehat" },
-    bg: lightGray,
-    paragraphs: [
-      {
-        en: "Productive conflict has a texture that is different from destructive conflict, and a leader needs to be able to recognise both.",
-        id: "Konflik yang produktif memiliki tekstur yang berbeda dari konflik yang destruktif, dan seorang pemimpin perlu mampu mengenali keduanya.",
-        pullQuote: false,
-      },
-      {
-        en: "Destructive conflict is personal. It attacks character rather than engaging with ideas. It escalates without resolution. It leaves people feeling unsafe, diminished, or dismissed. This is the conflict most people are trying to avoid, and rightly so.",
-        id: "Konflik yang destruktif bersifat personal. Ia menyerang karakter alih-alih terlibat dengan gagasan. Ia meningkat tanpa resolusi. Ia membuat orang merasa tidak aman, direndahkan, atau diabaikan. Inilah konflik yang kebanyakan orang berusaha hindari, dan itu wajar.",
-        pullQuote: false,
-      },
-      {
-        en: "Productive conflict is about the issue, not the person.",
-        id: "Konflik yang produktif membahas masalahnya, bukan orangnya.",
-        pullQuote: true,
-      },
-      {
-        en: "It is curious rather than combative. It tolerates disagreement without requiring immediate resolution. It stays in the room, meaning people do not withdraw into silence or take the argument sideways into other relationships. And it ends with both parties having a clearer picture than they started with, even if they have not fully resolved their differences.",
-        id: "Ia penuh rasa ingin tahu, bukan suka bertarung. Ia mentolerir ketidaksetujuan tanpa menuntut resolusi segera. Ia tetap di dalam ruangan, artinya orang tidak mundur ke dalam diam atau membawa argumen itu ke hubungan-hubungan lain secara tidak langsung. Dan ia berakhir dengan kedua pihak memiliki gambaran yang lebih jelas dari sebelumnya, meski perbedaan mereka belum sepenuhnya terselesaikan.",
-        pullQuote: false,
-      },
-      {
-        en: "The leader's job is not to prevent conflict. It is to create the conditions where the productive kind becomes possible and the destructive kind loses its oxygen.",
-        id: "Tugas pemimpin bukan mencegah konflik. Tugasnya adalah menciptakan kondisi di mana jenis yang produktif menjadi mungkin dan jenis yang destruktif kehilangan oksigennya.",
-        pullQuote: false,
-      },
+    id: "task-relationship",
+    tag: DIG_DEEPER,
+    title: { en: "Conflict about the work and conflict about the person", id: "Konflik tentang pekerjaan dan konflik tentang pribadi" },
+    blocks: [
+      { kind: "p", text: { en: "Researchers separate two kinds of conflict in teams.^13^", id: "Para peneliti membedakan dua jenis konflik dalam tim.^13^" } },
+      { kind: "p", text: {
+        en: "**Task conflict** is a difference about the work: the plan, the method, or what to do first.",
+        id: "**Konflik tugas** adalah perbedaan tentang pekerjaan: rencana, cara kerja, atau apa yang harus didahulukan.",
+      } },
+      { kind: "p", text: {
+        en: "**Relationship conflict** is tension between the people themselves: dislike, irritation or hurt.",
+        id: "**Konflik hubungan** adalah ketegangan antara orang-orangnya sendiri: rasa tidak suka, kesal, atau sakit hati.",
+      } },
+      { kind: "p", text: {
+        en: "Relationship conflict harms teams. Research agrees on this.^14,15^ Task conflict is less simple. One large review found that it often harms team performance as well.^14^ A later review of 116 studies found that task conflict can help, for example in decision quality, when it stays separate from relationship conflict.^15^",
+        id: "Konflik hubungan merugikan tim. Penelitian sepakat tentang hal ini.^14,15^ Konflik tugas tidak sesederhana itu. Satu tinjauan besar menemukan bahwa konflik tugas pun sering merugikan kinerja tim.^14^ Tinjauan yang lebih baru terhadap 116 penelitian menemukan bahwa konflik tugas dapat membantu, misalnya dalam mutu keputusan, selama konflik itu tetap terpisah dari konflik hubungan.^15^",
+      } },
+      { kind: "p", text: {
+        en: "So conflict does not automatically make a team better. Handled well, it can. The rules later in this module help keep a difference about the work from turning into a conflict between people.",
+        id: "Jadi, konflik tidak otomatis membuat tim lebih baik. Jika ditangani dengan baik, bisa. Aturan-aturan di bagian berikutnya membantu agar perbedaan tentang pekerjaan tidak berubah menjadi konflik antarpribadi.",
+      } },
     ],
   },
 ];
 
-const CONCEPT_CARDS = [
+const FURTHER_READING: { href: string; title: string; desc: T }[] = [
   {
-    number: 1,
-    title: {
-      en: "Name what is coming before it arrives",
-      id: "Ungkapkan apa yang akan datang sebelum ia tiba",
-    },
-    body: {
-      en: "Before any difficult conversation, tell the people in the room that conflict is going to happen and that it is supposed to. When people are not surprised by tension, they are less likely to react to it as a threat.",
-      id: "Sebelum percakapan sulit apa pun, beritahu orang-orang di ruangan bahwa konflik akan terjadi dan memang seharusnya demikian. Ketika orang tidak terkejut dengan ketegangan, mereka lebih kecil kemungkinannya bereaksi seolah itu ancaman.",
-    },
-    script: {
-      en: "\"I want us to expect that we are going to disagree today. That is actually the goal. If we leave without having disagreed, we probably have not gone deep enough.\"",
-      id: "\"Saya ingin kita semua mengharapkan bahwa kita akan berselisih pendapat hari ini. Itu sebenarnya tujuannya. Jika kita pergi tanpa berselisih, kita mungkin belum cukup dalam.\"",
+    href: "https://web.mit.edu/curhan/www/docs/Articles/15341_Readings/Group_Performance/Edmondson%20Psychological%20safety.pdf",
+    title: "Psychological safety and learning behavior in work teams",
+    desc: { en: "Amy Edmondson's original study of safety in teams (full paper, PDF).", id: "Penelitian asli Amy Edmondson tentang rasa aman dalam tim (naskah lengkap, PDF)." },
+  },
+  {
+    href: "https://explore.psychsafety.com/n/detert-edmondson-2011/",
+    title: "Implicit voice theories",
+    desc: { en: "A summary of why people stay silent even when no one has punished them.", id: "Ringkasan tentang mengapa orang tetap diam meskipun tidak ada yang pernah menghukum mereka." },
+  },
+  {
+    href: "https://rework.withgoogle.com/en/guides/understanding-team-effectiveness",
+    title: "Understanding team effectiveness",
+    desc: {
+      en: "In an internal study of its own teams, Google found psychological safety was the most important of five team factors.^16^",
+      id: "Dalam studi internal terhadap tim-timnya sendiri, Google menemukan bahwa rasa aman psikologis adalah yang terpenting dari lima faktor tim.^16^",
     },
   },
   {
-    number: 2,
-    title: {
-      en: "Conflict means listening, not just speaking",
-      id: "Konflik berarti mendengarkan, bukan hanya berbicara",
-    },
+    href: "https://www.news.cornell.edu/stories/2016/08/how-winning-teams-navigate-conflict-stay-course",
+    title: "How winning teams navigate conflict",
+    desc: { en: "A short summary of a study of 57 student project teams.", id: "Ringkasan singkat dari penelitian terhadap 57 tim proyek mahasiswa." },
+  },
+  {
+    href: "https://www.beyondintractability.org/artsum/johnson-constructive",
+    title: "Constructive controversy",
+    desc: { en: "A summary of how groups can disagree in a structured way and reach better decisions.", id: "Ringkasan tentang bagaimana kelompok dapat berbeda pendapat secara teratur dan mencapai keputusan yang lebih baik." },
+  },
+  {
+    href: "https://en.wikipedia.org/wiki/Friedrich_Glasl%27s_model_of_conflict_escalation",
+    title: "Glasl's model of conflict escalation",
+    desc: { en: "An overview of all nine stages.", id: "Gambaran umum dari kesembilan tahap." },
+  },
+];
+
+const CONTRAST: { bad: T; good: T }[] = [
+  { bad: { en: "Silence means peace", id: "Diam dianggap damai" }, good: { en: "Silence is a warning sign", id: "Diam adalah tanda peringatan" } },
+  { bad: { en: "The problem stays hidden", id: "Masalah tetap tersembunyi" }, good: { en: "The problem is named early", id: "Masalah diungkapkan sejak dini" } },
+  { bad: { en: "People talk about each other", id: "Orang membicarakan satu sama lain di belakang" }, good: { en: "People talk to each other", id: "Orang berbicara langsung satu sama lain" } },
+  { bad: { en: "People adjust in private, before talking", id: "Orang menyesuaikan diri sendiri-sendiri, sebelum bicara" }, good: { en: "People adjust together, after talking", id: "Orang menyesuaikan diri bersama-sama, setelah bicara" } },
+  { bad: { en: "Small problems pile up", id: "Masalah kecil menumpuk" }, good: { en: "Small problems are handled while they are small", id: "Masalah kecil ditangani selagi masih kecil" } },
+  { bad: { en: "Trust slowly breaks down", id: "Kepercayaan perlahan runtuh" }, good: { en: "Trust grows", id: "Kepercayaan bertumbuh" } },
+  { bad: { en: "Unity on the surface", id: "Kesatuan di permukaan saja" }, good: { en: "Unity that holds under pressure", id: "Kesatuan yang bertahan di bawah tekanan" } },
+];
+
+const SAFE_STEPS: { title: T; body: T }[] = [
+  {
+    title: { en: "Say that conflict is normal.", id: "Katakan bahwa konflik itu wajar." },
+    body: { en: "Every team has it. Saying so removes the fear that conflict means the team is failing.", id: "Setiap tim mengalaminya. Dengan mengatakannya, rasa takut bahwa konflik berarti tim gagal akan hilang." },
+  },
+  {
+    title: { en: "Explain the rules before the conversation starts.", id: "Jelaskan aturannya sebelum percakapan dimulai." },
+    body: { en: "People need to know how a conflict will be handled before they risk naming one.", id: "Orang perlu tahu bagaimana konflik akan ditangani sebelum mereka berani mengungkapkannya." },
+  },
+  {
+    title: { en: "Choose the time and the place.", id: "Pilih waktu dan tempatnya." },
+    body: { en: "Set a time, find a calm and private setting, and when needed, invite a neutral third person.", id: "Tentukan waktu, cari suasana yang tenang dan pribadi, dan jika perlu, undang orang ketiga yang netral." },
+  },
+];
+
+const RULES: { title: T; body: T }[] = [
+  {
+    title: { en: "Trust is a decision, not a feeling.", id: "Percaya adalah keputusan, bukan perasaan." },
     body: {
-      en: "A conflict conversation that is only about getting your position across is not conflict, it is performance. Productive conflict requires that each person genuinely tries to understand why the other person holds their view.",
-      id: "Percakapan konflik yang hanya tentang menyampaikan posisimu bukan konflik, itu penampilan. Konflik yang produktif mengharuskan setiap orang sungguh-sungguh berusaha memahami mengapa orang lain memegang pandangannya.",
-    },
-    script: {
-      en: "\"Before you respond, tell me if you understood what they were saying. Not whether you agree. Whether you understood.\"",
-      id: "\"Sebelum kamu merespons, ceritakan apakah kamu memahami apa yang mereka katakan. Bukan apakah kamu setuju. Apakah kamu memahami.\"",
+      en: "Come to the conversation ready to trust. You may not feel trust at this moment, and that is all right. You decide to trust the other person anyway. You do this because you want to move forward with this person. Where trust is low, people hear a disagreement about the work as a personal attack.^19^ Choosing to trust keeps the conversation about the problem.",
+      id: "Datanglah ke percakapan itu dengan siap untuk percaya. Mungkin saat ini Anda tidak merasakan kepercayaan, dan itu tidak apa-apa. Anda tetap memutuskan untuk memercayai orang itu. Anda melakukannya karena Anda ingin melangkah maju bersamanya. Ketika kepercayaan rendah, orang menganggap perbedaan tentang pekerjaan sebagai serangan pribadi.^19^ Memilih untuk percaya menjaga percakapan tetap tentang masalahnya.",
     },
   },
   {
-    number: 3,
-    title: {
-      en: "The goal is a broader picture, not a winner",
-      id: "Tujuannya adalah gambaran yang lebih luas, bukan pemenang",
-    },
+    title: { en: "There is no winner and no loser.", id: "Tidak ada pemenang dan tidak ada yang kalah." },
     body: {
-      en: "When two people with different perspectives engage honestly, both of them usually see something they could not see alone. The goal of the conflict table is not to determine who is right. It is to build a more complete picture than either person brought in.",
-      id: "Ketika dua orang dengan perspektif berbeda terlibat dengan jujur, keduanya biasanya melihat sesuatu yang tidak bisa mereka lihat sendirian. Tujuan dari meja konflik bukan untuk menentukan siapa yang benar. Tujuannya adalah membangun gambaran yang lebih lengkap dari apa yang dibawa oleh masing-masing orang.",
-    },
-    script: {
-      en: "\"Let us hold both of these views at the same time for a moment and see what we can see from that position.\"",
-      id: "\"Mari kita pertimbangkan kedua pandangan ini sekaligus sejenak dan lihat apa yang bisa kita lihat dari posisi itu.\"",
+      en: "The goal is not to win the argument. The goal is a better result for the team. If one person loses, the whole team loses something.",
+      id: "Tujuannya bukan memenangkan perdebatan. Tujuannya adalah hasil yang lebih baik bagi tim. Jika satu orang kalah, seluruh tim kehilangan sesuatu.",
     },
   },
   {
-    number: 4,
-    title: {
-      en: "Changing your mind is a sign of strength",
-      id: "Mengubah pikiran adalah tanda kekuatan",
-    },
+    title: { en: "Talk about the problem, not the person.", id: "Bicarakan masalahnya, bukan orangnya." },
     body: {
-      en: "In many cultural contexts, publicly changing your position feels like a loss of face. A good leader names this directly and reframes it before the conversation starts.",
-      id: "Dalam banyak konteks budaya, mengubah posisi secara terbuka terasa seperti kehilangan muka. Seorang pemimpin yang baik mengungkapkan hal ini secara langsung dan membingkainya ulang sebelum percakapan dimulai.",
-    },
-    script: {
-      en: "\"If you walk out of this conversation thinking differently than you walked in, that is exactly what is supposed to happen. That is not weakness. That is what it looks like when two people actually think together.\"",
-      id: "\"Jika kamu keluar dari percakapan ini dengan berpikir berbeda dari ketika kamu masuk, itulah yang seharusnya terjadi. Itu bukan kelemahan. Itulah yang terjadi ketika dua orang sungguh-sungguh berpikir bersama.\"",
+      en: "Describe what happened and how it affects the work. Do not describe the other person's character. People can solve a problem together. A judgement about a person can only be defended.",
+      id: "Ceritakan apa yang terjadi dan bagaimana hal itu memengaruhi pekerjaan. Jangan menilai watak orang lain. Orang bisa memecahkan masalah bersama-sama. Penilaian terhadap pribadi seseorang hanya akan dibela mati-matian.",
     },
   },
   {
-    number: 5,
-    title: {
-      en: "Prepare the room before you need it",
-      id: "Persiapkan ruangan sebelum kamu membutuhkannya",
-    },
+    title: { en: "Listen until you can repeat the other person's view.", id: "Dengarkan sampai Anda bisa mengulang pandangan orang lain." },
     body: {
-      en: "A leader cannot create safety in the middle of conflict if they have not built it beforehand. Trust is the infrastructure of productive disagreement. The time to invest in relationship, shared values, and honest communication is before the hard conversation is needed, not when you are already in it.",
-      id: "Seorang pemimpin tidak bisa menciptakan rasa aman di tengah konflik jika ia belum membangunnya sebelumnya. Kepercayaan adalah infrastruktur dari ketidaksetujuan yang produktif. Waktu untuk berinvestasi dalam hubungan, nilai bersama, dan komunikasi yang jujur adalah sebelum percakapan sulit itu dibutuhkan, bukan ketika kamu sudah berada di dalamnya.",
+      en: "Before you answer, say back what you heard. Keep going until the other person agrees that you understood. You do not have to agree with them. You do have to understand them first.",
+      id: "Sebelum menjawab, ulangi apa yang Anda dengar. Teruskan sampai orang itu mengatakan bahwa Anda sudah memahaminya. Anda tidak harus setuju dengannya. Tetapi Anda harus memahaminya lebih dahulu.",
     },
-    script: {
-      en: "\"Part of my job as a leader is to make sure that when we hit a hard moment together, we already have enough trust in the room to handle it.\"",
-      id: "\"Bagian dari tugas saya sebagai pemimpin adalah memastikan bahwa ketika kita menghadapi momen sulit bersama, kita sudah memiliki cukup kepercayaan di dalam ruangan untuk menanganinya.\"",
+  },
+  {
+    title: { en: "Talk first, then adjust.", id: "Bicara dulu, baru menyesuaikan diri." },
+    body: {
+      en: "Do not quietly change your behaviour to get around the problem. Adjusting in silence is a form of avoiding. Talk first. Then both people adjust, based on what you agreed together.",
+      id: "Jangan diam-diam mengubah perilaku Anda untuk menyiasati masalah. Menyesuaikan diri tanpa bicara adalah salah satu bentuk menghindar. Bicaralah lebih dahulu. Setelah itu kedua pihak menyesuaikan diri berdasarkan apa yang disepakati bersama.",
     },
   },
 ];
 
-const FIELD_STORY_PARAGRAPHS = [
+const NOT_LEADER: AccItem = {
+  id: "not-leader",
+  tag: { en: "If you are not the leader", id: "Jika Anda bukan pemimpin" },
+  title: { en: "You can still name a conflict", id: "Anda tetap dapat mengungkapkan konflik" },
+  blocks: [
+    { kind: "p", text: {
+      en: "You do not need a title to name a conflict. Start by raising it privately with the other person (Matthew 18:15). Use the same five rules, even if the other person has never heard of them.",
+      id: "Anda tidak perlu jabatan untuk mengungkapkan konflik. Mulailah dengan membicarakannya secara pribadi dengan orang yang bersangkutan (Matius 18:15). Gunakan kelima aturan yang sama, meskipun orang itu belum pernah mendengarnya.",
+    } },
+    { kind: "p", text: {
+      en: "If a private conversation does not feel safe, ask a trusted third person to help. You can also ask your leader to create a safe place for the conversation.",
+      id: "Jika percakapan pribadi terasa tidak aman, mintalah bantuan orang ketiga yang Anda percaya. Anda juga dapat meminta pemimpin Anda menciptakan tempat yang aman untuk percakapan itu.",
+    } },
+    { kind: "p", text: {
+      en: "If you are afraid to speak, ask yourself where the fear comes from. Is it this team, or an earlier experience? The answer can help you decide on the next step.",
+      id: "Jika Anda takut berbicara, tanyakan pada diri sendiri dari mana rasa takut itu berasal. Dari tim ini, atau dari pengalaman sebelumnya? Jawabannya dapat membantu Anda menentukan langkah berikutnya.",
+    } },
+  ],
+};
+
+const STORY: T[] = [
   {
-    en: "Two leaders were working together in a children's home in Southeast Asia. One came from abroad, one from the local community. Both were deeply committed to the work. Both brought clear vision and strong convictions about how things should run.",
-    id: "Dua pemimpin bekerja bersama di sebuah panti asuhan di Asia Tenggara. Satu datang dari luar negeri, satu dari komunitas lokal. Keduanya sangat berkomitmen pada pekerjaan itu. Keduanya membawa visi yang jelas dan keyakinan kuat tentang bagaimana seharusnya segala sesuatu berjalan.",
-    climax: false,
+    en: "Two leaders worked together in a children's home in Southeast Asia. One came from abroad. The other came from the local community. Both were committed to the work. Both had a clear vision and strong ideas about how the home should run.",
+    id: "Dua pemimpin bekerja bersama di sebuah panti asuhan di Asia Tenggara. Yang satu datang dari luar negeri. Yang lain berasal dari masyarakat setempat. Keduanya berkomitmen pada pekerjaan itu. Keduanya punya visi yang jelas dan gagasan yang kuat tentang bagaimana panti itu seharusnya dijalankan.",
   },
   {
-    en: "And both of them knew, from the first weeks, that they saw things differently.",
-    id: "Dan keduanya tahu, sejak minggu-minggu pertama, bahwa mereka melihat hal-hal dengan cara yang berbeda.",
-    climax: false,
+    en: "From the first weeks, both of them knew that they saw things differently. They worked in different ways. They made decisions in different ways. They had different ideas about how to care for the children. None of this was hidden. They could both see the gap clearly.",
+    id: "Sejak minggu-minggu pertama, keduanya tahu bahwa mereka memandang banyak hal secara berbeda. Cara kerja mereka berbeda. Cara mengambil keputusan mereka berbeda. Gagasan mereka tentang cara merawat anak-anak pun berbeda. Semua itu tidak disembunyikan. Keduanya melihat jarak di antara mereka dengan jelas.",
   },
+  { en: "But they could not talk about it.", id: "Tetapi mereka tidak bisa membicarakannya." },
   {
-    en: "Their working styles were different. Their assumptions about decision-making were different. Their instincts about how to care for the children were different. None of this was hidden from them. They were intelligent people. They could see the gap clearly.",
-    id: "Gaya kerja mereka berbeda. Asumsi mereka tentang pengambilan keputusan berbeda. Insting mereka tentang cara merawat anak-anak berbeda. Tidak ada dari ini yang tersembunyi bagi mereka. Mereka adalah orang-orang yang cerdas. Mereka bisa melihat perbedaannya dengan jelas.",
-    climax: false,
-  },
-  {
-    en: "What they could not do was talk about it.",
-    id: "Yang tidak bisa mereka lakukan adalah membicarakannya.",
-    climax: false,
-  },
-  {
-    en: "The reason was not hostility. It was the opposite. They respected each other deeply. And that respect had become a barrier. Neither wanted to damage what they had built. Neither wanted to cause the other person discomfort. So they stayed careful. They stayed polite. And the gap stayed open.",
-    id: "Alasannya bukan permusuhan. Justru sebaliknya. Mereka saling menghormati dengan dalam. Dan rasa hormat itu telah menjadi penghalang. Tidak satu pun yang ingin merusak apa yang telah mereka bangun. Tidak satu pun yang ingin membuat orang lain tidak nyaman. Maka mereka tetap berhati-hati. Mereka tetap sopan. Dan jurang itu tetap terbuka.",
-    climax: false,
-  },
-  {
-    en: "One day, a third person who knew them both well sat down with them and said something simple: \"I want to bring you to a table where conflict is going to happen. I think you need it, and I think it is safe.\"",
-    id: "Suatu hari, orang ketiga yang mengenal keduanya dengan baik duduk bersama mereka dan mengatakan sesuatu yang sederhana: \"Saya ingin membawa kamu ke sebuah meja di mana konflik akan terjadi. Saya pikir kamu membutuhkannya, dan saya pikir itu aman.\"",
-    climax: true,
-  },
-  {
-    en: "He set some ground rules. Not a long list. Just enough to name what kind of conversation this was going to be.",
-    id: "Ia menetapkan beberapa aturan dasar. Bukan daftar yang panjang. Cukup untuk menjelaskan percakapan seperti apa yang akan terjadi.",
-    climax: false,
-  },
-  {
-    en: "Then both of them talked. Honestly. It was not comfortable. There were moments of real friction. But there were also moments where one of them said something that visibly landed for the other person, where a position they had held softened because they had actually heard a different view.",
-    id: "Lalu keduanya berbicara. Dengan jujur. Itu tidak nyaman. Ada momen-momen gesekan yang nyata. Tapi ada juga momen-momen di mana salah satu dari mereka mengatakan sesuatu yang jelas-jelas mengena bagi orang lain, di mana posisi yang selama ini mereka pegang melunak karena mereka benar-benar mendengar pandangan yang berbeda.",
-    climax: false,
-  },
-  {
-    en: "They did not resolve everything. Some of their differences remained. But they left with something they had not had before: a way of talking to each other about the things that mattered. Unity grew from that table. Not because the conflict disappeared, but because it was finally allowed to exist.",
-    id: "Mereka tidak menyelesaikan semuanya. Beberapa perbedaan mereka tetap ada. Tapi mereka pergi dengan sesuatu yang belum pernah mereka miliki sebelumnya: cara untuk saling berbicara tentang hal-hal yang penting. Persatuan tumbuh dari meja itu. Bukan karena konflik itu hilang, tapi karena ia akhirnya diizinkan untuk ada.",
-    climax: false,
+    en: "The reason was not anger. They respected each other too much to say it. That respect stopped them from speaking. Neither wanted to damage what they had built. Neither wanted to make the other person uncomfortable. So they stayed careful and polite, and the gap stayed open.",
+    id: "Penyebabnya bukan amarah. Mereka terlalu saling menghormati untuk mengatakannya. Rasa hormat itu menahan mereka untuk berbicara. Tidak ada yang mau merusak apa yang telah mereka bangun. Tidak ada yang mau membuat yang lain tidak nyaman. Jadi mereka tetap hati-hati dan sopan, dan jarak itu tetap terbuka.",
   },
 ];
 
-const FAITH_ANCHOR_PARAGRAPHS = [
+const STORY_MOMENT: T = {
+  en: "One day, a third person who knew them both sat down with them. He told them he wanted to bring them to a table where conflict was going to happen. He thought they needed it, and he thought it was safe.",
+  id: "Suatu hari, seseorang yang mengenal keduanya duduk bersama mereka. Ia berkata bahwa ia ingin membawa mereka ke sebuah meja tempat konflik akan terjadi. Menurutnya mereka membutuhkannya, dan menurutnya tempat itu aman.",
+};
+
+const STORY_AFTER: T[] = [
   {
-    en: (
-      <>
-        <span style={{ color: amber, fontWeight: 700 }}>Ephesians 4:15</span> is often quoted in pieces: &ldquo;speaking the truth in love.&rdquo; But the full context matters. Paul is describing what it looks like for a body to grow up into maturity. Speaking truth in love is not a communication style. It is a description of how community develops towards health. Silence, in that framework, is not neutrality. It is a withdrawal from the process of growth.
-      </>
-    ),
-    id: (
-      <>
-        <span style={{ color: amber, fontWeight: 700 }}>Efesus 4:15</span> sering dikutip secara sepotong: &ldquo;berkata benar dalam kasih.&rdquo; Tetapi konteks penuhnya penting. Paulus menggambarkan seperti apa ketika sebuah tubuh bertumbuh menjadi dewasa. Berkata benar dalam kasih bukan gaya komunikasi. Itu adalah deskripsi bagaimana komunitas berkembang menuju kesehatan. Diam, dalam kerangka itu, bukan netralitas. Itu adalah penarikan diri dari proses pertumbuhan.
-      </>
-    ),
-    elevated: false,
+    en: "He set a few ground rules. It was not a long list. It was enough to explain what kind of conversation this would be.",
+    id: "Ia menetapkan beberapa aturan dasar. Daftarnya tidak panjang. Cukup untuk menjelaskan percakapan macam apa ini nantinya.",
   },
   {
-    en: (
-      <>
-        <span style={{ color: amber, fontWeight: 700 }}>Proverbs 27:17</span> says that iron sharpens iron. That is not a comfortable image. Iron against iron produces friction, heat, and spark. It produces something better than what either piece was before the contact. The sharpening requires the friction.
-      </>
-    ),
-    id: (
-      <>
-        <span style={{ color: amber, fontWeight: 700 }}>Amsal 27:17</span> berkata bahwa besi mengasah besi. Itu bukan gambaran yang nyaman. Besi melawan besi menghasilkan gesekan, panas, dan percikan. Itu menghasilkan sesuatu yang lebih baik dari apa yang masing-masing benda sebelum bersentuhan. Penajaman membutuhkan gesekan.
-      </>
-    ),
-    elevated: false,
+    en: "Then both leaders talked honestly. It was not comfortable. There were moments of real tension. There were also moments when one of them said something that the other really heard. Views that each had held for a long time began to soften.",
+    id: "Lalu kedua pemimpin itu berbicara dengan jujur. Rasanya tidak nyaman. Ada saat-saat yang sungguh tegang. Ada juga saat ketika salah satu dari mereka mengatakan sesuatu yang benar-benar didengar oleh yang lain. Pandangan yang lama dipegang masing-masing mulai melunak.",
   },
   {
-    en: (
-      <>
-        Confrontation, when it is rooted in genuine care for the other person and the shared work, is an act of covenant love. It says: I care about you enough to be honest with you. I care about what we are building together enough to name what is wrong.
-      </>
-    ),
-    id: (
-      <>
-        Konfrontasi, ketika berakar pada kepedulian tulus terhadap orang lain dan pekerjaan bersama, adalah tindakan kasih perjanjian. Ini berkata: Saya cukup peduli pada kamu untuk jujur kepadamu. Saya cukup peduli tentang apa yang kita bangun bersama untuk menyebutkan apa yang salah.
-      </>
-    ),
-    elevated: false,
-  },
-  {
-    en: (
-      <>
-        Silence, in the face of genuine dysfunction, is not kindness. It protects your own comfort at the expense of the person, the team, and the mission you share. The leader who avoids hard conversations is not protecting anyone. They are choosing their own peace over the health of the people they lead.
-      </>
-    ),
-    id: (
-      <>
-        Diam, di hadapan disfungsi yang nyata, bukanlah kebaikan. Itu melindungi kenyamanan kamu sendiri dengan mengorbankan orang, tim, dan misi yang kalian bagi. Pemimpin yang menghindari percakapan sulit tidak melindungi siapa pun. Mereka memilih kedamaian mereka sendiri di atas kesehatan orang yang mereka pimpin.
-      </>
-    ),
-    elevated: true,
+    en: "They did not solve everything. Some differences remained. But they left with something they did not have before: a way to talk with each other about the things that mattered. Their unity grew from that table. It grew because the conflict was finally allowed to be named.",
+    id: "Tidak semuanya terselesaikan. Beberapa perbedaan tetap ada. Tetapi mereka pulang dengan sesuatu yang belum mereka miliki sebelumnya: cara untuk berbicara satu sama lain tentang hal-hal yang penting. Kesatuan mereka bertumbuh dari meja itu. Kesatuan itu bertumbuh karena konflik akhirnya boleh diungkapkan.",
   },
 ];
 
-const REFLECTION_QUESTIONS = [
+const LESSONS: T[] = [
+  { en: "Respect can lead to silence. Silence did not protect their unity. It kept the gap open.", id: "Rasa hormat bisa berujung pada diam. Diam tidak melindungi kesatuan mereka. Diam justru membiarkan jarak itu tetap terbuka." },
+  { en: "A third person created a safe place. Both leaders knew the conversation would be hard, and both knew it was safe.", id: "Seorang pihak ketiga menciptakan tempat yang aman. Kedua pemimpin tahu percakapan itu akan sulit, dan keduanya tahu tempat itu aman." },
+  { en: "The ground rules came first, before anyone spoke.", id: "Aturan dasar ditetapkan lebih dahulu, sebelum ada yang berbicara." },
+  { en: "Not everything was solved. Unity, clarity and trust still grew.", id: "Tidak semuanya terselesaikan. Namun kesatuan, kejelasan, dan kepercayaan tetap bertumbuh." },
+];
+
+const FAITH: T[] = [
   {
-    en: "What conversation have you been avoiding, and what has that silence cost? Not in theory, but specifically: what has it cost the person, the relationship, the team, or the work?",
-    id: "Percakapan apa yang selama ini kamu hindari, dan harga apa yang sudah harus dibayar akibat keheningan itu? Bukan secara teori, tapi secara konkret: harga apa yang sudah ditanggung oleh orang tersebut, hubungan, tim, atau pekerjaan?",
+    en: "Paul tells us to work to keep the unity of the Spirit (~~Ephesians 4:3~~). Unity does not keep itself.",
+    id: "Paulus mengajak kita berusaha memelihara kesatuan Roh (~~Efesus 4:3~~). Kesatuan tidak menjaga dirinya sendiri.",
   },
   {
-    en: "Think of a leader you have seen handle conflict well. What did they do that made it feel different from destructive conflict? What can you apply from how they handled it?",
-    id: "Pikirkan seorang pemimpin yang pernah kamu lihat menangani konflik dengan baik. Apa yang mereka lakukan sehingga terasa berbeda dari konflik yang destruktif? Apa yang bisa kamu terapkan dari cara mereka menanganinya?",
+    en: "He also writes: \"Be angry and do not sin; do not let the sun go down on your anger, and give no opportunity to the devil\" (~~Ephesians 4:26-27, ESV~~). Anger that is left alone gives the enemy room.",
+    id: "Ia juga menulis: \"Apabila kamu menjadi marah, janganlah kamu berbuat dosa: janganlah matahari terbenam, sebelum padam amarahmu, dan janganlah beri kesempatan kepada Iblis\" (~~Efesus 4:26-27, TB~~). Kemarahan yang dibiarkan memberi ruang bagi musuh.",
   },
   {
-    en: "Where in your current context is polite agreement substituting for honest engagement? What would it take to make honest disagreement feel safe there?",
-    id: "Di mana dalam konteksmu saat ini persetujuan sopan sedang menggantikan keterlibatan yang jujur? Apa yang diperlukan agar ketidaksetujuan yang jujur terasa aman di sana?",
+    en: "Paul's warning is simple. Anger that is held in and never dealt with gives the enemy a foothold. The problem is not the quiet itself. It is what we leave unresolved. Conflict that is not named does not go away. It grows.",
+    id: "Peringatan Paulus sederhana. Amarah yang dipendam dan tidak pernah diselesaikan memberi kesempatan kepada Iblis. Masalahnya bukan pada diam itu sendiri, tetapi pada apa yang kita biarkan tidak terselesaikan. Konflik yang tidak diungkapkan tidak hilang. Konflik itu terus membesar.",
+  },
+  {
+    en: "Not all conflict comes from him. James says it starts in our own desires (~~James 4:1~~). We are responsible for our part.",
+    id: "Tidak semua konflik berasal dari dia. Yakobus mengatakan bahwa konflik bermula dari keinginan kita sendiri (~~Yakobus 4:1~~). Kita bertanggung jawab atas bagian kita.",
+  },
+  {
+    en: "God also tells his people not to hate a brother in the heart, but to speak to him honestly (~~Leviticus 19:17~~).",
+    id: "Allah juga memerintahkan umat-Nya untuk tidak membenci saudara di dalam hati, tetapi menegurnya dengan jujur (~~Imamat 19:17~~).",
+  },
+  {
+    en: "This is for differences between people who are safe with each other. If you are being harmed, bullied or abused, you do not have to face that person alone. Tell someone with authority to act, or a trusted person outside the situation.",
+    id: "Ini berlaku untuk perbedaan di antara orang-orang yang aman satu sama lain. Jika Anda disakiti, dirundung, atau dianiaya, Anda tidak harus menghadapi orang itu sendirian. Beri tahu seseorang yang berwenang untuk bertindak, atau orang tepercaya di luar situasi itu.",
   },
 ];
 
-const KEY_TAKEAWAYS = [
+const FAITH_CLOSE: T = {
+  en: "Avoiding conflict is not peace. Healthy conflict names the problem early, in love, and directly with the person involved, in a way that honours them. That is how a team keeps its unity.",
+  id: "Menghindari konflik bukanlah damai. Konflik yang sehat mengungkapkan masalah sejak dini, dengan kasih, dan langsung kepada orang yang bersangkutan, dengan cara yang menghormatinya. Dengan cara itulah sebuah tim menjaga kesatuannya.",
+};
+
+const REFLECT: T = {
+  en: "Is there something unresolved in your team that is safe and right to name? What would it look like to name it in love this week?",
+  id: "Apakah ada sesuatu yang belum terselesaikan dalam tim Anda yang aman dan tepat untuk diungkapkan? Seperti apa jadinya jika Anda mengungkapkannya dengan kasih minggu ini?",
+};
+
+const TAKEAWAYS: T[] = [
   {
-    en: "Name the problem out loud to your team before your next difficult conversation: \"We are going to disagree in this conversation, and that is the goal.\"",
-    id: "Ungkapkan masalah itu secara terbuka kepada timmu sebelum percakapan sulit berikutnya: \"Kita akan berselisih dalam percakapan ini, dan itulah tujuannya.\"",
+    en: "Conflict is when people who depend on each other see their goals, needs or views as opposed, and at least one of them feels it.",
+    id: "Konflik adalah ketika orang-orang yang saling bergantung merasa tujuan, kebutuhan, atau pandangan mereka saling bertentangan, dan setidaknya salah satu dari mereka merasakannya.",
   },
   {
-    en: "Identify one relationship in your current team where silence has become the default, and ask for a real conversation this week, not to resolve everything, but to begin.",
-    id: "Identifikasi satu hubungan dalam timmu saat ini di mana diam telah menjadi kebiasaan, dan minta percakapan yang nyata minggu ini, bukan untuk menyelesaikan segalanya, tapi untuk memulai.",
+    en: "Healthy conflict is conflict faced openly and with respect. Through it, people gain unity, clarity and trust, and continue together in unity.",
+    id: "Konflik yang sehat adalah konflik yang dihadapi secara terbuka dan dengan saling menghormati. Melalui konflik itu, orang memperoleh kesatuan, kejelasan, dan kepercayaan, lalu melangkah bersama dalam kesatuan.",
   },
   {
-    en: "Build trust before you need it: invest in one relational moment this week with someone you may eventually need to have a hard conversation with.",
-    id: "Bangun kepercayaan sebelum kamu membutuhkannya: investasikan satu momen relasional minggu ini dengan seseorang yang mungkin suatu saat perlu kamu ajak bicara dengan jujur.",
+    en: "Conflict feels unsafe for many people because of unhealthy conflict in the past. The fear is real, even when the danger is not.",
+    id: "Konflik terasa tidak aman bagi banyak orang karena konflik yang tidak sehat di masa lalu. Rasa takutnya nyata, meskipun bahayanya tidak.",
+  },
+  {
+    en: "Unnamed conflict does not go away. It piles up and comes out when emotions run high.",
+    id: "Konflik yang tidak diungkapkan tidak hilang. Konflik itu menumpuk dan keluar ketika emosi memuncak.",
+  },
+  {
+    en: "The leader creates a safe place and explains the rules before the conversation starts.",
+    id: "Pemimpin menciptakan tempat yang aman dan menjelaskan aturannya sebelum percakapan dimulai.",
+  },
+  {
+    en: "Trust is a decision, not a feeling. Choose to trust because you want to move forward together.",
+    id: "Percaya adalah keputusan, bukan perasaan. Pilihlah untuk percaya karena Anda ingin melangkah maju bersama.",
   },
 ];
 
-const RESEARCH_CALLOUTS = [
-  {
-    source: "Google Project Aristotle, 2016",
-    en: "After studying 180 teams over two years, Google's People Operations team found that psychological safety¹ was the single strongest predictor of team effectiveness, outranking individual talent, experience, and team composition. Psychological safety is the shared belief that it is safe to take interpersonal risks, to speak up, and to disagree.² Teams that could challenge each other openly were consistently the highest performers.",
-    id: "Setelah mempelajari 180 tim selama dua tahun, tim People Operations Google menemukan bahwa keamanan psikologis¹ adalah prediktor tunggal terkuat dari efektivitas tim, mengalahkan bakat individu, pengalaman, dan komposisi tim. Keamanan psikologis adalah keyakinan bersama bahwa aman untuk mengambil risiko interpersonal, untuk berbicara, dan untuk tidak setuju.² Tim yang bisa saling menantang secara terbuka secara konsisten adalah yang berkinerja tertinggi.",
-  },
-  {
-    source: "Hofstede — Power Distance Index",
-    en: "Geert Hofstede's³ research across 90 countries found wide variation in how cultures relate to authority and disagreement. High power-distance countries such as Indonesia (78), Malaysia (100), and the Philippines (94) place a premium on hierarchy and deference. Low power-distance countries such as the Netherlands (38) and Germany (35) normalise pushback and open challenge. In high-PDI settings, silence is not disengagement. It is the culturally appropriate signal of respect.",
-    id: "Penelitian Geert Hofstede³ di 90 negara menemukan variasi besar dalam cara budaya berhubungan dengan otoritas dan ketidaksetujuan. Negara dengan jarak kekuasaan tinggi seperti Indonesia (78), Malaysia (100), dan Filipina (94) mengutamakan hierarki dan kepatuhan. Negara dengan jarak kekuasaan rendah seperti Belanda (38) dan Jerman (35) menganggap wajar bantahan dan tantangan terbuka. Dalam konteks PDI tinggi, diam bukan berarti tidak terlibat. Itu adalah sinyal rasa hormat yang tepat secara budaya.",
-  },
-  {
-    source: "Patrick Lencioni — The Five Dysfunctions of a Team, 2002",
-    en: "Lencioni's⁴ widely read practitioner framework identifies fear of conflict as the second of five dysfunctions that commonly undermine team performance. Teams which avoid genuine debate do not eliminate tension — they redirect it into politics, passive resistance, and quiet resentment. Note: this model is a practitioner account, not a peer-reviewed finding. For empirically grounded team research, Hackman's⁵ six conditions (explaining 50–74% of variance in team effectiveness) provide the stronger evidence base. The absence of productive conflict is not peace. It is the postponement of a harder conversation.",
-    id: "Kerangka praktisi Lencioni⁴ yang banyak dibaca mengidentifikasi ketakutan terhadap konflik sebagai disfungsi kedua dari lima yang umum merusak kinerja tim. Tim yang menghindari debat yang tulus tidak menghilangkan ketegangan, mereka mengalihkannya ke dalam politik, resistensi pasif, dan kepahitan yang terpendam. Catatan: model ini adalah akun praktisi, bukan temuan peer-reviewed. Untuk penelitian tim yang berdasar secara empiris, enam kondisi Hackman⁵ (menjelaskan 50–74% varians dalam efektivitas tim) memberikan dasar bukti yang lebih kuat. Tidak adanya konflik yang produktif bukan berarti damai. Itu adalah penundaan dari percakapan yang lebih berat.",
-  },
+const SOURCES: string[] = [
+  "Merriam-Webster. Conflict. merriam-webster.com/dictionary/conflict",
+  "Thomas, K. W. (1992). Conflict and negotiation processes in organizations. In M. D. Dunnette and L. M. Hough (Eds.), Handbook of Industrial and Organizational Psychology, Vol. 3. Definition as commonly paraphrased.",
+  "Rahim, M. A. (2002). Toward a theory of managing organizational conflict. International Journal of Conflict Management, 13(3), 206-235. https://www.emeraldinsight.com/doi/abs/10.1108/eb022874",
+  "Pondy, L. R. (1967). Organizational conflict: Concepts and models. Administrative Science Quarterly, 12(2). https://public.websites.umich.edu/~lroot/ConflictMgtConceptMap/Pondy-Organizational-Conflict-1967.pdf",
+  "Johnson, D. W., and Johnson, R. T. Constructive controversy. Summary at Beyond Intractability. Evidence comes mainly from education settings. https://www.beyondintractability.org/artsum/johnson-constructive",
+  "Edmondson, A. C. (1999). Psychological safety and learning behavior in work teams. Administrative Science Quarterly, 44(2), 350-383. https://web.mit.edu/curhan/www/docs/Articles/15341_Readings/Group_Performance/Edmondson%20Psychological%20safety.pdf",
+  "Morrison, E. W., and Milliken, F. J. (2000). Organizational silence. Academy of Management Review, 25(4), 706-725. https://explore.psychsafety.com/n/morrison-milliken-2000/",
+  "Detert, J. R., and Edmondson, A. C. (2011). Implicit voice theories. Academy of Management Journal, 54(3), 461-488. https://explore.psychsafety.com/n/detert-edmondson-2011/",
+  "Bach, G. R., and Wyden, P. (1968). The Intimate Enemy. Practitioner term, not a tested research finding. https://en.wikipedia.org/wiki/Gunnysacking",
+  "Glasl, F. (1982). Model of conflict escalation. Practitioner model used in mediation. https://en.wikipedia.org/wiki/Friedrich_Glasl%27s_model_of_conflict_escalation",
+  "De Dreu, C. K. W., Evers, A., Beersma, B., Kluwer, E. S., and Nauta, A. (2001). A theory-based measure of conflict management strategies in the workplace. Journal of Organizational Behavior, 22(6), 645-668. https://emerald.com/insight/content/doi/10.1108/eb022817/full/html",
+  "Oetzel, J. G., and Ting-Toomey, S. (2003). Face concerns in interpersonal conflict. Communication Research, 30(6), 599-624. https://www.ffri.hr/~ibrdar/komunikacija/seminari/Oetzel,%202003%20-%20Interpersonal%20conflict%20and%20face%20concerns.pdf",
+  "Jehn, K. A. (1995). A multimethod examination of the benefits and detriments of intragroup conflict. Administrative Science Quarterly, 40, 256-282. https://web.mit.edu/curhan/www/docs/Articles/15341_Readings/Negotiation_and_Conflict_Management/Jehn-ASQ-1995.pdf",
+  "De Dreu, C. K. W., and Weingart, L. R. (2003). Task versus relationship conflict, team performance, and team member satisfaction. Journal of Applied Psychology, 88(4), 741-749. https://pubmed.ncbi.nlm.nih.gov/12940412/",
+  "De Wit, F. R. C., Greer, L. L., and Jehn, K. A. (2012). The paradox of intragroup conflict: A meta-analysis. Journal of Applied Psychology, 97(2), 360-390. https://repub.eur.nl/pub/37902",
+  "Google re:Work. Understanding team effectiveness (Project Aristotle). Internal company study, not peer-reviewed. https://rework.withgoogle.com/en/guides/understanding-team-effectiveness",
+  "Behfar, K. J., Peterson, R. S., Mannix, E. A., and Trochim, W. M. K. (2008). The critical role of conflict resolution in teams. Journal of Applied Psychology, 93(1), 170-188. https://www.news.cornell.edu/stories/2016/08/how-winning-teams-navigate-conflict-stay-course",
+  "Edmondson, A. C. (2018). The Fearless Organization. Wiley.",
+  "Simons, T. L., and Peterson, R. S. (2000). Task conflict and relationship conflict in top management teams: The pivotal role of intragroup trust. Journal of Applied Psychology, 85(1), 102-111. https://randallspeterson.com/2000/06/17/task-conflict-and-relationship-conflict-in-top-management-teams-the-pivotal-role-of-intragroup-trust/",
 ];
+
+// ── STYLES ─────────────────────────────────────────────────────────────────────
+
+const CSS = `
+.hc{--navy:oklch(22% 0.10 260);--navy-deep:oklch(18% 0.10 260);--amber:oklch(65% 0.15 45);--off:oklch(96% 0.005 80);--light:oklch(95% 0.008 80);--body:oklch(38% 0.05 260);--sub:oklch(52% 0.008 260);--muted:oklch(48% 0.04 260);--dim-navy:oklch(76% 0.03 80);--light-navy:oklch(88% 0.02 80);--card:oklch(99% 0.003 80);--line:oklch(84% 0.01 260);--callout-bg:oklch(97% 0.010 50);--callout-border:oklch(88% 0.030 50);--serif:var(--font-cormorant),'Cormorant Garamond',Georgia,serif;font-family:var(--font-montserrat),Montserrat,sans-serif;background:var(--off);color:var(--body);min-height:100vh}
+.hc *{box-sizing:border-box}
+.hc-wrap{max-width:720px;margin:0 auto;padding:0 16px}
+.hc-sec{padding:clamp(56px,8vw,80px) 0}
+.hc-a{background:var(--off)}
+.hc-b{background:var(--light)}
+.hc p{font-size:15px;line-height:1.85;margin:0 0 18px}
+.hc-eyebrow{font-size:11px!important;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);margin:0 0 12px!important;line-height:1.4!important}
+.hc h2{font-family:var(--serif);font-weight:600;font-size:clamp(26px,3.5vw,38px);line-height:1.15;color:var(--navy);margin:0 0 20px}
+.hc h3{font-family:var(--serif);font-weight:600;font-size:clamp(22px,2.8vw,28px);line-height:1.2;color:var(--navy);margin:36px 0 10px}
+.hc h4{font-weight:700;font-size:14px;color:var(--navy);margin:20px 0 8px}
+.hc-sup{font-size:.68em;font-weight:700;color:var(--amber);line-height:0;margin-left:1px}
+.hc-verse{color:var(--amber);font-weight:700}
+.hc-lede{font-size:clamp(15px,1.6vw,17px)!important}
+/* hero */
+.hc-hero{position:relative;overflow:hidden;background:var(--navy);padding:clamp(72px,10vw,96px) 0 clamp(64px,9vw,88px)}
+.hc-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:.22;mix-blend-mode:luminosity;pointer-events:none}
+.hc-hero .hc-wrap{position:relative;max-width:760px}
+.hc-hero h1{font-family:var(--serif);font-weight:600;font-size:clamp(40px,6vw,72px);line-height:1.08;color:var(--off);margin:0 0 20px}
+.hc-hero .hc-subline{font-family:var(--serif);font-style:italic;font-size:clamp(18px,2.2vw,23px);color:oklch(82% 0.025 80);line-height:1.6;max-width:600px;margin:0 0 32px}
+.hc-save{display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:10px 24px;border:none;border-radius:4px;background:var(--amber);color:var(--off);font-family:inherit;font-size:13px;font-weight:700;cursor:pointer}
+.hc-save[aria-pressed="true"]{background:oklch(35% 0.05 260);cursor:default}
+.hc-save svg{width:18px;height:18px}
+.hc-save:focus-visible,.hc-acc-btn:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+/* objectives */
+.hc-obj{background:var(--navy);padding:clamp(40px,6vw,56px) 0}
+.hc-obj ul{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.hc-obj li{display:flex;gap:14px;align-items:flex-start;color:var(--dim-navy);font-size:14px;font-weight:500;line-height:1.7}
+.hc-obj li::before{content:"";flex:0 0 3px;height:20px;background:var(--amber);margin-top:3px}
+/* definitions */
+.hc-defs{display:grid;gap:16px;margin:24px 0 32px}
+.hc-def{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:22px 24px}
+.hc-def .hc-src{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.hc-def blockquote{font-family:var(--serif);font-size:21px;line-height:1.45;color:var(--navy);margin:0 0 10px}
+.hc-def .hc-focus{font-size:13px!important;color:var(--muted);margin:0!important;line-height:1.6!important}
+.hc-ours{background:var(--navy);border-radius:8px;padding:clamp(24px,4vw,36px);margin:0 0 8px}
+.hc-ours .hc-term{font-size:11px!important;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);margin:0 0 8px!important}
+.hc-ours .hc-def-text{font-family:var(--serif);font-size:clamp(22px,3vw,27px)!important;line-height:1.4!important;color:var(--light-navy);margin:0 0 24px!important}
+.hc-ours .hc-def-text:last-child{margin-bottom:0!important}
+.hc-num-list{list-style:none;margin:18px 0 0;padding:0;display:grid;gap:18px}
+.hc-num-list li{display:flex;gap:16px;align-items:flex-start;font-size:15px;line-height:1.8}
+.hc-num{flex:0 0 32px;height:32px;border-radius:50%;background:var(--navy);color:var(--off);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700}
+.hc-num-list strong{display:block;color:var(--navy);font-weight:700;margin-bottom:2px}
+.hc-gain{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0}
+.hc-gain>div{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:18px}
+.hc-gain strong{display:block;font-family:var(--serif);font-size:22px;color:var(--navy);margin-bottom:6px}
+.hc-gain span{font-size:14px;line-height:1.7}
+.hc-callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:6px;padding:18px 22px;margin-top:24px}
+.hc-callout p{margin:0!important}
+.hc-callout strong{color:var(--navy)}
+/* accordion */
+.hc-acc{margin-top:32px;border-top:1px solid var(--line)}
+.hc-acc-item{border-bottom:1px solid var(--line)}
+.hc-acc-btn{width:100%;min-height:56px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0;background:none;border:none;cursor:pointer;text-align:left;font-family:inherit;font-size:15px;font-weight:600;color:var(--navy)}
+.hc-acc-lead{display:flex;flex-direction:column;gap:4px}
+.hc-acc-tag{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--amber)}
+.hc-chev{flex:0 0 20px;width:20px;height:20px;color:var(--amber);transition:transform .3s}
+.hc-acc-btn[aria-expanded="true"] .hc-chev{transform:rotate(180deg)}
+.hc-acc-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s}
+.hc-acc-panel.open{grid-template-rows:1fr}
+.hc-acc-panel>div{overflow:hidden}
+.hc-acc-inner{padding:0 0 22px}
+.hc-acc-inner ul{margin:0 0 18px;padding-left:20px;font-size:15px;line-height:1.8}
+.hc-acc-inner li{margin-bottom:6px}
+.hc-reading{list-style:none;padding:0!important}
+.hc-reading li{margin-bottom:14px!important}
+.hc-reading a{color:var(--navy);font-weight:700;text-decoration:underline;text-decoration-color:var(--amber);text-underline-offset:3px}
+/* visual */
+.hcv{position:relative;container-type:inline-size}
+.hcv img{width:100%;height:auto;display:block;border-radius:8px}
+.hcv .hcv-k{position:absolute;transform:translate(-50%,-50%);font-family:var(--font-montserrat),Montserrat,sans-serif;font-weight:700;font-size:clamp(10px,2.1cqw,16px);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;color:oklch(45% 0.13 258)}
+.hcv .hcv-o{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:.2em;margin-bottom:-2.6cqw;font-family:var(--font-montserrat),Montserrat,sans-serif;font-weight:700;font-size:clamp(11px,2.3cqw,18px);letter-spacing:.08em;text-transform:uppercase;line-height:1.1;color:oklch(60% 0.17 45)}
+.hc-caption{font-size:13px;color:var(--muted);margin-top:10px;line-height:1.6}
+/* contrast */
+.hc-contrast{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--card)}
+.hc-contrast .hc-head{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:14px 18px;background:oklch(93% 0.008 80);color:var(--muted)}
+.hc-contrast .hc-head.good{background:var(--navy);color:var(--amber)}
+.hc-contrast .hc-cell{font-size:14px;line-height:1.6;padding:14px 18px;border-top:1px solid var(--line)}
+.hc-contrast .hc-cell.good{font-weight:500;color:var(--navy);border-left:1px solid var(--line)}
+.hc-cell-label{display:none}
+/* rules */
+.hc-rules{list-style:none;margin:24px 0 0;padding:0;display:grid;gap:26px}
+.hc-rules li{display:grid;grid-template-columns:32px 1fr;gap:16px;align-items:start}
+.hc-rule-main{font-weight:700!important;font-size:16px!important;color:var(--navy);margin:4px 0 6px!important;line-height:1.5!important}
+.hc-note{font-size:13px!important;color:var(--sub);margin-top:24px!important;line-height:1.7!important}
+/* story */
+.hc-moment{font-family:var(--serif);font-style:italic;font-size:clamp(20px,2.4vw,24px)!important;line-height:1.5!important;color:var(--navy);border-left:none;margin:28px 0!important}
+.hc-lessons{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:clamp(20px,3vw,28px);margin-top:28px}
+.hc-lessons h3{margin-top:0!important}
+.hc-lessons ul{margin:0;padding-left:20px;font-size:15px;line-height:1.8}
+.hc-lessons li{margin-bottom:6px}
+/* faith */
+.hc-faith{background:var(--navy)}
+.hc-faith h2{color:var(--off);font-size:clamp(22px,2.8vw,32px)}
+.hc-faith p{color:var(--light-navy)}
+.hc-faith .hc-faith-close{color:var(--off);font-weight:600}
+.hc-reflect{background:var(--off);border-radius:8px;padding:clamp(20px,3vw,28px);margin-top:28px}
+.hc-reflect .hc-reflect-text{font-family:var(--serif);font-size:22px!important;line-height:1.45!important;color:var(--navy);margin:0!important}
+/* takeaways */
+.hc-take{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.hc-take li{display:flex;gap:16px;align-items:flex-start;background:var(--off);border-radius:8px;padding:16px 18px;font-size:15px;line-height:1.75;color:var(--navy)}
+@media (max-width:600px){
+  .hc-gain{grid-template-columns:1fr}
+  .hc-contrast{grid-template-columns:1fr}
+  .hc-contrast .hc-head{display:none}
+  .hc-contrast .hc-cell.good{border-left:none;border-top:none;padding-top:0;padding-bottom:18px}
+  .hc-contrast .hc-cell.bad{padding-bottom:8px}
+  .hc-cell-label{display:block;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:2px;color:var(--muted)}
+  .hc-cell.good .hc-cell-label{color:var(--amber)}
+}
+@media (prefers-reduced-motion:reduce){
+  .hc-acc-panel,.hc-chev{transition:none}
+}
+`;
+
+// ── ACCORDION ──────────────────────────────────────────────────────────────────
+
+function Accordion({ items, lang, open, onToggle, extra }: {
+  items: AccItem[];
+  lang: Lang;
+  open: Record<string, boolean>;
+  onToggle: (id: string) => void;
+  extra?: { item: AccItem; content: ReactNode };
+}) {
+  const all = extra ? [...items, extra.item] : items;
+  return (
+    <div className="hc-acc">
+      {all.map((item) => {
+        const isOpen = !!open[item.id];
+        const panelId = `hc-panel-${item.id}`;
+        const btnId = `hc-btn-${item.id}`;
+        const custom = extra && item.id === extra.item.id ? extra.content : null;
+        return (
+          <div className="hc-acc-item" key={item.id} id={item.anchorId}>
+            <button
+              id={btnId}
+              type="button"
+              className="hc-acc-btn"
+              aria-expanded={isOpen}
+              aria-controls={panelId}
+              onClick={() => onToggle(item.id)}
+            >
+              <span className="hc-acc-lead">
+                <span className="hc-acc-tag">{item.tag[lang]}</span>
+                {item.title[lang]}
+              </span>
+              <svg className="hc-chev" viewBox="0 0 20 20" aria-hidden="true">
+                <path d="M5 7.5l5 5 5-5" fill="none" stroke="currentColor" strokeWidth="2" />
+              </svg>
+            </button>
+            <div id={panelId} role="region" aria-labelledby={btnId} className={`hc-acc-panel${isOpen ? " open" : ""}`}>
+              <div>
+                <div className="hc-acc-inner">
+                  {custom ?? item.blocks.map((b, i) => {
+                    if (b.kind === "ul") {
+                      return <ul key={i}>{b.items.map((it, j) => <li key={j}>{rich(it[lang])}</li>)}</ul>;
+                    }
+                    if (b.kind === "h4") return <h4 key={i}>{b.text[lang]}</h4>;
+                    return <p key={i}>{rich(b.text[lang])}</p>;
+                  })}
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
 
 // ── COMPONENT ──────────────────────────────────────────────────────────────────
 
@@ -387,9 +666,7 @@ export default function HealthyConflictClient({ isSaved: initialSaved, signupBan
 
   const [saved, setSaved] = useState(initialSaved);
   const [isPending, startTransition] = useTransition();
-  const [expandedCards, setExpandedCards] = useState<Record<number, boolean>>({});
-  const [bgOpen, setBgOpen] = useState(false);
-  const [reflections, setReflections] = useState<Record<number, string>>({});
+  const [open, setOpen] = useState<Record<string, boolean>>({});
 
   const t = (en: string, id: string) => tFn(en, id, lang);
 
@@ -406,1100 +683,420 @@ export default function HealthyConflictClient({ isSaved: initialSaved, signupBan
     });
   }
 
-  function toggleCard(index: number) {
-    setExpandedCards((prev) => {
-      const next = { ...prev, [index]: !prev[index] };
-      if (next[index]) {
-        window.gtag?.("event", "concept_card_opened", { resource: "healthy-conflict", card: index + 1 });
+  function toggle(id: string) {
+    setOpen((prev) => {
+      const next = { ...prev, [id]: !prev[id] };
+      if (next[id]) {
+        window.gtag?.("event", "concept_card_opened", { resource: "healthy-conflict", card: id });
       }
       return next;
     });
   }
 
-  // ── RESPONSIVE CONTRAST CARD GRID ─────────────────────────────────────────
-  // We detect window width with a simple CSS media query approach via inline styles.
-  // Since this is inline-only, we use a fixed 2-col grid that stacks via min-width.
+  const furtherReading: AccItem = {
+    id: "further-reading",
+    tag: { en: "Further reading", id: "Bacaan lanjutan" },
+    title: { en: "Where to learn more", id: "Untuk belajar lebih jauh" },
+    blocks: [],
+  };
+
+  const labelBad = t("Avoiding conflict", "Menghindari konflik");
+  const labelGood = t("Healthy conflict", "Konflik yang sehat");
 
   return (
-    <div style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", background: offWhite, minHeight: "100vh" }}>
+    <div className="hc">
+      <style>{CSS}</style>
+
       <LangToggle langs={["en", "id"]} extra={
         <PresentLauncher href="/resources/healthy-conflict/present" lang={lang}
           title={{ en: "Teaching this to someone else?", id: "Mengajarkan ini kepada orang lain?" }}
-          text={{ en: "Use the guided slideshow to walk your team through the five elements of a safe space.", id: "Gunakan slideshow terpandu untuk mengajak timmu melalui lima elemen ruang yang aman." }} />
+          text={{ en: "Use the guided slideshow to walk your team through the five rules for healthy conflict.", id: "Gunakan slideshow terpandu untuk mengajak tim Anda melalui lima aturan untuk konflik yang sehat." }} />
       } />
 
-      {/* ── 1. HERO ──────────────────────────────────────────────────────────── */}
-      <div style={{
-        background: navy,
-        padding: "clamp(72px, 10vw, 96px) 24px clamp(64px, 9vw, 88px)",
-        position: "relative",
-        overflow: "hidden",
-      }}>
-        <img src="/images/resources/healthy-conflict/hero.jpg" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", opacity: 0.18, mixBlendMode: "luminosity", pointerEvents: "none" }} />
-        <div style={{
-          position: "absolute",
-          left: 0,
-          top: 0,
-          bottom: 0,
-          width: 5,
-          background: amber,
-        }} />
-        <div style={{ maxWidth: 760, margin: "0 auto" }}>
-          <p style={{
-            fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-            fontSize: 12,
-            fontWeight: 700,
-            letterSpacing: "0.12em",
-            textTransform: "uppercase",
-            color: amber,
-            marginBottom: 20,
-          }}>
-            {t("Cross-Cultural · Leadership", "Lintas Budaya · Kepemimpinan")}
-          </p>
-
-          <h1 style={{
-            fontFamily: serif,
-            fontSize: "clamp(40px, 6vw, 72px)",
-            fontWeight: 600,
-            color: offWhite,
-            lineHeight: 1.08,
-            margin: "0 0 24px",
-          }}>
+      {/* ── 1. HERO ─────────────────────────────────────────────────────────── */}
+      <header className="hc-hero">
+        <img src="/images/resources/healthy-conflict/hero.jpg" alt="" />
+        <div className="hc-wrap">
+          <p className="hc-eyebrow">{t("Cross-Cultural · Leadership", "Lintas Budaya · Kepemimpinan")}</p>
+          <h1>{t("Healthy Conflict", "Konflik yang Sehat")}</h1>
+          <p className="hc-subline">
             {t(
-              "Creating Healthy Conflict: An Underrated Leadership Skill",
-              "Menciptakan Konflik yang Sehat: Keahlian Kepemimpinan yang Diremehkan",
-            )}
-          </h1>
-
-          <p style={{
-            fontFamily: serif,
-            fontSize: "clamp(17px, 2vw, 21px)",
-            fontWeight: 400,
-            color: "oklch(82% 0.025 80)",
-            lineHeight: 1.75,
-            fontStyle: "italic",
-            maxWidth: 600,
-            marginBottom: 32,
-          }}>
-            {t(
-              "Most leaders know how to keep the peace. Fewer know how to break it in a way that builds something better.",
-              "Kebanyakan pemimpin tahu cara menjaga perdamaian. Lebih sedikit yang tahu cara mengusiknya dengan cara yang membangun sesuatu yang lebih baik.",
+              "Conflict that is not named does not go away. It grows.",
+              "Konflik yang tidak diungkapkan tidak hilang. Konflik itu terus membesar.",
             )}
           </p>
+          <button
+            type="button"
+            className="hc-save"
+            onClick={handleSave}
+            disabled={saved || isPending}
+            aria-pressed={saved}
+            aria-label={saved
+              ? t("Saved to your dashboard", "Tersimpan di dasbor Anda")
+              : t("Save this module to your dashboard", "Simpan modul ini ke dasbor Anda")}
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 3h12v18l-6-4.5L6 21z" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+            </svg>
+            <span>{saved ? t("Saved to Dashboard", "Tersimpan di Dasbor") : t("Save to Dashboard", "Simpan ke Dasbor")}</span>
+          </button>
+        </div>
+      </header>
 
-          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-            <button
-              onClick={handleSave}
-              disabled={saved || isPending}
-              style={{
-                padding: "12px 28px",
-                background: saved ? "oklch(35% 0.05 260)" : amber,
-                color: offWhite,
-                border: "none",
-                borderRadius: 0,
-                fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-                fontSize: 13,
-                fontWeight: 700,
-                cursor: saved ? "default" : "pointer",
-              }}
-            >
-              {saved
-                ? t("✓ Saved to Dashboard", "✓ Tersimpan di Dashboard")
-                : t("Save to Dashboard", "Simpan ke Dashboard")}
-            </button>
-          </div>
+      {/* ── 2. INTRODUCTION ─────────────────────────────────────────────────── */}
+      <section className="hc-sec hc-a">
+        <div className="hc-wrap">
+          {INTRO.map((p, i) => (
+            <p key={i} className="hc-lede" style={i === INTRO.length - 1 ? { marginBottom: 0 } : undefined}>{p[lang]}</p>
+          ))}
+        </div>
+      </section>
+
+      {/* ── 3. AFTER THIS MODULE ────────────────────────────────────────────── */}
+      <div className="hc-obj">
+        <div className="hc-wrap">
+          <p className="hc-eyebrow">{t("After This Module", "Setelah Modul Ini")}</p>
+          <ul>
+            {OBJECTIVES.map((o, i) => <li key={i}>{o[lang]}</li>)}
+          </ul>
         </div>
       </div>
 
-      {/* ── 2. INTRODUCTION ──────────────────────────────────────────────────── */}
-      <div style={{ background: offWhite, padding: "clamp(56px, 8vw, 80px) 24px" }}>
-        <div style={{ maxWidth: 720, margin: "0 auto" }}>
-          <p style={{
-            fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-            fontSize: "clamp(15px, 1.6vw, 17px)",
-            fontWeight: 400,
-            color: bodyText,
-            lineHeight: 1.85,
-            marginBottom: 20,
-          }}>
+      {/* ── 4. KEY TERMS ────────────────────────────────────────────────────── */}
+      <section className="hc-sec hc-b">
+        <div className="hc-wrap">
+          <p className="hc-eyebrow">{t("Key terms", "Istilah Kunci")}</p>
+          <h2>{t("What is conflict?", "Apa itu konflik?")}</h2>
+          <p>
             {t(
-              "There is a particular silence that cross-cultural leaders know well. The meeting ends. Heads nod. Everyone smiles. You walk out feeling like something was resolved. And then nothing changes.",
-              "Ada keheningan tertentu yang dikenal baik oleh para pemimpin lintas budaya. Rapat berakhir. Kepala mengangguk. Semua orang tersenyum. Kamu keluar dengan perasaan seolah sesuatu telah terselesaikan. Dan kemudian tidak ada yang berubah.",
-            )}
-          </p>
-          <p style={{
-            fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-            fontSize: "clamp(15px, 1.6vw, 17px)",
-            fontWeight: 400,
-            color: bodyText,
-            lineHeight: 1.85,
-            marginBottom: 20,
-          }}>
-            {t(
-              "Underneath that silence is usually a conversation that never happened. A disagreement that no one named. A frustration that went underground instead of onto the table.",
-              "Di balik keheningan itu biasanya ada percakapan yang tidak pernah terjadi. Ketidaksetujuan yang tidak pernah diungkapkan siapa pun. Frustrasi yang masuk ke bawah tanah alih-alih ke atas meja.",
+              "Researchers define conflict in different ways. Three definitions are widely used. Each one looks at a different part of conflict.",
+              "Para peneliti mendefinisikan konflik dengan cara yang berbeda. Ada tiga definisi yang banyak dipakai. Masing-masing melihat bagian konflik yang berbeda.",
             )}
           </p>
 
-          <img
-            src="/images/resources/healthy-conflict/conflict-table.jpg"
-            alt="A team around a conference table — the setting where honest disagreement becomes possible"
-            style={{
-              width: "100%",
-              height: "auto",
-              display: "block",
-              margin: "8px 0 28px",
-              borderLeft: `4px solid ${amber}`,
-            }}
-          />
-
-          <p style={{
-            fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-            fontSize: "clamp(15px, 1.6vw, 17px)",
-            fontWeight: 400,
-            color: bodyText,
-            lineHeight: 1.85,
-            marginBottom: 20,
-          }}>
-            {t(
-              "This is not a failure of character. In many of the cultures where cross-cultural leaders work, silence is the respectful response. Raising a direct objection can feel like an attack. Holding your position publicly can be heard as a refusal to submit. The instinct to protect relational harmony is not weakness, it is wisdom shaped by culture, community, and history.",
-              "Ini bukan kegagalan karakter. Dalam banyak budaya di mana pemimpin lintas budaya bekerja, diam adalah respons yang penuh hormat. Mengajukan keberatan secara langsung bisa terasa seperti serangan. Mempertahankan posisi secara terbuka bisa didengar sebagai penolakan untuk tunduk. Insting untuk melindungi keharmonisan hubungan bukanlah kelemahan, melainkan kebijaksanaan yang dibentuk oleh budaya, komunitas, dan sejarah.",
-            )}
-          </p>
-          <p style={{
-            fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-            fontSize: "clamp(15px, 1.6vw, 17px)",
-            fontWeight: 400,
-            color: "oklch(30% 0.12 260)",
-            lineHeight: 1.85,
-            marginBottom: 20,
-            fontStyle: "italic",
-            marginTop: 8,
-          }}>
-            {t(
-              "But instincts, however culturally appropriate, have consequences.",
-              "Tapi insting, betapapun tepat secara budaya, memiliki konsekuensi.",
-            )}
-          </p>
-          <p style={{
-            fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-            fontSize: "clamp(15px, 1.6vw, 17px)",
-            fontWeight: 400,
-            color: bodyText,
-            lineHeight: 1.85,
-            marginBottom: 0,
-          }}>
-            {t(
-              "This module is about what happens when healthy conflict is missing, what it actually looks like when it is present, and how a leader can create the conditions where honest disagreement becomes the thing that builds trust rather than destroys it.",
-              "Modul ini membahas apa yang terjadi ketika konflik yang sehat tidak ada, seperti apa sebenarnya ketika ia hadir, dan bagaimana seorang pemimpin dapat menciptakan kondisi di mana ketidaksetujuan yang jujur menjadi hal yang membangun kepercayaan, bukan menghancurkannya.",
-            )}
-          </p>
-        </div>
-      </div>
-
-      {/* ── 3. LEARNING OUTCOME ──────────────────────────────────────────────── */}
-      <div style={{ background: navy, padding: "48px 24px" }}>
-        <div style={{ maxWidth: 720, margin: "0 auto" }}>
-          <p style={{
-            fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-            fontSize: 11,
-            fontWeight: 700,
-            letterSpacing: "0.12em",
-            textTransform: "uppercase",
-            color: amber,
-            marginBottom: 24,
-          }}>
-            {t("After This Module", "Setelah Modul Ini")}
-          </p>
-
-          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            {[
-              t(
-                "Recognise when conflict avoidance is costing your team more than the conflict itself would.",
-                "Mengenali ketika penghindaran konflik merugikan timmu lebih dari konflik itu sendiri.",
-              ),
-              t(
-                "Distinguish between destructive conflict and productive conflict, and describe what makes the difference.",
-                "Membedakan antara konflik yang destruktif dan konflik yang produktif, dan menjelaskan apa yang membuat perbedaan itu.",
-              ),
-              t(
-                "Create a structured, culturally aware space where honest disagreement can happen safely.",
-                "Menciptakan ruang yang terstruktur dan peka budaya di mana ketidaksetujuan yang jujur bisa terjadi dengan aman.",
-              ),
-            ].map((item, i) => (
-              <div key={i} style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
-                <div style={{
-                  width: 3,
-                  height: 20,
-                  background: amber,
-                  flexShrink: 0,
-                  marginTop: 3,
-                }} />
-                <p style={{
-                  fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-                  fontSize: 14,
-                  fontWeight: 500,
-                  color: dimOnNavy,
-                  lineHeight: 1.65,
-                  margin: 0,
-                }}>
-                  {item}
-                </p>
+          <div className="hc-defs">
+            {DEFINITIONS.map((d, i) => (
+              <div className="hc-def" key={i}>
+                <div className="hc-src">{rich(d.src[lang])}</div>
+                <blockquote>&ldquo;{d.quote[lang]}&rdquo;</blockquote>
+                <p className="hc-focus">{d.focus[lang]}</p>
               </div>
             ))}
           </div>
-        </div>
-      </div>
 
-      {/* ── 4. CONTRAST CARD ─────────────────────────────────────────────────── */}
-      <div style={{ background: offWhite, padding: "clamp(56px, 8vw, 72px) 24px" }}>
-        <div style={{ maxWidth: 880, margin: "0 auto" }}>
-          <p style={{
-            fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-            fontSize: 11,
-            fontWeight: 700,
-            letterSpacing: "0.12em",
-            textTransform: "uppercase",
-            color: subText,
-            marginBottom: 28,
-          }}>
-            {t("Avoidance vs. Healthy Conflict", "Penghindaran vs. Konflik Sehat")}
+          <div className="hc-ours">
+            <p className="hc-term">{t("Conflict", "Konflik")}</p>
+            <p className="hc-def-text">
+              {t(
+                "Conflict is when people who depend on each other see their goals, needs or views as opposed, and at least one of them feels it.",
+                "Konflik adalah ketika orang-orang yang saling bergantung merasa tujuan, kebutuhan, atau pandangan mereka saling bertentangan, dan setidaknya salah satu dari mereka merasakannya.",
+              )}
+            </p>
+            <p className="hc-term">{t("Healthy conflict", "Konflik yang sehat")}</p>
+            <p className="hc-def-text">
+              {t(
+                "Healthy conflict is when people face a conflict openly and with respect, and through it gain unity, clarity and trust. After the conflict, they continue together in unity.",
+                "Konflik yang sehat adalah ketika orang menghadapi konflik secara terbuka dan dengan saling menghormati, dan melalui konflik itu memperoleh kesatuan, kejelasan, dan kepercayaan. Setelah konflik, mereka melangkah bersama dalam kesatuan.",
+              )}
+            </p>
+          </div>
+
+          <h3>{t("Why this definition of conflict", "Mengapa definisi konflik ini")}</h3>
+          <p>
+            {t(
+              "It takes one element from each of the three definitions above. It adds one element that matters for teams.",
+              "Definisi ini mengambil satu unsur dari masing-masing tiga definisi di atas, lalu menambahkan satu unsur yang penting bagi tim.",
+            )}
+          </p>
+          <ol className="hc-num-list">
+            {WHY_DEF.map((w, i) => (
+              <li key={i}>
+                <span className="hc-num" aria-hidden="true">{i + 1}</span>
+                <div><strong>{w.title[lang]}</strong>{rich(w.body[lang])}</div>
+              </li>
+            ))}
+          </ol>
+
+          <h3>{t("Why this definition of healthy conflict", "Mengapa definisi konflik yang sehat ini")}</h3>
+          <p>
+            {t(
+              "The definition of healthy conflict describes the result. A conflict is healthy when people come out of it with more than they had before. They gain three things:",
+              "Definisi konflik yang sehat menggambarkan hasilnya. Sebuah konflik disebut sehat ketika orang keluar darinya dengan lebih banyak daripada sebelumnya. Mereka memperoleh tiga hal:",
+            )}
+          </p>
+          <div className="hc-gain">
+            {GAINS.map((g, i) => (
+              <div key={i}><strong>{g.title[lang]}</strong><span>{g.body[lang]}</span></div>
+            ))}
+          </div>
+          <p style={{ marginTop: 18 }}>
+            {rich(t(
+              "Research on structured disagreement suggests that, handled well, conflict can lead to better decisions. This works best when people share a goal and follow clear rules.^5^",
+              "Penelitian tentang perbedaan pendapat yang diatur dengan jelas menunjukkan bahwa konflik yang ditangani dengan baik dapat menghasilkan keputusan yang lebih baik. Hal ini paling berhasil ketika orang memiliki tujuan yang sama dan mengikuti aturan yang jelas.^5^",
+            ))}
           </p>
 
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-            gap: 0,
-          }}>
-            {/* Left — Avoidance */}
-            <div style={{
-              background: mutedGray,
-              padding: "36px 32px",
-              borderRight: "1px solid oklch(88% 0.008 80)",
-            }}>
-              <p style={{
-                fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-                fontSize: 11,
-                fontWeight: 700,
-                letterSpacing: "0.10em",
-                textTransform: "uppercase",
-                color: subText,
-                marginBottom: 20,
-              }}>
-                {t("Avoidance", "Penghindaran")}
-              </p>
-              <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-                {CONTRAST_AVOIDANCE.map((item, i) => (
-                  <div key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
-                    <div style={{
-                      width: 4,
-                      height: 4,
-                      borderRadius: 0,
-                      background: subText,
-                      flexShrink: 0,
-                      marginTop: 7,
-                    }} />
-                    <p style={{
-                      fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-                      fontSize: 14,
-                      fontWeight: 400,
-                      color: subText,
-                      lineHeight: 1.65,
-                      margin: 0,
-                    }}>
-                      {item}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Right — Healthy Conflict */}
-            <div style={{
-              background: offWhite,
-              padding: "36px 32px",
-              borderTop: `3px solid ${amber}`,
-              borderLeft: `3px solid ${amber}`,
-            }}>
-              <p style={{
-                fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-                fontSize: 11,
-                fontWeight: 700,
-                letterSpacing: "0.10em",
-                textTransform: "uppercase",
-                color: amber,
-                marginBottom: 20,
-              }}>
-                {t("Healthy Conflict", "Konflik Sehat")}
-              </p>
-              <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-                {CONTRAST_HEALTHY.map((item, i) => (
-                  <div key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
-                    <div style={{
-                      width: 4,
-                      height: 4,
-                      borderRadius: 0,
-                      background: amber,
-                      flexShrink: 0,
-                      marginTop: 7,
-                    }} />
-                    <p style={{
-                      fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-                      fontSize: 14,
-                      fontWeight: 500,
-                      color: bodyText,
-                      lineHeight: 1.65,
-                      margin: 0,
-                    }}>
-                      {item}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
+          <div className="hc-callout">
+            <p>
+              {rich(t(
+                "Conflict itself is not healthy or unhealthy. The word *healthy* describes what a team does with it.",
+                "Konflik itu sendiri tidak sehat dan tidak tidak sehat. Kata *sehat* menggambarkan apa yang dilakukan tim terhadap konflik itu.",
+              ))}
+            </p>
           </div>
         </div>
-      </div>
+      </section>
 
       {signupBanner}
 
-      {/* ── 5. TEACHING — 4 SECTIONS ─────────────────────────────────────────── */}
-      {TEACHING_SECTIONS.map((section, si) => (
-        <div key={si}>
-        <div style={{ background: section.bg, padding: "clamp(56px, 7vw, 80px) 24px" }}>
-          <div style={{ maxWidth: 720, margin: "0 auto" }}>
-            <h2 style={{
-              fontFamily: serif,
-              fontSize: "clamp(22px, 2.8vw, 30px)",
-              fontWeight: 600,
-              color: section.dark ? offWhite : navy,
-              marginBottom: 24,
-            }}>
-              {lang === "id" ? section.title.id : section.title.en}
-            </h2>
+      {/* ── 5. CONFLICT FEELS UNSAFE ────────────────────────────────────────── */}
+      <section className="hc-sec hc-a" id="mc-unsafe">
+        <div className="hc-wrap">
+          <p className="hc-eyebrow">{t("Why teams avoid conflict", "Mengapa Tim Menghindari Konflik")}</p>
+          <h2>{t("Conflict feels unsafe", "Konflik terasa tidak aman")}</h2>
+          {UNSAFE.map((p, i) => <p key={i}>{rich(p[lang])}</p>)}
 
-            {section.paragraphs.map((para, pi) =>
-              para.pullQuote ? (
-                <div key={pi} style={{
-                  fontFamily: serif,
-                  fontSize: "clamp(18px, 2vw, 22px)",
-                  fontStyle: "italic",
-                  color: section.dark ? lightOnNavy : navy,
-                  borderLeft: `3px solid ${amber}`,
-                  paddingLeft: 20,
-                  margin: "28px 0",
-                  lineHeight: 1.6,
-                }}>
-                  {lang === "id" ? para.id : para.en}
-                </div>
-              ) : (
-                <p key={pi} style={{
-                  fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-                  fontSize: "clamp(14px, 1.5vw, 16px)",
-                  fontWeight: 400,
-                  color: section.dark ? dimOnNavy : bodyText,
-                  lineHeight: 1.85,
-                  marginBottom: 20,
-                }}>
-                  {lang === "id" ? para.id : para.en}
-                </p>
-              )
+          <h3>{t("Unnamed conflict piles up", "Konflik yang tidak diungkapkan akan menumpuk")}</h3>
+          <p>{rich(PILES[lang])}</p>
+
+          <h3>{t("How unhealthy conflict grows", "Bagaimana konflik yang tidak sehat membesar")}</h3>
+          {GROWS.map((p, i) => <p key={i}>{rich(p[lang])}</p>)}
+
+          <Accordion
+            items={UNSAFE_ACCORDIONS}
+            lang={lang}
+            open={open}
+            onToggle={toggle}
+            extra={{
+              item: furtherReading,
+              content: (
+                <ul className="hc-reading">
+                  {FURTHER_READING.map((r, i) => (
+                    <li key={i}>
+                      <a href={r.href} target="_blank" rel="noopener noreferrer">{r.title}</a>. {rich(r.desc[lang])}
+                    </li>
+                  ))}
+                </ul>
+              ),
+            }}
+          />
+        </div>
+      </section>
+
+      {/* ── 6. VISUAL ───────────────────────────────────────────────────────── */}
+      <section className="hc-sec hc-b">
+        <div className="hc-wrap">
+          <p className="hc-eyebrow">{t("See it", "Lihat gambarnya")}</p>
+          <h2>{t("What healthy conflict looks like", "Seperti Apa Konflik yang Sehat")}</h2>
+          <p>
+            {t(
+              "Two people bring a difference into a safe place. They name it and work through it. They leave as one, going forward in the same direction.",
+              "Dua orang membawa perbedaan mereka ke tempat yang aman. Mereka mengungkapkannya dan menyelesaikannya bersama. Mereka keluar sebagai satu kesatuan, melangkah ke arah yang sama.",
             )}
+          </p>
+          <figure style={{ margin: 0 }}>
+            <div className="hcv">
+              <div className="hcv-o" aria-hidden="true">
+                <div>{t("Unity", "Kesatuan")}</div>
+                <div>{t("Clarity", "Kejelasan")}</div>
+                <div>{t("Trust", "Kepercayaan")}</div>
+              </div>
+              <img
+                src="/images/resources/healthy-conflict/healthy-conflict-visual.webp"
+                alt={t(
+                  "Two people at a table. Each line has a knot: the conflict. The lines meet in a safe place and go forward as one line to a good outcome.",
+                  "Dua orang di sebuah meja. Setiap garis memiliki simpul, yaitu konflik. Kedua garis bertemu di tempat yang aman dan bergerak maju sebagai satu garis menuju hasil yang baik.",
+                )}
+              />
+              <span className="hcv-k" aria-hidden="true" style={{ left: "32%", top: "86%" }}>{t("Conflict", "Konflik")}</span>
+              <span className="hcv-k" aria-hidden="true" style={{ left: "67.6%", top: "86%" }}>{t("Conflict", "Konflik")}</span>
+              <span className="hcv-k" aria-hidden="true" style={{ left: "50%", top: "79%" }}>{t("Safe place", "Tempat aman")}</span>
+            </div>
+            <figcaption className="hc-caption">
+              {t(
+                "Two lines come together in a safe place and go forward as one.",
+                "Dua garis bertemu di tempat yang aman, lalu bergerak maju sebagai satu.",
+              )}
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      {/* ── 7. CONTRAST ─────────────────────────────────────────────────────── */}
+      <section className="hc-sec hc-a">
+        <div className="hc-wrap">
+          <p className="hc-eyebrow">{t("Compare", "Bandingkan")}</p>
+          <h2>{t("Avoiding conflict and healthy conflict", "Menghindari Konflik dan Konflik yang Sehat")}</h2>
+          <p>
+            {t(
+              "The same team can look very different, depending on what it does with conflict.",
+              "Tim yang sama bisa tampak sangat berbeda, tergantung pada apa yang dilakukannya terhadap konflik.",
+            )}
+          </p>
+          <figure style={{ margin: "0 0 28px" }}>
+            <img
+              src="/images/resources/healthy-conflict/conflict-avoidance.webp"
+              alt={t(
+                "Two people with arms crossed turn away from each other. Their lines pull apart in opposite directions.",
+                "Dua orang bersedekap dan saling membelakangi. Garis mereka saling menjauh ke arah yang berlawanan.",
+              )}
+              style={{ width: "100%", height: "auto", display: "block", borderRadius: 8 }}
+            />
+            <figcaption className="hc-caption">
+              {t(
+                "Avoiding conflict: each person turns away and the lines pull apart.",
+                "Menghindari konflik: masing-masing berbalik dan garisnya saling menjauh.",
+              )}
+            </figcaption>
+          </figure>
+          <div
+            className="hc-contrast"
+            role="table"
+            aria-label={t("Avoiding conflict compared with healthy conflict", "Perbandingan antara menghindari konflik dan konflik yang sehat")}
+          >
+            <div role="rowgroup" style={{ display: "contents" }}>
+              <div role="row" style={{ display: "contents" }}>
+                <div className="hc-head bad" role="columnheader">{labelBad}</div>
+                <div className="hc-head good" role="columnheader">{labelGood}</div>
+              </div>
+            </div>
+            <div role="rowgroup" style={{ display: "contents" }}>
+              {CONTRAST.map((row, i) => (
+                <div role="row" style={{ display: "contents" }} key={i}>
+                  <div className="hc-cell bad" role="cell">
+                    <span className="hc-cell-label" aria-hidden="true">{labelBad}</span>
+                    {row.bad[lang]}
+                  </div>
+                  <div className="hc-cell good" role="cell">
+                    <span className="hc-cell-label" aria-hidden="true">{labelGood}</span>
+                    {row.good[lang]}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-        </div>
-      ))}
+      </section>
 
-      {/* ── 6. RESEARCH CALLOUTS ─────────────────────────────────────────────── */}
-      <div id="mc-research" style={{ background: lightGray, padding: "clamp(56px, 8vw, 72px) 24px" }}>
-        <div style={{ maxWidth: 720, margin: "0 auto" }}>
-          <p style={{
-            fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-            fontSize: 11,
-            fontWeight: 700,
-            letterSpacing: "0.12em",
-            textTransform: "uppercase",
-            color: amber,
-            marginBottom: 28,
-          }}>
-            {t("What the Research Shows", "Apa yang Dikatakan Penelitian")}
+      {/* ── 8. CREATING A SAFE PLACE ────────────────────────────────────────── */}
+      <section className="hc-sec hc-b">
+        <div className="hc-wrap">
+          <p className="hc-eyebrow">{t("The leader's role", "Peran Pemimpin")}</p>
+          <h2>{t("Creating a safe place", "Menciptakan Tempat yang Aman")}</h2>
+          <p>
+            {t(
+              "A team will not name conflict until it feels safe to do so. Creating that safe place is the leader's job.",
+              "Sebuah tim tidak akan mengungkapkan konflik sebelum merasa aman untuk melakukannya. Menciptakan tempat yang aman itu adalah tugas pemimpin.",
+            )}
           </p>
-          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-            {RESEARCH_CALLOUTS.map((item, ri) => (
-              <div key={ri} style={{
-                background: offWhite,
-                padding: "20px 24px",
-                borderLeft: `3px solid ${amber}`,
-              }}>
-                <p style={{
-                  fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-                  fontSize: 11,
-                  fontWeight: 700,
-                  color: amber,
-                  textTransform: "uppercase",
-                  letterSpacing: "0.08em",
-                  marginBottom: 10,
-                }}>
-                  {item.source}
-                </p>
-                <p style={{
-                  fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-                  fontSize: 14,
-                  color: bodyText,
-                  lineHeight: 1.8,
-                  margin: 0,
-                }}>
-                  {lang === "id" ? item.id : item.en}
-                </p>
-              </div>
+          <p>
+            {rich(t(
+              "Teams handle conflict better when they agree in advance how they will handle it. One study followed 57 student project teams. The teams that did well set clear rules for conflict and focused on facts, not on personalities.^17^",
+              "Tim menangani konflik dengan lebih baik ketika mereka sepakat sejak awal tentang cara menanganinya. Satu penelitian mengikuti 57 tim proyek mahasiswa. Tim yang berhasil menetapkan aturan yang jelas untuk konflik dan berfokus pada fakta, bukan pada kepribadian.^17^",
             ))}
+          </p>
+          <ol className="hc-num-list">
+            {SAFE_STEPS.map((s, i) => (
+              <li key={i}>
+                <span className="hc-num" aria-hidden="true">{i + 1}</span>
+                <div><strong>{s.title[lang]}</strong>{s.body[lang]}</div>
+              </li>
+            ))}
+          </ol>
+          <div className="hc-callout">
+            <p>
+              {rich(t(
+                "**Safe is not the same as comfortable.** A safe team still disagrees, and that can feel uncomfortable. Safe means people can disagree without fear of being punished for it.^18^",
+                "**Aman tidak sama dengan nyaman.** Tim yang aman tetap berbeda pendapat, dan itu bisa terasa tidak nyaman. Aman berarti orang boleh berbeda pendapat tanpa takut dihukum karenanya.^18^",
+              ))}
+            </p>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* ── 7. CONCEPT CARDS — THE CONFLICT TABLE ────────────────────────────── */}
-      <div style={{ background: navy, padding: "clamp(64px, 9vw, 88px) 24px" }}>
-        <div style={{ maxWidth: 840, margin: "0 auto" }}>
-          <p style={{
-            fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-            fontSize: 11,
-            fontWeight: 700,
-            letterSpacing: "0.12em",
-            textTransform: "uppercase",
-            color: amber,
-            marginBottom: 12,
-          }}>
-            {t("The Conflict Table", "Meja Konflik")}
-          </p>
-
-          <h2 style={{
-            fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-            fontSize: "clamp(20px, 2.8vw, 28px)",
-            fontWeight: 800,
-            color: offWhite,
-            marginBottom: 40,
-          }}>
+      {/* ── 9. FIVE RULES ───────────────────────────────────────────────────── */}
+      <section className="hc-sec hc-a" id="mc-rules">
+        <div className="hc-wrap">
+          <p className="hc-eyebrow">{t("The rules", "Aturannya")}</p>
+          <h2>{t("Five rules for healthy conflict", "Lima Aturan untuk Konflik yang Sehat")}</h2>
+          <p>
             {t(
-              "5 Elements of a Safe Space",
-              "5 Elemen Ruang yang Aman",
+              "The leader explains these rules before the conversation starts. Every person in the conversation agrees to them.",
+              "Pemimpin menjelaskan aturan ini sebelum percakapan dimulai. Setiap orang dalam percakapan itu menyetujuinya.",
             )}
-          </h2>
-
-          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-            {CONCEPT_CARDS.map((card, ci) => {
-              const isOpen = !!expandedCards[ci];
-              return (
-                <div
-                  key={ci}
-                  style={{
-                    background: "oklch(28% 0.10 260)",
-                    border: `1px solid ${isOpen ? amber : "oklch(32% 0.10 260)"}`,
-                    borderTop: isOpen ? `2px solid ${amber}` : undefined,
-                    overflow: "hidden",
-                  }}
-                >
-                  <button
-                    onClick={() => toggleCard(ci)}
-                    style={{
-                      width: "100%",
-                      padding: "20px 24px",
-                      background: "transparent",
-                      border: "none",
-                      cursor: "pointer",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      gap: 12,
-                      textAlign: "left",
-                    }}
-                  >
-                    <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-                      <span style={{
-                        fontFamily: serif,
-                        fontSize: 32,
-                        fontWeight: 700,
-                        color: amber,
-                        lineHeight: 1,
-                        flexShrink: 0,
-                      }}>
-                        {card.number}
-                      </span>
-                      <span style={{
-                        fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-                        fontSize: 14,
-                        fontWeight: 700,
-                        color: offWhite,
-                        lineHeight: 1.3,
-                      }}>
-                        {lang === "id" ? card.title.id : card.title.en}
-                      </span>
-                    </div>
-                    <span style={{
-                      color: amber,
-                      fontSize: 20,
-                      fontWeight: 700,
-                      flexShrink: 0,
-                      lineHeight: 1,
-                    }}>
-                      {isOpen ? "−" : "+"}
-                    </span>
-                  </button>
-
-                  {isOpen && (
-                    <div style={{ padding: "0 24px 24px" }}>
-                      <p style={{
-                        fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-                        fontSize: 14,
-                        color: dimOnNavy,
-                        lineHeight: 1.8,
-                        marginBottom: 20,
-                      }}>
-                        {lang === "id" ? card.body.id : card.body.en}
-                      </p>
-                      <div style={{
-                        background: amberDim,
-                        padding: "14px 18px",
-                        borderLeft: `3px solid ${amber}`,
-                      }}>
-                        <p style={{
-                          fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-                          fontSize: 11,
-                          fontWeight: 700,
-                          color: amber,
-                          textTransform: "uppercase",
-                          letterSpacing: "0.08em",
-                          marginBottom: 8,
-                        }}>
-                          {t("You might say:", "Anda bisa berkata:")}
-                        </p>
-                        <p style={{
-                          fontFamily: serif,
-                          fontSize: 15,
-                          fontStyle: "italic",
-                          color: lightOnNavy,
-                          lineHeight: 1.7,
-                          margin: 0,
-                        }}>
-                          {lang === "id" ? card.script.id : card.script.en}
-                        </p>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-
-      {/* ── 7. FIELD STORY ───────────────────────────────────────────────────── */}
-      <div style={{ background: navyDeep, padding: "clamp(80px, 11vw, 112px) 24px" }}>
-        <div style={{ maxWidth: 680, margin: "0 auto" }}>
-          <p style={{
-            fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-            fontSize: 11,
-            fontWeight: 700,
-            letterSpacing: "0.12em",
-            textTransform: "uppercase",
-            color: amber,
-            marginBottom: 16,
-          }}>
-            {t("Field Story", "Kisah Lapangan")}
           </p>
+          <ol className="hc-rules">
+            {RULES.map((r, i) => (
+              <li key={i}>
+                <span className="hc-num" aria-hidden="true">{i + 1}</span>
+                <div>
+                  <p className="hc-rule-main">{r.title[lang]}</p>
+                  <p style={{ marginBottom: 0 }}>{rich(r.body[lang])}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
 
-          <h2 style={{
-            fontFamily: serif,
-            fontSize: "clamp(26px, 3.5vw, 38px)",
-            fontWeight: 600,
-            color: offWhite,
-            marginBottom: 40,
-          }}>
-            {t("Two Leaders, One Table", "Dua Pemimpin, Satu Meja")}
-          </h2>
+          <Accordion items={[NOT_LEADER]} lang={lang} open={open} onToggle={toggle} />
 
-          <div style={{
-            height: 1,
-            background: "oklch(35% 0.08 260)",
-            margin: "0 0 40px",
-          }} />
-
-          {FIELD_STORY_PARAGRAPHS.map((para, pi) =>
-            para.climax ? (
-              <div key={pi} style={{
-                borderLeft: `3px solid ${amber}`,
-                paddingLeft: 24,
-                margin: "32px 0",
-              }}>
-                <p style={{
-                  fontFamily: serif,
-                  fontSize: "clamp(17px, 1.9vw, 20px)",
-                  color: lightOnNavy,
-                  lineHeight: 1.85,
-                  fontStyle: "italic",
-                  margin: 0,
-                }}>
-                  {lang === "id" ? para.id : para.en}
-                </p>
-              </div>
-            ) : (
-              <p key={pi} style={{
-                fontFamily: serif,
-                fontSize: "clamp(17px, 1.9vw, 20px)",
-                color: "oklch(84% 0.02 80)",
-                lineHeight: 1.85,
-                marginBottom: 24,
-              }}>
-                {lang === "id" ? para.id : para.en}
-              </p>
-            )
-          )}
-        </div>
-      </div>
-
-      {/* ── 8. QUOTE HIGHLIGHT ───────────────────────────────────────────────── */}
-      <section style={{ background: offWhite, padding: "clamp(64px, 9vw, 88px) 24px" }}>
-        <div style={{ maxWidth: 680, margin: "0 auto" }}>
-          {/* Navy quote container */}
-          <div style={{ background: navy, padding: "clamp(40px, 6vw, 56px) 44px", marginBottom: 32 }}>
-            <p style={{
-              fontFamily: serif,
-              fontSize: "clamp(24px, 3.2vw, 36px)",
-              fontWeight: 600,
-              color: offWhite,
-              fontStyle: "italic",
-              marginBottom: 16,
-              lineHeight: 1.3,
-              textAlign: "center",
-            }}>
-              &ldquo;{t("Faithful are the wounds of a friend.", "Seorang kawan memukul dengan maksud baik, tetapi seorang lawan mencium secara berlimpah-limpah.")}&rdquo;
-            </p>
-            <p style={{
-              fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-              fontSize: 12,
-              fontWeight: 700,
-              color: amber,
-              textTransform: "uppercase",
-              letterSpacing: "0.10em",
-              textAlign: "center",
-              marginBottom: 0,
-            }}>
-              {t("Proverbs 27:6", "Amsal 27:6")}
-            </p>
-            <div style={{ width: 48, height: 2, background: amber, margin: "20px auto 0" }} />
-          </div>
-          {/* Commentary paragraph — stays on offWhite below navy box */}
-          <p style={{
-            fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-            fontSize: 15,
-            color: bodyText,
-            lineHeight: 1.8,
-            textAlign: "left",
-          }}>
+          <p className="hc-note">
             {t(
-              "A friend who only tells you what you want to hear is not actually serving you. In leadership, the most loving thing you can sometimes do for a colleague is to say the thing that is true, even when it is uncomfortable. That is what faithful wounds look like.",
-              "Seorang teman yang hanya memberitahumu apa yang ingin kamu dengar sebenarnya tidak melayanimu. Dalam kepemimpinan, hal paling penuh kasih yang kadang bisa kamu lakukan untuk seorang rekan adalah mengatakan hal yang benar, bahkan ketika itu tidak nyaman. Itulah arti seorang kawan yang memukul dengan maksud baik.",
+              "These rules are for differences between people who work together. They do not cover abuse, harassment, misconduct or safeguarding concerns. Those must be reported to the right person, not talked through as a conflict.",
+              "Aturan ini untuk perbedaan di antara orang-orang yang bekerja bersama. Aturan ini tidak mencakup kekerasan, pelecehan, pelanggaran etika, atau masalah perlindungan anak dan orang yang rentan. Hal-hal itu harus dilaporkan kepada pihak yang tepat, bukan diselesaikan sebagai konflik biasa.",
             )}
           </p>
         </div>
       </section>
 
-      {/* ── 9. FAITH ANCHOR ──────────────────────────────────────────────────── */}
-      <div style={{ background: lightGray, padding: "clamp(64px, 9vw, 88px) 24px" }}>
-        <div style={{ maxWidth: 720, margin: "0 auto" }}>
-          <p style={{
-            fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-            fontSize: 11,
-            fontWeight: 700,
-            letterSpacing: "0.12em",
-            textTransform: "uppercase",
-            color: amber,
-            marginBottom: 12,
-          }}>
-            {t("Faith Anchor", "Pegangan Iman")}
-          </p>
-
-          <h2 style={{
-            fontFamily: serif,
-            fontSize: "clamp(22px, 2.8vw, 32px)",
-            fontWeight: 600,
-            color: navy,
-            marginBottom: 36,
-          }}>
-            {t("Sharpened by Honest Contact", "Diasah oleh Perjumpaan yang Jujur")}
-          </h2>
-
-          {FAITH_ANCHOR_PARAGRAPHS.map((para, pi) => (
-            <p key={pi} style={{
-              fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-              fontSize: 15,
-              color: para.elevated ? navy : bodyText,
-              lineHeight: 1.85,
-              marginBottom: pi < FAITH_ANCHOR_PARAGRAPHS.length - 1 ? 20 : 0,
-            }}>
-              {lang === "id" ? para.id : para.en}
-            </p>
-          ))}
-        </div>
-      </div>
-
-      {/* ── 10. REFLECTION QUESTIONS ─────────────────────────────────────────── */}
-      <div style={{ background: lightGray, padding: "clamp(64px, 9vw, 88px) 24px" }}>
-        <div style={{ maxWidth: 720, margin: "0 auto" }}>
-          <p style={{
-            fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-            fontSize: 11,
-            fontWeight: 700,
-            letterSpacing: "0.12em",
-            textTransform: "uppercase",
-            color: subText,
-            marginBottom: 12,
-          }}>
-            {t("Reflection", "Refleksi")}
-          </p>
-
-          <h2 style={{
-            fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-            fontSize: "clamp(18px, 2.2vw, 24px)",
-            fontWeight: 800,
-            color: navy,
-            marginBottom: 40,
-          }}>
-            {t("Questions to Sit With", "Pertanyaan untuk Direnungkan")}
-          </h2>
-
-          <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
-            {REFLECTION_QUESTIONS.map((q, qi) => (
-              <div key={qi} style={{
-                background: offWhite,
-                padding: "28px 28px 24px",
-              }}>
-                <div style={{
-                  display: "flex",
-                  gap: 20,
-                  alignItems: "flex-start",
-                  marginBottom: 16,
-                }}>
-                  <span style={{
-                    fontFamily: serif,
-                    fontSize: 36,
-                    fontWeight: 700,
-                    color: amber,
-                    lineHeight: 1,
-                    flexShrink: 0,
-                  }}>
-                    {qi + 1}
-                  </span>
-                  <p style={{
-                    fontFamily: serif,
-                    fontSize: "clamp(16px, 1.8vw, 18px)",
-                    fontStyle: "italic",
-                    color: navy,
-                    lineHeight: 1.75,
-                    margin: 0,
-                  }}>
-                    {lang === "id" ? q.id : q.en}
-                  </p>
-                </div>
-                <textarea
-                  value={reflections[qi] ?? ""}
-                  onChange={(e) =>
-                    setReflections((prev) => ({ ...prev, [qi]: e.target.value }))
-                  }
-                  placeholder={t("Your reflection...", "Refleksi Anda...")}
-                  rows={3}
-                  style={{
-                    width: "100%",
-                    padding: "14px 16px",
-                    fontFamily: serif,
-                    fontSize: 15,
-                    color: bodyText,
-                    background: offWhite,
-                    border: "1px solid oklch(88% 0.01 80)",
-                    borderRadius: 0,
-                    resize: "vertical",
-                    lineHeight: 1.75,
-                    boxSizing: "border-box",
-                  }}
-                />
-              </div>
-            ))}
+      {/* ── 10. FROM THE FIELD ──────────────────────────────────────────────── */}
+      <section className="hc-sec hc-b">
+        <div className="hc-wrap">
+          <p className="hc-eyebrow">{t("From the field", "Dari Lapangan")}</p>
+          <h2>{t("An example: two leaders at one table", "Sebuah Contoh: Dua Pemimpin di Satu Meja")}</h2>
+          {STORY.map((p, i) => <p key={i}>{p[lang]}</p>)}
+          <p className="hc-moment">{STORY_MOMENT[lang]}</p>
+          {STORY_AFTER.map((p, i) => <p key={i}>{p[lang]}</p>)}
+          <div className="hc-lessons">
+            <h3>{t("What this example shows", "Apa yang ditunjukkan contoh ini")}</h3>
+            <ul>
+              {LESSONS.map((l, i) => <li key={i}>{l[lang]}</li>)}
+            </ul>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* ── 11. KEY TAKEAWAY ─────────────────────────────────────────────────── */}
-      <div style={{
-        background: offWhite,
-        padding: "clamp(64px, 9vw, 88px) 24px",
-        borderTop: `3px solid ${amber}`,
-      }}>
-        <div style={{ maxWidth: 720, margin: "0 auto" }}>
-          <p style={{
-            fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-            fontSize: 11,
-            fontWeight: 700,
-            letterSpacing: "0.12em",
-            textTransform: "uppercase",
-            color: amber,
-            marginBottom: 12,
-          }}>
-            {t("Key Takeaway", "Poin Utama")}
-          </p>
-
-          <h2 style={{
-            fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-            fontSize: "clamp(18px, 2.2vw, 24px)",
-            fontWeight: 800,
-            color: navy,
-            marginBottom: 36,
-          }}>
-            {t("Three things to do this week", "Tiga hal yang perlu dilakukan minggu ini")}
-          </h2>
-
-          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-            {KEY_TAKEAWAYS.map((item, ii) => (
-              <div key={ii} style={{
-                display: "flex",
-                gap: 16,
-                alignItems: "flex-start",
-                padding: "20px 24px",
-                background: lightGray,
-              }}>
-                <div style={{
-                  width: 3,
-                  alignSelf: "stretch",
-                  background: amber,
-                  flexShrink: 0,
-                }} />
-                <p style={{
-                  fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-                  fontSize: 14,
-                  fontWeight: 500,
-                  color: bodyText,
-                  lineHeight: 1.75,
-                  margin: 0,
-                }}>
-                  {lang === "id" ? item.id : item.en}
-                </p>
-              </div>
-            ))}
+      {/* ── 11. FAITH ANCHOR ────────────────────────────────────────────────── */}
+      <section className="hc-sec hc-faith">
+        <div className="hc-wrap">
+          <p className="hc-eyebrow">{t("Faith Anchor", "Pegangan Iman")}</p>
+          <h2>{t("Silence is not peace", "Diam Bukan Damai")}</h2>
+          {FAITH.map((p, i) => <p key={i}>{rich(p[lang])}</p>)}
+          <p className="hc-faith-close">{FAITH_CLOSE[lang]}</p>
+          <div className="hc-reflect">
+            <p className="hc-eyebrow">{t("Reflect", "Renungkan")}</p>
+            <p className="hc-reflect-text">{REFLECT[lang]}</p>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* ── 12. FURTHER READING ──────────────────────────────────────────────── */}
-      <div style={{ background: lightGray, padding: "clamp(48px, 7vw, 64px) 24px" }}>
-        <div style={{ maxWidth: 720, margin: "0 auto" }}>
-          <p style={{
-            fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-            fontSize: 11,
-            fontWeight: 700,
-            letterSpacing: "0.12em",
-            textTransform: "uppercase",
-            color: amber,
-            marginBottom: 8,
-          }}>
-            {t("Further Reading", "Bacaan Lebih Lanjut")}
-          </p>
-          <p style={{
-            fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-            fontSize: 13,
-            color: subText,
-            lineHeight: 1.6,
-            marginBottom: 28,
-          }}>
-            {t(
-              "Sources and recommended books that inform this module.",
-              "Sumber dan buku yang menjadi dasar modul ini.",
-            )}
-          </p>
-          <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-            {[
-              {
-                author: "Patrick Lencioni",
-                title: "The Five Dysfunctions of a Team",
-                year: "2002",
-                note: t(
-                  "A widely read practitioner framework identifying fear of conflict as central to team dysfunction. Not peer-reviewed, but the most accessible entry point to why productive conflict is missing in most organisations. For empirical grounding, pair with Hackman's team effectiveness research.",
-                  "Kerangka praktisi yang banyak dibaca yang mengidentifikasi ketakutan terhadap konflik sebagai inti dari disfungsi tim. Tidak peer-reviewed, tetapi titik masuk paling mudah diakses mengapa konflik produktif hilang di sebagian besar organisasi. Untuk dasar empiris, padukan dengan penelitian efektivitas tim Hackman.",
-                ),
-              },
-              {
-                author: "Erin Meyer",
-                title: "The Culture Map",
-                year: "2014",
-                note: t(
-                  "Chapter 7 maps how cultures differ on disagreeing — from direct confrontation norms (Netherlands, France, Israel) to strong avoidance cultures (Japan, Indonesia, Thailand). Essential reading for cross-cultural leaders.",
-                  "Bab 7 memetakan bagaimana budaya berbeda dalam hal ketidaksetujuan — dari budaya konfrontasi langsung hingga budaya penghindaran.",
-                ),
-              },
-              {
-                author: "Peter Scazzero",
-                title: "The Emotionally Healthy Leader",
-                year: "2015",
-                note: t(
-                  "Addresses the unique dynamics of conflict avoidance in faith-based organisations, where spiritual language is often used to suppress legitimate disagreement.",
-                  "Membahas dinamika unik penghindaran konflik dalam organisasi berbasis iman.",
-                ),
-              },
-            ].map((ref, ri) => (
-              <div key={ri} style={{
-                display: "flex",
-                gap: 16,
-                alignItems: "flex-start",
-                padding: "20px 20px",
-                background: offWhite,
-              }}>
-                <div style={{
-                  width: 3,
-                  alignSelf: "stretch",
-                  background: amber,
-                  flexShrink: 0,
-                }} />
-                <div>
-                  <p style={{
-                    fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-                    fontSize: 13,
-                    fontWeight: 700,
-                    color: bodyText,
-                    lineHeight: 1.5,
-                    margin: "0 0 2px",
-                  }}>
-                    {ref.author} — <em>{ref.title}</em> ({ref.year})
-                  </p>
-                  <p style={{
-                    fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-                    fontSize: 13,
-                    fontWeight: 400,
-                    color: subText,
-                    lineHeight: 1.65,
-                    margin: 0,
-                  }}>
-                    {ref.note}
-                  </p>
-                </div>
-              </div>
+      {/* ── 12. KEY TAKEAWAYS ───────────────────────────────────────────────── */}
+      <section className="hc-sec hc-b">
+        <div className="hc-wrap">
+          <p className="hc-eyebrow">{t("Key takeaways", "Poin Penting")}</p>
+          <h2>{t("What to remember", "Yang Perlu Diingat")}</h2>
+          <ol className="hc-take">
+            {TAKEAWAYS.map((k, i) => (
+              <li key={i}>
+                <span className="hc-num" aria-hidden="true">{i + 1}</span>
+                <div>{k[lang]}</div>
+              </li>
             ))}
-          </div>
+          </ol>
         </div>
-      </div>
+      </section>
 
-      {/* ── 13. LONG-FORM SEO SECTION ────────────────────────────────────────── */}
-      <div style={{ background: offWhite, padding: "clamp(64px, 9vw, 88px) 24px" }}>
-        <div style={{ maxWidth: 720, margin: "0 auto" }}>
-          <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: amber, marginBottom: 12 }}>
-            Background
-          </p>
-          <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(22px, 2.8vw, 32px)", fontWeight: 800, color: navy, marginBottom: 32, lineHeight: 1.2 }}>
-            Healthy Conflict in Teams: Why Avoidance Is the Real Leadership Failure
-          </h2>
-          <button
-            onClick={() => setBgOpen(!bgOpen)}
-            style={{
-              display: "inline-flex", alignItems: "center", gap: 6,
-              marginTop: 20, marginBottom: 24, padding: "10px 20px",
-              background: "transparent", border: "1.5px solid oklch(65% 0.15 45)",
-              color: "oklch(65% 0.15 45)", borderRadius: 12,
-              fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, fontWeight: 700,
-              cursor: "pointer", letterSpacing: "0.04em",
-            }}
-          >
-            {bgOpen ? "Close ↑" : "Read the research →"}
-          </button>
-          {bgOpen && [
-            "Most leadership literature on conflict begins in the wrong place. It treats conflict as the problem to be managed, and harmony as the goal. But in cross-cultural team settings, that framing is exactly backwards. Conflict is not the threat to team health. Unresolved, underground conflict is. The leader who creates conditions where disagreement is safe has done more for their team's long-term effectiveness than the one who keeps every meeting comfortable.",
-            "Healthy conflict is the productive surfacing of real differences so a team can work through them and reach genuine alignment. It is not performance, not aggression, and not the absence of care for relationships. It is a form of respect — the belief that the people around the table are capable of handling honest conversation, and that the work is important enough to do well.",
-            "The challenge in multicultural and cross-cultural teams is that conflict avoidance is often not a personal weakness. It is a culturally encoded survival strategy. In many high-context cultures across Asia, the Middle East, and Africa, direct disagreement — especially upward or in a group setting — carries real social risk. To disagree publicly is to create discomfort for others, to potentially embarrass someone of higher status, and to invite the same back toward yourself. The rational response, in those cultural frameworks, is to signal concern indirectly: through silence, through delayed implementation, through vague agreement that never fully materialises. This is not dishonesty. It is social intelligence operating within a different set of rules.",
-            "The problem is that a leader from a low-context culture — where directness is expected, and silence means agreement — will consistently misread these signals. They will conduct a meeting, read the room as aligned, and leave with a decision that three people in the room actually disagreed with. Those three will implement half-heartedly, or raise the concern quietly with peers, or simply wait for the decision to fail on its own. None of this is visible to the leader until the damage is already done.",
-            "Sherwood Lingenfelter,⁶ writing in Teamwork Cross-Culturally, identifies the most intractable form of this dysfunction as what he calls 'wicked problems' — conflicts that cannot be solved by better processes or communication training alone. These are situations where the root issue is not the presenting disagreement but the identity beneath it: two people operating from fundamentally different assumptions about authority, belonging, fairness, and what resolution actually means. No meeting structure or feedback framework resolves that. What resolves it, Lingenfelter argues, is a shared identity that is more foundational than cultural identity: the in-Christ identity that Paul describes in Galatians 3:28, where the distinctions remain real but no longer determine the hierarchy of loyalty.",
-            "The earliest church understood this from experience, not theory. Acts 6:1-7 records the first documented cross-cultural conflict in the Christian community: a complaint from Hellenistic Jewish widows that they were being overlooked in the daily food distribution, while Hebrew Jewish widows were being served. This was not a minor logistical complaint. It was a charge of ethnic discrimination inside the community that had just declared itself unified in Christ. The apostles' response is instructive. They did not dismiss the complaint. They did not handle it privately and announce a decision. They called the whole community together, presented the problem transparently, and asked the community to select their own representatives to lead the solution. The seven names chosen are all Greek names — the affected group was entrusted with the resolution.",
-            "From that passage, five principles emerge that remain directly applicable to cross-cultural teams today. Discovery: the complaint is heard and taken seriously before any response is formed. Mediation: leadership facilitates rather than decides unilaterally. Participation: the affected parties are given genuine voice and agency in the solution. Agreement: the resolution is formal, shared, and clear. Reaffirmation: the community confirms its unity and continues its work. These are not abstract ideals. They are a sequence tested in a real conflict with real cultural stakes.",
-            "Matthew 18:15-17 provides a complementary framework: direct private conversation first, then a witness, then broader escalation if needed. The principle is theologically grounded and practically sound. The cross-cultural application requires care. 'Direct' is not universal. In many high-context cultures, directness through a trusted intermediary — someone who can carry the concern to the other party without putting either person in a public face-loss situation — is not a workaround. It is itself a direct method. The goal of the Matthew 18 process is restoration and clarity. The path there adapts to the cultural logic of the people involved.",
-            "For leaders managing multicultural teams, the practical starting point is not a new conflict resolution framework. It is an honest assessment of whether your team environment actually makes conflict safe. Do team members ever push back in meetings, or does pushback always arrive through side conversations afterward? When you ask 'any concerns?' and get silence, do you probe, or do you accept the silence? Have you ever had a team member tell you something privately that contradicted what they said in the group? If that has happened more than once, the team has a conflict safety problem — and the leader's role is to build a different kind of room.",
-            "The teams that handle conflict well are not teams that fight more. They are teams where disagreement is normal enough, and safe enough, that it gets handled before it becomes fracture. That is what healthy conflict produces: not drama, but durable trust.",
-          ].map((para, i) => (
-            <p key={i} style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(14px, 1.5vw, 16px)", color: bodyText, lineHeight: 1.85, marginBottom: 20 }}>
-              {para}
-            </p>
-          ))}
-        </div>
-      </div>
-
-      {/* ── 14. SOURCES ──────────────────────────────────────────────────────── */}
-      <SourcesDropdown sources={[
-        "Amy C. Edmondson — Psychological Safety and Learning Behavior in Work Teams (Administrative Science Quarterly, 1999)",
-        "Google People Operations — Project Aristotle: Understanding Team Effectiveness (2016) — re.work/guides/understanding-team-effectiveness",
-        "Geert Hofstede — Culture's Consequences: Comparing Values, Behaviors, Institutions, and Organizations Across Nations (Sage, 2nd ed., 2001); country scores via Hofstede Insights (hofstede-insights.com)",
-        "Patrick Lencioni — The Five Dysfunctions of a Team (Jossey-Bass, 2002). Practitioner framework — no peer-reviewed empirical validation.",
-        "J. Richard Hackman — Leading Teams: Setting the Stage for Great Performances (Harvard Business Review Press, 2002). Six conditions explaining 50–74% of variance in team effectiveness.",
-        "Sherwood G. Lingenfelter — Teamwork Cross-Culturally: Christ-Centered Solutions for Multicultural Teams (Baker Academic, 2024)",
-      ]} lang={lang} />
-
-      {/* ── 15. CTA FOOTER ───────────────────────────────────────────────────── */}
-      <div style={{
-        background: navy,
-        padding: "clamp(56px, 8vw, 80px) 24px",
-        textAlign: "center",
-      }}>
-        <h2 style={{
-          fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-          fontSize: "clamp(20px, 3vw, 30px)",
-          fontWeight: 800,
-          color: offWhite,
-          marginBottom: 16,
-        }}>
-          {t("Keep Growing", "Terus Bertumbuh")}
-        </h2>
-
-        <p style={{
-          fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-          fontSize: 15,
-          color: dimOnNavy,
-          lineHeight: 1.75,
-          maxWidth: 520,
-          margin: "0 auto 40px",
-        }}>
-          {t(
-            "Explore more training modules to deepen your cross-cultural leadership.",
-            "Jelajahi lebih banyak sumber untuk memperdalam kepemimpinan lintas budaya kamu.",
-          )}
-        </p>
-
-        <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-          <Link
-            href="/resources"
-            style={{
-              display: "inline-block",
-              padding: "14px 36px",
-              background: amber,
-              color: offWhite,
-              fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-              fontSize: 14,
-              fontWeight: 700,
-              textDecoration: "none",
-              borderRadius: 0,
-            }}
-          >
-            {t("← Training", "← Pelatihan")}
-          </Link>
-          <Link
-            href="/resources/cultural-intelligence"
-            style={{
-              display: "inline-block",
-              padding: "14px 36px",
-              border: `1px solid oklch(45% 0.05 260)`,
-              color: offWhite,
-              fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-              fontSize: 14,
-              fontWeight: 600,
-              textDecoration: "none",
-              borderRadius: 0,
-            }}
-          >
-            Cultural Intelligence →
-          </Link>
-        </div>
-      </div>
+      {/* ── 13. SOURCES ─────────────────────────────────────────────────────── */}
+      <SourcesDropdown sources={SOURCES} lang={lang} markerStyle="number" />
     </div>
   );
 }

@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 const RESOURCE_SLUG = "healthy-conflict";
 
 export const metadata: Metadata = {
-  title: "Present: Creating Healthy Conflict",
+  title: "Present: Healthy Conflict",
   robots: { index: false, follow: false },
 };
 

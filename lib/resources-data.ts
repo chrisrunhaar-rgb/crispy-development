@@ -725,16 +725,16 @@ export const RESOURCES: Resource[] = [
   {
     id: "healthy-conflict",
     slug: "healthy-conflict",
-    title: "Creating Healthy Conflict",
-    titleId: "Menciptakan Konflik yang Sehat",
-    description: "Conflict avoidance is the instinct. But conflict is the solution. Learn how to create the conditions for productive, trust-building conflict in multicultural teams.",
-    descriptionId: "Menghindari konflik adalah naluri. Tapi konflik adalah solusinya. Pelajari cara menciptakan kondisi untuk konflik yang produktif dan membangun kepercayaan dalam tim multikultural.",
+    title: "Healthy Conflict",
+    titleId: "Konflik yang Sehat",
+    description: "Conflict that is not named does not go away. It grows. Learn what healthy conflict is, why it feels unsafe, and five rules for creating a safe place to face it.",
+    descriptionId: "Konflik yang tidak diungkapkan tidak hilang. Konflik itu terus membesar. Pelajari apa itu konflik yang sehat, mengapa konflik terasa tidak aman, dan lima aturan untuk menciptakan tempat yang aman untuk menghadapinya.",
     time: "25 min",
     format: "Guide",
     languages: ["en", "id"],
     gated: false,
     topics: ["team-facilitation", "cross-cultural"],
-    keywords: ["conflict", "disagreement", "productive conflict", "healthy tension", "debate", "friction", "difficult conversations", "brave", "avoid conflict", "confrontation", "konflik", "safe space"],
+    keywords: ["conflict", "disagreement", "productive conflict", "healthy tension", "debate", "friction", "difficult conversations", "brave", "avoid conflict", "confrontation", "konflik", "safe space", "safe place", "giving way", "face", "five rules"],
   },
   // ── ASSESSMENTS (added) ──────────────────────────────────────────────────────
   {
