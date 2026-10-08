@@ -993,8 +993,8 @@ export default function HealthyConflictClient({ isSaved: initialSaved, signupBan
           <h2>{t("Creating a safe place", "Menciptakan Tempat yang Aman")}</h2>
           <p>
             {t(
-              "A team will not name conflict until it feels safe to do so. Creating that safe place is the leader's job.",
-              "Sebuah tim tidak akan mengungkapkan konflik sebelum merasa aman untuk melakukannya. Menciptakan tempat yang aman itu adalah tugas pemimpin.",
+              "A team will not name conflict until it feels safe to do so. The leader starts it, and the team builds it together.",
+              "Sebuah tim tidak akan mengungkapkan konflik sebelum merasa aman untuk melakukannya. Pemimpin yang memulainya, dan tim membangunnya bersama-sama.",
             )}
           </p>
           <p>

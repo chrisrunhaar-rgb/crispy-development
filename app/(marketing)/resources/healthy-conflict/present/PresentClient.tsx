@@ -149,15 +149,6 @@ const RULES: { title: Pair; lines: Pair[] }[] = [
   },
 ];
 
-const NOT_LEADER_LINES: Pair[][] = [
-  [{ en: "Start by raising it privately with the other person (Matthew 18:15).", id: "Mulailah dengan membicarakannya secara pribadi dengan orang yang bersangkutan (Matius 18:15)." }],
-  [{ en: "If a private conversation does not feel safe, ask a trusted third person to help.", id: "Jika percakapan pribadi terasa tidak aman, mintalah bantuan orang ketiga yang Anda percaya." }],
-  [
-    { en: "If you are afraid to speak, ask yourself where the fear comes from.", id: "Jika Anda takut berbicara, tanyakan pada diri sendiri dari mana rasa takut itu berasal." },
-    { en: "Is it this team, or an earlier experience?", id: "Dari tim ini, atau dari pengalaman sebelumnya?" },
-  ],
-];
-
 const TAKEAWAYS: Pair[] = [
   { en: "Conflict is when people who depend on each other see their goals, needs or views as opposed.", id: "Konflik adalah ketika orang-orang yang saling bergantung merasa tujuan, kebutuhan, atau pandangan mereka saling bertentangan." },
   { en: "Healthy conflict is conflict faced openly and with respect.", id: "Konflik yang sehat adalah konflik yang dihadapi secara terbuka dan dengan saling menghormati." },
@@ -282,7 +273,49 @@ function Pile({ count, burst }: { count: number; burst: boolean }) {
 
 // ─── The slides ───────────────────────────────────────────────────────────────
 // `steps` is how many clicks a slide has: each click reveals the next part.
-type Slide = { key: string; dark?: boolean; steps?: number; render: (lang: Lang, step: number) => React.ReactNode };
+// `bleed` slides fill the whole canvas with an image (no padding, no footer).
+type Slide = { key: string; dark?: boolean; bleed?: boolean; steps?: number; render: (lang: Lang, step: number) => React.ReactNode };
+
+// Full-slide image slides. The images have a near-white background (254), so the
+// slide uses the same colour and the image can sit edge to edge.
+const bleedBg = "rgb(254,254,254)";
+
+function BleedHeading({ lang, title }: { lang: Lang; title: Pair }) {
+  return (
+    <div style={{ position: "absolute", left: 72, top: 60, zIndex: 2, display: "flex", flexDirection: "column", gap: 10, alignItems: "flex-start" }}>
+      <p style={{ ...kicker, margin: 0 }}>{t("See it", "Lihat gambarnya", lang)}</p>
+      <h2 style={{ ...midTitle, fontSize: 46, textAlign: "left", maxWidth: 560, margin: 0 }}>{t(title.en, title.id, lang)}</h2>
+    </div>
+  );
+}
+
+// The healthy conflict picture at full slide size, with its HTML labels.
+// The image box is 1458x820, bottom-centred, so the outcome words fit above the arrow.
+function HealthyBleed({ lang }: { lang: Lang }) {
+  const k: React.CSSProperties = {
+    position: "absolute", transform: "translate(-50%,-50%)", fontFamily: sans, fontWeight: 700, fontSize: 30,
+    letterSpacing: "0.06em", textTransform: "uppercase", whiteSpace: "nowrap", color: "oklch(45% 0.13 258)",
+  };
+  return (
+    <>
+      <div aria-hidden="true" style={{ position: "absolute", left: "50%", top: 22, transform: "translateX(-50%)", zIndex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 4,
+        fontFamily: sans, fontWeight: 700, fontSize: 30, letterSpacing: "0.08em", textTransform: "uppercase", lineHeight: 1.1, color: "oklch(60% 0.17 45)" }}>
+        <div>{t("Unity", "Kesatuan", lang)}</div>
+        <div>{t("Clarity", "Kejelasan", lang)}</div>
+        <div>{t("Trust", "Kepercayaan", lang)}</div>
+      </div>
+      <div style={{ position: "absolute", left: (W - 1458) / 2, top: H - 820, width: 1458, height: 820 }}>
+        <img src={`${IMG}/healthy-conflict-visual.webp`}
+          alt={t("Two people at a table. Each line has a knot: the conflict. The lines meet in a safe place and go forward as one line to a good outcome.",
+            "Dua orang di sebuah meja. Setiap garis memiliki simpul, yaitu konflik. Kedua garis bertemu di tempat yang aman dan bergerak maju sebagai satu garis menuju hasil yang baik.", lang)}
+          style={{ width: "100%", height: "100%", display: "block" }} />
+        <span aria-hidden="true" style={{ ...k, left: "32%", top: "84.3%" }}>{t("Conflict", "Konflik", lang)}</span>
+        <span aria-hidden="true" style={{ ...k, left: "67.6%", top: "84.3%" }}>{t("Conflict", "Konflik", lang)}</span>
+        <span aria-hidden="true" style={{ ...k, left: "50%", top: "76.5%" }}>{t("Safe place", "Tempat aman", lang)}</span>
+      </div>
+    </>
+  );
+}
 
 const RULE_SLIDES: Slide[] = RULES.flatMap((r, n): Slide[] => [
   { key: `rules-${n}`, render: lang => <RuleListSlide upTo={n} lang={lang} /> },
@@ -307,28 +340,6 @@ const SLIDES: Slide[] = [
           </p>
         </div>
       </>
-    ),
-  },
-  {
-    key: "every-team",
-    steps: 3,
-    render: (lang, step) => (
-      <div style={{ display: "grid", gridTemplateColumns: "1.05fr 1fr", alignItems: "center", gap: 72, width: "100%" }}>
-        <img src={`${IMG}/conflict-table.jpg`} alt={t("A team around a table.", "Sebuah tim duduk mengelilingi meja.", lang)}
-          style={{ width: "100%", height: 560, objectFit: "cover", borderRadius: 20, display: "block", boxShadow: "0 24px 60px oklch(14% 0.05 260 / 0.22)" }} />
-        <div style={{ display: "flex", flexDirection: "column", gap: 26 }}>
-          <p style={{ fontFamily: serif, fontSize: 64, fontWeight: 600, color: navy, margin: 0, lineHeight: 1.1 }}>
-            {t("Every team has conflict.", "Setiap tim pernah mengalami konflik.", lang)}
-          </p>
-          {rule()}
-          <p style={{ ...show(step >= 1), ...body, textAlign: "left", fontSize: 32, color: navy }}>
-            {t("People who work closely together will see things differently.", "Orang yang bekerja berdekatan pasti punya cara pandang yang berbeda.", lang)}
-          </p>
-          <p style={{ ...show(step >= 2), fontFamily: serif, fontStyle: "italic", fontSize: 46, fontWeight: 600, color: orange, margin: 0, lineHeight: 1.15 }}>
-            {t("What matters is what the team does with it.", "Yang penting adalah apa yang dilakukan tim dengan perbedaan itu.", lang)}
-          </p>
-        </div>
-      </div>
     ),
   },
   {
@@ -384,28 +395,6 @@ const SLIDES: Slide[] = [
     ),
   },
   {
-    key: "unsafe",
-    dark: true,
-    steps: 4,
-    render: (lang, step) => (
-      <>
-        <div style={stack(14)}>
-          <p style={kicker}>{t("Why teams avoid conflict", "Mengapa tim menghindari konflik", lang)}</p>
-          <h2 style={{ ...midTitle, color: offWhite }}>{t("Conflict feels unsafe", "Konflik terasa tidak aman", lang)}</h2>
-        </div>
-        {rule()}
-        <div style={stack(22)}>
-          {UNSAFE_LINES.map((l, n) => (
-            <p key={l.en} style={{ ...show(step >= n), ...line(42, offWhite), fontWeight: 500 }}>{t(l.en, l.id, lang)}</p>
-          ))}
-        </div>
-        <p style={{ ...show(step >= 3), ...line(56, orange), fontStyle: "italic" }}>
-          {t("The fear is real, even when the danger is not.", "Rasa takutnya nyata, meskipun bahayanya tidak.", lang)}
-        </p>
-      </>
-    ),
-  },
-  {
     key: "piles",
     steps: 3,
     render: (lang, step) => (
@@ -425,155 +414,26 @@ const SLIDES: Slide[] = [
     ),
   },
   {
-    key: "grows",
-    steps: 4,
-    render: (lang, step) => (
+    key: "avoid",
+    bleed: true,
+    render: lang => (
       <>
-        <div style={stack(14)}>
-          <p style={kicker}>{t("Why teams avoid conflict", "Mengapa tim menghindari konflik", lang)}</p>
-          <h2 style={{ ...midTitle, fontSize: 64 }}>{t("How unhealthy conflict grows", "Bagaimana konflik yang tidak sehat membesar", lang)}</h2>
-        </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 28, width: "100%" }}>
-          {STAGES.map((s, n) => (
-            <div key={s.head.en} style={{ ...card, ...show(step >= n), padding: "32px 30px", borderTop: `8px solid ${[lightGray, muted, navy][n]}` }}>
-              <p style={{ fontFamily: sans, fontSize: 19, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: muted, margin: "0 0 14px" }}>{t(s.head.en, s.head.id, lang)}</p>
-              <p style={{ fontFamily: serif, fontSize: 36, fontWeight: 600, lineHeight: 1.25, color: navy, margin: 0 }}>{t(s.text.en, s.text.id, lang)}</p>
-            </div>
-          ))}
-        </div>
-        <p style={{ ...show(step >= 3), ...line(42, orange), fontStyle: "italic", maxWidth: 1200 }}>
-          {t("Healthy conflict names a difference in the early stages.", "Konflik yang sehat mengungkapkan perbedaan pada tahap awal.", lang)}
-        </p>
-      </>
-    ),
-  },
-  {
-    key: "giving-way",
-    steps: 2,
-    render: (lang, step) => (
-      <>
-        <div style={stack(14)}>
-          <p style={kicker}>{t("Dig deeper", "Pelajari lebih dalam", lang)}</p>
-          <h2 style={{ ...midTitle, fontSize: 64 }}>{t("Giving way is different from avoiding", "Mengalah berbeda dari menghindar", lang)}</h2>
-          <p style={body}>{t("From the outside, giving way and avoiding look the same.", "Dari luar, mengalah dan menghindar tampak sama.", lang)}</p>
-        </div>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32, width: "100%" }}>
-          {WAY_OR_AVOID.map((v, n) => (
-            <div key={v.head.en} style={{ ...card, ...show(step >= n), padding: "32px 40px", borderTop: `6px solid ${v.good ? orange : lightGray}` }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 20 }}>
-                <Check good={v.good} />
-                <p style={{ fontFamily: serif, fontSize: 50, fontWeight: 600, color: navy, margin: 0, lineHeight: 1.1 }}>{t(v.head.en, v.head.id, lang)}</p>
-              </div>
-              <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                {v.items.map(it => (
-                  <p key={it.en} style={{ fontFamily: sans, fontSize: 25, lineHeight: 1.4, color: v.good ? navy : muted, margin: 0 }}>{t(it.en, it.id, lang)}</p>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      </>
-    ),
-  },
-  {
-    key: "three-questions",
-    steps: 4,
-    render: (lang, step) => (
-      <>
-        <div style={stack(14)}>
-          <p style={kicker}>{t("Giving way or avoiding?", "Mengalah atau menghindar?", lang)}</p>
-          <h2 style={{ ...midTitle, fontSize: 64 }}>{t("Three questions to tell them apart", "Tiga pertanyaan untuk membedakannya", lang)}</h2>
-        </div>
-        <ol style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 18, width: 1200 }}>
-          {THREE_QUESTIONS.map((q, n) => (
-            <li key={q.en} style={{ ...card, ...show(step >= n), display: "flex", alignItems: "center", gap: 28, padding: "22px 36px" }}>
-              <span style={{ flexShrink: 0, fontFamily: serif, fontSize: 60, fontWeight: 600, color: orange, lineHeight: 1, width: 40 }}>{n + 1}</span>
-              <span style={{ fontFamily: serif, fontSize: 36, fontWeight: 500, color: navy, lineHeight: 1.25 }}>{t(q.en, q.id, lang)}</span>
-            </li>
-          ))}
-        </ol>
-        <div style={{ ...show(step >= 3), ...stack(8) }}>
-          <p style={{ ...line(36, navy) }}>{t("If the answer to all three is yes, you gave way.", "Jika jawaban untuk ketiganya ya, Anda mengalah.", lang)}</p>
-          <p style={{ ...line(36, orange), fontStyle: "italic" }}>{t("If not, the conflict still needs to be named.", "Jika tidak, konflik itu masih perlu diungkapkan.", lang)}</p>
-        </div>
-      </>
-    ),
-  },
-  {
-    key: "face",
-    steps: 3,
-    render: (lang, step) => (
-      <>
-        <div style={stack(14)}>
-          <p style={kicker}>{t("Conflict, culture and face", "Konflik, budaya, dan muka", lang)}</p>
-          <h2 style={{ ...midTitle, fontSize: 62 }}>{t("Indirect naming is still naming", "Mengungkapkan secara tidak langsung tetap mengungkapkan", lang)}</h2>
-        </div>
-        <p style={{ ...line(36), fontWeight: 500, maxWidth: 1240 }}>
-          {t("In many cultures, direct confrontation in front of others causes loss of face for both people.",
-            "Di banyak budaya, menghadapi orang secara langsung di depan orang lain membuat kedua pihak kehilangan muka.", lang)}
-        </p>
-        <div style={{ ...show(step >= 1), display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 18, maxWidth: 1300 }}>
-          {INDIRECT.map(w => (
-            <span key={w.en} style={{ ...card, padding: "18px 30px", fontFamily: sans, fontSize: 26, fontWeight: 600, color: navy, border: `2px solid ${orange}` }}>{t(w.en, w.id, lang)}</span>
-          ))}
-        </div>
-        <p style={{ ...show(step >= 2), ...line(38, orange), fontStyle: "italic", maxWidth: 1240 }}>
-          {t("The prophet Nathan named David's sin through a story (2 Samuel 12).", "Nabi Natan mengungkapkan dosa Daud melalui sebuah cerita (2 Samuel 12).", lang)}
-        </p>
+        <img src={`${IMG}/conflict-avoidance.webp`}
+          alt={t("Two people with arms crossed turn away from each other. Their lines pull apart in opposite directions.",
+            "Dua orang bersedekap dan saling membelakangi. Garis mereka saling menjauh ke arah yang berlawanan.", lang)}
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+        <BleedHeading lang={lang} title={{ en: "What avoiding conflict looks like", id: "Seperti apa menghindari konflik" }} />
       </>
     ),
   },
   {
     key: "see-it",
-    render: lang => {
-      const k: React.CSSProperties = {
-        position: "absolute", transform: "translate(-50%,-50%)", fontFamily: sans, fontWeight: 700, fontSize: 17,
-        letterSpacing: "0.06em", textTransform: "uppercase", whiteSpace: "nowrap", color: "oklch(45% 0.13 258)",
-      };
-      return (
-        <div style={stack(16)}>
-          <p style={kicker}>{t("See it", "Lihat gambarnya", lang)}</p>
-          <h2 style={{ ...midTitle, fontSize: 52 }}>{t("What healthy conflict looks like", "Seperti apa konflik yang sehat", lang)}</h2>
-          <figure style={{ margin: 0, width: 820 }}>
-            <div style={{ position: "relative", background: "#ffffff", borderRadius: 12 }}>
-              <div aria-hidden="true" style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 3, marginBottom: -21, paddingTop: 10,
-                fontFamily: sans, fontWeight: 700, fontSize: 18, letterSpacing: "0.08em", textTransform: "uppercase", lineHeight: 1.1, color: "oklch(60% 0.17 45)" }}>
-                <div>{t("Unity", "Kesatuan", lang)}</div>
-                <div>{t("Clarity", "Kejelasan", lang)}</div>
-                <div>{t("Trust", "Kepercayaan", lang)}</div>
-              </div>
-              <img src={`${IMG}/healthy-conflict-visual.webp`}
-                alt={t("Two people at a table. Each line has a knot: the conflict. The lines meet in a safe place and go forward as one line to a good outcome.",
-                  "Dua orang di sebuah meja. Setiap garis memiliki simpul, yaitu konflik. Kedua garis bertemu di tempat yang aman dan bergerak maju sebagai satu garis menuju hasil yang baik.", lang)}
-                style={{ width: 820, height: 461, display: "block", borderRadius: 12 }} />
-              <span aria-hidden="true" style={{ ...k, left: "32%", top: "86%" }}>{t("Conflict", "Konflik", lang)}</span>
-              <span aria-hidden="true" style={{ ...k, left: "67.6%", top: "86%" }}>{t("Conflict", "Konflik", lang)}</span>
-              <span aria-hidden="true" style={{ ...k, left: "50%", top: "79%" }}>{t("Safe place", "Tempat aman", lang)}</span>
-            </div>
-            <figcaption style={{ ...body, fontSize: 24, marginTop: 14 }}>
-              {t("Two lines come together in a safe place and go forward as one.", "Dua garis bertemu di tempat yang aman, lalu bergerak maju sebagai satu.", lang)}
-            </figcaption>
-          </figure>
-        </div>
-      );
-    },
-  },
-  {
-    key: "avoid",
+    bleed: true,
     render: lang => (
-      <div style={stack(16)}>
-        <p style={kicker}>{t("Compare", "Bandingkan", lang)}</p>
-        <h2 style={{ ...midTitle, fontSize: 52 }}>{t("Avoiding conflict", "Menghindari konflik", lang)}</h2>
-        <figure style={{ margin: 0, width: 880 }}>
-          <img src={`${IMG}/conflict-avoidance.webp`}
-            alt={t("Two people with arms crossed turn away from each other. Their lines pull apart in opposite directions.",
-              "Dua orang bersedekap dan saling membelakangi. Garis mereka saling menjauh ke arah yang berlawanan.", lang)}
-            style={{ width: 880, height: 495, display: "block", borderRadius: 12 }} />
-          <figcaption style={{ ...body, fontSize: 24, marginTop: 14 }}>
-            {t("Each person turns away and the lines pull apart.", "Masing-masing berbalik, dan garis mereka saling menjauh.", lang)}
-          </figcaption>
-        </figure>
-      </div>
+      <>
+        <HealthyBleed lang={lang} />
+        <BleedHeading lang={lang} title={{ en: "What healthy conflict looks like", id: "Seperti apa konflik yang sehat" }} />
+      </>
     ),
   },
   {
@@ -608,7 +468,7 @@ const SLIDES: Slide[] = [
       <>
         <div style={stack(14)}>
           <p style={kicker}>{t("The leader's role", "Peran pemimpin", lang)}</p>
-          <h2 style={midTitle}>{t("Creating a safe place", "Menciptakan tempat yang aman", lang)}</h2>
+          <h2 style={{ ...midTitle, maxWidth: 1300 }}>{t("The leader starts it. The team creates a safe place together.", "Pemimpin yang memulai. Tim menciptakan tempat yang aman bersama-sama.", lang)}</h2>
           <p style={{ ...body, maxWidth: 1150 }}>{t("A team will not name conflict until it feels safe to do so.", "Sebuah tim tidak akan mengungkapkan konflik sebelum merasa aman untuk melakukannya.", lang)}</p>
         </div>
         <ol style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 18, width: 1100 }}>
@@ -640,118 +500,6 @@ const SLIDES: Slide[] = [
   },
   ...RULE_SLIDES,
   { key: "rules-all", render: lang => <RuleListSlide upTo={RULES.length} lang={lang} /> },
-  {
-    key: "not-leader",
-    steps: 4,
-    render: (lang, step) => (
-      <>
-        <div style={stack(14)}>
-          <p style={kicker}>{t("If you are not the leader", "Jika Anda bukan pemimpin", lang)}</p>
-          <h2 style={{ ...midTitle, fontSize: 56 }}>{t("You can still name a conflict", "Anda tetap dapat mengungkapkan konflik", lang)}</h2>
-        </div>
-        <ol style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 12, width: 1240 }}>
-          {NOT_LEADER_LINES.map((group, n) => (
-            <li key={group[0].en} style={{ ...card, ...show(step >= n), display: "flex", alignItems: "center", gap: 26, padding: "16px 32px" }}>
-              <span style={numDot(navy, 48)}>{n + 1}</span>
-              <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-                {group.map(l => (
-                  <span key={l.en} style={{ fontFamily: sans, fontSize: 25, fontWeight: 500, lineHeight: 1.35, color: navy }}>{t(l.en, l.id, lang)}</span>
-                ))}
-              </div>
-            </li>
-          ))}
-        </ol>
-        <div style={{ ...show(step >= 3), width: 1240, padding: "14px 32px", borderRadius: 14, border: `2px solid ${orange}`, display: "flex", flexDirection: "column", gap: 4 }}>
-          <p style={{ fontFamily: sans, fontSize: 21, lineHeight: 1.4, fontWeight: 600, color: navy, margin: 0 }}>
-            {t("These rules do not cover abuse, harassment, misconduct or safeguarding concerns.",
-              "Aturan ini tidak mencakup kekerasan, pelecehan, pelanggaran etika, atau masalah perlindungan anak dan orang yang rentan.", lang)}
-          </p>
-          <p style={{ fontFamily: sans, fontSize: 21, lineHeight: 1.4, color: muted, margin: 0 }}>
-            {t("Those must be reported to the right person.", "Hal-hal itu harus dilaporkan kepada pihak yang tepat.", lang)}
-          </p>
-        </div>
-      </>
-    ),
-  },
-  {
-    key: "faith",
-    dark: true,
-    steps: 3,
-    render: (lang, step) => (
-      <>
-        <p style={kicker}>{t("Faith Anchor", "Pegangan Iman", lang)}</p>
-        <h2 style={{ ...bigTitle, color: offWhite }}>{t("Silence is not peace", "Diam bukan damai", lang)}</h2>
-        {rule()}
-        <p style={{ ...show(step >= 1), ...line(42, offWhite), fontWeight: 500, maxWidth: 1250 }}>
-          {t("Paul tells us to work to keep the unity of the Spirit (Ephesians 4:3).", "Paulus mengajak kita berusaha memelihara kesatuan Roh (Efesus 4:3).", lang)}
-        </p>
-        <p style={{ ...show(step >= 2), ...line(52, orange), fontStyle: "italic" }}>
-          {t("Unity does not keep itself.", "Kesatuan tidak menjaga dirinya sendiri.", lang)}
-        </p>
-      </>
-    ),
-  },
-  {
-    key: "foothold",
-    steps: 3,
-    render: (lang, step) => (
-      <>
-        <p style={kicker}>{t("Faith Anchor", "Pegangan Iman", lang)}</p>
-        <blockquote style={{ ...card, margin: 0, borderLeft: `8px solid ${orange}`, padding: "36px 52px", maxWidth: 1300 }}>
-          <p style={{ fontFamily: serif, fontStyle: "italic", fontWeight: 500, fontSize: 44, lineHeight: 1.3, color: navy, margin: "0 0 18px" }}>
-            &ldquo;{t("Be angry and do not sin; do not let the sun go down on your anger, and give no opportunity to the devil.",
-              "Apabila kamu menjadi marah, janganlah kamu berbuat dosa: janganlah matahari terbenam, sebelum padam amarahmu, dan janganlah beri kesempatan kepada Iblis.", lang)}&rdquo;
-          </p>
-          <p style={{ fontFamily: sans, fontSize: 20, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: muted, margin: 0 }}>
-            {t("Ephesians 4:26-27, ESV", "Efesus 4:26-27, TB", lang)}
-          </p>
-        </blockquote>
-        <p style={{ ...show(step >= 1), ...line(38), fontWeight: 500, maxWidth: 1250 }}>
-          {t("Anger that is held in and never dealt with gives the enemy a foothold.", "Amarah yang dipendam dan tidak pernah diselesaikan memberi kesempatan kepada Iblis.", lang)}
-        </p>
-        <div style={{ ...show(step >= 2), ...stack(6) }}>
-          <p style={{ ...line(38, orange), fontStyle: "italic" }}>{t("The problem is not the quiet itself.", "Masalahnya bukan pada diam itu sendiri,", lang)}</p>
-          <p style={{ ...line(38, orange), fontStyle: "italic" }}>{t("It is what we leave unresolved.", "tetapi pada apa yang kita biarkan tidak terselesaikan.", lang)}</p>
-        </div>
-      </>
-    ),
-  },
-  {
-    key: "our-part",
-    steps: 3,
-    render: (lang, step) => {
-      const ref: React.CSSProperties = { fontFamily: sans, fontSize: 19, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: orange, margin: "0 0 14px" };
-      const txt: React.CSSProperties = { fontFamily: serif, fontSize: 34, fontWeight: 500, lineHeight: 1.3, color: navy, margin: 0 };
-      return (
-        <>
-          <p style={kicker}>{t("Faith Anchor", "Pegangan Iman", lang)}</p>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32, width: "100%" }}>
-            <div style={{ ...card, padding: "32px 38px", borderTop: `6px solid ${orange}` }}>
-              <p style={ref}>{t("James 4:1", "Yakobus 4:1", lang)}</p>
-              <p style={txt}>{t("Not all conflict comes from the enemy.", "Tidak semua konflik berasal dari Iblis.", lang)}</p>
-              <p style={{ ...txt, marginTop: 10 }}>{t("James says it starts in our own desires.", "Yakobus mengatakan bahwa konflik bermula dari keinginan kita sendiri.", lang)}</p>
-              <p style={{ ...txt, marginTop: 10, fontWeight: 600 }}>{t("We are responsible for our part.", "Kita bertanggung jawab atas bagian kita.", lang)}</p>
-            </div>
-            <div style={{ ...card, ...show(step >= 1), padding: "32px 38px", borderTop: `6px solid ${orange}` }}>
-              <p style={ref}>{t("Leviticus 19:17", "Imamat 19:17", lang)}</p>
-              <p style={txt}>{t("Do not hate a brother in the heart.", "Jangan membenci saudara di dalam hati.", lang)}</p>
-              <p style={{ ...txt, marginTop: 10, fontWeight: 600 }}>{t("Speak to him honestly.", "Tegurlah dia dengan terus terang.", lang)}</p>
-            </div>
-          </div>
-          <div style={{ ...show(step >= 2), width: "100%", padding: "18px 32px", borderRadius: 14, border: `2px solid ${lightGray}`, display: "flex", flexDirection: "column", gap: 4 }}>
-            <p style={{ fontFamily: sans, fontSize: 23, lineHeight: 1.45, fontWeight: 600, color: navy, margin: 0 }}>
-              {t("If you are being harmed, bullied or abused, you do not have to face that person alone.",
-                "Jika Anda disakiti, dirundung, atau dianiaya, Anda tidak harus menghadapi orang itu sendirian.", lang)}
-            </p>
-            <p style={{ fontFamily: sans, fontSize: 23, lineHeight: 1.45, color: muted, margin: 0 }}>
-              {t("Tell someone with authority to act, or a trusted person outside the situation.",
-                "Beri tahu seseorang yang berwenang untuk bertindak, atau orang tepercaya di luar situasi itu.", lang)}
-            </p>
-          </div>
-        </>
-      );
-    },
-  },
   {
     key: "not-peace",
     dark: true,
@@ -807,6 +555,7 @@ const SLIDES: Slide[] = [
       </>
     ),
   },
+  { key: "close", bleed: true, render: lang => <HealthyBleed lang={lang} /> },
 ];
 
 const stepsOf = (index: number) => SLIDES[index].steps ?? 1;
@@ -816,6 +565,14 @@ function SlideFrame({ index, lang, step }: { index: number; lang: Lang; step: nu
   const s = SLIDES[index];
   const isTitle = index === 0;
   const dark = !!s.dark;
+  if (s.bleed) {
+    return (
+      <div style={{ width: W, height: H, position: "relative", background: bleedBg, overflow: "hidden", fontFamily: sans }}>
+        {s.render(lang, step)}
+        <div aria-hidden="true" style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 10, background: orange, zIndex: 3 }} />
+      </div>
+    );
+  }
   return (
     <div style={{ width: W, height: H, position: "relative", background: dark ? navy : offWhite, overflow: "hidden", fontFamily: sans }}>
       {isTitle && (
