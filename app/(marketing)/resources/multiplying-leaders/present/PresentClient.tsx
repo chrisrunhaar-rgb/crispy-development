@@ -743,7 +743,7 @@ export default function PresentClient() {
 
       {/* Start hint, shown until the presenter first moves on */}
       {!started && !overview && (
-        <div className="mawl-ui" style={{ position: "absolute", left: "50%", bottom: 104, transform: "translateX(-50%)", display: "flex", alignItems: "center", gap: 14, whiteSpace: "nowrap" }}>
+        <div className="mawl-ui" style={{ position: "absolute", left: "50%", bottom: phone ? 52 : 88, transform: "translateX(-50%)", display: "flex", alignItems: "center", gap: 14, whiteSpace: "nowrap" }}>
           {!isFull && (
             <button type="button" onClick={() => { setStarted(true); toggleFull(); }}
               style={{ display: "inline-flex", alignItems: "center", gap: 10, height: 48, padding: "0 24px", borderRadius: 999, border: "none", background: orange, color: "white", fontFamily: sans, fontWeight: 700, fontSize: 15, cursor: "pointer", boxShadow: "0 10px 30px oklch(0% 0 0 / 0.35)" }}>
@@ -759,7 +759,7 @@ export default function PresentClient() {
 
       {/* Control bar */}
       <div className="mawl-ui" role="toolbar" aria-label={t("Presentation controls", "Kontrol presentasi", lang)}
-        style={{ position: "absolute", left: "50%", bottom: 28, transform: "translateX(-50%)",
+        style={{ position: "absolute", left: "50%", bottom: phone ? 8 : 20, transform: `translateX(-50%) scale(${phone ? 0.6 : 0.82})`, transformOrigin: "bottom center",
           display: "flex", alignItems: "center", gap: 2, padding: 6, borderRadius: 16, background: "oklch(18% 0.05 260 / 0.88)", backdropFilter: "blur(12px)", boxShadow: "0 12px 40px oklch(0% 0 0 / 0.4)" }}>
         <button type="button" className="mawl-pill" style={{ ...pill, opacity: i === 0 ? 0.35 : 1 }} disabled={i === 0} onClick={() => { setStarted(true); prev(); }}
           aria-label={t("Previous slide", "Slide sebelumnya", lang)}>
