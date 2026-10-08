@@ -1,10 +1,14 @@
-﻿"use client";
+"use client";
 
 import { useState, useTransition } from "react";
+import type { ReactNode, CSSProperties } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
 import LangToggle from "@/components/LangToggle";
+import SourcesDropdown from "@/components/SourcesDropdown";
+import { Compass, Scale, Users, Cross, BookOpen, HeartPulse, Mountain, Ship } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 type Lang = "en" | "id";
 const t = (en: string, id: string, lang: Lang) =>
@@ -13,21 +17,54 @@ const t = (en: string, id: string, lang: Lang) =>
 // -- BRAND TOKENS -------------------------------------------------------------
 const navy     = "oklch(22% 0.10 260)";
 const orange   = "oklch(65% 0.15 45)";
-const offWhite = "oklch(97% 0.005 80)";
-const lightGray = "oklch(95% 0.008 80)";
+const offWhite = "oklch(96% 0.005 80)";
+const lightGray = "oklch(88% 0.008 80)";
 const bodyText = "oklch(38% 0.05 260)";
+
+const eyebrow = (color: string = orange): CSSProperties => ({
+  fontFamily: "Montserrat, sans-serif",
+  fontSize: "0.75rem",
+  fontWeight: 700,
+  letterSpacing: "0.12em",
+  textTransform: "uppercase",
+  color,
+  marginBottom: 16,
+});
+
+// Wrap superscript citation numbers in orange
+function cite(text: string): ReactNode {
+  const parts = text.split(/([¹²³⁴⁵⁶⁷⁸⁹⁰]+)/);
+  if (parts.length === 1) return text;
+  return parts.map((part, i) =>
+    /^[¹²³⁴⁵⁶⁷⁸⁹⁰]+$/.test(part)
+      ? <span key={i} style={{ color: orange, fontWeight: 700 }}>{part}</span>
+      : part
+  );
+}
+
+// -- SOURCES (order matches superscript numbers) -----------------------------
+const SOURCES = [
+  "Pollock, D.C., Van Reken, R.E. & Pollock, M.V. (2017). Third Culture Kids: The Experience of Growing Up Among Worlds (3rd ed.). Nicholas Brealey.",
+  "Rahim, H.F. et al. (2021). Cultural Identity Conflict and Psychological Well-Being in Bicultural Young Adults. Journal of Nervous and Mental Disease, 209(7), 525-532.",
+  "Koteskey, R. Burnout. Cross-Cultural Workers series, GO International.",
+  "Berry, J.W. (2005). Acculturation: Living Successfully in Two Cultures. International Journal of Intercultural Relations, 29(6), 697-712.",
+  "Filipic Sterle, M. et al. (2018). Expatriate Family Adjustment: An Overview of Empirical Evidence on Challenges and Resources. Frontiers in Psychology, 9, 1207.",
+  "Nouwen, H.J.M. (1992). Life of the Beloved: Spiritual Living in a Secular World. Crossroad.",
+  "Shaum, S. (2023). 5 Themes Amongst Cross-Cultural Workers. Tending Scattered Wool.",
+  "Yampolsky, M.A., Amiot, C.E. & de la Sablonnière, R. (2013). Multicultural Identity Integration and Well-Being. Frontiers in Psychology, 4, 126.",
+];
 
 // -- VERSE DATA ----------------------------------------------------------------
 const VERSES = {
   "matt-4-3-4": {
-    ref: "Matthew 4:3—4",
-    ref_id: "Matius 4:3—4",
+    ref: "Matthew 4:3-4",
+    ref_id: "Matius 4:3-4",
     en: "The tempter came to him and said, 'If you are the Son of God, tell these stones to become bread.' Jesus answered, 'It is written: Man shall not live on bread alone, but on every word that comes from the mouth of God.'",
     id: "Lalu datanglah si pencoba itu dan berkata kepada-Nya: 'Jika Engkau Anak Allah, perintahkanlah supaya batu-batu ini menjadi roti.' Tetapi Yesus menjawab: 'Ada tertulis: Manusia hidup bukan dari roti saja, tetapi dari setiap firman yang keluar dari mulut Allah.'",
   },
   "psalm-46-1-2": {
-    ref: "Psalm 46:1—2",
-    ref_id: "Mazmur 46:1—2",
+    ref: "Psalm 46:1-2",
+    ref_id: "Mazmur 46:1-2",
     en: "God is our refuge and strength, an ever-present help in trouble. Therefore we will not fear, though the earth give way and the mountains fall into the heart of the sea.",
     id: "Allah itu bagi kita tempat perlindungan dan kekuatan, sebagai penolong dalam kesesakan sangat terbukti. Sebab itu kita tidak akan takut, sekalipun bumi berubah, sekalipun gunung-gunung goncang di dalam laut.",
   },
@@ -50,7 +87,7 @@ type AnchorKey = "calling" | "values" | "community" | "faith" | "story" | "body"
 
 const ANCHORS: {
   key: AnchorKey;
-  icon: string;
+  icon: LucideIcon;
   color: string;
   en_title: string; id_title: string;
   en_tagline: string; id_tagline: string;
@@ -62,147 +99,171 @@ const ANCHORS: {
 }[] = [
   {
     key: "calling",
-    icon: "??",
+    icon: Compass,
     color: "oklch(52% 0.16 260)",
     en_title: "Calling",
     id_title: "Panggilan",
     en_tagline: "Knowing why you are here",
-    id_tagline: "Mengetahui mengapa Anda ada di sini",
-    en_strength: "When your sense of calling is clear, external pressure loses much of its power to define you. You know what you came to do — and that knowledge insulates you from the noise of comparison, criticism, and cultural confusion. Calling gives you a 'why' strong enough to carry almost any 'how.'",
-    id_strength: "Ketika rasa panggilan Anda jelas, tekanan eksternal kehilangan banyak kekuatannya untuk mendefinisikan Anda. Anda tahu apa yang Anda datangi untuk dilakukan — dan pengetahuan itu melindungi Anda dari kebisingan perbandingan, kritik, dan kebingungan budaya. Panggilan memberi Anda 'mengapa' yang cukup kuat untuk menanggung hampir semua 'bagaimana.'",
-    en_threat: "Pressure attacks calling through chronic fruitlessness — when the work produces nothing visible for so long that you begin to wonder if you misheard God. It attacks through comparison with leaders who appear more successful. It attacks through people who question your motives or competence, planting seeds of self-doubt that slowly erode the original conviction that brought you here.",
-    id_threat: "Tekanan menyerang panggilan melalui ketidakberbuahan yang kronis — ketika pekerjaan tidak menghasilkan sesuatu yang terlihat begitu lama sehingga Anda mulai bertanya-tanya apakah Anda salah mendengar Tuhan. Tekanan menyerang melalui perbandingan dengan pemimpin yang tampak lebih sukses. Tekanan menyerang melalui orang-orang yang mempertanyakan motif atau kompetensi Anda, menanam benih keraguan diri yang perlahan mengikis keyakinan awal yang membawa Anda ke sini.",
-    en_scenario: "You've been in your role for two years. A colleague who started at the same time has planted three new groups and is being celebrated across the network. You've invested deeply in two relationships that just walked away. You sit down to prepare another session for the same small, unchanged group — and wonder if you ever actually heard God correctly.",
-    id_scenario: "Anda telah berada dalam peran Anda selama dua tahun. Seorang rekan yang mulai pada waktu yang sama telah mendirikan tiga kelompok baru dan dirayakan di seluruh jaringan. Anda telah berinvestasi dalam dua hubungan yang baru saja pergi. Anda duduk untuk mempersiapkan sesi lain untuk kelompok kecil yang sama yang tidak berubah — dan bertanya-tanya apakah Anda pernah benar-benar mendengar Tuhan dengan benar.",
-    en_practice: "Write your 'calling statement' — three sentences maximum. When did you first sense this was what you were made for? What would be unfinished if you walked away today? Read it aloud once a week, especially in dry seasons.",
-    id_practice: "Tuliskan 'pernyataan panggilan' Anda — maksimal tiga kalimat. Kapan Anda pertama kali merasakan bahwa inilah yang Anda diciptakan? Apa yang akan tetap tidak selesai jika Anda pergi hari ini? Bacalah dengan bersuara seminggu sekali, terutama di musim-musim kering.",
-    en_question: "If your work produced nothing measurable for twelve months, would you still know you are in the right place? What does your answer reveal?",
-    id_question: "Jika pekerjaan Anda tidak menghasilkan sesuatu yang terukur selama dua belas bulan, apakah Anda masih tahu bahwa Anda berada di tempat yang tepat? Apa yang diungkapkan jawaban Anda?",
+    id_tagline: "Tahu kenapa kamu ada di sini",
+    en_strength: "When your sense of calling is clear, outside pressure loses much of its power to define you. You know what you came to do, and that knowledge shields you from the noise of comparison, criticism and cultural confusion. Calling gives you a 'why' strong enough to carry almost any 'how'.",
+    id_strength: "Saat panggilanmu jelas, tekanan dari luar kehilangan banyak kuasanya untuk menentukan siapa kamu. Kamu tahu untuk apa kamu datang, dan itu melindungimu dari riuhnya perbandingan, kritik dan kebingungan budaya. Panggilan memberimu 'mengapa' yang cukup kuat untuk menanggung hampir semua 'bagaimana'.",
+    en_threat: "Pressure attacks calling through long stretches without visible fruit, until you start to wonder if you misheard God. It attacks through comparison with leaders who seem more successful, and through people who question your motives or skill. Burnout research among cross-cultural workers finds that the most committed people, with the highest expectations, are often the most vulnerable.³",
+    id_threat: "Tekanan menyerang panggilan lewat masa panjang tanpa buah yang kelihatan, sampai kamu mulai bertanya apakah kamu salah dengar dari Tuhan. Tekanan juga datang lewat perbandingan dengan pemimpin yang tampak lebih sukses, dan lewat orang yang meragukan motif atau kemampuanmu. Penelitian tentang burnout pada pekerja lintas budaya menemukan bahwa orang yang paling berkomitmen, dengan harapan paling tinggi, sering justru paling rentan.³",
+    en_scenario: "You have been in your role for two years. A colleague who started at the same time has planted three new groups and is being celebrated across the network. Two relationships you invested in deeply have just walked away. You sit down to prepare another session for the same small group, unchanged, and wonder if you ever heard God correctly.",
+    id_scenario: "Sudah dua tahun kamu di peran ini. Seorang rekan yang mulai bersamaan sudah merintis tiga kelompok baru dan dipuji di seluruh jaringan. Dua hubungan yang kamu bangun dengan sungguh-sungguh baru saja pergi. Kamu duduk menyiapkan sesi lagi untuk kelompok kecil yang sama, yang tidak berubah, dan bertanya-tanya apakah kamu dulu benar-benar mendengar Tuhan.",
+    en_practice: "Write your 'calling statement' in three sentences or fewer. When did you first sense this was what you were made for? What would be left unfinished if you walked away today? Read it aloud once a week, especially in dry seasons.",
+    id_practice: "Tulis 'pernyataan panggilan' kamu, paling banyak tiga kalimat. Kapan pertama kali kamu merasa inilah yang menjadi tujuanmu diciptakan? Apa yang belum selesai kalau kamu pergi hari ini? Bacakan dengan suara keras seminggu sekali, terutama di musim kering.",
+    en_question: "If your work produced nothing measurable for twelve months, would you still know you are in the right place? What does your answer tell you?",
+    id_question: "Kalau pekerjaanmu tidak menghasilkan apa pun yang bisa diukur selama dua belas bulan, apakah kamu tetap yakin berada di tempat yang tepat? Apa yang jawabanmu katakan tentang dirimu?",
   },
   {
     key: "values",
-    icon: "??",
+    icon: Scale,
     color: "oklch(58% 0.17 35)",
     en_title: "Values",
-    id_title: "Nilai-nilai",
+    id_title: "Nilai",
     en_tagline: "What you will and won't compromise",
-    id_tagline: "Apa yang akan dan tidak akan Anda kompromikan",
-    en_strength: "Clearly named values function as an internal compass — they tell you which decisions are yours to make and which are not, regardless of what the surrounding culture expects. In cross-cultural environments where almost everything is negotiable, knowing what is non-negotiable gives you a reliable centre. Values are the skeleton that keeps identity upright when external pressure tries to reshape you.",
-    id_strength: "Nilai-nilai yang diungkapkan dengan jelas berfungsi sebagai kompas internal — nilai-nilai itu memberi tahu Anda keputusan mana yang menjadi milik Anda dan mana yang tidak, terlepas dari apa yang diharapkan budaya sekitar. Dalam lingkungan lintas budaya di mana hampir semua hal dapat dinegosiasikan, mengetahui apa yang tidak dapat dinegosiasikan memberi Anda pusat yang andal. Nilai-nilai adalah kerangka yang membuat identitas tetap tegak ketika tekanan eksternal mencoba membentuk kembali Anda.",
-    en_threat: "Cultural immersion applies constant pressure to blend — to adopt local norms, local communication styles, local definitions of success. This is appropriate in many ways. But slow, unexamined accommodation can gradually shift your values without your noticing. By the time you realise what has happened, you have been making decisions from a value set that is no longer quite yours.",
-    id_threat: "Imersi budaya menerapkan tekanan konstan untuk berbaur — untuk mengadopsi norma lokal, gaya komunikasi lokal, definisi kesuksesan lokal. Ini sesuai dalam banyak hal. Tetapi akomodasi yang lambat dan tidak diperiksa dapat secara bertahap menggeser nilai-nilai Anda tanpa Anda sadari. Pada saat Anda menyadari apa yang telah terjadi, Anda telah membuat keputusan dari seperangkat nilai yang bukan sepenuhnya milik Anda lagi.",
-    en_scenario: "Your team culture has quietly shifted over eighteen months toward avoiding difficult conversations. You notice you've stopped naming concerns in meetings because the cost of disruption feels too high. One day you realise you've become someone who prioritises peace over truth — and you're not sure when that became your approach.",
-    id_scenario: "Budaya tim Anda telah bergeser secara diam-diam selama delapan belas bulan ke arah menghindari percakapan sulit. Anda perhatikan bahwa Anda telah berhenti menyebutkan kekhawatiran dalam rapat karena harga yang harus dibayar untuk mengganggu suasana terasa terlalu tinggi. Suatu hari Anda menyadari bahwa Anda telah menjadi seseorang yang memprioritaskan perdamaian daripada kebenaran — dan Anda tidak yakin kapan itu menjadi pendekatan Anda.",
-    en_practice: "Name your three core values — one word each. For each, write one behaviour that would demonstrate it is active in your life. Review quarterly and ask honestly: did my decisions this season reflect these values?",
-    id_practice: "Sebutkan tiga nilai inti Anda — satu kata masing-masing. Untuk masing-masing, tuliskan satu perilaku yang akan menunjukkan bahwa nilai itu aktif dalam hidup Anda. Tinjau setiap kuartal dan tanyakan dengan jujur: apakah keputusan saya musim ini mencerminkan nilai-nilai ini?",
-    en_question: "Where in the last six months have you acted against something you believe — and told yourself it was unavoidable? Was it?",
-    id_question: "Di mana dalam enam bulan terakhir Anda bertindak melawan sesuatu yang Anda percaya — dan meyakinkan diri sendiri bahwa itu tidak dapat dihindari? Benarkah demikian?",
+    id_tagline: "Apa yang mau dan tidak mau kamu kompromikan",
+    en_strength: "Clearly named values work as an inner compass. They tell you which decisions are yours to make, whatever the culture around you expects. Where almost everything is negotiable, knowing what is not gives you a steady centre. Acculturation research finds that people who keep their own values while engaging the new culture tend to have the best mental health.⁴",
+    id_strength: "Nilai yang dirumuskan dengan jelas berfungsi seperti kompas di dalam diri. Nilai itu menunjukkan keputusan mana yang memang bagianmu, apa pun harapan budaya di sekitarmu. Ketika hampir semua hal bisa ditawar, tahu apa yang tidak bisa ditawar memberimu pusat yang stabil. Penelitian akulturasi menemukan bahwa orang yang tetap memegang nilainya sambil terlibat dengan budaya baru cenderung punya kesehatan mental paling baik.⁴",
+    en_threat: "Living inside another culture puts steady pressure on you to blend in: to adopt local norms, local ways of speaking, local ideas of success. Much of that is right and good. But slow, unexamined adjustment can shift your values without you noticing. By the time you see it, you have been deciding from a set of values that is no longer quite yours.",
+    id_threat: "Hidup di dalam budaya lain terus mendorongmu untuk membaur: mengikuti norma setempat, cara bicara setempat, ukuran sukses setempat. Banyak dari itu baik dan memang perlu. Tetapi penyesuaian yang pelan dan tidak pernah diperiksa bisa menggeser nilaimu tanpa kamu sadari. Saat kamu melihatnya, kamu sudah lama mengambil keputusan dari nilai yang bukan lagi sepenuhnya milikmu.",
+    en_scenario: "Over eighteen months your team has quietly drifted toward avoiding hard conversations. You notice you have stopped naming concerns in meetings because the cost of disruption feels too high. One day you realise you now put peace ahead of truth, and you are not sure when that started.",
+    id_scenario: "Selama delapan belas bulan, timmu pelan-pelan makin menghindari percakapan sulit. Kamu sadar kamu sudah berhenti menyampaikan kekhawatiran di rapat karena risikonya terasa terlalu besar. Suatu hari kamu sadar bahwa kamu sekarang lebih mengutamakan damai daripada kebenaran, dan kamu tidak tahu sejak kapan.",
+    en_practice: "Name your three core values, one word each. For each one, write one behaviour that would show it is alive in your life. Review them every quarter and ask honestly: did my decisions this season reflect these values?",
+    id_practice: "Tuliskan tiga nilai intimu, masing-masing satu kata. Untuk setiap nilai, tulis satu perilaku yang menunjukkan nilai itu benar-benar hidup dalam dirimu. Tinjau setiap tiga bulan dan tanyakan dengan jujur: apakah keputusanku di musim ini mencerminkan nilai-nilai ini?",
+    en_question: "Where in the last six months have you acted against something you believe and told yourself it was unavoidable? Was it?",
+    id_question: "Di mana dalam enam bulan terakhir kamu bertindak bertentangan dengan apa yang kamu yakini, lalu bilang ke diri sendiri bahwa itu tidak bisa dihindari? Benarkah begitu?",
   },
   {
     key: "community",
-    icon: "??",
+    icon: Users,
     color: "oklch(50% 0.16 170)",
     en_title: "Community",
     id_title: "Komunitas",
     en_tagline: "Who knows and loves you",
-    id_tagline: "Siapa yang mengenal dan mencintai Anda",
-    en_strength: "We know ourselves partly through the eyes of people who know us well. A trusted community acts as a mirror that reflects who we actually are — not who pressure is trying to turn us into. When your sense of self becomes blurred under sustained pressure, community is what names you back to yourself. It says: 'This is who you are. We've seen it for years. The pressure is lying.'",
-    id_strength: "Kita mengenal diri kita sendiri sebagian melalui mata orang-orang yang mengenal kita dengan baik. Komunitas yang dipercaya bertindak sebagai cermin yang mencerminkan siapa kita sebenarnya — bukan siapa yang tekanan coba ubah kita menjadi. Ketika rasa diri Anda menjadi kabur di bawah tekanan yang berkelanjutan, komunitaslah yang memanggil Anda kembali kepada diri sendiri. Komunitas berkata: 'Inilah dirimu. Kami telah melihatnya selama bertahun-tahun. Tekanan itu berbohong.'",
-    en_threat: "Cross-cultural ministry and leadership work are among the loneliest professions on earth. Role expectations, cultural distance, frequent relocation, language barriers, and the weight of being 'the outsider' all work against deep community. Over time, the isolation is not just socially painful — it strips the leader of the external witnesses to their own identity, leaving only pressure's voice in the room.",
-    id_threat: "Pelayanan dan kepemimpinan lintas budaya adalah salah satu profesi paling kesepian di bumi. Harapan peran, jarak budaya, perpindahan yang sering, hambatan bahasa, dan beban menjadi 'orang luar' semuanya melawan komunitas yang dalam. Seiring waktu, isolasi tidak hanya menyakitkan secara sosial — itu melepas pemimpin dari saksi-saksi eksternal untuk identitas mereka sendiri, hanya menyisakan suara tekanan di ruangan itu.",
-    en_scenario: "You've just come through a public failure — a project collapse, a team conflict that went wrong, a decision that cost credibility. In the aftermath, most people in your network treat you differently. But one person calls you by name, sits with you in it, and says nothing except: 'I know who you are. This doesn't change that.' That person is doing more for your identity than any strategy.",
-    id_scenario: "Anda baru saja melewati kegagalan publik — runtuhnya proyek, konflik tim yang salah, keputusan yang menghabiskan kredibilitas. Setelah itu, sebagian besar orang dalam jaringan Anda memperlakukan Anda secara berbeda. Tetapi satu orang memanggil Anda dengan nama, duduk bersama Anda di dalamnya, dan tidak berkata apa-apa kecuali: 'Saya tahu siapa Anda. Ini tidak mengubah itu.' Orang itu melakukan lebih banyak untuk identitas Anda daripada strategi apa pun.",
-    en_practice: "Identify two to three people who knew you before this role and still know you now. Schedule a non-agenda conversation with one of them this month. Share something real — not just progress updates. Ask them: 'Do I seem like myself to you lately?'",
-    id_practice: "Identifikasi dua hingga tiga orang yang mengenal Anda sebelum peran ini dan masih mengenal Anda sekarang. Jadwalkan percakapan tanpa agenda dengan salah satu dari mereka bulan ini. Bagikan sesuatu yang nyata — bukan hanya pembaruan kemajuan. Tanyakan kepada mereka: 'Apakah saya tampak seperti diri saya sendiri bagimu akhir-akhir ini?'",
-    en_question: "Who in your life currently has both the access and the freedom to tell you the truth about yourself? If no one comes to mind, what needs to change?",
-    id_question: "Siapa dalam hidup Anda yang saat ini memiliki akses dan kebebasan untuk menceritakan kebenaran tentang diri Anda? Jika tidak ada yang terlintas di benak, apa yang perlu diubah?",
+    id_tagline: "Siapa yang mengenal dan mengasihimu",
+    en_strength: "We know ourselves partly through the eyes of people who know us well. Trusted friends act as a mirror that shows who we really are, rather than who pressure is trying to make us. When your sense of self blurs under long pressure, community names you back to yourself: 'This is who you are. We have seen it for years.' Research on expatriate families finds that staying in touch with family, friends and former colleagues protects wellbeing.⁵",
+    id_strength: "Kita mengenal diri sendiri sebagian lewat mata orang yang mengenal kita dengan baik. Teman yang dipercaya menjadi cermin yang menunjukkan siapa kita sebenarnya, bukan siapa yang ingin dibentuk oleh tekanan. Saat gambaran dirimu kabur karena tekanan yang lama, komunitas mengingatkanmu siapa kamu: 'Inilah kamu. Kami sudah melihatnya bertahun-tahun.' Penelitian tentang keluarga ekspatriat menemukan bahwa tetap terhubung dengan keluarga, teman dan mantan rekan kerja melindungi kesejahteraan.⁵",
+    en_threat: "Cross-cultural work can be deeply lonely. Role expectations, cultural distance, frequent moves, language barriers and the weight of being the outsider all work against deep friendship. Over time, isolation does more than hurt. It removes the people who could remind you who you are, and leaves pressure as the only voice in the room.",
+    id_threat: "Pekerjaan lintas budaya bisa sangat sepi. Tuntutan peran, jarak budaya, sering pindah, hambatan bahasa dan beban sebagai orang luar semuanya mempersulit persahabatan yang dalam. Lama-lama, isolasi bukan hanya menyakitkan. Isolasi menyingkirkan orang-orang yang bisa mengingatkanmu siapa kamu, sampai yang tersisa hanya suara tekanan.",
+    en_scenario: "You have just come through a public failure: a project that collapsed, a team conflict that went wrong, a decision that cost you credibility. Afterwards, most people in your network treat you differently. But one person calls you by name, sits with you in it and says only: 'I know who you are. This doesn't change that.' That person is doing more for your identity than any strategy.",
+    id_scenario: "Kamu baru saja melewati kegagalan di depan banyak orang: proyek yang gagal, konflik tim yang memburuk, keputusan yang membuat kredibilitasmu turun. Setelah itu, kebanyakan orang di jaringanmu memperlakukanmu berbeda. Tetapi satu orang memanggil namamu, duduk menemanimu, dan hanya berkata: 'Aku tahu siapa kamu. Ini tidak mengubah itu.' Orang itu berbuat lebih banyak untuk identitasmu daripada strategi apa pun.",
+    en_practice: "Name two or three people who knew you before this role and still know you now. Book a conversation with no agenda with one of them this month. Share something real, beyond progress updates. Ask them: 'Do I seem like myself to you lately?'",
+    id_practice: "Sebutkan dua atau tiga orang yang mengenalmu sebelum peran ini dan masih mengenalmu sekarang. Jadwalkan obrolan tanpa agenda dengan salah satu dari mereka bulan ini. Ceritakan sesuatu yang nyata, bukan hanya kabar kemajuan. Tanyakan: 'Menurutmu, akhir-akhir ini aku masih seperti diriku sendiri?'",
+    en_question: "Who in your life has both the access and the freedom to tell you the truth about yourself? If no one comes to mind, what needs to change?",
+    id_question: "Siapa dalam hidupmu yang punya akses sekaligus kebebasan untuk mengatakan kebenaran tentang dirimu? Kalau tidak ada yang terlintas, apa yang perlu berubah?",
   },
   {
     key: "faith",
-    icon: "??",
+    icon: Cross,
     color: "oklch(55% 0.18 305)",
     en_title: "Faith",
     id_title: "Iman",
     en_tagline: "Who God says you are",
-    id_tagline: "Siapa Anda menurut Tuhan",
-    en_strength: "In the wilderness, Jesus was tempted three times. Every temptation was fundamentally an identity temptation: 'If you are the Son of God...' The enemy's strategy was not to make Jesus do something wrong — it was to make him act as if he needed to prove who he was. Jesus' identity was secure because it had been spoken at his baptism: 'This is my beloved Son, in whom I am well pleased.' He did not need to perform. He already knew. Faith works the same way — it holds the identity God has declared over us as more authoritative than anything circumstances or culture can say.",
-    id_strength: "Di padang gurun, Yesus dicobai tiga kali. Setiap godaan pada dasarnya adalah godaan identitas: 'Jika Engkau Anak Allah...' Strategi musuh bukan untuk membuat Yesus melakukan sesuatu yang salah — itu adalah untuk membuatnya bertindak seolah-olah dia perlu membuktikan siapa dirinya. Identitas Yesus aman karena telah diucapkan pada pembaptisan-Nya: 'Inilah Anak-Ku yang Kukasihi, kepada-Nyalah Aku berkenan.' Dia tidak perlu menunjukkan. Dia sudah tahu. Iman bekerja dengan cara yang sama — iman memegang identitas yang telah dinyatakan Tuhan atas kita sebagai lebih otoritatif daripada apa pun yang dapat dikatakan oleh keadaan atau budaya.",
-    en_threat: "Spiritual drought is the most dangerous faith attack. When prayer feels hollow, Scripture feels abstract, and God feels distant — often precisely because of the sustained stress of cross-cultural life — the faith anchor begins to drag. A leader in spiritual drought is no longer drawing identity from God's voice. They are left to draw it from performance, approval, and comparison instead. The container empties and pressure rushes in.",
-    id_threat: "Kekeringan rohani adalah serangan iman yang paling berbahaya. Ketika doa terasa hampa, Kitab Suci terasa abstrak, dan Tuhan terasa jauh — seringkali justru karena tekanan berkelanjutan dari kehidupan lintas budaya — jangkar iman mulai terseret. Seorang pemimpin dalam kekeringan rohani tidak lagi mengambil identitas dari suara Tuhan. Mereka dibiarkan mengambilnya dari kinerja, persetujuan, dan perbandingan. Wadah kosong dan tekanan mengalir masuk.",
-    en_scenario: "It is month seven of a difficult season. You haven't felt anything in prayer for weeks. You read your Bible because you're supposed to, but it lands flat. A leader you respect tells you that a true person of faith wouldn't be struggling this much. You begin to wonder if you were ever really rooted in God at all — or just performing faith well enough to fool yourself.",
-    id_scenario: "Ini adalah bulan ketujuh dari musim yang sulit. Anda tidak merasakan apa pun dalam doa selama berminggu-minggu. Anda membaca Alkitab karena Anda seharusnya, tetapi terasa datar. Seorang pemimpin yang Anda hormati mengatakan bahwa orang beriman yang sejati tidak akan berjuang sebanyak ini. Anda mulai bertanya-tanya apakah Anda pernah benar-benar berakar dalam Tuhan sama sekali — atau hanya menampilkan iman dengan cukup baik untuk menipu diri sendiri.",
-    en_practice: "Spend fifteen minutes with Psalm 46 this week. Not studying it — sitting with it. Let the language of fortress and refuge sink in below the level of analysis. Your identity in Christ is not a feeling you maintain. It is a truth you return to. Come back to it.",
-    id_practice: "Habiskan lima belas menit bersama Mazmur 46 minggu ini. Bukan mempelajarinya — duduk bersamanya. Biarkan bahasa benteng dan perlindungan meresap di bawah level analisis. Identitas Anda dalam Kristus bukan perasaan yang Anda pertahankan. Itu adalah kebenaran yang Anda kembalikan. Kembalilah padanya.",
-    en_question: "When the feelings are gone — when prayer is dry and Scripture is flat — what do you believe about who you are to God? Is that belief strong enough to hold you?",
-    id_question: "Ketika perasaan sudah pergi — ketika doa kering dan Kitab Suci terasa datar — apa yang Anda percaya tentang siapa Anda bagi Tuhan? Apakah keyakinan itu cukup kuat untuk menopang Anda?",
+    id_tagline: "Siapa kamu menurut Tuhan",
+    en_strength: "In the wilderness, Jesus was tempted three times, and each temptation was about identity: 'If you are the Son of God...' The enemy wanted him to act as if he had to prove who he was. Jesus was secure because the Father had already spoken at his baptism: 'This is my beloved Son, in whom I am well pleased.' He had nothing to prove. Faith works the same way. It holds what God has said about you as more true than anything circumstances or culture say. Henri Nouwen called this living as the Beloved.⁶",
+    id_strength: "Di padang gurun, Yesus dicobai tiga kali, dan setiap pencobaan menyangkut identitas: 'Jika Engkau Anak Allah...' Iblis ingin Dia bertindak seolah-olah Dia harus membuktikan siapa diri-Nya. Yesus teguh karena Bapa sudah berbicara saat Ia dibaptis: 'Inilah Anak-Ku yang Kukasihi, kepada-Nyalah Aku berkenan.' Ia tidak perlu membuktikan apa pun. Iman bekerja dengan cara yang sama. Iman memegang apa yang Tuhan katakan tentang kamu sebagai lebih benar daripada apa pun yang dikatakan keadaan atau budaya. Henri Nouwen menyebutnya hidup sebagai yang Dikasihi.⁶",
+    en_threat: "Spiritual drought is the most dangerous attack on faith. Prayer feels hollow, Scripture feels abstract and God feels distant, often because of the long stress of cross-cultural life. When that happens, a leader stops drawing identity from God's voice and starts drawing it from performance, approval and comparison. People who care for cross-cultural workers name this 'performance lie' as one of the most common themes they see.⁷",
+    id_threat: "Kekeringan rohani adalah serangan paling berbahaya terhadap iman. Doa terasa kosong, Firman terasa jauh dan Tuhan terasa tidak dekat, sering justru karena tekanan panjang hidup lintas budaya. Saat itu terjadi, seorang pemimpin berhenti menerima identitas dari suara Tuhan dan mulai mencarinya dari kinerja, pengakuan dan perbandingan. Para pendamping pekerja lintas budaya menyebut 'kebohongan kinerja' ini sebagai salah satu tema yang paling sering mereka temui.⁷",
+    en_scenario: "It is month seven of a hard season. You have not felt anything in prayer for weeks. You read your Bible because you should, but it lands flat. A leader you respect tells you that a person of real faith would not be struggling this much. You start to wonder if you were ever rooted in God at all, or only performing faith well enough to fool yourself.",
+    id_scenario: "Ini bulan ketujuh dari musim yang berat. Sudah berminggu-minggu kamu tidak merasakan apa-apa saat berdoa. Kamu membaca Alkitab karena memang seharusnya, tetapi terasa hambar. Seorang pemimpin yang kamu hormati bilang bahwa orang yang imannya sungguh-sungguh tidak akan bergumul sampai seperti ini. Kamu mulai bertanya apakah kamu pernah benar-benar berakar di dalam Tuhan, atau hanya pandai berpura-pura beriman sampai menipu diri sendiri.",
+    en_practice: "Spend fifteen minutes with Psalm 46 this week. Sit with it rather than study it. Let the words fortress and refuge sink in below the level of analysis. Your identity in Christ is a truth you return to, even on days you cannot feel it. Come back to it.",
+    id_practice: "Luangkan lima belas menit bersama Mazmur 46 minggu ini. Jangan mempelajarinya, cukup diam bersamanya. Biarkan kata benteng dan tempat perlindungan meresap lebih dalam dari sekadar pikiran. Identitasmu di dalam Kristus adalah kebenaran yang bisa kamu datangi lagi, bahkan di hari-hari ketika kamu tidak merasakannya. Kembalilah ke sana.",
+    en_question: "When the feelings are gone, when prayer is dry and Scripture is flat, what do you believe about who you are to God? Is that belief strong enough to hold you?",
+    id_question: "Ketika perasaan itu hilang, ketika doa kering dan Firman terasa hambar, apa yang kamu percayai tentang siapa kamu bagi Tuhan? Apakah keyakinan itu cukup kuat untuk menopangmu?",
   },
   {
     key: "story",
-    icon: "??",
+    icon: BookOpen,
     color: "oklch(56% 0.15 50)",
     en_title: "Story",
-    id_title: "Cerita",
+    id_title: "Kisah",
     en_tagline: "The through-line of your life",
-    id_tagline: "Benang merah kehidupan Anda",
-    en_strength: "Your story — the accumulation of experiences, transitions, failures, and graces that have formed you — is a source of stable identity that the present moment cannot overwrite. When you know your story, you have evidence: you have been here before, God was faithful before, you are not who you were ten years ago. Story provides continuity. It situates the current pressure inside a larger arc that has meaning and direction.",
-    id_strength: "Cerita Anda — akumulasi pengalaman, transisi, kegagalan, dan anugerah yang telah membentuk Anda — adalah sumber identitas yang stabil yang tidak dapat ditimpa oleh momen saat ini. Ketika Anda mengetahui cerita Anda, Anda memiliki bukti: Anda pernah ada di sini sebelumnya, Tuhan setia sebelumnya, Anda bukan siapa yang Anda dulu sepuluh tahun lalu. Cerita memberikan kesinambungan. Cerita menempatkan tekanan saat ini di dalam busur yang lebih besar yang memiliki makna dan arah.",
-    en_threat: "Sustained pressure in a foreign cultural context can sever you from your own narrative. When you are immersed in a culture that doesn't share your reference points, the stories that formed you become untellable — no one here knows the context. Over time, you can lose your sense of the thread. The person who left your home country three years ago and the person sitting here now — who connects them? If you cannot answer that, your story anchor has gone slack.",
-    id_threat: "Tekanan berkelanjutan dalam konteks budaya asing dapat memutus Anda dari narasi Anda sendiri. Ketika Anda terbenam dalam budaya yang tidak berbagi titik referensi Anda, cerita-cerita yang membentuk Anda menjadi tidak dapat diceritakan — tidak ada yang di sini yang mengetahui konteksnya. Seiring waktu, Anda dapat kehilangan rasa benang itu. Orang yang meninggalkan negara asal Anda tiga tahun lalu dan orang yang duduk di sini sekarang — siapa yang menghubungkan mereka? Jika Anda tidak dapat menjawab itu, jangkar cerita Anda telah mengendur.",
-    en_scenario: "Someone in your sending church asks how you're doing. You open your mouth and realise you have no idea how to tell the story of the last eighteen months in a way that makes sense to someone who wasn't there. The gap between your experience and their frame of reference is so wide that you close down, say 'it's been hard,' and move on. But the untold story is accumulating.",
-    id_scenario: "Seseorang di gereja pengutus Anda bertanya bagaimana keadaan Anda. Anda membuka mulut dan menyadari bahwa Anda tidak tahu bagaimana menceritakan kisah delapan belas bulan terakhir dengan cara yang masuk akal bagi seseorang yang tidak ada di sana. Kesenjangan antara pengalaman Anda dan kerangka referensi mereka begitu lebar sehingga Anda menutup diri, berkata 'itu sulit,' dan melanjutkan. Tetapi cerita yang tidak terceritakan terus terakumulasi.",
-    en_practice: "Write the last five years of your life as a series of chapters — each chapter with a title and two or three sentences. Look for the pattern: What has been consistent? What has changed? What has God been doing across the whole arc? Share it with one person who will listen.",
-    id_practice: "Tulis lima tahun terakhir kehidupan Anda sebagai serangkaian bab — setiap bab dengan judul dan dua atau tiga kalimat. Cari polanya: Apa yang konsisten? Apa yang telah berubah? Apa yang telah Tuhan lakukan di seluruh busur itu? Bagikan kepada satu orang yang akan mendengarkan.",
-    en_question: "What is the one thread — a theme, a conviction, a wound that became a gift — that runs through every chapter of your story? Can you name it?",
-    id_question: "Apa satu benang merah — sebuah tema, sebuah keyakinan, sebuah luka yang menjadi hadiah — yang membentang melalui setiap bab dalam cerita Anda? Bisakah Anda mengungkapkannya?",
+    id_tagline: "Benang merah hidupmu",
+    en_strength: "Your story is the build-up of experiences, moves, failures and graces that have formed you. The present moment cannot overwrite it. When you know your story, you have evidence: you have been here before, God was faithful before, and you are not who you were ten years ago. Story gives you continuity. It places today's pressure inside a longer arc with meaning and direction.",
+    id_strength: "Kisahmu adalah kumpulan pengalaman, perpindahan, kegagalan dan anugerah yang membentukmu. Saat ini tidak bisa menghapusnya. Kalau kamu mengenal kisahmu, kamu punya bukti: kamu pernah di titik ini, Tuhan dulu setia, dan kamu bukan lagi orang yang sama seperti sepuluh tahun lalu. Kisah memberi kesinambungan. Kisah menempatkan tekanan hari ini di dalam perjalanan yang lebih panjang, yang punya makna dan arah.",
+    en_threat: "Long pressure in a foreign culture can cut you off from your own story. When no one around you shares your reference points, the stories that formed you become hard to tell, because nobody here knows the background. Over time you can lose the thread. Who connects the person who left home three years ago with the person sitting here now? Research on people living between cultures links a split, compartmentalised identity with a less coherent life story and lower wellbeing.⁸",
+    id_threat: "Tekanan panjang di budaya asing bisa memutuskanmu dari kisahmu sendiri. Ketika tidak ada orang di sekitarmu yang punya titik acuan yang sama, kisah-kisah yang membentukmu jadi sulit diceritakan, karena tidak ada yang tahu latar belakangnya. Lama-lama kamu bisa kehilangan benang merahnya. Siapa yang menghubungkan orang yang meninggalkan rumah tiga tahun lalu dengan orang yang duduk di sini sekarang? Penelitian tentang orang yang hidup di antara budaya menghubungkan identitas yang terpecah-pecah dengan kisah hidup yang kurang utuh dan kesejahteraan yang lebih rendah.⁸",
+    en_scenario: "Someone from your sending church asks how you are doing. You open your mouth and realise you have no idea how to tell the story of the last eighteen months in a way that makes sense to someone who was not there. The gap is so wide that you close down, say 'it's been hard' and move on. But the untold story keeps piling up.",
+    id_scenario: "Seseorang dari gereja pengutusmu bertanya bagaimana kabarmu. Kamu membuka mulut lalu sadar kamu tidak tahu bagaimana menceritakan delapan belas bulan terakhir dengan cara yang masuk akal bagi orang yang tidak ada di sana. Jaraknya terlalu lebar, jadi kamu menutup diri, bilang 'lumayan berat' lalu ganti topik. Tetapi kisah yang tidak diceritakan itu terus menumpuk.",
+    en_practice: "Write the last five years of your life as a set of chapters, each with a title and two or three sentences. Look for the pattern. What has stayed the same? What has changed? What has God been doing across the whole arc? Share it with one person who will listen.",
+    id_practice: "Tulis lima tahun terakhir hidupmu sebagai beberapa bab, masing-masing dengan judul dan dua atau tiga kalimat. Cari polanya. Apa yang tetap sama? Apa yang berubah? Apa yang Tuhan kerjakan di sepanjang perjalanan itu? Ceritakan kepada satu orang yang mau mendengarkan.",
+    en_question: "What is the one thread that runs through every chapter of your story? It might be a theme, a conviction, or a wound that became a gift. Can you name it?",
+    id_question: "Apa satu benang merah yang ada di setiap bab kisahmu? Bisa berupa tema, keyakinan, atau luka yang menjadi anugerah. Bisakah kamu menyebutkannya?",
   },
   {
     key: "body",
-    icon: "??",
+    icon: HeartPulse,
     color: "oklch(52% 0.17 155)",
     en_title: "Body",
     id_title: "Tubuh",
     en_tagline: "The physical self as identity carrier",
-    id_tagline: "Diri fisik sebagai pembawa identitas",
-    en_strength: "The body knows what the mind edits. Sleep patterns, appetite, posture, physical presence — these are identity signals that the body is carrying honestly even when the leader is performing fine on the surface. When the body is cared for, it becomes a stable platform for clear thinking and grounded presence. A leader who is physically rested and resourced is harder to destabilise than one who is running on three hours of sleep and two cups of coffee.",
-    id_strength: "Tubuh tahu apa yang diedit oleh pikiran. Pola tidur, nafsu makan, postur, kehadiran fisik — ini adalah sinyal identitas yang dibawa tubuh dengan jujur bahkan ketika pemimpin tampil baik di permukaan. Ketika tubuh dirawat, itu menjadi platform yang stabil untuk berpikir jernih dan kehadiran yang membumi. Seorang pemimpin yang beristirahat secara fisik dan terpenuhi lebih sulit untuk tidak stabil daripada seseorang yang berjalan dengan tiga jam tidur dan dua cangkir kopi.",
-    en_threat: "Cross-cultural environments expose the body to accumulated stress: climate, diet change, unfamiliar physical environments, the neurological load of processing a second language constantly, the stress hormones of chronic low-grade uncertainty. Over time, these compound. The body becomes a liability instead of a resource. And when physical depletion reaches a threshold, emotional regulation collapses — making every identity threat feel catastrophic.",
-    id_threat: "Lingkungan lintas budaya mengekspos tubuh pada tekanan yang terakumulasi: iklim, perubahan pola makan, lingkungan fisik yang tidak familiar, beban neurologis dari terus-menerus memproses bahasa kedua, hormon stres dari ketidakpastian kronis tingkat rendah. Seiring waktu, ini menjadi semakin besar. Tubuh menjadi beban alih-alih sumber daya. Dan ketika penipisan fisik mencapai ambang batas, regulasi emosi runtuh — membuat setiap ancaman identitas terasa bencana.",
-    en_scenario: "It's week three of a high-stakes conflict within your team. You haven't slept well in a fortnight. During a leadership meeting, a criticism you would normally receive with composure triggers a disproportionate reaction — you feel exposed, ashamed, and convinced the criticism defines you. Later, after sleep and food, the same criticism looks manageable. Your reaction was not a character flaw. It was a depleted body failing to regulate.",
-    id_scenario: "Ini adalah minggu ketiga dari konflik berisiko tinggi dalam tim Anda. Anda tidak tidur dengan baik selama dua minggu. Selama pertemuan kepemimpinan, kritik yang biasanya Anda terima dengan tenang memicu reaksi yang tidak proporsional — Anda merasa terekspos, malu, dan yakin bahwa kritik itu mendefinisikan Anda. Kemudian, setelah tidur dan makan, kritik yang sama tampak dapat ditangani. Reaksi Anda bukan cacat karakter. Itu adalah tubuh yang habis yang gagal mengatur.",
-    en_practice: "For the next two weeks, track three physical markers daily: hours of sleep, one form of movement (even a 20-minute walk), and one moment of intentional stillness. Notice the correlation between physical care and emotional stability. Your body is data about your soul.",
-    id_practice: "Selama dua minggu ke depan, lacak tiga penanda fisik setiap hari: jam tidur, satu bentuk gerakan (bahkan jalan kaki 20 menit), dan satu momen ketenangan yang disengaja. Perhatikan korelasi antara perawatan fisik dan stabilitas emosional. Tubuh Anda adalah data tentang jiwa Anda.",
+    id_tagline: "Tubuh sebagai pembawa identitas",
+    en_strength: "The body knows what the mind edits out. Sleep, appetite, posture and physical presence are honest signals, even when a leader looks fine on the surface. A body that is cared for becomes a steady base for clear thinking and grounded presence. A rested leader is harder to knock off balance than one running on three hours of sleep and two cups of coffee.",
+    id_strength: "Tubuh tahu apa yang disembunyikan pikiran. Pola tidur, nafsu makan, postur dan cara kamu hadir adalah sinyal yang jujur, bahkan saat seorang pemimpin tampak baik-baik saja dari luar. Tubuh yang dirawat menjadi dasar yang kokoh untuk berpikir jernih dan hadir dengan tenang. Pemimpin yang cukup istirahat lebih sulit digoyahkan daripada yang hanya tidur tiga jam dan bertahan dengan dua cangkir kopi.",
+    en_threat: "Cross-cultural life loads the body with stress: climate, new food, unfamiliar surroundings, the effort of working in a second language all day, and the strain of constant low-level uncertainty. Over time these add up, and the body becomes a burden instead of a resource. When you are physically depleted, it gets much harder to keep your emotions steady, and every threat to your identity feels bigger than it is.",
+    id_threat: "Hidup lintas budaya membebani tubuh dengan stres: iklim, makanan baru, lingkungan yang asing, kerja keras memakai bahasa kedua sepanjang hari, dan ketegangan karena ketidakpastian yang terus ada. Lama-lama semua itu menumpuk, dan tubuh menjadi beban, bukan lagi sumber kekuatan. Saat tubuhmu terkuras, jauh lebih sulit menjaga emosi tetap stabil, dan setiap ancaman terhadap identitasmu terasa lebih besar dari kenyataannya.",
+    en_scenario: "It is week three of a high-stakes conflict in your team. You have not slept well in a fortnight. In a leadership meeting, a criticism you would normally take calmly sets off an outsized reaction. You feel exposed, ashamed and sure the criticism defines you. Later, after sleep and a meal, the same criticism looks manageable. Your reaction came from a depleted body, and says little about your character.",
+    id_scenario: "Ini minggu ketiga konflik serius di timmu. Sudah dua minggu kamu tidak tidur nyenyak. Dalam rapat pimpinan, kritik yang biasanya bisa kamu terima dengan tenang memicu reaksi yang berlebihan. Kamu merasa terbuka, malu dan yakin bahwa kritik itu menentukan siapa kamu. Kemudian, setelah tidur dan makan, kritik yang sama terlihat bisa dihadapi. Reaksimu datang dari tubuh yang terkuras, dan tidak banyak berkata tentang karaktermu.",
+    en_practice: "For the next two weeks, track three things each day: hours of sleep, one form of movement (even a 20-minute walk) and one moment of deliberate stillness. Notice how physical care and emotional steadiness move together. Your body is telling you something about your soul.",
+    id_practice: "Selama dua minggu ke depan, catat tiga hal setiap hari: jam tidur, satu bentuk gerak (jalan kaki 20 menit pun cukup) dan satu momen hening yang disengaja. Perhatikan bagaimana perawatan tubuh dan kestabilan emosi saling berkaitan. Tubuhmu sedang memberi tahu sesuatu tentang jiwamu.",
     en_question: "If your body could speak right now, what would it say it needs most? And what is stopping you from giving it that?",
-    id_question: "Jika tubuh Anda bisa berbicara sekarang, apa yang akan dikatakannya paling dibutuhkan? Dan apa yang menghalangi Anda untuk memberikan itu?",
+    id_question: "Kalau tubuhmu bisa bicara sekarang, apa yang paling ia butuhkan? Dan apa yang menghalangimu untuk memberikannya?",
   },
 ];
 
 // -- SELF-ASSESSMENT RECOMMENDATIONS ------------------------------------------
 const RECOMMENDATIONS: Record<AnchorKey, { en: string; id: string }> = {
   calling: {
-    en: "Your calling anchor needs attention first. Start by writing your calling statement this week — even if it feels impossible right now. The act of writing it is itself a grounding practice. Don't wait until you feel certain. Write what you knew when you said yes.",
-    id: "Jangkar panggilan Anda perlu perhatian pertama. Mulailah dengan menulis pernyataan panggilan Anda minggu ini — meskipun terasa mustahil sekarang. Tindakan menulisnya sendiri sudah merupakan praktik pemantapan. Jangan tunggu sampai Anda merasa yakin. Tuliskan apa yang Anda ketahui ketika Anda berkata ya.",
+    en: "Your calling anchor needs attention first. Write your calling statement this week, even if it feels impossible right now. Writing it is itself a grounding practice. Don't wait until you feel certain. Write what you knew when you said yes.",
+    id: "Jangkar panggilanmu perlu diperhatikan lebih dulu. Tulis pernyataan panggilanmu minggu ini, meskipun sekarang terasa mustahil. Menulisnya saja sudah menjadi latihan yang menenangkan. Jangan tunggu sampai kamu merasa yakin. Tulis apa yang kamu tahu saat kamu berkata ya.",
   },
   values: {
-    en: "Your values anchor needs strengthening. Before you do anything else, name three non-negotiables — things you would not compromise even under significant pressure. Write them somewhere visible. Values that aren't named can't be defended.",
-    id: "Jangkar nilai-nilai Anda perlu diperkuat. Sebelum Anda melakukan hal lain, sebutkan tiga hal yang tidak dapat dikompromikan — hal-hal yang tidak akan Anda kompromikan bahkan di bawah tekanan yang signifikan. Tuliskan di tempat yang terlihat. Nilai-nilai yang tidak diungkapkan tidak dapat dipertahankan.",
+    en: "Your values anchor needs strengthening. Before anything else, name three non-negotiables: things you would not compromise even under heavy pressure. Write them somewhere you will see them. Values you have never named are hard to defend.",
+    id: "Jangkar nilaimu perlu diperkuat. Sebelum hal lain, tuliskan tiga hal yang tidak bisa ditawar: hal-hal yang tidak akan kamu kompromikan meski di bawah tekanan berat. Tulis di tempat yang sering kamu lihat. Nilai yang tidak pernah dirumuskan sulit dipertahankan.",
   },
   community: {
-    en: "Your community anchor is your most urgent need. Isolation is not humility — it is danger. This week, reach out to one person who knew you before this role. Not to report. Just to be known. That one conversation may do more for your identity than six months of personal development work.",
-    id: "Jangkar komunitas Anda adalah kebutuhan paling mendesak Anda. Isolasi bukan kerendahan hati — itu adalah bahaya. Minggu ini, hubungi satu orang yang mengenal Anda sebelum peran ini. Bukan untuk melapor. Hanya untuk dikenal. Satu percakapan itu mungkin akan lebih banyak dilakukan untuk identitas Anda daripada enam bulan pekerjaan pengembangan pribadi.",
+    en: "Your community anchor is your most urgent need. Pulling back from people can feel humble, but it leaves you exposed. This week, reach out to one person who knew you before this role. Don't report on your work. Just let yourself be known. That one conversation may steady you more than you expect.",
+    id: "Jangkar komunitasmu adalah kebutuhan yang paling mendesak. Menarik diri dari orang lain bisa terasa rendah hati, tetapi justru membuatmu rentan. Minggu ini, hubungi satu orang yang mengenalmu sebelum peran ini. Jangan melapor soal pekerjaan. Biarkan dirimu dikenal. Satu obrolan itu bisa menguatkanmu lebih dari yang kamu kira.",
   },
   faith: {
-    en: "Your faith anchor is where to start. Not with a new discipline or a longer quiet time — but with honesty. Tell God exactly where you are. Bring the drought, the distance, the flatness. Colossians 3:3 is not a feeling you achieve — it is a reality you return to: your life is hidden with Christ in God. That has not changed.",
-    id: "Jangkar iman Anda adalah tempat untuk memulai. Bukan dengan disiplin baru atau waktu hening yang lebih lama — tetapi dengan kejujuran. Ceritakan kepada Tuhan tepat di mana Anda berada. Bawa kekeringan, jarak, kerataan. Kolose 3:3 bukan perasaan yang Anda capai — itu adalah realitas yang Anda kembalikan: hidup Anda tersembunyi bersama Kristus di dalam Allah. Itu tidak berubah.",
+    en: "Your faith anchor is where to start. Begin with honesty, before any new discipline or longer quiet time. Tell God exactly where you are. Bring the drought, the distance, the flatness. Colossians 3:3 describes something already true: your life is hidden with Christ in God. That has not changed.",
+    id: "Mulailah dari jangkar imanmu. Awali dengan kejujuran, sebelum disiplin baru atau saat teduh yang lebih lama. Katakan kepada Tuhan dengan jujur di mana kamu sekarang. Bawa kekeringan, jarak dan rasa hambar itu. Kolose 3:3 menggambarkan sesuatu yang sudah benar: hidupmu tersembunyi bersama Kristus di dalam Allah. Itu tidak berubah.",
   },
   story: {
-    en: "Your story anchor needs re-engagement. Set aside one hour this week with no agenda except to write. Start with: 'The chapter I am in right now is called...' Then go back five years and name each chapter before it. The pattern you find will be more grounding than any strategy.",
-    id: "Jangkar cerita Anda membutuhkan keterlibatan kembali. Sisihkan satu jam minggu ini tanpa agenda kecuali untuk menulis. Mulailah dengan: 'Bab yang saya jalani sekarang disebut...' Kemudian kembali lima tahun dan beri judul setiap bab sebelumnya. Pola yang Anda temukan akan lebih menstabilkan daripada strategi apa pun.",
+    en: "Your story anchor needs fresh attention. Set aside one hour this week with no agenda except writing. Start with: 'The chapter I am in right now is called...' Then go back five years and name each chapter before it. The pattern you find will steady you.",
+    id: "Jangkar kisahmu perlu diperhatikan lagi. Sisihkan satu jam minggu ini tanpa agenda selain menulis. Mulai dengan: 'Bab yang sedang kujalani sekarang berjudul...' Lalu mundur lima tahun dan beri judul setiap bab sebelumnya. Pola yang kamu temukan akan menguatkanmu.",
   },
   body: {
-    en: "Your body anchor is telling you something you need to hear. Start with sleep — it is the most immediate lever. Protect seven to eight hours tonight. Not as a luxury. As a leadership decision. You cannot think clearly, lead well, or hold your identity steady from inside a depleted body.",
-    id: "Jangkar tubuh Anda memberi tahu Anda sesuatu yang perlu Anda dengar. Mulailah dengan tidur — itu adalah tuas paling langsung. Lindungi tujuh hingga delapan jam malam ini. Bukan sebagai kemewahan. Sebagai keputusan kepemimpinan. Anda tidak dapat berpikir jernih, memimpin dengan baik, atau mempertahankan identitas Anda dengan stabil dari dalam tubuh yang habis.",
+    en: "Your body anchor is telling you something you need to hear. Start with sleep, the quickest place to begin. Protect seven to eight hours tonight, and treat it as a leadership decision. It is hard to think clearly, lead well or hold your identity steady from inside a depleted body.",
+    id: "Jangkar tubuhmu sedang memberi tahu sesuatu yang perlu kamu dengar. Mulailah dari tidur, tempat paling cepat untuk memulai. Jaga tujuh sampai delapan jam tidur malam ini, dan anggap itu keputusan kepemimpinan. Sulit berpikir jernih, memimpin dengan baik atau menjaga identitasmu tetap stabil dari dalam tubuh yang terkuras.",
   },
 };
+
+// -- KEY TAKEAWAYS ------------------------------------------------------------
+const TAKEAWAYS: { en: string; id: string }[] = [
+  {
+    en: "Identity under pressure rests on six anchors: calling, values, community, faith, story and body. When one drags, the others carry more weight.",
+    id: "Identitas di bawah tekanan bertumpu pada enam jangkar: panggilan, nilai, komunitas, iman, kisah dan tubuh. Saat satu terseret, yang lain menanggung beban lebih berat.",
+  },
+  {
+    en: "Pressure rarely attacks head on. It works slowly, through fruitless seasons, quiet cultural drift, isolation and exhaustion, until you are deciding from a self that is no longer quite yours.",
+    id: "Tekanan jarang menyerang terang-terangan. Tekanan bekerja pelan-pelan, lewat musim tanpa buah, pergeseran budaya yang diam-diam, isolasi dan kelelahan, sampai kamu mengambil keputusan dari diri yang bukan lagi sepenuhnya milikmu.",
+  },
+  {
+    en: "Start with your weakest anchor. One small practice, done this week, steadies you more than a big plan you never begin.",
+    id: "Mulailah dari jangkar yang paling lemah. Satu latihan kecil yang kamu lakukan minggu ini lebih menguatkan daripada rencana besar yang tidak pernah dimulai.",
+  },
+  {
+    en: "You need people who knew you before this role. They can name you back to yourself when pressure has blurred the picture.",
+    id: "Kamu butuh orang yang mengenalmu sebelum peran ini. Mereka bisa mengingatkan siapa kamu ketika tekanan sudah mengaburkan gambaran itu.",
+  },
+  {
+    en: "Your deepest identity is already settled. Like Jesus in the wilderness, you have nothing to prove: your life is hidden with Christ in God.",
+    id: "Identitasmu yang terdalam sudah pasti. Seperti Yesus di padang gurun, kamu tidak perlu membuktikan apa pun: hidupmu tersembunyi bersama Kristus di dalam Allah.",
+  },
+];
 
 // -- PROPS ---------------------------------------------------------------------
 type Props = { userPathway: string | null; isSaved: boolean };
@@ -238,72 +299,77 @@ export default function IdentityUnderPressureClient({ userPathway, isSaved: init
     <div style={{ fontFamily: "Montserrat, sans-serif", color: bodyText, background: offWhite }}>
       <LangToggle />
 
-      {/* LANGUAGE TOGGLE */}
-
       {/* HERO */}
       <section style={{ background: navy, padding: "80px 24px 64px", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at 40% 0%, oklch(32% 0.12 300 / 0.4) 0%, transparent 65%)", pointerEvents: "none" }} />
-        <div style={{ maxWidth: 720, margin: "0 auto", position: "relative" }}>
-          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: orange, marginBottom: 20 }}>
-            {t("Faith & Calling — Article", "Iman & Panggilan — Artikel", lang)}
+        <img
+          src="/images/resources/identity-under-pressure/hero.jpg"
+          alt=""
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.22, mixBlendMode: "luminosity", pointerEvents: "none" }}
+          onError={(e) => { e.currentTarget.style.display = "none"; }}
+        />
+        <div style={{ position: "absolute", inset: 0, background: navy, opacity: 0.15, mixBlendMode: "multiply", pointerEvents: "none" }} />
+        <div style={{ maxWidth: 860, margin: "0 auto", position: "relative" }}>
+          <p style={{ ...eyebrow(), marginBottom: 20 }}>
+            {t("Faith & Calling · Article", "Iman & Panggilan · Artikel", lang)}
           </p>
           <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: offWhite, lineHeight: 1.08, margin: "0 0 24px" }}>
             {t("Identity Under Pressure", "Identitas di Bawah Tekanan", lang)}
           </h1>
-          <p style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: "clamp(16px, 2vw, 19px)", color: "oklch(82% 0.03 80)", lineHeight: 1.65, maxWidth: 580, margin: "0 0 32px" }}>
+          <p style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontStyle: "italic", fontSize: "clamp(18px, 2.2vw, 22px)", color: "oklch(82% 0.03 80)", lineHeight: 1.65, maxWidth: 580, margin: "0 0 32px" }}>
             {t(
               "Maintaining a grounded sense of self when living and leading between worlds.",
-              "Mempertahankan rasa diri yang membumi ketika hidup dan memimpin di antara dua dunia.",
+              "Tetap teguh menjadi dirimu saat hidup dan memimpin di antara dua dunia.",
               lang
             )}
           </p>
-          <div style={{ background: "oklch(30% 0.10 260 / 0.6)", borderRadius: 12, padding: "24px 28px", maxWidth: 580, margin: "0 auto" }}>
+          <div style={{ background: "oklch(30% 0.10 260 / 0.6)", borderRadius: 12, padding: "24px 28px", maxWidth: 580 }}>
             <p style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 17, color: "oklch(88% 0.04 80)", lineHeight: 1.75, fontStyle: "italic", marginBottom: 10 }}>
               "{lang === "id" ? VERSES["col-3-3"].id : VERSES["col-3-3"].en}"
             </p>
-            <button onClick={() => setActiveVerse("col-3-3")} style={{ background: "none", border: "none", cursor: "pointer", color: orange, fontWeight: 700, fontSize: 12, letterSpacing: "0.08em", textDecoration: "underline dotted", padding: 0 }}>
+            <button type="button" onClick={() => setActiveVerse("col-3-3")} style={{ background: "none", border: "none", cursor: "pointer", color: orange, fontWeight: 700, fontSize: 12, letterSpacing: "0.08em", textDecoration: "underline dotted", padding: 0 }}>
               {lang === "id" ? VERSES["col-3-3"].ref_id : VERSES["col-3-3"].ref}
             </button>
           </div>
         </div>
       </section>
 
-      {/* INTRO — WHAT IS IDENTITY UNDER PRESSURE */}
+      {/* INTRO: WHAT IS IDENTITY UNDER PRESSURE */}
       <section style={{ background: offWhite, padding: "72px 24px" }}>
-        <div style={{ maxWidth: 760, margin: "0 auto" }}>
-          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: orange, marginBottom: 12, textAlign: "center" }}>
+        <div style={{ maxWidth: 860, margin: "0 auto" }}>
+          <p style={{ ...eyebrow(), marginBottom: 12, textAlign: "center" }}>
             {t("The Challenge", "Tantangan", lang)}
           </p>
           <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(24px, 3.5vw, 40px)", fontWeight: 800, color: navy, textAlign: "center", marginBottom: 32 }}>
-            {t("When pressure reshapes who you are", "Ketika tekanan membentuk kembali siapa Anda", lang)}
+            {t("When pressure reshapes who you are", "Ketika tekanan mengubah siapa dirimu", lang)}
           </h2>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32, marginBottom: 40 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 32, marginBottom: 40 }}>
             <div>
               <p style={{ fontSize: 15, lineHeight: 1.8, color: bodyText }}>
-                {t(
-                  "Cross-cultural leaders face a particular identity challenge: they are simultaneously too foreign and too familiar. Too foreign to be fully trusted by the community they serve. Too familiar with their home culture to explain the depth of what they've experienced away from it. The result is a kind of identity no-man's land — belonging fully to neither world.",
-                  "Pemimpin lintas budaya menghadapi tantangan identitas tertentu: mereka sekaligus terlalu asing dan terlalu akrab. Terlalu asing untuk sepenuhnya dipercaya oleh komunitas yang mereka layani. Terlalu akrab dengan budaya asal mereka untuk menjelaskan kedalaman apa yang telah mereka alami jauh dari sana. Hasilnya adalah semacam tanah tak bertuan identitas — tidak sepenuhnya milik satu dunia mana pun.",
+                {cite(t(
+                  "Cross-cultural leaders face a particular identity challenge: they are too foreign and too familiar at the same time. Too foreign to be fully trusted by the community they serve. Too changed to explain to their home culture what they have lived through away from it. The result is an identity no-man's land, where you belong fully to neither world. Researchers who study people raised between cultures describe the same pattern: real ties to many places, full ownership of none.¹",
+                  "Pemimpin lintas budaya menghadapi tantangan identitas yang khas: mereka terlalu asing sekaligus terlalu akrab. Terlalu asing untuk sepenuhnya dipercaya oleh komunitas yang mereka layani. Terlalu berubah untuk bisa menjelaskan kepada budaya asalnya apa yang sudah mereka alami di luar sana. Hasilnya seperti tanah tak bertuan, tempat kamu tidak sepenuhnya menjadi bagian dari dunia mana pun. Para peneliti yang mempelajari orang yang dibesarkan di antara budaya melihat pola yang sama: punya ikatan dengan banyak tempat, tetapi tidak sepenuhnya memiliki satu pun.¹",
                   lang
-                )}
+                ))}
               </p>
             </div>
             <div>
               <p style={{ fontSize: 15, lineHeight: 1.8, color: bodyText }}>
                 {t(
-                  "Pressure attacks identity through four primary channels: relentless role demands that leave no space for selfhood, cultural immersion that slowly redefines normal, public failure that becomes the loudest voice about who you are, and systemic criticism that wears away confidence from the outside in. Without conscious anchors, the self bends — or breaks.",
-                  "Tekanan menyerang identitas melalui empat saluran utama: tuntutan peran yang tanpa henti yang tidak menyisakan ruang untuk diri sendiri, keadaan terbenam dalam budaya setempat yang perlahan mendefinisikan ulang normalitas, kegagalan publik yang menjadi suara paling keras tentang siapa Anda, dan kritik sistemik yang mengikis kepercayaan diri dari luar ke dalam. Tanpa jangkar yang sadar, diri melengkung — atau patah.",
+                  "Pressure attacks identity in four main ways: role demands that leave no room to be yourself, life inside another culture that slowly changes what feels normal, public failure that becomes the loudest voice about who you are, and steady criticism that wears down confidence from the outside in. Without anchors you have chosen on purpose, the self bends, and sometimes breaks.",
+                  "Tekanan menyerang identitas lewat empat jalur utama: tuntutan peran yang tidak menyisakan ruang untuk menjadi dirimu sendiri, hidup di dalam budaya lain yang pelan-pelan mengubah apa yang terasa normal, kegagalan di depan umum yang menjadi suara paling keras tentang siapa kamu, dan kritik terus-menerus yang mengikis rasa percaya diri dari luar ke dalam. Tanpa jangkar yang sengaja kamu pilih, dirimu bisa melengkung, bahkan patah.",
                   lang
                 )}
               </p>
             </div>
           </div>
-          <div style={{ background: `${orange}12`, borderRadius: 12, padding: "24px 28px", borderLeft: `4px solid ${orange}` }}>
+          <div style={{ background: "oklch(65% 0.15 45 / 0.08)", borderRadius: 12, padding: "24px 28px", borderLeft: `4px solid ${orange}` }}>
             <p style={{ fontSize: 15, lineHeight: 1.75, color: bodyText, fontStyle: "italic", margin: 0 }}>
-              {t(
-                "The Six Anchors Identity Map below is not a personality model. It is a diagnostic framework — a way of identifying which of the six foundations that stabilise your identity under pressure is currently the most depleted, and what to do about it.",
-                "Peta Identitas Enam Jangkar di bawah ini bukan model kepribadian. Ini adalah kerangka diagnostik — cara untuk mengidentifikasi mana dari enam fondasi yang menstabilkan identitas Anda di bawah tekanan yang saat ini paling terkuras, dan apa yang harus dilakukan tentang hal itu.",
+              {cite(t(
+                "The Six Anchors Identity Map below is a diagnostic tool, not a personality model. It helps you see which of the six foundations that steady your identity is most worn down right now, and what to do about it. This matters: in studies of people living between cultures, more inner identity conflict goes with a less clear sense of self, and with lower wellbeing.²",
+                "Peta Identitas Enam Jangkar di bawah ini adalah alat diagnosis, bukan model kepribadian. Peta ini membantumu melihat mana dari enam fondasi penopang identitasmu yang paling terkuras saat ini, dan apa yang perlu dilakukan. Ini penting: dalam penelitian tentang orang yang hidup di antara budaya, makin besar konflik identitas di dalam diri, makin kabur gambaran diri seseorang, dan makin rendah kesejahteraannya.²",
                 lang
-              )}
+              ))}
             </p>
           </div>
         </div>
@@ -311,17 +377,17 @@ export default function IdentityUnderPressureClient({ userPathway, isSaved: init
 
       {/* THE SIX ANCHORS */}
       <section style={{ background: lightGray, padding: "72px 24px" }}>
-        <div style={{ maxWidth: 880, margin: "0 auto" }}>
-          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: orange, marginBottom: 12, textAlign: "center" }}>
+        <div style={{ maxWidth: 860, margin: "0 auto" }}>
+          <p style={{ ...eyebrow(), marginBottom: 12, textAlign: "center" }}>
             {t("The Six Anchors Identity Map", "Peta Identitas Enam Jangkar", lang)}
           </p>
           <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(24px, 3.5vw, 40px)", fontWeight: 800, color: navy, textAlign: "center", marginBottom: 12 }}>
-            {t("What keeps you grounded", "Apa yang membuat Anda tetap membumi", lang)}
+            {t("What keeps you grounded", "Apa yang membuatmu tetap teguh", lang)}
           </h2>
           <p style={{ textAlign: "center", fontSize: 15, color: bodyText, lineHeight: 1.65, maxWidth: 580, margin: "0 auto 48px" }}>
             {t(
-              "Select each anchor to explore what it provides, how pressure attacks it, a realistic scenario, and a grounding practice.",
-              "Pilih setiap jangkar untuk menjelajahi apa yang disediakannya, bagaimana tekanan menyerangnya, skenario yang realistis, dan praktik pemantapan.",
+              "Select each anchor to see what it gives you, how pressure attacks it, a realistic scenario and a grounding practice.",
+              "Pilih setiap jangkar untuk melihat apa yang diberikannya, bagaimana tekanan menyerangnya, contoh situasi nyata dan latihan untuk meneguhkannya.",
               lang
             )}
           </p>
@@ -333,15 +399,17 @@ export default function IdentityUnderPressureClient({ userPathway, isSaved: init
               return (
                 <button
                   key={anchor.key}
+                  type="button"
+                  aria-expanded={isOpen}
                   onClick={() => setOpenAnchor(isOpen ? null : anchor.key)}
                   style={{
                     textAlign: "left", padding: "22px 20px", borderRadius: 12,
                     border: `2px solid ${isOpen ? anchor.color : "oklch(88% 0.008 260)"}`,
-                    background: isOpen ? `${anchor.color}18` : "white",
+                    background: isOpen ? `color-mix(in oklch, ${anchor.color} 10%, white)` : "white",
                     cursor: "pointer", transition: "all 0.2s",
                   }}
                 >
-                  <div style={{ fontSize: 28, marginBottom: 10 }}>{anchor.icon}</div>
+                  <div style={{ marginBottom: 10, color: anchor.color }}><anchor.icon size={28} strokeWidth={1.75} aria-hidden="true" /></div>
                   <div style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 800, fontSize: 14, color: isOpen ? anchor.color : navy, marginBottom: 4 }}>
                     {t(anchor.en_title, anchor.id_title, lang)}
                   </div>
@@ -356,10 +424,11 @@ export default function IdentityUnderPressureClient({ userPathway, isSaved: init
           {/* Anchor detail panel */}
           {openAnchor && (() => {
             const anchor = ANCHORS.find(a => a.key === openAnchor)!;
+            const Icon = anchor.icon;
             return (
-              <div style={{ background: "white", borderRadius: 16, padding: "40px 36px", border: `2px solid ${anchor.color}30`, animation: "fadeIn 0.3s ease" }}>
+              <div style={{ background: "white", borderRadius: 16, padding: "40px 36px", border: `2px solid color-mix(in oklch, ${anchor.color} 25%, white)`, animation: "fadeIn 0.3s ease" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 28 }}>
-                  <span style={{ fontSize: 40 }}>{anchor.icon}</span>
+                  <span style={{ color: anchor.color, display: "flex" }}><Icon size={40} strokeWidth={1.75} aria-hidden="true" /></span>
                   <div>
                     <div style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 800, fontSize: 22, color: anchor.color }}>
                       {t(anchor.en_title, anchor.id_title, lang)}
@@ -370,28 +439,28 @@ export default function IdentityUnderPressureClient({ userPathway, isSaved: init
                   </div>
                 </div>
 
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 28, marginBottom: 28 }}>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 28, marginBottom: 28 }}>
                   <div>
-                    <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: orange, marginBottom: 10 }}>
-                      {t("When strong, it provides—", "Ketika kuat, ini memberikan—", lang)}
+                    <p style={{ ...eyebrow(), marginBottom: 10 }}>
+                      {t("When strong, it gives you", "Saat kuat, jangkar ini memberimu", lang)}
                     </p>
                     <p style={{ fontSize: 14, lineHeight: 1.75, color: bodyText, margin: 0 }}>
-                      {t(anchor.en_strength, anchor.id_strength, lang)}
+                      {cite(t(anchor.en_strength, anchor.id_strength, lang))}
                     </p>
                   </div>
                   <div>
-                    <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(55% 0.18 25)", marginBottom: 10 }}>
+                    <p style={{ ...eyebrow("oklch(55% 0.18 25)"), marginBottom: 10 }}>
                       {t("How pressure attacks it", "Bagaimana tekanan menyerangnya", lang)}
                     </p>
                     <p style={{ fontSize: 14, lineHeight: 1.75, color: bodyText, margin: 0 }}>
-                      {t(anchor.en_threat, anchor.id_threat, lang)}
+                      {cite(t(anchor.en_threat, anchor.id_threat, lang))}
                     </p>
                   </div>
                 </div>
 
                 {/* Pressure test scenario */}
                 <div style={{ background: "oklch(96% 0.008 260)", borderRadius: 10, padding: "20px 24px", marginBottom: 24, borderLeft: `4px solid ${anchor.color}` }}>
-                  <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: anchor.color, marginBottom: 8 }}>
+                  <p style={{ ...eyebrow(anchor.color), marginBottom: 8 }}>
                     {t("Pressure Test", "Uji Tekanan", lang)}
                   </p>
                   <p style={{ fontSize: 14, lineHeight: 1.7, color: bodyText, fontStyle: "italic", margin: 0 }}>
@@ -399,11 +468,11 @@ export default function IdentityUnderPressureClient({ userPathway, isSaved: init
                   </p>
                 </div>
 
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 20 }}>
                   {/* Grounding practice */}
-                  <div style={{ background: `${anchor.color}10`, borderRadius: 10, padding: "20px 20px" }}>
-                    <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: anchor.color, marginBottom: 8 }}>
-                      {t("Grounding Practice", "Praktik Pemantapan", lang)}
+                  <div style={{ background: `color-mix(in oklch, ${anchor.color} 8%, white)`, borderRadius: 10, padding: "20px 20px" }}>
+                    <p style={{ ...eyebrow(anchor.color), marginBottom: 8 }}>
+                      {t("Grounding Practice", "Latihan Meneguhkan", lang)}
                     </p>
                     <p style={{ fontSize: 14, lineHeight: 1.65, color: bodyText, margin: 0 }}>
                       {t(anchor.en_practice, anchor.id_practice, lang)}
@@ -411,7 +480,7 @@ export default function IdentityUnderPressureClient({ userPathway, isSaved: init
                   </div>
                   {/* Reflection question */}
                   <div style={{ background: offWhite, borderRadius: 10, padding: "20px 20px", border: `1px solid oklch(88% 0.008 260)` }}>
-                    <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: orange, marginBottom: 8 }}>
+                    <p style={{ ...eyebrow(), marginBottom: 8 }}>
                       {t("Reflection Question", "Pertanyaan Refleksi", lang)}
                     </p>
                     <p style={{ fontSize: 14, lineHeight: 1.65, color: navy, fontStyle: "italic", margin: 0 }}>
@@ -427,17 +496,17 @@ export default function IdentityUnderPressureClient({ userPathway, isSaved: init
 
       {/* SELF-ASSESSMENT */}
       <section style={{ background: offWhite, padding: "72px 24px" }}>
-        <div style={{ maxWidth: 760, margin: "0 auto" }}>
-          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: orange, marginBottom: 12, textAlign: "center" }}>
+        <div style={{ maxWidth: 860, margin: "0 auto" }}>
+          <p style={{ ...eyebrow(), marginBottom: 12, textAlign: "center" }}>
             {t("Self-Assessment", "Penilaian Diri", lang)}
           </p>
           <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(24px, 3.5vw, 40px)", fontWeight: 800, color: navy, textAlign: "center", marginBottom: 16 }}>
-            {t("How stable are your anchors?", "Seberapa stabil jangkar-jangkar Anda?", lang)}
+            {t("How stable are your anchors?", "Seberapa stabil jangkar-jangkarmu?", lang)}
           </h2>
           <p style={{ textAlign: "center", fontSize: 15, color: bodyText, lineHeight: 1.65, maxWidth: 540, margin: "0 auto 40px" }}>
             {t(
-              "Rate each anchor from 1 (very shaky) to 5 (very stable). Be honest — this is only for you.",
-              "Nilai setiap jangkar dari 1 (sangat goyah) hingga 5 (sangat stabil). Jujurlah — ini hanya untuk Anda.",
+              "Rate each anchor from 1 (very shaky) to 5 (very stable). Be honest. Only you will see this.",
+              "Beri nilai setiap jangkar dari 1 (sangat goyah) sampai 5 (sangat stabil). Jujurlah. Hanya kamu yang melihat ini.",
               lang
             )}
           </p>
@@ -448,7 +517,7 @@ export default function IdentityUnderPressureClient({ userPathway, isSaved: init
               return (
                 <div key={anchor.key} style={{ background: "white", borderRadius: 12, padding: "20px 24px", display: "flex", alignItems: "center", gap: 20, flexWrap: "wrap" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 160 }}>
-                    <span style={{ fontSize: 22 }}>{anchor.icon}</span>
+                    <span style={{ color: anchor.color, display: "flex" }}><anchor.icon size={22} strokeWidth={1.75} aria-hidden="true" /></span>
                     <div>
                       <div style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 700, fontSize: 13, color: navy }}>
                         {t(anchor.en_title, anchor.id_title, lang)}
@@ -462,6 +531,9 @@ export default function IdentityUnderPressureClient({ userPathway, isSaved: init
                     {[1, 2, 3, 4, 5].map(n => (
                       <button
                         key={n}
+                        type="button"
+                        aria-pressed={rating === n}
+                        aria-label={`${t(anchor.en_title, anchor.id_title, lang)}: ${n}`}
                         onClick={() => setRatings(prev => ({ ...prev, [anchor.key]: n }))}
                         style={{
                           width: 40, height: 40, borderRadius: "50%", border: `2px solid`,
@@ -497,27 +569,28 @@ export default function IdentityUnderPressureClient({ userPathway, isSaved: init
           {allRated && !showRecommendation && (
             <div style={{ textAlign: "center" }}>
               <button
+                type="button"
                 onClick={() => setShowRecommendation(true)}
                 style={{ padding: "14px 36px", background: orange, color: "white", border: "none", borderRadius: 8, fontFamily: "Montserrat, sans-serif", fontWeight: 700, fontSize: 14, cursor: "pointer", letterSpacing: "0.06em" }}
               >
-                {t("Show my starting point", "Tunjukkan titik awal saya", lang)}
+                {t("Show my starting point", "Tunjukkan titik awalku", lang)}
               </button>
             </div>
           )}
 
           {showRecommendation && lowestAnchor && (
-            <div style={{ background: "white", borderRadius: 16, padding: "36px 32px", border: `2px solid ${lowestAnchor.color}40`, animation: "fadeIn 0.3s ease" }}>
-              <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: orange, marginBottom: 12 }}>
+            <div style={{ background: "white", borderRadius: 16, padding: "36px 32px", border: `2px solid color-mix(in oklch, ${lowestAnchor.color} 30%, white)`, animation: "fadeIn 0.3s ease" }}>
+              <p style={{ ...eyebrow(), marginBottom: 12 }}>
                 {t("Start Here", "Mulai dari Sini", lang)}
               </p>
               <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
-                <span style={{ fontSize: 36 }}>{lowestAnchor.icon}</span>
+                <span style={{ color: lowestAnchor.color, display: "flex" }}><lowestAnchor.icon size={36} strokeWidth={1.75} aria-hidden="true" /></span>
                 <div>
                   <h3 style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 800, fontSize: 20, color: lowestAnchor.color, margin: 0 }}>
                     {t(lowestAnchor.en_title, lowestAnchor.id_title, lang)} {t("Anchor", "Jangkar", lang)}
                   </h3>
                   <p style={{ fontSize: 13, color: bodyText, fontStyle: "italic", margin: "4px 0 0" }}>
-                    {t("Your lowest-rated anchor", "Jangkar Anda yang dinilai terendah", lang)}
+                    {t("Your lowest-rated anchor", "Jangkar dengan nilai terendahmu", lang)}
                   </p>
                 </div>
               </div>
@@ -529,54 +602,54 @@ export default function IdentityUnderPressureClient({ userPathway, isSaved: init
         </div>
       </section>
 
-      {/* THE UNSHAKEABLE CORE — BIBLICAL REFLECTION */}
+      {/* THE UNSHAKEABLE CORE: BIBLICAL REFLECTION */}
       <section style={{ background: navy, padding: "80px 24px" }}>
-        <div style={{ maxWidth: 760, margin: "0 auto" }}>
-          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: orange, marginBottom: 16, textAlign: "center" }}>
+        <div style={{ maxWidth: 860, margin: "0 auto" }}>
+          <p style={{ ...eyebrow(), marginBottom: 16, textAlign: "center" }}>
             {t("The Unshakeable Core", "Inti yang Tidak Tergoyahkan", lang)}
           </p>
           <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(24px, 3.5vw, 40px)", fontWeight: 800, color: offWhite, textAlign: "center", marginBottom: 40 }}>
             {t("Identity in Christ", "Identitas di dalam Kristus", lang)}
           </h2>
 
-          {/* Matthew 4 — Jesus in the desert */}
+          {/* Matthew 4: Jesus in the desert */}
           <div style={{ display: "flex", gap: 20, marginBottom: 36, alignItems: "flex-start" }}>
-            <div style={{ flexShrink: 0, width: 44, height: 44, borderRadius: "50%", background: "oklch(32% 0.10 260)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20 }}>
-              ???
+            <div style={{ flexShrink: 0, width: 44, height: 44, borderRadius: "50%", background: "oklch(32% 0.10 260)", display: "flex", alignItems: "center", justifyContent: "center", color: orange }}>
+              <Mountain size={20} strokeWidth={1.75} aria-hidden="true" />
             </div>
             <div>
-              <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: orange, marginBottom: 8 }}>
+              <p style={{ ...eyebrow(), marginBottom: 8 }}>
                 {t("Jesus in the Desert", "Yesus di Padang Gurun", lang)}
               </p>
               <p style={{ fontSize: 16, lineHeight: 1.8, color: "oklch(82% 0.03 80)", margin: 0 }}>
                 {t(
-                  "In Matthew 4, every temptation began with the same challenge: 'If you are the Son of God...' The enemy's deepest strategy was never about bread or kingdoms. It was about identity. Satan wanted Jesus to act as though his identity required proving — to perform, to demonstrate, to secure. But Jesus had already heard his Father's voice at the Jordan: 'This is my Son, whom I love.' He did not need to prove anything. His identity was settled before the pressure began.",
-                  "Dalam Matius 4, setiap godaan dimulai dengan tantangan yang sama: 'Jika Engkau Anak Allah...' Strategi terdalam musuh tidak pernah tentang roti atau kerajaan. Itu tentang identitas. Iblis ingin Yesus bertindak seolah-olah identitas-Nya membutuhkan pembuktian — untuk menunjukkan, untuk mendemonstrasikan, untuk mengamankan. Tetapi Yesus telah mendengar suara Bapa-Nya di Sungai Yordan: 'Inilah Anak-Ku yang Kukasihi.' Dia tidak perlu membuktikan apa pun. Identitas-Nya telah ditetapkan sebelum tekanan dimulai.",
+                  "In Matthew 4, every temptation opened with the same challenge: 'If you are the Son of God...' Bread and kingdoms were the surface. Underneath, the attack was on identity. Satan wanted Jesus to act as though his identity needed proving. But Jesus had already heard his Father's voice at the Jordan: 'This is my Son, whom I love.' He had nothing to prove. His identity was settled before the pressure began.",
+                  "Dalam Matius 4, setiap pencobaan dibuka dengan tantangan yang sama: 'Jika Engkau Anak Allah...' Roti dan kerajaan hanya di permukaan. Di baliknya, yang diserang adalah identitas. Iblis ingin Yesus bertindak seolah-olah identitas-Nya perlu dibuktikan. Tetapi Yesus sudah mendengar suara Bapa-Nya di Sungai Yordan: 'Inilah Anak-Ku yang Kukasihi.' Ia tidak perlu membuktikan apa pun. Identitas-Nya sudah pasti sebelum tekanan datang.",
                   lang
                 )}
               </p>
               {/* Verse reference */}
               <p style={{ marginTop: 14, fontSize: 13, color: "oklch(60% 0.05 260)" }}>
-                <button onClick={() => setActiveVerse("matt-4-3-4")} style={{ background: "none", border: "none", cursor: "pointer", color: orange, fontWeight: 700, fontSize: 13, textDecoration: "underline dotted", padding: 0 }}>
+                <button type="button" onClick={() => setActiveVerse("matt-4-3-4")} style={{ background: "none", border: "none", cursor: "pointer", color: orange, fontWeight: 700, fontSize: 13, textDecoration: "underline dotted", padding: 0 }}>
                   {lang === "id" ? VERSES["matt-4-3-4"].ref_id : VERSES["matt-4-3-4"].ref}
                 </button>
               </p>
             </div>
           </div>
 
-          {/* Paul — cross-cultural identity */}
+          {/* Paul: cross-cultural identity */}
           <div style={{ display: "flex", gap: 20, marginBottom: 36, alignItems: "flex-start" }}>
-            <div style={{ flexShrink: 0, width: 44, height: 44, borderRadius: "50%", background: "oklch(32% 0.10 260)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20 }}>
-              ??
+            <div style={{ flexShrink: 0, width: 44, height: 44, borderRadius: "50%", background: "oklch(32% 0.10 260)", display: "flex", alignItems: "center", justifyContent: "center", color: orange }}>
+              <Ship size={20} strokeWidth={1.75} aria-hidden="true" />
             </div>
             <div>
-              <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: orange, marginBottom: 8 }}>
-                {t("Paul — The Cross-Cultural Leader", "Paulus — Pemimpin Lintas Budaya", lang)}
+              <p style={{ ...eyebrow(), marginBottom: 8 }}>
+                {t("Paul, the Cross-Cultural Leader", "Paulus, Pemimpin Lintas Budaya", lang)}
               </p>
               <p style={{ fontSize: 16, lineHeight: 1.8, color: "oklch(82% 0.03 80)", margin: 0 }}>
                 {t(
-                  "Paul was the archetypal cross-cultural leader: a Jew among Gentiles, a Roman citizen among the dispossessed, a theologian who worked with his hands, a missionary who was beaten, imprisoned, shipwrecked, and abandoned by colleagues. At every point, his identity was under siege. What held him? Not performance — he described himself as the worst of sinners. Not success — the churches he planted were frequently chaotic. What held him was the truth of Colossians 3:3: his life was hidden with Christ in God. That hiddenness was not obscurity. It was security.",
-                  "Paulus adalah pemimpin lintas budaya yang arketipal: seorang Yahudi di antara orang-orang non-Yahudi, warga negara Romawi di antara orang-orang yang tidak berdaya, seorang teolog yang bekerja dengan tangannya, seorang pekerja pelayanan lintas budaya yang dipukul, dipenjara, karam kapal, dan ditinggalkan oleh rekan-rekannya. Di setiap titik, identitasnya berada di bawah pengepungan. Apa yang menopangnya? Bukan kinerja — dia menggambarkan dirinya sebagai orang berdosa yang paling buruk. Bukan kesuksesan — gereja-gereja yang ia dirikan sering kali kacau. Yang menopangnya adalah kebenaran Kolose 3:3: hidupnya tersembunyi bersama Kristus di dalam Allah. Ketersembunyian itu bukan ketidakjelasan. Itu adalah keamanan.",
+                  "Paul was the model cross-cultural leader: a Jew among Gentiles, a Roman citizen among the powerless, a theologian who worked with his hands, a church planter who was beaten, jailed, shipwrecked and abandoned by colleagues. His identity was under attack at every turn. What held him? Performance could not, since he called himself the worst of sinners. Success could not either, since the churches he planted were often chaotic. What held him was Colossians 3:3: his life was hidden with Christ in God. Hidden there, he was safe.",
+                  "Paulus adalah teladan pemimpin lintas budaya: seorang Yahudi di tengah bangsa-bangsa lain, warga Romawi di tengah orang-orang yang tak berdaya, seorang teolog yang bekerja dengan tangannya sendiri, seorang perintis jemaat yang dipukuli, dipenjara, mengalami karam kapal dan ditinggalkan rekan-rekannya. Identitasnya diserang di setiap langkah. Apa yang menopangnya? Bukan kinerja, karena ia menyebut dirinya orang berdosa yang paling besar. Bukan juga keberhasilan, karena jemaat-jemaat yang ia rintis sering kacau. Yang menopangnya adalah Kolose 3:3: hidupnya tersembunyi bersama Kristus di dalam Allah. Tersembunyi di sana, ia aman.",
                   lang
                 )}
               </p>
@@ -589,7 +662,7 @@ export default function IdentityUnderPressureClient({ userPathway, isSaved: init
               "{lang === "id" ? VERSES["psalm-46-1-2"].id : VERSES["psalm-46-1-2"].en}"
             </p>
             <div style={{ textAlign: "center" }}>
-              <button onClick={() => setActiveVerse("psalm-46-1-2")} style={{ background: "none", border: "none", cursor: "pointer", color: orange, fontWeight: 700, fontSize: 13, letterSpacing: "0.08em", textDecoration: "underline dotted" }}>
+              <button type="button" onClick={() => setActiveVerse("psalm-46-1-2")} style={{ background: "none", border: "none", cursor: "pointer", color: orange, fontWeight: 700, fontSize: 13, letterSpacing: "0.08em", textDecoration: "underline dotted" }}>
                 {lang === "id" ? VERSES["psalm-46-1-2"].ref_id : VERSES["psalm-46-1-2"].ref}
               </button>
             </div>
@@ -599,8 +672,8 @@ export default function IdentityUnderPressureClient({ userPathway, isSaved: init
           <div style={{ marginTop: 32, padding: "0 0 8px" }}>
             <p style={{ fontSize: 16, lineHeight: 1.85, color: "oklch(78% 0.03 80)", fontStyle: "italic", textAlign: "center" }}>
               {t(
-                "Psalm 46 was written for leaders in crisis — when the earth gives way, when mountains fall into the sea, when nations rage and kingdoms crumble. Its invitation is not to deny the pressure. It is to locate yourself inside an identity that the pressure cannot reach: the identity of a person known and kept by God. 'Therefore we will not fear' is not a denial of the circumstances. It is a declaration about who we are inside them.",
-                "Mazmur 46 ditulis untuk pemimpin dalam krisis — ketika bumi bergerak, ketika gunung-gunung jatuh ke laut, ketika bangsa-bangsa bergemuruh dan kerajaan-kerajaan runtuh. Undangannya bukan untuk menyangkal tekanan. Itu adalah untuk menempatkan diri Anda di dalam identitas yang tidak dapat dijangkau oleh tekanan: identitas seseorang yang dikenal dan dijaga oleh Tuhan. 'Sebab itu kita tidak akan takut' bukan penyangkalan keadaan. Itu adalah deklarasi tentang siapa kita di dalamnya.",
+                "Psalm 46 speaks to anyone in crisis: when the earth gives way, when mountains fall into the sea, when nations rage and kingdoms crumble. It does not ask you to deny the pressure. It invites you to stand inside an identity the pressure cannot reach, as someone known and kept by God. 'Therefore we will not fear' looks the circumstances in the face and says who we are in the middle of them.",
+                "Mazmur 46 berbicara kepada siapa pun yang sedang dalam krisis: ketika bumi berubah, ketika gunung-gunung goncang di dalam laut, ketika bangsa-bangsa ribut dan kerajaan-kerajaan goyah. Mazmur ini tidak memintamu menyangkal tekanan. Mazmur ini mengajakmu berdiri di dalam identitas yang tidak bisa dijangkau tekanan, sebagai orang yang dikenal dan dijaga Tuhan. 'Sebab itu kita tidak akan takut' menatap keadaan apa adanya dan menyatakan siapa kita di tengah-tengahnya.",
                 lang
               )}
             </p>
@@ -608,18 +681,18 @@ export default function IdentityUnderPressureClient({ userPathway, isSaved: init
 
           {/* Closing prayer */}
           <div style={{ marginTop: 36, background: "oklch(26% 0.09 260)", borderRadius: 12, padding: "28px 32px", textAlign: "center" }}>
-            <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: orange, marginBottom: 16 }}>
+            <p style={{ ...eyebrow(), marginBottom: 16 }}>
               {t("A Prayer", "Sebuah Doa", lang)}
             </p>
             <p style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 18, color: "oklch(88% 0.04 80)", lineHeight: 1.85, fontStyle: "italic", margin: 0 }}>
               {t(
-                "Lord, when the pressure tells me who I am, remind me who You say I am. When the work is fruitless and the season is long, let my identity rest not in what I produce but in what You have spoken. You have engraved my name on the palms of Your hands. That is enough. That is everything. Amen.",
-                "Tuhan, ketika tekanan memberitahuku siapa aku, ingatkan aku tentang apa yang Engkau katakan tentang diriku. Ketika pekerjaan tidak menghasilkan buah dan musimnya panjang, biarkan identitasku tidak beristirahat dalam apa yang aku hasilkan tetapi dalam apa yang telah Engkau ucapkan. Engkau telah mengukir namaku di telapak tangan-Mu. Itu cukup. Itu segalanya. Amin.",
+                "Lord, when the pressure tells me who I am, remind me who You say I am. When the work is fruitless and the season is long, let my identity rest on what You have spoken, more than on what I produce. You have engraved my name on the palms of Your hands. That is enough. That is everything. Amen.",
+                "Tuhan, ketika tekanan memberitahuku siapa aku, ingatkan aku tentang apa yang Engkau katakan tentang diriku. Ketika pekerjaan tidak menghasilkan buah dan musimnya panjang, biarlah identitasku bersandar pada apa yang Engkau firmankan, bukan pada apa yang aku hasilkan. Engkau telah mengukir namaku di telapak tangan-Mu. Itu cukup. Itu segalanya. Amin.",
                 lang
               )}
             </p>
             <p style={{ marginTop: 16, fontSize: 12, color: orange, fontWeight: 700, letterSpacing: "0.08em" }}>
-              <button onClick={() => setActiveVerse("isa-49-16")} style={{ background: "none", border: "none", cursor: "pointer", color: orange, fontWeight: 700, fontSize: 12, letterSpacing: "0.08em", textDecoration: "underline dotted", padding: 0 }}>
+              <button type="button" onClick={() => setActiveVerse("isa-49-16")} style={{ background: "none", border: "none", cursor: "pointer", color: orange, fontWeight: 700, fontSize: 12, letterSpacing: "0.08em", textDecoration: "underline dotted", padding: 0 }}>
                 {lang === "id" ? VERSES["isa-49-16"].ref_id : VERSES["isa-49-16"].ref}
               </button>
             </p>
@@ -627,9 +700,33 @@ export default function IdentityUnderPressureClient({ userPathway, isSaved: init
         </div>
       </section>
 
+      {/* KEY TAKEAWAYS */}
+      <section style={{ background: lightGray, padding: "96px 24px" }}>
+        <div style={{ maxWidth: 860, margin: "0 auto" }}>
+          <p style={{ ...eyebrow() }}>
+            {t("Key Takeaways", "Poin Penting", lang)}
+          </p>
+          <h2 style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: "clamp(28px, 3.5vw, 42px)", fontWeight: 700, color: navy, marginBottom: 48, lineHeight: 1.2, fontStyle: "italic" }}>
+            {t("What to Carry Forward", "Yang Perlu Kamu Bawa", lang)}
+          </h2>
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            {TAKEAWAYS.map((item, i) => (
+              <div key={i} style={{ background: "white", borderRadius: 10, padding: "24px 28px", borderLeft: `4px solid ${orange}`, display: "flex", gap: 20, alignItems: "flex-start" }}>
+                <div style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: "clamp(28px, 3vw, 36px)", fontWeight: 700, color: orange, lineHeight: 1, minWidth: 32, flexShrink: 0, marginTop: -2 }}>
+                  {i + 1}
+                </div>
+                <p style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: "clamp(15px, 1.7vw, 17px)", color: bodyText, lineHeight: 1.85, margin: 0 }}>
+                  {t(item.en, item.id, lang)}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* SAVE & PATHWAY CTA */}
-      <section style={{ background: lightGray, padding: "64px 24px", textAlign: "center" }}>
-        <div style={{ maxWidth: 560, margin: "0 auto" }}>
+      <section style={{ background: offWhite, padding: "64px 24px", textAlign: "center" }}>
+        <div style={{ maxWidth: 860, margin: "0 auto" }}>
           <p style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: "clamp(18px, 2.5vw, 24px)", color: bodyText, lineHeight: 1.7, fontStyle: "italic", marginBottom: 12 }}>
             {t(
               "\"Your life is hidden with Christ in God.\"",
@@ -638,31 +735,41 @@ export default function IdentityUnderPressureClient({ userPathway, isSaved: init
             )}
           </p>
           <p style={{ fontSize: 12, color: orange, fontWeight: 700, letterSpacing: "0.08em", marginBottom: 40 }}>
-            — {lang === "id" ? VERSES["col-3-3"].ref_id : VERSES["col-3-3"].ref}
+            {lang === "id" ? VERSES["col-3-3"].ref_id : VERSES["col-3-3"].ref}
           </p>
 
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-            {!saved ? (
-              <button
-                onClick={handleSave}
-                disabled={isPending}
-                style={{ padding: "14px 32px", background: orange, color: "white", border: "none", borderRadius: 8, fontFamily: "Montserrat, sans-serif", fontWeight: 700, fontSize: 14, cursor: isPending ? "wait" : "pointer", letterSpacing: "0.06em" }}
-              >
-                {isPending ? t("Saving—", "Menyimpan—", lang) : t("Save to Dashboard", "Simpan ke Dashboard", lang)}
-              </button>
-            ) : (
-              <span style={{ padding: "14px 32px", background: "oklch(40% 0.15 145)", color: "white", borderRadius: 8, fontFamily: "Montserrat, sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: "0.06em" }}>
-                ? {t("Saved to Dashboard", "Tersimpan di Dashboard", lang)}
+            <button
+              type="button"
+              onClick={handleSave}
+              disabled={saved || isPending}
+              aria-pressed={saved}
+              aria-label={saved
+                ? t("Saved to your dashboard", "Tersimpan di dasbor kamu", lang)
+                : t("Save this module to your dashboard", "Simpan modul ini ke dasbor kamu", lang)}
+              style={{ display: "inline-flex", alignItems: "center", gap: 10, minHeight: 44, padding: "12px 28px", background: saved ? navy : orange, color: "white", border: "none", borderRadius: 8, fontFamily: "Montserrat, sans-serif", fontWeight: 700, fontSize: 14, cursor: saved ? "default" : isPending ? "wait" : "pointer", letterSpacing: "0.06em" }}
+            >
+              <svg viewBox="0 0 24 24" width={18} height={18} aria-hidden="true">
+                <path d="M6 3h12v18l-6-4.5L6 21z" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+              </svg>
+              <span>
+                {saved
+                  ? t("Saved to Dashboard", "Tersimpan di Dasbor", lang)
+                  : isPending
+                    ? t("Saving...", "Menyimpan...", lang)
+                    : t("Save to Dashboard", "Simpan ke Dasbor", lang)}
               </span>
-            )}
+            </button>
             {userPathway && (
-              <Link href="/dashboard" style={{ padding: "14px 32px", background: "transparent", color: navy, border: `1.5px solid oklch(72% 0.03 260)`, borderRadius: 8, fontFamily: "Montserrat, sans-serif", fontWeight: 700, fontSize: 14, textDecoration: "none", letterSpacing: "0.06em" }}>
+              <Link href="/dashboard" style={{ display: "inline-flex", alignItems: "center", minHeight: 44, padding: "12px 28px", background: "transparent", color: navy, border: `1.5px solid oklch(72% 0.03 260)`, borderRadius: 8, fontFamily: "Montserrat, sans-serif", fontWeight: 700, fontSize: 14, textDecoration: "none", letterSpacing: "0.06em" }}>
                 {t("Back to Pathway", "Kembali ke Jalur", lang)}
               </Link>
             )}
           </div>
         </div>
       </section>
+
+      <SourcesDropdown sources={SOURCES} lang={lang} />
 
       {/* VERSE POPUP */}
       {activeVerse && VERSES[activeVerse as keyof typeof VERSES] && (() => {
@@ -674,9 +781,9 @@ export default function IdentityUnderPressureClient({ userPathway, isSaved: init
                 "{lang === "id" ? v.id : v.en}"
               </p>
               <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 700, color: orange, letterSpacing: "0.08em", marginBottom: 24 }}>
-                — {lang === "id" ? v.ref_id : v.ref} ({lang === "id" ? "TB" : "NIV"})
+                {lang === "id" ? v.ref_id : v.ref} ({lang === "id" ? "TB" : "NIV"})
               </p>
-              <button onClick={() => setActiveVerse(null)} style={{ padding: "10px 24px", background: navy, color: offWhite, border: "none", borderRadius: 12, fontFamily: "Montserrat, sans-serif", fontWeight: 700, cursor: "pointer" }}>
+              <button type="button" onClick={() => setActiveVerse(null)} style={{ minHeight: 44, padding: "10px 24px", background: navy, color: offWhite, border: "none", borderRadius: 12, fontFamily: "Montserrat, sans-serif", fontWeight: 700, cursor: "pointer" }}>
                 {t("Close", "Tutup", lang)}
               </button>
             </div>

@@ -185,8 +185,8 @@ export const RESOURCES: Resource[] = [
   {
     id: "returning-well",
     slug: "returning-well",
-    title: "Returning Well: Life After Cross-Cultural Work",
-    titleId: "Kembali dengan Baik: Kehidupan Setelah Pelayanan Lintas Budaya",
+    title: "Returning Well",
+    titleId: "Kembali dengan Baik",
     description: "Processing the transition back to your home culture after long-term cross-cultural service.",
     descriptionId: "Menjalani transisi pulang ke budaya asal Anda setelah pelayanan lintas budaya jangka panjang.",
     time: "30 min",
@@ -341,8 +341,8 @@ export const RESOURCES: Resource[] = [
   {
     id: "conflict-resolution-multicultural",
     slug: "conflict-resolution",
-    title: "Conflict Resolution in Multicultural Teams",
-    titleId: "Resolusi Konflik dalam Tim Multikultural",
+    title: "Conflict Resolution",
+    titleId: "Resolusi Konflik",
     description: "Why conflict looks different across cultures — and how to navigate it constructively.",
     descriptionId: "Mengapa konflik terlihat berbeda lintas budaya — dan cara menavigasinya secara konstruktif.",
     time: "15 min",

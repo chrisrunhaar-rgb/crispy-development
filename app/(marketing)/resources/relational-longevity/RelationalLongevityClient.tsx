@@ -4,6 +4,7 @@ import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
 import LangToggle from "@/components/LangToggle";
+import SourcesDropdown from "@/components/SourcesDropdown";
 
 // --- TYPES ------------------------------------------------------------------
 
@@ -34,6 +35,22 @@ const VERSES = {
   },
 };
 
+// --- SUPERSCRIPT HELPER -----------------------------------------------------
+
+function withSup(text: string): React.ReactNode {
+  const parts = text.split(/([¹²³⁴⁵⁶⁷⁸⁹⁰]+)/);
+  if (parts.length === 1) return text;
+  return parts.map((part, i) =>
+    /^[¹²³⁴⁵⁶⁷⁸⁹⁰]+$/.test(part) ? (
+      <span key={i} style={{ color: "oklch(65% 0.15 45)", fontWeight: 700 }}>
+        {part}
+      </span>
+    ) : (
+      part
+    )
+  );
+}
+
 // --- SKILL SECTIONS ---------------------------------------------------------
 
 type SkillKey = "listening" | "conflict" | "loss";
@@ -42,7 +59,6 @@ const SKILLS: {
   key: SkillKey;
   accentColor: string;
   accentBg: string;
-  icon: string;
   en_label: string;
   id_label: string;
   en_subtitle: string;
@@ -70,61 +86,60 @@ const SKILLS: {
     key: "listening",
     accentColor: "oklch(45% 0.14 200)",
     accentBg: "oklch(45% 0.14 200 / 0.08)",
-    icon: "??",
-    en_label: "Skill 1 — Loving Listening",
-    id_label: "Keterampilan 1 — Mendengarkan dengan Kasih",
+    en_label: "Loving Listening",
+    id_label: "Mendengarkan dengan Kasih",
     en_subtitle: "The shift from advice-giver to question-asker",
     id_subtitle: "Beralih dari pemberi saran menjadi penanya",
     en_intro:
-      "Most of us were trained to fix, advise, and respond quickly. We bring solutions before the other person has finished speaking. But in cross-cultural teams — where context is rarely fully visible — the first and most powerful skill is simply this: stay longer in the question. Loving listening is not passive silence. It is an active choice to understand before being understood, and to ask before assuming.",
+      "Most of us were trained to fix, advise and respond quickly. We offer solutions before the other person has finished speaking. In cross-cultural teams, where so much context stays hidden, the first skill is simple: stay longer in the question. Loving listening is an active choice. You try to understand before you are understood, and you ask before you assume.",
     id_intro:
-      "Sebagian besar dari kita dilatih untuk memperbaiki, memberi saran, dan merespons dengan cepat. Kita membawa solusi sebelum orang lain selesai berbicara. Namun dalam tim lintas budaya — di mana konteks jarang sepenuhnya terlihat — keterampilan pertama dan paling kuat adalah ini: tinggallah lebih lama dalam pertanyaan. Mendengarkan dengan kasih bukan diam yang pasif. Ini adalah pilihan aktif untuk memahami sebelum dipahami, dan bertanya sebelum berasumsi.",
+      "Sebagian besar dari kita dilatih untuk memperbaiki, memberi saran dan merespons dengan cepat. Kita menawarkan solusi sebelum orang lain selesai bicara. Dalam tim lintas budaya, di mana banyak konteks tidak terlihat, keterampilan pertama itu sederhana: bertahanlah lebih lama dalam pertanyaan. Mendengarkan dengan kasih adalah pilihan yang aktif. Kamu berusaha memahami sebelum dipahami, dan bertanya sebelum berasumsi.",
     en_scenario_heading: "The scenario",
     id_scenario_heading: "Skenario",
     en_scenario:
       "A colleague from a different cultural background approaches you after a team meeting. She says quietly: \"I'm not sure I can keep going like this. Everything feels so heavy.\"",
     id_scenario:
-      "Seorang kolega dari latar belakang budaya yang berbeda mendekati Anda setelah rapat tim. Dia berkata pelan: \"Saya tidak yakin bisa terus seperti ini. Semuanya terasa begitu berat.\"",
+      "Seorang kolega dari latar belakang budaya yang berbeda mendekatimu setelah rapat tim. Dia berkata pelan: \"Saya tidak yakin bisa terus seperti ini. Semuanya terasa begitu berat.\"",
     en_typical_label: "Typical response",
     id_typical_label: "Respons umum",
     en_typical:
-      "\"I know how you feel. Have you tried taking some time off? You probably just need rest. Things will get better — remember why you're here. Let me know if I can help with your workload.\"",
+      "\"I know how you feel. Have you tried taking some time off? You probably just need rest. Things will get better. Remember why you're here. Let me know if I can help with your workload.\"",
     id_typical:
-      "\"Saya mengerti perasaanmu. Sudahkah kamu mencoba mengambil waktu istirahat? Kamu mungkin hanya perlu istirahat. Semuanya akan membaik — ingat kenapa kamu ada di sini. Beri tahu saya jika saya bisa membantu dengan beban kerjamu.\"",
+      "\"Saya mengerti perasaanmu. Sudahkah kamu mencoba mengambil waktu istirahat? Kamu mungkin hanya perlu istirahat. Semuanya akan membaik. Ingat kenapa kamu ada di sini. Beri tahu saya kalau saya bisa membantu dengan beban kerjamu.\"",
     en_better_label: "Loving listening response",
     id_better_label: "Respons mendengarkan dengan kasih",
     en_better:
-      "\"That sounds really hard. [Pause.] What's making it feel the heaviest right now?\" Then wait. Fully. Don't rescue, don't redirect. The pause is not awkward — it is the space where the real thing surfaces.",
+      "\"That sounds really hard. [Pause.] What's making it feel the heaviest right now?\" Then wait. Fully. Don't rescue, don't redirect. The pause may feel awkward, but it is often where the real issue comes to the surface.",
     id_better:
-      "\"Kedengarannya sangat berat. [Jeda.] Apa yang membuat semuanya terasa paling berat saat ini?\" Kemudian tunggu. Sepenuhnya. Jangan selamatkan, jangan alihkan. Jeda itu tidak canggung — itu adalah ruang di mana hal yang sesungguhnya muncul.",
-    en_technique_heading: "The technique: Reflect — Ask — Wait",
-    id_technique_heading: "Tekniknya: Refleksikan — Tanyakan — Tunggu",
+      "\"Kedengarannya sangat berat. [Jeda.] Apa yang paling membuatnya terasa berat saat ini?\" Lalu tunggu. Sepenuhnya. Jangan menyelamatkan, jangan mengalihkan. Jeda itu mungkin terasa canggung, tetapi sering kali di situlah masalah yang sebenarnya muncul.",
+    en_technique_heading: "The technique: Reflect, Ask, Wait",
+    id_technique_heading: "Tekniknya: Refleksikan, Tanyakan, Tunggu",
     en_technique_steps: [
       {
         label: "Reflect",
-        body: "Mirror back what you heard — not a summary, a reflection. \"That sounds exhausting.\" \"It sounds like something shifted recently.\" This signals: I received what you said. It is not therapy-speak — it is presence.",
+        body: "Mirror back what you heard. Keep it short: \"That sounds exhausting.\" \"It sounds like something shifted recently.\" This tells the other person you received what they said. Mindful listening is one of the core skills in intercultural conflict work, and it starts here.⁴",
       },
       {
         label: "Ask",
-        body: "Ask one open question — not a checklist. \"What feels hardest right now?\" or \"Where is most of the weight coming from?\" One question, then stop. Multiple questions in a row shut people down, especially in high-context cultures where being interrogated triggers silence.",
+        body: "Ask one open question, not a checklist. \"What feels hardest right now?\" or \"Where is most of the weight coming from?\" One question, then stop. A string of questions can feel like an interrogation, especially in high-context cultures, and people go quiet.",
       },
       {
         label: "Wait",
-        body: "Silence is not a problem to fix. In many Asian, African, and Middle Eastern cultures, a meaningful pause before responding signals respect and thoughtfulness. Western communicators are often trained to fill silence — but silence is often where the real answer forms. Give it 5 seconds. Then 10.",
+        body: "Silence is not a problem to fix. In many high-context cultures, a pause before answering shows respect and careful thought. People raised in more direct cultures often rush to fill the gap, yet the real answer often forms in that silence. Give it 5 seconds. Then 10.",
       },
     ],
     id_technique_steps: [
       {
         label: "Refleksikan",
-        body: "Cerminkan kembali apa yang Anda dengar — bukan ringkasan, tapi refleksi. \"Kedengarannya melelahkan.\" \"Sepertinya ada sesuatu yang berubah belakangan ini.\" Ini memberi sinyal: saya menerima apa yang Anda katakan. Ini bukan bahasa terapi — ini adalah kehadiran.",
+        body: "Ulangi kembali apa yang kamu dengar. Cukup singkat: \"Kedengarannya melelahkan.\" \"Sepertinya ada yang berubah belakangan ini.\" Ini menunjukkan bahwa kamu sungguh menerima apa yang dia katakan. Mendengarkan dengan penuh perhatian adalah salah satu keterampilan inti dalam menangani konflik antarbudaya, dan semuanya dimulai di sini.⁴",
       },
       {
         label: "Tanyakan",
-        body: "Ajukan satu pertanyaan terbuka — bukan daftar periksa. \"Apa yang paling berat saat ini?\" atau \"Dari mana sebagian besar tekanan itu datang?\" Satu pertanyaan, lalu berhenti. Beberapa pertanyaan berturut-turut membuat orang diam, terutama dalam budaya high-context di mana diinterogasi memicu keheningan.",
+        body: "Ajukan satu pertanyaan terbuka, bukan daftar periksa. \"Apa yang paling berat saat ini?\" atau \"Dari mana sebagian besar beban itu datang?\" Satu pertanyaan, lalu berhenti. Rentetan pertanyaan bisa terasa seperti interogasi, terutama dalam budaya high-context, dan orang pun jadi diam.",
       },
       {
         label: "Tunggu",
-        body: "Keheningan bukan masalah yang harus diperbaiki. Dalam banyak budaya Asia, Afrika, dan Timur Tengah, jeda bermakna sebelum merespons menandakan rasa hormat dan kedalaman pikiran. Komunikator Barat sering dilatih untuk mengisi keheningan — tetapi keheningan sering kali adalah tempat jawaban nyata terbentuk. Berikan 5 detik. Kemudian 10.",
+        body: "Keheningan bukan masalah yang harus diperbaiki. Dalam banyak budaya high-context, jeda sebelum menjawab menunjukkan rasa hormat dan pemikiran yang matang. Orang dari budaya yang lebih langsung sering buru-buru mengisi keheningan, padahal jawaban yang sebenarnya sering terbentuk di sana. Beri waktu 5 detik. Lalu 10.",
       },
     ],
   },
@@ -132,61 +147,60 @@ const SKILLS: {
     key: "conflict",
     accentColor: "oklch(50% 0.17 30)",
     accentBg: "oklch(50% 0.17 30 / 0.08)",
-    icon: "?",
-    en_label: "Skill 2 — Navigating Conflict",
-    id_label: "Keterampilan 2 — Menavigasi Konflik",
+    en_label: "Handling Conflict Well",
+    id_label: "Menangani Konflik dengan Baik",
     en_subtitle: "Cross-cultural conflict escalation patterns",
     id_subtitle: "Pola eskalasi konflik lintas budaya",
     en_intro:
-      "Conflict in cross-cultural teams doesn't announce itself clearly. It often moves in patterns that are invisible to the uninitiated — especially when cultural rules about directness, hierarchy, and face differ significantly. Understanding the three stages of escalation, and what typically goes wrong at each stage, is the difference between a team that repairs and a team that fractures.",
+      "Conflict in cross-cultural teams rarely announces itself. It often moves in patterns that newcomers miss, especially when cultures differ on directness, hierarchy and face.⁵ If you understand the three stages of escalation and what usually goes wrong at each one, your team has a far better chance of repairing instead of fracturing.",
     id_intro:
-      "Konflik dalam tim lintas budaya tidak mengumumkan dirinya dengan jelas. Sering kali bergerak dalam pola yang tidak terlihat bagi yang belum berpengalaman — terutama ketika aturan budaya tentang keterusterangan, hierarki, dan menjaga muka berbeda secara signifikan. Memahami tiga tahap eskalasi, dan apa yang biasanya salah di setiap tahap, adalah perbedaan antara tim yang memperbaiki diri dan tim yang retak.",
+      "Konflik dalam tim lintas budaya jarang muncul terang-terangan. Sering kali konflik bergerak dalam pola yang tidak terlihat oleh pendatang baru, terutama ketika budaya berbeda soal keterusterangan, hierarki dan menjaga muka.⁵ Kalau kamu memahami tiga tahap eskalasi dan apa yang biasanya salah di setiap tahap, timmu punya peluang jauh lebih besar untuk pulih daripada retak.",
     en_scenario_heading: "Three stages of escalation",
     id_scenario_heading: "Tiga tahap eskalasi",
     en_scenario:
-      "A senior team member repeatedly dismisses ideas from a junior colleague in team meetings — not aggressively, but consistently. The junior colleague says nothing in the meetings, but begins withdrawing from team activities.",
+      "A senior team member keeps dismissing ideas from a junior colleague in team meetings. He is not aggressive, just consistent. The junior colleague says nothing in the meetings, but starts pulling back from team activities.",
     id_scenario:
-      "Seorang anggota tim senior berulang kali mengabaikan ide dari kolega junior dalam rapat tim — tidak secara agresif, tetapi secara konsisten. Kolega junior tidak berkata apa-apa dalam rapat, tetapi mulai menarik diri dari kegiatan tim.",
-    en_typical_label: "Stage 1 — Signal",
-    id_typical_label: "Tahap 1 — Sinyal",
+      "Seorang anggota tim senior terus mengabaikan ide dari kolega junior dalam rapat tim. Dia tidak agresif, tetapi konsisten. Kolega junior tidak berkata apa-apa dalam rapat, tetapi mulai menarik diri dari kegiatan tim.",
+    en_typical_label: "Stage 1: Signal",
+    id_typical_label: "Tahap 1: Sinyal",
     en_typical:
-      "The junior colleague's silence and withdrawal IS the signal — in many Asian and African cultural contexts, this is how conflict is communicated. It is not passive; it is a message. The typical mistake: the Western team leader reads the withdrawal as disengagement or personality, rather than as a relational signal that something is wrong.",
+      "The junior colleague's silence and withdrawal IS the signal. In many cultures, including Indonesian settings where harmony (rukun) and shame (malu) shape how people speak, conflict is often expressed indirectly.⁶ Pulling back carries a message. The common mistake: a leader from a more direct culture reads it as disengagement or personality, and misses the relational signal that something is wrong.",
     id_typical:
-      "Keheningan dan penarikan diri kolega junior ADALAH sinyalnya — dalam banyak konteks budaya Asia dan Afrika, inilah cara konflik dikomunikasikan. Ini bukan pasif; ini adalah pesan. Kesalahan umum: pemimpin tim Barat membaca penarikan diri sebagai ketidaktertarikan atau kepribadian, bukan sebagai sinyal relasional bahwa ada sesuatu yang salah.",
-    en_better_label: "Stage 2 — Response",
-    id_better_label: "Tahap 2 — Respons",
+      "Diam dan menarik dirinya kolega junior ITULAH sinyalnya. Dalam banyak budaya, termasuk di Indonesia di mana rukun dan malu membentuk cara orang berbicara, konflik sering diungkapkan secara tidak langsung.⁶ Menarik diri pun membawa pesan. Kesalahan yang sering terjadi: pemimpin dari budaya yang lebih langsung membacanya sebagai kurang peduli atau soal kepribadian, lalu melewatkan sinyal relasional bahwa ada yang tidak beres.",
+    en_better_label: "Stage 2: Response",
+    id_better_label: "Tahap 2: Respons",
     en_better:
-      "When the signal is ignored, one of two things happens: the unaddressed tension calcifies into resentment (the relationship slowly dies), or it erupts later at a higher intensity — often in the wrong context. The critical response window is between signal and escalation. A skilled leader names what they have noticed — not the conflict itself, but the pattern. Privately, gently, specifically: \"I've noticed you've been quieter recently. Is there something I should be aware of?\"",
+      "When the signal is ignored, one of two things usually happens. The tension hardens into resentment and the relationship slowly dies, or it erupts later with more force, often in the wrong setting. The window to respond is between signal and escalation. A skilled leader names the pattern they have noticed, without labelling it a conflict. Privately, gently, specifically: \"I've noticed you've been quieter recently. Is there something I should be aware of?\"",
     id_better:
-      "Ketika sinyal diabaikan, salah satu dari dua hal terjadi: ketegangan yang tidak ditangani mengeras menjadi kepahitan (hubungan perlahan mati), atau meledak kemudian dengan intensitas lebih tinggi — sering dalam konteks yang salah. Jendela respons kritis berada antara sinyal dan eskalasi. Seorang pemimpin terampil menyebutkan apa yang mereka perhatikan — bukan konfliknya sendiri, tapi polanya. Secara pribadi, dengan lembut, dan spesifik: \"Saya perhatikan Anda lebih pendiam belakangan ini. Apakah ada sesuatu yang harus saya ketahui?\"",
-    en_technique_heading: "Stage 3 — Resolution",
-    id_technique_heading: "Tahap 3 — Resolusi",
+      "Ketika sinyal diabaikan, biasanya terjadi salah satu dari dua hal. Ketegangan mengeras menjadi kepahitan dan hubungan perlahan mati, atau meledak kemudian dengan lebih keras, sering di situasi yang salah. Waktu terbaik untuk merespons ada di antara sinyal dan eskalasi. Pemimpin yang terampil menyebutkan pola yang dia perhatikan, tanpa menyebutnya konflik. Secara pribadi, lembut dan spesifik: \"Saya perhatikan kamu lebih pendiam belakangan ini. Apakah ada sesuatu yang perlu saya ketahui?\"",
+    en_technique_heading: "Stage 3: Resolution",
+    id_technique_heading: "Tahap 3: Resolusi",
     en_technique_steps: [
       {
         label: "Resolution is not the same as agreement",
-        body: "Cross-cultural conflict resolution rarely ends in explicit mutual acknowledgement — especially in high-context cultures where directly naming a conflict can feel more damaging than the conflict itself. Resolution may look like: the senior team member begins including the junior's ideas, the junior begins re-engaging, and neither party ever says the word 'conflict.' The relationship moves forward.",
+        body: "Cross-cultural conflict rarely ends with both sides openly naming what happened. In high-context cultures, naming a conflict directly can feel more damaging than the conflict itself. Resolution may look like this: the senior team member starts including the junior's ideas, the junior re-engages, and nobody ever says the word 'conflict.' The relationship moves forward.",
       },
       {
         label: "Third-party facilitation",
-        body: "In many cultural contexts, conflict is best resolved through a trusted intermediary — not as a sign of failure, but as the culturally appropriate path. A respected team member, a senior pastor, or an elder figure who carries weight with both parties can often unlock movement that direct confrontation cannot. Western leaders who insist on direct resolution may be applying their own cultural framework rather than serving the relationship.",
+        body: "In many cultures, a trusted go-between is the right path for resolving conflict, and using one is no sign of failure.⁵ A respected team member, a senior pastor or an elder who carries weight with both people can often open a way that direct confrontation cannot. Leaders who insist on face-to-face resolution may be applying their own cultural framework instead of serving the relationship.",
       },
       {
         label: "Don't wait for a crisis",
-        body: "The most effective conflict navigation happens long before any single event — by building a team culture where small tensions are named early, where questions are safe to ask, and where leaders model the vulnerability of saying: \"I think something is off between us. Can we talk?\" Prevention is not the absence of conflict. It is a culture where conflict moves quickly to the surface rather than festering underneath.",
+        body: "The best conflict work happens long before any single event. Build a team culture where small tensions are named early, where questions are safe to ask, and where leaders show vulnerability by saying: \"I think something is off between us. Can we talk?\" In a healthy team, conflict still happens, but it comes to the surface quickly instead of festering underneath.",
       },
     ],
     id_technique_steps: [
       {
         label: "Resolusi tidak sama dengan kesepakatan",
-        body: "Resolusi konflik lintas budaya jarang berakhir dengan pengakuan bersama yang eksplisit — terutama dalam budaya high-context di mana secara langsung menyebut konflik bisa terasa lebih merusak daripada konflik itu sendiri. Resolusi mungkin terlihat seperti: anggota tim senior mulai memasukkan ide junior, junior mulai terlibat kembali, dan tidak ada pihak yang pernah menyebut kata 'konflik.' Hubungan bergerak maju.",
+        body: "Konflik lintas budaya jarang berakhir dengan kedua pihak terang-terangan membicarakan apa yang terjadi. Dalam budaya high-context, menyebut konflik secara langsung bisa terasa lebih merusak daripada konflik itu sendiri. Resolusi bisa terlihat seperti ini: anggota tim senior mulai memakai ide si junior, si junior kembali terlibat, dan tidak ada yang pernah menyebut kata 'konflik.' Hubungan pun bergerak maju.",
       },
       {
         label: "Fasilitasi pihak ketiga",
-        body: "Dalam banyak konteks budaya, konflik paling baik diselesaikan melalui perantara yang dipercaya — bukan sebagai tanda kegagalan, tetapi sebagai jalur yang tepat secara budaya. Anggota tim yang dihormati, pendeta senior, atau tokoh penatua yang memiliki bobot bagi kedua pihak sering kali dapat membuka jalan yang tidak bisa dilakukan konfrontasi langsung. Pemimpin Barat yang bersikeras pada resolusi langsung mungkin menerapkan kerangka budaya mereka sendiri daripada melayani hubungan tersebut.",
+        body: "Dalam banyak budaya, perantara yang dipercaya adalah jalan yang tepat untuk menyelesaikan konflik, dan memakainya bukan tanda kegagalan.⁵ Anggota tim yang dihormati, pendeta senior, atau tokoh yang disegani kedua pihak sering bisa membuka jalan yang tidak bisa dibuka oleh konfrontasi langsung. Pemimpin yang memaksakan penyelesaian empat mata mungkin sedang menerapkan kerangka budayanya sendiri, bukan melayani hubungan itu.",
       },
       {
         label: "Jangan menunggu krisis",
-        body: "Navigasi konflik yang paling efektif terjadi jauh sebelum peristiwa tunggal apa pun — dengan membangun budaya tim di mana ketegangan kecil disebutkan lebih awal, di mana pertanyaan aman untuk diajukan, dan di mana pemimpin memberi teladan keterbukaan dengan mengatakan: \"Saya pikir ada sesuatu yang tidak beres di antara kita. Bisakah kita bicara?\" Pencegahan bukan ketidakhadiran konflik. Itu adalah budaya di mana konflik bergerak cepat ke permukaan daripada membusuk di bawah.",
+        body: "Penanganan konflik yang terbaik terjadi jauh sebelum ada peristiwa besar. Bangun budaya tim di mana ketegangan kecil dibicarakan sejak awal, di mana bertanya itu aman, dan di mana pemimpin memberi teladan keterbukaan dengan berkata: \"Sepertinya ada yang tidak beres di antara kita. Bisa kita bicara?\" Dalam tim yang sehat, konflik tetap ada, tetapi cepat muncul ke permukaan dan tidak dibiarkan membusuk di bawah.",
       },
     ],
   },
@@ -194,61 +208,60 @@ const SKILLS: {
     key: "loss",
     accentColor: "oklch(42% 0.12 290)",
     accentBg: "oklch(42% 0.12 290 / 0.08)",
-    icon: "??",
-    en_label: "Skill 3 — Processing Loss Together",
-    id_label: "Keterampilan 3 — Mengolah Kehilangan Bersama",
+    en_label: "Processing Loss Together",
+    id_label: "Mengolah Kehilangan Bersama",
     en_subtitle: "The unique grief of cross-cultural life",
     id_subtitle: "Duka unik kehidupan lintas budaya",
     en_intro:
-      "Cross-cultural workers don't just experience losses — they accumulate them. Every departure, every transition, every goodbye is a small grief that rarely gets named, let alone processed. Missionary families and international team workers often live with compacted grief: the losses stack up faster than they can be processed, and the culture of the field can make it feel inappropriate to grieve at all. This is where relational breakdown often begins — not in conflict, but in unexpressed loss.",
+      "Cross-cultural workers don't just experience losses. They accumulate them. Every departure, transition and goodbye is a small grief that rarely gets named, let alone processed. Families serving abroad and international team members often live with compacted grief: losses stack up faster than they can be processed, and field culture can make grieving feel out of place. Relational breakdown often starts here, in loss nobody has put into words, long before any open conflict.",
     id_intro:
-      "Pekerja lintas budaya tidak hanya mengalami kehilangan — mereka mengumpulkannya. Setiap kepergian, setiap transisi, setiap perpisahan adalah duka kecil yang jarang disebutkan, apalagi diolah. Keluarga pekerja lapangan dan pekerja tim internasional sering hidup dengan duka yang tertekan: kehilangan menumpuk lebih cepat dari yang bisa diolah, dan budaya lapangan dapat membuat segalanya terasa tidak pantas untuk berduka sama sekali. Di sinilah kerusakan relasional sering dimulai — bukan dalam konflik, tetapi dalam kehilangan yang tidak terungkapkan.",
+      "Pekerja lintas budaya tidak hanya mengalami kehilangan. Mereka mengumpulkannya. Setiap kepergian, transisi dan perpisahan adalah duka kecil yang jarang disebut, apalagi diolah. Keluarga pekerja lapangan dan anggota tim internasional sering hidup dengan duka yang menumpuk: kehilangan datang lebih cepat daripada yang bisa diolah, dan budaya lapangan bisa membuat berduka terasa tidak pantas. Kerusakan relasional sering dimulai di sini, dalam kehilangan yang tidak pernah diungkapkan, jauh sebelum ada konflik terbuka.",
     en_scenario_heading: "What accumulated loss looks like",
-    id_scenario_heading: "Seperti apa akumulasi kehilangan",
+    id_scenario_heading: "Seperti apa kehilangan yang menumpuk",
     en_scenario:
-      "A team member who has been on the field for four years. In that time: two close colleagues have left, their child changed schools twice, their home church changed leadership, they were repatriated once during a political crisis and had to leave within 48 hours, and last month their closest local friend moved cities. Each loss was brief. None was formally acknowledged. They show up to team meetings on time, carry their responsibilities, and laugh at the right moments. Inside, they are running on empty.",
+      "A team member has been on the field for four years. In that time two close colleagues have left, their child has changed schools twice, their home church has changed leadership, they were evacuated once during a political crisis with 48 hours to leave, and last month their closest local friend moved away. Each loss was brief. None was formally acknowledged. They arrive at team meetings on time, carry their responsibilities and laugh at the right moments. Inside, they are running on empty.",
     id_scenario:
-      "Seorang anggota tim yang telah berada di lapangan selama empat tahun. Dalam waktu itu: dua kolega dekat telah pergi, anak mereka berganti sekolah dua kali, gereja rumah mereka berganti kepemimpinan, mereka dipulangkan sekali selama krisis politik dan harus pergi dalam 48 jam, dan bulan lalu sahabat lokal terdekat mereka pindah kota. Setiap kehilangan berlangsung singkat. Tidak ada yang secara resmi diakui. Mereka datang ke rapat tim tepat waktu, mengemban tanggung jawab mereka, dan tertawa pada saat yang tepat. Di dalam, mereka kehabisan energi.",
+      "Seorang anggota tim sudah empat tahun di lapangan. Selama itu, dua kolega dekat sudah pergi, anaknya pindah sekolah dua kali, gereja asalnya berganti pemimpin, dia pernah dievakuasi saat krisis politik dan hanya punya 48 jam untuk pergi, dan bulan lalu sahabat lokal terdekatnya pindah kota. Setiap kehilangan terjadi sebentar. Tidak satu pun diakui secara resmi. Dia datang ke rapat tepat waktu, menjalankan tanggung jawabnya dan tertawa di saat yang tepat. Di dalam, dia kehabisan tenaga.",
     en_typical_label: "What teams typically miss",
     id_typical_label: "Yang biasanya dilewatkan tim",
     en_typical:
-      "Teams that function well operationally often have no language for grief. The debrief focuses on tasks, logistics, and forward planning — never: \"What have we lost this season? What do we need to grieve before we move on?\" The cost of not naming loss is high: disengagement, resentment toward leadership, compassion fatigue, and — most commonly — premature departure.",
+      "Teams that run well on tasks often have no language for grief. Debriefs focus on tasks, logistics and planning, and never ask: \"What have we lost this season? What do we need to grieve before we move on?\" Many workers never get a debrief at all. One recent survey found only 14% of returning workers had received one.⁷ Unnamed loss has a cost: people disengage, resentment toward leaders grows, and some end up leaving.",
     id_typical:
-      "Tim yang berfungsi baik secara operasional sering tidak memiliki bahasa untuk kesedihan. Debriefing berfokus pada tugas, logistik, dan perencanaan ke depan — tidak pernah: \"Apa yang telah kita kehilangan musim ini? Apa yang perlu kita ratapi sebelum kita melanjutkan?\" Harga yang harus dibayar karena tidak mengungkapkan kehilangan itu tinggi: ketidakterlibatan, kepahitan terhadap kepemimpinan, kelelahan welas asih, dan — paling umum — kepergian prematur.",
+      "Tim yang berjalan baik dalam tugas sering tidak punya bahasa untuk duka. Debriefing berfokus pada tugas, logistik dan rencana, dan tidak pernah bertanya: \"Apa yang sudah kita kehilangan di musim ini? Apa yang perlu kita ratapi sebelum melangkah?\" Banyak pekerja bahkan tidak pernah mendapat debriefing. Sebuah survei terbaru menemukan hanya 14% pekerja yang pulang yang pernah menerimanya.⁷ Kehilangan yang tidak disebut ada harganya: orang menarik diri, kepahitan terhadap pemimpin tumbuh, dan sebagian akhirnya pergi.",
     en_better_label: "How to create space for loss",
     id_better_label: "Cara memberi tempat bagi duka",
     en_better:
-      "It starts with the leader naming their own losses first. Not as a performance of vulnerability, but as genuine modelling: \"Before we look at the quarter ahead, I want to name something we've lost. Sarah leaving took something from this team. I miss working with her. Does anyone else want to name what they've been carrying?\" This simple act — naming, inviting, and not rushing past — creates the relational safety that keeps people on the field.",
+      "It starts with the leader naming their own losses first. This is honest modelling, not a show of vulnerability: \"Before we look at the quarter ahead, I want to name something we've lost. Sarah leaving took something from this team. I miss working with her. Does anyone else want to name what they've been carrying?\" Naming, inviting and not rushing past builds the relational safety that helps people stay.",
     id_better:
-      "Ini dimulai dengan pemimpin yang menyebutkan kehilangan mereka sendiri terlebih dahulu. Bukan sebagai pertunjukan kerentanan, tetapi sebagai pemodelan yang tulus: \"Sebelum kita melihat kuartal ke depan, saya ingin menyebutkan sesuatu yang telah kita kehilangan. Kepergian Sarah mengambil sesuatu dari tim ini. Saya merindukan bekerja dengannya. Adakah orang lain yang ingin menyebutkan apa yang telah mereka bawa?\" Tindakan sederhana ini — menyebutkan, mengundang, dan tidak terburu-buru melewati — menciptakan keamanan relasional yang membuat orang tetap di lapangan.",
+      "Semuanya dimulai dengan pemimpin yang lebih dulu menyebut kehilangannya sendiri. Ini teladan yang jujur, bukan pertunjukan kerentanan: \"Sebelum kita melihat kuartal ke depan, saya ingin menyebut sesuatu yang sudah kita kehilangan. Kepergian Sarah mengambil sesuatu dari tim ini. Saya rindu bekerja bersamanya. Ada yang ingin menyebut apa yang sedang kalian pikul?\" Menyebut, mengundang dan tidak buru-buru melewatinya membangun rasa aman yang membantu orang bertahan.",
     en_technique_heading: "Three practices for teams",
     id_technique_heading: "Tiga praktik untuk tim",
     en_technique_steps: [
       {
         label: "The goodbye ritual",
-        body: "Every departure deserves a named farewell — not just a cake and a card, but a structured moment where the team speaks honestly about what this person contributed and what leaves with them. The goodbye ritual is not sentimental; it is a grief hygiene practice that prevents accumulated unspoken loss.",
+        body: "Every departure deserves a proper farewell. Go beyond a cake and a card: give it a structured moment where the team speaks honestly about what this person gave and what leaves with them. A goodbye ritual is grief hygiene. It keeps unspoken loss from piling up.",
       },
       {
         label: "The quarterly grief check",
-        body: "Once per quarter, before the forward-planning session, add one question to the team meeting: \"What has this team lost — in people, in momentum, in dreams — that we haven't yet acknowledged?\" Keep a physical list visible. Naming is not the same as wallowing. It is how teams stay resilient.",
+        body: "Once a quarter, before forward planning, add one question to the team meeting: \"What has this team lost, in people, momentum or dreams, that we haven't yet acknowledged?\" Keep a written list where everyone can see it. Naming loss keeps a team resilient, and it is different from wallowing.",
       },
       {
         label: "The personal loss inventory",
-        body: "As a leader, regularly ask your team members individually: \"How is the weight of transition sitting with you right now?\" Not 'how are you doing?' (which gets a social answer) but a specific, honest invitation. Cross-cultural workers often carry losses silently because no one ever asked. You asking changes that.",
+        body: "As a leader, ask team members one by one, and often: \"How is the weight of transition sitting with you right now?\" 'How are you doing?' gets a social answer. A specific, honest question gets a real one. Cross-cultural workers often carry losses silently because no one asked. Your question changes that.",
       },
     ],
     id_technique_steps: [
       {
         label: "Ritual perpisahan",
-        body: "Setiap kepergian layak mendapat perpisahan yang disebutkan — bukan hanya kue dan kartu, tetapi momen terstruktur di mana tim berbicara dengan jujur tentang apa yang dikontribusikan orang ini dan apa yang pergi bersama mereka. Ritual perpisahan bukan sentimental; ini adalah praktik kebersihan duka yang mencegah akumulasi kehilangan yang tidak terucapkan.",
+        body: "Setiap kepergian layak mendapat perpisahan yang pantas. Lebih dari kue dan kartu, beri waktu khusus di mana tim berbicara jujur tentang apa yang sudah diberikan orang ini dan apa yang ikut pergi bersamanya. Ritual perpisahan adalah cara merawat duka. Ini menjaga agar kehilangan yang tak terucap tidak menumpuk.",
       },
       {
         label: "Pemeriksaan duka triwulanan",
-        body: "Sekali per kuartal, sebelum sesi perencanaan ke depan, tambahkan satu pertanyaan pada rapat tim: \"Apa yang telah tim ini kehilangan — dalam orang, dalam momentum, dalam mimpi — yang belum kita akui?\" Simpan daftar fisik yang terlihat. Menyebutkan tidak sama dengan larut. Begitulah cara tim tetap tangguh.",
+        body: "Sekali setiap kuartal, sebelum membahas rencana ke depan, tambahkan satu pertanyaan di rapat tim: \"Apa yang sudah hilang dari tim ini, baik orang, semangat atau impian, yang belum kita akui?\" Simpan daftar tertulis yang bisa dilihat semua orang. Menyebut kehilangan membuat tim tetap tangguh, dan itu berbeda dengan larut dalam kesedihan.",
       },
       {
         label: "Inventaris kehilangan pribadi",
-        body: "Sebagai pemimpin, secara rutin tanyakan kepada anggota tim Anda secara individual: \"Bagaimana Anda merasakan beban transisi ini saat ini?\" Bukan 'apa kabar?' (yang mendapat jawaban sosial) tetapi undangan yang spesifik dan jujur. Pekerja lintas budaya sering membawa kehilangan dalam diam karena tidak ada yang pernah bertanya. Pertanyaan Anda mengubahnya.",
+        body: "Sebagai pemimpin, tanyakan kepada anggota timmu satu per satu, dan sering: \"Bagaimana beban transisi ini terasa buatmu sekarang?\" 'Apa kabar?' hanya mendapat jawaban basa-basi. Pertanyaan yang spesifik dan jujur mendapat jawaban yang sebenarnya. Pekerja lintas budaya sering memikul kehilangan dalam diam karena tidak ada yang bertanya. Pertanyaanmu mengubah itu.",
       },
     ],
   },
@@ -263,33 +276,33 @@ const HEALTH_CHECKS: {
 }[] = [
   {
     id: "hc1",
-    en: "When a colleague shares something difficult, my first instinct is to listen — not to fix or advise.",
-    id_lang: "Ketika seorang kolega berbagi sesuatu yang sulit, insting pertama saya adalah mendengarkan — bukan memperbaiki atau memberi saran.",
+    en: "When a colleague shares something difficult, my first instinct is to listen, not to fix or advise.",
+    id_lang: "Ketika seorang kolega berbagi sesuatu yang sulit, naluri pertama saya adalah mendengarkan, bukan memperbaiki atau memberi saran.",
   },
   {
     id: "hc2",
-    en: "I notice early signals that something is off in a relationship — before it becomes a visible problem.",
-    id_lang: "Saya memperhatikan sinyal awal bahwa ada sesuatu yang tidak beres dalam suatu hubungan — sebelum menjadi masalah yang terlihat.",
+    en: "I notice early signals that something is off in a relationship, before it becomes a visible problem.",
+    id_lang: "Saya memperhatikan sinyal awal bahwa ada yang tidak beres dalam suatu hubungan, sebelum menjadi masalah yang terlihat.",
   },
   {
     id: "hc3",
     en: "I feel free to name tension or awkwardness directly with the people I work with.",
-    id_lang: "Saya merasa bebas untuk menyebut ketegangan atau kecanggungan secara langsung dengan orang-orang yang saya ajak bekerja.",
+    id_lang: "Saya merasa bebas untuk menyebut ketegangan atau kecanggungan secara langsung dengan orang-orang yang bekerja bersama saya.",
   },
   {
     id: "hc4",
-    en: "My team has language for grief and loss — not just for tasks and plans.",
-    id_lang: "Tim saya memiliki bahasa untuk duka dan kehilangan — bukan hanya untuk tugas dan rencana.",
+    en: "My team has language for grief and loss, not just for tasks and plans.",
+    id_lang: "Tim saya punya bahasa untuk duka dan kehilangan, bukan hanya untuk tugas dan rencana.",
   },
   {
     id: "hc5",
     en: "When I reflect on the goodbyes and transitions of the past year, I feel they were adequately acknowledged.",
-    id_lang: "Ketika saya merenungkan perpisahan dan transisi tahun lalu, saya merasa semuanya cukup diakui.",
+    id_lang: "Ketika saya merenungkan perpisahan dan transisi setahun terakhir, saya merasa semuanya sudah cukup diakui.",
   },
   {
     id: "hc6",
     en: "The relationships on my team feel strong enough to survive a real disagreement.",
-    id_lang: "Hubungan dalam tim saya terasa cukup kuat untuk bertahan dari ketidaksetujuan yang nyata.",
+    id_lang: "Hubungan dalam tim saya terasa cukup kuat untuk bertahan dari perbedaan pendapat yang nyata.",
   },
 ];
 
@@ -329,10 +342,18 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
   // --- BRAND TOKENS ----------------------------------------------------------
   const navy = "oklch(22% 0.10 260)";
   const orange = "oklch(65% 0.15 45)";
-  const offWhite = "oklch(97% 0.005 80)";
-  const lightGray = "oklch(95% 0.008 80)";
+  const offWhite = "oklch(96% 0.005 80)";
+  const lightGray = "oklch(88% 0.008 80)";
   const bodyText = "oklch(38% 0.05 260)";
   const serif = "var(--font-cormorant, Cormorant Garamond, Georgia, serif)";
+  const eyebrow: React.CSSProperties = {
+    fontFamily: "Montserrat, sans-serif",
+    color: orange,
+    fontSize: "0.75rem",
+    fontWeight: 700,
+    letterSpacing: "0.12em",
+    textTransform: "uppercase",
+  };
 
   const verseData = activeVerse ? VERSES[activeVerse as keyof typeof VERSES] : null;
 
@@ -366,21 +387,28 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
       {/* -- Language Bar --------------------------------------------------- */}
 
       {/* -- Hero ----------------------------------------------------------- */}
-      <div style={{ background: navy, padding: "88px 24px 80px" }}>
-        <div style={{ maxWidth: 760, margin: "0 auto" }}>
-          <p
-            style={{
-              color: orange,
-              fontSize: 12,
-              fontWeight: 700,
-              letterSpacing: "0.12em",
-              textTransform: "uppercase",
-              marginBottom: 20,
-            }}
-          >
-            {t(
-              "Team & Facilitation — Personal Development",
-            )}
+      <section style={{ background: navy, padding: "88px 24px 80px", position: "relative", overflow: "hidden" }}>
+        <img
+          src="/images/resources/relational-longevity/hero.jpg"
+          alt=""
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            opacity: 0.22,
+            mixBlendMode: "luminosity",
+            pointerEvents: "none",
+          }}
+          onError={(e) => {
+            e.currentTarget.style.display = "none";
+          }}
+        />
+        <div style={{ maxWidth: 860, margin: "0 auto", position: "relative" }}>
+          <p style={{ ...eyebrow, marginBottom: 20 }}>
+            {t("Team & Facilitation", "Tim & Fasilitasi")}
           </p>
 
           {/* Striking stat */}
@@ -404,18 +432,18 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
                 lineHeight: 1.5,
               }}
             >
-              {t(
-                "The leading cause of leaving the field isn't hardship. It's broken relationships.",
+              {withSup(
+                t(
+                  "Most early departures from the field are preventable.¹ Team relationships are a big part of the story.²",
+                  "Sebagian besar kepergian dini dari lapangan sebenarnya bisa dicegah.¹ Hubungan dalam tim adalah bagian besar dari ceritanya.²"
+                )
               )}
             </p>
           </div>
 
-          <p style={{ color: orange, fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
-            {t("Team & Facilitation — Guide", "Tim & Fasilitasi — Panduan", "Team & Facilitatie — Gids")}
-          </p>
           <h1
             style={{
-              fontFamily: "Cormorant Garamond, serif",
+              fontFamily: serif,
               fontSize: "clamp(40px, 6vw, 72px)",
               fontWeight: 600,
               color: offWhite,
@@ -423,7 +451,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
               lineHeight: 1.08,
             }}
           >
-            {t("Relational Longevity", "Kelanggengan Relasional", "Relationele Longeviteit")}
+            {t("Relational Longevity", "Kelanggengan Relasional")}
           </h1>
 
           <p
@@ -437,8 +465,11 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
               fontStyle: "italic",
             }}
           >
-            {t(
-              "Why relational breakdown is the #1 reason cross-cultural workers leave the field prematurely — and three skills that build the interpersonal resilience to stay.",
+            {withSup(
+              t(
+                "Broken team relationships are one of the main preventable reasons cross-cultural workers leave the field early.²³ Here are three skills that help people stay.",
+                "Hubungan tim yang rusak adalah salah satu alasan utama yang bisa dicegah mengapa pekerja lintas budaya meninggalkan lapangan lebih awal.²³ Berikut tiga keterampilan yang membantu orang bertahan."
+              )
             )}
           </p>
 
@@ -462,39 +493,58 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
             >
               {t(
                 "Think of the last person who left your team or organisation earlier than expected. What was the real reason?",
+                "Pikirkan orang terakhir yang meninggalkan tim atau organisasimu lebih cepat dari yang diharapkan. Apa alasan sebenarnya?"
               )}
             </p>
           </div>
 
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
             <button
+              type="button"
               onClick={handleSave}
               disabled={saved || isPending}
+              aria-pressed={saved}
+              aria-label={
+                saved
+                  ? t("Saved to your dashboard", "Tersimpan di dasbor kamu")
+                  : t("Save this module to your dashboard", "Simpan modul ini ke dasbor kamu")
+              }
               style={{
-                padding: "12px 28px",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 10,
+                minHeight: 44,
+                padding: "10px 24px",
                 border: "none",
-                cursor: saved ? "default" : "pointer",
+                borderRadius: 4,
+                background: saved ? "oklch(35% 0.05 260)" : orange,
+                color: offWhite,
                 fontFamily: "Montserrat, sans-serif",
                 fontSize: 13,
                 fontWeight: 700,
-                background: saved ? "oklch(35% 0.05 260)" : orange,
-                color: offWhite,
-                borderRadius: 4,
+                cursor: saved ? "default" : "pointer",
               }}
             >
-              {saved
-                ? t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard")
-                : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
+              <svg viewBox="0 0 24 24" width={18} height={18} aria-hidden="true">
+                <path
+                  d="M6 3h12v18l-6-4.5L6 21z"
+                  fill={saved ? "currentColor" : "none"}
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinejoin="round"
+                />
+              </svg>
+              <span>{saved ? t("Saved to Dashboard", "Tersimpan di Dasbor") : t("Save to Dashboard", "Simpan ke Dasbor")}</span>
             </button>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* -- Context Bar ----------------------------------------------------- */}
       <div style={{ background: "oklch(28% 0.09 260)", padding: "32px 24px" }}>
         <div
           style={{
-            maxWidth: 760,
+            maxWidth: 860,
             margin: "0 auto",
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
@@ -504,18 +554,18 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
           {[
             {
               stat: "71%",
-              en: "of cross-cultural workers who leave prematurely cite relational breakdown as the primary factor",
-              id: "pekerja lintas budaya yang pergi terlalu dini menyebut kerusakan relasional sebagai faktor utama",
+              en: "of attrition is preventable, according to the ReMAP II study¹",
+              id: "kepergian dari lapangan sebenarnya bisa dicegah, menurut studi ReMAP II¹",
             },
             {
               stat: "SYIS",
-              en: "Sharpening Your Interpersonal Skills — the curriculum behind this module",
-              id: "Mengasah Keterampilan Interpersonal Anda — kurikulum di balik modul ini",
+              en: "Sharpening Your Interpersonal Skills: the curriculum behind this module",
+              id: "Mengasah Keterampilan Interpersonal: kurikulum di balik modul ini",
             },
             {
               stat: "3",
-              en: "core skills that research identifies as most protective of long-term team health",
-              id: "keterampilan inti yang diidentifikasi penelitian sebagai paling melindungi kesehatan tim jangka panjang",
+              en: "skills this module practises: listening, handling conflict and grieving loss together",
+              id: "keterampilan yang dilatih modul ini: mendengarkan, menangani konflik dan berduka bersama",
             },
           ].map((item, i) => (
             <div key={i}>
@@ -539,7 +589,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
                   margin: 0,
                 }}
               >
-                {lang === "en" ? item.en : lang === "id" ? item.id : item.id}
+                {withSup(lang === "en" ? item.en : item.id)}
               </p>
             </div>
           ))}
@@ -548,18 +598,8 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
 
       {/* -- Three Skills Accordion ------------------------------------------ */}
       <div style={{ padding: "80px 24px", maxWidth: 860, margin: "0 auto" }}>
-        <p
-          style={{
-            color: orange,
-            fontSize: 12,
-            fontWeight: 700,
-            letterSpacing: "0.12em",
-            textTransform: "uppercase",
-            marginBottom: 12,
-            textAlign: "center",
-          }}
-        >
-          {t("Three Relational Skills", "Tiga Keterampilan Relasional", "Drie Relationele Vaardigheden")}
+        <p style={{ ...eyebrow, marginBottom: 12, textAlign: "center" }}>
+          {t("Three Relational Skills", "Tiga Keterampilan Relasional")}
         </p>
         <h2
           style={{
@@ -571,7 +611,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
             textAlign: "center",
           }}
         >
-          {t("Build the skills that keep teams together", "Bangun keterampilan yang menjaga tim tetap bersatu", "Bouw de vaardigheden die teams bijeenhouden")}
+          {t("Build the skills that keep teams together", "Bangun keterampilan yang menjaga tim tetap bersatu")}
         </h2>
         <p
           style={{
@@ -584,21 +624,16 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
           }}
         >
           {t(
-            "Each section is scenario-based. Read the situation, then explore the contrast between the typical response and the skilled one.",
+            "Each section is scenario-based. Read the situation, then compare the typical response with the skilled one.",
+            "Setiap bagian berbasis skenario. Baca situasinya, lalu lihat perbedaan antara respons yang biasa dan respons yang terampil."
           )}
         </p>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-          {SKILLS.map((skill) => {
+          {SKILLS.map((skill, skillIdx) => {
             const isOpen = openSkill === skill.key;
-            const label =
-              lang === "en" ? skill.en_label : lang === "id" ? skill.id_label : skill.id_label;
-            const subtitle =
-              lang === "en"
-                ? skill.en_subtitle
-                : lang === "id"
-                ? skill.id_subtitle
-                : skill.id_subtitle;
+            const label = lang === "en" ? skill.en_label : skill.id_label;
+            const subtitle = lang === "en" ? skill.en_subtitle : skill.id_subtitle;
 
             return (
               <div
@@ -612,6 +647,8 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
               >
                 {/* Accordion header */}
                 <button
+                  type="button"
+                  aria-expanded={isOpen}
                   onClick={() => setOpenSkill(isOpen ? null : skill.key)}
                   style={{
                     width: "100%",
@@ -626,7 +663,26 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
                     transition: "background 0.2s",
                   }}
                 >
-                  <span style={{ fontSize: 24, flexShrink: 0 }}>{skill.icon}</span>
+                  <span
+                    aria-hidden="true"
+                    style={{
+                      width: 36,
+                      height: 36,
+                      flexShrink: 0,
+                      borderRadius: "50%",
+                      border: `2px solid ${skill.accentColor}`,
+                      color: skill.accentColor,
+                      display: "inline-flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontFamily: serif,
+                      fontWeight: 700,
+                      fontSize: 20,
+                      lineHeight: 1,
+                    }}
+                  >
+                    {skillIdx + 1}
+                  </span>
                   <div style={{ flex: 1 }}>
                     <div
                       style={{
@@ -649,10 +705,13 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
                       flexShrink: 0,
                       transition: "transform 0.2s",
                       transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
-                      display: "inline-block",
+                      display: "inline-flex",
                     }}
+                    aria-hidden="true"
                   >
-                    ?
+                    <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
                   </span>
                 </button>
 
@@ -670,11 +729,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
                         borderTop: `2px solid ${skill.accentBg}`,
                       }}
                     >
-                      {lang === "en"
-                        ? skill.en_intro
-                        : lang === "id"
-                        ? skill.id_intro
-                        : skill.id_intro}
+                      {withSup(lang === "en" ? skill.en_intro : skill.id_intro)}
                     </p>
 
                     {/* Scenario */}
@@ -697,11 +752,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
                           marginBottom: 10,
                         }}
                       >
-                        {lang === "en"
-                          ? skill.en_scenario_heading
-                          : lang === "id"
-                          ? skill.id_scenario_heading
-                          : skill.id_scenario_heading}
+                        {lang === "en" ? skill.en_scenario_heading : skill.id_scenario_heading}
                       </p>
                       <p
                         style={{
@@ -713,11 +764,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
                           margin: 0,
                         }}
                       >
-                        {lang === "en"
-                          ? skill.en_scenario
-                          : lang === "id"
-                          ? skill.id_scenario
-                          : skill.id_scenario}
+                        {lang === "en" ? skill.en_scenario : skill.id_scenario}
                       </p>
                     </div>
 
@@ -725,7 +772,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
                     <div
                       style={{
                         display: "grid",
-                        gridTemplateColumns: "1fr 1fr",
+                        gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
                         gap: 16,
                         marginBottom: 32,
                       }}
@@ -750,11 +797,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
                             marginBottom: 10,
                           }}
                         >
-                          {lang === "en"
-                            ? skill.en_typical_label
-                            : lang === "id"
-                            ? skill.id_typical_label
-                            : skill.id_typical_label}
+                          {lang === "en" ? skill.en_typical_label : skill.id_typical_label}
                         </p>
                         <p
                           style={{
@@ -764,11 +807,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
                             margin: 0,
                           }}
                         >
-                          {lang === "en"
-                            ? skill.en_typical
-                            : lang === "id"
-                            ? skill.id_typical
-                            : skill.id_typical}
+                          {withSup(lang === "en" ? skill.en_typical : skill.id_typical)}
                         </p>
                       </div>
 
@@ -792,11 +831,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
                             marginBottom: 10,
                           }}
                         >
-                          {lang === "en"
-                            ? skill.en_better_label
-                            : lang === "id"
-                            ? skill.id_better_label
-                            : skill.id_better_label}
+                          {lang === "en" ? skill.en_better_label : skill.id_better_label}
                         </p>
                         <p
                           style={{
@@ -806,11 +841,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
                             margin: 0,
                           }}
                         >
-                          {lang === "en"
-                            ? skill.en_better
-                            : lang === "id"
-                            ? skill.id_better
-                            : skill.id_better}
+                          {withSup(lang === "en" ? skill.en_better : skill.id_better)}
                         </p>
                       </div>
                     </div>
@@ -827,19 +858,10 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
                           letterSpacing: "0.04em",
                         }}
                       >
-                        {lang === "en"
-                          ? skill.en_technique_heading
-                          : lang === "id"
-                          ? skill.id_technique_heading
-                          : skill.id_technique_heading}
+                        {lang === "en" ? skill.en_technique_heading : skill.id_technique_heading}
                       </p>
                       <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                        {(lang === "en"
-                          ? skill.en_technique_steps
-                          : lang === "id"
-                          ? skill.id_technique_steps
-                          : skill.id_technique_steps
-                        ).map((step, idx) => (
+                        {(lang === "en" ? skill.en_technique_steps : skill.id_technique_steps).map((step, idx) => (
                           <div
                             key={idx}
                             style={{
@@ -887,7 +909,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
                                   margin: 0,
                                 }}
                               >
-                                {step.body}
+                                {withSup(step.body)}
                               </p>
                             </div>
                           </div>
@@ -904,19 +926,9 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
 
       {/* -- Relational Health Check ----------------------------------------- */}
       <div style={{ background: lightGray, padding: "80px 24px" }}>
-        <div style={{ maxWidth: 720, margin: "0 auto" }}>
-          <p
-            style={{
-              color: orange,
-              fontSize: 12,
-              fontWeight: 700,
-              letterSpacing: "0.12em",
-              textTransform: "uppercase",
-              marginBottom: 12,
-              textAlign: "center",
-            }}
-          >
-            {t("Reflection", "Refleksi", "Reflectie")}
+        <div style={{ maxWidth: 860, margin: "0 auto" }}>
+          <p style={{ ...eyebrow, marginBottom: 12, textAlign: "center" }}>
+            {t("Reflection", "Refleksi")}
           </p>
           <h2
             style={{
@@ -928,7 +940,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
               textAlign: "center",
             }}
           >
-            {t("Relational Health Check", "Pemeriksaan Kesehatan Relasional", "Relationele Gezondheidscheck")}
+            {t("Relational Health Check", "Pemeriksaan Kesehatan Relasional")}
           </h2>
           <p
             style={{
@@ -942,7 +954,8 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
             }}
           >
             {t(
-              "These six statements are not a scored quiz. They are honest prompts — sit with each one and notice what surfaces.",
+              "These six statements are honest prompts, with no score at the end. Sit with each one and notice what comes up.",
+              "Enam pernyataan ini adalah ajakan untuk jujur, tanpa skor di akhir. Renungkan satu per satu dan perhatikan apa yang muncul."
             )}
           </p>
 
@@ -952,6 +965,8 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
               return (
                 <button
                   key={item.id}
+                  type="button"
+                  aria-pressed={isChecked}
                   onClick={() => toggleCheck(item.id)}
                   style={{
                     background: isChecked ? "oklch(65% 0.15 45 / 0.08)" : offWhite,
@@ -987,6 +1002,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
                         height="9"
                         viewBox="0 0 12 9"
                         fill="none"
+                        aria-hidden="true"
                         style={{ display: "block" }}
                       >
                         <path
@@ -1023,7 +1039,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
                         fontWeight: isChecked ? 600 : 400,
                       }}
                     >
-                      {lang === "en" ? item.en : lang === "id" ? item.id_lang : item.id}
+                      {lang === "en" ? item.en : item.id_lang}
                     </p>
                   </div>
                 </button>
@@ -1054,14 +1070,17 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
               >
                 {checkedItems.size >= 5
                   ? t(
-                      "These are genuine strengths. The challenge now is to protect them — especially under pressure, in busy seasons, and when the team is losing people.",
+                      "These are real strengths. The challenge now is to protect them under pressure, in busy seasons and when the team is losing people.",
+                      "Ini adalah kekuatan yang nyata. Tantangannya sekarang adalah menjaganya saat tertekan, di musim sibuk dan ketika tim kehilangan orang."
                     )
                   : checkedItems.size >= 3
                   ? t(
-                      "You have a foundation to build on. The statements you didn't check are the most important ones to sit with. What would need to shift for those to become true?",
+                      "You have a foundation to build on. The statements you didn't check are the ones to sit with. What would need to shift for them to become true?",
+                      "Kamu punya fondasi untuk dibangun. Pernyataan yang tidak kamu centang adalah yang paling perlu direnungkan. Apa yang perlu berubah supaya pernyataan itu menjadi benar?"
                     )
                   : t(
-                      "Honesty is the starting point. These gaps are not failures — they are the exact places where the three skills in this module do their work.",
+                      "Honesty is the starting point. These gaps are exactly where the three skills in this module do their work.",
+                      "Kejujuran adalah titik awal. Celah-celah ini justru tempat tiga keterampilan dalam modul ini bekerja."
                     )}
               </p>
             </div>
@@ -1070,19 +1089,10 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
       </div>
 
       {/* -- Biblical Foundation --------------------------------------------- */}
-      <div style={{ background: navy, padding: "80px 24px" }}>
-        <div style={{ maxWidth: 720, margin: "0 auto" }}>
-          <p
-            style={{
-              color: orange,
-              fontSize: 12,
-              fontWeight: 700,
-              letterSpacing: "0.12em",
-              textTransform: "uppercase",
-              marginBottom: 20,
-            }}
-          >
-            {t("Biblical Foundation", "Dasar Alkitab", "Bijbelse Basis")}
+      <section style={{ background: navy, padding: "80px 24px" }}>
+        <div style={{ maxWidth: 860, margin: "0 auto" }}>
+          <p style={{ ...eyebrow, marginBottom: 20 }}>
+            {t("Biblical Foundation", "Dasar Alkitab")}
           </p>
           <h2
             style={{
@@ -1094,11 +1104,12 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
             }}
           >
             {t(
-              "Even the best relationships fracture — and God still works",
+              "Even the best relationships can break, and God still works",
+              "Hubungan terbaik pun bisa retak, dan Allah tetap bekerja"
             )}
           </h2>
 
-          {/* Verse 1 — Colossians 3:14 */}
+          {/* Verse 1: Colossians 3:14 */}
           <div style={{ marginBottom: 52 }}>
             <p
               style={{
@@ -1111,11 +1122,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
               }}
             >
               <VerseRef id="col-3-14">
-                {lang === "en"
-                  ? VERSES["col-3-14"].en_ref
-                  : lang === "id"
-                  ? VERSES["col-3-14"].id_ref
-                  : VERSES["col-3-14"].id_ref}
+                {lang === "en" ? VERSES["col-3-14"].en_ref : VERSES["col-3-14"].id_ref}
               </VerseRef>
             </p>
             <p
@@ -1128,13 +1135,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
                 marginBottom: 24,
               }}
             >
-              "
-              {lang === "en"
-                ? VERSES["col-3-14"].en
-                : lang === "id"
-                ? VERSES["col-3-14"].id
-                : VERSES["col-3-14"].id}
-              "
+              &ldquo;{lang === "en" ? VERSES["col-3-14"].en : VERSES["col-3-14"].id}&rdquo;
             </p>
             <p
               style={{
@@ -1144,12 +1145,13 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
               }}
             >
               {t(
-                "Paul's letter to the Colossians lists the garments of a healthy community — compassion, kindness, humility, gentleness, patience, forbearance, forgiveness. But notice the structure: love is not one item on the list. It is what binds all the others together. Without love, the other virtues remain isolated skills — good in theory, brittle in practice. The relational longevity that keeps cross-cultural teams together is not primarily a set of communication techniques. It is love expressed through them. The SYIS skills in this module — listening, navigating conflict, processing loss — are love made concrete.",
+                "Paul's letter to the Colossians lists the clothing of a healthy community: compassion, kindness, humility, gentleness, patience, forbearance and forgiveness. Look at the structure. Love is not just one more item on the list. It is what binds all the others together. Without love, the other virtues stay isolated skills, good in theory and brittle in practice. Communication techniques alone do not keep cross-cultural teams together. Love expressed through them does. The three skills in this module (listening, handling conflict and processing loss) are love made concrete.",
+                "Surat Paulus kepada jemaat di Kolose menyebut 'pakaian' sebuah komunitas yang sehat: belas kasihan, kemurahan, kerendahan hati, kelemahlembutan, kesabaran, saling sabar dan saling mengampuni. Perhatikan susunannya. Kasih bukan sekadar satu butir lagi dalam daftar. Kasihlah yang mengikat semuanya. Tanpa kasih, kebajikan lain hanya menjadi keterampilan yang terpisah, bagus dalam teori tetapi rapuh dalam praktik. Teknik komunikasi saja tidak cukup untuk menjaga tim lintas budaya tetap bersatu. Kasih yang dinyatakan melalui teknik itulah yang menjaganya. Tiga keterampilan dalam modul ini (mendengarkan, menangani konflik dan mengolah kehilangan) adalah kasih yang diwujudkan."
               )}
             </p>
           </div>
 
-          {/* Verse 2 — Acts 15:39 */}
+          {/* Verse 2: Acts 15:39 */}
           <div
             style={{
               borderTop: "1px solid oklch(35% 0.06 260)",
@@ -1167,11 +1169,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
               }}
             >
               <VerseRef id="acts-15-39">
-                {lang === "en"
-                  ? VERSES["acts-15-39"].en_ref
-                  : lang === "id"
-                  ? VERSES["acts-15-39"].id_ref
-                  : VERSES["acts-15-39"].id_ref}
+                {lang === "en" ? VERSES["acts-15-39"].en_ref : VERSES["acts-15-39"].id_ref}
               </VerseRef>
             </p>
             <p
@@ -1184,13 +1182,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
                 marginBottom: 24,
               }}
             >
-              "
-              {lang === "en"
-                ? VERSES["acts-15-39"].en
-                : lang === "id"
-                ? VERSES["acts-15-39"].id
-                : VERSES["acts-15-39"].id}
-              "
+              &ldquo;{lang === "en" ? VERSES["acts-15-39"].en : VERSES["acts-15-39"].id}&rdquo;
             </p>
             <p
               style={{
@@ -1200,8 +1192,11 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
                 marginBottom: 20,
               }}
             >
-              {t(
-                "This verse doesn't have a happy ending tied up neatly. Paul and Barnabas — two of the most effective cross-cultural missionaries in history, the very team that launched the first Gentile church at Antioch — had a conflict so sharp that they separated permanently. The Bible does not minimise this. It reports it plainly. And what follows is not a story of failure: both Paul and Barnabas continued their mission, each with a different team. God did not require the relationship to be preserved for the mission to continue.",
+              {withSup(
+                t(
+                  "This verse has no neat happy ending. Paul and Barnabas had been sent out together by the church in Antioch and had planted churches across Galatia. Then they had a disagreement so sharp (the Greek word is paroxysmos) that they parted ways.⁸ The Bible does not play this down. It reports it plainly. Both men kept serving, each with a new partner. And the story did not end there. Paul later names Barnabas as a fellow worker (1 Corinthians 9:6) and asks for Mark, calling him useful for ministry (2 Timothy 4:11), which suggests the relationships were eventually restored.⁸",
+                  "Ayat ini tidak punya akhir bahagia yang rapi. Paulus dan Barnabas diutus bersama oleh jemaat di Antiokhia dan telah mendirikan jemaat-jemaat di Galatia. Lalu mereka berselisih begitu tajam (kata Yunaninya paroxysmos) sehingga mereka berpisah.⁸ Alkitab tidak mengecilkan hal ini. Alkitab mencatatnya apa adanya. Keduanya tetap melayani, masing-masing dengan rekan baru. Dan ceritanya tidak berhenti di situ. Paulus kemudian menyebut Barnabas sebagai rekan sepelayanan (1 Korintus 9:6) dan meminta Markus datang karena pelayanannya berguna (2 Timotius 4:11). Ini menunjukkan bahwa hubungan mereka akhirnya dipulihkan.⁸"
+                )
               )}
             </p>
             <p
@@ -1212,75 +1207,185 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
               }}
             >
               {t(
-                "What this means for you: relational longevity is worth fighting for — and the three skills in this module are how you fight for it. But relational longevity is not the same as relational perfection. Some relationships will fracture despite your best efforts. The measure of your relational health is not whether all your relationships have survived intact. It is whether you brought love, honesty, and humility to them — and whether you keep doing so.",
+                "What this means for you: relational longevity is worth fighting for, and the three skills in this module are how you fight for it. Still, longevity is different from perfection. Some relationships will break despite your best efforts. Your relational health is measured by whether you brought love, honesty and humility to each relationship, and whether you keep doing so, more than by whether every one survived intact.",
+                "Artinya bagimu: kelanggengan relasional layak diperjuangkan, dan tiga keterampilan dalam modul ini adalah cara memperjuangkannya. Namun langgeng tidak sama dengan sempurna. Sebagian hubungan akan retak meskipun kamu sudah berusaha sebaik mungkin. Kesehatan relasionalmu tidak diukur dari apakah semua hubungan bertahan utuh, tetapi dari apakah kamu membawa kasih, kejujuran dan kerendahan hati ke dalamnya, dan terus melakukannya."
               )}
             </p>
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* -- Key Takeaways ---------------------------------------------------- */}
+      <section style={{ background: lightGray, padding: "96px 24px" }}>
+        <div style={{ maxWidth: 860, margin: "0 auto" }}>
+          <p style={{ ...eyebrow, marginBottom: 12, textAlign: "center" }}>
+            {t("Key Takeaways", "Poin Utama")}
+          </p>
+          <h2
+            style={{
+              fontFamily: serif,
+              fontSize: "clamp(28px, 3.5vw, 42px)",
+              fontWeight: 700,
+              color: navy,
+              fontStyle: "italic",
+              lineHeight: 1.2,
+              marginBottom: 48,
+              textAlign: "center",
+            }}
+          >
+            {t("What to Carry Forward", "Yang Perlu Dibawa")}
+          </h2>
+          <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+            {[
+              {
+                en: "Broken team relationships are one of the main preventable reasons people leave the field early. Investing in them is investing in staying power.",
+                id: "Hubungan tim yang rusak adalah salah satu alasan utama yang bisa dicegah mengapa orang meninggalkan lapangan lebih awal. Merawatnya berarti membantu orang bertahan.",
+              },
+              {
+                en: "Listen before you fix. Reflect, ask one open question, then wait.",
+                id: "Dengarkan sebelum memperbaiki. Refleksikan, ajukan satu pertanyaan terbuka, lalu tunggu.",
+              },
+              {
+                en: "Silence and withdrawal are often signals. Name the pattern privately and gently, before tension hardens or erupts.",
+                id: "Diam dan menarik diri sering kali adalah sinyal. Sebutkan polanya secara pribadi dan lembut, sebelum ketegangan mengeras atau meledak.",
+              },
+              {
+                en: "Resolution may not look like open agreement. In many cultures a trusted go-between is the right path.",
+                id: "Resolusi belum tentu berupa kesepakatan terbuka. Dalam banyak budaya, perantara yang dipercaya adalah jalan yang tepat.",
+              },
+              {
+                en: "Name loss out loud. Goodbye rituals and regular grief checks keep unspoken loss from piling up.",
+                id: "Sebutkan kehilangan dengan terbuka. Ritual perpisahan dan pemeriksaan duka rutin menjaga agar kehilangan yang tak terucap tidak menumpuk.",
+              },
+            ].map((item, i) => (
+              <div
+                key={i}
+                style={{
+                  background: "white",
+                  borderRadius: 10,
+                  padding: "24px 28px",
+                  borderLeft: `4px solid ${orange}`,
+                  display: "flex",
+                  gap: 20,
+                  alignItems: "flex-start",
+                }}
+              >
+                <span
+                  aria-hidden="true"
+                  style={{
+                    fontFamily: serif,
+                    fontSize: "clamp(28px, 3vw, 36px)",
+                    fontWeight: 700,
+                    color: orange,
+                    lineHeight: 1,
+                    minWidth: 32,
+                    flexShrink: 0,
+                  }}
+                >
+                  {i + 1}
+                </span>
+                <p
+                  style={{
+                    fontFamily: serif,
+                    fontSize: "clamp(15px, 1.7vw, 17px)",
+                    color: bodyText,
+                    lineHeight: 1.85,
+                    margin: 0,
+                  }}
+                >
+                  {lang === "en" ? item.en : item.id}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* -- Sources ---------------------------------------------------------- */}
+      <SourcesDropdown
+        lang={lang}
+        background={offWhite}
+        sources={[
+          "Propempo International. \"The Truth About Missionary Attrition.\" Cites the ReMAP II finding that 71% of attrition is preventable, with peer conflict among the preventable causes. https://propempo.com/community/propempo-blog/the-truth-about-missionary-attrition2/",
+          "A Life Overseas. \"New data confirms that team conflict is one of the primary factors in missionary attrition.\" Survey of 221 agencies: team conflict ranks among the top five preventable factors. https://www.alifeoverseas.com/new-data-confirms-that-team-conflict-is-one-of-the-primary-factors-in-missionary-attrition/",
+          "World Evangelical Alliance Missions Commission. US Report of Findings on Missionary Retention (December 2003). Problems with peers rank fifth overall and third among preventable causes. https://www.worldevangelicals.org/resources/rfiles/res3_95_link_1292358708.pdf",
+          "Grothe, T. \"Intercultural Conflict Management\" (8.2), in Exploring Intercultural Communication. LibreTexts. Mindful listening as a core intercultural conflict skill. https://socialsci.libretexts.org/Courses/Butte_College/Exploring_Intercultural_Communication_(Grothe)/08:_Intercultural_Conflict/8.02:_Intercultural_Conflict_Management",
+          "Ting-Toomey, S. Face-Negotiation Theory (1985/1988). Face concerns, indirect approaches and third-party mediation in high-context cultures. Summary: https://en.wikipedia.org/wiki/Face_negotiation_theory",
+          "\"Exploring Intercultural Communication in Indonesia: Cultural Values, Challenges, and Strategies.\" ResearchGate. On rukun, malu and indirect expression. https://www.researchgate.net/publication/371709788_Exploring_Intercultural_Communication_in_Indonesia_Cultural_Values_Challenges_and_Strategies",
+          "A Life Overseas. \"What Missionaries Need Today: 2023 FieldPartner Survey Results.\" Only 14% of returnees had been debriefed; conflict resolution is a top unmet training need. https://www.alifeoverseas.com/what-missionaries-need-today-a-summary-of-the-2023-fieldpartner-survey-results/",
+          "ReadingActs. \"Acts 15:36-40: Disagreement with Barnabas.\" On paroxysmos, and how later references to Barnabas and Mark suggest restoration. https://readingacts.com/2019/03/03/acts-1536-40-disagreement-with-barnabas-2/",
+        ]}
+      />
 
       {/* -- Footer / Keep Going --------------------------------------------- */}
-      <div style={{ background: lightGray, padding: "80px 24px", textAlign: "center" }}>
-        <h2
-          style={{
-            fontFamily: "Montserrat, sans-serif",
-            fontSize: "clamp(20px, 2.5vw, 28px)",
-            fontWeight: 800,
-            color: navy,
-            marginBottom: 16,
-          }}
-        >
-          {t("Keep Growing", "Terus Bertumbuh", "Blijf Groeien")}
-        </h2>
-        <p
-          style={{
-            fontSize: 15,
-            color: bodyText,
-            lineHeight: 1.75,
-            maxWidth: 520,
-            margin: "0 auto 40px",
-          }}
-        >
-          {t(
-            "The skills that keep teams together take practice. Explore more training modules to deepen your cross-cultural leadership.",
-          )}
-        </p>
-        <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-          <Link
-            href="/resources"
+      <section style={{ background: navy, padding: "80px 24px", textAlign: "center" }}>
+        <div style={{ maxWidth: 860, margin: "0 auto" }}>
+          <h2
             style={{
-              display: "inline-block",
-              padding: "14px 36px",
-              background: navy,
+              fontFamily: "Montserrat, sans-serif",
+              fontSize: "clamp(20px, 2.5vw, 28px)",
+              fontWeight: 800,
               color: offWhite,
-              fontFamily: "Montserrat, sans-serif",
-              fontSize: 14,
-              fontWeight: 700,
-              textDecoration: "none",
-              borderRadius: 4,
+              marginBottom: 16,
             }}
           >
-            {t("Training", "Pelatihan", "Contentbibliotheek")}
-          </Link>
-          <Link
-            href="/resources/conflict-resolution"
+            {t("Keep Growing", "Terus Bertumbuh")}
+          </h2>
+          <p
             style={{
-              display: "inline-block",
-              padding: "14px 36px",
-              background: "transparent",
-              border: `2px solid ${navy}`,
-              color: navy,
-              fontFamily: "Montserrat, sans-serif",
-              fontSize: 14,
-              fontWeight: 700,
-              textDecoration: "none",
-              borderRadius: 4,
+              fontSize: 15,
+              color: "oklch(76% 0.03 80)",
+              lineHeight: 1.75,
+              maxWidth: 520,
+              margin: "0 auto 40px",
             }}
           >
-            {t("Conflict Resolution", "Resolusi Konflik", "Conflictoplossing")}
-          </Link>
+            {t(
+              "The skills that keep teams together take practice. Explore more training modules to deepen your cross-cultural leadership.",
+              "Keterampilan yang menjaga tim tetap bersatu perlu dilatih. Jelajahi modul pelatihan lain untuk memperdalam kepemimpinan lintas budayamu."
+            )}
+          </p>
+          <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
+            <Link
+              href="/resources"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                minHeight: 44,
+                padding: "12px 36px",
+                background: orange,
+                color: offWhite,
+                fontFamily: "Montserrat, sans-serif",
+                fontSize: 14,
+                fontWeight: 700,
+                textDecoration: "none",
+                borderRadius: 4,
+              }}
+            >
+              {t("Training", "Pelatihan")}
+            </Link>
+            <Link
+              href="/resources/conflict-resolution"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                minHeight: 44,
+                padding: "12px 36px",
+                background: "transparent",
+                border: `2px solid ${offWhite}`,
+                color: offWhite,
+                fontFamily: "Montserrat, sans-serif",
+                fontSize: 14,
+                fontWeight: 700,
+                textDecoration: "none",
+                borderRadius: 4,
+              }}
+            >
+              {t("Conflict Resolution", "Resolusi Konflik")}
+            </Link>
+          </div>
         </div>
-      </div>
+      </section>
 
       {/* -- Verse Popup ----------------------------------------------------- */}
       {activeVerse && verseData && (
@@ -1317,13 +1422,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
                 marginBottom: 20,
               }}
             >
-              "
-              {lang === "en"
-                ? verseData.en
-                : lang === "id"
-                ? verseData.id
-                : verseData.id}
-              "
+              &ldquo;{lang === "en" ? verseData.en : verseData.id}&rdquo;
             </p>
             <p
               style={{
@@ -1335,21 +1434,14 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
                 marginBottom: 28,
               }}
             >
-              —{" "}
-              {lang === "en"
-                ? verseData.en_ref
-                : lang === "id"
-                ? verseData.id_ref
-                : verseData.id_ref}{" "}
-              ({lang === "en"
-                ? verseData.en_version
-                : lang === "id"
-                ? verseData.id_version
-                : verseData.id_version})
+              {lang === "en" ? verseData.en_ref : verseData.id_ref}{" "}
+              ({lang === "en" ? verseData.en_version : verseData.id_version})
             </p>
             <button
+              type="button"
               onClick={() => setActiveVerse(null)}
               style={{
+                minHeight: 44,
                 padding: "10px 24px",
                 background: navy,
                 color: offWhite,
@@ -1361,7 +1453,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
                 cursor: "pointer",
               }}
             >
-              {t("Close", "Tutup", "Sluiten")}
+              {t("Close", "Tutup")}
             </button>
           </div>
         </div>
