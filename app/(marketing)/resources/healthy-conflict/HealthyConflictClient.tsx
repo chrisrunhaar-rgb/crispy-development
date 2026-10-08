@@ -555,9 +555,9 @@ const CSS = `
 .hc-reading a{color:var(--navy);font-weight:700;text-decoration:underline;text-decoration-color:var(--amber);text-underline-offset:3px}
 /* visual */
 .hcv{position:relative;container-type:inline-size}
-.hcv img{width:100%;height:auto;display:block;border-radius:8px}
+.hcv img{width:100%;height:auto;display:block;border-radius:0 0 8px 8px}
 .hcv .hcv-k{position:absolute;transform:translate(-50%,-50%);font-family:var(--font-montserrat),Montserrat,sans-serif;font-weight:700;font-size:clamp(10px,2.1cqw,16px);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;color:oklch(45% 0.13 258)}
-.hcv .hcv-o{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:.2em;margin-bottom:-2.6cqw;font-family:var(--font-montserrat),Montserrat,sans-serif;font-weight:700;font-size:clamp(11px,2.3cqw,18px);letter-spacing:.08em;text-transform:uppercase;line-height:1.1;color:oklch(60% 0.17 45)}
+.hcv .hcv-o{position:relative;z-index:1;background:#fefefe;border-radius:8px 8px 0 0;padding-top:1.4em;display:flex;flex-direction:column;align-items:center;gap:.2em;margin-bottom:-2.6cqw;font-family:var(--font-montserrat),Montserrat,sans-serif;font-weight:700;font-size:clamp(11px,2.3cqw,18px);letter-spacing:.08em;text-transform:uppercase;line-height:1.1;color:oklch(60% 0.17 45)}
 .hc-caption{font-size:13px;color:var(--muted);margin-top:10px;line-height:1.6}
 /* contrast */
 .hc-contrast{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--card)}
