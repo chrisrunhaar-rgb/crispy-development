@@ -27,45 +27,6 @@ function Ref({ n }: { n: number }) {
   );
 }
 
-const STORIES = [
-  {
-    titleEn: "The Missed Deadline",
-    titleId: "Batas Waktu yang Terlewat",
-    beforeEn: "\"The client didn't give us clear requirements. That's why we missed the deadline.\"",
-    beforeId: "\"Klien tidak memberikan kami persyaratan yang jelas. Itulah mengapa kami melewatkan batas waktu.\"",
-    shiftEn: "Then we asked: \"What could WE have done differently?\"",
-    shiftId: "Kemudian kami bertanya: \"Apa yang BISA kami lakukan secara berbeda?\"",
-    afterEn: "We owned the communication gap and proposed weekly sync meetings. Next project: on time.",
-    afterId: "Kami mengakui kesenjangan komunikasi dan mengusulkan pertemuan sinkron mingguan. Proyek berikutnya: tepat waktu.",
-    resultEn: "Team learned to clarify scope upfront. Trust increased.",
-    resultId: "Tim belajar memperjelas ruang lingkup di muka. Kepercayaan meningkat.",
-  },
-  {
-    titleEn: "The Team Conflict",
-    titleId: "Konflik Tim",
-    beforeEn: "\"Sarah keeps dismissing my ideas in meetings. I'm not going to contribute anymore.\"",
-    beforeId: "\"Sarah terus menolak ide saya di pertemuan. Saya tidak akan berkontribusi lagi.\"",
-    shiftEn: "Then we asked: \"What conversation do WE need to have?\"",
-    shiftId: "Kemudian kami bertanya: \"Percakapan apa yang PERLU kami miliki?\"",
-    afterEn: "We initiated a 1-on-1 with Sarah to understand her perspective. Turned out there was a misunderstanding.",
-    afterId: "Kami memulai 1-on-1 dengan Sarah untuk memahami perspektifnya. Ternyata ada kesalahpahaman.",
-    resultEn: "Relationship restored. Better collaboration. Team morale improved.",
-    resultId: "Hubungan dipulihkan. Kolaborasi lebih baik. Moral tim meningkat.",
-  },
-  {
-    titleEn: "The Skill Gap",
-    titleId: "Kesenjangan Keterampilan",
-    beforeEn: "\"I don't have the training for this. I can't do it.\"",
-    beforeId: "\"Saya tidak memiliki pelatihan untuk ini. Saya tidak bisa melakukannya.\"",
-    shiftEn: "Then we asked: \"What support do I need to learn this?\"",
-    shiftId: "Kemudian kami bertanya: \"Dukungan apa yang saya butuhkan untuk mempelajari ini?\"",
-    afterEn: "We sought mentorship, took an online course, and practiced. Within 3 months: proficient.",
-    afterId: "Kami mencari bimbingan, mengikuti kursus online, dan berlatih. Dalam 3 bulan: mahir.",
-    resultEn: "Expanded capability. Increased confidence. Career growth.",
-    resultId: "Kemampuan diperluas. Kepercayaan diri meningkat. Pertumbuhan karir.",
-  },
-];
-
 const BIBLICAL_STORIES = [
   {
     ref: "Genesis 3:12",
@@ -664,52 +625,6 @@ export default function AboveBelowClient(_props: {
                 <div style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 40, fontWeight: 600, color: orange, lineHeight: 1, marginBottom: 10 }}>{i + 1}</div>
                 <div style={{ fontSize: 15, fontWeight: 700, color: navy, marginBottom: 8 }}>{t(s.en, s.id, lang)}</div>
                 <p style={{ fontSize: 14, color: bodyText, lineHeight: 1.7, margin: 0 }}>{t(s.dEn, s.dId, lang)}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* REAL STORIES */}
-      <div style={{ background: lightGray, padding: "72px 24px" }}>
-        <div style={{ maxWidth: 900, margin: "0 auto" }}>
-          <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", margin: "0 0 16px" }}>
-            {t("In Practice", "Dalam Praktik", lang)}
-          </p>
-          <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: navy, margin: "0 0 12px" }}>
-            {t("Real Stories", "Kisah Nyata", lang)}
-          </h2>
-          <p style={{ fontSize: 15, color: bodyText, marginBottom: 40, lineHeight: 1.65 }}>
-            {t(
-              "How the shift from below the line to above makes a real difference in teams and leaders.",
-              "Bagaimana pergeseran dari bawah garis ke atas membuat perbedaan nyata dalam tim dan pemimpin.",
-              lang
-            )}
-          </p>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 24 }}>
-            {STORIES.map((story, i) => (
-              <div key={i} style={{ borderRadius: 12, overflow: "hidden", boxShadow: "0 2px 12px oklch(20% 0.06 260 / 0.10)" }}>
-                <div style={{ background: navy, color: offWhite, padding: "24px" }}>
-                  <div style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 22, fontWeight: 600, margin: 0 }}>{t(story.titleEn, story.titleId, lang)}</div>
-                </div>
-                <div style={{ background: "white", padding: "28px" }}>
-                  <div style={{ marginBottom: 20 }}>
-                    <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase" as const, color: "oklch(50% 0.06 260)", marginBottom: 8 }}>↓ {t("Before", "Sebelum", lang)}</div>
-                    <p style={{ fontSize: 14, lineHeight: 1.65, color: bodyText, fontStyle: "italic", margin: 0 }}>{t(story.beforeEn, story.beforeId, lang)}</p>
-                  </div>
-                  <div style={{ marginBottom: 20, paddingLeft: 16, borderLeft: `3px solid ${orange}` }}>
-                    <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase" as const, color: orange, marginBottom: 8 }}>→ {t("The Shift", "Peralihan", lang)}</div>
-                    <p style={{ fontSize: 14, lineHeight: 1.65, color: bodyText, margin: 0 }}>{t(story.shiftEn, story.shiftId, lang)}</p>
-                  </div>
-                  <div style={{ marginBottom: 20 }}>
-                    <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase" as const, color: navy, marginBottom: 8 }}>↑ {t("After", "Sesudah", lang)}</div>
-                    <p style={{ fontSize: 14, lineHeight: 1.65, color: bodyText, margin: 0 }}>{t(story.afterEn, story.afterId, lang)}</p>
-                  </div>
-                  <div style={{ paddingTop: 16, borderTop: "1px solid oklch(90% 0.008 260)" }}>
-                    <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase" as const, color: orange, marginBottom: 8 }}>✓ {t("Outcome", "Hasil", lang)}</div>
-                    <p style={{ fontSize: 14, lineHeight: 1.65, color: navy, fontWeight: 600, margin: 0 }}>{t(story.resultEn, story.resultId, lang)}</p>
-                  </div>
-                </div>
               </div>
             ))}
           </div>
