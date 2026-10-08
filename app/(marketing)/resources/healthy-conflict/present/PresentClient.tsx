@@ -152,10 +152,8 @@ const RULES: { title: Pair; lines: Pair[] }[] = [
 const TAKEAWAYS: Pair[] = [
   { en: "Conflict is when people who depend on each other see their goals, needs or views as opposed.", id: "Konflik adalah ketika orang-orang yang saling bergantung merasa tujuan, kebutuhan, atau pandangan mereka saling bertentangan." },
   { en: "Healthy conflict is conflict faced openly and with respect.", id: "Konflik yang sehat adalah konflik yang dihadapi secara terbuka dan dengan saling menghormati." },
-  { en: "The fear is real, even when the danger is not.", id: "Rasa takutnya nyata, meskipun bahayanya tidak." },
   { en: "Unnamed conflict does not go away. It piles up.", id: "Konflik yang tidak diungkapkan tidak hilang. Konflik itu menumpuk." },
   { en: "The leader creates a safe place and explains the rules before the conversation starts.", id: "Pemimpin menciptakan tempat yang aman dan menjelaskan aturannya sebelum percakapan dimulai." },
-  { en: "Trust is a decision, not a feeling.", id: "Percaya adalah keputusan, bukan perasaan." },
 ];
 
 // ─── Slide building blocks (fixed px on the 1600×900 canvas) ─────────────────
@@ -536,7 +534,7 @@ const SLIDES: Slide[] = [
   },
   {
     key: "takeaways",
-    steps: 6,
+    steps: 4,
     render: (lang, step) => (
       <>
         <div style={stack(14)}>
