@@ -888,12 +888,6 @@ export default function HealthyConflictClient({ isSaved: initialSaved, signupBan
         <div className="hc-wrap">
           <p className="hc-eyebrow">{t("See it", "Lihat gambarnya")}</p>
           <h2>{t("What healthy conflict looks like", "Seperti Apa Konflik yang Sehat")}</h2>
-          <p>
-            {t(
-              "Two people bring a difference into a safe place. They name it and work through it. They leave as one, going forward in the same direction.",
-              "Dua orang membawa perbedaan mereka ke tempat yang aman. Mereka mengungkapkannya dan menyelesaikannya bersama. Mereka keluar sebagai satu kesatuan, melangkah ke arah yang sama.",
-            )}
-          </p>
           <figure style={{ margin: 0 }}>
             <div className="hcv">
               <div className="hcv-o" aria-hidden="true">
@@ -919,21 +913,15 @@ export default function HealthyConflictClient({ isSaved: initialSaved, signupBan
               )}
             </figcaption>
           </figure>
-        </div>
-      </section>
-
-      {/* ── 7. CONTRAST ─────────────────────────────────────────────────────── */}
-      <section className="hc-sec hc-a">
-        <div className="hc-wrap">
-          <p className="hc-eyebrow">{t("Compare", "Bandingkan")}</p>
-          <h2>{t("Avoiding conflict and healthy conflict", "Menghindari Konflik dan Konflik yang Sehat")}</h2>
-          <p>
+          <p style={{ marginTop: 20 }}>
             {t(
-              "The same team can look very different, depending on what it does with conflict.",
-              "Tim yang sama bisa tampak sangat berbeda, tergantung pada apa yang dilakukannya terhadap konflik.",
+              "Both people bring their knot, the conflict, to the table. They do not hide it. In the safe place they talk it through together. One line comes out and goes forward. They leave with unity, clarity and trust.",
+              "Kedua orang membawa simpul mereka, yaitu konflik, ke meja. Mereka tidak menyembunyikannya. Di tempat yang aman, mereka membicarakannya bersama. Satu garis keluar dan bergerak maju. Mereka pulang dengan kesatuan, kejelasan, dan kepercayaan.",
             )}
           </p>
-          <figure style={{ margin: "0 0 28px" }}>
+
+          <h3>{t("What avoiding conflict looks like", "Seperti Apa Menghindari Konflik")}</h3>
+          <figure style={{ margin: 0 }}>
             <img
               src="/images/resources/healthy-conflict/conflict-avoidance.webp"
               alt={t(
@@ -949,6 +937,26 @@ export default function HealthyConflictClient({ isSaved: initialSaved, signupBan
               )}
             </figcaption>
           </figure>
+          <p style={{ marginTop: 20, marginBottom: 0 }}>
+            {t(
+              "The same two people, with the same knots. But now they cross their arms and turn away. Nobody says anything. Each person carries the knot away alone, and the lines pull apart. The conflict is not gone. It is only unspoken, and the distance between them keeps growing.",
+              "Dua orang yang sama, dengan simpul yang sama. Tetapi sekarang mereka bersedekap dan saling membelakangi. Tidak ada yang berbicara. Masing-masing membawa simpulnya sendiri, dan garis mereka saling menjauh. Konfliknya tidak hilang. Konfliknya hanya tidak diucapkan, dan jarak di antara mereka terus bertambah.",
+            )}
+          </p>
+        </div>
+      </section>
+
+      {/* ── 7. CONTRAST ─────────────────────────────────────────────────────── */}
+      <section className="hc-sec hc-a">
+        <div className="hc-wrap">
+          <p className="hc-eyebrow">{t("Compare", "Bandingkan")}</p>
+          <h2>{t("Avoiding conflict and healthy conflict", "Menghindari Konflik dan Konflik yang Sehat")}</h2>
+          <p>
+            {t(
+              "The same team can look very different, depending on what it does with conflict.",
+              "Tim yang sama bisa tampak sangat berbeda, tergantung pada apa yang dilakukannya terhadap konflik.",
+            )}
+          </p>
           <div
             className="hc-contrast"
             role="table"
@@ -1048,8 +1056,43 @@ export default function HealthyConflictClient({ isSaved: initialSaved, signupBan
         </div>
       </section>
 
+      {/* ── 9b. PUT IT INTO PRACTICE ────────────────────────────────────────── */}
+      <section className="hc-sec hc-b" id="mc-practice">
+        <div className="hc-wrap">
+          <p className="hc-eyebrow">{t("Put it into practice", "Terapkan dalam Praktik")}</p>
+          <h2>{t("Make healthy conflict a team habit", "Jadikan Konflik yang Sehat Kebiasaan Tim")}</h2>
+          <p>
+            {t(
+              "Do not wait until a conflict happens. Healthy conflict works best when it is a normal part of how the team works.",
+              "Jangan menunggu sampai konflik terjadi. Konflik yang sehat paling berhasil ketika menjadi bagian biasa dari cara tim bekerja.",
+            )}
+          </p>
+          <h3>{t("Ask the question in every meeting", "Ajukan pertanyaannya di setiap rapat")}</h3>
+          <p>
+            {t(
+              "In every team meeting, ask one question: “Is there a conflict we need to resolve in a healthy way?” Ask it every time, even when you expect the answer to be no.",
+              "Di setiap rapat tim, ajukan satu pertanyaan: “Apakah ada konflik yang perlu kita selesaikan dengan cara yang sehat?” Ajukan setiap kali, bahkan ketika Anda mengira jawabannya tidak ada.",
+            )}
+          </p>
+          <h3>{t("Why the routine matters", "Mengapa rutinitas ini penting")}</h3>
+          <p>
+            {t(
+              "When the question comes every meeting, the door is always open. People know they will have a regular chance to raise something, small or large, before it becomes a problem. Nobody has to find the courage to start the conversation alone. The whole team uses the same words and the same five rules, so everyone knows what healthy conflict means and what happens when someone speaks up.",
+              "Ketika pertanyaan ini muncul di setiap rapat, pintunya selalu terbuka. Orang tahu mereka selalu punya kesempatan untuk mengangkat sesuatu, kecil atau besar, sebelum menjadi masalah. Tidak ada yang harus mengumpulkan keberanian untuk memulai percakapan sendirian. Seluruh tim memakai kata-kata yang sama dan lima aturan yang sama, sehingga semua orang tahu apa arti konflik yang sehat dan apa yang terjadi ketika seseorang angkat bicara.",
+            )}
+          </p>
+          <h3>{t("The leader’s task", "Tugas pemimpin")}</h3>
+          <p style={{ marginBottom: 0 }}>
+            {t(
+              "Building this habit is the leader’s job. You ask the question. You guide the conversation through the five rules. When you are part of a conflict yourself, you go first. When the team sees you handle conflict calmly and fairly, they learn it is safe to do the same. Over time the routine shapes the culture of the team.",
+              "Membangun kebiasaan ini adalah tugas pemimpin. Andalah yang mengajukan pertanyaannya. Anda memandu percakapan melalui lima aturan. Ketika Anda sendiri menjadi bagian dari konflik, Anda yang memulai lebih dulu. Ketika tim melihat Anda menangani konflik dengan tenang dan adil, mereka belajar bahwa aman untuk melakukan hal yang sama. Lama-kelamaan, rutinitas ini membentuk budaya tim.",
+            )}
+          </p>
+        </div>
+      </section>
+
       {/* ── 10. FROM THE FIELD ──────────────────────────────────────────────── */}
-      <section className="hc-sec hc-b">
+      <section className="hc-sec hc-a">
         <div className="hc-wrap">
           <p className="hc-eyebrow">{t("From the field", "Dari Lapangan")}</p>
           <h2>{t("An example: two leaders at one table", "Sebuah Contoh: Dua Pemimpin di Satu Meja")}</h2>
