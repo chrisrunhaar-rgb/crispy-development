@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import LangToggle from "@/components/LangToggle";
+import PresentLauncher from "@/components/PresentLauncher";
 import SourcesDropdown from "@/components/SourcesDropdown";
 import { saveResourceToDashboard } from "@/app/(marketing)/resources/actions";
 
@@ -230,7 +231,11 @@ export default function AboveBelowClient(_props: {
 
   return (
     <div style={{ fontFamily: "Montserrat, sans-serif", background: offWhite, minHeight: "100vh" }}>
-      <LangToggle />
+      <LangToggle langs={["en", "id"]} extra={
+        <PresentLauncher href="/resources/above-below-the-line/present" lang={lang}
+          title={{ en: "Teaching this to someone else?", id: "Mengajarkan ini kepada orang lain?" }}
+          text={{ en: "Use the guided slideshow to walk your team through the line and build a shared team language.", id: "Gunakan slideshow terpandu untuk mengajak tim Anda memahami garis ini dan membangun bahasa tim bersama." }} />
+      } />
 
       {/* HERO */}
       <div style={{ background: navy, padding: "80px 24px 72px", position: "relative", overflow: "hidden" }}>
@@ -251,7 +256,7 @@ export default function AboveBelowClient(_props: {
           <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(16px, 2vw, 20px)", color: "oklch(85% 0.03 80)", maxWidth: 540, margin: "0 0 28px", lineHeight: 1.65, fontStyle: "italic" }}>
             {t(
               "Are you leading as a Victor — or a Victim?",
-              "Apakah Anda memimpin sebagai Orang yang Berdaya, atau sebagai Korban?",
+              "Apakah Anda memimpin sebagai Pemenang, atau sebagai Korban?",
               lang
             )}
           </p>
@@ -379,7 +384,7 @@ export default function AboveBelowClient(_props: {
             {t("The Impact", "Dampaknya", lang)}
           </p>
           <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 48px)", fontWeight: 600, color: navy, margin: "0 0 16px" }}>
-            {t("Victor or Victim?", "Berdaya atau Korban?", lang)}
+            {t("Victor or Victim?", "Pemenang atau Korban?", lang)}
           </h2>
           <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.75, maxWidth: 620, margin: "0 0 44px" }}>
             {t(
@@ -397,7 +402,7 @@ export default function AboveBelowClient(_props: {
                   {t("Above the Line", "Di Atas Garis", lang)}
                 </div>
                 <div style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 30, fontWeight: 600, color: offWhite, lineHeight: 1.1 }}>
-                  {t("The Victor", "Orang yang Berdaya", lang)}
+                  {t("The Victor", "Pemenang", lang)}
                 </div>
               </div>
               <div style={{ background: "white", padding: "28px" }}>
@@ -602,6 +607,65 @@ export default function AboveBelowClient(_props: {
                 <>Empat langkah ini mengasumsikan titik awal individualis dan konteks-rendah. Dalam budaya kehormatan/rasa malu<Ref n={7} /><Ref n={8} /> — dominan di seluruh Asia Tenggara<Ref n={4} />, Timur Tengah, dan sebagian besar Afrika — konfrontasi langsung dapat menutup pintu yang dimaksudkan kerangka ini untuk dibuka. Adaptasi, jangan tinggalkan: &ldquo;Melihat&rdquo; mungkin perlu terjadi secara pribadi. &ldquo;Memiliki&rdquo; mungkin dimulai sebagai &ldquo;kami berkontribusi&rdquo; sebelum &ldquo;saya berkontribusi.&rdquo; Bangun keamanan psikologis melalui kepercayaan relasional terlebih dahulu.<Ref n={5} /></>
               )}
             </p>
+          </div>
+        </div>
+      </div>
+
+      {/* TEAM LANGUAGE */}
+      <div style={{ background: offWhite, padding: "72px 24px" }}>
+        <div style={{ maxWidth: 900, margin: "0 auto" }}>
+          <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", margin: "0 0 16px" }}>
+            {t("Using it together", "Menggunakannya bersama", lang)}
+          </p>
+          <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 48px)", fontWeight: 600, color: navy, margin: "0 0 16px" }}>
+            {t("Building a team language", "Membangun bahasa tim", lang)}
+          </h2>
+          <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.8, maxWidth: 640, margin: "0 0 16px" }}>
+            {t(
+              "Above and Below the Line works best as a shared dictionary. When the whole team knows the same words, you can talk about hard moments without blaming anyone.",
+              "Di Atas dan Di Bawah Garis paling berguna sebagai kamus bersama. Kamus bahasa tim ini membuat semua orang memakai kata yang sama, sehingga Anda bisa membicarakan saat sulit tanpa menyalahkan siapa pun.",
+              lang
+            )}
+          </p>
+          <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.8, maxWidth: 640, margin: "0 0 40px" }}>
+            {t(
+              "The words are not a weapon. They are a way to help, remind and encourage each other.",
+              "Kata-kata ini bukan senjata. Kata-kata ini adalah cara untuk saling membantu, mengingatkan dan menguatkan.",
+              lang
+            )}
+          </p>
+
+          <div style={{ background: navy, borderRadius: 14, padding: "36px 32px", marginBottom: 40 }}>
+            <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" as const, color: orange, marginBottom: 14 }}>
+              {t("The one question", "Satu pertanyaan", lang)}
+            </div>
+            <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(24px, 3.2vw, 34px)", fontWeight: 600, color: offWhite, lineHeight: 1.25, margin: "0 0 18px" }}>
+              {t("“Is this response above or below the line?”", "“Apakah respons ini di atas atau di bawah garis?”", lang)}
+            </p>
+            <p style={{ fontSize: 15, color: "oklch(85% 0.03 80)", lineHeight: 1.75, margin: 0, maxWidth: 600 }}>
+              {t(
+                "Ask it. Never answer it for someone else. Do not judge. The person reflects and decides for themselves.",
+                "Tanyakan saja. Jangan pernah menjawabnya untuk orang lain. Jangan menghakimi. Orang itu sendiri yang merenungkan dan memutuskan.",
+                lang
+              )}
+            </p>
+          </div>
+
+          <div style={{ fontSize: 13, fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase" as const, color: navy, marginBottom: 18 }}>
+            {t("How to start with your team", "Cara memulai dengan tim Anda", lang)}
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 16 }}>
+            {[
+              { en: "Agree on the words", id: "Sepakati kata-katanya", dEn: "Go through the above and below words together. Pick the ones your team will use.", dId: "Bahas kata-kata di atas dan di bawah garis bersama. Pilih kata yang akan dipakai tim Anda." },
+              { en: "Keep them visible", id: "Buat selalu terlihat", dEn: "Put the line on a wall, a screen or a shared document. Words you see are words you use.", dId: "Pasang garis ini di dinding, layar atau dokumen bersama. Kata yang terlihat akan lebih sering dipakai." },
+              { en: "Use the question", id: "Pakai pertanyaannya", dEn: "When things get hard, ask the one question. Then give the person space to answer.", dId: "Saat keadaan sulit, ajukan satu pertanyaan itu. Lalu beri orang itu ruang untuk menjawab." },
+            ].map((s, i) => (
+              <div key={i} style={{ background: lightGray, borderRadius: 12, padding: "26px 24px" }}>
+                <div style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 40, fontWeight: 600, color: orange, lineHeight: 1, marginBottom: 10 }}>{i + 1}</div>
+                <div style={{ fontSize: 15, fontWeight: 700, color: navy, marginBottom: 8 }}>{t(s.en, s.id, lang)}</div>
+                <p style={{ fontSize: 14, color: bodyText, lineHeight: 1.7, margin: 0 }}>{t(s.dEn, s.dId, lang)}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
