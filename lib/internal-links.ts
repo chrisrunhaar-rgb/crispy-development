@@ -260,11 +260,14 @@ export const internalLinkMap: Record<string, LinkedResource[]> = {
     { slug: 'building-trust-across-cultures', title: 'Building Trust Across Cultures', reason: 'Build trust that sustains long-term' },
     { slug: 'emotional-intelligence', title: 'Emotional Intelligence', reason: 'EQ sustains long-term relationships' },
     { slug: 'sustainable-pace', title: 'Sustainable Pace', reason: 'A sustainable pace protects your relationships' },
+    { slug: 'healthy-conflict', title: 'Healthy Conflict', reason: 'Name tension early so it does not turn into distance' },
+    { slug: 'conflict-resolution', title: 'Conflict Resolution', reason: 'Work through a conflict that has already surfaced' },
   ],
   'returning-well': [
     { slug: 'healthy-transitions', title: 'Managing Healthy Transitions', reason: 'Apply transition principles to repatriation' },
     { slug: 'identity-under-pressure', title: 'Identity Under Pressure', reason: 'Recalibrate identity after returning' },
     { slug: 'psychological-first-aid', title: 'Psychological First Aid', reason: 'Support others who are struggling on return' },
+    { slug: 'debriefing-reflection', title: 'Debriefing & Reflection', reason: 'Make sense of your years abroad before moving on' },
   ],
   'sustainable-pace': [
     { slug: 'sabbath-leadership', title: 'Sabbath Leadership', reason: 'Rest is the engine of sustainable pace' },

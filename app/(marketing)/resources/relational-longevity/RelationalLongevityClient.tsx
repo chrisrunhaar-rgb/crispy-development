@@ -1,5 +1,6 @@
 ﻿"use client";
 import { useState, useTransition } from "react";
+import Link from "next/link";
 import { useLanguage } from "@/lib/LanguageContext";
 import { saveResourceToDashboard } from "../actions";
 import LangToggle from "@/components/LangToggle";
@@ -50,6 +51,34 @@ function withSup(text: string): React.ReactNode {
   );
 }
 
+// --- RICH TEXT (links + superscripts) ----------------------------------------
+// Marker syntax: [[phrase -> /resources/slug]] becomes an inline link.
+
+function rich(text: string): React.ReactNode {
+  const parts = text.split(/(\[\[[^\]]+?->[^\]]+?\]\])/);
+  if (parts.length === 1) return withSup(text);
+  return parts.map((part, i) => {
+    const m = part.match(/^\[\[(.+?)\s*->\s*(.+?)\]\]$/);
+    if (m) {
+      return (
+        <Link
+          key={i}
+          href={m[2]}
+          style={{
+            color: "oklch(65% 0.15 45)",
+            fontWeight: 700,
+            textDecoration: "underline",
+            textUnderlineOffset: 3,
+          }}
+        >
+          {m[1]}
+        </Link>
+      );
+    }
+    return <span key={i}>{withSup(part)}</span>;
+  });
+}
+
 // --- SKILL SECTIONS ---------------------------------------------------------
 
 type SkillKey = "listening" | "conflict" | "loss";
@@ -80,6 +109,8 @@ const SKILLS: {
   id_technique_heading: string;
   en_technique_steps: { label: string; body: string }[];
   id_technique_steps: { label: string; body: string }[];
+  en_closing?: string;
+  id_closing?: string;
 }[] = [
   {
     key: "listening",
@@ -148,60 +179,38 @@ const SKILLS: {
     accentBg: "oklch(50% 0.17 30 / 0.08)",
     en_label: "Handling Conflict Well",
     id_label: "Menangani Konflik dengan Baik",
-    en_subtitle: "Cross-cultural conflict escalation patterns",
-    id_subtitle: "Pola eskalasi konflik lintas budaya",
-    en_intro:
-      "Conflict in cross-cultural teams rarely announces itself. It often moves in patterns that newcomers miss, especially when cultures differ on directness, hierarchy and face.⁵ If you understand the three stages of escalation and what usually goes wrong at each one, your team has a far better chance of repairing instead of fracturing.",
-    id_intro:
-      "Konflik dalam tim lintas budaya jarang muncul terang-terangan. Sering kali konflik bergerak dalam pola yang tidak terlihat oleh pendatang baru, terutama ketika budaya berbeda soal keterusterangan, hierarki dan menjaga muka.⁵ Kalau Anda memahami tiga tahap eskalasi dan apa yang biasanya salah di setiap tahap, tim Anda punya peluang jauh lebih besar untuk pulih, bukan retak.",
-    en_scenario_heading: "Three stages of escalation",
-    id_scenario_heading: "Tiga tahap eskalasi",
-    en_scenario:
-      "A senior team member keeps dismissing ideas from a junior colleague in team meetings. He is not aggressive, just consistent. The junior colleague says nothing in the meetings, but starts pulling back from team activities.",
-    id_scenario:
-      "Seorang anggota tim senior terus mengabaikan ide dari kolega junior dalam rapat tim. Dia tidak agresif, tetapi konsisten. Kolega junior tidak berkata apa-apa dalam rapat, tetapi mulai menarik diri dari kegiatan tim.",
-    en_typical_label: "Stage 1: Signal",
-    id_typical_label: "Tahap 1: Sinyal",
-    en_typical:
-      "The junior colleague's silence and withdrawal IS the signal. In many cultures, including Indonesian settings where harmony (rukun) and shame (malu) shape how people speak, conflict is often expressed indirectly.⁶ Pulling back carries a message. The common mistake: a leader from a more direct culture reads it as disengagement or personality, and misses the relational signal that something is wrong.",
-    id_typical:
-      "Diamnya kolega junior dan sikapnya menarik diri ITULAH sinyalnya. Dalam banyak budaya, termasuk di Indonesia di mana rukun dan malu membentuk cara orang berbicara, konflik sering diungkapkan secara tidak langsung.⁶ Menarik diri pun membawa pesan. Kesalahan yang sering terjadi: pemimpin dari budaya yang lebih langsung membacanya sebagai kurang peduli atau soal kepribadian, lalu melewatkan sinyal relasional bahwa ada yang tidak beres.",
-    en_better_label: "Stage 2: Response",
-    id_better_label: "Tahap 2: Respons",
-    en_better:
-      "When the signal is ignored, one of two things usually happens. The tension hardens into resentment and the relationship slowly dies, or it erupts later with more force, often in the wrong setting. The window to respond is between signal and escalation. A skilled leader names the pattern they have noticed, without labelling it a conflict. Privately, gently, specifically: \"I've noticed you've been quieter recently. Is there something I should be aware of?\"",
-    id_better:
-      "Ketika sinyal diabaikan, biasanya terjadi salah satu dari dua hal. Ketegangan mengeras menjadi kepahitan dan hubungan perlahan mati, atau meledak kemudian dengan lebih keras, sering di situasi yang salah. Waktu terbaik untuk menanggapi ada di antara sinyal dan eskalasi. Pemimpin yang terampil mengungkapkan pola yang dia lihat, tanpa menyebutnya konflik. Secara pribadi, lembut dan spesifik: \"Saya perhatikan Anda lebih pendiam belakangan ini. Apakah ada sesuatu yang perlu saya ketahui?\"",
-    en_technique_heading: "Stage 3: Resolution",
-    id_technique_heading: "Tahap 3: Penyelesaian",
+    en_subtitle: "Naming conflict early, in a way that fits the culture",
+    id_subtitle: "Mengungkapkan konflik sejak dini, dengan cara yang sesuai budaya",
+    en_intro: "Conflict is normal on every team. It is not a sign that the team is failing. On cross-cultural teams it often shows up quietly, as silence or distance, before anyone says a word.⁵",
+    id_intro: "Konflik itu wajar di setiap tim. Konflik bukan tanda bahwa tim sedang gagal. Dalam tim lintas budaya, konflik sering muncul diam-diam, dalam bentuk keheningan atau jarak, sebelum ada yang mengatakan apa pun.⁵",
+    en_scenario_heading: "The scenario",
+    id_scenario_heading: "Skenario",
+    en_scenario: "A senior team member keeps dismissing ideas from a junior colleague in team meetings. He is not aggressive, just consistent. The junior colleague says nothing in the meetings, but starts pulling back from team activities.",
+    id_scenario: "Seorang anggota tim senior terus mengabaikan ide dari kolega junior dalam rapat tim. Dia tidak agresif, tetapi konsisten. Kolega junior tidak berkata apa-apa dalam rapat, tetapi mulai menarik diri dari kegiatan tim.",
+    en_typical_label: "A common response",
+    id_typical_label: "Respons yang umum",
+    en_typical: "The leader notices the junior colleague is quieter but says nothing. It seems small, and raising it might embarrass the senior team member. The hope is that it will pass.",
+    id_typical: "Pemimpin melihat kolega junior itu menjadi lebih pendiam, tetapi tidak berkata apa-apa. Kelihatannya masalah kecil, dan membicarakannya bisa mempermalukan anggota tim senior. Harapannya, masalah itu akan berlalu sendiri.",
+    en_better_label: "A better response",
+    id_better_label: "Respons yang lebih baik",
+    en_better: "The leader talks with the junior colleague privately first: \"I've noticed you've been quieter recently. Is there something I should be aware of?\" Then the leader [[names the pattern with the senior colleague -> /resources/giving-feedback-across-cultures]], also in private, or through a trusted go-between if that fits the culture better.⁵",
+    id_better: "Pemimpin lebih dulu berbicara secara pribadi dengan kolega junior itu: \"Saya perhatikan Anda lebih pendiam belakangan ini. Apakah ada sesuatu yang perlu saya ketahui?\" Setelah itu, pemimpin [[mengungkapkan pola tersebut kepada kolega senior -> /resources/giving-feedback-across-cultures]], juga secara pribadi, atau melalui orang ketiga yang dipercaya jika cara itu lebih sesuai dengan budayanya.⁵",
+    en_technique_heading: "Four things to keep in mind",
+    id_technique_heading: "Empat hal yang perlu diingat",
     en_technique_steps: [
-      {
-        label: "Resolution is not the same as agreement",
-        body: "Cross-cultural conflict rarely ends with both sides openly naming what happened. In high-context cultures, naming a conflict directly can feel more damaging than the conflict itself. Resolution may look like this: the senior team member starts including the junior's ideas, the junior re-engages, and nobody ever says the word 'conflict.' The relationship moves forward.",
-      },
-      {
-        label: "Third-party facilitation",
-        body: "In many cultures, a trusted go-between is the right path for resolving conflict, and using one is no sign of failure.⁵ A respected team member, a senior pastor or an elder who carries weight with both people can often open a way that direct confrontation cannot. Leaders who insist on face-to-face resolution may be applying their own cultural framework instead of serving the relationship.",
-      },
-      {
-        label: "Don't wait for a crisis",
-        body: "The best conflict work happens long before any single event. Build a team culture where small tensions are named early, where questions are safe to ask, and where leaders show vulnerability by saying: \"I think something is off between us. Can we talk?\" In a healthy team, conflict still happens, but it comes to the surface quickly instead of festering underneath.",
-      },
+      { label: "Unnamed conflict piles up", body: "Conflict that is not named does not disappear. Small hurts are stored up and may come out later, all at once. This is sometimes called [[gunnysacking -> /resources/healthy-conflict]]." },
+      { label: "Giving way or avoiding?", body: "Letting something go can be an act of love. It can also be avoidance. Three questions help tell them apart: Was the matter named, at least to yourself and in prayer? Is it finished, with no bad feeling left? Has it stayed away, with no need to bring it back?" },
+      { label: "Indirect naming is still naming", body: "Where [[face -> /resources/healthy-conflict#mc-face]] matters, naming a conflict does not have to be direct or public. It can happen in a private conversation, through a story, or with help from a trusted go-between.⁵⁶ What matters is that it is named and not left hidden." },
+      { label: "Name it early", body: "A conflict is often easier to talk about in the early stages, while both people still want each other to win. Waiting for a crisis can make the conversation more difficult." },
     ],
     id_technique_steps: [
-      {
-        label: "Penyelesaian tidak sama dengan kesepakatan",
-        body: "Konflik lintas budaya jarang berakhir dengan kedua pihak terang-terangan membicarakan apa yang terjadi. Dalam budaya konteks tinggi, membicarakan konflik secara langsung bisa terasa lebih merusak daripada konflik itu sendiri. Penyelesaian bisa terlihat seperti ini: anggota tim senior mulai memakai ide kolega juniornya, si junior kembali terlibat, dan tidak ada yang pernah menyebut kata 'konflik.' Hubungan pun bergerak maju.",
-      },
-      {
-        label: "Fasilitasi pihak ketiga",
-        body: "Dalam banyak budaya, perantara yang dipercaya adalah jalan yang tepat untuk menyelesaikan konflik, dan memakainya bukan tanda kegagalan.⁵ Anggota tim yang dihormati, pendeta senior, atau tokoh yang disegani kedua pihak sering bisa membuka jalan yang tidak bisa dibuka oleh konfrontasi langsung. Pemimpin yang memaksakan penyelesaian empat mata mungkin sedang menerapkan kerangka budayanya sendiri, bukan melayani hubungan itu.",
-      },
-      {
-        label: "Jangan menunggu krisis",
-        body: "Penanganan konflik yang terbaik terjadi jauh sebelum ada peristiwa besar. Bangun budaya tim di mana ketegangan kecil dibicarakan sejak awal, di mana bertanya itu aman, dan di mana pemimpin memberi teladan keterbukaan dengan berkata: \"Sepertinya ada yang tidak beres di antara kita. Bisa kita bicara?\" Dalam tim yang sehat, konflik tetap ada, tetapi cepat muncul ke permukaan dan tidak dibiarkan membusuk di bawah.",
-      },
+      { label: "Konflik yang tidak diungkapkan menumpuk", body: "Konflik yang tidak diungkapkan tidak hilang. Luka-luka kecil terus disimpan dan bisa keluar sekaligus di kemudian hari. Hal ini kadang disebut [[gunnysacking -> /resources/healthy-conflict]]." },
+      { label: "Mengalah atau menghindar?", body: "Membiarkan sesuatu berlalu bisa menjadi tindakan kasih. Bisa juga menjadi bentuk menghindar. Tiga pertanyaan ini membantu membedakannya: Apakah persoalan itu sudah diungkapkan, setidaknya kepada diri sendiri dan dalam doa? Apakah sudah selesai, tanpa rasa tidak enak yang tersisa? Apakah persoalan itu tidak muncul lagi, tanpa perlu diungkit kembali?" },
+      { label: "Mengungkapkan secara tidak langsung juga termasuk mengungkapkan", body: "Ketika [[menjaga muka -> /resources/healthy-conflict#mc-face]] dianggap penting, mengungkapkan konflik tidak harus dilakukan secara langsung atau di depan umum. Bisa lewat percakapan pribadi, lewat cerita, atau dengan bantuan orang ketiga yang dipercaya.⁵⁶ Yang penting, konflik itu diungkapkan dan tidak dibiarkan tersembunyi." },
+      { label: "Ungkapkan sejak dini", body: "Konflik sering lebih mudah dibicarakan di tahap awal, ketika kedua pihak masih sama-sama menginginkan yang terbaik bagi satu sama lain. Menunggu sampai terjadi krisis bisa membuat percakapan lebih sulit." },
     ],
+    en_closing: "To go deeper, see [[Creating Healthy Conflict -> /resources/healthy-conflict]], or explore the five conflict styles in [[Conflict Resolution -> /resources/conflict-resolution]].",
+    id_closing: "Untuk pembahasan lebih dalam, lihat [[Konflik yang Sehat -> /resources/healthy-conflict]], atau pelajari lima gaya konflik dalam [[Resolusi Konflik -> /resources/conflict-resolution]].",
   },
   {
     key: "loss",
@@ -224,9 +233,9 @@ const SKILLS: {
     en_typical_label: "What teams typically miss",
     id_typical_label: "Yang biasanya dilewatkan tim",
     en_typical:
-      "Teams that run well on tasks often have no language for grief. Debriefs focus on tasks, logistics and planning, and never ask: \"What have we lost this season? What do we need to grieve before we move on?\" Many workers never get a debrief at all. One recent survey found only 14% of returning workers had received one.⁷ Unnamed loss has a cost: people disengage, resentment toward leaders grows, and some end up leaving.",
+      "Teams that run well on tasks often have no language for grief. [[Debriefs -> /resources/debriefing-reflection]] focus on tasks, logistics and planning, and may not ask: \"What have we lost this time? What do we need to grieve before we move on?\" Many workers never get a debrief at all. One recent survey found only 14% of returning workers had received one.⁷ Unnamed loss has a cost: people disengage, resentment toward leaders grows, and some end up leaving.",
     id_typical:
-      "Tim yang berjalan baik dalam tugas sering tidak punya bahasa untuk duka. Debriefing berfokus pada tugas, logistik dan rencana, dan tidak pernah bertanya: \"Apa yang telah hilang dari kita di musim ini? Apa yang perlu kita beri waktu untuk berduka sebelum melangkah?\" Banyak pekerja bahkan tidak pernah mendapat debriefing. Sebuah survei terbaru menemukan hanya 14% pekerja yang pulang yang pernah menerimanya.⁷ Kehilangan yang tidak diungkapkan ada harganya: orang menarik diri, kepahitan terhadap pemimpin tumbuh, dan sebagian akhirnya pergi.",
+      "Tim yang berjalan baik dalam tugas sering tidak punya bahasa untuk duka. [[Debriefing -> /resources/debriefing-reflection]] berfokus pada tugas, logistik dan rencana, dan sering tidak bertanya: \"Apa yang telah hilang dari kita di masa ini? Apa yang perlu kita beri waktu untuk berduka sebelum melangkah?\" Banyak pekerja bahkan tidak pernah mendapat debriefing. Sebuah survei terbaru menemukan hanya 14% pekerja yang pulang yang pernah menerimanya.⁷ Kehilangan yang tidak diungkapkan ada harganya: orang menarik diri, kepahitan terhadap pemimpin tumbuh, dan sebagian akhirnya pergi.",
     en_better_label: "How to create space for loss",
     id_better_label: "Cara memberi tempat bagi duka",
     en_better:
@@ -266,42 +275,99 @@ const SKILLS: {
   },
 ];
 
-// --- HEALTH CHECK STATEMENTS ------------------------------------------------
+// --- OBJECTIVES, WHY, TEACHING ----------------------------------------------
 
-const HEALTH_CHECKS: {
-  id: string;
-  en: string;
-  id_lang: string;
+const OBJECTIVES: { en: string; id: string }[] = [
+  { en: "Explain why team relationships affect how long cross-cultural workers stay on the field.", id: "Menjelaskan mengapa hubungan dalam tim memengaruhi berapa lama pekerja lintas budaya bertahan di lapangan." },
+  { en: "Apply the three listening steps (Reflect, Ask, Wait) when a teammate shares a struggle.", id: "Menerapkan tiga langkah mendengarkan (Cerminkan, Tanyakan, Tunggu) ketika rekan tim menceritakan pergumulannya." },
+  { en: "Recognise early signs of tension that is not being named, such as a teammate going quiet or pulling back.", id: "Mengenali tanda-tanda awal ketegangan yang belum diungkapkan, misalnya rekan tim yang menjadi diam atau menarik diri." },
+  { en: "Distinguish between giving way out of care and avoiding a conflict that needs to be named.", id: "Membedakan antara mengalah karena peduli dan menghindari konflik yang perlu diungkapkan." },
+  { en: "Describe two or more ways a team can acknowledge loss, such as goodbyes and grief check-ins.", id: "Menguraikan setidaknya dua cara tim dapat mengakui kehilangan, misalnya berpamitan dan saat khusus untuk membicarakan duka." },
+];
+
+const WHY: { en: string; id: string }[] = [
+  { en: "Many cross-cultural workers leave the field earlier than they or their organisation planned. The ReMAP II study found that 71% of this attrition was preventable, and peer conflict was among the preventable causes.¹ A US study on worker retention ranked problems with peers fifth among all causes and third among preventable ones.³ Another survey, of 221 agencies, placed team conflict among the top five preventable factors.²", id: "Banyak pekerja lintas budaya meninggalkan lapangan lebih awal daripada yang mereka atau organisasi mereka rencanakan. Studi ReMAP II menemukan bahwa 71% dari kepergian ini sebenarnya bisa dicegah, dan konflik dengan rekan kerja termasuk salah satu penyebab yang bisa dicegah.¹ Sebuah studi di Amerika Serikat tentang alasan pekerja bertahan atau pergi menempatkan masalah dengan rekan kerja di urutan kelima dari semua penyebab, dan urutan ketiga dari penyebab yang bisa dicegah.³ Survei lain terhadap 221 lembaga menempatkan konflik tim di antara lima faktor teratas yang bisa dicegah.²" },
+  { en: "When a team relationship breaks down, the cost often reaches further than one person. Years of language learning, local friendships and trust may leave with them. The people who stay may carry hurt that does not get talked about. Over time, a team can lose energy and focus without anyone quite knowing why.", id: "Ketika hubungan dalam tim rusak, dampaknya sering lebih luas daripada satu orang saja. Bertahun-tahun belajar bahasa, persahabatan dengan orang setempat, dan kepercayaan bisa ikut hilang ketika orang itu pergi. Mereka yang tetap tinggal mungkin membawa luka yang tidak dibicarakan. Lama-kelamaan, sebuah tim bisa kehilangan semangat dan fokus tanpa ada yang benar-benar tahu penyebabnya." },
+  { en: "Many workers feel unprepared for this. In a 2023 survey, [[conflict resolution -> /resources/conflict-resolution]] was one of the top training needs workers said had not been met.⁷ These are skills, and skills can be learned and practised.", id: "Banyak pekerja merasa tidak siap menghadapi hal ini. Dalam survei tahun 2023, [[penyelesaian konflik -> /resources/conflict-resolution]] termasuk kebutuhan pelatihan utama yang menurut para pekerja belum terpenuhi.⁷ Ini adalah keterampilan, dan keterampilan bisa dipelajari dan dilatih." },
+];
+
+const TEACHING: { en_title: string; id_title: string; en: string; id: string }[] = [
+  { en_title: "What relational longevity means", id_title: "Apa arti kelanggengan relasional", en: "Relational longevity is the ability of a team's relationships to last over years, through changes in roles, conflict and loss. It does not mean everyone becomes close friends. It means people can keep working together with trust, even after hard seasons. On cross-cultural teams this takes more effort. People bring different ideas about respect, directness and how to handle a problem, and many of those ideas stay unspoken.", id: "Kelanggengan relasional adalah kemampuan hubungan dalam tim untuk bertahan selama bertahun-tahun, melewati perubahan peran, konflik, dan kehilangan. Ini tidak berarti semua orang menjadi sahabat dekat. Artinya, orang tetap bisa bekerja sama dengan saling percaya, bahkan setelah melewati masa yang berat. Dalam tim lintas budaya, hal ini membutuhkan usaha lebih. Setiap orang membawa pandangan yang berbeda tentang rasa hormat, keterusterangan, dan cara menangani masalah, dan banyak dari pandangan itu tidak diucapkan." },
+  { en_title: "Small habits, repeated over time", id_title: "Kebiasaan kecil yang diulang dari waktu ke waktu", en: "Long-lasting team relationships are usually built in ordinary moments, not in big events. A teammate feels heard when you give them your full attention and check what you understood.⁴ A tension stays small when someone names it early. A loss feels lighter when the team stops to mark it together. Each of these is a small habit. Repeated over months and years, they become the [[trust -> /resources/building-trust-across-cultures]] a team stands on.", id: "Hubungan tim yang langgeng biasanya dibangun dalam momen-momen biasa, bukan dalam peristiwa besar. Rekan tim merasa didengar ketika Anda memberi perhatian penuh dan memastikan apa yang Anda pahami.⁴ Ketegangan tetap kecil ketika seseorang mengungkapkannya sejak dini. Kehilangan terasa lebih ringan ketika tim berhenti sejenak untuk mengakuinya bersama. Masing-masing adalah kebiasaan kecil. Jika diulang selama berbulan-bulan dan bertahun-tahun, kebiasaan itu menjadi dasar [[kepercayaan -> /resources/building-trust-across-cultures]] dalam tim." },
+  { en_title: "Culture shapes how tension shows up", id_title: "Budaya membentuk cara ketegangan muncul", en: "In many cultures, protecting each other's [[face -> /resources/healthy-conflict#mc-face]] matters more than saying a problem out loud.⁵ In Indonesia, values like rukun (harmony) and malu (a sense of shame or social restraint) often lead people to [[express disagreement indirectly -> /resources/understanding-high-context]].⁶ A teammate may go quiet, step back from team activities or speak through someone else. These are often signals and should not be read as indifference. Leaders who learn to notice them can respond before the distance grows.", id: "Di banyak budaya, [[menjaga muka -> /resources/healthy-conflict#mc-face]] satu sama lain lebih penting daripada mengatakan masalah secara terang-terangan.⁵ Di Indonesia, nilai seperti rukun dan malu sering membuat orang menyampaikan ketidaksetujuan [[secara tidak langsung -> /resources/understanding-high-context]].⁶ Rekan tim mungkin menjadi diam, mundur dari kegiatan tim, atau berbicara melalui orang lain. Hal-hal ini sering merupakan sinyal, bukan tanda tidak peduli. Pemimpin yang belajar memperhatikannya dapat menanggapi sebelum jaraknya semakin lebar." },
+  { en_title: "Loss is part of the work", id_title: "Kehilangan adalah bagian dari pekerjaan", en: "Cross-cultural teams change often. Colleagues leave, local friends move away, and plans end before they are finished. Each change can bring a sense of loss, even when it is not called that. Making room to talk about these losses can help a team stay healthy.", id: "Tim lintas budaya sering berubah. Rekan kerja pergi, teman setempat pindah, dan rencana berakhir sebelum selesai. Setiap perubahan bisa membawa rasa kehilangan, meskipun tidak disebut demikian. Memberi ruang untuk membicarakan kehilangan ini dapat membantu tim tetap sehat." },
+];
+
+// --- SELF-ASSESSMENT --------------------------------------------------------
+
+const ASSESS: { en: string; id: string; en_label: string; id_label: string }[] = [
+  { en: "When a teammate shares a struggle, I listen to understand before I offer a fix.", id: "Ketika rekan tim menceritakan pergumulannya, saya mendengarkan untuk memahami sebelum menawarkan solusi.", en_label: "Listening first", id_label: "Mendengarkan lebih dulu" },
+  { en: "I check what I heard by saying it back in my own words.", id: "Saya memastikan apa yang saya dengar dengan mengulanginya dalam kata-kata saya sendiri.", en_label: "Checking what I heard", id_label: "Memastikan yang saya dengar" },
+  { en: "I notice early signs of tension, such as someone going quiet or pulling back.", id: "Saya memperhatikan tanda-tanda awal ketegangan, misalnya seseorang menjadi diam atau menarik diri.", en_label: "Noticing early signs", id_label: "Memperhatikan tanda awal" },
+  { en: "When tension builds, I name it early, in a way that fits the person and the culture.", id: "Ketika ketegangan muncul, saya mengungkapkannya sejak dini, dengan cara yang sesuai dengan orangnya dan budayanya.", en_label: "Naming tension early", id_label: "Mengungkapkan ketegangan sejak dini" },
+  { en: "On our team, people can raise a disagreement without fear of losing face.", id: "Di tim kami, orang bisa menyampaikan perbedaan pendapat tanpa takut kehilangan muka.", en_label: "Safe to disagree", id_label: "Aman untuk berbeda pendapat" },
+  { en: "I can tell the difference between giving way out of care and avoiding a hard conversation.", id: "Saya bisa membedakan antara mengalah karena peduli dan menghindari percakapan yang sulit.", en_label: "Giving way, not avoiding", id_label: "Mengalah, bukan menghindar" },
+  { en: "Our team makes room to talk about what we have lost, as well as what we need to do.", id: "Tim kami memberi ruang untuk membicarakan apa yang hilang, selain apa yang perlu dikerjakan.", en_label: "Talking about loss", id_label: "Membicarakan kehilangan" },
+  { en: "When someone leaves the team, we take time to say goodbye well.", id: "Ketika seseorang meninggalkan tim, kami meluangkan waktu untuk berpamitan dengan baik.", en_label: "Saying goodbye well", id_label: "Berpamitan dengan baik" },
+  { en: "I trust my teammates enough to tell them when I am struggling.", id: "Saya cukup percaya kepada rekan-rekan tim sehingga berani memberi tahu mereka ketika saya sedang bergumul.", en_label: "Trust to be honest", id_label: "Berani terbuka" },
+  { en: "My key relationships on the team are strong enough to get through a real disagreement.", id: "Hubungan-hubungan utama saya dalam tim cukup kuat untuk melewati perbedaan pendapat yang serius.", en_label: "Strong enough to disagree", id_label: "Cukup kuat untuk berbeda pendapat" },
+];
+
+const ASSESS_SCALE: { en: string; id: string }[] = [
+  { en: "Not at all", id: "Sama sekali tidak" },
+  { en: "A little", id: "Sedikit" },
+  { en: "Somewhat", id: "Sebagian" },
+  { en: "Mostly", id: "Sebagian besar" },
+  { en: "Fully", id: "Sepenuhnya" },
+];
+
+const ASSESS_BANDS: {
+  min: number;
+  max: number;
+  skill: SkillKey;
+  anchor: string;
+  en_title: string;
+  id_title: string;
+  en_body: string;
+  id_body: string;
+  en_tip: string;
+  id_tip: string;
 }[] = [
   {
-    id: "hc1",
-    en: "When a colleague shares something difficult, my first instinct is to listen, not to fix or advise.",
-    id_lang: "Ketika seorang kolega berbagi sesuatu yang sulit, naluri pertama saya adalah mendengarkan, bukan memperbaiki atau memberi saran.",
+    min: 10,
+    max: 24,
+    skill: "listening",
+    anchor: "mc-listening",
+    en_title: "Relationships under strain",
+    id_title: "Hubungan yang sedang tertekan",
+    en_body: "Several of your team relationships may be carrying more weight than they can hold right now. This is common, especially after a hard season, and it can change. Start small. One honest conversation, or one time of really listening, can begin to rebuild trust.",
+    id_body: "Beberapa hubungan dalam tim Anda mungkin sedang menanggung beban yang lebih berat daripada yang bisa ditahan saat ini. Hal ini umum terjadi, terutama setelah masa yang berat, dan bisa berubah. Mulailah dari yang kecil. Satu percakapan yang jujur, atau satu kali sungguh-sungguh mendengarkan, bisa mulai membangun kembali kepercayaan.",
+    en_tip: "Pick one teammate this week. Ask one open question, then listen without offering a fix. Which relationship would you most like to see restored?",
+    id_tip: "Pilih satu rekan tim minggu ini. Ajukan satu pertanyaan terbuka, lalu dengarkan tanpa menawarkan solusi. Hubungan mana yang paling ingin Anda lihat dipulihkan?",
   },
   {
-    id: "hc2",
-    en: "I notice early signals that something is off in a relationship, before it becomes a visible problem.",
-    id_lang: "Saya memperhatikan sinyal awal bahwa ada yang tidak beres dalam suatu hubungan, sebelum menjadi masalah yang terlihat.",
+    min: 25,
+    max: 37,
+    skill: "conflict",
+    anchor: "mc-conflict",
+    en_title: "Good foundations, with some thin places",
+    id_title: "Dasar yang baik, dengan beberapa bagian yang rapuh",
+    en_body: "Many things are working in your team relationships. Some areas may need attention before they wear thin. Your lowest areas show where a small change could help the most.",
+    id_body: "Banyak hal sudah berjalan baik dalam hubungan tim Anda. Beberapa bagian mungkin perlu perhatian sebelum menjadi rapuh. Area terendah Anda menunjukkan di mana perubahan kecil bisa paling membantu.",
+    en_tip: "Look at your two lowest areas. Is there a tension you have been carrying that is still small enough to name? Who could you talk to about it, and how?",
+    id_tip: "Lihat dua area terendah Anda. Adakah ketegangan yang selama ini Anda pendam yang masih cukup kecil untuk diungkapkan? Dengan siapa Anda bisa membicarakannya, dan bagaimana caranya?",
   },
   {
-    id: "hc3",
-    en: "I feel free to name tension or awkwardness directly with the people I work with.",
-    id_lang: "Saya merasa bebas mengungkapkan ketegangan atau kecanggungan secara langsung kepada orang-orang yang bekerja bersama saya.",
-  },
-  {
-    id: "hc4",
-    en: "My team has language for grief and loss, not just for tasks and plans.",
-    id_lang: "Tim saya punya bahasa untuk duka dan kehilangan, bukan hanya untuk tugas dan rencana.",
-  },
-  {
-    id: "hc5",
-    en: "When I reflect on the goodbyes and transitions of the past year, I feel they were adequately acknowledged.",
-    id_lang: "Ketika saya merenungkan perpisahan dan transisi setahun terakhir, saya merasa semuanya sudah cukup diakui.",
-  },
-  {
-    id: "hc6",
-    en: "The relationships on my team feel strong enough to survive a real disagreement.",
-    id_lang: "Hubungan dalam tim saya terasa cukup kuat untuk bertahan dari perbedaan pendapat yang nyata.",
+    min: 38,
+    max: 50,
+    skill: "loss",
+    anchor: "mc-loss",
+    en_title: "Relationships with staying power",
+    id_title: "Hubungan yang punya daya tahan",
+    en_body: "Your team relationships seem to have real strength. People are heard, tension gets named, and loss is acknowledged. Strong relationships still need care, especially through changes in the team.",
+    id_body: "Hubungan dalam tim Anda tampaknya memiliki kekuatan yang nyata. Orang didengar, ketegangan diungkapkan, dan kehilangan diakui. Hubungan yang kuat tetap perlu dirawat, terutama ketika tim mengalami perubahan.",
+    en_tip: "Who on your team might be struggling more quietly than you? Consider how you could help others build the same habits.",
+    id_tip: "Siapa di tim Anda yang mungkin sedang bergumul lebih diam-diam daripada Anda? Pikirkan bagaimana Anda bisa membantu orang lain membangun kebiasaan yang sama.",
   },
 ];
 
@@ -314,7 +380,8 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
   const [isPending, startTransition] = useTransition();
   const [activeVerse, setActiveVerse] = useState<string | null>(null);
   const [openSkill, setOpenSkill] = useState<SkillKey | null>(null);
-  const [checkedItems, setCheckedItems] = useState<Set<string>>(new Set());
+  const [aStep, setAStep] = useState(0);
+  const [aAnswers, setAAnswers] = useState<(number | null)[]>(Array(ASSESS.length).fill(null));
 
   const t = (en: string, id: string) => tFn(en, id, lang);
 
@@ -326,16 +393,27 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
     });
   }
 
-  function toggleCheck(id: string) {
-    setCheckedItems((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) {
-        next.delete(id);
-      } else {
-        next.add(id);
-      }
+  const aDone = aStep >= ASSESS.length;
+  const aTotal = aAnswers.reduce<number>((sum, a) => sum + (a ?? 0), 0);
+  const aBand = ASSESS_BANDS.find((b) => aTotal >= b.min && aTotal <= b.max) ?? ASSESS_BANDS[0];
+  const aLowest = aAnswers
+    .map((a, i) => ({ i, s: a ?? 0 }))
+    .sort((x, y) => x.s - y.s || x.i - y.i)
+    .slice(0, 2);
+  function answerQ(score: number) {
+    setAAnswers((prev) => {
+      const next = [...prev];
+      next[aStep] = score;
       return next;
     });
+    setAStep((st) => Math.min(st + 1, ASSESS.length));
+  }
+  function backQ() {
+    setAStep((st) => Math.max(0, st - 1));
+  }
+  function restartA() {
+    setAAnswers(Array(ASSESS.length).fill(null));
+    setAStep(0);
   }
 
   // --- BRAND TOKENS ----------------------------------------------------------
@@ -344,9 +422,27 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
   const offWhite = "oklch(96% 0.005 80)";
   const lightGray = "oklch(88% 0.008 80)";
   const bodyText = "oklch(38% 0.05 260)";
-  const serif = "var(--font-cormorant, Cormorant Garamond, Georgia, serif)";
+  const sans = "var(--font-montserrat),Montserrat,sans-serif";
+  const serif = "var(--font-cormorant),'Cormorant Garamond',Georgia,serif";
+  const h2Style: React.CSSProperties = {
+    fontFamily: serif,
+    fontWeight: 600,
+    fontSize: "clamp(26px,3.5vw,38px)",
+    lineHeight: 1.15,
+    color: navy,
+    margin: "0 0 20px",
+  };
+  const h3Style: React.CSSProperties = {
+    fontFamily: serif,
+    fontWeight: 600,
+    fontSize: "clamp(22px,2.8vw,28px)",
+    lineHeight: 1.2,
+    color: navy,
+    margin: "36px 0 10px",
+  };
+  const bodyP: React.CSSProperties = { fontSize: 15, lineHeight: 1.85, color: bodyText, margin: "0 0 18px" };
   const eyebrow: React.CSSProperties = {
-    fontFamily: "Montserrat, sans-serif",
+    fontFamily: sans,
     color: orange,
     fontSize: "0.75rem",
     fontWeight: 700,
@@ -366,7 +462,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
           cursor: "pointer",
           color: orange,
           fontWeight: 700,
-          fontFamily: "Montserrat, sans-serif",
+          fontFamily: sans,
           fontSize: "inherit",
           padding: 0,
           textDecoration: "underline dotted",
@@ -380,13 +476,13 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
 
   // --- RENDER ----------------------------------------------------------------
   return (
-    <div style={{ fontFamily: "Montserrat, sans-serif", background: offWhite, minHeight: "100vh" }}>
+    <div style={{ fontFamily: sans, background: offWhite, minHeight: "100vh" }}>
       <LangToggle />
 
       {/* -- Language Bar --------------------------------------------------- */}
 
       {/* -- Hero ----------------------------------------------------------- */}
-      <section style={{ background: navy, padding: "88px 24px 80px", position: "relative", overflow: "hidden" }}>
+      <section style={{ background: navy, padding: "clamp(72px,10vw,96px) 0 clamp(64px,9vw,88px)", position: "relative", overflow: "hidden" }}>
         <img
           src="/images/resources/relational-longevity/hero.jpg"
           alt=""
@@ -405,8 +501,8 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
             e.currentTarget.style.display = "none";
           }}
         />
-        <div style={{ maxWidth: 860, margin: "0 auto", position: "relative" }}>
-          <p style={{ ...eyebrow, marginBottom: 20 }}>
+        <div style={{ maxWidth: 760, margin: "0 auto", padding: "0 16px", position: "relative" }}>
+          <p style={{ ...eyebrow, fontSize: 11, margin: "0 0 12px", lineHeight: 1.4 }}>
             {t("Team & Facilitation", "Tim & Fasilitasi")}
           </p>
 
@@ -416,7 +512,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
               fontSize: "clamp(40px, 6vw, 72px)",
               fontWeight: 600,
               color: offWhite,
-              margin: "0 0 24px",
+              margin: "0 0 20px",
               lineHeight: 1.08,
             }}
           >
@@ -426,19 +522,17 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
           <p
             style={{
               fontFamily: serif,
-              fontSize: "clamp(17px, 2vw, 22px)",
-              color: "oklch(82% 0.025 80)",
-              lineHeight: 1.75,
-              maxWidth: 640,
-              marginBottom: 32,
               fontStyle: "italic",
+              fontSize: "clamp(18px,2.2vw,23px)",
+              color: "oklch(82% 0.025 80)",
+              lineHeight: 1.6,
+              maxWidth: 600,
+              margin: "0 0 32px",
             }}
           >
-            {withSup(
-              t(
-                "Broken team relationships are one of the main preventable reasons cross-cultural workers leave the field early.²³ Here are three skills that help people stay.",
-                "Hubungan tim yang rusak adalah salah satu alasan utama yang bisa dicegah mengapa pekerja lintas budaya meninggalkan lapangan lebih awal.²³ Berikut tiga keterampilan yang membantu orang bertahan."
-              )
+            {t(
+              "Three skills that help cross-cultural teams stay together over the years.",
+              "Tiga keterampilan yang membantu tim lintas budaya tetap bersama selama bertahun-tahun."
             )}
           </p>
 
@@ -488,7 +582,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
                 borderRadius: 4,
                 background: saved ? "oklch(35% 0.05 260)" : orange,
                 color: offWhite,
-                fontFamily: "Montserrat, sans-serif",
+                fontFamily: sans,
                 fontSize: 13,
                 fontWeight: 700,
                 cursor: saved ? "default" : "pointer",
@@ -509,76 +603,75 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
         </div>
       </section>
 
-      {/* -- Context Bar ----------------------------------------------------- */}
-      <div style={{ background: "oklch(28% 0.09 260)", padding: "32px 24px" }}>
-        <div
-          style={{
-            maxWidth: 860,
-            margin: "0 auto",
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-            gap: 24,
-          }}
-        >
-          {[
-            {
-              stat: "71%",
-              en: "of attrition is preventable, according to the ReMAP II study¹",
-              id: "kepergian dari lapangan sebenarnya bisa dicegah, menurut studi ReMAP II¹",
-            },
-            {
-              stat: "SYIS",
-              en: "Sharpening Your Interpersonal Skills: the curriculum behind this module",
-              id: "Mengasah Keterampilan Interpersonal: kurikulum di balik modul ini",
-            },
-            {
-              stat: "3",
-              en: "skills this module practises: listening, handling conflict and grieving loss together",
-              id: "keterampilan yang dilatih modul ini: mendengarkan, menangani konflik dan berduka bersama",
-            },
-          ].map((item, i) => (
-            <div key={i}>
-              <div
+      {/* -- Objectives ------------------------------------------------------ */}
+      <div style={{ background: navy, padding: "clamp(40px,6vw,56px) 0" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto", padding: "0 16px" }}>
+          <p style={{ ...eyebrow, fontSize: 11, margin: "0 0 12px", lineHeight: 1.4 }}>
+            {t("After This Module", "Setelah Modul Ini")}
+          </p>
+          <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "grid", gap: 14 }}>
+            {OBJECTIVES.map((o, i) => (
+              <li
+                key={i}
                 style={{
-                  fontFamily: serif,
-                  fontSize: "clamp(32px, 4vw, 44px)",
-                  fontWeight: 700,
-                  color: orange,
-                  lineHeight: 1,
-                  marginBottom: 8,
-                }}
-              >
-                {item.stat}
-              </div>
-              <p
-                style={{
-                  fontSize: 13,
+                  display: "flex",
+                  gap: 14,
+                  alignItems: "flex-start",
                   color: "oklch(76% 0.03 80)",
-                  lineHeight: 1.6,
-                  margin: 0,
+                  fontSize: 14,
+                  fontWeight: 500,
+                  lineHeight: 1.7,
                 }}
               >
-                {withSup(lang === "en" ? item.en : item.id)}
-              </p>
-            </div>
-          ))}
+                <span aria-hidden="true" style={{ flex: "0 0 3px", height: 20, background: orange, marginTop: 3 }} />
+                <span>{lang === "en" ? o.en : o.id}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
 
+      {/* -- Why this matters ------------------------------------------------ */}
+      <section id="mc-why" style={{ background: offWhite, padding: "clamp(56px,8vw,80px) 0" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto", padding: "0 16px" }}>
+          <p style={{ ...eyebrow, fontSize: 11, margin: "0 0 12px", lineHeight: 1.4 }}>
+            {t("Why this matters", "Mengapa ini penting")}
+          </p>
+          <h2 style={h2Style}>
+            {t("Relationships affect who stays", "Hubungan memengaruhi siapa yang bertahan")}
+          </h2>
+          {WHY.map((p, i) => (
+            <p key={i} style={{ ...bodyP, marginBottom: i === WHY.length - 1 ? 0 : 18 }}>
+              {rich(lang === "en" ? p.en : p.id)}
+            </p>
+          ))}
+        </div>
+      </section>
+
+      {/* -- Teaching -------------------------------------------------------- */}
+      <section id="mc-teaching" style={{ background: "oklch(95% 0.008 80)", padding: "clamp(56px,8vw,80px) 0" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto", padding: "0 16px" }}>
+          <p style={{ ...eyebrow, fontSize: 11, margin: "0 0 12px", lineHeight: 1.4 }}>
+            {t("The idea", "Gagasannya")}
+          </p>
+          <h2 style={h2Style}>
+            {t("What keeps team relationships going", "Apa yang membuat hubungan tim bertahan")}
+          </h2>
+          {TEACHING.map((b, i) => (
+            <div key={i}>
+              <h3 style={{ ...h3Style, marginTop: i === 0 ? 8 : 36 }}>{lang === "en" ? b.en_title : b.id_title}</h3>
+              <p style={{ ...bodyP, marginBottom: 0 }}>{rich(lang === "en" ? b.en : b.id)}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* -- Three Skills Accordion ------------------------------------------ */}
-      <div style={{ padding: "80px 24px", maxWidth: 860, margin: "0 auto" }}>
-        <p style={{ ...eyebrow, marginBottom: 12 }}>
+      <div style={{ padding: "clamp(56px,8vw,80px) 24px", maxWidth: 860, margin: "0 auto" }}>
+        <p style={{ ...eyebrow, fontSize: 11, margin: "0 0 12px", lineHeight: 1.4 }}>
           {t("Three Relational Skills", "Tiga Keterampilan Relasional")}
         </p>
-        <h2
-          style={{
-            fontFamily: "Montserrat, sans-serif",
-            fontSize: "clamp(22px, 3vw, 32px)",
-            fontWeight: 800,
-            color: navy,
-            marginBottom: 12,
-                      }}
-        >
+        <h2 style={h2Style}>
           {t("Build the skills that keep teams together", "Bangun keterampilan yang menjaga tim tetap bersatu")}
         </h2>
         <p
@@ -605,6 +698,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
             return (
               <div
                 key={skill.key}
+                id={`mc-${skill.key}`}
                 style={{
                   border: `1px solid ${isOpen ? skill.accentColor : "oklch(88% 0.01 80)"}`,
                   borderRadius: 8,
@@ -653,7 +747,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
                   <div style={{ flex: 1 }}>
                     <div
                       style={{
-                        fontFamily: "Montserrat, sans-serif",
+                        fontFamily: sans,
                         fontSize: "clamp(15px, 1.8vw, 18px)",
                         fontWeight: 800,
                         color: isOpen ? skill.accentColor : navy,
@@ -666,7 +760,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
                   </div>
                   <span
                     style={{
-                      fontFamily: "Montserrat, sans-serif",
+                      fontFamily: sans,
                       fontSize: 20,
                       color: skill.accentColor,
                       flexShrink: 0,
@@ -696,7 +790,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
                         borderTop: `2px solid ${skill.accentBg}`,
                       }}
                     >
-                      {withSup(lang === "en" ? skill.en_intro : skill.id_intro)}
+                      {rich(lang === "en" ? skill.en_intro : skill.id_intro)}
                     </p>
 
                     {/* Scenario */}
@@ -710,7 +804,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
                     >
                       <p
                         style={{
-                          fontFamily: "Montserrat, sans-serif",
+                          fontFamily: sans,
                           fontSize: 11,
                           fontWeight: 700,
                           color: skill.accentColor,
@@ -755,7 +849,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
                       >
                         <p
                           style={{
-                            fontFamily: "Montserrat, sans-serif",
+                            fontFamily: sans,
                             fontSize: 11,
                             fontWeight: 700,
                             color: "oklch(48% 0.18 25)",
@@ -774,7 +868,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
                             margin: 0,
                           }}
                         >
-                          {withSup(lang === "en" ? skill.en_typical : skill.id_typical)}
+                          {rich(lang === "en" ? skill.en_typical : skill.id_typical)}
                         </p>
                       </div>
 
@@ -789,7 +883,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
                       >
                         <p
                           style={{
-                            fontFamily: "Montserrat, sans-serif",
+                            fontFamily: sans,
                             fontSize: 11,
                             fontWeight: 700,
                             color: skill.accentColor,
@@ -808,7 +902,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
                             margin: 0,
                           }}
                         >
-                          {withSup(lang === "en" ? skill.en_better : skill.id_better)}
+                          {rich(lang === "en" ? skill.en_better : skill.id_better)}
                         </p>
                       </div>
                     </div>
@@ -817,7 +911,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
                     <div>
                       <p
                         style={{
-                          fontFamily: "Montserrat, sans-serif",
+                          fontFamily: sans,
                           fontSize: 13,
                           fontWeight: 800,
                           color: navy,
@@ -844,7 +938,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
                                 borderRadius: "50%",
                                 background: skill.accentColor,
                                 color: offWhite,
-                                fontFamily: "Montserrat, sans-serif",
+                                fontFamily: sans,
                                 fontSize: 12,
                                 fontWeight: 800,
                                 display: "flex",
@@ -859,7 +953,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
                             <div>
                               <p
                                 style={{
-                                  fontFamily: "Montserrat, sans-serif",
+                                  fontFamily: sans,
                                   fontSize: 13,
                                   fontWeight: 700,
                                   color: skill.accentColor,
@@ -876,12 +970,17 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
                                   margin: 0,
                                 }}
                               >
-                                {withSup(step.body)}
+                                {rich(step.body)}
                               </p>
                             </div>
                           </div>
                         ))}
                       </div>
+                      {(lang === "en" ? skill.en_closing : skill.id_closing) && (
+                        <p style={{ fontSize: 14, color: bodyText, lineHeight: 1.75, margin: "24px 0 0" }}>
+                          {rich((lang === "en" ? skill.en_closing : skill.id_closing) as string)}
+                        </p>
+                      )}
                     </div>
                   </div>
                 )}
@@ -892,164 +991,171 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
       </div>
 
       {/* -- Relational Health Check ----------------------------------------- */}
-      <div style={{ background: lightGray, padding: "80px 24px" }}>
+      <div id="self-assessment" style={{ background: lightGray, padding: "96px 24px", scrollMarginTop: 24 }}>
         <div style={{ maxWidth: 860, margin: "0 auto" }}>
-          <p style={{ ...eyebrow, marginBottom: 12 }}>
-            {t("Reflection", "Refleksi")}
+          <p style={{ ...eyebrow, fontSize: 11, margin: "0 0 12px", lineHeight: 1.4 }}>
+            {t("Self-Assessment", "Penilaian Diri")}
           </p>
-          <h2
-            style={{
-              fontFamily: "Montserrat, sans-serif",
-              fontSize: "clamp(22px, 3vw, 32px)",
-              fontWeight: 800,
-              color: navy,
-              marginBottom: 12,
-                          }}
-          >
-            {t("Relational Health Check", "Pemeriksaan Kesehatan Relasional")}
-          </h2>
-          <p
-            style={{
-              fontSize: 15,
-              color: bodyText,
-              lineHeight: 1.7,
-              marginBottom: 40,
-              maxWidth: 560,
-              margin: "0 0 40px",
-            }}
-          >
+          <h2 style={h2Style}>{t("Relational Health Check", "Cek Kesehatan Relasional")}</h2>
+          <p style={{ fontSize: "clamp(15px,1.7vw,17px)", color: bodyText, lineHeight: 1.8, maxWidth: 620, margin: "0 0 32px" }}>
             {t(
-              "These six statements are honest prompts, with no score at the end. Sit with each one and notice what comes up.",
-              "Enam pernyataan ini adalah ajakan untuk jujur, tanpa skor di akhir. Renungkan satu per satu dan perhatikan apa yang muncul."
+              "Ten statements about your team relationships. Rate each one from 1 to 5 as honestly as you can. There are no right answers.",
+              "Sepuluh pernyataan tentang hubungan dalam tim Anda. Nilai masing-masing dari 1 sampai 5 sejujur mungkin. Tidak ada jawaban yang benar atau salah."
             )}
           </p>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            {HEALTH_CHECKS.map((item, idx) => {
-              const isChecked = checkedItems.has(item.id);
-              return (
-                <button
-                  key={item.id}
-                  type="button"
-                  aria-pressed={isChecked}
-                  onClick={() => toggleCheck(item.id)}
-                  style={{
-                    background: isChecked ? "oklch(65% 0.15 45 / 0.08)" : offWhite,
-                    border: `1px solid ${isChecked ? orange : "oklch(88% 0.01 80)"}`,
-                    borderRadius: 8,
-                    padding: "18px 20px",
-                    display: "flex",
-                    gap: 16,
-                    alignItems: "flex-start",
-                    cursor: "pointer",
-                    textAlign: "left",
-                    transition: "all 0.15s",
-                  }}
-                >
+          <div
+            aria-live="polite"
+            style={{
+              background: "white",
+              borderRadius: 10,
+              padding: "28px clamp(18px, 4vw, 32px)",
+              borderLeft: `4px solid ${orange}`,
+            }}
+          >
+            {!aDone ? (
+              <div key={aStep}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
+                  <span style={{ fontSize: 13, fontWeight: 700, color: navy }}>
+                    {aStep + 1} {t("of", "dari")} {ASSESS.length}
+                  </span>
+                  {aStep > 0 && (
+                    <button
+                      type="button"
+                      onClick={backQ}
+                      style={{
+                        background: "none",
+                        border: "none",
+                        color: orange,
+                        textDecoration: "underline",
+                        fontFamily: sans,
+                        fontSize: 13,
+                        fontWeight: 700,
+                        cursor: "pointer",
+                        minHeight: 44,
+                        padding: "0 8px",
+                      }}
+                    >
+                      {t("Back", "Kembali")}
+                    </button>
+                  )}
+                </div>
+                <div style={{ height: 4, background: lightGray, borderRadius: 2, marginBottom: 28 }}>
                   <div
                     style={{
-                      width: 22,
-                      height: 22,
-                      borderRadius: 4,
-                      border: `2px solid ${isChecked ? orange : "oklch(75% 0.02 80)"}`,
-                      background: isChecked ? orange : "transparent",
-                      flexShrink: 0,
-                      marginTop: 1,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      transition: "all 0.15s",
+                      height: 4,
+                      background: orange,
+                      borderRadius: 2,
+                      width: `${(aStep / ASSESS.length) * 100}%`,
+                      transition: "width 0.3s",
                     }}
-                  >
-                    {isChecked && (
-                      <svg
-                        width="12"
-                        height="9"
-                        viewBox="0 0 12 9"
-                        fill="none"
-                        aria-hidden="true"
-                        style={{ display: "block" }}
+                  />
+                </div>
+                <p
+                  style={{
+                    fontFamily: serif,
+                    fontSize: "clamp(19px,2.4vw,24px)",
+                    fontWeight: 600,
+                    color: navy,
+                    lineHeight: 1.5,
+                    margin: "0 0 28px",
+                  }}
+                >
+                  {lang === "en" ? ASSESS[aStep].en : ASSESS[aStep].id}
+                </p>
+                <div role="group" aria-label={lang === "en" ? ASSESS[aStep].en : ASSESS[aStep].id} style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 8 }}>
+                  {[1, 2, 3, 4, 5].map((v) => {
+                    const word = lang === "en" ? ASSESS_SCALE[v - 1].en : ASSESS_SCALE[v - 1].id;
+                    const selected = aAnswers[aStep] === v;
+                    return (
+                      <button
+                        key={v}
+                        type="button"
+                        aria-pressed={selected}
+                        aria-label={`${v}, ${word}`}
+                        title={word}
+                        onClick={() => answerQ(v)}
+                        style={{
+                          minHeight: 56,
+                          borderRadius: 8,
+                          fontFamily: sans,
+                          fontSize: 18,
+                          fontWeight: 700,
+                          cursor: "pointer",
+                          background: selected ? navy : "white",
+                          color: selected ? offWhite : navy,
+                          border: selected ? `2px solid ${navy}` : "2px solid oklch(80% 0.02 260)",
+                        }}
                       >
-                        <path
-                          d="M1 4L4.5 7.5L11 1"
-                          stroke={offWhite}
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    )}
-                  </div>
-                  <div style={{ flex: 1 }}>
-                    <span
-                      style={{
-                        fontFamily: "Montserrat, sans-serif",
-                        fontSize: 11,
-                        fontWeight: 700,
-                        color: orange,
-                        letterSpacing: "0.08em",
-                        textTransform: "uppercase",
-                        display: "block",
-                        marginBottom: 4,
-                      }}
-                    >
-                      {idx + 1}
-                    </span>
-                    <p
-                      style={{
-                        fontSize: 15,
-                        color: isChecked ? navy : bodyText,
-                        lineHeight: 1.7,
-                        margin: 0,
-                        fontWeight: isChecked ? 600 : 400,
-                      }}
-                    >
-                      {lang === "en" ? item.en : item.id_lang}
-                    </p>
-                  </div>
+                        {v}
+                      </button>
+                    );
+                  })}
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between", marginTop: 10, fontSize: 12, color: bodyText }}>
+                  <span>1 = {lang === "en" ? ASSESS_SCALE[0].en : ASSESS_SCALE[0].id}</span>
+                  <span>5 = {lang === "en" ? ASSESS_SCALE[4].en : ASSESS_SCALE[4].id}</span>
+                </div>
+              </div>
+            ) : (
+              <div>
+                <p style={{ ...eyebrow, fontSize: 11, margin: "0 0 8px", lineHeight: 1.4 }}>
+                  {t("Your result", "Hasil Anda")}
+                </p>
+                <p style={{ fontFamily: serif, fontSize: "clamp(40px,6vw,56px)", fontWeight: 700, color: navy, margin: "0 0 4px", lineHeight: 1.1 }}>
+                  {aTotal}
+                  <span style={{ fontSize: "0.45em" }}> / {ASSESS.length * 5}</span>
+                </p>
+                <h3
+                  style={{
+                    fontFamily: serif,
+                    fontStyle: "italic",
+                    fontSize: "clamp(22px,2.8vw,28px)",
+                    fontWeight: 700,
+                    color: navy,
+                    margin: "0 0 12px",
+                  }}
+                >
+                  {lang === "en" ? aBand.en_title : aBand.id_title}
+                </h3>
+                <p style={{ fontFamily: serif, fontSize: "clamp(15px,1.7vw,17px)", lineHeight: 1.85, color: bodyText, margin: "0 0 16px" }}>
+                  {lang === "en" ? aBand.en_body : aBand.id_body}
+                </p>
+                <p style={{ fontSize: 14, lineHeight: 1.7, color: bodyText, margin: "0 0 12px" }}>
+                  <strong>{t("Your lowest areas: ", "Area terendah Anda: ")}</strong>
+                  {aLowest.map((x) => (lang === "en" ? ASSESS[x.i].en_label : ASSESS[x.i].id_label)).join(", ")}
+                </p>
+                <p style={{ fontSize: 14, lineHeight: 1.7, color: bodyText, margin: "0 0 20px" }}>
+                  {lang === "en" ? aBand.en_tip : aBand.id_tip}{" "}
+                  <a
+                    href={`#${aBand.anchor}`}
+                    onClick={() => setOpenSkill(aBand.skill)}
+                    style={{ color: orange, fontWeight: 700, textDecoration: "underline", textUnderlineOffset: 3 }}
+                  >
+                    {t("Go to this section", "Buka bagian ini")}
+                  </a>
+                </p>
+                <button
+                  type="button"
+                  onClick={restartA}
+                  style={{
+                    background: "white",
+                    color: navy,
+                    border: `2px solid ${navy}`,
+                    borderRadius: 8,
+                    fontFamily: sans,
+                    fontSize: 14,
+                    fontWeight: 700,
+                    cursor: "pointer",
+                    minHeight: 44,
+                    padding: "0 20px",
+                  }}
+                >
+                  {t("Start again", "Mulai lagi")}
                 </button>
-              );
-            })}
+              </div>
+            )}
           </div>
-
-          {/* Reflection prompt below checklist */}
-          {checkedItems.size > 0 && (
-            <div
-              style={{
-                marginTop: 28,
-                background: offWhite,
-                borderRadius: 8,
-                padding: "24px 28px",
-                borderLeft: `4px solid ${orange}`,
-              }}
-            >
-              <p
-                style={{
-                  fontFamily: serif,
-                  fontSize: "clamp(15px, 1.8vw, 18px)",
-                  fontStyle: "italic",
-                  color: navy,
-                  lineHeight: 1.7,
-                  margin: 0,
-                }}
-              >
-                {checkedItems.size >= 5
-                  ? t(
-                      "These are real strengths. The challenge now is to protect them under pressure, in busy seasons and when the team is losing people.",
-                      "Ini adalah kekuatan yang nyata. Tantangannya sekarang adalah menjaganya saat tertekan, di musim sibuk dan ketika tim kehilangan orang."
-                    )
-                  : checkedItems.size >= 3
-                  ? t(
-                      "You have a foundation to build on. The statements you didn't check are the ones to sit with. What would need to shift for them to become true?",
-                      "Anda punya fondasi untuk dibangun. Pernyataan yang tidak Anda centang adalah yang paling perlu direnungkan. Apa yang perlu berubah supaya pernyataan itu menjadi benar?"
-                    )
-                  : t(
-                      "Honesty is the starting point. These gaps are exactly where the three skills in this module do their work.",
-                      "Kejujuran adalah titik awal. Celah-celah ini justru tempat tiga keterampilan dalam modul ini bekerja."
-                    )}
-              </p>
-            </div>
-          )}
         </div>
       </div>
 
@@ -1061,7 +1167,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
           </p>
           <h2
             style={{
-              fontFamily: "Montserrat, sans-serif",
+              fontFamily: sans,
               fontSize: "clamp(22px, 3vw, 32px)",
               fontWeight: 800,
               color: offWhite,
@@ -1078,7 +1184,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
           <div style={{ marginBottom: 52 }}>
             <p
               style={{
-                fontFamily: "Montserrat, sans-serif",
+                fontFamily: sans,
                 fontSize: 12,
                 fontWeight: 700,
                 color: orange,
@@ -1125,7 +1231,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
           >
             <p
               style={{
-                fontFamily: "Montserrat, sans-serif",
+                fontFamily: sans,
                 fontSize: 12,
                 fontWeight: 700,
                 color: orange,
@@ -1214,8 +1320,8 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
                 id: "Diam dan menarik diri sering kali adalah sinyal. Ungkapkan polanya secara pribadi dan lembut, sebelum ketegangan mengeras atau meledak.",
               },
               {
-                en: "Resolution may not look like open agreement. In many cultures a trusted go-between is the right path.",
-                id: "Penyelesaian belum tentu berupa kesepakatan terbuka. Dalam banyak budaya, perantara yang dipercaya adalah jalan yang tepat.",
+                en: "Name conflict early, while both people still want each other to win. Indirect naming, through a private talk, a story or a trusted go-between, is still naming.",
+                id: "Ungkapkan konflik sejak dini, ketika kedua pihak masih sama-sama menginginkan yang terbaik bagi satu sama lain. Mengungkapkan secara tidak langsung, lewat percakapan pribadi, cerita, atau orang ketiga yang dipercaya, juga termasuk mengungkapkan.",
               },
               {
                 en: "Name loss out loud. Goodbye rituals and regular grief checks keep unspoken loss from piling up.",
@@ -1320,7 +1426,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
             </p>
             <p
               style={{
-                fontFamily: "Montserrat, sans-serif",
+                fontFamily: sans,
                 fontSize: 12,
                 fontWeight: 700,
                 color: orange,
@@ -1341,7 +1447,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
                 color: offWhite,
                 border: "none",
                 borderRadius: 12,
-                fontFamily: "Montserrat, sans-serif",
+                fontFamily: sans,
                 fontWeight: 700,
                 fontSize: 13,
                 cursor: "pointer",

@@ -366,7 +366,7 @@ export default function IdentityUnderPressureClient({ userPathway, isSaved: init
       </section>
 
       {/* INTRO: WHAT IS IDENTITY UNDER PRESSURE */}
-      <section style={{ background: offWhite, padding: "72px 24px" }}>
+      <section id="mc-challenge" style={{ background: offWhite, padding: "72px 24px" }}>
         <div style={{ maxWidth: 860, margin: "0 auto" }}>
           <p style={{ ...eyebrow(), marginBottom: 12 }}>
             {t("The Challenge", "Tantangan", lang)}
@@ -656,7 +656,7 @@ export default function IdentityUnderPressureClient({ userPathway, isSaved: init
       </section>
 
       {/* THE UNSHAKEABLE CORE: BIBLICAL REFLECTION */}
-      <section style={{ background: navy, padding: "80px 24px" }}>
+      <section id="mc-core" style={{ background: navy, padding: "80px 24px" }}>
         <div style={{ maxWidth: 860, margin: "0 auto" }}>
           <p style={{ ...eyebrow(), marginBottom: 16 }}>
             {t("The Unshakeable Core", "Inti yang Tidak Tergoyahkan", lang)}
