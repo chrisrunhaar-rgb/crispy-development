@@ -644,14 +644,16 @@ export default function ReturningWellClient({ userPathway, isSaved: initialSaved
             </p>
           </div>
 
-          {/* Stage selector: horizontal arc */}
-          <div style={{
-            display: "flex",
-            gap: 0,
+          {/* Stage selector: 4 across on desktop, 2x2 on phones */}
+          <style>{`.rw-stage-tabs { grid-template-columns: repeat(4, 1fr); } @media (max-width: 600px) { .rw-stage-tabs { grid-template-columns: repeat(2, 1fr); } }`}</style>
+          <div className="rw-stage-tabs" style={{
+            display: "grid",
+            gap: 1,
             marginBottom: 48,
             borderRadius: 8,
             overflow: "hidden",
             border: `1px solid oklch(88% 0.01 80)`,
+            background: "oklch(88% 0.01 80)",
           }}>
             {JOURNEY_STAGES.map((stage, idx) => {
               const isActive = stage.id === activeStage;
@@ -662,10 +664,9 @@ export default function ReturningWellClient({ userPathway, isSaved: initialSaved
                   key={stage.id}
                   onClick={() => setActiveStage(stage.id)}
                   style={{
-                    flex: 1,
-                    padding: "20px 12px",
+                    padding: "18px 10px",
+                    minHeight: 44,
                     border: "none",
-                    borderRight: idx < JOURNEY_STAGES.length - 1 ? `1px solid oklch(88% 0.01 80)` : "none",
                     cursor: "pointer",
                     background: isActive ? navy : offWhite,
                     color: isActive ? offWhite : bodyText,
@@ -675,10 +676,11 @@ export default function ReturningWellClient({ userPathway, isSaved: initialSaved
                 >
                   <div style={{
                     fontFamily: serif,
-                    fontSize: "clamp(15px, 1.8vw, 20px)",
+                    fontSize: "clamp(17px, 1.8vw, 20px)",
                     fontWeight: 700,
                     fontStyle: "italic",
                     marginBottom: 4,
+                    overflowWrap: "anywhere",
                     color: isActive ? offWhite : navy,
                   }}>
                     {stageTitle}
