@@ -603,6 +603,23 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
         </div>
       </section>
 
+      {/* -- Why this matters ------------------------------------------------ */}
+      <section id="mc-why" style={{ background: offWhite, padding: "clamp(56px,8vw,80px) 0" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto", padding: "0 16px" }}>
+          <p style={{ ...eyebrow, fontSize: 11, margin: "0 0 12px", lineHeight: 1.4 }}>
+            {t("Why this matters", "Mengapa ini penting")}
+          </p>
+          <h2 style={h2Style}>
+            {t("Relationships affect who stays", "Hubungan memengaruhi siapa yang bertahan")}
+          </h2>
+          {WHY.map((p, i) => (
+            <p key={i} style={{ ...bodyP, marginBottom: i === WHY.length - 1 ? 0 : 18 }}>
+              {rich(lang === "en" ? p.en : p.id)}
+            </p>
+          ))}
+        </div>
+      </section>
+
       {/* -- Objectives ------------------------------------------------------ */}
       <div style={{ background: navy, padding: "clamp(40px,6vw,56px) 0" }}>
         <div style={{ maxWidth: 720, margin: "0 auto", padding: "0 16px" }}>
@@ -630,23 +647,6 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
           </ul>
         </div>
       </div>
-
-      {/* -- Why this matters ------------------------------------------------ */}
-      <section id="mc-why" style={{ background: offWhite, padding: "clamp(56px,8vw,80px) 0" }}>
-        <div style={{ maxWidth: 720, margin: "0 auto", padding: "0 16px" }}>
-          <p style={{ ...eyebrow, fontSize: 11, margin: "0 0 12px", lineHeight: 1.4 }}>
-            {t("Why this matters", "Mengapa ini penting")}
-          </p>
-          <h2 style={h2Style}>
-            {t("Relationships affect who stays", "Hubungan memengaruhi siapa yang bertahan")}
-          </h2>
-          {WHY.map((p, i) => (
-            <p key={i} style={{ ...bodyP, marginBottom: i === WHY.length - 1 ? 0 : 18 }}>
-              {rich(lang === "en" ? p.en : p.id)}
-            </p>
-          ))}
-        </div>
-      </section>
 
       {/* -- Teaching -------------------------------------------------------- */}
       <section id="mc-teaching" style={{ background: "oklch(95% 0.008 80)", padding: "clamp(56px,8vw,80px) 0" }}>
