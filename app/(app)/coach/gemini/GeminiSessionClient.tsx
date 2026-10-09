@@ -330,7 +330,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
   // When manual mode is on, append an instruction so the coach waits fully and never fills silence.
   // Localised for ID users so the coach doesn't code-switch to English (TALI's open item).
   const manualModeInstruction = lang === "id"
-    ? `\n\n## MODE MANUAL AKTIF\nOrang ini mengendalikan giliran bicara sendiri. Tunggu sepenuhnya sampai mereka selesai — jangan pernah mengisi keheningan, jangan memotong, jangan mendorong mereka untuk berbicara. Kamu hanya akan merespons setelah mereka memberi sinyal bahwa mereka selesai. Saat merespons, pertimbangkan keseluruhan yang mereka bagikan, bukan hanya kalimat terakhir.`
+    ? `\n\n## MODE MANUAL AKTIF\nOrang ini mengendalikan giliran bicara sendiri. Tunggu sepenuhnya sampai mereka selesai — jangan pernah mengisi keheningan, jangan memotong, jangan mendorong mereka untuk berbicara. Anda hanya akan merespons setelah mereka memberi sinyal bahwa mereka selesai. Saat merespons, pertimbangkan keseluruhan yang mereka bagikan, bukan hanya kalimat terakhir.`
     : `\n\n## MANUAL MODE ACTIVE\nThis person controls their own turn-taking. Wait fully until they are finished — never fill the silence, never interrupt, never prompt them to keep talking. You will only respond after they signal they are done. When you do respond, reflect on the whole of what they shared, not just their last sentence.`;
 
   const effectiveSystemPrompt = useCallback(

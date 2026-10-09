@@ -2162,7 +2162,7 @@ export default function UnderstandingBurnoutClient({
                     margin: 0,
                   }}
                 >
-                  {t("If You Lead a Cross-Cultural Team", "Jika Kamu Memimpin Tim Lintas Budaya", lang)}
+                  {t("If You Lead a Cross-Cultural Team", "Jika Anda Memimpin Tim Lintas Budaya", lang)}
                 </h3>
                 <span
                   style={{
@@ -2206,10 +2206,10 @@ export default function UnderstandingBurnoutClient({
                     "Six risk factors shape whether your team environment protects or depletes: workload, control over one’s own work, reward (financial and relational), community cohesion, perceived fairness, and values alignment. These are not abstract theory. The Maslach Burnout Inventory (MBI) and the Areas of Worklife Survey (AWS) give you concrete tools to screen for these conditions before people collapse.",
                     "The shift leaders need to make is from reactive care to structural prevention. Your team deserves both.",
                   ] : [
-                    "Ketika seseorang di timmu mengalami burnout, naluri pertama adalah fokus pada mereka, menawarkan dukungan, istirahat, atau konseling. Itu penting. Namun penelitian oleh Leiter dan Maslach mengungkapkan sesuatu yang tidak nyaman: orang yang sama, ketika ditempatkan dalam konteks organisasi yang berbeda, sering kali tidak mengalami burnout. Sindrom ini dipicu oleh kondisi struktural, bukan semata-mata oleh kerentanan pribadi seseorang.",
-                    "Artinya, burnout dalam timmu sering kali adalah sinyal tentang organisasimu, bukan penilaian atas individu tersebut.",
-                    "Ada enam faktor risiko yang menentukan apakah lingkungan timmu melindungi atau justru menguras tenaga: beban kerja, kendali atas pekerjaan sendiri, penghargaan (finansial maupun relasional), kohesi komunitas, keadilan yang dirasakan, dan keselarasan nilai. Ini bukan teori semata. Maslach Burnout Inventory (MBI) dan Areas of Worklife Survey (AWS) memberikan alat yang konkret untuk mendeteksi kondisi-kondisi ini sebelum orang-orang di timmu jatuh.",
-                    "Pergeseran yang perlu dibuat oleh pemimpin adalah dari perawatan reaktif menuju pencegahan struktural. Timmu layak mendapatkan keduanya.",
+                    "Ketika seseorang di tim Anda mengalami burnout, naluri pertama adalah fokus pada mereka, menawarkan dukungan, istirahat, atau konseling. Itu penting. Namun penelitian oleh Leiter dan Maslach mengungkapkan sesuatu yang tidak nyaman: orang yang sama, ketika ditempatkan dalam konteks organisasi yang berbeda, sering kali tidak mengalami burnout. Sindrom ini dipicu oleh kondisi struktural, bukan semata-mata oleh kerentanan pribadi seseorang.",
+                    "Artinya, burnout dalam tim Anda sering kali adalah sinyal tentang organisasi Anda, bukan penilaian atas individu tersebut.",
+                    "Ada enam faktor risiko yang menentukan apakah lingkungan tim Anda melindungi atau justru menguras tenaga: beban kerja, kendali atas pekerjaan sendiri, penghargaan (finansial maupun relasional), kohesi komunitas, keadilan yang dirasakan, dan keselarasan nilai. Ini bukan teori semata. Maslach Burnout Inventory (MBI) dan Areas of Worklife Survey (AWS) memberikan alat yang konkret untuk mendeteksi kondisi-kondisi ini sebelum orang-orang di tim Anda jatuh.",
+                    "Pergeseran yang perlu dibuat oleh pemimpin adalah dari perawatan reaktif menuju pencegahan struktural. Tim Anda layak mendapatkan keduanya.",
                   ]).map((para, i) => (
                     <p
                       key={i}

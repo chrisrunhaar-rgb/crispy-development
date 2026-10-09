@@ -811,13 +811,13 @@ export default function BigFiveClient({
               {lang === "id" ? "Poin Utama" : "Key Takeaway"}
             </p>
             <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(18px, 2.2vw, 24px)", fontWeight: 800, color: "oklch(22% 0.10 260)", marginBottom: 36 }}>
-              {lang === "id" ? "Tiga hal yang bisa kamu terapkan minggu ini" : "Three things to act on this week"}
+              {lang === "id" ? "Tiga hal yang bisa Anda terapkan minggu ini" : "Three things to act on this week"}
             </h2>
             <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
               {(lang === "id" ? [
-                "Selesaikan asesmen Big Five ini dan identifikasi skor trait mana yang paling mengejutkanmu. Diskusikan dengan satu rekan yang mengenalmu dalam konteks berbeda — pekerjaan, keluarga, atau pelayanan — dan tanya apa yang mereka amati.",
-                "Pilih salah satu traitmu yang skornya lebih rendah dan identifikasi satu situasi konkret minggu ini di mana kamu melihat trait itu bekerja. Ungkapkan tanpa menghakimi: bukan 'saya buruk di X' tapi 'saya cenderung ke X dalam situasi seperti ini.'",
-                "Bagikan kerangka Big Five dengan timmu dan bandingkan trait mana yang tumpang tindih dan mana yang saling melengkapi. Gunakan untuk percakapan tentang bagaimana kalian membagi pekerjaan, bukan untuk menetapkan identitas tetap.",
+                "Selesaikan asesmen Big Five ini dan identifikasi skor trait mana yang paling mengejutkan Anda. Diskusikan dengan satu rekan yang mengenal Anda dalam konteks berbeda — pekerjaan, keluarga, atau pelayanan — dan tanya apa yang mereka amati.",
+                "Pilih salah satu trait Anda yang skornya lebih rendah dan identifikasi satu situasi konkret minggu ini di mana Anda melihat trait itu bekerja. Ungkapkan tanpa menghakimi: bukan 'saya buruk di X' tapi 'saya cenderung ke X dalam situasi seperti ini.'",
+                "Bagikan kerangka Big Five dengan tim Anda dan bandingkan trait mana yang tumpang tindih dan mana yang saling melengkapi. Gunakan untuk percakapan tentang bagaimana kalian membagi pekerjaan, bukan untuk menetapkan identitas tetap.",
               ] : [
                 "Take this Big Five assessment and identify which of your five trait scores surprises you most. Discuss it with one colleague who knows you in a different context — work, family, ministry — and ask what they observe.",
                 "Choose one of your lower-scoring traits and name one specific situation this week where you see it play out. Name it without judgment: not 'I am bad at X' but 'I tend toward X in situations like this.'",

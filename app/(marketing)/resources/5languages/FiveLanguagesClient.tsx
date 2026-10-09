@@ -94,8 +94,8 @@ const LANG_DATA_ID: Record<ScoreKey, {
     name: "Kata-Kata Penghargaan",
     color: "oklch(72% 0.18 85)",
     colorLight: "oklch(96% 0.03 85)",
-    desc: "Kamu merasa dihargai ketika orang-orang mengucapkan apresiasi yang spesifik dan tulus. Sebuah kalimat yang tepat waktu bisa memampukan kamu melewati musim yang berat. Pujian yang kabur kurang bermakna dibanding kata-kata spesifik yang menunjukkan seseorang benar-benar melihat pekerjaanmu.",
-    notMeans: "Ini bukan berarti kamu butuh pujian terus-menerus. Kamu menginginkan kejujuran — kata-kata yang benar, spesifik, dan disampaikan di saat yang tepat.",
+    desc: "Anda merasa dihargai ketika orang-orang mengucapkan apresiasi yang spesifik dan tulus. Sebuah kalimat yang tepat waktu bisa memampukan Anda melewati musim yang berat. Pujian yang kabur kurang bermakna dibanding kata-kata spesifik yang menunjukkan seseorang benar-benar melihat pekerjaan Anda.",
+    notMeans: "Ini bukan berarti Anda butuh pujian terus-menerus. Anda menginginkan kejujuran — kata-kata yang benar, spesifik, dan disampaikan di saat yang tepat.",
     crossCultural: "Kata-Kata Penghargaan mudah diterima dalam budaya low-context, tapi bisa terasa performatif dalam budaya Asia high-context di mana komunikasi tidak langsung adalah norma. Pelajari kosakata apresiasi lokal.",
     biblical: "Barnabas artinya 'Anak Penghiburan.' Ia membela Saulus ketika tidak ada yang mempercayainya (Kisah Para Rasul 9:27), melihat potensi dalam Yohanes Markus ketika Paulus menolaknya (Kisah Para Rasul 15:36–39), dan membangun kepercayaan diri jemaat di seluruh gereja mula-mula (Kisah Para Rasul 11:23). Bahasa kasih utamanya adalah kata-kata — diucapkan di saat yang paling dibutuhkan, menyebut apa yang orang lain belum bisa lihat. Pemimpin Kata-Kata Penghargaan belajar dari Barnabas: sebuah kalimat yang disampaikan dengan baik pada saat yang tepat bisa mengubah seluruh arah hidup seseorang.",
     biblicalAnchor: "Barnabas — Kisah Para Rasul 9:27",
@@ -104,18 +104,18 @@ const LANG_DATA_ID: Record<ScoreKey, {
     name: "Waktu Berkualitas",
     color: "oklch(62% 0.14 235)",
     colorLight: "oklch(95% 0.02 235)",
-    desc: "Kamu merasa dihargai ketika seseorang memberikanmu perhatian penuh yang tidak terburu-buru. Satu jam yang terganggu nilainya lebih rendah dari tiga puluh menit yang fokus. Kehadiran adalah mata uangnya — ada bersamamu tanpa mengecek ponsel, tanpa rapat berikutnya yang sudah menarik perhatian.",
-    notMeans: "Ini bukan berarti kamu butuh waktu tanpa batas bersama orang-orang. Kamu butuh perhatian penuh selama waktu yang diberikan — kualitas di atas kuantitas.",
+    desc: "Anda merasa dihargai ketika seseorang memberikan Anda perhatian penuh yang tidak terburu-buru. Satu jam yang terganggu nilainya lebih rendah dari tiga puluh menit yang fokus. Kehadiran adalah mata uangnya — ada bersama Anda tanpa mengecek ponsel, tanpa rapat berikutnya yang sudah menarik perhatian.",
+    notMeans: "Ini bukan berarti Anda butuh waktu tanpa batas bersama orang-orang. Anda butuh perhatian penuh selama waktu yang diberikan — kualitas di atas kuantitas.",
     crossCultural: "Waktu Berkualitas tampak berbeda di tempat di mana waktu itu sendiri terstruktur berbeda. Makan malam panjang yang santai adalah bentuk kasih yang dalam di Indonesia, di mana pertemuan yang sama mungkin terasa tidak efisien di Jerman. Pelajari apa arti 'tidak terburu-buru' di setiap konteks.",
-    biblical: "Yesus bisa saja melatih kedua belas murid hanya melalui pengajaran, tapi Injil menunjukkan Ia melakukan sesuatu yang berbeda. Ia makan bersama mereka, berjalan bersama mereka di jalan yang panjang, tidur di perahu yang sama, bertanya apa yang sedang mereka perdebatkan, dan menyingkir bersama lingkaran dalam ke gunung-gunung dan taman-taman. Pelatihan terjadi melalui waktu bersama. Pemimpin Waktu Berkualitas belajar dari Yesus: kehadiran adalah kurikulum. Tim yang telah bersama denganmu jauh lebih banyak mengingat daripada tim yang hanya diajar olehmu.",
+    biblical: "Yesus bisa saja melatih kedua belas murid hanya melalui pengajaran, tapi Injil menunjukkan Ia melakukan sesuatu yang berbeda. Ia makan bersama mereka, berjalan bersama mereka di jalan yang panjang, tidur di perahu yang sama, bertanya apa yang sedang mereka perdebatkan, dan menyingkir bersama lingkaran dalam ke gunung-gunung dan taman-taman. Pelatihan terjadi melalui waktu bersama. Pemimpin Waktu Berkualitas belajar dari Yesus: kehadiran adalah kurikulum. Tim yang telah bersama dengan Anda jauh lebih banyak mengingat daripada tim yang hanya diajar oleh Anda.",
     biblicalAnchor: "Yesus bersama Kedua Belas — Markus 3:14",
   },
   C: {
     name: "Tindakan Pelayanan",
     color: "oklch(52% 0.14 150)",
     colorLight: "oklch(95% 0.02 150)",
-    desc: "Kamu merasa dihargai ketika seseorang melakukan sesuatu yang praktis untuk membantumu — tanpa diminta. Rekan yang memperhatikan apa yang kamu tanggung dan langsung bertindak tanpa menunggu permintaan berbicara langsung kepadamu. Tindakan itu berkata: Aku melihatmu, dan aku bertindak atasnya.",
-    notMeans: "Ini bukan berarti kamu ingin orang mengerjakan tugasmu. Kamu menginginkan pelayanan yang sukarela dan spesifik — bantuan yang menunjukkan kesadaran akan situasimu yang sebenarnya, bukan sekadar mengambil tugas secara umum.",
+    desc: "Anda merasa dihargai ketika seseorang melakukan sesuatu yang praktis untuk membantu Anda — tanpa diminta. Rekan yang memperhatikan apa yang Anda tanggung dan langsung bertindak tanpa menunggu permintaan berbicara langsung kepada Anda. Tindakan itu berkata: Aku melihat Anda, dan aku bertindak atasnya.",
+    notMeans: "Ini bukan berarti Anda ingin orang mengerjakan tugas Anda. Anda menginginkan pelayanan yang sukarela dan spesifik — bantuan yang menunjukkan kesadaran akan situasi Anda yang sebenarnya, bukan sekadar mengambil tugas secara umum.",
     crossCultural: "Pelayanan yang dilakukan diam-diam berbicara keras di banyak budaya, tapi bisa disalahartikan sebagai melampaui batas dalam budaya lain. Dalam budaya berorientasi otonomi, tanyakan dulu sebelum bertindak. Dalam budaya komunal, bertindak tanpa bertanya seringkali adalah bentuk kasih tertinggi.",
     biblical: "Kisah Para Rasul 9 menyebut Tabita sebagai seorang murid yang penuh dengan perbuatan baik dan sedekah. Ia membuat jubah-jubah untuk para janda Yopa — pelayanan praktis, berulang, dan tersembunyi yang membangun gereja melalui keseharian. Ketika ia meninggal, para janda menunjukkan kepada Petrus jubah-jubah yang ia buat. Karunianya terlihat hanya dari apa yang telah ia berikan. Pemimpin Tindakan Pelayanan belajar dari Tabita: pekerjaan yang tidak ada yang tepuktangani seringkali adalah pekerjaan yang menopang gereja.",
     biblicalAnchor: "Tabita (Dorkas) — Kisah Para Rasul 9:36",
@@ -124,9 +124,9 @@ const LANG_DATA_ID: Record<ScoreKey, {
     name: "Hadiah Konkret",
     color: "oklch(68% 0.15 10)",
     colorLight: "oklch(96% 0.02 10)",
-    desc: "Kamu merasa dihargai ketika seseorang membawakan sesuatu yang dipilih khusus untukmu. Nilainya bukan harganya — melainkan bukti bahwa seseorang memikirkanmu ketika kamu tidak ada. Sebuah kenang-kenangan kecil yang dibawa sepulang bepergian bisa lebih bermakna dari hadiah mahal yang tidak personal.",
-    notMeans: "Ini bukan berarti kamu materialistis. Kamu membaca hadiah sebagai simbol perhatian. Hadiah yang penuh pertimbangan namun murah harganya dari seseorang yang mengenalmu jauh lebih berharga dari hadiah mahal dari seseorang yang tidak.",
-    crossCultural: "Hadiah Konkret membawa makna kuat dalam banyak budaya Asia, Afrika, dan Amerika Latin, dan bisa terasa transaksional dalam konteks Eropa Utara. Di beberapa budaya, apa yang kamu berikan menandakan nilai hubungannya. Pelajari tata bahasa pemberian hadiah setempat.",
+    desc: "Anda merasa dihargai ketika seseorang membawakan sesuatu yang dipilih khusus untuk Anda. Nilainya bukan harganya — melainkan bukti bahwa seseorang memikirkan Anda ketika Anda tidak ada. Sebuah kenang-kenangan kecil yang dibawa sepulang bepergian bisa lebih bermakna dari hadiah mahal yang tidak personal.",
+    notMeans: "Ini bukan berarti Anda materialistis. Anda membaca hadiah sebagai simbol perhatian. Hadiah yang penuh pertimbangan namun murah harganya dari seseorang yang mengenal Anda jauh lebih berharga dari hadiah mahal dari seseorang yang tidak.",
+    crossCultural: "Hadiah Konkret membawa makna kuat dalam banyak budaya Asia, Afrika, dan Amerika Latin, dan bisa terasa transaksional dalam konteks Eropa Utara. Di beberapa budaya, apa yang Anda berikan menandakan nilai hubungannya. Pelajari tata bahasa pemberian hadiah setempat.",
     biblical: "Maria dari Betani memecahkan buli-buli nard murni — senilai upah setahun — dan menuangkannya ke kaki Yesus (Markus 14:3–9). Para murid menyebutnya pemborosan. Yesus menyebutnya indah: 'Ia telah melakukan suatu perbuatan yang indah padaku — di mana pun Injil diberitakan di seluruh dunia, apa yang dilakukannya ini akan disebut-sebut juga untuk mengenang dia.' Hadiah itu dengan sengaja berlebihan. Pemimpin Hadiah Konkret belajar dari Maria: hadiah yang penuh pertimbangan, diberikan pada saat yang tepat, membawa bobot yang tidak bisa dibawa oleh kata-kata.",
     biblicalAnchor: "Maria dari Betani — Markus 14:3",
   },
@@ -134,7 +134,7 @@ const LANG_DATA_ID: Record<ScoreKey, {
     name: "Sentuhan yang Tepat",
     color: "oklch(70% 0.16 65)",
     colorLight: "oklch(95% 0.03 65)",
-    desc: "Kamu merasa dihargai ketika seseorang memberikan kehangatan fisik yang tepat — jabatan tangan yang erat, tangan di bahu, salam yang hangat. Kehadiran fisik mengomunikasikan apa yang terkadang tidak bisa diungkapkan oleh kata-kata: bahwa seseorang benar-benar senang kamu ada di sini.",
+    desc: "Anda merasa dihargai ketika seseorang memberikan kehangatan fisik yang tepat — jabatan tangan yang erat, tangan di bahu, salam yang hangat. Kehadiran fisik mengomunikasikan apa yang terkadang tidak bisa diungkapkan oleh kata-kata: bahwa seseorang benar-benar senang Anda ada di sini.",
     notMeans: "Ini bukan berarti semua kontak fisik itu diterima. 'Tepat' adalah kata kuncinya — bentuknya harus sesuai dengan hubungan, dinamika gender, dan konteks budaya. Substansinya (kehangatan insani) adalah konstan; bentuknya tidak.",
     crossCultural: "Sentuhan yang Tepat adalah yang paling bervariasi dari kelima bahasa ini di berbagai budaya. Pelukan samping yang normal dalam pelayanan di Filipina tidak tepat di sebagian besar Timur Tengah. Selalu baca konteks budaya sebelum mengekspresikan kehangatan secara fisik. Niat untuk terhubung harus disertai kecerdasan budaya.",
     biblical: "Injil mencatat Yesus menyentuh banyak orang — orang kusta yang tidak ada yang mau menyentuhnya (Markus 1:41), anak-anak yang para murid coba jauhkan (Markus 10:13–16), usungan anak janda (Lukas 7:14), mata orang-orang buta (Matius 9:29). Dalam budaya dengan kode kemurnian yang ketat, sentuhan itu sekaligus mengejutkan dan pastoral. Pemimpin Sentuhan yang Tepat belajar dari Yesus: kehadiran fisik adalah bagian dari cara kasih Tuhan menjangkau manusia. Dalam pelayanan lintas budaya, bentuk sentuhannya harus beradaptasi — substansinya, bahwa kehangatan insani membawa kasih ilahi, tidak berubah.",
@@ -196,7 +196,7 @@ const RECEIVING_PAIRS_ID: Pair[] = [
   { a: "A", b: "B", textA: "Mendengar kolega secara spesifik menyebut apa yang mereka hargai dari pekerjaanku menyegarkan aku.", textB: "Diberi tiga puluh menit tanpa terburu-buru oleh seorang kolega menyegarkan aku." },
   { a: "A", b: "C", textA: "Kata-kata dorongan dari pemimpin yang dihormati memampukan aku melewati musim-musim yang berat.", textB: "Bantuan praktis dengan beban kerjaku memampukan aku melewati musim-musim yang berat." },
   { a: "A", b: "C", textA: "Aku merasa diperhatikan ketika pastorlku menyebutku dengan nama dalam doa syukur.", textB: "Aku merasa diperhatikan ketika rekan tim dengan diam-diam mengerjakan tugas yang selama ini aku tunda." },
-  { a: "A", b: "C", textA: "Setelah Minggu yang berat, aku ingin mendengar seseorang berkata, 'Kamu melakukannya dengan baik hari ini.'", textB: "Setelah Minggu yang berat, aku ingin seseorang membawakan secangkir teh tanpa aku memintanya." },
+  { a: "A", b: "C", textA: "Setelah Minggu yang berat, aku ingin mendengar seseorang berkata, 'Anda melakukannya dengan baik hari ini.'", textB: "Setelah Minggu yang berat, aku ingin seseorang membawakan secangkir teh tanpa aku memintanya." },
   { a: "A", b: "C", textA: "Kata-kata terima kasih yang spesifik setelah tugas yang berat paling mengena bagiku.", textB: "Bantuan praktis yang spesifik setelah tugas yang berat paling mengena bagiku." },
   { a: "A", b: "D", textA: "Pengakuan verbal yang spesifik dari atasanku lebih berarti bagiku dari sebuah bonus.", textB: "Hadiah kecil yang penuh pertimbangan dari atasanku lebih berarti dari bonus yang tidak personal." },
   { a: "A", b: "D", textA: "Aku menyimpan email-email penuh semangat dalam folder yang aku baca di hari-hari yang berat.", textB: "Aku menyimpan hadiah-hadiah kecil dari rekan tim di mejaku sebagai pengingat bahwa aku dikasihi." },
@@ -346,17 +346,17 @@ function getInterpretation(
     label: lang === "id" ? "Keduanya Luas" : "Both Broad",
     labelColor: "oklch(60% 0.08 200)",
     text: lang === "id"
-      ? "Kamu mendapat skor merata di berbagai bahasa dalam kedua tes. Kepekaan adalah luas — tidak ada satu bahasa yang mendominasi. Ini jarang tapi sah."
+      ? "Anda mendapat skor merata di berbagai bahasa dalam kedua tes. Kepekaan adalah luas — tidak ada satu bahasa yang mendominasi. Ini jarang tapi sah."
       : "You scored evenly across multiple languages in both tests. Your sensitivity is broad — no single language dominates. This is rare but legitimate.",
     action: lang === "id"
-      ? "Sebutkan dua bahasa teratasmu di setiap tes dan beritahu tim bahwa keduanya tersampaikan dengan baik kepadamu."
+      ? "Sebutkan dua bahasa teratas Anda di setiap tes dan beritahu tim bahwa keduanya tersampaikan dengan baik kepada Anda."
       : "Name your top two languages in each test and tell your team that either lands well for you.",
   };
   if (rPrimary === gPrimary) return {
     label: lang === "id" ? "Cocok" : "Match",
     labelColor: "oklch(52% 0.14 150)",
     text: lang === "id"
-      ? "Bahasa menerima dan memberimu cocok. Kamu memberikan apa yang paling kamu butuhkan, dan kamu tahu cara menyampaikannya. Risikonya: kamu mungkin mengasumsikan orang lain menginginkan apa yang kamu inginkan."
+      ? "Bahasa menerima dan memberi Anda cocok. Anda memberikan apa yang paling Anda butuhkan, dan Anda tahu cara menyampaikannya. Risikonya: Anda mungkin mengasumsikan orang lain menginginkan apa yang Anda inginkan."
       : "Your receiving and giving primaries match. You give what you most need, and you know how to deliver it. The risk: you may assume others want what you want.",
     action: lang === "id"
       ? "Tanyakan kepada setiap anggota tim bahasa menerima mereka. Catat. Jadikan referensi sebelum setiap momen kepedulian."
@@ -366,10 +366,10 @@ function getInterpretation(
     label: lang === "id" ? "Dua Bahasa" : "Two Languages",
     labelColor: "oklch(62% 0.14 235)",
     text: lang === "id"
-      ? "Bahasa menerima dan memberimu berbeda — pola yang paling mengungkapkan. Kamu membawa kemampuan alami dalam dua bahasa: bagaimana kamu secara alami cenderung menerima kepedulian, dan bagaimana kamu secara alami cenderung memberikannya. Risikonya: timmu mungkin tidak tahu apa yang kamu butuhkan secara pribadi."
+      ? "Bahasa menerima dan memberi Anda berbeda — pola yang paling mengungkapkan. Anda membawa kemampuan alami dalam dua bahasa: bagaimana Anda secara alami cenderung menerima kepedulian, dan bagaimana Anda secara alami cenderung memberikannya. Risikonya: tim Anda mungkin tidak tahu apa yang Anda butuhkan secara pribadi."
       : "Your receiving and giving languages differ — the most insightful pattern. You carry natural fluency in two languages: how you are wired to receive care, and how you are wired to give it. The risk: your team may not know what you personally need.",
     action: lang === "id"
-      ? `Beritahukan kedua bahasamu kepada timmu secara terbuka: "Apa yang membuat aku merasa diperhatikan adalah ${LD[rPrimary].name}. Yang paling alami aku berikan adalah ${LD[gPrimary].name}."`
+      ? `Beritahukan kedua bahasa Anda kepada tim Anda secara terbuka: "Apa yang membuat aku merasa diperhatikan adalah ${LD[rPrimary].name}. Yang paling alami aku berikan adalah ${LD[gPrimary].name}."`
       : `Tell your team both languages out loud: "What makes me feel cared for is ${LD[rPrimary].name}. What I most naturally give is ${LD[gPrimary].name}."`,
   };
 }
@@ -584,13 +584,13 @@ export default function FiveLanguagesClient({
               marginBottom: "2rem",
             }}>
               {lang === "id"
-                ? <>Tes 5 Languages dua arah pertama untuk tim — temukan apakah kamu menerima kepedulian melalui{" "}
+                ? <>Tes 5 Languages dua arah pertama untuk tim — temukan apakah Anda menerima kepedulian melalui{" "}
                     <span style={{ color: LD.A.color, fontWeight: 600 }}>Kata-Kata Penghargaan</span>,{" "}
                     <span style={{ color: LD.B.color, fontWeight: 600 }}>Waktu Berkualitas</span>,{" "}
                     <span style={{ color: LD.C.color, fontWeight: 600 }}>Tindakan Pelayanan</span>,{" "}
                     <span style={{ color: LD.D.color, fontWeight: 600 }}>Hadiah Konkret</span>, atau{" "}
                     <span style={{ color: LD.E.color, fontWeight: 600 }}>Sentuhan yang Tepat</span>{" "}
-                    — dan apakah kamu memberikannya dalam bahasa yang sama.</>
+                    — dan apakah Anda memberikannya dalam bahasa yang sama.</>
                 : <>The first two-way 5 Languages test for teams — discover whether you receive care through{" "}
                     <span style={{ color: LD.A.color, fontWeight: 600 }}>Words of Affirmation</span>,{" "}
                     <span style={{ color: LD.B.color, fontWeight: 600 }}>Quality Time</span>,{" "}
@@ -637,14 +637,14 @@ export default function FiveLanguagesClient({
             </h2>
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", color: "oklch(42% 0.008 260)", lineHeight: 1.7, maxWidth: 680, marginBottom: "2.5rem" }}>
               {lang === "id"
-                ? "Ini adalah tes 5 Languages pertama yang dirancang untuk mengukur kedua sisi kepedulian. Versi asli Chapman¹ hanya menangkap cara kamu menerima. Di sini, kamu menyelesaikan dua tes — satu untuk menerima, satu untuk memberi. Keduanya tidak sama. Untuk tim lintas budaya, mengetahui kesenjangan antara keduanya bukan pilihan: di situlah wawasan kepemimpinan yang nyata berada."
+                ? "Ini adalah tes 5 Languages pertama yang dirancang untuk mengukur kedua sisi kepedulian. Versi asli Chapman¹ hanya menangkap cara Anda menerima. Di sini, Anda menyelesaikan dua tes — satu untuk menerima, satu untuk memberi. Keduanya tidak sama. Untuk tim lintas budaya, mengetahui kesenjangan antara keduanya bukan pilihan: di situlah wawasan kepemimpinan yang nyata berada."
                 : "This is the first 5 Languages test designed to measure both sides of care. Chapman’s¹ original only captures how you receive. Here, you complete two tests — one for receiving, one for giving. They are not the same. For cross-cultural teams, knowing the gap between the two is not optional: it is where the real leadership insight lives."
               }
             </p>
 
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(35% 0.008 260)", lineHeight: 1.75, maxWidth: 720, marginBottom: "2.5rem" }}>
               {lang === "id"
-                ? "Kebanyakan tim menganggap kepedulian ya kepedulian — bahwa apa yang kamu berikan diterima seperti yang kamu maksudkan. Jarang sekali begitu. Aturan Emas meleset: seorang pemimpin yang secara alami cenderung pada Kata-Kata menuangkan afirmasi kepada rekan yang membutuhkan Tindakan Pelayanan, dan keduanya tidak mengerti mengapa tidak berhasil. Hasilmu akan menunjukkan salah satu dari tiga pola — Cocok, Dua Bahasa, atau Luas. Masing-masing memiliki langkah praktis yang berbeda. Langkah paling berdampak adalah yang paling sederhana: beritahukan kedua bahasamu kepada timmu secara terbuka."
+                ? "Kebanyakan tim menganggap kepedulian ya kepedulian — bahwa apa yang Anda berikan diterima seperti yang Anda maksudkan. Jarang sekali begitu. Aturan Emas meleset: seorang pemimpin yang secara alami cenderung pada Kata-Kata menuangkan afirmasi kepada rekan yang membutuhkan Tindakan Pelayanan, dan keduanya tidak mengerti mengapa tidak berhasil. Hasil Anda akan menunjukkan salah satu dari tiga pola — Cocok, Dua Bahasa, atau Luas. Masing-masing memiliki langkah praktis yang berbeda. Langkah paling berdampak adalah yang paling sederhana: beritahukan kedua bahasa Anda kepada tim Anda secara terbuka."
                 : "Most teams assume care is care — that what you give lands the way you intend it. It rarely does. The Golden Rule misfires: a leader wired for Words pours affirmation over a teammate who needs Acts of Service, and neither understands why it is not working. Your results will show one of three patterns — Match, Two Languages, or Broad. Each has a different practical move. The highest-leverage step is the simplest: tell your team both languages out loud."
               }
             </p>
@@ -715,7 +715,7 @@ export default function FiveLanguagesClient({
               </p>
               <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", lineHeight: 1.7, color: "oklch(38% 0.008 260)" }}>
                 {lang === "id"
-                  ? "Kelima bahasa bisa melintas budaya, tapi bobot budayanya tidak. Kata-Kata Penghargaan bisa terasa performatif dalam budaya Asia high-context. Sentuhan yang Tepat adalah yang paling bervariasi — pelukan samping yang normal dalam pelayanan di Filipina tidak tepat di sebagian besar Timur Tengah. Tes ini memberimu bahasamu. Pekerjaan lintas budaya adalah belajar bagaimana bahasa itu diucapkan dengan tepat dalam budaya di sekitarmu."
+                  ? "Kelima bahasa bisa melintas budaya, tapi bobot budayanya tidak. Kata-Kata Penghargaan bisa terasa performatif dalam budaya Asia high-context. Sentuhan yang Tepat adalah yang paling bervariasi — pelukan samping yang normal dalam pelayanan di Filipina tidak tepat di sebagian besar Timur Tengah. Tes ini memberi Anda bahasa Anda. Pekerjaan lintas budaya adalah belajar bagaimana bahasa itu diucapkan dengan tepat dalam budaya di sekitar Anda."
                   : "The five languages travel across cultures, but their cultural weight does not. Words of Affirmation can feel performative in high-context Asian cultures. Appropriate Touch is the most variable — a side-hug normal in Filipino ministry is inappropriate in much of the Middle East. The test gives you your language. The cross-cultural work is learning how that language is properly spoken in the cultures around you."
                 }
               </p>
@@ -896,11 +896,11 @@ export default function FiveLanguagesClient({
         <div className="container-wide" style={{ maxWidth: "680px", margin: "0 auto", padding: "clamp(2rem, 4vw, 4rem) 1.5rem" }}>
           <div style={{ marginBottom: "2rem" }}>
             <p style={{ fontSize: "12px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.5rem" }}>
-              {lang === "id" ? "Tes 1 — Cara kamu menerima kepedulian" : "Test 1 — How you receive care"}
+              {lang === "id" ? "Tes 1 — Cara Anda menerima kepedulian" : "Test 1 — How you receive care"}
             </p>
             <p style={{ fontSize: "14px", color: "oklch(50% 0.008 260)" }}>
               {lang === "id"
-                ? `Pasangan ${currentPair + 1} dari 40  ·  Pilih pernyataan yang paling benar untukmu`
+                ? `Pasangan ${currentPair + 1} dari 40  ·  Pilih pernyataan yang paling benar untuk Anda`
                 : `Pair ${currentPair + 1} of 40  ·  Choose the statement that feels most true for you`
               }
             </p>
@@ -955,7 +955,7 @@ export default function FiveLanguagesClient({
             marginBottom: "0.5rem",
             lineHeight: 1.2,
           }}>
-            {lang === "id" ? "Bahasa menerima kamu adalah:" : "Your receiving language is:"}
+            {lang === "id" ? "Bahasa menerima Anda adalah:" : "Your receiving language is:"}
           </h2>
           <h2 style={{
             fontFamily: "Cormorant Garamond, serif",
@@ -974,7 +974,7 @@ export default function FiveLanguagesClient({
             marginBottom: "2rem",
           }}>
             {lang === "id"
-              ? "Sekarang Tes 2: bagaimana kamu memberi kepedulian. Jawab apa yang benar-benar kamu lakukan — bukan yang kamu harapkan."
+              ? "Sekarang Tes 2: bagaimana Anda memberi kepedulian. Jawab apa yang benar-benar Anda lakukan — bukan yang Anda harapkan."
               : "Now Test 2: how you give care. Answer what you actually do — not what you wish you did."
             }
           </p>
@@ -1046,11 +1046,11 @@ export default function FiveLanguagesClient({
         <div className="container-wide" style={{ maxWidth: "680px", margin: "0 auto", padding: "clamp(2rem, 4vw, 4rem) 1.5rem" }}>
           <div style={{ marginBottom: "2rem" }}>
             <p style={{ fontSize: "12px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.5rem" }}>
-              {lang === "id" ? "Tes 2 — Cara kamu memberi kepedulian" : "Test 2 — How you give care"}
+              {lang === "id" ? "Tes 2 — Cara Anda memberi kepedulian" : "Test 2 — How you give care"}
             </p>
             <p style={{ fontSize: "14px", color: "oklch(50% 0.008 260)" }}>
               {lang === "id"
-                ? `Pasangan ${currentPair + 41} dari 80  ·  Pilih apa yang benar-benar kamu lakukan, bukan yang kamu harapkan`
+                ? `Pasangan ${currentPair + 41} dari 80  ·  Pilih apa yang benar-benar Anda lakukan, bukan yang Anda harapkan`
                 : `Pair ${currentPair + 41} of 80  ·  Choose what you actually do, not what you wish you did`
               }
             </p>
@@ -1068,7 +1068,7 @@ export default function FiveLanguagesClient({
               lineHeight: 1.55,
             }}>
               {lang === "id"
-                ? <>Setengah jalan. Apakah kamu memilih apa yang benar-benar kamu lakukan — atau apa yang kamu harapkan? Sesuaikan jika perlu.</>
+                ? <>Setengah jalan. Apakah Anda memilih apa yang benar-benar Anda lakukan — atau apa yang Anda harapkan? Sesuaikan jika perlu.</>
                 : <>Halfway through. Are you choosing what you <em>actually do</em> — or what you wish you did? Adjust if needed.</>
               }
             </div>
@@ -1113,7 +1113,7 @@ export default function FiveLanguagesClient({
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "oklch(65% 0.15 45)" }} />
         <div className="container-wide" style={{ position: "relative" }}>
           <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
-            {lang === "id" ? "Hasil Tes Kamu · 5 Bahasa Penghargaan" : "Your Results · 5 Languages of Appreciation"}
+            {lang === "id" ? "Hasil Tes Anda · 5 Bahasa Penghargaan" : "Your Results · 5 Languages of Appreciation"}
           </p>
 
           <div style={{ marginBottom: "1.5rem" }}>
@@ -1179,7 +1179,7 @@ export default function FiveLanguagesClient({
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1.5rem" }}>
             <div style={{ background: "oklch(97% 0.005 80)", borderRadius: "12px", padding: "1.5rem" }}>
               <p style={{ fontSize: "12px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(55% 0.06 260)", marginBottom: "1.25rem" }}>
-                {lang === "id" ? "Bahasa Menerima Kamu" : "Your Receiving Language"}
+                {lang === "id" ? "Bahasa Menerima Anda" : "Your Receiving Language"}
               </p>
               <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                 {(Object.entries(displayReceiving) as [ScoreKey, number][])
@@ -1191,7 +1191,7 @@ export default function FiveLanguagesClient({
             </div>
             <div style={{ background: "oklch(97% 0.005 80)", borderRadius: "12px", padding: "1.5rem" }}>
               <p style={{ fontSize: "12px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(55% 0.06 260)", marginBottom: "1.25rem" }}>
-                {lang === "id" ? "Bahasa Memberi Kamu" : "Your Giving Language"}
+                {lang === "id" ? "Bahasa Memberi Anda" : "Your Giving Language"}
               </p>
               <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                 {(Object.entries(displayGiving) as [ScoreKey, number][])
@@ -1209,10 +1209,10 @@ export default function FiveLanguagesClient({
       <section style={{ background: "oklch(97% 0.005 80)", padding: "clamp(2rem, 4vw, 3.5rem) 0" }}>
         <div className="container-wide">
           <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(26px, 3.5vw, 36px)", fontWeight: 600, color: "oklch(22% 0.10 260)", marginBottom: "0.5rem" }}>
-            {lang === "id" ? "Dua bahasa kamu" : "Your two languages"}
+            {lang === "id" ? "Dua bahasa Anda" : "Your two languages"}
           </h2>
           <p style={{ fontSize: "15px", color: "oklch(45% 0.06 260)", marginBottom: "2rem", lineHeight: 1.6 }}>
-            {lang === "id" ? "Profil untuk bahasa menerima dan memberi utama kamu." : "Profiles for your receiving and giving primaries."}
+            {lang === "id" ? "Profil untuk bahasa menerima dan memberi utama Anda." : "Profiles for your receiving and giving primaries."}
           </p>
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "1.5rem" }}>
@@ -1276,7 +1276,7 @@ export default function FiveLanguagesClient({
               >
                 {isSaving
                   ? (lang === "id" ? "Menyimpan..." : "Saving...")
-                  : (lang === "id" ? "Simpan hasilmu" : "Save to dashboard")
+                  : (lang === "id" ? "Simpan hasil Anda" : "Save to dashboard")
                 }
               </button>
               {saveError && (

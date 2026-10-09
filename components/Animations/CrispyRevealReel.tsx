@@ -61,7 +61,7 @@ const COPY = {
     cards: [
       ['Setiap pemimpin membawa sebuah kisah.'],
       ['Sebagian membawanya melintasi batas negara,', 'bahasa, dan budaya.'],
-      ['Kamu tidak perlu berjalan sendirian.'],
+      ['Anda tidak perlu berjalan sendirian.'],
     ],
     eyebrow: 'Pengembangan. Coaching. Bertumbuh.',
     line3: 'Platform pengembangan kepemimpinan Kristen.',

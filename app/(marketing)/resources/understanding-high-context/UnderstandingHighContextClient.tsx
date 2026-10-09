@@ -56,12 +56,12 @@ const scriptureStyle: CSSProperties = {
 
 const HERO_SUBTITLE = {
   en: "How meaning travels between the words — and what you miss when you only hear the words.",
-  id: "Cara makna berjalan di antara kata-kata — dan apa yang kamu lewatkan ketika hanya mendengar kata-katanya saja.",
+  id: "Cara makna berjalan di antara kata-kata — dan apa yang Anda lewatkan ketika hanya mendengar kata-katanya saja.",
 };
 
 const HERO_INTRO = {
   en: "You asked a clear question. You got a clear answer. The meeting ended well — or so you thought. Three weeks later you discover nothing happened, and nobody feels the need to explain why. That moment of confusion is the starting point for this module. High-context communication is not broken communication. It is a different system entirely, and once you learn to read it, you will not miss a signal the same way again.",
-  id: "Kamu mengajukan pertanyaan yang jelas. Kamu mendapat jawaban yang jelas. Rapat berakhir dengan baik — setidaknya begitu yang kamu kira. Tiga minggu kemudian kamu menyadari tidak ada yang terjadi, dan tidak ada yang merasa perlu menjelaskan mengapa. Momen kebingungan itulah titik awal modul ini. Komunikasi berkonteks tinggi bukan komunikasi yang rusak. Ini adalah sistem yang berbeda sepenuhnya, dan begitu kamu belajar membacanya, kamu tidak akan melewatkan sinyal dengan cara yang sama lagi.",
+  id: "Anda mengajukan pertanyaan yang jelas. Anda mendapat jawaban yang jelas. Rapat berakhir dengan baik — setidaknya begitu yang Anda kira. Tiga minggu kemudian Anda menyadari tidak ada yang terjadi, dan tidak ada yang merasa perlu menjelaskan mengapa. Momen kebingungan itulah titik awal modul ini. Komunikasi berkonteks tinggi bukan komunikasi yang rusak. Ini adalah sistem yang berbeda sepenuhnya, dan begitu Anda belajar membacanya, Anda tidak akan melewatkan sinyal dengan cara yang sama lagi.",
 };
 
 const OPENING_TEACHING_PARAS = {
@@ -72,7 +72,7 @@ const OPENING_TEACHING_PARAS = {
     "One honest note: the researcher who popularised this framework, Edward T. Hall¹, never validated it with rigorous data, and academic critics have raised serious questions about placing whole countries on a fixed scale (Cardon 2008², Kittler et al. 2011³). This module uses the framework as a practical lens, not a scientific measurement. Erin Meyer's Culture Map⁴ — built from extensive research across 62 countries — refines Hall's ideas and offers a more reliable guide. The tendencies described here are real. They are just not a rulebook for predicting individuals.",
   ],
   id: [
-    "Dalam komunikasi berkonteks rendah, pesan ada di dalam kata-kata. Jika sesuatu penting, kamu mengatakannya dengan jelas. Hal-hal penting dituliskan, dijabarkan, dikonfirmasi. Inilah gaya komunikasi Jerman, Belanda, Amerika Serikat, dan sejumlah negara lain di mana berbicara langsung adalah suatu kebajikan dan kejelasan adalah bentuk kebaikan.",
+    "Dalam komunikasi berkonteks rendah, pesan ada di dalam kata-kata. Jika sesuatu penting, Anda mengatakannya dengan jelas. Hal-hal penting dituliskan, dijabarkan, dikonfirmasi. Inilah gaya komunikasi Jerman, Belanda, Amerika Serikat, dan sejumlah negara lain di mana berbicara langsung adalah suatu kebajikan dan kejelasan adalah bentuk kebaikan.",
     "Dalam komunikasi berkonteks tinggi, pesan ada di dalam segala sesuatu yang mengelilingi kata-kata. Hubungan antara para pembicara. Setting percakapan. Jeda sebelum menjawab. Apa yang tidak dikatakan. Nada di ruangan setelah seseorang berbicara. Bagi orang yang tumbuh dalam sistem ini, semua ini tidak memerlukan penjelasan — itulah cara komunikasi bekerja. Bagi seseorang yang datang dari luar sistem ini, rasanya seperti semua orang berbicara dalam kode.",
     "Sebagian besar budaya di dunia cenderung berkonteks tinggi. Ini mencakup sebagian besar Asia, Timur Tengah, Amerika Latin, dan Afrika sub-Sahara. Ini bukan keanehan atau masalah komunikasi yang perlu diperbaiki. Ini adalah mode komunikasi manusia yang paling dominan di dunia.",
     "Satu catatan jujur: peneliti yang mempopulerkan kerangka ini, Edward T. Hall¹, tidak pernah memvalidasinya dengan data yang ketat, dan para kritikus akademis telah mempertanyakan penempatan seluruh negara pada skala yang tetap (Cardon 2008², Kittler dkk. 2011³). Modul ini menggunakan kerangka tersebut sebagai lensa praktis, bukan sebagai pengukuran ilmiah. Culture Map karya Erin Meyer⁴ — yang dibangun dari penelitian mendalam di lebih dari 62 negara — menyempurnakan gagasan Hall dan menawarkan panduan yang lebih andal. Kecenderungan yang dijelaskan di sini adalah nyata. Namun bukan berarti ini adalah aturan untuk memprediksi individu.",
@@ -87,8 +87,8 @@ const LEARNING_OUTCOMES = {
   ],
   id: [
     { keyword: "Mengenali", rest: " lima dinamika utama komunikasi berkonteks tinggi — penolakan tidak langsung, keheningan komunikatif, menjaga muka, basa-basi relasional, dan keputusan berbasis konsensus — serta mengidentifikasinya dalam momen lintas budaya yang nyata." },
-    { keyword: "Menempatkan", rest: " dirimu dan budaya yang kamu kerjakan dalam spektrum komunikasi, dan mengidentifikasi kesenjangan yang menghasilkan kesalahpahaman." },
-    { keyword: "Menerapkan", rest: " satu penyesuaian konkret dalam rapatmu lintas budaya berikutnya, berdasarkan apa yang kamu dekode di ruang-ruang sinyal." },
+    { keyword: "Menempatkan", rest: " diri Anda dan budaya yang Anda kerjakan dalam spektrum komunikasi, dan mengidentifikasi kesenjangan yang menghasilkan kesalahpahaman." },
+    { keyword: "Menerapkan", rest: " satu penyesuaian konkret dalam rapat Anda lintas budaya berikutnya, berdasarkan apa yang Anda dekode di ruang-ruang sinyal." },
   ],
 };
 
@@ -123,10 +123,10 @@ const SIGNAL_ROOMS: SignalRoom[] = [
     region: { en: "Japan · Middle East · Latin America", id: "Jepang · Timur Tengah · Amerika Latin" },
     setup: { en: "Indirect refusal is not dishonesty. It is a different kind of honesty.", id: "Penolakan tidak langsung bukan ketidakjujuran. Ini adalah kejujuran dalam bentuk yang berbeda." },
     dialogue: [
-      { speaker: "Alex (team lead, visiting from Germany)", text: { en: "So — can your team deliver the full report by Friday?", id: "Jadi — apakah tim kamu bisa menyerahkan laporan lengkap pada hari Jumat?" } },
+      { speaker: "Alex (team lead, visiting from Germany)", text: { en: "So — can your team deliver the full report by Friday?", id: "Jadi — apakah tim Anda bisa menyerahkan laporan lengkap pada hari Jumat?" } },
       { speaker: "Kenji (senior local staff)", text: { en: "Yes, we will do our best.", id: "Ya, kami akan melakukan yang terbaik." } },
       { speaker: "Alex", text: { en: "Perfect. So Friday is confirmed?", id: "Baik. Jadi Jumat sudah dipastikan?" } },
-      { speaker: "Kenji", text: { en: "We will try very hard to meet your expectations.", id: "Kami akan berusaha keras untuk memenuhi harapan kamu." } },
+      { speaker: "Kenji", text: { en: "We will try very hard to meet your expectations.", id: "Kami akan berusaha keras untuk memenuhi harapan Anda." } },
       { speaker: "Alex", text: { en: "Great. I'll tell the client it's Friday.", id: "Bagus. Saya akan memberitahu klien bahwa itu Jumat." } },
       { speaker: "Kenji", text: { en: "[long pause]", id: "[jeda panjang]" }, isSilence: true },
     ],
@@ -168,7 +168,7 @@ const SIGNAL_ROOMS: SignalRoom[] = [
     },
     takeaway: {
       en: "Next time, after any group silence, try this: 'I want to check in separately with a few of you — is there anything you want me to know that's easier to say one-on-one?' It signals that you welcome what the room couldn't say out loud.",
-      id: "Lain kali, setelah ada keheningan dalam kelompok, coba ini: 'Saya ingin berbincang secara terpisah dengan beberapa dari kamu — apakah ada yang ingin kamu sampaikan yang lebih mudah dibicarakan satu lawan satu?' Ini memberi sinyal bahwa kamu menyambut apa yang tidak bisa diucapkan secara terbuka di ruangan itu.",
+      id: "Lain kali, setelah ada keheningan dalam kelompok, coba ini: 'Saya ingin berbincang secara terpisah dengan beberapa dari Anda — apakah ada yang ingin Anda sampaikan yang lebih mudah dibicarakan satu lawan satu?' Ini memberi sinyal bahwa Anda menyambut apa yang tidak bisa diucapkan secara terbuka di ruangan itu.",
     },
   },
   {
@@ -177,10 +177,10 @@ const SIGNAL_ROOMS: SignalRoom[] = [
     region: { en: "China · Arab World · Latin America", id: "Tiongkok · Dunia Arab · Amerika Latin" },
     setup: { en: "Different word, same need — dignity is not a Western idea.", id: "Kata yang berbeda, kebutuhan yang sama — martabat bukan ide orang Barat." },
     dialogue: [
-      { speaker: "David (regional director, British)", text: { en: "I need to give you some feedback about last week's presentation. It wasn't up to the standard we need. The data was incomplete and you ran over time.", id: "Saya perlu memberimu umpan balik tentang presentasi minggu lalu. Itu tidak sesuai standar yang kita butuhkan. Datanya tidak lengkap dan kamu melebihi waktu yang ditetapkan." } },
+      { speaker: "David (regional director, British)", text: { en: "I need to give you some feedback about last week's presentation. It wasn't up to the standard we need. The data was incomplete and you ran over time.", id: "Saya perlu memberi Anda umpan balik tentang presentasi minggu lalu. Itu tidak sesuai standar yang kita butuhkan. Datanya tidak lengkap dan Anda melebihi waktu yang ditetapkan." } },
       { speaker: "Fatima (project lead, Egyptian, in a team meeting)", text: { en: "Thank you for letting me know.", id: "Terima kasih sudah memberitahu saya." } },
       { speaker: "(Later that week)", text: { en: "[later that week]", id: "[belakangan minggu itu]" }, isSilence: true },
-      { speaker: "Colleague (privately, to David)", text: { en: "Did you know Fatima is looking for another position?", id: "Apakah kamu tahu Fatima sedang mencari posisi lain?" } },
+      { speaker: "Colleague (privately, to David)", text: { en: "Did you know Fatima is looking for another position?", id: "Apakah Anda tahu Fatima sedang mencari posisi lain?" } },
       { speaker: "David", text: { en: "What? Why? I only gave her feedback.", id: "Apa? Mengapa? Saya hanya memberikan umpan balik." } },
     ],
     options: [
@@ -194,7 +194,7 @@ const SIGNAL_ROOMS: SignalRoom[] = [
     },
     takeaway: {
       en: "Next time, for anything corrective: private first, always. Ask to meet one-on-one, name what you observed, and ask what got in the way. The conversation changes completely.",
-      id: "Lain kali, untuk hal apa pun yang bersifat korektif: pribadi dulu, selalu. Minta untuk bertemu empat mata, ungkapkan apa yang kamu amati, dan tanyakan apa yang menjadi hambatan. Percakapannya berubah sepenuhnya.",
+      id: "Lain kali, untuk hal apa pun yang bersifat korektif: pribadi dulu, selalu. Minta untuk bertemu empat mata, ungkapkan apa yang Anda amati, dan tanyakan apa yang menjadi hambatan. Percakapannya berubah sepenuhnya.",
     },
   },
   {
@@ -204,9 +204,9 @@ const SIGNAL_ROOMS: SignalRoom[] = [
     setup: { en: "The meeting before the meeting is not a delay. It is the meeting.", id: "Pertemuan sebelum pertemuan bukan penundaan. Itulah pertemuannya." },
     dialogue: [
       { speaker: "Christine (country manager, Canadian)", text: { en: "Great — so we're agreed on the partnership terms. Shall we get the contract drafted?", id: "Bagus — jadi kita sudah sepakat dengan syarat-syarat kemitraan. Apakah kita mulai menyusun kontraknya?" } },
-      { speaker: "Emmanuel (CEO, Nigerian)", text: { en: "Yes, yes. But first, how is your family? You mentioned your son last time. How is he doing?", id: "Ya, ya. Tapi pertama, bagaimana kabar keluargamu? Kamu menyebut anakmu terakhir kali. Bagaimana keadaannya?" } },
+      { speaker: "Emmanuel (CEO, Nigerian)", text: { en: "Yes, yes. But first, how is your family? You mentioned your son last time. How is he doing?", id: "Ya, ya. Tapi pertama, bagaimana kabar keluarga Anda? Anda menyebut anak Anda terakhir kali. Bagaimana keadaannya?" } },
       { speaker: "Christine (slightly impatient)", text: { en: "He's fine, thank you. So on the contract — should we aim to have it signed by end of month?", id: "Dia baik-baik saja, terima kasih. Jadi soal kontrak — haruskah kita menargetkan penandatanganan sebelum akhir bulan?" } },
-      { speaker: "Emmanuel", text: { en: "Of course. But sit — let me have them bring tea. You know, my father used to say, the agreement between men is not the paper they sign. It is the trust they build.", id: "Tentu. Tapi duduklah — biar saya minta mereka membawakan teh. Kamu tahu, ayah saya dulu selalu berkata, kesepakatan antara manusia bukan kertas yang mereka tandatangani. Melainkan kepercayaan yang mereka bangun." } },
+      { speaker: "Emmanuel", text: { en: "Of course. But sit — let me have them bring tea. You know, my father used to say, the agreement between men is not the paper they sign. It is the trust they build.", id: "Tentu. Tapi duduklah — biar saya minta mereka membawakan teh. Anda tahu, ayah saya dulu selalu berkata, kesepakatan antara manusia bukan kertas yang mereka tandatangani. Melainkan kepercayaan yang mereka bangun." } },
       { speaker: "Christine (later, to her colleague)", text: { en: "We're three meetings in and we still haven't got to the details.", id: "Kita sudah tiga kali rapat dan masih belum sampai ke detailnya." } },
     ],
     options: [
@@ -220,7 +220,7 @@ const SIGNAL_ROOMS: SignalRoom[] = [
     },
     takeaway: {
       en: "Next time you are impatient with the preamble, ask yourself: what would it mean to this person if you skipped it? The answer is usually worth slowing down for.",
-      id: "Lain kali kamu tidak sabar dengan basa-basi, tanyakan pada dirimu sendiri: apa artinya bagi orang ini jika kamu melewatinya? Jawabannya biasanya sepadan dengan waktu untuk melambat.",
+      id: "Lain kali Anda tidak sabar dengan basa-basi, tanyakan pada diri Anda sendiri: apa artinya bagi orang ini jika Anda melewatinya? Jawabannya biasanya sepadan dengan waktu untuk melambat.",
     },
   },
   {
@@ -247,7 +247,7 @@ const SIGNAL_ROOMS: SignalRoom[] = [
     },
     takeaway: {
       en: "Next time you need a decision from a consensus-oriented team, ask: 'Who else needs to be part of this conversation before it lands?' Finding out early saves weeks.",
-      id: "Lain kali kamu membutuhkan keputusan dari tim yang berorientasi pada konsensus, tanyakan: 'Siapa lagi yang perlu menjadi bagian dari percakapan ini sebelum keputusan diambil?' Mengetahuinya lebih awal bisa menghemat berminggu-minggu waktu.",
+      id: "Lain kali Anda membutuhkan keputusan dari tim yang berorientasi pada konsensus, tanyakan: 'Siapa lagi yang perlu menjadi bagian dari percakapan ini sebelum keputusan diambil?' Mengetahuinya lebih awal bisa menghemat berminggu-minggu waktu.",
     },
   },
 ];
@@ -255,32 +255,32 @@ const SIGNAL_ROOMS: SignalRoom[] = [
 // ─── Self-mapping canvas prompts ──────────────────────────────────────────────
 const CANVAS_PROMPTS = [
   {
-    eyebrow: { en: "Prompt 1 — Your Default", id: "Pertanyaan 1 — Defaultmu" },
+    eyebrow: { en: "Prompt 1 — Your Default", id: "Pertanyaan 1 — Default Anda" },
     heading: {
       en: "Where would you plot yourself on this scale, based on how you actually communicate — not how you think you should?",
-      id: "Di mana kamu akan menempatkan dirimu dalam skala ini, berdasarkan cara kamu sebenarnya berkomunikasi — bukan cara yang menurutmu seharusnya?",
+      id: "Di mana Anda akan menempatkan diri Anda dalam skala ini, berdasarkan cara Anda sebenarnya berkomunikasi — bukan cara yang menurut Anda seharusnya?",
     },
     hint: {
       en: "Look at the cultures plotted above. Do you tend toward the explicit end — direct, written, task-first? Or toward the implicit end — reading the room, building relationship before business, leaving things unsaid?",
-      id: "Lihat budaya-budaya yang digambar di atas. Apakah kamu cenderung ke ujung eksplisit — langsung, tertulis, tugas lebih dulu? Atau ke ujung implisit — membaca suasana, membangun hubungan sebelum bisnis, membiarkan hal-hal tidak diucapkan?",
+      id: "Lihat budaya-budaya yang digambar di atas. Apakah Anda cenderung ke ujung eksplisit — langsung, tertulis, tugas lebih dulu? Atau ke ujung implisit — membaca suasana, membangun hubungan sebelum bisnis, membiarkan hal-hal tidak diucapkan?",
     },
   },
   {
-    eyebrow: { en: "Prompt 2 — The People You Lead", id: "Pertanyaan 2 — Orang-orang yang Kamu Pimpin" },
+    eyebrow: { en: "Prompt 2 — The People You Lead", id: "Pertanyaan 2 — Orang-orang yang Anda Pimpin" },
     heading: {
       en: "Name one or two cultures you work with most closely. Based on what you have seen in the signal rooms — where would you place them?",
-      id: "Sebutkan satu atau dua budaya yang paling sering kamu kerjakan. Berdasarkan apa yang kamu lihat di ruang sinyal — di mana kamu akan menempatkan mereka?",
+      id: "Sebutkan satu atau dua budaya yang paling sering Anda kerjakan. Berdasarkan apa yang Anda lihat di ruang sinyal — di mana Anda akan menempatkan mereka?",
     },
     hint: {
       en: "You are not labelling them permanently. You are estimating a tendency so you can communicate more intentionally.",
-      id: "Kamu tidak memberi label secara permanen. Kamu memperkirakan kecenderungan agar bisa berkomunikasi dengan lebih disengaja.",
+      id: "Anda tidak memberi label secara permanen. Anda memperkirakan kecenderungan agar bisa berkomunikasi dengan lebih disengaja.",
     },
   },
   {
     eyebrow: { en: "Prompt 3 — The Gap", id: "Pertanyaan 3 — Kesenjangan" },
     heading: {
       en: "Where is the largest gap between your default and theirs? What is one thing you could adjust this week to close it?",
-      id: "Di mana kesenjangan terbesar antara defaultmu dan default mereka? Apa satu hal yang bisa kamu sesuaikan minggu ini untuk menutupnya?",
+      id: "Di mana kesenjangan terbesar antara default Anda dan default mereka? Apa satu hal yang bisa Anda sesuaikan minggu ini untuk menutupnya?",
     },
     hint: {
       en: "Not a permanent change. Not an identity shift. Just one adjustment — one deliberate move toward their communication language.",
@@ -317,8 +317,8 @@ const KEY_TAKEAWAYS = [
       body: "The gap between your communication instinct and your team's is not a problem to be eliminated. It is the place where the most important learning happens.",
     },
     id: {
-      title: "Kesenjangan antara defaultmu dan default mereka adalah pekerjaannya.",
-      body: "Kesenjangan antara naluri komunikasimu dan naluri timmu bukan masalah yang harus dihilangkan. Itulah tempat di mana pembelajaran terpenting terjadi.",
+      title: "Kesenjangan antara default Anda dan default mereka adalah pekerjaannya.",
+      body: "Kesenjangan antara naluri komunikasi Anda dan naluri tim Anda bukan masalah yang harus dihilangkan. Itulah tempat di mana pembelajaran terpenting terjadi.",
     },
   },
 ];
@@ -340,7 +340,7 @@ const FAITH_PARAS = {
 
 const FIELD_STORY = {
   en: "I had been leading the team for about eight months when I realized I had been running meetings I did not actually understand.\n\nEvery week, I would ask if there were concerns. Every week, the room was quiet. I took this as a good sign. The team was aligned. Progress was clear. When things did not get done, I assumed it was capacity — never communication.\n\nThen a local colleague I trusted pulled me aside after a meeting. She did not challenge me. She just asked a question. \"Do you know what it costs someone on this team to speak up in the room when you are there?\"\n\nI did not know what she meant. She explained, carefully, that my directness — which I thought of as efficiency — landed as pressure. When I asked for concerns in a group, people heard: perform confidence in front of the leader. No one was going to raise a problem there.\n\nI started meeting people one-on-one before group sessions. I stopped asking \"are there any concerns\" and started asking \"help me understand what might slow this down.\" The amount of information that came back was humbling.\n\nI had not changed my team. I had changed where I was listening.",
-  id: "Saya sudah memimpin tim selama sekitar delapan bulan ketika saya menyadari bahwa saya telah menjalankan rapat-rapat yang sebenarnya tidak saya pahami.\n\nSetiap minggu, saya bertanya apakah ada kekhawatiran. Setiap minggu, ruangan itu sunyi. Saya mengambil ini sebagai pertanda baik. Tim sudah selaras. Kemajuan jelas terlihat. Ketika sesuatu tidak terselesaikan, saya berasumsi itu soal kapasitas — bukan komunikasi.\n\nKemudian seorang rekan lokal yang saya percaya menarik saya ke samping setelah sebuah rapat. Dia tidak menantang saya. Dia hanya mengajukan satu pertanyaan. \"Apakah kamu tahu berapa harga yang harus dibayar seseorang di tim ini untuk berbicara di ruangan ketika kamu ada di sana?\"\n\nSaya tidak mengerti apa yang dia maksud. Dia menjelaskan, dengan hati-hati, bahwa keterusterangan saya — yang saya pikir adalah efisiensi — terasa seperti tekanan. Ketika saya meminta kekhawatiran dalam kelompok, orang-orang mendengar: tampilkan kepercayaan diri di hadapan pemimpin. Tidak ada yang akan mengangkat masalah di sana.\n\nSaya mulai menemui orang-orang secara empat mata sebelum sesi kelompok. Saya berhenti bertanya \"apakah ada kekhawatiran\" dan mulai bertanya \"bantu saya memahami apa yang mungkin memperlambat hal ini.\" Jumlah informasi yang kembali sangat merendahkan hati.\n\nSaya tidak mengubah tim saya. Saya mengubah tempat saya mendengarkan.",
+  id: "Saya sudah memimpin tim selama sekitar delapan bulan ketika saya menyadari bahwa saya telah menjalankan rapat-rapat yang sebenarnya tidak saya pahami.\n\nSetiap minggu, saya bertanya apakah ada kekhawatiran. Setiap minggu, ruangan itu sunyi. Saya mengambil ini sebagai pertanda baik. Tim sudah selaras. Kemajuan jelas terlihat. Ketika sesuatu tidak terselesaikan, saya berasumsi itu soal kapasitas — bukan komunikasi.\n\nKemudian seorang rekan lokal yang saya percaya menarik saya ke samping setelah sebuah rapat. Dia tidak menantang saya. Dia hanya mengajukan satu pertanyaan. \"Apakah Anda tahu berapa harga yang harus dibayar seseorang di tim ini untuk berbicara di ruangan ketika Anda ada di sana?\"\n\nSaya tidak mengerti apa yang dia maksud. Dia menjelaskan, dengan hati-hati, bahwa keterusterangan saya — yang saya pikir adalah efisiensi — terasa seperti tekanan. Ketika saya meminta kekhawatiran dalam kelompok, orang-orang mendengar: tampilkan kepercayaan diri di hadapan pemimpin. Tidak ada yang akan mengangkat masalah di sana.\n\nSaya mulai menemui orang-orang secara empat mata sebelum sesi kelompok. Saya berhenti bertanya \"apakah ada kekhawatiran\" dan mulai bertanya \"bantu saya memahami apa yang mungkin memperlambat hal ini.\" Jumlah informasi yang kembali sangat merendahkan hati.\n\nSaya tidak mengubah tim saya. Saya mengubah tempat saya mendengarkan.",
 };
 
 const RESEARCH_BG_PARAS_EN = `Where the framework came from
@@ -405,7 +405,7 @@ Menjaga muka sebagai pola lintas budaya terdokumentasi dengan baik — mianzi Ti
 
 Catatan tentang individu
 
-Setiap kerangka dalam modul ini membawa batasan yang sama: kecenderungan komunikasi nyata di tingkat populasi, tetapi tidak dapat memprediksi bagaimana individu mana pun akan berkomunikasi. Perlakukan kerangka-kerangka ini sebagai orientasi awal — cara untuk mengungkapkan apa yang kamu perhatikan — bukan sebagai sistem untuk mengkategorikan orang.`;
+Setiap kerangka dalam modul ini membawa batasan yang sama: kecenderungan komunikasi nyata di tingkat populasi, tetapi tidak dapat memprediksi bagaimana individu mana pun akan berkomunikasi. Perlakukan kerangka-kerangka ini sebagai orientasi awal — cara untuk mengungkapkan apa yang Anda perhatikan — bukan sebagai sistem untuk mengkategorikan orang.`;
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
@@ -536,7 +536,7 @@ function ContextCalibrationGauge({ lang }: { lang: "en" | "id" }) {
         {/* Label */}
         <text x="390" y="60" textAnchor="middle" fontFamily={FONT_BODY}
           fontSize="14" fontWeight="700" fill={ORANGE}>
-          {t("You?", "Kamu?")}
+          {t("You?", "Anda?")}
         </text>
 
         {/* ════════ HIGH-CONTEXT CULTURES (circles) ═══════════════════ */}
@@ -795,7 +795,7 @@ function SignalRoom({
           <>
             <p style={{ fontFamily: FONT_BODY, fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: ORANGE, margin: "0 0 8px" }}>
               {isCorrectChoice
-                ? t("You read it right", "Kamu membacanya dengan tepat")
+                ? t("You read it right", "Anda membacanya dengan tepat")
                 : t("Here is what was actually happening", "Inilah yang sebenarnya terjadi")}
             </p>
             {room.reveal[lang].split("\n\n").map((para, i) => (
@@ -883,7 +883,7 @@ export default function UnderstandingHighContextClient({ isSaved: initialSaved }
           <button
             onClick={handleSave}
             disabled={saved || isPending}
-            aria-label={t("Save this module to your dashboard", "Simpan modul ini ke dashboard kamu")}
+            aria-label={t("Save this module to your dashboard", "Simpan modul ini ke dashboard Anda")}
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -1004,12 +1004,12 @@ export default function UnderstandingHighContextClient({ isSaved: initialSaved }
       <div style={{ background: OFF_WHITE, padding: "64px 24px" }}>
         <div style={{ maxWidth: 720, margin: "0 auto" }}>
           <h2 style={{ fontFamily: FONT_HEADLINE, fontSize: "clamp(24px, 3vw, 36px)", fontWeight: 600, color: NAVY, lineHeight: 1.2, margin: "0 0 20px" }}>
-            {t("Five dynamics to decode", "Lima dinamika yang perlu kamu dekode")}
+            {t("Five dynamics to decode", "Lima dinamika yang perlu Anda dekode")}
           </h2>
           <p style={prose}>
             {t(
               "The five signal rooms below each present a real moment of cross-cultural communication. In each one, something is being communicated — but not in the words. Read the dialogue, make your choice, then see what was actually happening beneath the surface. These five dynamics appear in workplaces, partnerships, and ministry teams across the globe — different names, same patterns.",
-              "Lima ruang sinyal di bawah ini masing-masing menyajikan momen nyata komunikasi lintas budaya. Dalam setiap ruang, sesuatu sedang dikomunikasikan — tetapi bukan dalam kata-kata. Baca dialognya, buat pilihanmu, lalu lihat apa yang sebenarnya terjadi di balik permukaan. Lima dinamika ini muncul di tempat kerja, kemitraan, dan tim pelayanan di seluruh dunia — nama yang berbeda, pola yang sama."
+              "Lima ruang sinyal di bawah ini masing-masing menyajikan momen nyata komunikasi lintas budaya. Dalam setiap ruang, sesuatu sedang dikomunikasikan — tetapi bukan dalam kata-kata. Baca dialognya, buat pilihan Anda, lalu lihat apa yang sebenarnya terjadi di balik permukaan. Lima dinamika ini muncul di tempat kerja, kemitraan, dan tim pelayanan di seluruh dunia — nama yang berbeda, pola yang sama."
             )}
           </p>
         </div>
@@ -1025,7 +1025,7 @@ export default function UnderstandingHighContextClient({ isSaved: initialSaved }
           <p style={{ fontFamily: FONT_BODY, fontSize: 15, color: "oklch(72% 0.04 260)", lineHeight: 1.75, margin: "0 0 56px", maxWidth: 600 }}>
             {t(
               "Each room shows you a real moment of cross-cultural communication. Read the dialogue, then choose what you think is happening beneath the surface.",
-              "Setiap ruang menunjukkan momen nyata komunikasi lintas budaya. Baca dialog tersebut, lalu pilih apa yang menurutmu sedang terjadi di balik permukaan."
+              "Setiap ruang menunjukkan momen nyata komunikasi lintas budaya. Baca dialog tersebut, lalu pilih apa yang menurut Anda sedang terjadi di balik permukaan."
             )}
           </p>
           {SIGNAL_ROOMS.map((room, i) => (
@@ -1046,12 +1046,12 @@ export default function UnderstandingHighContextClient({ isSaved: initialSaved }
         <div style={{ maxWidth: 720, margin: "0 auto" }}>
           <p style={eyebrow}>{t("Self-Mapping Canvas", "Peta Diri")}</p>
           <h2 style={{ fontFamily: FONT_HEADLINE, fontSize: "clamp(24px, 3vw, 36px)", fontWeight: 600, color: NAVY, margin: "0 0 12px", lineHeight: 1.2 }}>
-            {t("Where do you sit — and who are you working with?", "Di mana posisimu — dan dengan siapa kamu bekerja?")}
+            {t("Where do you sit — and who are you working with?", "Di mana posisi Anda — dan dengan siapa Anda bekerja?")}
           </h2>
           <p style={{ fontFamily: FONT_BODY, fontSize: 15, color: BODY_TEXT, lineHeight: 1.75, margin: "0 0 36px" }}>
             {t(
               "Use the scale above as your reference. Work through these prompts in the order given.",
-              "Gunakan skala di atas sebagai referensimu. Kerjakan pertanyaan-pertanyaan ini secara berurutan."
+              "Gunakan skala di atas sebagai referensi Anda. Kerjakan pertanyaan-pertanyaan ini secara berurutan."
             )}
           </p>
 
@@ -1081,7 +1081,7 @@ export default function UnderstandingHighContextClient({ isSaved: initialSaved }
             <p style={{ fontFamily: FONT_BODY, fontSize: 14, fontStyle: "italic", color: BODY_TEXT, lineHeight: 1.75, margin: 0 }}>
               {t(
                 "This is not about placing cultures in a hierarchy. Every position on this scale is a legitimate communication style. The goal is clarity — so you can bridge the gap intentionally.",
-                "Ini bukan tentang menempatkan budaya dalam hierarki. Setiap posisi dalam skala ini adalah gaya komunikasi yang sah. Tujuannya adalah kejelasan — agar kamu bisa menjembatani kesenjangan secara disengaja."
+                "Ini bukan tentang menempatkan budaya dalam hierarki. Setiap posisi dalam skala ini adalah gaya komunikasi yang sah. Tujuannya adalah kejelasan — agar Anda bisa menjembatani kesenjangan secara disengaja."
               )}
             </p>
           </div>
@@ -1093,12 +1093,12 @@ export default function UnderstandingHighContextClient({ isSaved: initialSaved }
         <div style={{ maxWidth: 720, margin: "0 auto" }}>
           <p style={eyebrow}>{t("Communication Spectrum", "Spektrum Komunikasi")}</p>
           <h2 style={{ fontFamily: FONT_HEADLINE, fontSize: "clamp(28px, 3.5vw, 40px)", fontWeight: 600, color: NAVY, lineHeight: 1.15, margin: "0 0 16px" }}>
-            {t("Where does your culture sit?", "Di mana posisi budayamu?")}
+            {t("Where does your culture sit?", "Di mana posisi budaya Anda?")}
           </h2>
           <p style={{ fontFamily: FONT_BODY, fontSize: 15, color: BODY_TEXT, lineHeight: 1.75, margin: "0 0 40px", maxWidth: 600 }}>
             {t(
               "Every culture falls somewhere on this spectrum — not as a fixed point, but as a tendency. Knowing the range helps you calibrate what to expect and what to adjust.",
-              "Setiap budaya berada di suatu tempat dalam spektrum ini — bukan sebagai titik tetap, tetapi sebagai kecenderungan. Mengetahui rentangnya membantumu mengkalibrasi apa yang diharapkan dan apa yang perlu disesuaikan."
+              "Setiap budaya berada di suatu tempat dalam spektrum ini — bukan sebagai titik tetap, tetapi sebagai kecenderungan. Mengetahui rentangnya membantu Anda mengkalibrasi apa yang diharapkan dan apa yang perlu disesuaikan."
             )}
           </p>
           <ContextCalibrationGauge lang={lang} />

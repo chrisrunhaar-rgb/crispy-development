@@ -250,7 +250,7 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
           <p style={{ fontFamily: "var(--font-cormorant), 'Cormorant Garamond', Georgia, serif", fontSize: "clamp(19px, 2.5vw, 23px)", color: navyOklch, lineHeight: 1.6, fontStyle: "italic", marginBottom: 0 }}>
             {t(
               '"You came in as the expert. You told people what the vision was. In our culture, that means the conversation is already over."',
-              '"Kamu datang sebagai ahlinya. Kamu memberi tahu orang-orang apa visinya. Dalam budaya kami, itu berarti percakapan sudah berakhir."',
+              '"Anda datang sebagai ahlinya. Anda memberi tahu orang-orang apa visinya. Dalam budaya kami, itu berarti percakapan sudah berakhir."',
               '"Je kwam binnen als de expert. Je vertelde mensen wat de visie was. In onze cultuur betekent dat dat het gesprek al voorbij is."'
             )}
           </p>

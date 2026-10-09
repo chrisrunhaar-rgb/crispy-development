@@ -68,7 +68,7 @@ const RAFT_STEPS = [
     ],
     id_how: [
       "Buat daftar 5 hingga 10 orang yang telah membentuk Anda di musim ini.",
-      "Jadilah spesifik: bukan 'kamu sangat mendukung' tetapi 'ketika kamu tetap bersamaku melalui krisis September itu, itu mengubahku.'",
+      "Jadilah spesifik: bukan 'Anda sangat mendukung' tetapi 'ketika Anda tetap bersamaku melalui krisis September itu, itu mengubahku.'",
       "Sampaikan dengan cara yang sesuai dengan hubungan: catatan tulisan tangan, percakapan langsung, pesan suara.",
       "Ciptakan ritual kecil: makan bersama, jalan-jalan, pertemuan. Sesuatu yang akan diingat oleh tubuh Anda dan mereka.",
     ],

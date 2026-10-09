@@ -241,22 +241,22 @@ export default function DisciplineOfSilenceClient({
     if (total <= 5) {
       resultText = t(
         "Silence is not yet a habit in your life. That's not a failure — it's the starting point. This module was made for exactly where you are.",
-        "Keheningan belum menjadi kebiasaan dalam hidupmu. Itu bukan kegagalan — itu adalah titik awal. Modul ini dibuat untuk tepat di mana kamu berada."
+        "Keheningan belum menjadi kebiasaan dalam hidup Anda. Itu bukan kegagalan — itu adalah titik awal. Modul ini dibuat untuk tepat di mana Anda berada."
       );
     } else if (total <= 9) {
       resultText = t(
         "You're reaching for silence, but haven't found a steady rhythm yet. This module will help you build one.",
-        "Kamu sedang meraih keheningan, tetapi belum menemukan ritme yang stabil. Modul ini akan membantumu membangunnya."
+        "Anda sedang meraih keheningan, tetapi belum menemukan ritme yang stabil. Modul ini akan membantu Anda membangunnya."
       );
     } else if (total <= 12) {
       resultText = t(
         "Silence is growing in your practice, but it hasn't fully settled. This module will help you protect and deepen it.",
-        "Keheningan sedang bertumbuh dalam praktikmu, tetapi belum sepenuhnya menetap. Modul ini akan membantumu melindungi dan memperdalamannya."
+        "Keheningan sedang bertumbuh dalam praktik Anda, tetapi belum sepenuhnya menetap. Modul ini akan membantu Anda melindungi dan memperdalamannya."
       );
     } else {
       resultText = t(
         "Silence is already a discipline in your life. Use this module to sharpen your practice and learn how to lead others into it.",
-        "Keheningan sudah menjadi disiplin dalam hidupmu. Gunakan modul ini untuk mempertajam praktikmu dan belajar bagaimana memimpin orang lain ke dalamnya."
+        "Keheningan sudah menjadi disiplin dalam hidup Anda. Gunakan modul ini untuk mempertajam praktik Anda dan belajar bagaimana memimpin orang lain ke dalamnya."
       );
     }
     setAssessmentResult(resultText);
@@ -690,7 +690,7 @@ export default function DisciplineOfSilenceClient({
               }}>
                 {t(
                   "At the end of this module, we'll return to these areas — to see where you want to grow and how to get there.",
-                  "Di akhir modul ini, kita akan kembali ke area-area ini — untuk melihat di mana kamu ingin bertumbuh dan bagaimana caranya."
+                  "Di akhir modul ini, kita akan kembali ke area-area ini — untuk melihat di mana Anda ingin bertumbuh dan bagaimana caranya."
                 )}
               </p>
             </div>
@@ -1093,24 +1093,24 @@ export default function DisciplineOfSilenceClient({
               <p style={{ ...prose, marginBottom: "2.5rem" }}>
                 {t(
                   "You've completed the module. Now take a moment to reflect on what this means for you specifically.",
-                  "Kamu telah menyelesaikan modul ini. Sekarang luangkan waktu untuk merenungkan apa artinya ini bagimu secara pribadi."
+                  "Anda telah menyelesaikan modul ini. Sekarang luangkan waktu untuk merenungkan apa artinya ini bagi Anda secara pribadi."
                 )}
               </p>
 
               {[
                 {
                   key: "area" as const,
-                  label: t("After reading this module, in what area do you most want to grow?", "Setelah membaca modul ini, di area apa kamu paling ingin bertumbuh?"),
+                  label: t("After reading this module, in what area do you most want to grow?", "Setelah membaca modul ini, di area apa Anda paling ingin bertumbuh?"),
                   placeholder: t("Be specific — what came to mind while reading?", "Jadilah spesifik — apa yang terlintas saat membaca?"),
                 },
                 {
                   key: "challenge" as const,
-                  label: t("What is your biggest challenge in making silence a habit?", "Apa tantangan terbesarmu dalam menjadikan keheningan sebagai kebiasaan?"),
-                  placeholder: t("What gets in the way for you?", "Apa yang menghalangimu?"),
+                  label: t("What is your biggest challenge in making silence a habit?", "Apa tantangan terbesar Anda dalam menjadikan keheningan sebagai kebiasaan?"),
+                  placeholder: t("What gets in the way for you?", "Apa yang menghalangi Anda?"),
                 },
                 {
                   key: "impact" as const,
-                  label: t("What would change in your leadership if silence became a discipline?", "Apa yang akan berubah dalam kepemimpinanmu jika keheningan menjadi disiplin?"),
+                  label: t("What would change in your leadership if silence became a discipline?", "Apa yang akan berubah dalam kepemimpinan Anda jika keheningan menjadi disiplin?"),
                   placeholder: t("Think practically...", "Pikirkan secara praktis..."),
                 },
               ].map(({ key, label, placeholder }) => (
@@ -1156,7 +1156,7 @@ export default function DisciplineOfSilenceClient({
               }}>
                 {t(
                   "Your responses will be sent to Google AI to generate personalised advice. They are not stored.",
-                  "Responsmu akan dikirim ke Google AI untuk menghasilkan saran personal. Data tidak disimpan."
+                  "Respons Anda akan dikirim ke Google AI untuk menghasilkan saran personal. Data tidak disimpan."
                 )}
               </p>
               <button
@@ -1202,7 +1202,7 @@ export default function DisciplineOfSilenceClient({
                     color: orange,
                     marginBottom: "0.75rem",
                   }}>
-                    {t("For You", "Untukmu")}
+                    {t("For You", "Untuk Anda")}
                   </p>
                   <p style={{
                     fontFamily: CORMORANT,

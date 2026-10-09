@@ -48,11 +48,11 @@ const BOOKS: Book[] = [
     descriptionEn:
       "Jim Kwik's Limitless provides a practical system for upgrading your mental performance, showing that the real limits on learning are not innate but learned, and can be unlearned. For leaders who feel they are not natural readers, this book reframes the story.",
     descriptionId:
-      "Limitless karya Jim Kwik memberikan sistem praktis untuk meningkatkan performa mentalmu, menunjukkan bahwa batasan belajar yang sesungguhnya bukan bawaan lahir, melainkan dipelajari, dan bisa diubah. Bagi pemimpin yang merasa bukan pembaca alami, buku ini membingkai ulang ceritanya.",
+      "Limitless karya Jim Kwik memberikan sistem praktis untuk meningkatkan performa mental Anda, menunjukkan bahwa batasan belajar yang sesungguhnya bukan bawaan lahir, melainkan dipelajari, dan bisa diubah. Bagi pemimpin yang merasa bukan pembaca alami, buku ini membingkai ulang ceritanya.",
     whyReadEn:
       "Start here if you believe reading is something other people are better at. Kwik dismantles that story directly.",
     whyReadId:
-      "Mulailah dari sini jika kamu percaya membaca adalah sesuatu yang lebih dikuasai orang lain. Kwik membongkar cerita itu secara langsung.",
+      "Mulailah dari sini jika Anda percaya membaca adalah sesuatu yang lebih dikuasai orang lain. Kwik membongkar cerita itu secara langsung.",
     category: "habit",
     buyUrl:
       "https://www.amazon.com/dp/1401960529",
@@ -70,7 +70,7 @@ const BOOKS: Book[] = [
     whyReadEn:
       "If you want to build a consistent reading habit, this is the manual. Clear's system for habit stacking and environment design is directly applicable.",
     whyReadId:
-      "Jika kamu ingin membangun kebiasaan membaca yang konsisten, ini adalah panduannya. Sistem Clear untuk menumpuk kebiasaan dan merancang lingkungan bisa langsung diterapkan.",
+      "Jika Anda ingin membangun kebiasaan membaca yang konsisten, ini adalah panduannya. Sistem Clear untuk menumpuk kebiasaan dan merancang lingkungan bisa langsung diterapkan.",
     category: "habit",
     buyUrl: "https://www.amazon.com/dp/0735211299",
   },
@@ -87,7 +87,7 @@ const BOOKS: Book[] = [
     whyReadEn:
       "Read this to understand why your environment may be working against your reading habit, and what to do about it.",
     whyReadId:
-      "Bacalah ini untuk memahami mengapa lingkunganmu mungkin berjalan berlawanan dengan kebiasaan membacamu, dan apa yang bisa dilakukan.",
+      "Bacalah ini untuk memahami mengapa lingkungan Anda mungkin berjalan berlawanan dengan kebiasaan membaca Anda, dan apa yang bisa dilakukan.",
     category: "habit",
     buyUrl: "https://www.amazon.com/dp/1455586692",
   },
@@ -105,7 +105,7 @@ const BOOKS: Book[] = [
     whyReadEn:
       "If you lead across cultures and sometimes feel like you are speaking different languages even in the same language, this book names what is actually happening.",
     whyReadId:
-      "Jika kamu memimpin lintas budaya dan kadang merasa berbicara bahasa yang berbeda meskipun menggunakan bahasa yang sama, buku ini mengungkapkan apa yang sebenarnya terjadi.",
+      "Jika Anda memimpin lintas budaya dan kadang merasa berbicara bahasa yang berbeda meskipun menggunakan bahasa yang sama, buku ini mengungkapkan apa yang sebenarnya terjadi.",
     category: "cross-cultural",
     buyUrl: "https://www.amazon.com/dp/1610392507",
   },
@@ -157,7 +157,7 @@ const BOOKS: Book[] = [
     whyReadEn:
       "If you feel too busy to read, this is the first book to read. Comer diagnoses the hurry that keeps leaders from the formation they most need.",
     whyReadId:
-      "Kalau kamu merasa terlalu sibuk untuk membaca, inilah buku pertama yang perlu dibaca. Comer mendiagnosis ketergesa-gesaan yang menghalangi pemimpin dari pembentukan yang paling mereka butuhkan.",
+      "Kalau Anda merasa terlalu sibuk untuk membaca, inilah buku pertama yang perlu dibaca. Comer mendiagnosis ketergesa-gesaan yang menghalangi pemimpin dari pembentukan yang paling mereka butuhkan.",
     category: "faith",
     buyUrl: "https://www.amazon.com/dp/0525653090",
   },
@@ -170,11 +170,11 @@ const BOOKS: Book[] = [
     descriptionEn:
       "Robert Clinton spent decades studying the life patterns of Christian leaders and found that the most significant growth usually comes through trial, not success. This book gives you a map of leadership development stages and helps you locate yourself on it.",
     descriptionId:
-      "Robert Clinton menghabiskan beberapa dekade mempelajari pola kehidupan para pemimpin Kristen dan menemukan bahwa pertumbuhan paling signifikan biasanya datang melalui ujian, bukan kesuksesan. Buku ini memberimu peta tahapan pengembangan kepemimpinan.",
+      "Robert Clinton menghabiskan beberapa dekade mempelajari pola kehidupan para pemimpin Kristen dan menemukan bahwa pertumbuhan paling signifikan biasanya datang melalui ujian, bukan kesuksesan. Buku ini memberi Anda peta tahapan pengembangan kepemimpinan.",
     whyReadEn:
       "Essential for anyone navigating a difficult or uncertain season. Clinton helps you see the bigger arc of what God may be doing in your leadership journey.",
     whyReadId:
-      "Penting bagi siapa pun yang menavigasi musim yang sulit atau tidak pasti. Clinton membantumu melihat busur lebih besar dari apa yang mungkin sedang Tuhan kerjakan sepanjang masa kepemimpinanmu.",
+      "Penting bagi siapa pun yang menavigasi musim yang sulit atau tidak pasti. Clinton membantu Anda melihat busur lebih besar dari apa yang mungkin sedang Tuhan kerjakan sepanjang masa kepemimpinan Anda.",
     category: "faith",
     buyUrl: "https://www.amazon.com/dp/0891091831",
   },
@@ -209,7 +209,7 @@ const BOOKS: Book[] = [
     whyReadEn:
       "If you ever wonder whether you are unleashing or inadvertently limiting the people around you, this book gives you the language and the tools to find out.",
     whyReadId:
-      "Jika kamu pernah bertanya-tanya apakah kamu sedang membebaskan atau justru tanpa sengaja membatasi orang-orang di sekitarmu, buku ini memberimu bahasa dan alat untuk mengetahuinya.",
+      "Jika Anda pernah bertanya-tanya apakah Anda sedang membebaskan atau justru tanpa sengaja membatasi orang-orang di sekitar Anda, buku ini memberi Anda bahasa dan alat untuk mengetahuinya.",
     category: "leadership",
     buyUrl: "https://www.amazon.com/dp/006266307X",
   },
@@ -243,7 +243,7 @@ const BOOKS: Book[] = [
     whyReadEn:
       "A useful reference to return to across different seasons of leadership. Some laws will hit harder depending on where you are right now.",
     whyReadId:
-      "Referensi yang berguna untuk kembali dibaca di berbagai musim kepemimpinan. Beberapa hukum akan terasa lebih kuat tergantung di mana kamu berada saat ini.",
+      "Referensi yang berguna untuk kembali dibaca di berbagai musim kepemimpinan. Beberapa hukum akan terasa lebih kuat tergantung di mana Anda berada saat ini.",
     category: "leadership",
     buyUrl: "https://www.amazon.com/dp/0785289356",
   },
@@ -645,7 +645,7 @@ export default function LeadersReadersClient({
           >
             {t(
               "You don't have a reading problem. You have an identity question.",
-              "Kamu tidak punya masalah membaca. Kamu punya pertanyaan tentang identitas.",
+              "Anda tidak punya masalah membaca. Anda punya pertanyaan tentang identitas.",
               lang
             )}
           </p>
@@ -801,9 +801,9 @@ export default function LeadersReadersClient({
             </>
           ) : (
             <>
-              <p style={proseSubhead}>Kamu ingin membaca lebih banyak</p>
+              <p style={proseSubhead}>Anda ingin membaca lebih banyak</p>
               <p style={prose}>
-                Kebanyakan pemimpin ingin membaca lebih banyak dari yang mereka lakukan sekarang. Kalau kamu membuka modul ini, kemungkinan besar kamu salah satunya. Bukan karena kamu tidak peduli — kamu peduli. Tapi hari-hari terasa penuh, buku tetap di rak, dan lama-lama rasanya seperti membaca adalah sesuatu yang dilakukan orang lain.
+                Kebanyakan pemimpin ingin membaca lebih banyak dari yang mereka lakukan sekarang. Kalau Anda membuka modul ini, kemungkinan besar Anda salah satunya. Bukan karena Anda tidak peduli — Anda peduli. Tapi hari-hari terasa penuh, buku tetap di rak, dan lama-lama rasanya seperti membaca adalah sesuatu yang dilakukan orang lain.
               </p>
               <p style={prose}>
                 Ada cara yang lebih berguna untuk masuk ke dalam ini. Dan itu tidak dimulai dengan disiplin atau daftar tugas yang lebih panjang.
@@ -820,7 +820,7 @@ export default function LeadersReadersClient({
                 Ada prinsip yang sudah lama dikenal dalam ilmu perilaku: kebiasaan yang berbasis identitas bertahan dengan cara yang tidak bisa dilakukan oleh kebiasaan berbasis hasil.<span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700 }}>¹</span>
               </p>
               <p style={prose}>
-                Memberi tahu dirimu &ldquo;aku ingin membaca 20 buku tahun ini&rdquo; itu rapuh. Memberi tahu dirimu &ldquo;aku adalah tipe pemimpin yang membaca&rdquo; itu menopang. Ketika kamu adalah seorang pembaca, 15 menit di pagi hari dengan sebuah buku sudah menjadi bagian dari dirimu. Tidak butuh kemauan keras. Itulah siapa kamu.
+                Memberi tahu diri Anda &ldquo;aku ingin membaca 20 buku tahun ini&rdquo; itu rapuh. Memberi tahu diri Anda &ldquo;aku adalah tipe pemimpin yang membaca&rdquo; itu menopang. Ketika Anda adalah seorang pembaca, 15 menit di pagi hari dengan sebuah buku sudah menjadi bagian dari diri Anda. Tidak butuh kemauan keras. Itulah siapa Anda.
               </p>
 
               {/* Before / After — pergeseran identitas */}
@@ -916,33 +916,33 @@ export default function LeadersReadersClient({
               <p style={prose}>
                 Sebelum kita melanjutkan, aku ingin mengungkapkan sesuatu secara langsung, karena ini penting.
               </p>
-              <p style={proseSubhead}>Membaca menghormati tradisimu</p>
+              <p style={proseSubhead}>Membaca menghormati tradisi Anda</p>
               <p style={prose}>
-                Banyak pemimpin yang belajar bersama Crispy tumbuh di dalam budaya di mana kebijaksanaan tidak terutama disampaikan melalui buku. Ia datang melalui para sesepuh. Melalui pepatah dan cerita. Melalui proses magang di sisi seseorang yang tahu hal-hal yang kamu belum tahu.
+                Banyak pemimpin yang belajar bersama Crispy tumbuh di dalam budaya di mana kebijaksanaan tidak terutama disampaikan melalui buku. Ia datang melalui para sesepuh. Melalui pepatah dan cerita. Melalui proses magang di sisi seseorang yang tahu hal-hal yang Anda belum tahu.
               </p>
               <p style={prose}>
-                Ini bukan cara belajar yang primitif. Ini adalah cara yang dalam, canggih, dan sering kali lebih utuh secara formatif daripada membaca sendirian. Kalau itu adalah tradisimu, hormatilah. Itu adalah bagian dari cara Tuhan melestarikan kebijaksanaan lintas generasi.
+                Ini bukan cara belajar yang primitif. Ini adalah cara yang dalam, canggih, dan sering kali lebih utuh secara formatif daripada membaca sendirian. Kalau itu adalah tradisi Anda, hormatilah. Itu adalah bagian dari cara Tuhan melestarikan kebijaksanaan lintas generasi.
               </p>
-              <p style={proseSubhead}>Mentor jauhmu sedang menunggumu</p>
+              <p style={proseSubhead}>Mentor jauh Anda sedang menunggu Anda</p>
               <p style={prose}>
                 Membaca bukan pengganti pembelajaran lisan. Ini adalah perluasannya.
               </p>
               <p style={prose}>
-                Ada pemikir yang hidup berabad-abad sebelummu, di negara yang tidak akan pernah kamu kunjungi, dengan sesuatu untuk dikatakan kepada situasimu yang tidak bisa dikatakan oleh mentor lokalmu. Membaca adalah cara kamu mengakses para mentor yang jauh itu. Ini adalah bentuk pendampingan yang paling demokratis yang tersedia. Buku tidak peduli tentang statusmu, bahasamu, atau paspormu. Kamu bisa duduk bersama Agustinus, atau Chinua Achebe, atau Ada Lum, cukup dengan meluangkan satu sore saja.
+                Ada pemikir yang hidup berabad-abad sebelum Anda, di negara yang tidak akan pernah Anda kunjungi, dengan sesuatu untuk dikatakan kepada situasi Anda yang tidak bisa dikatakan oleh mentor lokal Anda. Membaca adalah cara Anda mengakses para mentor yang jauh itu. Ini adalah bentuk pendampingan yang paling demokratis yang tersedia. Buku tidak peduli tentang status Anda, bahasa Anda, atau paspor Anda. Anda bisa duduk bersama Agustinus, atau Chinua Achebe, atau Ada Lum, cukup dengan meluangkan satu sore saja.
               </p>
-              <p style={proseSubhead}>Apa yang kamu baca membentuk cara kamu memimpin</p>
+              <p style={proseSubhead}>Apa yang Anda baca membentuk cara Anda memimpin</p>
               <p style={prose}>
-                Sebagian besar buku kepemimpinan yang tersedia secara luas ditulis oleh penulis Amerika Utara atau Eropa, untuk konteks Amerika Utara atau Eropa. Itu hanya soal ekonomi penerbitan. Tapi kalau kamu hanya membaca apa yang paling mudah didapat, kamu akan menyerap kerangka budaya tertentu untuk kepemimpinan tanpa menyadarinya.
+                Sebagian besar buku kepemimpinan yang tersedia secara luas ditulis oleh penulis Amerika Utara atau Eropa, untuk konteks Amerika Utara atau Eropa. Itu hanya soal ekonomi penerbitan. Tapi kalau Anda hanya membaca apa yang paling mudah didapat, Anda akan menyerap kerangka budaya tertentu untuk kepemimpinan tanpa menyadarinya.
               </p>
               <p style={prose}>
-                Pemimpin lintas budaya perlu membaca secara beragam, dengan disengaja. Carilah penulis dari tradisi budayamu sendiri. Carilah penulis dari dunia mayoritas. Perhatikan suara siapa yang belum pernah kamu dengar.
+                Pemimpin lintas budaya perlu membaca secara beragam, dengan disengaja. Carilah penulis dari tradisi budaya Anda sendiri. Carilah penulis dari dunia mayoritas. Perhatikan suara siapa yang belum pernah Anda dengar.
               </p>
               <p style={proseSubhead}>Membaca membangun empati — dan riset membuktikannya</p>
               <p style={prose}>
                 Fiksi sastra telah terbukti dalam penelitian yang ditinjau sejawat secara terukur meningkatkan kapasitas untuk memahami apa yang terjadi di dalam pikiran orang lain. Para peneliti Emanuele Castano dan David Kidd menemukan bukti bahwa membaca fiksi sastra dapat meningkatkan kinerja pada tes empati dan pengambilan perspektif yang tervalidasi — sebuah temuan yang telah menghasilkan diskusi ilmiah yang substansial dan penelitian lebih lanjut.<span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700 }}>²</span>
               </p>
               <p style={{ ...prose, marginBottom: 0 }}>
-                Alasannya? Fiksi sastra memaksamu untuk melatih persis apa yang dituntut oleh pekerjaan lintas budaya: memegang ketidakpastian, membuat kesimpulan tentang orang yang tidak sepertimu, dan tetap penasaran daripada menutup diri. Kalau kamu ingin lebih baik dalam membaca situasi dan membaca orang, salah satu alat terbaik adalah membaca buku.
+                Alasannya? Fiksi sastra memaksa Anda untuk melatih persis apa yang dituntut oleh pekerjaan lintas budaya: memegang ketidakpastian, membuat kesimpulan tentang orang yang tidak seperti Anda, dan tetap penasaran daripada menutup diri. Kalau Anda ingin lebih baik dalam membaca situasi dan membaca orang, salah satu alat terbaik adalah membaca buku.
               </p>
 
               <PullQuote
@@ -1074,7 +1074,7 @@ export default function LeadersReadersClient({
               <p style={{ fontFamily: FONT, fontSize: "0.875rem", color: "oklch(75% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
                 {t(
                   "You don't have to finish every book. Read what feeds you now. Set aside what doesn't. The goal is formation, not completion.",
-                  "Kamu tidak harus menyelesaikan setiap buku. Bacalah yang memberimu makan sekarang. Sisihkan yang tidak. Tujuannya adalah pembentukan, bukan penyelesaian.",
+                  "Anda tidak harus menyelesaikan setiap buku. Bacalah yang memberi Anda makan sekarang. Sisihkan yang tidak. Tujuannya adalah pembentukan, bukan penyelesaian.",
                   lang
                 )}
               </p>
@@ -1105,7 +1105,7 @@ export default function LeadersReadersClient({
               <p style={{ fontFamily: FONT, fontSize: "0.875rem", color: "oklch(75% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
                 {t(
                   "Who are you reading? Check your last five books. If every voice comes from the same tradition, that's worth noticing.",
-                  "Siapa yang kamu baca? Periksa lima buku terakhirmu. Kalau setiap suara berasal dari tradisi yang sama, itu layak diperhatikan.",
+                  "Siapa yang Anda baca? Periksa lima buku terakhir Anda. Kalau setiap suara berasal dari tradisi yang sama, itu layak diperhatikan.",
                   lang
                 )}
               </p>
@@ -1128,7 +1128,7 @@ export default function LeadersReadersClient({
             <p style={{ fontFamily: FONT, fontSize: "0.9rem", color: offWhite, lineHeight: 1.7, margin: 0 }}>
               {t(
                 "Pick one book you've been meaning to read. Not the one you think you should read — the one you actually want to read. Block 10 minutes tomorrow morning and start.",
-                "Pilih satu buku yang sudah lama ingin kamu baca. Bukan yang kamu pikir harus dibaca — tapi yang benar-benar ingin kamu baca. Blokir 10 menit besok pagi dan mulailah.",
+                "Pilih satu buku yang sudah lama ingin Anda baca. Bukan yang Anda pikir harus dibaca — tapi yang benar-benar ingin Anda baca. Blokir 10 menit besok pagi dan mulailah.",
                 lang
               )}
             </p>
@@ -1163,7 +1163,7 @@ export default function LeadersReadersClient({
           <SectionH2>
             {t(
               "Great Books to Start Your Reading Habit",
-              "Buku-Buku Pilihan untuk Memulai Kebiasaan Membacamu",
+              "Buku-Buku Pilihan untuk Memulai Kebiasaan Membaca Anda",
               lang
             )}
           </SectionH2>
@@ -1171,7 +1171,7 @@ export default function LeadersReadersClient({
           <PullQuote
             quote={t(
               "You must linger among a limited number of master-thinkers, and digest their works, if you would derive ideas which shall win firm hold in your mind.",
-              "Kamu harus berlama-lama bersama sejumlah kecil pemikir terbaik, dan mencerna karya-karya mereka, jika ingin mendapatkan gagasan yang benar-benar tertanam dalam pikiranmu.",
+              "Anda harus berlama-lama bersama sejumlah kecil pemikir terbaik, dan mencerna karya-karya mereka, jika ingin mendapatkan gagasan yang benar-benar tertanam dalam pikiran Anda.",
               lang
             )}
             attribution="Seneca — Letters to Lucilius, c. 65 AD"
@@ -1417,15 +1417,15 @@ export default function LeadersReadersClient({
             {[
               {
                 en: "When did a book last genuinely change how you lead? What shifted in you, not just what you learned?",
-                id: "Kapan terakhir kali sebuah buku benar-benar mengubah cara kamu memimpin? Apa yang bergeser dalam dirimu, bukan hanya apa yang kamu pelajari?",
+                id: "Kapan terakhir kali sebuah buku benar-benar mengubah cara Anda memimpin? Apa yang bergeser dalam diri Anda, bukan hanya apa yang Anda pelajari?",
               },
               {
                 en: "Whose voices are missing from your reading list? Think about cultural background, geography, gender, tradition. What would it mean to include them?",
-                id: "Suara siapa yang hilang dari daftar bacaanmu? Pikirkan tentang latar belakang budaya, geografi, gender, tradisi. Apa artinya memasukkan mereka?",
+                id: "Suara siapa yang hilang dari daftar bacaan Anda? Pikirkan tentang latar belakang budaya, geografi, gender, tradisi. Apa artinya memasukkan mereka?",
               },
               {
                 en: "What does your current reading say about your posture toward learning? Are you feeding the leader you are becoming, or staying comfortable with what you already know?",
-                id: "Apa yang bacaanmu saat ini katakan tentang sikapmu terhadap pembelajaran? Apakah kamu sedang memberi makan pemimpin yang sedang kamu tuju, atau tetap nyaman dengan apa yang sudah kamu ketahui?",
+                id: "Apa yang bacaan Anda saat ini katakan tentang sikap Anda terhadap pembelajaran? Apakah Anda sedang memberi makan pemimpin yang sedang Anda tuju, atau tetap nyaman dengan apa yang sudah Anda ketahui?",
               },
             ].map((q, i) => (
               <div
@@ -1565,14 +1565,14 @@ export default function LeadersReadersClient({
             <>
               <p style={proseSubhead}>Instruksi Wesley</p>
               <p style={proseDark}>
-                Pada tahun 1760, John Wesley menulis surat kepada seorang pendeta muda. Suratnya singkat dan instruksinya langsung: &ldquo;Suka atau tidak suka, bacalah dan berdoalah setiap hari. Itu demi hidupmu.&rdquo;
+                Pada tahun 1760, John Wesley menulis surat kepada seorang pendeta muda. Suratnya singkat dan instruksinya langsung: &ldquo;Suka atau tidak suka, bacalah dan berdoalah setiap hari. Itu demi hidup Anda.&rdquo;
               </p>
               <p style={proseDark}>
                 Yang menarik bagiku dari kalimat itu adalah Wesley mengungkapkan penolakan yang mungkin muncul terlebih dahulu. Ia tidak mengasumsikan sang pendeta akan senang mendengar ini. Ia mengasumsikan sang pendeta akan merasa ini merepotkan, atau tidak nyaman, atau tidak relevan. Dan ia mengatakannya juga, dengan bobot pastoral.
               </p>
               <p style={proseSubhead}>Masih berlaku hari ini</p>
               <p style={proseDark}>
-                Wesley menulis kepada seorang pekerja lapangan di abad ke-18, tapi ia bisa saja menulis kepadamu sekarang. Perlawanannya belum berubah. Laju kehidupan yang menyisihkan waktu membaca adalah perlawanan yang sama, hanya dengan bentuk yang berbeda.
+                Wesley menulis kepada seorang pekerja lapangan di abad ke-18, tapi ia bisa saja menulis kepada Anda sekarang. Perlawanannya belum berubah. Laju kehidupan yang menyisihkan waktu membaca adalah perlawanan yang sama, hanya dengan bentuk yang berbeda.
               </p>
               <p style={proseDark}>
                 Pemimpin yang berhenti belajar, yang mengisi setiap momen tenang dengan kebisingan, yang hanya mengandalkan apa yang sudah mereka ketahui, adalah pemimpin yang perlahan-lahan berhenti. Wesley tidak merekomendasikan program pengembangan diri. Ia berkata: ini adalah kelangsungan hidup bagi pemimpin yang ingin terus bertumbuh.
@@ -1592,7 +1592,7 @@ export default function LeadersReadersClient({
               />
 
               <p style={{ ...proseDark, marginBottom: 0, fontStyle: "italic" }}>
-                Siapa saja mentor di rakmu yang belum pernah kamu temui?
+                Siapa saja mentor di rak Anda yang belum pernah Anda temui?
               </p>
             </>
           )}
@@ -1627,15 +1627,15 @@ export default function LeadersReadersClient({
             {[
               {
                 en: "Write one sentence: \"I am a leader who reads because...\" Complete it honestly. This is your identity statement. Put it somewhere you will see it.",
-                id: "Tulislah satu kalimat: \"Aku adalah seorang pemimpin yang membaca karena...\" Selesaikan dengan jujur. Ini adalah pernyataan identitasmu. Taruh di tempat yang akan kamu lihat.",
+                id: "Tulislah satu kalimat: \"Aku adalah seorang pemimpin yang membaca karena...\" Selesaikan dengan jujur. Ini adalah pernyataan identitas Anda. Taruh di tempat yang akan Anda lihat.",
               },
               {
                 en: "Name one book you have been meaning to read. Not the one you think you should read. The one you actually want to read. Start it this week, even just 10 pages.",
-                id: "Sebutkan satu buku yang sudah lama ingin kamu baca. Bukan yang kamu pikir harus kamu baca. Yang benar-benar ingin kamu baca. Mulailah minggu ini, bahkan hanya 10 halaman saja.",
+                id: "Sebutkan satu buku yang sudah lama ingin Anda baca. Bukan yang Anda pikir harus Anda baca. Yang benar-benar ingin Anda baca. Mulailah minggu ini, bahkan hanya 10 halaman saja.",
               },
               {
                 en: "Name one author or thinker from a different cultural background than your own. Find something they have written. It does not have to be long. Start there.",
-                id: "Sebutkan satu penulis atau pemikir dari latar belakang budaya yang berbeda dari milikmu. Temukan sesuatu yang mereka tulis. Tidak harus panjang. Mulailah dari sana.",
+                id: "Sebutkan satu penulis atau pemikir dari latar belakang budaya yang berbeda dari milik Anda. Temukan sesuatu yang mereka tulis. Tidak harus panjang. Mulailah dari sana.",
               },
             ].map((item, i) => (
               <div
@@ -1673,7 +1673,7 @@ export default function LeadersReadersClient({
           <PullQuote
             quote={t(
               "Reading a book should be a conversation between you and the author. Presumably he knows more about the subject than you do; if not, you probably should not be bothering with his book.",
-              "Membaca sebuah buku seharusnya menjadi percakapan antara kamu dan penulisnya. Dia diasumsikan tahu lebih banyak tentang topik itu daripada kamu; jika tidak, kamu mungkin tidak perlu repot-repot membaca bukunya.",
+              "Membaca sebuah buku seharusnya menjadi percakapan antara Anda dan penulisnya. Dia diasumsikan tahu lebih banyak tentang topik itu daripada Anda; jika tidak, Anda mungkin tidak perlu repot-repot membaca bukunya.",
               lang
             )}
             attribution="Mortimer Adler — How to Read a Book"

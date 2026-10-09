@@ -50,7 +50,7 @@ const leaderNeeds = [
     en_title: "Clarity, not confusion",
     id_title: "Kejelasan, bukan kebingungan",
     en_desc: "Your leader needs to know what you are working on, where things stand, and whether there are decisions sitting with them that they have not noticed yet. Not because they distrust you — because they are carrying more than you can see, and they cannot afford to guess.",
-    id_desc: "Pemimpinmu perlu tahu apa yang sedang kamu kerjakan, di mana semuanya berada, dan apakah ada keputusan yang menunggu mereka yang belum mereka sadari. Bukan karena mereka tidak percaya kamu — tapi karena mereka membawa lebih banyak dari yang bisa kamu lihat, dan mereka tidak bisa menebak-nebak.",
+    id_desc: "Pemimpin Anda perlu tahu apa yang sedang Anda kerjakan, di mana semuanya berada, dan apakah ada keputusan yang menunggu mereka yang belum mereka sadari. Bukan karena mereka tidak percaya Anda — tapi karena mereka membawa lebih banyak dari yang bisa Anda lihat, dan mereka tidak bisa menebak-nebak.",
     icon: (
       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
@@ -63,7 +63,7 @@ const leaderNeeds = [
     en_title: "Honest intelligence, not flattery",
     id_title: "Kecerdasan yang jujur, bukan sanjungan",
     en_desc: "Your leader needs to be able to predict you. When you say something will be done by Thursday, it is done by Thursday. Your leader should never need to chase you. Reliability builds a specific kind of trust that is hard to rebuild once broken.",
-    id_desc: "Pemimpinmu perlu bisa memprediksi kamu. Ketika kamu bilang sesuatu akan selesai Kamis, itu selesai Kamis. Pemimpinmu tidak seharusnya perlu mengejar kamu. Keandalan membangun jenis kepercayaan tertentu yang sulit dibangun ulang begitu rusak.",
+    id_desc: "Pemimpin Anda perlu bisa memprediksi Anda. Ketika Anda bilang sesuatu akan selesai Kamis, itu selesai Kamis. Pemimpin Anda tidak seharusnya perlu mengejar Anda. Keandalan membangun jenis kepercayaan tertentu yang sulit dibangun ulang begitu rusak.",
     icon: (
       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
@@ -76,7 +76,7 @@ const leaderNeeds = [
     en_title: "Solutions, not just problems",
     id_title: "Solusi, bukan hanya masalah",
     en_desc: "Your leader needs you to bring problems with suggested solutions, not just problems. Every problem you bring without a suggested path forward adds to a cognitive load that is already high. Show up as a thinking partner, not a problem-reporter.",
-    id_desc: "Pemimpinmu perlu kamu membawa masalah dengan solusi yang disarankan, bukan hanya masalahnya saja. Setiap masalah yang kamu bawa tanpa jalur yang disarankan menambah beban kognitif yang sudah tinggi. Hadirlah sebagai mitra berpikir, bukan pelapor masalah.",
+    id_desc: "Pemimpin Anda perlu Anda membawa masalah dengan solusi yang disarankan, bukan hanya masalahnya saja. Setiap masalah yang Anda bawa tanpa jalur yang disarankan menambah beban kognitif yang sudah tinggi. Hadirlah sebagai mitra berpikir, bukan pelapor masalah.",
     icon: (
       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <line x1="9" y1="18" x2="15" y2="18"/><line x1="10" y1="22" x2="14" y2="22"/>
@@ -89,7 +89,7 @@ const leaderNeeds = [
     en_title: "Reliability and follow-through",
     id_title: "Keandalan dan tindak lanjut",
     en_desc: "Your leader needs to know that your work is moving in the same direction they are trying to take the organisation. When you disagree, say so in the right room, at the right time — then commit to the direction chosen. Alignment is not compliance; it is partnership.",
-    id_desc: "Pemimpinmu perlu tahu bahwa pekerjaanmu bergerak ke arah yang sama dengan yang mereka coba bawa organisasi. Ketika kamu tidak setuju, sampaikan di ruang yang tepat, pada waktu yang tepat — lalu berkomitmen pada arah yang dipilih. Keselarasan bukan kepatuhan; itu kemitraan.",
+    id_desc: "Pemimpin Anda perlu tahu bahwa pekerjaan Anda bergerak ke arah yang sama dengan yang mereka coba bawa organisasi. Ketika Anda tidak setuju, sampaikan di ruang yang tepat, pada waktu yang tepat — lalu berkomitmen pada arah yang dipilih. Keselarasan bukan kepatuhan; itu kemitraan.",
     icon: (
       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <polyline points="9 11 12 14 22 4"/>
@@ -107,7 +107,7 @@ const principles = [
     id_title: "Kenali Dunia Mereka",
     cite: "³",
     en_body: "Senior leaders have limited bandwidth. They are managing multiple channels of information simultaneously, and they do not always have context for what you are about to say. Lead with the conclusion. Tell them what happened, what it means, and what you need, in that order. Then offer detail if they want it. This structure — most important thing first, supporting information after — is what your leader's brain is looking for even if they have never articulated it.",
-    id_body: "Pemimpin senior memiliki bandwidth yang terbatas. Mereka mengelola beberapa saluran informasi sekaligus, dan tidak selalu punya konteks untuk apa yang akan kamu katakan. Mulailah dengan kesimpulan. Beritahu mereka apa yang terjadi, apa artinya, dan apa yang kamu butuhkan, dalam urutan itu. Itulah struktur yang dicari otak pemimpinmu bahkan jika mereka belum pernah mengungkapkannya.",
+    id_body: "Pemimpin senior memiliki bandwidth yang terbatas. Mereka mengelola beberapa saluran informasi sekaligus, dan tidak selalu punya konteks untuk apa yang akan Anda katakan. Mulailah dengan kesimpulan. Beritahu mereka apa yang terjadi, apa artinya, dan apa yang Anda butuhkan, dalam urutan itu. Itulah struktur yang dicari otak pemimpin Anda bahkan jika mereka belum pernah mengungkapkannya.",
   },
   {
     padded: "02",
@@ -115,7 +115,7 @@ const principles = [
     id_title: "Sesuaikan Media dengan Pesan",
     cite: undefined,
     en_body: "Some leaders want data. Some want narrative. Some need a two-minute verbal briefing; others want a bullet-point email they can read at 6am. Managing up means adapting to your leader's style, not the other way around. This is asymmetric by design: the one who is managing up carries the responsibility for the fit. Pay attention to how your leader communicates with others. What format do their own communications take? These are signals worth reading.",
-    id_body: "Sebagian pemimpin butuh data. Sebagian butuh narasi. Sebagian butuh briefing verbal dua menit; yang lain butuh email berpoin-poin yang bisa mereka baca jam 6 pagi. Bekerja sama dengan atasan berarti beradaptasi dengan gaya pemimpinmu, bukan sebaliknya. Ini memang tidak seimbang: kamulah yang bertanggung jawab untuk menyesuaikan diri. Perhatikan cara pemimpinmu berkomunikasi dengan orang lain. Format apa yang digunakan komunikasi mereka kepada kamu? Itu adalah sinyal yang layak dibaca.",
+    id_body: "Sebagian pemimpin butuh data. Sebagian butuh narasi. Sebagian butuh briefing verbal dua menit; yang lain butuh email berpoin-poin yang bisa mereka baca jam 6 pagi. Bekerja sama dengan atasan berarti beradaptasi dengan gaya pemimpin Anda, bukan sebaliknya. Ini memang tidak seimbang: kamulah yang bertanggung jawab untuk menyesuaikan diri. Perhatikan cara pemimpin Anda berkomunikasi dengan orang lain. Format apa yang digunakan komunikasi mereka kepada Anda? Itu adalah sinyal yang layak dibaca.",
   },
   {
     padded: "03",
@@ -123,7 +123,7 @@ const principles = [
     id_title: "Baca Situasinya",
     cite: "⁴",
     en_body: "Timing matters more than most people realise. The same conversation, on the same topic, with the same content, lands completely differently depending on when it happens. A complex issue raised when your leader is walking between two meetings will receive a fraction of the attention it deserves. Reading your leader's energy and context is a skill. It requires observation. When in doubt, ask: 'Is now a good time?' It is a simple question that signals respect for your leader's attention, and it almost always works.",
-    id_body: "Waktu lebih penting dari yang disadari kebanyakan orang. Percakapan yang sama, tentang topik yang sama, dengan konten yang sama, diterima sangat berbeda tergantung kapan terjadi. Isu kompleks yang diangkat ketika pemimpinmu sedang berjalan di antara dua rapat akan mendapat sebagian kecil perhatian yang layak diterimanya. Membaca energi dan konteks pemimpinmu adalah keterampilan. Ketika ragu, tanya: 'Apakah ini waktu yang tepat?' Pertanyaan sederhana yang memberi sinyal rasa hormat terhadap perhatian pemimpinmu.",
+    id_body: "Waktu lebih penting dari yang disadari kebanyakan orang. Percakapan yang sama, tentang topik yang sama, dengan konten yang sama, diterima sangat berbeda tergantung kapan terjadi. Isu kompleks yang diangkat ketika pemimpin Anda sedang berjalan di antara dua rapat akan mendapat sebagian kecil perhatian yang layak diterimanya. Membaca energi dan konteks pemimpin Anda adalah keterampilan. Ketika ragu, tanya: 'Apakah ini waktu yang tepat?' Pertanyaan sederhana yang memberi sinyal rasa hormat terhadap perhatian pemimpin Anda.",
   },
   {
     padded: "04",
@@ -131,7 +131,7 @@ const principles = [
     id_title: "Tidak Setuju dengan Baik",
     cite: undefined,
     en_body: "Raise concerns in private; once a decision is made, support it publicly. This principle does not suppress honest disagreement — it channels it wisely. A leader who hears your concerns privately and considers them is far more likely to adjust course than one who is ambushed publicly. And a team that sees you publicly support decisions even when you disagreed in private is watching a model of integrity. These two moves together — private honesty, public alignment — are the highest form of upward influence.",
-    id_body: "Angkat kekhawatiran secara pribadi; setelah keputusan dibuat, dukung secara publik. Prinsip ini tidak menekan ketidaksetujuan yang jujur, melainkan menyalurkannya dengan bijaksana. Seorang pemimpin yang mendengar kekhawatiranmu secara pribadi jauh lebih mungkin menyesuaikan arah daripada yang diserang di depan umum. Dan tim yang melihat kamu mendukung keputusan secara publik bahkan ketika kamu tidak setuju secara pribadi sedang menyaksikan model integritas.",
+    id_body: "Angkat kekhawatiran secara pribadi; setelah keputusan dibuat, dukung secara publik. Prinsip ini tidak menekan ketidaksetujuan yang jujur, melainkan menyalurkannya dengan bijaksana. Seorang pemimpin yang mendengar kekhawatiran Anda secara pribadi jauh lebih mungkin menyesuaikan arah daripada yang diserang di depan umum. Dan tim yang melihat Anda mendukung keputusan secara publik bahkan ketika Anda tidak setuju secara pribadi sedang menyaksikan model integritas.",
   },
   {
     padded: "05",
@@ -139,7 +139,7 @@ const principles = [
     id_title: "Jaga Radar Mereka",
     cite: undefined,
     en_body: "No leader should hear bad news from someone else first. After a conversation, a decision, or a completed task, close the loop. A brief message confirming what was agreed, what you did, and what comes next. Most people forget this step because the task feels complete when it is done. But the loop is not just for your records. It gives your leader certainty, confirms that things are moving, and reduces the number of things they have to track actively. Over time, consistent loop-closing becomes the highest form of reliability.",
-    id_body: "Tidak ada pemimpin yang harus mendengar berita buruk dari orang lain lebih dulu. Setelah percakapan, keputusan, atau tugas yang selesai, tutup lingkarannya. Pesan singkat mengkonfirmasi apa yang disepakati, apa yang kamu lakukan, dan apa yang akan datang. Kebanyakan orang melupakan langkah ini karena tugas terasa selesai. Tapi lingkaran bukan hanya untuk catatanmu. Ia memberi pemimpinmu kepastian dan mengurangi jumlah hal yang harus mereka lacak secara aktif.",
+    id_body: "Tidak ada pemimpin yang harus mendengar berita buruk dari orang lain lebih dulu. Setelah percakapan, keputusan, atau tugas yang selesai, tutup lingkarannya. Pesan singkat mengkonfirmasi apa yang disepakati, apa yang Anda lakukan, dan apa yang akan datang. Kebanyakan orang melupakan langkah ini karena tugas terasa selesai. Tapi lingkaran bukan hanya untuk catatan Anda. Ia memberi pemimpin Anda kepastian dan mengurangi jumlah hal yang harus mereka lacak secara aktif.",
   },
 ];
 
@@ -353,13 +353,13 @@ export default function ManagingUpClient({ userPathway, isSaved: initialSaved }:
           <p style={proseLight}>
             {t(
               "You know someone like this. A capable, hard-working leader who keeps producing good results but can never seem to get traction with the person above them. Projects stall waiting for approval. Their ideas land flat. They feel invisible, or worse, misunderstood. The problem is rarely competence. It is almost always a relationship that hasn't been tended.",
-              "Kamu pasti kenal seseorang seperti ini. Pemimpin yang cakap, pekerja keras, terus menghasilkan hasil yang baik, tapi entah kenapa tidak pernah bisa mendapat dukungan dari orang di atasnya. Proyek-proyek macet menunggu persetujuan. Ide-idenya tidak mendapat sambutan. Mereka merasa tidak terlihat, atau lebih buruk lagi, disalahpahami. Masalahnya hampir tidak pernah soal kompetensi. Hampir selalu soal hubungan yang tidak pernah dirawat.",
+              "Anda pasti kenal seseorang seperti ini. Pemimpin yang cakap, pekerja keras, terus menghasilkan hasil yang baik, tapi entah kenapa tidak pernah bisa mendapat dukungan dari orang di atasnya. Proyek-proyek macet menunggu persetujuan. Ide-idenya tidak mendapat sambutan. Mereka merasa tidak terlihat, atau lebih buruk lagi, disalahpahami. Masalahnya hampir tidak pernah soal kompetensi. Hampir selalu soal hubungan yang tidak pernah dirawat.",
             )}
           </p>
           <p style={{ ...proseLight, marginBottom: 0 }}>
             {t(
               "Managing up is not a political game. It is not flattery or self-promotion. It is the practice of leading intentionally in the upward direction: understanding what your leader needs, communicating in ways that work for them, and building the kind of trust that creates room for you to lead well. This module covers the core needs your leader has from you, and five principles for communicating upward that actually work across cultural contexts.",
-              "Bekerja sama dengan atasan bukan permainan politik. Bukan pula sanjungan atau promosi diri. Ini adalah praktik memimpin secara sengaja ke arah atas: memahami apa yang dibutuhkan pemimpin kamu, berkomunikasi dengan cara yang tepat bagi mereka, dan membangun kepercayaan yang memberi ruang untuk kamu memimpin dengan baik. Modul ini membahas kebutuhan inti pemimpin kamu dari kamu, dan lima prinsip berkomunikasi ke atas yang benar-benar berhasil lintas konteks budaya.",
+              "Bekerja sama dengan atasan bukan permainan politik. Bukan pula sanjungan atau promosi diri. Ini adalah praktik memimpin secara sengaja ke arah atas: memahami apa yang dibutuhkan pemimpin Anda, berkomunikasi dengan cara yang tepat bagi mereka, dan membangun kepercayaan yang memberi ruang untuk Anda memimpin dengan baik. Modul ini membahas kebutuhan inti pemimpin Anda dari Anda, dan lima prinsip berkomunikasi ke atas yang benar-benar berhasil lintas konteks budaya.",
             )}<span style={{ color: ORANGE, fontWeight: 700 }}>¹</span>
           </p>
         </div>

@@ -13,7 +13,7 @@ const RESOURCE_SLUG = "5languages";
 
 export const metadata: Metadata = {
   title: "5 Bahasa Penghargaan — Asesmen Bahasa Indonesia | Crispy Development",
-  description: "Temukan bahasa kepedulianmu — cara kamu menerima dan memberikan apresiasi dalam tim lintas budaya. Asesmen dua arah pertama berbasis 5 Languages untuk pemimpin.",
+  description: "Temukan bahasa kepedulian Anda — cara Anda menerima dan memberikan apresiasi dalam tim lintas budaya. Asesmen dua arah pertama berbasis 5 Languages untuk pemimpin.",
   alternates: {
     canonical: "/resources/5languages/id",
   },

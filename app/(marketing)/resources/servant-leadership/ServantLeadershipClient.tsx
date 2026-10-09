@@ -164,31 +164,31 @@ const TENSIONS: TensionDef[] = [
     low: {
       body: {
         en: "Your serving is shaped by skill — useful, but fragile under pressure. Behavioral discipline is a start, not an arrival.",
-        id: "Pelayananmu dibentuk oleh keterampilan — berguna, tapi rapuh di bawah tekanan. Disiplin perilaku adalah awal, bukan tujuan.",
+        id: "Pelayanan Anda dibentuk oleh keterampilan — berguna, tapi rapuh di bawah tekanan. Disiplin perilaku adalah awal, bukan tujuan.",
       },
       q: {
         en: "What drives your serving when no one is watching?",
-        id: "Apa yang mendorong pelayananmu ketika tidak ada yang melihat?",
+        id: "Apa yang mendorong pelayanan Anda ketika tidak ada yang melihat?",
       },
     },
     mid: {
       body: {
         en: "You're navigating both — sometimes it feels like discipline, sometimes it flows. That tension is growth, not failure.",
-        id: "Kamu menavigasi keduanya — kadang terasa seperti disiplin, kadang mengalir. Ketegangan itu adalah pertumbuhan, bukan kegagalan.",
+        id: "Anda menavigasi keduanya — kadang terasa seperti disiplin, kadang mengalir. Ketegangan itu adalah pertumbuhan, bukan kegagalan.",
       },
       q: {
         en: "What would change if serving became less about what you do and more about who you are?",
-        id: "Apa yang akan berubah jika melayani lebih tentang siapa kamu daripada apa yang kamu lakukan?",
+        id: "Apa yang akan berubah jika melayani lebih tentang siapa Anda daripada apa yang Anda lakukan?",
       },
     },
     high: {
       body: {
         en: "Serving has become part of how you see yourself. Guard against identity collapse when your service is refused or goes unrecognised.",
-        id: "Melayani telah menjadi bagian dari cara kamu melihat dirimu. Jaga diri dari keruntuhan identitas ketika pelayananmu ditolak.",
+        id: "Melayani telah menjadi bagian dari cara Anda melihat diri Anda. Jaga diri dari keruntuhan identitas ketika pelayanan Anda ditolak.",
       },
       q: {
         en: "Where does your self-worth go when your service is rejected?",
-        id: "Ke mana harga dirimu pergi ketika pelayananmu ditolak?",
+        id: "Ke mana harga diri Anda pergi ketika pelayanan Anda ditolak?",
       },
     },
   },
@@ -202,31 +202,31 @@ const TENSIONS: TensionDef[] = [
     low: {
       body: {
         en: "You may be applying a model that works at home but creates distance elsewhere. Humility looks different across cultures — especially how it's expressed.",
-        id: "Mungkin kamu menerapkan model yang berhasil di tempat asalmu tapi menciptakan jarak di tempat lain. Kerendahan hati terlihat berbeda di berbagai budaya.",
+        id: "Mungkin Anda menerapkan model yang berhasil di tempat asal Anda tapi menciptakan jarak di tempat lain. Kerendahan hati terlihat berbeda di berbagai budaya.",
       },
       q: {
         en: "Where have you assumed that your way of serving is the humble way?",
-        id: "Di mana kamu berasumsi bahwa cara melayanimu adalah cara yang rendah hati?",
+        id: "Di mana Anda berasumsi bahwa cara melayani Anda adalah cara yang rendah hati?",
       },
     },
     mid: {
       body: {
         en: "You're learning to hold the principle while releasing the form. That adaptability is exactly what cross-cultural servant leadership requires.",
-        id: "Kamu belajar memegang prinsip sambil melepaskan bentuknya. Adaptabilitas itu persis yang dibutuhkan kepemimpinan hamba lintas budaya.",
+        id: "Anda belajar memegang prinsip sambil melepaskan bentuknya. Adaptabilitas itu persis yang dibutuhkan kepemimpinan hamba lintas budaya.",
       },
       q: {
         en: "What's one expression of service you've had to unlearn in a new cultural context?",
-        id: "Apa satu ekspresi pelayanan yang harus kamu lepaskan dalam konteks budaya baru?",
+        id: "Apa satu ekspresi pelayanan yang harus Anda lepaskan dalam konteks budaya baru?",
       },
     },
     high: {
       body: {
         en: "You're highly contextually aware. Watch that adaptability doesn't slide into endless accommodation — some things don't flex.",
-        id: "Kamu sangat sadar konteks. Perhatikan agar adaptabilitas tidak bergeser menjadi akomodasi tanpa batas — beberapa hal tidak bisa dilenturkan.",
+        id: "Anda sangat sadar konteks. Perhatikan agar adaptabilitas tidak bergeser menjadi akomodasi tanpa batas — beberapa hal tidak bisa dilenturkan.",
       },
       q: {
         en: "What are the non-negotiables you hold regardless of culture?",
-        id: "Apa yang tidak dapat dinegosiasikan yang kamu pegang terlepas dari budaya?",
+        id: "Apa yang tidak dapat dinegosiasikan yang Anda pegang terlepas dari budaya?",
       },
     },
   },
@@ -250,21 +250,21 @@ const TENSIONS: TensionDef[] = [
     mid: {
       body: {
         en: "You hold the tension well — neither dominating nor disappearing. That's the hard, necessary middle ground most servant leaders struggle to find.",
-        id: "Kamu mampu menjaga keseimbangan di antara keduanya, tidak mendominasi maupun menghilang. Itu adalah titik tengah yang sulit dan perlu.",
+        id: "Anda mampu menjaga keseimbangan di antara keduanya, tidak mendominasi maupun menghilang. Itu adalah titik tengah yang sulit dan perlu.",
       },
       q: {
         en: "When does your authority feel like a burden rather than a resource to give?",
-        id: "Kapan otoritasmu terasa seperti beban daripada sumber daya untuk diberikan?",
+        id: "Kapan otoritas Anda terasa seperti beban daripada sumber daya untuk diberikan?",
       },
     },
     high: {
       body: {
         en: "You lead with confidence. The question isn't whether you hold authority — it's whether those you serve experience it as gift or weight.",
-        id: "Kamu memimpin dengan keyakinan. Pertanyaannya bukan apakah kamu memegang otoritas — tapi apakah yang kamu layani merasakannya sebagai anugerah atau beban.",
+        id: "Anda memimpin dengan keyakinan. Pertanyaannya bukan apakah Anda memegang otoritas — tapi apakah yang Anda layani merasakannya sebagai anugerah atau beban.",
       },
       q: {
         en: "How do the people you lead describe your leadership when you're not in the room?",
-        id: "Bagaimana orang yang kamu pimpin menggambarkan kepemimpinanmu ketika kamu tidak ada?",
+        id: "Bagaimana orang yang Anda pimpin menggambarkan kepemimpinan Anda ketika Anda tidak ada?",
       },
     },
   },
@@ -278,31 +278,31 @@ const TENSIONS: TensionDef[] = [
     low: {
       body: {
         en: "Your instinct to protect the relationship may silence the truth the other person needs. Jesus confronted Peter (Mark 8:33) and cleared the Temple (John 2) — both were acts of care.",
-        id: "Nalurimu untuk melindungi hubungan mungkin membungkam kebenaran yang dibutuhkan orang lain. Yesus mengonfrontasi Petrus dan membersihkan Bait Allah — keduanya adalah tindakan kepedulian.",
+        id: "Naluri Anda untuk melindungi hubungan mungkin membungkam kebenaran yang dibutuhkan orang lain. Yesus mengonfrontasi Petrus dan membersihkan Bait Allah — keduanya adalah tindakan kepedulian.",
       },
       q: {
         en: "Is there a relationship where truth is waiting — held back by what you're calling grace?",
-        id: "Apakah ada hubungan di mana kebenaran sedang menunggu — ditahan oleh apa yang kamu sebut anugerah?",
+        id: "Apakah ada hubungan di mana kebenaran sedang menunggu — ditahan oleh apa yang Anda sebut anugerah?",
       },
     },
     mid: {
       body: {
         en: "You're learning that care and challenge aren't opposites. Holding both is harder than choosing either — and more faithful to what servant leadership actually demands.",
-        id: "Kamu belajar bahwa kepedulian dan tantangan bukan lawan. Memegang keduanya lebih sulit dari memilih salah satu — dan lebih setia.",
+        id: "Anda belajar bahwa kepedulian dan tantangan bukan lawan. Memegang keduanya lebih sulit dari memilih salah satu — dan lebih setia.",
       },
       q: {
         en: "What does it feel like in your body when you know you need to say something hard?",
-        id: "Apa yang kamu rasakan ketika kamu tahu kamu perlu mengatakan sesuatu yang berat?",
+        id: "Apa yang Anda rasakan ketika Anda tahu Anda perlu mengatakan sesuatu yang berat?",
       },
     },
     high: {
       body: {
         en: "You confront readily — a real strength when the motive is love. Check the difference between accountability that serves the relationship and accountability that serves being right.",
-        id: "Kamu mudah mengonfrontasi — kekuatan nyata ketika motivasinya kasih. Periksa perbedaan antara akuntabilitas yang melayani hubungan dan yang melayani keinginan untuk benar.",
+        id: "Anda mudah mengonfrontasi — kekuatan nyata ketika motivasinya kasih. Periksa perbedaan antara akuntabilitas yang melayani hubungan dan yang melayani keinginan untuk benar.",
       },
       q: {
         en: "When you confront, who are you primarily thinking about — them, or the principle?",
-        id: "Ketika kamu mengonfrontasi, siapa yang terutama kamu pikirkan — mereka, atau prinsipnya?",
+        id: "Ketika Anda mengonfrontasi, siapa yang terutama Anda pikirkan — mereka, atau prinsipnya?",
       },
     },
   },
@@ -320,27 +320,27 @@ const TENSIONS: TensionDef[] = [
       },
       q: {
         en: "What is serving costing you right now that you haven't named out loud?",
-        id: "Apa yang sedang dituntut pelayanan darimu yang belum pernah kamu ungkapkan?",
+        id: "Apa yang sedang dituntut pelayanan dari Anda yang belum pernah Anda ungkapkan?",
       },
     },
     mid: {
       body: {
         en: "You hold the joy and the weight together. That honesty is exactly where most faithful servant leaders live — and it's more sustainable than pretending only one is real.",
-        id: "Kamu memegang sukacita dan beban bersama. Kejujuran itu tepat di mana kebanyakan pemimpin hamba yang setia hidup.",
+        id: "Anda memegang sukacita dan beban bersama. Kejujuran itu tepat di mana kebanyakan pemimpin hamba yang setia hidup.",
       },
       q: {
         en: "How do you know when the cost has become too high — and who do you tell?",
-        id: "Bagaimana kamu tahu ketika pengorbanannya sudah terlalu besar, dan kepada siapa kamu bercerita?",
+        id: "Bagaimana Anda tahu ketika pengorbanannya sudah terlalu besar, dan kepada siapa Anda bercerita?",
       },
     },
     high: {
       body: {
         en: "You feel the cost clearly, and naming it is honest. Make sure it doesn't harden into a martyrdom narrative — costly serving still requires rest and replenishment.",
-        id: "Kamu merasakan pengorbanannya dengan jelas, dan mengungkapkannya itu jujur. Pastikan itu tidak mengeras menjadi narasi kemartiran. Pelayanan yang menuntut pengorbanan tetap membutuhkan istirahat.",
+        id: "Anda merasakan pengorbanannya dengan jelas, dan mengungkapkannya itu jujur. Pastikan itu tidak mengeras menjadi narasi kemartiran. Pelayanan yang menuntut pengorbanan tetap membutuhkan istirahat.",
       },
       q: {
         en: "What rhythms of replenishment are you actually practicing, not just planning?",
-        id: "Ritme pemulihan apa yang benar-benar kamu praktikkan, bukan hanya rencanakan?",
+        id: "Ritme pemulihan apa yang benar-benar Anda praktikkan, bukan hanya rencanakan?",
       },
     },
   },
@@ -429,7 +429,7 @@ const L: Record<Lang, {
     subtitle: "Sebagian besar pemimpin tahu bahwa mereka harus melayani. Lebih sedikit yang pernah bertanya apa sebenarnya harga yang harus dibayar, dari mana asalnya, atau bagaimana cara kerjanya ketika budaya di sekitar mereka tidak menghargainya.",
 
     introTitle: "Apa Itu Kepemimpinan Hamba — Sebenarnya?",
-    introBody: "Sebagian besar pelatihan kepemimpinan memberi tahu kamu apa yang harus dilakukan. Modul ini menanyakan siapa kamu. Kepemimpinan hamba bukan teknik yang diterapkan — melainkan postur yang dibentuk dari waktu ke waktu. Dua tradisi berbeda membentuk gagasan ini: penelitian sosial Robert Greenleaf (1970)¹ dan model Kristologis dari Filipi 2. Keduanya menghasilkan pemimpin yang rendah hati. Namun sumber, mekanisme, dan ekspresi lintas budayanya berbeda dengan cara yang sangat penting bagi siapa pun yang memimpin lintas budaya atau dalam komunitas di mana otoritas posisional adalah norma.",
+    introBody: "Sebagian besar pelatihan kepemimpinan memberi tahu Anda apa yang harus dilakukan. Modul ini menanyakan siapa Anda. Kepemimpinan hamba bukan teknik yang diterapkan — melainkan postur yang dibentuk dari waktu ke waktu. Dua tradisi berbeda membentuk gagasan ini: penelitian sosial Robert Greenleaf (1970)¹ dan model Kristologis dari Filipi 2. Keduanya menghasilkan pemimpin yang rendah hati. Namun sumber, mekanisme, dan ekspresi lintas budayanya berbeda dengan cara yang sangat penting bagi siapa pun yang memimpin lintas budaya atau dalam komunitas di mana otoritas posisional adalah norma.",
 
     greenleafTitle: "Kerangka Greenleaf",
     greenleafBody: "Pada tahun 1970, Robert Greenleaf — seorang eksekutif AT&T yang pensiun — menerbitkan sebuah esai yang mengubah cara dunia berpikir tentang kepemimpinan.¹ Terinspirasi dari novel Hermann Hesse,² ia menggambarkan pemimpin yang motivasi utamanya adalah melayani. Pertanyaan penentunya — 'uji terbaik' kepemimpinan hamba — menjadi standar seluruh bidang ini: Apakah mereka yang dilayani tumbuh sebagai pribadi, menjadi lebih sehat, lebih bijaksana, lebih bebas, lebih mandiri, dan lebih mungkin menjadi pelayan sendiri? Para peneliti kemudian memvalidasi tujuh dimensi kepemimpinan hamba yang terukur:³",
@@ -442,17 +442,17 @@ const L: Record<Lang, {
     crossBody: "Penelitian yang mencakup 59 masyarakat mengungkapkan satu temuan konsisten: integritas moral secara universal diakui sebagai kualitas kepemimpinan.⁵ Namun egalitarianisme dan perilaku memberdayakan — yang sering dianggap sebagai inti kepemimpinan hamba — adalah dimensi lintas budaya yang paling lemah. Dalam konteks jarak kuasa tinggi seperti Indonesia (skor jarak kuasa: 78/100)⁶ dan sebagian besar Asia Tenggara, memimpin dari bawah menciptakan kebingungan kecuali diungkapkan melalui otoritas moral dan investasi relasional, bukan penyetaraan posisional. Pekerti dan Sendjaya menemukan bahwa pemimpin Indonesia menekankan moralitas yang bertanggung jawab dan pengaruh transformatif daripada berbagi kuasa secara struktural.⁷ Pemimpin hamba mempertahankan otoritas — kenosis mengosongkan status, bukan kapasitas untuk memimpin.",
 
     twoTitle: "Dua Sumber Kuasa Hamba",
-    twoBody: "Model Greenleaf menempatkan kuasa dalam gerakan ke atas: otoritas yang diperoleh melalui pelayanan, dikonfirmasi oleh kepercayaan pengikut. Filipi 2 menempatkannya berbeda — kuasa mengalir ke bawah dari Tuhan, melalui pengosongan diri secara sukarela. Keduanya menghasilkan pemimpin yang rendah hati. Tapi sumbernya membentuk segalanya, terutama ketika melayani menuntut pengorbanan besar atau ketika budaya di sekitarmu tidak menghargai kerendahan hati.",
+    twoBody: "Model Greenleaf menempatkan kuasa dalam gerakan ke atas: otoritas yang diperoleh melalui pelayanan, dikonfirmasi oleh kepercayaan pengikut. Filipi 2 menempatkannya berbeda — kuasa mengalir ke bawah dari Tuhan, melalui pengosongan diri secara sukarela. Keduanya menghasilkan pemimpin yang rendah hati. Tapi sumbernya membentuk segalanya, terutama ketika melayani menuntut pengorbanan besar atau ketika budaya di sekitar Anda tidak menghargai kerendahan hati.",
     twoLeft: "Fil 2 — Ke Bawah", twoLeftSub: "Kuasa dari Tuhan melalui kenosis",
     twoRight: "Greenleaf — Ke Atas", twoRightSub: "Kuasa dari pengikut melalui kepercayaan",
 
     mapExplainTitle: "Lima Ketegangan yang Dihadapi Setiap Pemimpin Hamba",
-    mapExplainBody: "Kepemimpinan hamba bukan posisi untuk dicapai — melainkan sekumpulan ketegangan yang terus-menerus harus dipegang. Lima ketegangan di bawah ini bukan masalah yang harus dipecahkan. Itulah ruang di mana kepemimpinan hamba sejati dibentuk. Pemimpin yang berpura-pura ketegangan ini tidak ada cenderung berayun antara ekstrem tanpa menyadarinya. Pemimpin yang mengungkapkannya dengan jujur dapat bertumbuh melaluinya. Tempatkan dirimu pada setiap spektrum — bukan di mana kamu ingin berada, tetapi di mana kamu sejujurnya berada sekarang.",
+    mapExplainBody: "Kepemimpinan hamba bukan posisi untuk dicapai — melainkan sekumpulan ketegangan yang terus-menerus harus dipegang. Lima ketegangan di bawah ini bukan masalah yang harus dipecahkan. Itulah ruang di mana kepemimpinan hamba sejati dibentuk. Pemimpin yang berpura-pura ketegangan ini tidak ada cenderung berayun antara ekstrem tanpa menyadarinya. Pemimpin yang mengungkapkannya dengan jujur dapat bertumbuh melaluinya. Tempatkan diri Anda pada setiap spektrum — bukan di mana Anda ingin berada, tetapi di mana Anda sejujurnya berada sekarang.",
 
-    mapTitle: "Peta Keteganganmu",
-    mapIntro: "Klik di mana saja pada setiap spektrum untuk menempatkan dirimu. Tidak ada jawaban yang benar — hanya yang jujur.",
+    mapTitle: "Peta Ketegangan Anda",
+    mapIntro: "Klik di mana saja pada setiap spektrum untuk menempatkan diri Anda. Tidak ada jawaban yang benar — hanya yang jujur.",
     allPlaced: "Kelima ketegangan telah dipetakan.",
-    profileTitle: "Profilmu",
+    profileTitle: "Profil Anda",
     sittingWith: "Renungkan ini:",
 
     faithTitle: "Pegangan Iman",
@@ -466,8 +466,8 @@ const L: Record<Lang, {
     ],
 
     challengeTitle: "Tanya Penasihat",
-    challengeSubtitle: "Ceritakan tantangan kepemimpinan yang sedang kamu hadapi. Penasihat hanya mengacu pada kerangka dalam modul ini dan profil peta keteganganmu.",
-    challengePlaceholder: "Ceritakan tantangan kepemimpinanmu di sini — apa yang kamu hadapi, di mana kamu merasa terhenti, atau keputusan apa yang sedang kamu pertimbangkan...",
+    challengeSubtitle: "Ceritakan tantangan kepemimpinan yang sedang Anda hadapi. Penasihat hanya mengacu pada kerangka dalam modul ini dan profil peta ketegangan Anda.",
+    challengePlaceholder: "Ceritakan tantangan kepemimpinan Anda di sini — apa yang Anda hadapi, di mana Anda merasa terhenti, atau keputusan apa yang sedang Anda pertimbangkan...",
     challengeSubmit: "Dapatkan Saran",
     challengeLoading: "Sedang berpikir...",
     challengeError: "Tidak dapat merespons saat ini. Silakan coba lagi.",

@@ -93,7 +93,7 @@ const DRIFTS = [
     en_title: "The Drift of Disillusionment",
     id_title: "Pergeseran karena Kekecewaan",
     en_subtitle: "When the gap between vision and reality breaks you",
-    id_subtitle: "Ketika kesenjangan antara visi dan realitas menghancurkanmu",
+    id_subtitle: "Ketika kesenjangan antara visi dan realitas menghancurkan Anda",
     en_narrative: `She had arrived with a clear vision: a flourishing community, transformed lives, a team that shared her values. Three years later, the key leader she mentored had betrayed her trust. The church that once cheered her on had turned political. The person she poured the most into had walked away. She still showed up. She still led. But privately, she had stopped believing it would ever work, and she hadn't told anyone, including God.`,
     id_narrative: `Ia datang dengan visi yang jelas: komunitas yang berkembang, kehidupan yang diubah, tim yang berbagi nilai-nilainya. Tiga tahun kemudian, pemimpin kunci yang ia bimbing telah mengkhianati kepercayaannya. Gereja yang pernah mendukungnya telah menjadi politis. Orang yang paling ia curahkan telah pergi. Ia masih datang. Ia masih memimpin. Tetapi secara pribadi, ia telah berhenti percaya bahwa itu akan pernah berhasil, dan ia belum memberitahu siapa pun, termasuk Tuhan.`,
     en_signs: [
@@ -153,7 +153,7 @@ const DRIFTS = [
     en_title: "The Drift of Isolation",
     id_title: "Pergeseran karena Isolasi",
     en_subtitle: "When leadership loneliness cuts you off from God and others",
-    id_subtitle: "Ketika kesepian kepemimpinan memutusmu dari Tuhan dan sesama",
+    id_subtitle: "Ketika kesepian kepemimpinan memutus Anda dari Tuhan dan sesama",
     en_narrative: `He was seen by hundreds as strong, clear, and spiritually grounded. In reality, he hadn't had a real spiritual conversation with anyone in over a year. His accountability group had drifted. His mentor had moved on. He told himself he was fine, and the evidence was his continued output. But alone at night, he knew something was wrong. He had no one he could tell the truth to. Leadership had made him an island, and the island was slowly sinking.`,
     id_narrative: `Ia dipandang oleh ratusan orang sebagai kuat, jelas, dan berakar secara rohani. Kenyataannya, ia belum memiliki percakapan rohani yang nyata dengan siapa pun selama lebih dari setahun. Kelompok akuntabilitasnya perlahan bubar. Mentornya telah pindah. Ia berkata pada dirinya sendiri bahwa ia baik-baik saja, dan buktinya adalah output-nya yang terus berlanjut. Tetapi sendirian di malam hari, ia tahu ada yang salah. Ia tidak punya siapa pun yang bisa ia ceritakan kebenaran. Kepemimpinan telah menjadikannya sebuah pulau, dan pulau itu perlahan-lahan tenggelam.`,
     en_signs: [
@@ -183,7 +183,7 @@ const DRIFTS = [
     en_title: "The Drift of Syncretism",
     id_title: "Pergeseran karena Sinkretisme",
     en_subtitle: "When you slowly absorb the values of the culture you lead in",
-    id_subtitle: "Ketika kamu perlahan menyerap nilai-nilai budaya yang kamu pimpin",
+    id_subtitle: "Ketika Anda perlahan menyerap nilai-nilai budaya yang Anda pimpin",
     en_narrative: `She had been in Southeast Asia for seven years. She had learned the language, adapted her communication style, eaten the food, celebrated the festivals. All of that was good. But somewhere in the process, she had also absorbed other things: an ethic of saving face that made her avoid hard truths; a hierarchy of honour that made her reluctant to challenge those above her; a prosperity theology that had slowly seeped into her preaching. She hadn't chosen any of it consciously. It had seeped in through the cracks of unexamined living.`,
     id_narrative: `Ia telah berada di Asia Tenggara selama tujuh tahun. Ia telah mempelajari bahasa, mengadaptasi gaya komunikasinya, makan makanan, merayakan festival. Semua itu baik. Tetapi di suatu tempat dalam prosesnya, ia juga telah menyerap hal-hal lain: etika menjaga muka yang membuatnya menghindari kebenaran yang sulit; hierarki kehormatan yang membuatnya enggan menantang mereka yang di atasnya; teologi kemakmuran yang perlahan meresap ke dalam khotbahnya. Ia tidak memilih satu pun dari itu secara sadar. Itu telah meresap melalui celah-celah kehidupan yang tidak diperiksa.`,
     en_signs: [
@@ -298,7 +298,7 @@ export default function LeadingWithoutLosingFaithClient({ userPathway, isSaved: 
             {t("Faith & Calling — Lectio-Style Exploration", "Iman & Panggilan — Eksplorasi Gaya Lectio")}
           </p>
           <h1 style={{ fontFamily: serif, fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: offWhite, margin: "0 0 24px", lineHeight: 1.08 }}>
-            {t("Leading Without Losing Your Faith", "Memimpin Tanpa Kehilangan Imanmu")}
+            {t("Leading Without Losing Your Faith", "Memimpin Tanpa Kehilangan Iman Anda")}
           </h1>
           <div style={{ width: 48, height: 1, background: orange, margin: "0 auto 32px" }} />
           <p style={{ fontFamily: serif, fontSize: "clamp(18px, 2.4vw, 22px)", color: "oklch(82% 0.025 80)", lineHeight: 1.8, marginBottom: 40, fontStyle: "italic", maxWidth: 580, marginLeft: "auto", marginRight: "auto" }}>
@@ -496,7 +496,7 @@ export default function LeadingWithoutLosingFaithClient({ userPathway, isSaved: 
             <p style={{ marginBottom: 24 }}>
               {t(
                 "A colleague noticed the shift before he did. Not in his performance, but in his language. She said, quietly, one afternoon: \"You used to talk about what God was doing. Now you talk about what needs to happen.\"",
-                "Seorang kolega memperhatikan pergeseran itu sebelum ia sendiri menyadarinya. Bukan dalam kinerjanya, tetapi dalam bahasanya. Ia berkata, dengan tenang, suatu siang: \"Kamu dulu berbicara tentang apa yang Tuhan sedang lakukan. Sekarang kamu berbicara tentang apa yang perlu terjadi.\""
+                "Seorang kolega memperhatikan pergeseran itu sebelum ia sendiri menyadarinya. Bukan dalam kinerjanya, tetapi dalam bahasanya. Ia berkata, dengan tenang, suatu siang: \"Anda dulu berbicara tentang apa yang Tuhan sedang lakukan. Sekarang Anda berbicara tentang apa yang perlu terjadi.\""
               )}
             </p>
             <p style={{ marginBottom: 24 }}>
@@ -536,7 +536,7 @@ export default function LeadingWithoutLosingFaithClient({ userPathway, isSaved: 
           <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 19px)", color: bodyText, lineHeight: 1.85, margin: 0 }}>
             {t(
               "Five drifts, five pressures, one promise that holds across all of them. Your strength is not the variable. His faithfulness is. The leader who returns to this, not as a slogan but as a lived dependence, finds that the wellspring does not run dry.",
-              "Lima pergeseran, lima tekanan, satu janji yang berlaku di semuanya. Kekuatanmu bukan variabelnya. Kesetiaan-Nya yang tetap. Pemimpin yang kembali ke ini, bukan sebagai slogan tetapi sebagai ketergantungan yang dihidupi, menemukan bahwa sumber mata air tidak pernah kering."
+              "Lima pergeseran, lima tekanan, satu janji yang berlaku di semuanya. Kekuatan Anda bukan variabelnya. Kesetiaan-Nya yang tetap. Pemimpin yang kembali ke ini, bukan sebagai slogan tetapi sebagai ketergantungan yang dihidupi, menemukan bahwa sumber mata air tidak pernah kering."
             )}
           </p>
         </div>

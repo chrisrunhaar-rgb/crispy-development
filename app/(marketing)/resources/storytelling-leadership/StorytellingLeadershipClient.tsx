@@ -15,7 +15,7 @@ const STORY_CHAPTERS = [
     en_label: "Context", id_label: "Konteks",
     en_subtitle: "Where things stood", id_subtitle: "Keadaan awal",
     en_text: "Budi had been leading his team for six months. On paper, everything looked right — seven people from five different islands, all skilled, all committed. But Budi had noticed a pattern. In meetings, one team member — Roni, from Manado — would lean forward, challenge assumptions, push back on decisions in front of everyone. Budi said nothing. In Javanese culture, you do not embarrass someone publicly. You give space. You wait. He kept waiting.",
-    id_text: "Budi sudah memimpin timnya selama enam bulan. Di atas kertas, semuanya terlihat baik — tujuh orang dari lima pulau berbeda, semua berkompeten, semua berkomitmen. Namun Budi sudah memperhatikan sebuah pola. Dalam rapat-rapat, satu anggota tim — Roni, dari Manado — selalu condong ke depan, mempertanyakan asumsi, mendorong balik keputusan di hadapan semua orang. Budi diam saja. Dalam budaya Jawa, kamu tidak mempermalukan seseorang di depan umum. Kamu memberi ruang. Kamu menunggu. Dia terus menunggu.",
+    id_text: "Budi sudah memimpin timnya selama enam bulan. Di atas kertas, semuanya terlihat baik — tujuh orang dari lima pulau berbeda, semua berkompeten, semua berkomitmen. Namun Budi sudah memperhatikan sebuah pola. Dalam rapat-rapat, satu anggota tim — Roni, dari Manado — selalu condong ke depan, mempertanyakan asumsi, mendorong balik keputusan di hadapan semua orang. Budi diam saja. Dalam budaya Jawa, Anda tidak mempermalukan seseorang di depan umum. Anda memberi ruang. Anda menunggu. Dia terus menunggu.",
     en_pause: "Pause. Think of a team you have led or been part of. Who brought a different cultural communication style that you found difficult to read?",
     id_pause: "Berhenti sejenak. Pikirkan tim yang pernah Anda pimpin atau ikuti. Siapa yang membawa gaya komunikasi budaya berbeda yang sulit Anda baca?",
   },
@@ -33,7 +33,7 @@ const STORY_CHAPTERS = [
     en_label: "Climax", id_label: "Klimaks",
     en_subtitle: "The turn", id_subtitle: "Titik balik",
     en_text: "He remembered a story his grandfather used to tell — about two rivers coming down from different mountains. Where they met, the currents seemed to fight. But it was in that collision that the valley below became the most fertile land for miles. His grandfather had told it not as a lesson but as an observation. Budi put down the email draft. The next morning, he walked over to Roni before the team arrived. \"Can I tell you a story?\" he asked. He told the story of the two rivers. Then: \"I reassigned your task because I was afraid to tell you I had concerns about the timeline. I should have come to you directly. I'm sorry.\" Roni was quiet for a moment. Then: \"In my culture, we say what we mean because we believe the other person can handle the truth. That is how we show respect.\"",
-    id_text: "Ia teringat sebuah cerita yang sering diceritakan kakeknya — tentang dua sungai yang mengalir turun dari gunung yang berbeda. Di tempat pertemuan mereka, arus-arusnya tampak saling bertentangan. Namun justru di benturan itulah lembah di bawahnya menjadi tanah yang paling subur sejauh mata memandang. Kakeknya tidak menceritakannya sebagai pelajaran, melainkan sebagai pengamatan. Budi meletakkan draf emailnya. Keesokan paginya, ia menghampiri Roni sebelum anggota tim lain datang. \"Boleh saya ceritakan sebuah kisah?\" tanyanya. Ia menceritakan kisah dua sungai itu. Lalu: \"Saya memindahkan tugasmu karena saya takut untuk mengatakan bahwa saya punya kekhawatiran soal jadwal. Seharusnya saya datang langsung kepadamu. Maafkan saya.\" Roni terdiam sejenak. Kemudian: \"Di budaya kami, kami mengatakan apa yang kami maksud karena kami percaya orang lain mampu menanggung kebenaran. Itulah cara kami menunjukkan rasa hormat.\"",
+    id_text: "Ia teringat sebuah cerita yang sering diceritakan kakeknya — tentang dua sungai yang mengalir turun dari gunung yang berbeda. Di tempat pertemuan mereka, arus-arusnya tampak saling bertentangan. Namun justru di benturan itulah lembah di bawahnya menjadi tanah yang paling subur sejauh mata memandang. Kakeknya tidak menceritakannya sebagai pelajaran, melainkan sebagai pengamatan. Budi meletakkan draf emailnya. Keesokan paginya, ia menghampiri Roni sebelum anggota tim lain datang. \"Boleh saya ceritakan sebuah kisah?\" tanyanya. Ia menceritakan kisah dua sungai itu. Lalu: \"Saya memindahkan tugas Anda karena saya takut untuk mengatakan bahwa saya punya kekhawatiran soal jadwal. Seharusnya saya datang langsung kepada Anda. Maafkan saya.\" Roni terdiam sejenak. Kemudian: \"Di budaya kami, kami mengatakan apa yang kami maksud karena kami percaya orang lain mampu menanggung kebenaran. Itulah cara kami menunjukkan rasa hormat.\"",
     en_pause: "Pause. Is there a person or situation in your leadership right now where a story might reach further than a direct explanation?",
     id_pause: "Berhenti sejenak. Apakah ada seseorang atau situasi dalam kepemimpinan Anda saat ini di mana sebuah cerita bisa menjangkau lebih jauh daripada penjelasan langsung?",
   },
@@ -259,7 +259,7 @@ export default function StorytellingLeadershipClient({ userPathway, isSaved: ini
           <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 15, lineHeight: 1.85, color: bodyText, marginBottom: 40 }}>
             {t(
               "The Prodigal Son doesn't argue for forgiveness — it creates a felt experience of it. The Good Samaritan doesn't define 'neighbour' — it forces you to become one. Nathan's story to David ('There was a man who had a lamb...') bypassed a king's defences and reached a conscience that direct accusation never could. Story is not a soft tool. In the right hands, it is the sharpest thing available.",
-              "Anak yang Hilang tidak berargumen tentang pengampunan — ia menciptakan pengalaman yang terasa tentangnya. Orang Samaria yang Baik tidak mendefinisikan 'sesama' — ia memaksamu untuk menjadi satu. Cerita Natan kepada Daud ('Ada seorang laki-laki yang mempunyai domba...') melewati pertahanan seorang raja dan mencapai hati nurani yang tidak pernah bisa dicapai oleh tuduhan langsung. Cerita bukan alat yang lemah. Di tangan yang tepat, itu adalah hal paling tajam yang tersedia.",
+              "Anak yang Hilang tidak berargumen tentang pengampunan — ia menciptakan pengalaman yang terasa tentangnya. Orang Samaria yang Baik tidak mendefinisikan 'sesama' — ia memaksa Anda untuk menjadi satu. Cerita Natan kepada Daud ('Ada seorang laki-laki yang mempunyai domba...') melewati pertahanan seorang raja dan mencapai hati nurani yang tidak pernah bisa dicapai oleh tuduhan langsung. Cerita bukan alat yang lemah. Di tangan yang tepat, itu adalah hal paling tajam yang tersedia.",
               "De Verloren Zoon betoogt niet voor vergeving — het cre—ert een gevoelde ervaring ervan. De Barmhartige Samaritaan definieert 'naaste' niet — het dwingt je er ——n van te worden. Nathans verhaal aan David ('Er was een man die een lam had...') omzeilde de verdedigingen van een koning en bereikte een geweten dat directe beschuldiging nooit kon bereiken. Verhaal is geen zacht gereedschap. In de juiste handen is het het scherpste wat beschikbaar is."
             )}
           </p>
@@ -282,15 +282,15 @@ export default function StorytellingLeadershipClient({ userPathway, isSaved: ini
       {/* Your story */}
       <div style={{ maxWidth: 640, margin: "0 auto", padding: "72px 24px" }}>
         <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", color: orange, textTransform: "uppercase", marginBottom: 24 }}>
-          {t("Your story", "Ceritamu", "Jouw verhaal")}
+          {t("Your story", "Cerita Anda", "Jouw verhaal")}
         </p>
         <h2 style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: "clamp(26px, 3.5vw, 42px)", fontWeight: 600, color: navy, lineHeight: 1.2, marginBottom: 24 }}>
-          {t("Now it is your turn.", "Sekarang giliranmu.", "Nu is het jouw beurt.")}
+          {t("Now it is your turn.", "Sekarang giliran Anda.", "Nu is het jouw beurt.")}
         </h2>
         <p style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 20, color: bodyText, lineHeight: 1.8, fontStyle: "italic", marginBottom: 40 }}>
           {t(
             "Write the opening sentence of a story your team needs to hear. Not a lesson. Not a principle. One sentence — where were you, and what was happening?",
-            "Tulis kalimat pembuka dari sebuah cerita yang perlu didengar oleh timmu. Bukan pelajaran. Bukan prinsip. Satu kalimat — di mana Anda, dan apa yang terjadi?",
+            "Tulis kalimat pembuka dari sebuah cerita yang perlu didengar oleh tim Anda. Bukan pelajaran. Bukan prinsip. Satu kalimat — di mana Anda, dan apa yang terjadi?",
             "Schrijf de openingszin van een verhaal dat jouw team moet horen. Geen les. Geen principe. ——n zin — waar was je, en wat was er aan de hand?"
           )}
         </p>
@@ -311,7 +311,7 @@ export default function StorytellingLeadershipClient({ userPathway, isSaved: ini
           }}
         />
         <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, color: "oklch(68% 0.03 260)", marginTop: 12, fontStyle: "italic" }}>
-          {t("Your words stay here. This is for you alone.", "Kata-katamu tetap di sini. Ini untukmu saja.", "Jouw woorden blijven hier. Dit is voor jou alleen.")}
+          {t("Your words stay here. This is for you alone.", "Kata-kata Anda tetap di sini. Ini untuk Anda saja.", "Jouw woorden blijven hier. Dit is voor jou alleen.")}
         </p>
       </div>
 

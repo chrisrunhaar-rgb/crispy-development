@@ -21,14 +21,14 @@ export function SubscribeForm({ lang = "en" }: { lang?: "en" | "id" }) {
     },
     id: {
       label: "BYTES TERBARU",
-      heading: "Bytes baru, langsung ke inbox kamu.",
+      heading: "Bytes baru, langsung ke inbox Anda.",
       sub: "Bacaan singkat setiap dua minggu. Tidak ada kebisingan.",
       langLabel: "Terima dalam:",
-      placeholder: "email@kamu.com",
+      placeholder: "email@anda.com",
       button: "Langganan",
       loading: "Mendaftar…",
-      done: "Kamu sudah terdaftar. Byte berikutnya akan tiba di inboxmu.",
-      already: "Sudah terdaftar — kamu baik-baik saja.",
+      done: "Anda sudah terdaftar. Byte berikutnya akan tiba di inbox Anda.",
+      already: "Sudah terdaftar — Anda baik-baik saja.",
       error: "Ada masalah. Coba lagi.",
     },
   }[lang];

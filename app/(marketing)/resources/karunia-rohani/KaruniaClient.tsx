@@ -53,171 +53,171 @@ type GiftData = {
 const GIFTS: Record<string, GiftData> = {
   melayani: {
     label: "Melayani", en: "Serving",
-    desc: "Kamu memiliki kemampuan untuk melihat dan memenuhi kebutuhan praktis orang lain dengan sukacita.",
+    desc: "Anda memiliki kemampuan untuk melihat dan memenuhi kebutuhan praktis orang lain dengan sukacita.",
     descEn: "The ability to see and joyfully meet the practical needs of others.",
-    realLife: "Dalam kehidupan nyata: Kamu adalah orang yang datang lebih awal untuk menyiapkan ruangan, memperhatikan ketika seseorang perlu bantuan, dan tinggal lebih lama untuk membereskan — tanpa diminta.",
+    realLife: "Dalam kehidupan nyata: Anda adalah orang yang datang lebih awal untuk menyiapkan ruangan, memperhatikan ketika seseorang perlu bantuan, dan tinggal lebih lama untuk membereskan — tanpa diminta.",
     realLifeEn: "In real life: You're the person who arrives early to set up the room, notices when someone needs a hand, and stays late to clean up — without being asked.",
     longDesc: "Karunia Melayani (diakonia) adalah salah satu karunia paling mendasar dalam Tubuh Kristus. Mereka yang memiliki karunia ini melihat kebutuhan yang orang lain lewati begitu saja — tugas yang belum selesai, beban yang terlalu berat, detail yang bisa membuat atau menghancurkan sebuah acara — dan mereka bergerak untuk melakukannya dengan sukacita tulus. Pelayanan mereka tidak mencari pengakuan; ini adalah ungkapan kasih yang mengalir secara alami. Dalam konteks lintas budaya, karunia ini sangat berharga karena melampaui hambatan bahasa dan budaya, membangun kepercayaan melalui tindakan sebelum kata-kata bisa.",
     longDescEn: "The gift of Serving (diakonia) is one of the most foundational gifts in the Body of Christ. Those who carry it notice needs others walk past — the unfinished task, the burden that's too heavy, the detail that could make or break a gathering — and they move toward it with genuine joy. Their service doesn't seek recognition; it is simply love expressed naturally. In cross-cultural contexts, this gift is especially powerful because it crosses language and cultural barriers, building trust through action before words can.",
   },
   murah_hati: {
     label: "Murah Hati", en: "Mercy",
-    desc: "Kamu peka terhadap penderitaan orang lain dan dipanggil untuk hadir bersama mereka dalam kesulitan.",
+    desc: "Anda peka terhadap penderitaan orang lain dan dipanggil untuk hadir bersama mereka dalam kesulitan.",
     descEn: "Deep sensitivity to the suffering of others, with a calling to be present in their pain.",
-    realLife: "Dalam kehidupan nyata: Ketika seseorang berbagi rasa sakit mereka, kamu tidak langsung mencari solusi — kamu duduk bersama mereka, sungguh merasakan kesedihan mereka, dan hadir hingga mereka merasa benar-benar dipahami.",
+    realLife: "Dalam kehidupan nyata: Ketika seseorang berbagi rasa sakit mereka, Anda tidak langsung mencari solusi — Anda duduk bersama mereka, sungguh merasakan kesedihan mereka, dan hadir hingga mereka merasa benar-benar dipahami.",
     realLifeEn: "In real life: When someone shares their pain, you don't immediately reach for solutions — you sit with them, genuinely feel their sadness, and stay present until they feel truly understood.",
     longDesc: "Karunia Murah Hati (eleos) adalah kemampuan yang diberikan Roh untuk merasakan dan merespons rasa sakit emosional dan rohani orang lain. Mereka yang memilikinya ditarik secara naluriah kepada orang-orang yang terluka, terbuang, atau berduka. Mereka tidak terintimidasi oleh kesedihan atau kesulitan — sebaliknya, mereka menemukannya sebagai tempat di mana mereka paling efektif. Kehadiran mereka sendiri membawa penghiburan. Dalam pelayanan lintas budaya, karunia ini sangat berharga dalam situasi trauma, perpindahan, dan kehilangan budaya, di mana kata-kata sering kali tidak mencukupi.",
     longDescEn: "The gift of Mercy (eleos) is a Spirit-given ability to feel and respond to the emotional and spiritual pain of others. Those who carry it are drawn instinctively toward the wounded, the outcast, and the grieving. They are not intimidated by sadness or hardship — rather, they find it the place where they are most effective. Their very presence brings comfort. In cross-cultural ministry, this gift is especially vital in situations of trauma, displacement, and cultural loss, where words often fall short.",
   },
   keramahan: {
     label: "Keramahan", en: "Hospitality",
-    desc: "Kamu memiliki kemampuan untuk membuat orang merasa disambut, aman, dan diperhatikan.",
+    desc: "Anda memiliki kemampuan untuk membuat orang merasa disambut, aman, dan diperhatikan.",
     descEn: "The ability to create environments where people feel genuinely welcomed and safe.",
-    realLife: "Dalam kehidupan nyata: Orang asing merasa nyaman di sekitarmu dalam hitungan menit. Kamu memperhatikan ketika seseorang berdiri sendiri di sebuah acara, dan kamu bergerak untuk menyambut mereka — bukan karena tugas, tetapi karena kamu benar-benar ingin mereka merasa diterima.",
+    realLife: "Dalam kehidupan nyata: Orang asing merasa nyaman di sekitar Anda dalam hitungan menit. Anda memperhatikan ketika seseorang berdiri sendiri di sebuah acara, dan Anda bergerak untuk menyambut mereka — bukan karena tugas, tetapi karena Anda benar-benar ingin mereka merasa diterima.",
     realLifeEn: "In real life: Strangers feel at ease around you within minutes. You notice when someone is standing alone at a gathering, and you move toward them — not out of duty, but because you genuinely want them to feel they belong.",
     longDesc: "Karunia Keramahan (philoxenia — secara harfiah 'kasih kepada orang asing') melampaui sekadar menjadi tuan rumah yang baik. Ini adalah kemampuan ilahi untuk menciptakan ruang aman di mana orang merasa terlihat, diterima, dan dihargai. Mereka yang memiliki karunia ini mengubah rumah, meja, atau bahkan percakapan biasa menjadi tempat perjumpaan yang berarti. Dalam konteks lintas budaya, keramahan adalah fondasi dari semua pembangunan hubungan, membuka pintu untuk kepercayaan, berbagi iman, dan komunitas yang sejati.",
     longDescEn: "The gift of Hospitality (philoxenia — literally 'love of strangers') goes far beyond being a good host. It is a divine capacity to create safe spaces where people feel seen, accepted, and valued. Those with this gift transform homes, tables, or even ordinary conversations into places of meaningful encounter. In cross-cultural contexts, hospitality is the foundation of all relationship-building, opening doors for trust, faith-sharing, and genuine community.",
   },
   bahasa_roh: {
     label: "Bahasa Roh", en: "Tongues",
-    desc: "Kamu telah menerima karunia untuk berkomunikasi dalam bahasa rohani yang belum pernah dipelajari.",
+    desc: "Anda telah menerima karunia untuk berkomunikasi dalam bahasa rohani yang belum pernah dipelajari.",
     descEn: "The Spirit-given ability to communicate in a spiritual language not previously learned.",
-    realLife: "Dalam kehidupan nyata: Saat berdoa atau menyembah, kamu mengungkapkan dirimu dalam bahasa yang tidak kamu pelajari, merasakan komunikasi yang lebih dalam dengan Tuhan yang melampaui kata-kata yang kamu pahami.",
+    realLife: "Dalam kehidupan nyata: Saat berdoa atau menyembah, Anda mengungkapkan diri Anda dalam bahasa yang tidak Anda pelajari, merasakan komunikasi yang lebih dalam dengan Tuhan yang melampaui kata-kata yang Anda pahami.",
     realLifeEn: "In real life: During prayer or worship, you express yourself in a language you have not learned, experiencing a depth of communication with God that transcends words you understand.",
     longDesc: "Karunia Bahasa Roh (glossolalia) disebutkan dalam 1 Korintus 12-14 sebagai salah satu manifestasi Roh. Ini adalah kemampuan untuk berdoa atau berbicara kepada Tuhan dalam bahasa yang tidak dipelajari — baik untuk penggunaan pribadi dalam berdoa, atau untuk pesan kepada jemaat (yang kemudian membutuhkan tafsiran). Rasul Paulus menghargai karunia ini sambil menekankan bahwa kasih harus memandu ekspresinya, dan bahwa tafsiran diperlukan bila digunakan di depan umum. Karunia ini mempertajam kehidupan doa dan keintiman dengan Roh.",
     longDescEn: "The gift of Tongues (glossolalia) is mentioned in 1 Corinthians 12-14 as one of the Spirit's manifestations. It is the ability to pray or speak to God in a language not learned — either for personal prayer use, or as a message to the congregation (which then requires interpretation). Paul valued this gift while emphasising that love must guide its expression, and that interpretation is required when used publicly. This gift sharpens prayer life and intimacy with the Spirit.",
   },
   menyembuhkan: {
     label: "Menyembuhkan", en: "Healing",
-    desc: "Tuhan memakai doa-doamu sebagai sarana untuk kesembuhan fisik, emosi, atau rohani bagi orang lain.",
+    desc: "Tuhan memakai doa-doa Anda sebagai sarana untuk kesembuhan fisik, emosi, atau rohani bagi orang lain.",
     descEn: "God uses your prayers as a channel for physical, emotional, or spiritual healing.",
-    realLife: "Dalam kehidupan nyata: Kamu mendapati dirimu berdoa untuk orang yang sakit dengan keyakinan yang tulus — dan kamu telah menyaksikan Tuhan bekerja melalui doa-doa itu dengan cara yang tidak dapat dijelaskan secara medis.",
+    realLife: "Dalam kehidupan nyata: Anda mendapati diri Anda berdoa untuk orang yang sakit dengan keyakinan yang tulus — dan Anda telah menyaksikan Tuhan bekerja melalui doa-doa itu dengan cara yang tidak dapat dijelaskan secara medis.",
     realLifeEn: "In real life: You find yourself praying for the sick with genuine conviction — and you have witnessed God work through those prayers in ways that cannot be medically explained.",
     longDesc: "Karunia Menyembuhkan (iama) adalah karunia di mana Tuhan bekerja melalui seseorang sebagai saluran kesembuhan — fisik, emosional, atau rohani. Kesembuhan selalu merupakan tindakan Tuhan; orang yang memiliki karunia ini adalah alat, bukan sumber. Karunia ini dinyatakan dalam 1 Korintus 12 dan dilakukan dalam pelayanan Yesus dan para rasul. Dalam konteks budaya yang beragam, karunia ini sering menjadi kesaksian yang kuat tentang kuasa dan belas kasihan Tuhan yang melampaui batas.",
     longDescEn: "The gift of Healing (iama) is a gift in which God works through a person as a channel of healing — physical, emotional, or spiritual. Healing is always God's act; the person with this gift is the instrument, not the source. This gift is listed in 1 Corinthians 12 and demonstrated throughout Jesus's ministry and the apostles'. In diverse cultural contexts, this gift often becomes a powerful testimony to God's power and compassion that transcends boundaries.",
   },
   menguatkan: {
     label: "Menguatkan", en: "Exhortation",
-    desc: "Kamu mampu mendorong, menguatkan, dan membimbing orang lain untuk bertumbuh dan tidak menyerah.",
+    desc: "Anda mampu mendorong, menguatkan, dan membimbing orang lain untuk bertumbuh dan tidak menyerah.",
     descEn: "The ability to encourage, strengthen, and guide others to grow and not give up.",
-    realLife: "Dalam kehidupan nyata: Orang meninggalkan percakapan denganmu merasa lebih kuat dari sebelumnya. Kamu tahu persis kapan seseorang membutuhkan dorongan dan kata-kata yang tepat untuk dikatakan — bukan klise, tetapi sesuatu yang tepat sasaran.",
+    realLife: "Dalam kehidupan nyata: Orang meninggalkan percakapan dengan Anda merasa lebih kuat dari sebelumnya. Anda tahu persis kapan seseorang membutuhkan dorongan dan kata-kata yang tepat untuk dikatakan — bukan klise, tetapi sesuatu yang tepat sasaran.",
     realLifeEn: "In real life: People leave conversations with you feeling stronger than when they came. You know exactly when someone needs a push and the precise words to say — not clichÃƒÂ©s, but something that lands with pinpoint accuracy.",
     longDesc: "Karunia Menguatkan (paraklesis — kata yang sama dengan 'Penghibur' yang digunakan untuk Roh Kudus) adalah kemampuan untuk datang di samping seseorang dan mendukung mereka melalui kesulitan. Ini bukan sekedar optimisme; ini adalah bimbingan rohani yang berakar pada kebenaran. Mereka yang memiliki karunia ini melihat potensi dalam orang lain bahkan ketika orang lain tidak melihatnya dalam diri mereka sendiri, dan mereka berbicara dengan cara yang memobilisasi orang menuju pertumbuhan dan tindakan.",
     longDescEn: "The gift of Exhortation (paraklesis — the same word used for the 'Comforter' or Holy Spirit) is the ability to come alongside someone and support them through difficulty. It is not mere optimism; it is Spirit-grounded guidance rooted in truth. Those with this gift see potential in others even when those people cannot see it themselves, and they speak in ways that mobilise people toward growth and action.",
   },
   memberi: {
     label: "Memberi", en: "Giving",
-    desc: "Kamu dengan senang hati dan sukarela menggunakan sumber daya yang kamu miliki untuk kebutuhan pelayanan.",
+    desc: "Anda dengan senang hati dan sukarela menggunakan sumber daya yang Anda miliki untuk kebutuhan pelayanan.",
     descEn: "A wholehearted willingness to use personal resources generously for ministry needs.",
-    realLife: "Dalam kehidupan nyata: Ketika kamu mendengar tentang kebutuhan nyata, responmu pertama adalah berpikir tentang bagaimana kamu bisa membantu secara finansial atau material — dan kamu melakukannya dengan sukacita, bukan dengan berat hati.",
+    realLife: "Dalam kehidupan nyata: Ketika Anda mendengar tentang kebutuhan nyata, respon Anda pertama adalah berpikir tentang bagaimana Anda bisa membantu secara finansial atau material — dan Anda melakukannya dengan sukacita, bukan dengan berat hati.",
     realLifeEn: "In real life: When you hear about a genuine need, your first response is to think about how you can help financially or materially — and you do so with joy, not reluctance.",
     longDesc: "Karunia Memberi (metadidomi) disebutkan dalam Roma 12:8 dengan arahan untuk melakukannya 'dengan kemurahan hati'. Ini bukan hanya tentang kemampuan finansial — ini adalah kesiapan hati untuk menggunakan apa yang Tuhan percayakan dengan kemurahan hati demi memajukan Kerajaan-Nya. Mereka yang memiliki karunia ini sering memiliki kemampuan khusus untuk menghasilkan, mengelola, dan mendistribusikan sumber daya dengan bijaksana. Mereka memberi dengan cara yang tidak menarik perhatian kepada diri mereka sendiri tetapi kepada kebutuhan yang dipenuhi.",
     longDescEn: "The gift of Giving (metadidomi) is listed in Romans 12:8 with the direction to do it 'with generosity'. It is not merely about financial capacity — it is a heart readiness to use what God has entrusted generously for the advance of His Kingdom. Those with this gift often have a special ability to generate, manage, and distribute resources wisely. They give in ways that draw attention not to themselves but to the need being met.",
   },
   hikmat: {
     label: "Hikmat", en: "Wisdom",
-    desc: "Kamu mampu melihat situasi dengan sudut pandang Tuhan dan memberikan arah yang bijak kepada orang lain.",
+    desc: "Anda mampu melihat situasi dengan sudut pandang Tuhan dan memberikan arah yang bijak kepada orang lain.",
     descEn: "The ability to see situations from God's perspective and give wise, God-centred direction.",
-    realLife: "Dalam kehidupan nyata: Orang datang kepadamu ketika mereka menghadapi keputusan besar karena saran-saranmu cenderung memotong kerumitan dan menemukan apa yang benar-benar penting — secara praktis dan rohani.",
+    realLife: "Dalam kehidupan nyata: Orang datang kepada Anda ketika mereka menghadapi keputusan besar karena saran-saran Anda cenderung memotong kerumitan dan menemukan apa yang benar-benar penting — secara praktis dan rohani.",
     realLifeEn: "In real life: People seek you out when facing big decisions because your counsel tends to cut through complexity and find what truly matters — practically and spiritually.",
     longDesc: "Karunia Hikmat (sophia) adalah kemampuan yang diberikan Roh untuk menerapkan kebenaran Alkitab secara tepat pada situasi kehidupan nyata. Berbeda dengan pengetahuan (yang mengumpulkan kebenaran), hikmat tahu apa yang harus dilakukan dengan kebenaran itu. Ini adalah karunia yang membantu komunitas menavigasi konflik, membuat keputusan sulit, dan menemukan jalan maju ketika situasinya tidak jelas. Yakobus 1:5 menjanjikan bahwa hikmat tersedia bagi siapa saja yang memintanya — tetapi bagi mereka yang memiliki karunia ini, hikmat mengalir dengan cara yang luar biasa.",
     longDescEn: "The gift of Wisdom (sophia) is a Spirit-given ability to apply biblical truth accurately to real-life situations. Unlike knowledge (which accumulates truth), wisdom knows what to do with that truth. It is the gift that helps communities navigate conflict, make difficult decisions, and find a way forward when situations are unclear. James 1:5 promises wisdom is available to all who ask — but for those with this gift, wisdom flows in an extraordinary way.",
   },
   pengetahuan: {
     label: "Pengetahuan", en: "Knowledge",
-    desc: "Kamu menerima pemahaman supranatural tentang firman Tuhan atau situasi tertentu yang relevan bagi pelayanan.",
+    desc: "Anda menerima pemahaman supranatural tentang firman Tuhan atau situasi tertentu yang relevan bagi pelayanan.",
     descEn: "Supernatural understanding of God's word or specific situations relevant to ministry.",
-    realLife: "Dalam kehidupan nyata: Kamu memiliki pemahaman mendalam tentang Alkitab yang datang dari studi serius — dan terkadang kamu menerima wawasan tentang seseorang atau situasi yang tidak dapat kamu jelaskan secara rasional, yang kemudian terbukti tepat.",
+    realLife: "Dalam kehidupan nyata: Anda memiliki pemahaman mendalam tentang Alkitab yang datang dari studi serius — dan terkadang Anda menerima wawasan tentang seseorang atau situasi yang tidak dapat Anda jelaskan secara rasional, yang kemudian terbukti tepat.",
     realLifeEn: "In real life: You have a deep grasp of Scripture that comes from serious study — and sometimes you receive insight about a person or situation you cannot rationally explain, which later proves accurate.",
     longDesc: "Karunia Pengetahuan (gnosis) disebutkan dalam 1 Korintus 12 sebagai 'perkataan pengetahuan' — wawasan yang datang secara supranatural tentang situasi atau kebutuhan yang tidak bisa diketahui secara alami. Ini berbeda dari belajar keras yang baik (meskipun mereka yang memiliki karunia ini sering juga merupakan pelajar yang setia). Karunia ini berguna khusus dalam doa syafaat, konseling pastoral, dan konteks di mana kebutuhan tersembunyi seseorang perlu disingkapkan untuk pelayanan yang efektif.",
     longDescEn: "The gift of Knowledge (gnosis) is listed in 1 Corinthians 12 as a 'word of knowledge' — supernaturally given insight about a situation or need that could not be known naturally. This is distinct from diligent study (though those with this gift are often also faithful learners). The gift is especially useful in intercessory prayer, pastoral counselling, and contexts where a person's hidden need must be uncovered for effective ministry.",
   },
   iman: {
     label: "Iman", en: "Faith",
-    desc: "Kamu memiliki keyakinan yang kuat bahwa Tuhan akan bekerja bahkan dalam situasi yang tampaknya mustahil.",
+    desc: "Anda memiliki keyakinan yang kuat bahwa Tuhan akan bekerja bahkan dalam situasi yang tampaknya mustahil.",
     descEn: "An extraordinary conviction that God will act even when circumstances seem impossible.",
-    realLife: "Dalam kehidupan nyata: Ketika orang lain melihat hambatan, kamu melihat peluang. Kehadiranmu dalam sebuah tim mengubah atmosfer dari ketakutan menjadi kepercayaan — bukan karena kamu mengabaikan realita, tetapi karena kamu sungguh percaya Tuhan lebih besar dari realita.",
+    realLife: "Dalam kehidupan nyata: Ketika orang lain melihat hambatan, Anda melihat peluang. Kehadiran Anda dalam sebuah tim mengubah atmosfer dari ketakutan menjadi kepercayaan — bukan karena Anda mengabaikan realita, tetapi karena Anda sungguh percaya Tuhan lebih besar dari realita.",
     realLifeEn: "In real life: When others see obstacles, you see opportunities. Your presence in a team shifts the atmosphere from fear to trust — not because you ignore reality, but because you genuinely believe God is bigger than the reality.",
     longDesc: "Karunia Iman (pistis) yang disebutkan dalam 1 Korintus 12 bukan sekedar iman penyelamatan yang dimiliki semua orang Kristen — ini adalah manifestasi khusus dari Roh di mana seseorang menerima keyakinan yang luar biasa bahwa Tuhan akan bertindak dalam cara tertentu. Ini adalah iman yang menggerakkan gunung. Mereka yang memiliki karunia ini menjadi jangkar komunitas di saat krisis, ketidakpastian, atau saat proyek besar tampaknya tidak mungkin. Iman mereka menular dan memobilisasi orang lain untuk bertindak.",
     longDescEn: "The gift of Faith (pistis) listed in 1 Corinthians 12 is not merely the saving faith every Christian has — it is a specific Spirit manifestation in which a person receives extraordinary conviction that God will act in a specific way. This is the faith that moves mountains. Those with this gift become anchors for community in crisis, uncertainty, or when a large vision seems impossible. Their faith is contagious and mobilises others to act.",
   },
   kerasulan: {
     label: "Kerasulan", en: "Apostleship",
-    desc: "Kamu dipanggil untuk merintis dan mengembangkan pelayanan di wilayah atau konteks budaya yang baru.",
+    desc: "Anda dipanggil untuk merintis dan mengembangkan pelayanan di wilayah atau konteks budaya yang baru.",
     descEn: "A calling to pioneer and develop ministry in new regions or cross-cultural contexts.",
-    realLife: "Dalam kehidupan nyata: Kamu tertarik pada tempat-tempat di mana tidak ada gereja atau pelayanan yang ada — wilayah baru, budaya yang belum dijangkau, konteks perkotaan yang sulit. Kamu tidak menunggu seseorang membuka jalan; kamu adalah orang yang membuka jalan.",
+    realLife: "Dalam kehidupan nyata: Anda tertarik pada tempat-tempat di mana tidak ada gereja atau pelayanan yang ada — wilayah baru, budaya yang belum dijangkau, konteks perkotaan yang sulit. Anda tidak menunggu seseorang membuka jalan; Anda adalah orang yang membuka jalan.",
     realLifeEn: "In real life: You are drawn to places where there is no existing church or ministry — new territories, unreached cultures, difficult urban contexts. You don't wait for someone to open the way; you are the person who opens the way.",
     longDesc: "Karunia Kerasulan (apostolos — 'yang diutus') dalam pengertian fungsional mengacu pada mereka yang dipanggil untuk merintis dan meletakkan fondasi pelayanan di wilayah atau konteks baru. Paulus menggambarkan dirinya sebagai 'tukang bangunan yang ahli' yang meletakkan fondasi (1 Kor 3:10). Dalam era misi modern, karunia ini terlihat dalam mereka yang dipanggil untuk masuk ke konteks yang belum diinjili, membangun komunitas iman dari awal, dan kemudian mempercayakannya kepada pemimpin lokal. Karunia ini sangat cocok untuk kepemimpinan lintas budaya.",
     longDescEn: "The gift of Apostleship (apostolos — 'sent one') in its functional sense refers to those called to pioneer and lay foundations for ministry in new territories or contexts. Paul describes himself as a 'skilled master builder' who lays foundations (1 Cor 3:10). In modern missions, this gift shows in those called to enter unevangelised contexts, build faith communities from scratch, and then entrust them to local leaders. This gift is especially fitted for cross-cultural leadership.",
   },
   penginjilan: {
     label: "Penginjilan", en: "Evangelism",
-    desc: "Kamu memiliki kerinduan yang mendalam dan kemampuan untuk membagikan Injil kepada orang yang belum percaya.",
+    desc: "Anda memiliki kerinduan yang mendalam dan kemampuan untuk membagikan Injil kepada orang yang belum percaya.",
     descEn: "A deep longing and Spirit-empowered ability to share the Gospel with unbelievers.",
-    realLife: "Dalam kehidupan nyata: Percakapan dengan orang yang belum percaya terasa alami bagimu, bukan canggung. Kamu menemukan cara organik untuk berbagi tentang iman — melalui cerita, pertanyaan, atau momen yang tepat — dan kamu melihat orang merespons.",
+    realLife: "Dalam kehidupan nyata: Percakapan dengan orang yang belum percaya terasa alami bagi Anda, bukan canggung. Anda menemukan cara organik untuk berbagi tentang iman — melalui cerita, pertanyaan, atau momen yang tepat — dan Anda melihat orang merespons.",
     realLifeEn: "In real life: Conversations with unbelievers feel natural to you, not awkward. You find organic ways to share about faith — through stories, questions, or timely moments — and you see people respond.",
     longDesc: "Karunia Penginjilan (euangelistes) adalah karunia yang diberikan Roh untuk memberitakan Injil Yesus Kristus dengan cara yang efektif dan mengundang respons iman. Meskipun semua orang Kristen dipanggil untuk menjadi saksi, mereka yang memiliki karunia ini memiliki kemampuan yang luar biasa untuk menjelaskan Injil dengan jelas, menjawab pertanyaan dengan bijaksana, dan membuat percakapan rohani terasa aman bagi orang yang belum percaya. Efesus 4:11 mencantumkan penginjil sebagai hadiah Kristus bagi Gereja.",
     longDescEn: "The gift of Evangelism (euangelistes) is a Spirit-given gift to proclaim the Gospel of Jesus Christ in ways that effectively invite a faith response. While all Christians are called to be witnesses, those with this gift have an extraordinary ability to explain the Gospel clearly, answer questions wisely, and make spiritual conversations feel safe for unbelievers. Ephesians 4:11 lists the evangelist as one of Christ's gifts to the Church.",
   },
   bernubuat: {
     label: "Bernubuat", en: "Prophecy",
-    desc: "Kamu menerima dan menyampaikan pesan dari Tuhan yang menguatkan, mengingatkan, atau menantang jemaat.",
+    desc: "Anda menerima dan menyampaikan pesan dari Tuhan yang menguatkan, mengingatkan, atau menantang jemaat.",
     descEn: "Receiving and delivering messages from God that strengthen, warn, or challenge the community.",
-    realLife: "Dalam kehidupan nyata: Kamu sering merasakan dorongan untuk menyampaikan sesuatu kepada komunitas atau individu — dan ketika kamu melakukannya dalam kerendahan hati, pesanmu beresonansi dengan cara yang melampaui apa yang bisa kamu ketahui sendiri.",
+    realLife: "Dalam kehidupan nyata: Anda sering merasakan dorongan untuk menyampaikan sesuatu kepada komunitas atau individu — dan ketika Anda melakukannya dalam kerendahan hati, pesan Anda beresonansi dengan cara yang melampaui apa yang bisa Anda ketahui sendiri.",
     realLifeEn: "In real life: You often sense an urge to speak something to a community or individual — and when you do so in humility, your message resonates in ways that go beyond what you could have known on your own.",
     longDesc: "Karunia Bernubuat (propheteia) dalam Perjanjian Baru terutama bersifat forthtelling (menyampaikan) daripada foretelling (meramalkan). Paulus menggambarkannya sebagai membawa 'penguatan, dorongan, dan penghiburan' (1 Kor 14:3). Mereka yang memiliki karunia ini menerima pesan dari Tuhan yang relevan dengan kebutuhan saat ini komunitas dan menyampaikannya dengan otoritas yang direndahkan. Karunia ini bukan tentang membuat prediksi pribadi; ini tentang menjadi mulut Tuhan bagi umat-Nya. Semua nubuat harus diuji terhadap Kitab Suci dan komunitas.",
     longDescEn: "The gift of Prophecy (propheteia) in the New Testament is primarily forthtelling rather than foretelling. Paul describes it as bringing 'strengthening, encouragement, and comfort' (1 Cor 14:3). Those with this gift receive messages from God relevant to the present needs of the community and deliver them with humble authority. This gift is not about making personal predictions; it is about being God's voice to His people. All prophecy should be tested against Scripture and community.",
   },
   mengajar: {
     label: "Mengajar", en: "Teaching",
-    desc: "Kamu mampu menjelaskan kebenaran Alkitab dengan cara yang jelas, menarik, dan mudah dipahami orang lain.",
+    desc: "Anda mampu menjelaskan kebenaran Alkitab dengan cara yang jelas, menarik, dan mudah dipahami orang lain.",
     descEn: "The ability to explain biblical truth in a clear, engaging, and understandable way.",
-    realLife: "Dalam kehidupan nyata: Orang berkata bahwa konsep-konsep sulit menjadi masuk akal ketika kamu menjelaskannya. Kamu menikmati menggali Alkitab dalam kedalaman dan secara alami menemukan cara untuk membuat kebenaran itu dapat diterapkan dan mudah diingat.",
+    realLife: "Dalam kehidupan nyata: Orang berkata bahwa konsep-konsep sulit menjadi masuk akal ketika Anda menjelaskannya. Anda menikmati menggali Alkitab dalam kedalaman dan secara alami menemukan cara untuk membuat kebenaran itu dapat diterapkan dan mudah diingat.",
     realLifeEn: "In real life: People say that difficult concepts make sense when you explain them. You enjoy digging deep into Scripture and naturally find ways to make that truth applicable and memorable.",
     longDesc: "Karunia Mengajar (didaskalos) adalah kemampuan yang diberikan Roh untuk menyampaikan kebenaran Alkitab dengan cara yang jelas, sistematis, dan transformatif. Guru-guru sejati tidak hanya mentransfer informasi — mereka membantu orang memahami Alkitab dengan cara yang mengubah cara mereka berpikir dan hidup. Yesus adalah guru terbesar; Paulus, Apolos, dan lainnya meneladani karunia ini. Efesus 4:11 mencantumkan pengajar sebagai hadiah Kristus bagi Gereja untuk kedewasaan jemaat.",
     longDescEn: "The gift of Teaching (didaskalos) is a Spirit-given ability to deliver biblical truth in ways that are clear, systematic, and transformative. True teachers don't merely transfer information — they help people understand Scripture in ways that reshape how they think and live. Jesus was the supreme teacher; Paul, Apollos, and others modelled this gift. Ephesians 4:11 lists the teacher as one of Christ's gifts to the Church for the maturity of the congregation.",
   },
   gembala: {
     label: "Gembala", en: "Shepherding",
-    desc: "Kamu dipanggil untuk memelihara, membimbing, dan bertanggung jawab atas pertumbuhan rohani sekelompok orang.",
+    desc: "Anda dipanggil untuk memelihara, membimbing, dan bertanggung jawab atas pertumbuhan rohani sekelompok orang.",
     descEn: "A calling to nurture, guide, and take responsibility for the spiritual growth of a group.",
-    realLife: "Dalam kehidupan nyata: Kamu secara alami melacak bagaimana orang-orang dalam komunitasmu — secara rohani, emosional, dan relasional. Kamu merasakan tanggung jawab yang mendalam ketika seseorang mulai menjauh, dan kamu bergerak menuju mereka.",
+    realLife: "Dalam kehidupan nyata: Anda secara alami melacak bagaimana orang-orang dalam komunitas Anda — secara rohani, emosional, dan relasional. Anda merasakan tanggung jawab yang mendalam ketika seseorang mulai menjauh, dan Anda bergerak menuju mereka.",
     realLifeEn: "In real life: You naturally track how people in your community are doing — spiritually, emotionally, and relationally. You feel a deep sense of responsibility when someone starts drifting away, and you move toward them.",
     longDesc: "Karunia Gembala (poimen) adalah panggilan untuk memelihara dan melindungi pertumbuhan rohani sekelompok orang secara terus-menerus. Berbeda dengan pengajar yang dapat mengajar banyak orang sekaligus, gembala berkomitmen pada seseorang jangka panjang — mengenal mereka secara mendalam, berjalan bersama mereka dalam kesulitan, dan menjaga mereka agar tetap di jalan. 1 Petrus 5:2-4 menggambarkan gembala sebagai yang memimpin bukan dengan paksaan tetapi rela, bukan dengan motif keuntungan tetapi semangat.",
     longDescEn: "The gift of Shepherding (poimen) is a calling to nurture and protect the spiritual growth of a group of people over time. Unlike teaching which can reach many at once, the shepherd commits to a group long-term — knowing them deeply, walking with them through difficulty, and keeping them on the path. 1 Peter 5:2-4 describes the shepherd as one who leads not by compulsion but willingly, not for dishonest gain but eagerly.",
   },
   memimpin: {
     label: "Memimpin", en: "Leadership",
-    desc: "Kamu mampu menggerakkan, menginspirasi, dan membawa orang lain bersama-sama menuju tujuan yang Tuhan tetapkan.",
+    desc: "Anda mampu menggerakkan, menginspirasi, dan membawa orang lain bersama-sama menuju tujuan yang Tuhan tetapkan.",
     descEn: "The ability to mobilize, inspire, and unite people toward God-appointed goals.",
-    realLife: "Dalam kehidupan nyata: Ketika ada kekosongan kepemimpinan dalam sebuah kelompok, orang-orang secara alami melihat ke arahmu. Kamu menemukan cara untuk menyatukan orang dengan latar belakang berbeda di belakang tujuan bersama.",
+    realLife: "Dalam kehidupan nyata: Ketika ada kekosongan kepemimpinan dalam sebuah kelompok, orang-orang secara alami melihat ke arah Anda. Anda menemukan cara untuk menyatukan orang dengan latar belakang berbeda di belakang tujuan bersama.",
     realLifeEn: "In real life: When there is a leadership vacuum in a group, people naturally look to you. You find ways to unite people from different backgrounds behind a shared goal.",
     longDesc: "Karunia Memimpin (proistemi — 'berdiri di depan') dalam Roma 12:8 diarahkan untuk dilakukan 'dengan rajin'. Pemimpin rohani tidak memimpin untuk kekuasaan tetapi untuk melayani tujuan Tuhan. Mereka memiliki kemampuan untuk memvisionkan ke mana komunitas perlu pergi, menyelaraskan sumber daya dan orang, dan memotivasi orang lain untuk bergerak bersama. Dalam konteks lintas budaya, pemimpin yang efektif belajar bagaimana memimpin dengan cara yang menghormati nilai-nilai budaya yang beragam sambil tetap setia pada misi.",
     longDescEn: "The gift of Leadership (proistemi — 'to stand before') in Romans 12:8 is directed to be done 'with diligence'. Spiritual leaders lead not for power but to serve God's purposes. They have the ability to vision where the community needs to go, align resources and people, and motivate others to move together. In cross-cultural contexts, effective leaders learn to lead in ways that honour diverse cultural values while remaining faithful to the mission.",
   },
   administrasi: {
     label: "Administrasi", en: "Administration",
-    desc: "Kamu mampu merencanakan, mengorganisasi, dan mengkoordinasikan sumber daya untuk mencapai tujuan pelayanan.",
+    desc: "Anda mampu merencanakan, mengorganisasi, dan mengkoordinasikan sumber daya untuk mencapai tujuan pelayanan.",
     descEn: "The ability to plan, organize, and coordinate resources to achieve ministry goals effectively.",
-    realLife: "Dalam kehidupan nyata: Kamu secara alami melihat bagaimana bagian-bagian yang berbeda dari sebuah proyek saling berhubungan, siapa yang perlu melakukan apa, dan apa yang bisa salah — lalu kamu menciptakan sistem yang membuat semuanya berjalan lancar.",
+    realLife: "Dalam kehidupan nyata: Anda secara alami melihat bagaimana bagian-bagian yang berbeda dari sebuah proyek saling berhubungan, siapa yang perlu melakukan apa, dan apa yang bisa salah — lalu Anda menciptakan sistem yang membuat semuanya berjalan lancar.",
     realLifeEn: "In real life: You naturally see how the different parts of a project connect, who needs to do what, and what could go wrong — then you create systems that make everything run smoothly.",
     longDesc: "Karunia Administrasi (kubernesis — istilah Yunani untuk 'mengemudikan kapal') adalah kemampuan untuk mengatur, mengelola, dan mengarahkan program dan sumber daya untuk mencapai tujuan. Sementara pemimpin menentukan ke mana tujuan, administrator memastikan kapal tetap di jalur. Mereka unggul dalam perencanaan proyek, manajemen sumber daya, dan koordinasi orang. Tanpa karunia ini, bahkan visi terbaik pun gagal dalam pelaksanaan. Dalam pelayanan multikultural, karunia ini membantu komunitas yang beragam bekerja bersama secara efektif.",
     longDescEn: "The gift of Administration (kubernesis — the Greek term for 'steering a ship') is the ability to organise, manage, and steer programmes and resources toward goals. While leaders determine the destination, administrators ensure the ship stays on course. They excel in project planning, resource management, and coordinating people. Without this gift, even the best vision fails in execution. In multicultural ministry, this gift helps diverse communities work together effectively.",
   },
   mukjizat: {
     label: "Mukjizat", en: "Miracles",
-    desc: "Tuhan menyatakan kuasa-Nya melalui hidupmu dalam cara-cara yang melampaui penjelasan manusia.",
+    desc: "Tuhan menyatakan kuasa-Nya melalui hidup Anda dalam cara-cara yang melampaui penjelasan manusia.",
     descEn: "God reveals His power through your life in ways that surpass natural explanation.",
-    realLife: "Dalam kehidupan nyata: Kamu telah menyaksikan atau menjadi bagian dari situasi di mana Tuhan bertindak dengan cara yang tidak dapat dijelaskan secara alami — jawaban doa yang dramatis, pemulihan yang tidak terduga, atau kejadian yang terlalu tepat waktu untuk menjadi kebetulan.",
+    realLife: "Dalam kehidupan nyata: Anda telah menyaksikan atau menjadi bagian dari situasi di mana Tuhan bertindak dengan cara yang tidak dapat dijelaskan secara alami — jawaban doa yang dramatis, pemulihan yang tidak terduga, atau kejadian yang terlalu tepat waktu untuk menjadi kebetulan.",
     realLifeEn: "In real life: You have witnessed or been part of situations where God acted in ways that cannot be naturally explained — dramatic answers to prayer, unexpected restorations, or events too perfectly timed to be coincidence.",
     longDesc: "Karunia Mukjizat (dunamis — 'kuasa') adalah karunia di mana Tuhan bekerja melalui seseorang untuk melakukan hal-hal yang melampaui hukum alam. Disebutkan dalam 1 Korintus 12, karunia ini berfungsi sebagai tanda yang menunjuk kepada realitas Kerajaan Allah. Mereka yang memiliki karunia ini bukanlah penampil mukjizat — mereka adalah saluran yang rendah hati melalui mana kuasa Tuhan mengalir. Dalam konteks di mana Injil sedang disampaikan untuk pertama kalinya, mukjizat sering menjadi sarana utama melalui mana hati dibuka.",
     longDescEn: "The gift of Miracles (dunamis — 'power') is a gift in which God works through a person to do things beyond natural law. Listed in 1 Corinthians 12, this gift functions as a sign pointing to the reality of God's Kingdom. Those with this gift are not performers of miracles — they are humble channels through which God's power flows. In contexts where the Gospel is being presented for the first time, miracles often become a primary means through which hearts are opened.",
   },
   tafsir_bahasa_roh: {
     label: "Tafsir Bahasa Roh", en: "Interpretation of Tongues",
-    desc: "Kamu menerima kemampuan untuk menyampaikan makna dari pesan bahasa roh kepada jemaat.",
+    desc: "Anda menerima kemampuan untuk menyampaikan makna dari pesan bahasa roh kepada jemaat.",
     descEn: "The ability to convey the meaning of tongue messages to the gathered community.",
-    realLife: "Dalam kehidupan nyata: Ketika seseorang berbicara dalam bahasa roh dalam lingkungan ibadah, kamu menerima pemahaman tentang apa yang sedang dikomunikasikan dan merasa terdorong untuk menyampaikannya kepada jemaat.",
+    realLife: "Dalam kehidupan nyata: Ketika seseorang berbicara dalam bahasa roh dalam lingkungan ibadah, Anda menerima pemahaman tentang apa yang sedang dikomunikasikan dan merasa terdorong untuk menyampaikannya kepada jemaat.",
     realLifeEn: "In real life: When someone speaks in tongues in a worship setting, you receive understanding of what is being communicated and feel compelled to convey it to the gathered community.",
     longDesc: "Karunia Tafsir Bahasa Roh (hermenia glosson) adalah pasangan karunia bahasa roh. Paulus menjelaskan dalam 1 Korintus 14 bahwa ketika bahasa roh digunakan dalam pertemuan umum, harus ada penafsiran sehingga seluruh jemaat dapat mendapat manfaat. Mereka yang memiliki karunia ini menerima makna dari pesan yang disampaikan dalam bahasa roh dan menyampaikannya dalam bahasa yang dapat dimengerti. Ini bukan terjemahan kata per kata tetapi penyampaian makna dan maksud rohani.",
     longDescEn: "The gift of Interpretation of Tongues (hermenia glosson) is the companion gift to tongues. Paul explains in 1 Corinthians 14 that when tongues are used in a public gathering, there must be interpretation so the whole community can benefit. Those with this gift receive the meaning of a tongue message and convey it in an understandable language. This is not word-for-word translation but the conveyance of spiritual meaning and intent.",
@@ -508,11 +508,11 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
                 <KaruniaLangToggle />
               </div>
               <h1 style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: "oklch(97% 0.005 80)", lineHeight: 1.08, marginBottom: "1rem" }}>
-                {lang === "id" ? "Karunia Rohani Kamu" : "Your Spiritual Gifts"}
+                {lang === "id" ? "Karunia Rohani Anda" : "Your Spiritual Gifts"}
               </h1>
               <p style={{ fontSize: "0.9375rem", color: "oklch(78% 0.008 80)", lineHeight: 1.7, margin: 0 }}>
                 {lang === "id"
-                  ? "Berdasarkan jawabanmu, berikut adalah karunia rohani utama yang Tuhan berikan kepadamu."
+                  ? "Berdasarkan jawaban Anda, berikut adalah karunia rohani utama yang Tuhan berikan kepada Anda."
                  
                   : "Based on your answers, here are the primary spiritual gifts God has given you."}
               </p>
@@ -856,7 +856,7 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
           </h1>
           <p style={{ fontSize: "0.9375rem", color: "oklch(78% 0.008 80)", lineHeight: 1.7, marginBottom: "1.5rem" }}>
             {lang === "id"
-              ? "Temukan karunia rohani yang Tuhan berikan kepadamu — dan bagaimana karunia itu bisa dimaksimalkan dalam pelayanan dan kepemimpinan."
+              ? "Temukan karunia rohani yang Tuhan berikan kepada Anda — dan bagaimana karunia itu bisa dimaksimalkan dalam pelayanan dan kepemimpinan."
              
               : "Discover the spiritual gifts God has given you — and how they can be maximised in service and leadership."}
           </p>
@@ -947,13 +947,13 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
               </p>
               <p style={{ fontSize: "0.9375rem", color: "oklch(35% 0.008 260)", lineHeight: 1.8, margin: "0 0 0.875rem" }}>
                 {lang === "id"
-                  ? "Penilaian ini membantu kamu menemukan karunia rohani yang Tuhan berikan kepadamu untuk melayani Tubuh Kristus. Didasarkan pada tiga bagian utama Perjanjian Baru — Roma 12, 1 Korintus 12, dan Efesus 4 — tes ini mensurvei rasa panggilan, keyakinan, dan pengalamanmu di seluruh 19 karunia yang diakui."
+                  ? "Penilaian ini membantu Anda menemukan karunia rohani yang Tuhan berikan kepada Anda untuk melayani Tubuh Kristus. Didasarkan pada tiga bagian utama Perjanjian Baru — Roma 12, 1 Korintus 12, dan Efesus 4 — tes ini mensurvei rasa panggilan, keyakinan, dan pengalaman Anda di seluruh 19 karunia yang diakui."
                  
                   : "This assessment helps you discover the spiritual gifts God has given you for serving the body of Christ. Based on three primary New Testament passages — Romans 12, 1 Corinthians 12, and Ephesians 4 — the test surveys your sense of calling, conviction, and recent experience across 19 recognised gifts."}
               </p>
               <p style={{ fontSize: "0.9375rem", color: "oklch(35% 0.008 260)", lineHeight: 1.8, margin: 0 }}>
                 {lang === "id"
-                  ? "Karunia rohani berbeda dari bakat alami. Bakat alami adalah bagian dari cara Tuhan menciptakanmu; karunia rohani diberikan oleh Roh Kudus secara khusus untuk membangun Tubuh Kristus. Beberapa karunia tumpang tindih dengan kemampuan alami — seorang pengajar yang berbakat mungkin selalu menyukai menjelaskan sesuatu — tetapi karunia rohani adalah kemampuan yang diberdayakan Roh untuk menggunakan kemampuan itu bagi Kerajaan."
+                  ? "Karunia rohani berbeda dari bakat alami. Bakat alami adalah bagian dari cara Tuhan menciptakan Anda; karunia rohani diberikan oleh Roh Kudus secara khusus untuk membangun Tubuh Kristus. Beberapa karunia tumpang tindih dengan kemampuan alami — seorang pengajar yang berbakat mungkin selalu menyukai menjelaskan sesuatu — tetapi karunia rohani adalah kemampuan yang diberdayakan Roh untuk menggunakan kemampuan itu bagi Kerajaan."
                  
                   : "Spiritual gifts are not natural talents. A natural talent is part of how God made you; a spiritual gift is given by the Holy Spirit specifically for building up the body of Christ. Some gifts overlap with natural ability — a gifted teacher may have always loved explaining things — but the spiritual gift is the Spirit-empowered capacity to use that ability for the Kingdom."}
               </p>
@@ -992,13 +992,13 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
             {/* How to read results */}
             <div>
               <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.08em", color: PRIMARY, textTransform: "uppercase" as const, margin: "0 0 0.75rem" }}>
-                {lang === "id" ? "Cara membaca hasilmu" : "How to read your results"}
+                {lang === "id" ? "Cara membaca hasil Anda" : "How to read your results"}
               </p>
               <div style={{ display: "flex", flexDirection: "column", gap: "0.625rem" }}>
                 {(lang === "id" ? [
-                  "Baca tiga karunia teratasmu sebagai karunia yang saat ini digunakan Roh melaluimu. Mereka mungkin berubah di berbagai musim kehidupan dan pelayanan.",
-                  "Skor rendah pada suatu karunia bukan penilaian terhadap kerohanian kamu — itu hanya berarti karunia itu bukan instrumen utamamu.",
-                  "Beberapa karunia (terutama Bahasa Roh, Penyembuhan, Mukjizat, dan Nubuat) datang dengan keberagaman teologis di gereja yang lebih luas. Baca skor tersebut dengan hati-hati, dalam percakapan dengan tradisi gereja lokalmu.",
+                  "Baca tiga karunia teratas Anda sebagai karunia yang saat ini digunakan Roh melalui Anda. Mereka mungkin berubah di berbagai musim kehidupan dan pelayanan.",
+                  "Skor rendah pada suatu karunia bukan penilaian terhadap kerohanian Anda — itu hanya berarti karunia itu bukan instrumen utama Anda.",
+                  "Beberapa karunia (terutama Bahasa Roh, Penyembuhan, Mukjizat, dan Nubuat) datang dengan keberagaman teologis di gereja yang lebih luas. Baca skor tersebut dengan hati-hati, dalam percakapan dengan tradisi gereja lokal Anda.",
                 ] : [
                   "Read your top three gifts as the gifts the Spirit is currently using through you. They may shift across seasons of life and ministry.",
                   "A low score on a gift is not a verdict on your spirituality — it simply means that gift is not your primary instrument.",
@@ -1106,7 +1106,7 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
               </p>
               <p style={{ fontSize: "0.9rem", color: "oklch(32% 0.10 70)", lineHeight: 1.75, margin: 0 }}>
                 {lang === "id"
-                  ? "Orang Kristen memiliki pandangan berbeda tentang apakah semua karunia dalam 1 Korintus 12 masih beroperasi dengan cara yang sama hari ini. Tradisi sesionis percaya bahwa karunia tanda berhenti bersama usia apostolik. Tradisi kontinuasionis percaya semua karunia terus berlanjut. Modul ini tidak memihak. Ia mensurvei karunia seperti yang tercantum dalam Kitab Suci dan melaporkan karunia yang kamu rasakan paling aktif dalam hidupmu dan pelayananmu. Bacalah hasilmu dalam percakapan dengan tradisi gereja lokalmu."
+                  ? "Orang Kristen memiliki pandangan berbeda tentang apakah semua karunia dalam 1 Korintus 12 masih beroperasi dengan cara yang sama hari ini. Tradisi sesionis percaya bahwa karunia tanda berhenti bersama usia apostolik. Tradisi kontinuasionis percaya semua karunia terus berlanjut. Modul ini tidak memihak. Ia mensurvei karunia seperti yang tercantum dalam Kitab Suci dan melaporkan karunia yang Anda rasakan paling aktif dalam hidup Anda dan pelayanan Anda. Bacalah hasil Anda dalam percakapan dengan tradisi gereja lokal Anda."
                  
                   : "Christians hold different views on whether all the gifts in 1 Corinthians 12 still operate in the same way today. Cessationist traditions believe the sign gifts ceased with the apostolic age. Continuationist traditions believe all the gifts continue. This module does not take a side. It surveys the gifts as listed in Scripture and reports the gifts you sense most active in your own life and ministry. Hold your results in conversation with your local church tradition."}
               </p>
@@ -1123,13 +1123,13 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
             {lang === "id" ? "Poin Utama" : "Key Takeaway"}
           </p>
           <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(18px, 2.2vw, 24px)", fontWeight: 800, color: BG_DARK, marginBottom: 36 }}>
-            {lang === "id" ? "Tiga hal yang bisa kamu terapkan minggu ini" : "Three things to act on this week"}
+            {lang === "id" ? "Tiga hal yang bisa Anda terapkan minggu ini" : "Three things to act on this week"}
           </h2>
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             {(lang === "id" ? [
-              "Selesaikan asesmen karunia rohani ini dan bagikan hasilmu dengan satu atau dua orang yang mengenalmu dalam konteks pelayanan. Tanya: apakah ini cocok dengan apa yang mereka amati dalam hidupmu?",
-              "Identifikasi satu kegiatan pelayanan konkret di mana kamu merasakan kegembiraan dan aliran terbesar — di situ kemungkinan karuniamu paling aktif. Bagaimana kamu bisa meningkatkan kontribusimu di area itu minggu ini?",
-              "Identifikasi satu area pelayanan yang sering terasa berat atau kosong. Tanya dengan jujur: apakah ini karena karuniamu memang tidak ada di sini, atau karena kamu belum diperlengkapi dengan baik?",
+              "Selesaikan asesmen karunia rohani ini dan bagikan hasil Anda dengan satu atau dua orang yang mengenal Anda dalam konteks pelayanan. Tanya: apakah ini cocok dengan apa yang mereka amati dalam hidup Anda?",
+              "Identifikasi satu kegiatan pelayanan konkret di mana Anda merasakan kegembiraan dan aliran terbesar — di situ kemungkinan karunia Anda paling aktif. Bagaimana Anda bisa meningkatkan kontribusi Anda di area itu minggu ini?",
+              "Identifikasi satu area pelayanan yang sering terasa berat atau kosong. Tanya dengan jujur: apakah ini karena karunia Anda memang tidak ada di sini, atau karena Anda belum diperlengkapi dengan baik?",
             ] : [
               "Complete this spiritual gifts assessment and share your results with one or two people who know you in ministry context. Ask: does this match what they observe in your life and service?",
               "Identify one concrete ministry activity where you feel the greatest flow and joy — that is likely where your gifts are most active. How can you increase your contribution in that area this week?",
@@ -1206,13 +1206,13 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
         <div style={{ maxWidth: "720px", margin: "0 auto", textAlign: "center" as const }}>
           <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 600, color: "white", lineHeight: 1.15, marginBottom: "0.875rem" }}>
             {lang === "id"
-              ? "Siap menemukan karuniamu?"
+              ? "Siap menemukan karunia Anda?"
 
               : "Ready to discover your gifts?"}
           </h2>
           <p style={{ fontSize: "0.9375rem", color: "oklch(78% 0.008 80)", lineHeight: 1.7, marginBottom: "2rem" }}>
             {lang === "id"
-              ? "76 pernyataan. Sekitar 20 menit. Hasilmu disimpan ke dashboard untuk referensi tim."
+              ? "76 pernyataan. Sekitar 20 menit. Hasil Anda disimpan ke dashboard untuk referensi tim."
              
               : "76 statements. Around 20 minutes. Your results are saved to your dashboard for team reference."}
           </p>

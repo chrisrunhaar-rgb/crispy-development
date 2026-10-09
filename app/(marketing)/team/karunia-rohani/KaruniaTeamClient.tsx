@@ -37,25 +37,25 @@ const KARUNIA_MAP: Record<string, number[]> = {
 };
 
 const GIFTS: Record<string, { label: string; desc: string }> = {
-  melayani:          { label: "Melayani",           desc: "Kamu memiliki kemampuan untuk melihat dan memenuhi kebutuhan praktis orang lain dengan sukacita." },
-  murah_hati:        { label: "Murah Hati",          desc: "Kamu peka terhadap penderitaan orang lain dan dipanggil untuk hadir bersama mereka dalam kesulitan." },
-  keramahan:         { label: "Keramahan",           desc: "Kamu memiliki kemampuan untuk membuat orang merasa disambut, aman, dan diperhatikan." },
-  bahasa_roh:        { label: "Bahasa Roh",          desc: "Kamu telah menerima karunia untuk berkomunikasi dalam bahasa rohani yang belum pernah dipelajari." },
-  menyembuhkan:      { label: "Menyembuhkan",        desc: "Allah memakai doa-doamu sebagai sarana untuk kesembuhan fisik, emosi, atau rohani bagi orang lain." },
-  menguatkan:        { label: "Menguatkan",          desc: "Kamu mampu mendorong, menguatkan, dan membimbing orang lain untuk bertumbuh dan tidak menyerah." },
-  memberi:           { label: "Memberi",             desc: "Kamu dengan senang hati dan sukarela menggunakan sumber daya yang kamu miliki untuk kebutuhan pelayanan." },
-  hikmat:            { label: "Hikmat",              desc: "Kamu mampu melihat situasi dengan sudut pandang Allah dan memberikan arah yang bijak kepada orang lain." },
-  pengetahuan:       { label: "Pengetahuan",         desc: "Kamu menerima pemahaman supranatural tentang firman Allah atau situasi tertentu yang relevan bagi pelayanan." },
-  iman:              { label: "Iman",                desc: "Kamu memiliki keyakinan yang kuat bahwa Allah akan bekerja bahkan dalam situasi yang tampaknya mustahil." },
-  kerasulan:         { label: "Kerasulan",           desc: "Kamu dipanggil untuk merintis dan mengembangkan pelayanan di wilayah atau konteks budaya yang baru." },
-  penginjilan:       { label: "Penginjilan",         desc: "Kamu memiliki kerinduan yang mendalam dan kemampuan untuk membagikan Injil kepada orang yang belum percaya." },
-  bernubuat:         { label: "Bernubuat",           desc: "Kamu menerima dan menyampaikan pesan dari Allah yang menguatkan, mengingatkan, atau menantang jemaat." },
-  mengajar:          { label: "Mengajar",            desc: "Kamu mampu menjelaskan kebenaran Alkitab dengan cara yang jelas, menarik, dan mudah dipahami orang lain." },
-  gembala:           { label: "Gembala",             desc: "Kamu dipanggil untuk memelihara, membimbing, dan bertanggung jawab atas pertumbuhan rohani sekelompok orang." },
-  memimpin:          { label: "Memimpin",            desc: "Kamu mampu menggerakkan, menginspirasi, dan membawa orang lain bersama-sama menuju tujuan yang Allah tetapkan." },
-  administrasi:      { label: "Administrasi",        desc: "Kamu mampu merencanakan, mengorganisasi, dan mengkoordinasikan sumber daya untuk mencapai tujuan pelayanan." },
-  mukjizat:          { label: "Mukjizat",            desc: "Allah menyatakan kuasa-Nya melalui hidupmu dalam cara-cara yang melampaui penjelasan manusia." },
-  tafsir_bahasa_roh: { label: "Tafsir Bahasa Roh",  desc: "Kamu menerima kemampuan untuk menyampaikan makna dari pesan bahasa roh kepada jemaat." },
+  melayani:          { label: "Melayani",           desc: "Anda memiliki kemampuan untuk melihat dan memenuhi kebutuhan praktis orang lain dengan sukacita." },
+  murah_hati:        { label: "Murah Hati",          desc: "Anda peka terhadap penderitaan orang lain dan dipanggil untuk hadir bersama mereka dalam kesulitan." },
+  keramahan:         { label: "Keramahan",           desc: "Anda memiliki kemampuan untuk membuat orang merasa disambut, aman, dan diperhatikan." },
+  bahasa_roh:        { label: "Bahasa Roh",          desc: "Anda telah menerima karunia untuk berkomunikasi dalam bahasa rohani yang belum pernah dipelajari." },
+  menyembuhkan:      { label: "Menyembuhkan",        desc: "Allah memakai doa-doa Anda sebagai sarana untuk kesembuhan fisik, emosi, atau rohani bagi orang lain." },
+  menguatkan:        { label: "Menguatkan",          desc: "Anda mampu mendorong, menguatkan, dan membimbing orang lain untuk bertumbuh dan tidak menyerah." },
+  memberi:           { label: "Memberi",             desc: "Anda dengan senang hati dan sukarela menggunakan sumber daya yang Anda miliki untuk kebutuhan pelayanan." },
+  hikmat:            { label: "Hikmat",              desc: "Anda mampu melihat situasi dengan sudut pandang Allah dan memberikan arah yang bijak kepada orang lain." },
+  pengetahuan:       { label: "Pengetahuan",         desc: "Anda menerima pemahaman supranatural tentang firman Allah atau situasi tertentu yang relevan bagi pelayanan." },
+  iman:              { label: "Iman",                desc: "Anda memiliki keyakinan yang kuat bahwa Allah akan bekerja bahkan dalam situasi yang tampaknya mustahil." },
+  kerasulan:         { label: "Kerasulan",           desc: "Anda dipanggil untuk merintis dan mengembangkan pelayanan di wilayah atau konteks budaya yang baru." },
+  penginjilan:       { label: "Penginjilan",         desc: "Anda memiliki kerinduan yang mendalam dan kemampuan untuk membagikan Injil kepada orang yang belum percaya." },
+  bernubuat:         { label: "Bernubuat",           desc: "Anda menerima dan menyampaikan pesan dari Allah yang menguatkan, mengingatkan, atau menantang jemaat." },
+  mengajar:          { label: "Mengajar",            desc: "Anda mampu menjelaskan kebenaran Alkitab dengan cara yang jelas, menarik, dan mudah dipahami orang lain." },
+  gembala:           { label: "Gembala",             desc: "Anda dipanggil untuk memelihara, membimbing, dan bertanggung jawab atas pertumbuhan rohani sekelompok orang." },
+  memimpin:          { label: "Memimpin",            desc: "Anda mampu menggerakkan, menginspirasi, dan membawa orang lain bersama-sama menuju tujuan yang Allah tetapkan." },
+  administrasi:      { label: "Administrasi",        desc: "Anda mampu merencanakan, mengorganisasi, dan mengkoordinasikan sumber daya untuk mencapai tujuan pelayanan." },
+  mukjizat:          { label: "Mukjizat",            desc: "Allah menyatakan kuasa-Nya melalui hidup Anda dalam cara-cara yang melampaui penjelasan manusia." },
+  tafsir_bahasa_roh: { label: "Tafsir Bahasa Roh",  desc: "Anda menerima kemampuan untuk menyampaikan makna dari pesan bahasa roh kepada jemaat." },
 };
 
 const QUESTIONS: string[] = [
@@ -285,7 +285,7 @@ export default function KaruniaTeamClient({ user }: { user: User | null }) {
               className="t-hero"
               style={{ color: "oklch(97% 0.005 80)", marginBottom: "1rem" }}
             >
-              Karunia Rohani Kamu
+              Karunia Rohani Anda
             </h1>
             <p
               style={{
@@ -297,7 +297,7 @@ export default function KaruniaTeamClient({ user }: { user: User | null }) {
                 margin: 0,
               }}
             >
-              Karunia kamu adalah milik tim. Bagikan hasilnya. Percakapan
+              Karunia Anda adalah milik tim. Bagikan hasilnya. Percakapan
               tentang karunia rohani adalah salah satu percakapan paling
               bermakna yang bisa dilakukan sebuah tim.
             </p>
@@ -637,7 +637,7 @@ export default function KaruniaTeamClient({ user }: { user: User | null }) {
                 marginBottom: "1rem",
               }}
             >
-              Karuniamu adalah milik tim.
+              Karunia Anda adalah milik tim.
             </h2>
             <p
               style={{
@@ -649,7 +649,7 @@ export default function KaruniaTeamClient({ user }: { user: User | null }) {
                 marginBottom: "2rem",
               }}
             >
-              Bagikan hasilmu. Dengarkan hasil orang lain. Biarkan percakapan itu membangun tim yang saling melengkapi.
+              Bagikan hasil Anda. Dengarkan hasil orang lain. Biarkan percakapan itu membangun tim yang saling melengkapi.
             </p>
             <Link
               href="/dashboard?tab=team"
@@ -843,7 +843,7 @@ export default function KaruniaTeamClient({ user }: { user: User | null }) {
                 marginBottom: "1.5rem",
               }}
             >
-              Artinya: karuniamu baru sepenuhnya berfungsi ketika ia berinteraksi
+              Artinya: karunia Anda baru sepenuhnya berfungsi ketika ia berinteraksi
               dengan karunia orang lain. Tim yang memahami hal ini tidak sekadar
               membagi tugas — mereka merancang kolaborasi berdasarkan bagaimana
               Allah telah merancang masing-masing anggotanya.
@@ -1132,7 +1132,7 @@ export default function KaruniaTeamClient({ user }: { user: User | null }) {
               {
                 num: "02",
                 judul: "Sesuaikan tanggung jawab dengan karunia",
-                isi: "Tinjau siapa melakukan apa di tim kamu. Apakah ada orang yang melayani di area yang bertentangan dengan karunianya? Perubahan kecil dalam penempatan bisa menghasilkan buah yang jauh lebih besar.",
+                isi: "Tinjau siapa melakukan apa di tim Anda. Apakah ada orang yang melayani di area yang bertentangan dengan karunianya? Perubahan kecil dalam penempatan bisa menghasilkan buah yang jauh lebih besar.",
               },
               {
                 num: "03",

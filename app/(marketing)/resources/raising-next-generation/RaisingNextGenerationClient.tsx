@@ -29,7 +29,7 @@ const PHASES = [
     en_label: "Invite", id_label: "Undang",
     en_subtitle: "Come with me", id_subtitle: "Ikutlah denganku",
     en: "Paul invited Timothy into his journey (Acts 16:3). He did not advertise a leadership programme — he identified a young person of good character and reputation, and made the invitation personal. The most powerful developmental invitation is not a form to fill in. It is a specific word, spoken to a specific person: 'I see something in you. Come and learn alongside me.'",
-    id: "Paulus mengajak Timotius ikut serta dalam pelayanannya (Kisah 16:3). Dia tidak mengiklankan program kepemimpinan — dia mengidentifikasi orang muda dengan karakter dan reputasi yang baik, dan membuat undangan itu bersifat pribadi. Undangan pengembangan yang paling kuat bukan formulir untuk diisi. Ini adalah kata-kata spesifik, diucapkan kepada orang yang spesifik: 'Saya melihat sesuatu dalam dirimu. Mari belajar bersamaku.'",
+    id: "Paulus mengajak Timotius ikut serta dalam pelayanannya (Kisah 16:3). Dia tidak mengiklankan program kepemimpinan — dia mengidentifikasi orang muda dengan karakter dan reputasi yang baik, dan membuat undangan itu bersifat pribadi. Undangan pengembangan yang paling kuat bukan formulir untuk diisi. Ini adalah kata-kata spesifik, diucapkan kepada orang yang spesifik: 'Saya melihat sesuatu dalam diri Anda. Mari belajar bersamaku.'",
   },
   {
     phaseId: 2,
@@ -41,7 +41,7 @@ const PHASES = [
   {
     phaseId: 3,
     en_label: "Release", id_label: "Lepaskan",
-    en_subtitle: "You go ahead of me", id_subtitle: "Kamu pergi mendahuluiku",
+    en_subtitle: "You go ahead of me", id_subtitle: "Anda pergi mendahului saya",
     en: "The goal of all investment is release. Paul sent Timothy to places he himself could not go. The truest test of a leader-developer is whether they can celebrate someone surpassing them. Release requires letting go of control, credit, and the need to remain central. In many cultures, releasing someone is countercultural — it means giving away what you spent years building. But this is the logic of the Kingdom: the grain of wheat must fall into the ground.",
     id: "Tujuan dari semua investasi adalah pelepasan. Paulus mengutus Timotius ke tempat-tempat yang tidak bisa dia pergi sendiri. Ujian paling sejati dari pengembang pemimpin adalah apakah mereka bisa merayakan seseorang yang melampaui mereka. Pelepasan memerlukan melepaskan kendali, kredit, dan kebutuhan untuk tetap menjadi pusat. Dalam banyak budaya, melepaskan seseorang adalah kontra-budaya — artinya menyerahkan apa yang Anda habiskan bertahun-tahun untuk membangunnya.",
   },
@@ -73,7 +73,7 @@ const PRACTICES = [
   },
   {
     en: "Debrief after experiences — ask 'What did you see? What would you have done differently?' Reflection is the engine of growth.",
-    id: "Evaluasi setelah pengalaman — tanyakan 'Apa yang kamu lihat? Apa yang akan kamu lakukan secara berbeda?' Refleksi adalah mesin pertumbuhan.",
+    id: "Evaluasi setelah pengalaman — tanyakan 'Apa yang Anda lihat? Apa yang akan Anda lakukan secara berbeda?' Refleksi adalah mesin pertumbuhan.",
   },
   {
     en: "Give real responsibility with real support — stretch assignments with a safety net. Not too easy (no growth) and not too hard (no survival).",

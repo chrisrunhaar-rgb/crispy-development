@@ -60,7 +60,7 @@ const ZONES = [
     tagEn: "Feeling safe and in control",
     tagId: "Merasa aman dan terkendali",
     descEn: "The comfort zone is not just laziness. For many cross-cultural leaders, it builds slowly and looks responsible. You stay in the routines you know. You keep to the colleagues you trust. You avoid the conversations that require more language than you have or more risk than feels justified. None of that looks like fear. It looks like wisdom. But over time, the zone contracts. The things you do well become the only things you do. And the capacity for newness quietly atrophies.",
-    descId: "Zona nyaman bukan sekadar kemalasan. Bagi banyak pemimpin lintas budaya, zona ini terbentuk perlahan dan terlihat bertanggung jawab. Kamu tetap pada rutinitas yang kamu kenal. Kamu bergaul dengan rekan kerja yang kamu percaya. Kamu menghindari percakapan yang membutuhkan lebih banyak bahasa dari yang kamu miliki atau lebih banyak risiko dari yang terasa wajar. Tidak ada yang terlihat seperti ketakutan dari itu semua. Terlihat seperti kebijaksanaan. Tetapi seiring waktu, zona itu menyempit. Hal-hal yang kamu kuasai menjadi satu-satunya hal yang kamu lakukan. Dan kapasitas untuk sesuatu yang baru perlahan mengerdil.",
+    descId: "Zona nyaman bukan sekadar kemalasan. Bagi banyak pemimpin lintas budaya, zona ini terbentuk perlahan dan terlihat bertanggung jawab. Anda tetap pada rutinitas yang Anda kenal. Anda bergaul dengan rekan kerja yang Anda percaya. Anda menghindari percakapan yang membutuhkan lebih banyak bahasa dari yang Anda miliki atau lebih banyak risiko dari yang terasa wajar. Tidak ada yang terlihat seperti ketakutan dari itu semua. Terlihat seperti kebijaksanaan. Tetapi seiring waktu, zona itu menyempit. Hal-hal yang Anda kuasai menjadi satu-satunya hal yang Anda lakukan. Dan kapasitas untuk sesuatu yang baru perlahan mengerdil.",
     listEn: ["Operating from routine", "Declining unfamiliar invitations", "Comfortable with predictability, uncomfortable with possibility"],
     listId: ["Beroperasi dari rutinitas", "Menolak undangan yang tidak dikenal", "Nyaman dengan hal yang dapat diprediksi, tidak nyaman dengan kemungkinan baru"],
   },
@@ -75,7 +75,7 @@ const ZONES = [
     tagEn: "Facing challenges outside your usual experience",
     tagId: "Menghadapi tantangan di luar pengalaman biasa",
     descEn: "The fear zone has a specific feeling: the exposure of not knowing. In a cross-cultural context it comes with extra weight. You may be operating in a second language. The social rules may be unfamiliar. What counts as a mistake here, and how a mistake is seen by others, may be different from anything you were trained for. Most leaders do not linger in the fear zone deliberately. But passing through it is unavoidable if anything new is going to be learned. The discomfort here is not a sign you have made a wrong turn. It is the cost of entry into what comes next.",
-    descId: "Zona ketakutan memiliki perasaan yang khas: terekspos karena tidak tahu. Dalam konteks lintas budaya, ini datang dengan beban ekstra. Kamu mungkin beroperasi dalam bahasa kedua. Aturan sosial mungkin tidak familiar. Apa yang dianggap kesalahan di sini, dan bagaimana kesalahan itu dilihat orang lain, mungkin berbeda dari apa pun yang pernah kamu pelajari. Kebanyakan pemimpin tidak tinggal di zona ketakutan dengan sengaja. Tetapi melewatinya tidak bisa dihindari jika ada sesuatu yang baru yang akan dipelajari. Ketidaknyamanan di sini bukan tanda bahwa kamu telah mengambil jalan yang salah. Ini adalah harga yang harus dibayar untuk masuk ke apa yang ada di depan.",
+    descId: "Zona ketakutan memiliki perasaan yang khas: terekspos karena tidak tahu. Dalam konteks lintas budaya, ini datang dengan beban ekstra. Anda mungkin beroperasi dalam bahasa kedua. Aturan sosial mungkin tidak familiar. Apa yang dianggap kesalahan di sini, dan bagaimana kesalahan itu dilihat orang lain, mungkin berbeda dari apa pun yang pernah Anda pelajari. Kebanyakan pemimpin tidak tinggal di zona ketakutan dengan sengaja. Tetapi melewatinya tidak bisa dihindari jika ada sesuatu yang baru yang akan dipelajari. Ketidaknyamanan di sini bukan tanda bahwa Anda telah mengambil jalan yang salah. Ini adalah harga yang harus dibayar untuk masuk ke apa yang ada di depan.",
     listEn: ["Heightened awareness of what others think", "Uncertainty about the social rules", "Temptation to retreat to what is known"],
     listId: ["Sangat peka terhadap pendapat orang lain", "Tidak yakin tentang aturan sosial", "Tergoda untuk kembali ke yang sudah dikenal"],
   },
@@ -90,9 +90,9 @@ const ZONES = [
     tagEn: "Growing through discomfort",
     tagId: "Bertumbuh melalui ketidaknyamanan",
     descEn: "The learning zone is the place where capacity actually increases. It is not comfortable, but it is not the acute anxiety of the fear zone either. It is the sustained discomfort of someone building something new in themselves. In a cross-cultural context this zone often involves specific skills: navigating a different decision-making style, rebuilding trust after a cultural misstep, learning to lead through someone else's cultural framework rather than your own. The feeling of being inadequate here is temporary. The capacity being built is not.",
-    descId: "Zona pembelajaran adalah tempat di mana kapasitas sebenarnya meningkat. Ini tidak nyaman, tetapi bukan kecemasan akut dari zona ketakutan juga. Ini adalah ketidaknyamanan berkelanjutan dari seseorang yang membangun sesuatu yang baru dalam diri mereka. Dalam konteks lintas budaya, zona ini sering melibatkan keterampilan spesifik: menavigasi gaya pengambilan keputusan yang berbeda, membangun kembali kepercayaan setelah kesalahan budaya, belajar memimpin melalui kerangka budaya orang lain daripada milikmu sendiri. Perasaan tidak mampu di sini bersifat sementara. Kapasitas yang sedang dibangun tidak.",
+    descId: "Zona pembelajaran adalah tempat di mana kapasitas sebenarnya meningkat. Ini tidak nyaman, tetapi bukan kecemasan akut dari zona ketakutan juga. Ini adalah ketidaknyamanan berkelanjutan dari seseorang yang membangun sesuatu yang baru dalam diri mereka. Dalam konteks lintas budaya, zona ini sering melibatkan keterampilan spesifik: menavigasi gaya pengambilan keputusan yang berbeda, membangun kembali kepercayaan setelah kesalahan budaya, belajar memimpin melalui kerangka budaya orang lain daripada milik Anda sendiri. Perasaan tidak mampu di sini bersifat sementara. Kapasitas yang sedang dibangun tidak.",
     listEn: ["Trying approaches that feel unnatural", "Receiving feedback that challenges your assumptions", "Noticing yourself adapting rather than avoiding"],
-    listId: ["Mencoba pendekatan yang terasa tidak alami", "Menerima umpan balik yang mengubah cara pandangmu", "Memperhatikan dirimu beradaptasi, bukan menghindari"],
+    listId: ["Mencoba pendekatan yang terasa tidak alami", "Menerima umpan balik yang mengubah cara pandang Anda", "Memperhatikan diri Anda beradaptasi, bukan menghindari"],
   },
   {
     key: "growth",
@@ -105,9 +105,9 @@ const ZONES = [
     tagEn: "Living with purpose and clear vision",
     tagId: "Hidup dengan tujuan dan visi yang jelas",
     descEn: "The growth zone is not the absence of difficulty. It is the place where the difficulty has stopped defining you. Leaders who reach this zone often describe it as a shift in what feels normal: things that used to require courage now feel like ordinary competence.⁵ The comfort zone has expanded. What was once foreign has become familiar. In a cross-cultural setting this is not a permanent destination. New contexts, new seasons, new roles will bring you back through the other zones. But once you have done the work in a zone, you know the terrain. You know you have crossed it before. That knowledge changes how you approach the next threshold.",
-    descId: "Zona pertumbuhan bukan ketiadaan kesulitan. Ini adalah tempat di mana kesulitan telah berhenti mendefinisikanmu. Para pemimpin yang mencapai zona ini sering menggambarkannya sebagai pergeseran dalam apa yang terasa normal: hal-hal yang dulu membutuhkan keberanian kini terasa seperti kompetensi biasa. Zona nyaman telah berkembang. Yang dulu asing kini terasa familiar. Dalam konteks lintas budaya, ini bukan tujuan permanen. Konteks baru, musim baru, peran baru akan membawamu kembali melalui zona lain. Tetapi setelah kamu melakukan pekerjaan di suatu zona, kamu tahu medannya. Kamu tahu kamu pernah melewatinya sebelumnya. Pengetahuan itu mengubah cara kamu mendekati ambang berikutnya.",
+    descId: "Zona pertumbuhan bukan ketiadaan kesulitan. Ini adalah tempat di mana kesulitan telah berhenti mendefinisikan Anda. Para pemimpin yang mencapai zona ini sering menggambarkannya sebagai pergeseran dalam apa yang terasa normal: hal-hal yang dulu membutuhkan keberanian kini terasa seperti kompetensi biasa. Zona nyaman telah berkembang. Yang dulu asing kini terasa familiar. Dalam konteks lintas budaya, ini bukan tujuan permanen. Konteks baru, musim baru, peran baru akan membawa Anda kembali melalui zona lain. Tetapi setelah Anda melakukan pekerjaan di suatu zona, Anda tahu medannya. Anda tahu Anda pernah melewatinya sebelumnya. Pengetahuan itu mengubah cara Anda mendekati ambang berikutnya.",
     listEn: ["Operating with flexibility across cultural contexts", "Taking on challenges that were previously avoided", "Coaching others through zones you have already passed through"],
-    listId: ["Beroperasi dengan fleksibilitas di berbagai konteks budaya", "Mengambil tantangan yang sebelumnya dihindari", "Melatih orang lain melewati zona yang sudah kamu lewati"],
+    listId: ["Beroperasi dengan fleksibilitas di berbagai konteks budaya", "Mengambil tantangan yang sebelumnya dihindari", "Melatih orang lain melewati zona yang sudah Anda lewati"],
   },
 ];
 
@@ -148,37 +148,37 @@ const QUESTIONS = [
   {
     num: "01",
     en: "What is one thing in your current leadership context that you keep finding reasons not to do: a conversation you have been avoiding, an initiative you have not started, a relationship you have not invested in? What makes it feel unsafe to try?",
-    id: "Apa satu hal dalam konteks kepemimpinan kamu saat ini yang terus kamu temukan alasan untuk tidak melakukannya: percakapan yang telah kamu hindari, inisiatif yang belum kamu mulai, hubungan yang belum kamu investasikan? Apa yang membuatnya terasa tidak aman untuk dicoba?",
+    id: "Apa satu hal dalam konteks kepemimpinan Anda saat ini yang terus Anda temukan alasan untuk tidak melakukannya: percakapan yang telah Anda hindari, inisiatif yang belum Anda mulai, hubungan yang belum Anda investasikan? Apa yang membuatnya terasa tidak aman untuk dicoba?",
   },
   {
     num: "02a",
     en: "What specific fear is most active here? Is it a fear of failure, of how others will see you, of losing something you currently have, or something else?",
-    id: "Ketakutan spesifik apa yang paling aktif di sini? Apakah itu ketakutan akan kegagalan, tentang bagaimana orang lain akan melihat kamu, kehilangan sesuatu yang saat ini kamu miliki, atau sesuatu yang lain?",
+    id: "Ketakutan spesifik apa yang paling aktif di sini? Apakah itu ketakutan akan kegagalan, tentang bagaimana orang lain akan melihat Anda, kehilangan sesuatu yang saat ini Anda miliki, atau sesuatu yang lain?",
   },
   {
     num: "02b",
     en: "What is the worst realistic outcome if you tried this and it did not go well? How likely is that, really? And if you survived that outcome, what would you know then that you do not know now?",
-    id: "Apa hasil terburuk yang realistis jika kamu mencoba ini dan tidak berjalan dengan baik? Seberapa mungkin itu, sebenarnya? Dan jika kamu bertahan dari hasil itu, apa yang akan kamu ketahui saat itu yang tidak kamu ketahui sekarang?",
+    id: "Apa hasil terburuk yang realistis jika Anda mencoba ini dan tidak berjalan dengan baik? Seberapa mungkin itu, sebenarnya? Dan jika Anda bertahan dari hasil itu, apa yang akan Anda ketahui saat itu yang tidak Anda ketahui sekarang?",
   },
   {
     num: "03",
     en: "What are you missing out on by staying where you are? Consider not just experiences and skills, but also: the team members who are not being led into their growth because you are not modelling it. The relationships across cultural lines that are not forming. The impact that is not happening.",
-    id: "Apa yang kamu lewatkan dengan tetap di tempat kamu sekarang? Pertimbangkan bukan hanya pengalaman dan keterampilan, tetapi juga: anggota tim yang tidak dipimpin menuju pertumbuhan mereka karena kamu tidak mencontohkannya. Hubungan lintas budaya yang tidak terbentuk. Dampak yang tidak terjadi.",
+    id: "Apa yang Anda lewatkan dengan tetap di tempat Anda sekarang? Pertimbangkan bukan hanya pengalaman dan keterampilan, tetapi juga: anggota tim yang tidak dipimpin menuju pertumbuhan mereka karena Anda tidak mencontohkannya. Hubungan lintas budaya yang tidak terbentuk. Dampak yang tidak terjadi.",
   },
   {
     num: "04",
     en: "If you moved through the fear zone and spent real time in the learning zone over the next six months: what would be different? Not just for you personally, but for the people you lead and serve. What capacity would you have that you currently lack? What would become possible for your team, your community, or your organisation?",
-    id: "Jika kamu melewati zona ketakutan dan menghabiskan waktu nyata di zona pembelajaran selama enam bulan ke depan: apa yang akan berbeda? Bukan hanya untuk kamu secara pribadi, tetapi untuk orang-orang yang kamu pimpin dan layani. Kapasitas apa yang akan kamu miliki yang saat ini tidak kamu miliki? Apa yang akan menjadi mungkin untuk tim kamu, komunitas kamu, atau organisasi kamu?",
+    id: "Jika Anda melewati zona ketakutan dan menghabiskan waktu nyata di zona pembelajaran selama enam bulan ke depan: apa yang akan berbeda? Bukan hanya untuk Anda secara pribadi, tetapi untuk orang-orang yang Anda pimpin dan layani. Kapasitas apa yang akan Anda miliki yang saat ini tidak Anda miliki? Apa yang akan menjadi mungkin untuk tim Anda, komunitas Anda, atau organisasi Anda?",
   },
   {
     num: "05",
     en: "What is the smallest step you could take this week that would move you from the comfort zone into the learning zone? Not the full thing. Just the first step. What would that be? Who could you tell about it before this week is over?",
-    id: "Apa langkah terkecil yang bisa kamu ambil minggu ini yang akan memindahkan kamu dari zona nyaman ke zona pembelajaran? Bukan keseluruhan hal. Hanya langkah pertama. Apa itu? Kepada siapa kamu bisa menceritakannya sebelum minggu ini berakhir?",
+    id: "Apa langkah terkecil yang bisa Anda ambil minggu ini yang akan memindahkan Anda dari zona nyaman ke zona pembelajaran? Bukan keseluruhan hal. Hanya langkah pertama. Apa itu? Kepada siapa Anda bisa menceritakannya sebelum minggu ini berakhir?",
   },
   {
     num: "06",
     en: "Is there a specific prayer, Scripture, or conviction that belongs to this area of growth: something God has already spoken to you about this, or a verse that has stayed with you? What would it mean to take that more seriously than the resistance you feel?",
-    id: "Apakah ada doa, Kitab Suci, atau keyakinan tertentu yang berkaitan dengan area pertumbuhan ini: sesuatu yang sudah Tuhan bicarakan kepadamu tentang ini, atau ayat yang tetap bersamamu? Apa artinya mengambil itu lebih serius daripada perlawanan yang kamu rasakan?",
+    id: "Apakah ada doa, Kitab Suci, atau keyakinan tertentu yang berkaitan dengan area pertumbuhan ini: sesuatu yang sudah Tuhan bicarakan kepada Anda tentang ini, atau ayat yang tetap bersama Anda? Apa artinya mengambil itu lebih serius daripada perlawanan yang Anda rasakan?",
     optional: true,
   },
 ];
@@ -187,11 +187,11 @@ const QUESTIONS = [
 const TAKEAWAYS = [
   {
     en: "The comfort zone forms slowly and often looks like wisdom. Knowing your zone accurately is the first act of leadership.",
-    id: "Zona nyaman terbentuk perlahan dan sering terlihat seperti kebijaksanaan. Mengetahui zona kamu secara akurat adalah tindakan kepemimpinan pertama.",
+    id: "Zona nyaman terbentuk perlahan dan sering terlihat seperti kebijaksanaan. Mengetahui zona Anda secara akurat adalah tindakan kepemimpinan pertama.",
   },
   {
     en: "The Fear Zone is not the enemy of growth. It is the doorway. The signal of discomfort means you are at the threshold, not that you have gone too far.",
-    id: "Zona Ketakutan bukan musuh pertumbuhan, melainkan pintunya. Sinyal ketidaknyamanan berarti kamu berada di ambang, bukan bahwa kamu telah pergi terlalu jauh.",
+    id: "Zona Ketakutan bukan musuh pertumbuhan, melainkan pintunya. Sinyal ketidaknyamanan berarti Anda berada di ambang, bukan bahwa Anda telah pergi terlalu jauh.",
   },
   {
     en: "For cross-cultural leaders, comfort zone disruption is layered: behavioral, relational, and identity-level simultaneously.⁴ 'Who am I here?' is the deeper question.",
@@ -199,7 +199,7 @@ const TAKEAWAYS = [
   },
   {
     en: "Growth does not require that you never feel afraid. It requires that you act from trust rather than from the absence of fear.",
-    id: "Pertumbuhan tidak mengharuskan kamu tidak pernah merasa takut. Ini mengharuskan kamu bertindak dari kepercayaan, bukan dari ketiadaan rasa takut.",
+    id: "Pertumbuhan tidak mengharuskan Anda tidak pernah merasa takut. Ini mengharuskan Anda bertindak dari kepercayaan, bukan dari ketiadaan rasa takut.",
   },
 ];
 
@@ -273,19 +273,19 @@ export default function ComfortZoneClient({
   const zoneResultText = {
     comfort: {
       en: "Based on your responses, you appear to be spending most of your time in the Comfort Zone right now. The routines you rely on may be working, but it may also be time to ask what is being kept safe at the cost of what is possible.",
-      id: "Berdasarkan jawabanmu, kamu tampaknya menghabiskan sebagian besar waktumu di Zona Nyaman saat ini. Rutinitas yang kamu andalkan mungkin berhasil, tetapi mungkin sudah waktunya untuk bertanya apa yang dijaga aman dengan mengorbankan apa yang mungkin terjadi.",
+      id: "Berdasarkan jawaban Anda, Anda tampaknya menghabiskan sebagian besar waktu Anda di Zona Nyaman saat ini. Rutinitas yang Anda andalkan mungkin berhasil, tetapi mungkin sudah waktunya untuk bertanya apa yang dijaga aman dengan mengorbankan apa yang mungkin terjadi.",
     },
     fear: {
       en: "Based on your responses, you appear to be spending most of your time in the Fear Zone right now. You are aware of something you need to do and are holding back. That awareness is important. The threshold you are standing at is real, and so is what is on the other side.",
-      id: "Berdasarkan jawabanmu, kamu tampaknya menghabiskan sebagian besar waktumu di Zona Ketakutan saat ini. Kamu sadar ada sesuatu yang perlu kamu lakukan dan kamu menahan diri. Kesadaran itu penting. Ambang yang kamu berdiri di atasnya itu nyata, dan begitu juga apa yang ada di sisi lain.",
+      id: "Berdasarkan jawaban Anda, Anda tampaknya menghabiskan sebagian besar waktu Anda di Zona Ketakutan saat ini. Anda sadar ada sesuatu yang perlu Anda lakukan dan Anda menahan diri. Kesadaran itu penting. Ambang yang Anda berdiri di atasnya itu nyata, dan begitu juga apa yang ada di sisi lain.",
     },
     learning: {
       en: "Based on your responses, you appear to be spending most of your time in the Learning Zone right now. You are in the middle of growth that has not finished yet. The discomfort you feel is not a sign of failure. It is a sign you are in exactly the right place.",
-      id: "Berdasarkan jawabanmu, kamu tampaknya menghabiskan sebagian besar waktumu di Zona Pembelajaran saat ini. Kamu sedang berada di tengah pertumbuhan yang belum selesai. Ketidaknyamanan yang kamu rasakan bukan tanda kegagalan. Ini adalah tanda bahwa kamu berada tepat di tempat yang benar.",
+      id: "Berdasarkan jawaban Anda, Anda tampaknya menghabiskan sebagian besar waktu Anda di Zona Pembelajaran saat ini. Anda sedang berada di tengah pertumbuhan yang belum selesai. Ketidaknyamanan yang Anda rasakan bukan tanda kegagalan. Ini adalah tanda bahwa Anda berada tepat di tempat yang benar.",
     },
     growth: {
       en: "Based on your responses, you appear to be spending most of your time in the Growth Zone right now. What once required courage now feels like ordinary competence. The question worth sitting with: what is the next threshold? Where is the next edge?",
-      id: "Berdasarkan jawabanmu, kamu tampaknya menghabiskan sebagian besar waktumu di Zona Pertumbuhan saat ini. Apa yang dulu membutuhkan keberanian kini terasa seperti kompetensi biasa. Pertanyaan yang layak direnungkan: apa ambang berikutnya? Di mana tepi berikutnya?",
+      id: "Berdasarkan jawaban Anda, Anda tampaknya menghabiskan sebagian besar waktu Anda di Zona Pertumbuhan saat ini. Apa yang dulu membutuhkan keberanian kini terasa seperti kompetensi biasa. Pertanyaan yang layak direnungkan: apa ambang berikutnya? Di mana tepi berikutnya?",
     },
   };
 
@@ -315,14 +315,14 @@ export default function ComfortZoneClient({
           <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontStyle: "italic", fontSize: "clamp(17px, 2.2vw, 22px)", color: "oklch(82% 0.03 260)", lineHeight: 1.6, maxWidth: 580, marginBottom: "1.5rem", marginTop: 0 }}>
             {t(
               "Use this worksheet to name your zone, face your fear, and find your path forward.",
-              "Gunakan lembar kerja ini untuk mengungkapkan zonamu, menghadapi ketakutanmu, dan menemukan jalan ke depan.",
+              "Gunakan lembar kerja ini untuk mengungkapkan zona Anda, menghadapi ketakutan Anda, dan menemukan jalan ke depan.",
               lang
             )}
           </p>
           <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(16px, 2vw, 19px)", lineHeight: 1.65, color: "oklch(78% 0.04 260)", maxWidth: 580, margin: "0 0 40px" }}>
             {t(
               "Most leaders know what they should do next. They also know exactly why it feels easier not to. This module maps the space between where you are and where growth is waiting, and helps you take the first step across.",
-              "Kebanyakan pemimpin tahu apa yang harus mereka lakukan selanjutnya. Mereka juga tahu persis mengapa rasanya lebih mudah untuk tidak melakukannya. Modul ini memetakan ruang antara di mana kamu berada dan di mana pertumbuhan menunggu, dan membantu kamu mengambil langkah pertama.",
+              "Kebanyakan pemimpin tahu apa yang harus mereka lakukan selanjutnya. Mereka juga tahu persis mengapa rasanya lebih mudah untuk tidak melakukannya. Modul ini memetakan ruang antara di mana Anda berada dan di mana pertumbuhan menunggu, dan membantu Anda mengambil langkah pertama.",
               lang
             )}
           </p>
@@ -331,7 +331,7 @@ export default function ComfortZoneClient({
             saved ? (
               <Link href="/dashboard" style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.875rem", fontWeight: 700, letterSpacing: "0.06em", color: "oklch(72% 0.14 145)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.375rem" }}>
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><path d="M3 2h10a1 1 0 011 1v11l-6-3-6 3V3a1 1 0 011-1z"/></svg>
-                {t("In your dashboard", "Di dashboard kamu", lang)}
+                {t("In your dashboard", "Di dashboard Anda", lang)}
               </Link>
             ) : (
               <button
@@ -365,7 +365,7 @@ export default function ComfortZoneClient({
               <p style={bodyStyle()}>
                 {t(
                   "Most of us have a working theory about where we are stuck. This exercise asks you to test that theory. It maps the four zones between safety and growth,¹ helps you locate where you actually are right now, and gives you questions to work through: alone, with a coach, or in a peer group. The discomfort you feel around a particular next step is not a warning to stop. It is usually a marker that you are close to where the growth is.",
-                  "Sebagian besar dari kita memiliki teori kerja tentang di mana kita terjebak. Latihan ini mengajak kamu untuk menguji teori itu. Ini memetakan empat zona antara keamanan dan pertumbuhan, membantu kamu menemukan di mana kamu sebenarnya berada sekarang, dan memberikan pertanyaan untuk dikerjakan: sendiri, dengan pelatih, atau dalam kelompok teman sebaya. Ketidaknyamanan yang kamu rasakan tentang langkah berikutnya tertentu bukan peringatan untuk berhenti. Biasanya itu adalah penanda bahwa kamu dekat dengan tempat pertumbuhannya.",
+                  "Sebagian besar dari kita memiliki teori kerja tentang di mana kita terjebak. Latihan ini mengajak Anda untuk menguji teori itu. Ini memetakan empat zona antara keamanan dan pertumbuhan, membantu Anda menemukan di mana Anda sebenarnya berada sekarang, dan memberikan pertanyaan untuk dikerjakan: sendiri, dengan pelatih, atau dalam kelompok teman sebaya. Ketidaknyamanan yang Anda rasakan tentang langkah berikutnya tertentu bukan peringatan untuk berhenti. Biasanya itu adalah penanda bahwa Anda dekat dengan tempat pertumbuhannya.",
                   lang
                 )}
               </p>
@@ -446,35 +446,35 @@ export default function ComfortZoneClient({
           <p style={bodyStyle()}>
             {t(
               "You have learned which situations to navigate carefully and which to avoid. You have learned who in the community will engage and who will not. You have developed functional relationships, a workable language, a reliable routine. From the outside, this looks like competence. From the inside, it can begin to feel like a lid.",
-              "Kamu telah mempelajari situasi mana yang harus dinavigasi dengan hati-hati dan mana yang harus dihindari. Kamu telah belajar siapa di komunitas yang akan terlibat dan siapa yang tidak. Kamu telah mengembangkan hubungan fungsional, bahasa yang bisa digunakan, rutinitas yang dapat diandalkan. Dari luar, ini terlihat seperti kompetensi. Dari dalam, ini bisa mulai terasa seperti tutup.",
+              "Anda telah mempelajari situasi mana yang harus dinavigasi dengan hati-hati dan mana yang harus dihindari. Anda telah belajar siapa di komunitas yang akan terlibat dan siapa yang tidak. Anda telah mengembangkan hubungan fungsional, bahasa yang bisa digunakan, rutinitas yang dapat diandalkan. Dari luar, ini terlihat seperti kompetensi. Dari dalam, ini bisa mulai terasa seperti tutup.",
               lang
             )}
           </p>
           <p style={bodyStyle()}>
             {t(
               "The cross-cultural comfort zone often forms precisely because crossing into the fear zone carries real cost here. Getting something wrong in a high-context culture is not a small social misstep. It can damage trust that took years to build. Stepping into an unfamiliar leadership situation when you are already navigating language and cultural complexity is genuinely harder than doing the same thing in a familiar setting. The caution is rational.²",
-              "Zona nyaman lintas budaya sering terbentuk justru karena memasuki zona ketakutan membawa pengorbanan nyata di sini. Melakukan kesalahan dalam budaya konteks tinggi bukan sekadar kesalahan sosial kecil. Ini dapat merusak kepercayaan yang membutuhkan bertahun-tahun untuk dibangun. Memasuki situasi kepemimpinan yang tidak familiar ketika kamu sudah menavigasi kompleksitas bahasa dan budaya jauh lebih sulit daripada melakukan hal yang sama dalam lingkungan yang familiar. Kehati-hatian itu masuk akal.",
+              "Zona nyaman lintas budaya sering terbentuk justru karena memasuki zona ketakutan membawa pengorbanan nyata di sini. Melakukan kesalahan dalam budaya konteks tinggi bukan sekadar kesalahan sosial kecil. Ini dapat merusak kepercayaan yang membutuhkan bertahun-tahun untuk dibangun. Memasuki situasi kepemimpinan yang tidak familiar ketika Anda sudah menavigasi kompleksitas bahasa dan budaya jauh lebih sulit daripada melakukan hal yang sama dalam lingkungan yang familiar. Kehati-hatian itu masuk akal.",
               lang
             )}
           </p>
           <p style={bodyStyle()}>
             {t(
               "But the zone shrinks if you never push its edges.",
-              "Tetapi zona itu menyempit jika kamu tidak pernah mendorong batas-batasnya.",
+              "Tetapi zona itu menyempit jika Anda tidak pernah mendorong batas-batasnya.",
               lang
             )}
           </p>
           <p style={bodyStyle()}>
             {t(
               "There is also a version of this that builds in expat communities: comfort found entirely within a circle of people who share your background, language, and assumptions. Nothing is wrong with that belonging. But if the boundary of that circle becomes the boundary of your world, something has been lost.",
-              "Ada juga versi ini yang terbentuk dalam komunitas ekspatriat: kenyamanan yang ditemukan sepenuhnya dalam lingkaran orang-orang yang berbagi latar belakang, bahasa, dan asumsi kamu. Tidak ada yang salah dengan rasa memiliki itu. Tetapi jika batas lingkaran itu menjadi batas duniamu, ada sesuatu yang hilang.",
+              "Ada juga versi ini yang terbentuk dalam komunitas ekspatriat: kenyamanan yang ditemukan sepenuhnya dalam lingkaran orang-orang yang berbagi latar belakang, bahasa, dan asumsi Anda. Tidak ada yang salah dengan rasa memiliki itu. Tetapi jika batas lingkaran itu menjadi batas dunia Anda, ada sesuatu yang hilang.",
               lang
             )}
           </p>
           <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(20px, 2.5vw, 28px)", fontStyle: "italic", color: NAVY, lineHeight: 1.5, marginBottom: 0, marginTop: "1.5rem" }}>
             {t(
               "\"This module is an invitation to look honestly at where your actual boundary currently sits: not where you think it should be, or where it used to be. Where is it now?\"",
-              "\"Modul ini adalah undangan untuk melihat dengan jujur di mana batas aktual kamu saat ini berada: bukan di mana menurutmu seharusnya, atau di mana dulu. Di mana sekarang?\"",
+              "\"Modul ini adalah undangan untuk melihat dengan jujur di mana batas aktual Anda saat ini berada: bukan di mana menurut Anda seharusnya, atau di mana dulu. Di mana sekarang?\"",
               lang
             )}
           </p>
@@ -491,7 +491,7 @@ export default function ComfortZoneClient({
           <p style={{ ...bodyStyle(), paddingInline: "1.5rem" }}>
             {t(
               "Notice how the comfort and fear zones are the smallest. Staying inside keeps your future small. But the growth zone still encompasses the fear and comfort zones. Even as you grow, you will still experience fears. It's just that your comfort zone expands as you spend more time in the learning and growth zones.³",
-              "Perhatikan bagaimana zona nyaman dan ketakutan adalah yang terkecil. Tetap di dalamnya membuat masa depanmu menjadi kecil. Namun zona pertumbuhan masih mencakup zona ketakutan dan kenyamanan. Bahkan saat kamu bertumbuh, kamu masih akan mengalami ketakutan. Hanya saja zona nyamanmu berkembang seiring semakin banyak waktu yang kamu habiskan di zona pembelajaran dan pertumbuhan.",
+              "Perhatikan bagaimana zona nyaman dan ketakutan adalah yang terkecil. Tetap di dalamnya membuat masa depan Anda menjadi kecil. Namun zona pertumbuhan masih mencakup zona ketakutan dan kenyamanan. Bahkan saat Anda bertumbuh, Anda masih akan mengalami ketakutan. Hanya saja zona nyaman Anda berkembang seiring semakin banyak waktu yang Anda habiskan di zona pembelajaran dan pertumbuhan.",
               lang
             )}
           </p>
@@ -501,12 +501,12 @@ export default function ComfortZoneClient({
       {/* ── ZONE LOCATOR ── */}
       <section style={{ background: OFF_WHITE, ...sectionPadding }}>
         <div style={containerStyle}>
-          <p style={eyebrowStyle}>{t("WHERE ARE YOU RIGHT NOW?", "DI MANA KAMU SEKARANG?", lang)}</p>
-          <h2 style={h2Style()}>{t("Locate yourself on the map.", "Temukan posisimu di peta.", lang)}</h2>
+          <p style={eyebrowStyle}>{t("WHERE ARE YOU RIGHT NOW?", "DI MANA ANDA SEKARANG?", lang)}</p>
+          <h2 style={h2Style()}>{t("Locate yourself on the map.", "Temukan posisi Anda di peta.", lang)}</h2>
           <p style={bodyStyle()}>
             {t(
               "Read each statement. Mark the ones that feel most true for you right now, not how you'd like to be, but how you actually are.",
-              "Baca setiap pernyataan. Tandai yang paling terasa benar untukmu saat ini, bukan seperti yang ingin kamu jadikan dirimu, tapi seperti yang sebenarnya.",
+              "Baca setiap pernyataan. Tandai yang paling terasa benar untuk Anda saat ini, bukan seperti yang ingin Anda jadikan diri Anda, tapi seperti yang sebenarnya.",
               lang
             )}
           </p>
@@ -549,7 +549,7 @@ export default function ComfortZoneClient({
             <div role="region" aria-live="polite" style={{ background: NAVY, borderRadius: 8, padding: "2rem" }}>
               <p style={eyebrowStyle}>{t("YOUR RESULT", "HASILMU", lang)}</p>
               <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "1rem", lineHeight: 1.8, color: OFF_WHITE, margin: 0 }}>
-                {locatorResult ? t(zoneResultText[locatorResult].en, zoneResultText[locatorResult].id, lang) : t("You have a spread across multiple zones, which is common. Read each zone description and notice where you feel the most recognition.", "Jawabanmu tersebar di beberapa zona, yang merupakan hal yang umum. Baca setiap deskripsi zona dan perhatikan di mana kamu paling merasa dikenali.", lang)}
+                {locatorResult ? t(zoneResultText[locatorResult].en, zoneResultText[locatorResult].id, lang) : t("You have a spread across multiple zones, which is common. Read each zone description and notice where you feel the most recognition.", "Jawaban Anda tersebar di beberapa zona, yang merupakan hal yang umum. Baca setiap deskripsi zona dan perhatikan di mana Anda paling merasa dikenali.", lang)}
               </p>
             </div>
           )}
@@ -567,7 +567,7 @@ export default function ComfortZoneClient({
           <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.9375rem", color: "oklch(65% 0.04 260)", marginBottom: "2.5rem", maxWidth: "52ch", lineHeight: 1.7 }}>
             {t(
               "Work through these questions in a journal, with a coach, or in your peer group. Each question has a space for you to write privately. Your notes stay on your device.",
-              "Kerjakan pertanyaan-pertanyaan ini dalam jurnal, bersama pelatih, atau dalam kelompok teman sebaya. Setiap pertanyaan memiliki ruang untuk kamu menulis secara pribadi. Catatanmu tetap di perangkatmu.",
+              "Kerjakan pertanyaan-pertanyaan ini dalam jurnal, bersama pelatih, atau dalam kelompok teman sebaya. Setiap pertanyaan memiliki ruang untuk Anda menulis secara pribadi. Catatan Anda tetap di perangkat Anda.",
               lang
             )}
           </p>
@@ -624,7 +624,7 @@ export default function ComfortZoneClient({
             <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.9375rem", color: "oklch(65% 0.04 260)", marginBottom: "1.5rem", maxWidth: "52ch", lineHeight: 1.7 }}>
               {t(
                 "Based on your zone locator result and the answers you've written above, get a personal word of encouragement to help you take your next step.",
-                "Berdasarkan hasil pelacak zona dan jawaban yang telah kamu tulis di atas, dapatkan kata-kata dorongan pribadi untuk membantumu mengambil langkah berikutnya.",
+                "Berdasarkan hasil pelacak zona dan jawaban yang telah Anda tulis di atas, dapatkan kata-kata dorongan pribadi untuk membantu Anda mengambil langkah berikutnya.",
                 lang
               )}
             </p>
@@ -633,10 +633,10 @@ export default function ComfortZoneClient({
               <div style={{ background: "oklch(28% 0.10 260)", borderRadius: 6, padding: "1rem 1.5rem" }}>
                 <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.875rem", color: "oklch(60% 0.04 260)", margin: 0, lineHeight: 1.7 }}>
                   {!locatorDone && answeredReflections === 0
-                    ? t("Complete the zone locator above and answer at least one reflection question to unlock your encouragement.", "Selesaikan pelacak zona di atas dan jawab setidaknya satu pertanyaan refleksi untuk membuka doronganmu.", lang)
+                    ? t("Complete the zone locator above and answer at least one reflection question to unlock your encouragement.", "Selesaikan pelacak zona di atas dan jawab setidaknya satu pertanyaan refleksi untuk membuka dorongan Anda.", lang)
                     : !locatorDone
-                      ? t("Complete the zone locator above to unlock your encouragement.", "Selesaikan pelacak zona di atas untuk membuka doronganmu.", lang)
-                      : t("Answer at least one reflection question above to unlock your encouragement.", "Jawab setidaknya satu pertanyaan refleksi di atas untuk membuka doronganmu.", lang)
+                      ? t("Complete the zone locator above to unlock your encouragement.", "Selesaikan pelacak zona di atas untuk membuka dorongan Anda.", lang)
+                      : t("Answer at least one reflection question above to unlock your encouragement.", "Jawab setidaknya satu pertanyaan refleksi di atas untuk membuka dorongan Anda.", lang)
                   }
                 </p>
               </div>
@@ -846,28 +846,28 @@ export default function ComfortZoneClient({
               <p style={bodyStyle(true)}>
                 {t(
                   "You have just mapped where your comfort zone sits. That is useful information. But information without action tends to fade.",
-                  "Kamu baru saja memetakan di mana zona nyamanmu berada. Itu adalah informasi yang berguna. Tetapi informasi tanpa tindakan cenderung memudar.",
+                  "Anda baru saja memetakan di mana zona nyaman Anda berada. Itu adalah informasi yang berguna. Tetapi informasi tanpa tindakan cenderung memudar.",
                   lang
                 )}
               </p>
               <p style={bodyStyle(true)}>
                 {t(
                   "Pick one item from your answer to Question 01: the thing you would like to do but have been avoiding. Not the biggest thing. Not the one that requires the most courage. The one that is closest to the edge of your current zone.",
-                  "Pilih satu item dari jawabanmu untuk Pertanyaan 01: hal yang ingin kamu lakukan tetapi telah kamu hindari. Bukan hal terbesar. Bukan yang membutuhkan keberanian paling banyak. Yang paling dekat dengan tepi zona kamu saat ini.",
+                  "Pilih satu item dari jawaban Anda untuk Pertanyaan 01: hal yang ingin Anda lakukan tetapi telah Anda hindari. Bukan hal terbesar. Bukan yang membutuhkan keberanian paling banyak. Yang paling dekat dengan tepi zona Anda saat ini.",
                   lang
                 )}
               </p>
               <p style={bodyStyle(true)}>
                 {t(
                   "Tell one person about it. Not to create accountability in the performance sense, but to give the thought a landing place outside your own head. That act of naming it, out loud, to someone who knows you, is itself a step into the learning zone.",
-                  "Ceritakan kepada satu orang. Bukan untuk menciptakan akuntabilitas dalam pengertian kinerja, tetapi untuk memberi pikiran itu tempat berlabuh di luar kepalamu sendiri. Tindakan mengungkapkannya secara terbuka kepada seseorang yang mengenalmu, itu sendiri sudah merupakan langkah ke zona pembelajaran.",
+                  "Ceritakan kepada satu orang. Bukan untuk menciptakan akuntabilitas dalam pengertian kinerja, tetapi untuk memberi pikiran itu tempat berlabuh di luar kepala Anda sendiri. Tindakan mengungkapkannya secara terbuka kepada seseorang yang mengenal Anda, itu sendiri sudah merupakan langkah ke zona pembelajaran.",
                   lang
                 )}
               </p>
               <p style={bodyStyle(true)}>
                 {t(
                   "If you have a peer group, a team meeting, or a coaching session this week, bring your answer to Question 04. Ask them what they see that you might be missing. The people around you often have a clearer view of where you are stuck than you do.",
-                  "Jika kamu memiliki kelompok teman sebaya, pertemuan tim, atau sesi pelatihan minggu ini, bawa jawabanmu untuk Pertanyaan 04. Tanyakan kepada mereka apa yang mereka lihat yang mungkin kamu lewatkan. Orang-orang di sekitarmu sering memiliki pandangan yang lebih jelas tentang di mana kamu terjebak daripada kamu sendiri.",
+                  "Jika Anda memiliki kelompok teman sebaya, pertemuan tim, atau sesi pelatihan minggu ini, bawa jawaban Anda untuk Pertanyaan 04. Tanyakan kepada mereka apa yang mereka lihat yang mungkin Anda lewatkan. Orang-orang di sekitar Anda sering memiliki pandangan yang lebih jelas tentang di mana Anda terjebak daripada Anda sendiri.",
                   lang
                 )}
               </p>
@@ -880,7 +880,7 @@ export default function ComfortZoneClient({
                 <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "1.375rem", fontStyle: "italic", color: "oklch(78% 0.04 260)", lineHeight: 1.5, marginBottom: "1.25rem", marginTop: 0 }}>
                   {t(
                     "\"Growth does not require that you never feel afraid. It requires that you act from trust rather than from the absence of fear.\"",
-                    "\"Pertumbuhan tidak mengharuskan kamu tidak pernah merasa takut. Ini mengharuskan kamu bertindak dari kepercayaan, bukan dari ketiadaan rasa takut.\"",
+                    "\"Pertumbuhan tidak mengharuskan Anda tidak pernah merasa takut. Ini mengharuskan Anda bertindak dari kepercayaan, bukan dari ketiadaan rasa takut.\"",
                     lang
                   )}
                 </p>

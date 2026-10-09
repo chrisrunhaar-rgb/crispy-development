@@ -53,14 +53,14 @@ const DISGUISES: Record<DisguiseKey, DisguiseData> = {
     color: "oklch(42% 0.14 260)",
     intro: {
       en: "Avoidance is a protection strategy. It works in the short term: when the emotional cost of risking failure feels higher than the cost of not trying, the rational move is to not try. The problem compounds. The longer you wait, the more loaded the task becomes — and the more your sense of self gets entangled with whether you can finally do it well.",
-      id: "Penghindaran adalah strategi perlindungan. Itu berhasil dalam jangka pendek: ketika harga emosional yang harus dibayar karena berisiko gagal terasa lebih tinggi daripada harga karena tidak mencoba, keputusan yang masuk akal adalah tidak mencoba. Masalahnya terus bertambah. Semakin lama kamu menunggu, semakin berat beban tugasnya — dan semakin dalam keterkaitannya dengan rasa dirimu.",
+      id: "Penghindaran adalah strategi perlindungan. Itu berhasil dalam jangka pendek: ketika harga emosional yang harus dibayar karena berisiko gagal terasa lebih tinggi daripada harga karena tidak mencoba, keputusan yang masuk akal adalah tidak mencoba. Masalahnya terus bertambah. Semakin lama Anda menunggu, semakin berat beban tugasnya — dan semakin dalam keterkaitannya dengan rasa diri Anda.",
     },
     strategies: [
       {
-        title: { en: "Name what you're protecting yourself from", id: "Ungkapkan dari apa kamu sedang melindungi dirimu" },
+        title: { en: "Name what you're protecting yourself from", id: "Ungkapkan dari apa Anda sedang melindungi diri Anda" },
         body: {
           en: "Ask yourself: 'What am I actually afraid will happen if this doesn't go well?' Usually the answer is judgment, disappointment, or proof of inadequacy. Name it precisely. A fear named clearly loses some of its power to govern your behaviour — because you can now respond to the actual fear rather than to the fog of avoidance.",
-          id: "Tanyakan pada dirimu: 'Apa yang sebenarnya aku takutkan akan terjadi jika ini tidak berjalan baik?' Biasanya jawabannya adalah penilaian, kekecewaan, atau bukti ketidakcukupan. Ungkapkan dengan tepat. Ketakutan yang sudah diungkapkan dengan jelas kehilangan sebagian kekuatannya — karena sekarang kamu bisa merespons ketakutan yang sebenarnya, bukan kabut penghindaran.",
+          id: "Tanyakan pada diri Anda: 'Apa yang sebenarnya aku takutkan akan terjadi jika ini tidak berjalan baik?' Biasanya jawabannya adalah penilaian, kekecewaan, atau bukti ketidakcukupan. Ungkapkan dengan tepat. Ketakutan yang sudah diungkapkan dengan jelas kehilangan sebagian kekuatannya — karena sekarang Anda bisa merespons ketakutan yang sebenarnya, bukan kabut penghindaran.",
         },
       },
       {
@@ -74,7 +74,7 @@ const DISGUISES: Record<DisguiseKey, DisguiseData> = {
         title: { en: "Faithfulness, not success", id: "Kesetiaan, bukan kesuksesan" },
         body: {
           en: "In Matthew 25, the third servant buried his talent because he was afraid. His failure was not the absence of profit — it was the choice of inaction over faithfulness. The master did not ask for guaranteed returns. He asked for engagement. Your calling is not to guarantee a good outcome. It is to show up with what you have been given.",
-          id: "Dalam Matius 25, hamba ketiga mengubur talentanya karena ia takut. Kegagalannya bukan ketiadaan keuntungan — melainkan memilih ketidakaktifan daripada kesetiaan. Sang tuan tidak meminta hasil yang dijamin. Dia meminta keterlibatan. Panggilanmu bukan menjamin hasil yang baik. Melainkan hadir dengan apa yang telah diberikan kepadamu.",
+          id: "Dalam Matius 25, hamba ketiga mengubur talentanya karena ia takut. Kegagalannya bukan ketiadaan keuntungan — melainkan memilih ketidakaktifan daripada kesetiaan. Sang tuan tidak meminta hasil yang dijamin. Dia meminta keterlibatan. Panggilan Anda bukan menjamin hasil yang baik. Melainkan hadir dengan apa yang telah diberikan kepada Anda.",
         },
       },
     ],
@@ -91,21 +91,21 @@ const DISGUISES: Record<DisguiseKey, DisguiseData> = {
         title: { en: "Set the minimum viable standard first", id: "Tetapkan standar minimum terlebih dahulu" },
         body: {
           en: "Before you open any file, write down what 'done' looks like — not 'polished', not 'ready to present', just complete. All sections covered. Everything included once, imperfectly. Write this before you begin. Once a baseline exists, you can improve it. You cannot improve a blank page.",
-          id: "Sebelum membuka file apapun, tuliskan seperti apa 'selesai' itu — bukan 'rapi', bukan 'siap presentasi', hanya lengkap. Semua bagian tercakup. Semuanya termasuk sekali, tidak sempurna. Tuliskan ini sebelum memulai. Setelah ada basis, kamu bisa memperbaikinya. Kamu tidak bisa memperbaiki halaman kosong.",
+          id: "Sebelum membuka file apapun, tuliskan seperti apa 'selesai' itu — bukan 'rapi', bukan 'siap presentasi', hanya lengkap. Semua bagian tercakup. Semuanya termasuk sekali, tidak sempurna. Tuliskan ini sebelum memulai. Setelah ada basis, Anda bisa memperbaikinya. Anda tidak bisa memperbaiki halaman kosong.",
         },
       },
       {
         title: { en: "The 15-minute draft rule", id: "Aturan draft 15 menit" },
         body: {
           en: "Set a timer for 15 minutes. Write, design, or build something — anything — before the timer ends. It will not be your best work. That is exactly the point. An imperfect draft that exists gives you something to improve. The Zeigarnik effect² guarantees your brain will pull toward completion once it has started. Perfectionism thrives on blankness.",
-          id: "Atur timer selama 15 menit. Tulis, desain, atau bangun sesuatu — apa saja — sebelum timer berakhir. Itu tidak akan menjadi karya terbaikmu. Itulah intinya. Draft tidak sempurna yang ada memberimu sesuatu untuk diperbaiki. Efek Zeigarnik² menjamin otakmu akan menarik ke arah penyelesaian begitu sudah dimulai. Perfeksionisme berkembang dalam kekosongan.",
+          id: "Atur timer selama 15 menit. Tulis, desain, atau bangun sesuatu — apa saja — sebelum timer berakhir. Itu tidak akan menjadi karya terbaik Anda. Itulah intinya. Draft tidak sempurna yang ada memberi Anda sesuatu untuk diperbaiki. Efek Zeigarnik² menjamin otak Anda akan menarik ke arah penyelesaian begitu sudah dimulai. Perfeksionisme berkembang dalam kekosongan.",
         },
       },
       {
         title: { en: "Grace is the structural solution", id: "Kasih karunia adalah solusi struktural" },
         body: {
           en: "Perfectionism has a theological root: identity built on performance. If what I produce defines who I am, then producing something imperfect is an existential threat. Grace removes the stakes from performance. You are not defined by what you complete. When the outcome no longer determines your worth, you are free to begin.",
-          id: "Perfeksionisme memiliki akar teologis: identitas yang dibangun di atas kinerja. Jika apa yang aku hasilkan mendefinisikan siapa aku, maka menghasilkan sesuatu yang tidak sempurna adalah ancaman eksistensial. Kasih karunia menghilangkan taruhan dari kinerja. Kamu tidak didefinisikan oleh apa yang kamu selesaikan. Ketika hasil tidak lagi menentukan nilaimu, kamu bebas untuk memulai.",
+          id: "Perfeksionisme memiliki akar teologis: identitas yang dibangun di atas kinerja. Jika apa yang aku hasilkan mendefinisikan siapa aku, maka menghasilkan sesuatu yang tidak sempurna adalah ancaman eksistensial. Kasih karunia menghilangkan taruhan dari kinerja. Anda tidak didefinisikan oleh apa yang Anda selesaikan. Ketika hasil tidak lagi menentukan nilai Anda, Anda bebas untuk memulai.",
         },
       },
     ],
@@ -122,7 +122,7 @@ const DISGUISES: Record<DisguiseKey, DisguiseData> = {
         title: { en: "Smallest possible first action", id: "Tindakan pertama yang sekecil mungkin" },
         body: {
           en: "Not 'write the report.' Not 'plan the project.' Open the document. Send one email. Look at the brief. The task itself does not shrink — but your relationship to it changes the moment you have started. Research confirms: starting anything, even imperfectly, activates momentum. The Zeigarnik effect² means your brain will pull toward completion once it has begun.",
-          id: "Bukan 'tulis laporan.' Bukan 'rencanakan proyek.' Buka dokumennya. Kirim satu email. Lihat briefnya. Tugasnya sendiri tidak mengecil — tapi hubunganmu dengannya berubah di saat kamu sudah memulai. Penelitian mengonfirmasi: memulai apapun, meskipun tidak sempurna, mengaktifkan momentum. Efek Zeigarnik² berarti otakmu akan menarik ke arah penyelesaian begitu sudah dimulai.",
+          id: "Bukan 'tulis laporan.' Bukan 'rencanakan proyek.' Buka dokumennya. Kirim satu email. Lihat briefnya. Tugasnya sendiri tidak mengecil — tapi hubungan Anda dengannya berubah di saat Anda sudah memulai. Penelitian mengonfirmasi: memulai apapun, meskipun tidak sempurna, mengaktifkan momentum. Efek Zeigarnik² berarti otak Anda akan menarik ke arah penyelesaian begitu sudah dimulai.",
         },
       },
       {
@@ -136,7 +136,7 @@ const DISGUISES: Record<DisguiseKey, DisguiseData> = {
         title: { en: "The ant principle: prepare before you need to", id: "Prinsip semut: bersiap sebelum dibutuhkan" },
         body: {
           en: "Proverbs 6:6-8 commends the ant's approach: proactive preparation without external compulsion. Applied: when you are not yet overwhelmed, break the task into its smallest components and write them down. When overwhelm arrives, you already have a starting point. Preparation during calm prevents paralysis under pressure.",
-          id: "Amsal 6:6-8 memuji pendekatan semut: persiapan proaktif tanpa paksaan eksternal. Diterapkan: ketika kamu belum kewalahan, pecah tugasnya menjadi komponen terkecil dan tuliskan. Ketika kewalahan datang, kamu sudah punya titik awal. Persiapan saat tenang mencegah kelumpuhan saat tertekan.",
+          id: "Amsal 6:6-8 memuji pendekatan semut: persiapan proaktif tanpa paksaan eksternal. Diterapkan: ketika Anda belum kewalahan, pecah tugasnya menjadi komponen terkecil dan tuliskan. Ketika kewalahan datang, Anda sudah punya titik awal. Persiapan saat tenang mencegah kelumpuhan saat tertekan.",
         },
       },
     ],
@@ -390,7 +390,7 @@ export default function OvercomingProcrastinationClient({
           <p style={{ fontSize: "1.0625rem", color: "oklch(78% 0.04 260)", lineHeight: 1.7, maxWidth: 580, marginBottom: "2rem" }}>
             {t(
               "Procrastination is not laziness. It is fear, perfectionism, or overwhelm wearing a mask. This self-assessment helps you identify your pattern — and gives you targeted tools to move through it.",
-              "Penundaan bukan kemalasan. Itu adalah ketakutan, perfeksionisme, atau kewalahan yang memakai topeng. Penilaian diri ini membantu kamu mengidentifikasi polamu — dan memberimu alat yang tepat untuk mengatasinya.",
+              "Penundaan bukan kemalasan. Itu adalah ketakutan, perfeksionisme, atau kewalahan yang memakai topeng. Penilaian diri ini membantu Anda mengidentifikasi pola Anda — dan memberi Anda alat yang tepat untuk mengatasinya.",
               lang
             )}
           </p>
@@ -465,7 +465,7 @@ export default function OvercomingProcrastinationClient({
       <section style={{ background: "oklch(95% 0.004 260)", padding: "64px 24px" }}>
         <div style={{ maxWidth: 860, margin: "0 auto" }}>
           <p style={eyebrow}>{t("The Disguise Detector", "Pendeteksi Topeng", lang)}</p>
-          <h2 style={sectionH2}>{t("Identify your pattern", "Kenali polamu", lang)}</h2>
+          <h2 style={sectionH2}>{t("Identify your pattern", "Kenali pola Anda", lang)}</h2>
           <p style={{ fontSize: "0.9rem", color: MUTED, lineHeight: 1.65, margin: "0.5rem 0 1.5rem", maxWidth: 560 }}>
             {t(
               "One statement at a time. Rate each honestly — selecting an answer moves you forward automatically.",
@@ -587,7 +587,7 @@ export default function OvercomingProcrastinationClient({
       {showResult && (
         <section style={{ padding: "72px 24px" }}>
           <div style={{ maxWidth: 860, margin: "0 auto" }}>
-            <p style={eyebrow}>{t("Your Dominant Pattern", "Pola Dominanmu", lang)}</p>
+            <p style={eyebrow}>{t("Your Dominant Pattern", "Pola Dominan Anda", lang)}</p>
             <h2 style={{ ...sectionH2, color: disguise.color }}>
               {disguise.label[lang]}
             </h2>
@@ -750,7 +750,7 @@ export default function OvercomingProcrastinationClient({
               <p style={{ fontSize: "0.9375rem", lineHeight: 1.8, color: BODY_TEXT, margin: 0 }}>
                 {t(
                   "The deepest solution to perfectionism-driven delay is not more willpower — it is grace. When identity is built on performance, producing something imperfect is an existential threat. Justification by faith means the outcome does not define you. You are free to begin imperfectly, to complete inadequately, and to offer it faithfully. Anna Smith, writing in Modern Reformation,⁶ argues that perfectionism is a form of self-justification — and that grace is not a soft encouragement but a structural reorientation: when your worth is no longer at stake in your output, you can finally begin.",
-                  "Solusi terdalam untuk penundaan yang didorong perfeksionisme bukan lebih banyak kemauan — melainkan kasih karunia. Ketika identitas dibangun di atas kinerja, menghasilkan sesuatu yang tidak sempurna adalah ancaman eksistensial. Pembenaran melalui iman berarti hasilnya tidak mendefinisikan kamu. Kamu bebas untuk memulai secara tidak sempurna, menyelesaikan secara tidak memadai, dan mempersembahkannya dengan setia. Anna Smith, dalam Modern Reformation,⁶ berpendapat bahwa perfeksionisme adalah bentuk pembenaran diri — dan bahwa kasih karunia bukan dorongan yang lemah melainkan reorientasi struktural: ketika nilaimu tidak lagi dipertaruhkan dalam outputmu, kamu akhirnya bisa mulai.",
+                  "Solusi terdalam untuk penundaan yang didorong perfeksionisme bukan lebih banyak kemauan — melainkan kasih karunia. Ketika identitas dibangun di atas kinerja, menghasilkan sesuatu yang tidak sempurna adalah ancaman eksistensial. Pembenaran melalui iman berarti hasilnya tidak mendefinisikan Anda. Anda bebas untuk memulai secara tidak sempurna, menyelesaikan secara tidak memadai, dan mempersembahkannya dengan setia. Anna Smith, dalam Modern Reformation,⁶ berpendapat bahwa perfeksionisme adalah bentuk pembenaran diri — dan bahwa kasih karunia bukan dorongan yang lemah melainkan reorientasi struktural: ketika nilai Anda tidak lagi dipertaruhkan dalam output Anda, Anda akhirnya bisa mulai.",
                   lang
                 )}
               </p>
@@ -769,7 +769,7 @@ export default function OvercomingProcrastinationClient({
           <p style={{ fontSize: "0.9rem", color: "oklch(72% 0.04 260)", lineHeight: 1.7, margin: "0.5rem 0 2.5rem", maxWidth: 560 }}>
             {t(
               "Across 642 independent tests, specifying when, where, and exactly what you will do produced a medium-to-large effect on follow-through (d = 0.65).³ Complete the sentence below.",
-              "Dalam 642 uji independen, menentukan kapan, di mana, dan apa tepatnya yang akan kamu lakukan menghasilkan efek signifikan pada tindak lanjut (d = 0,65).³ Lengkapi kalimat di bawah ini.",
+              "Dalam 642 uji independen, menentukan kapan, di mana, dan apa tepatnya yang akan Anda lakukan menghasilkan efek signifikan pada tindak lanjut (d = 0,65).³ Lengkapi kalimat di bawah ini.",
               lang
             )}
           </p>
@@ -833,7 +833,7 @@ export default function OvercomingProcrastinationClient({
                 padding: "1.5rem 1.75rem",
               }}>
                 <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: ORANGE, margin: "0 0 0.5rem" }}>
-                  {t("Your commitment", "Komitmenmu", lang)}
+                  {t("Your commitment", "Komitmen Anda", lang)}
                 </p>
                 <p style={{ fontFamily: "var(--font-cormorant-garamond, 'Cormorant Garamond', serif)", fontSize: "1.25rem", fontStyle: "italic", color: OFF_WHITE, margin: 0, lineHeight: 1.55 }}>
                   &ldquo;{commitmentSentence}&rdquo;
@@ -909,7 +909,7 @@ export default function OvercomingProcrastinationClient({
           ) : (
             <div style={{ marginTop: "2rem", padding: "1.25rem 1.5rem", border: `1px dashed oklch(38% 0.08 260)` }}>
               <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.82rem", color: "oklch(55% 0.06 260)", margin: 0, fontStyle: "italic" }}>
-                {t("Your commitment will appear here once all four fields are filled.", "Komitmenmu akan muncul di sini setelah semua empat bidang diisi.", lang)}
+                {t("Your commitment will appear here once all four fields are filled.", "Komitmen Anda akan muncul di sini setelah semua empat bidang diisi.", lang)}
               </p>
             </div>
           )}
@@ -941,7 +941,7 @@ export default function OvercomingProcrastinationClient({
               },
               {
                 en: "Grace is the structural solution to perfectionism. When your worth is not on the line, you are free to begin — imperfectly, inadequately, faithfully.",
-                id: "Kasih karunia adalah solusi struktural untuk perfeksionisme. Ketika nilaimu tidak dipertaruhkan, kamu bebas untuk memulai — tidak sempurna, tidak memadai, dengan setia.",
+                id: "Kasih karunia adalah solusi struktural untuk perfeksionisme. Ketika nilai Anda tidak dipertaruhkan, Anda bebas untuk memulai — tidak sempurna, tidak memadai, dengan setia.",
               },
             ].map((item, i) => (
               <div key={i} style={{
@@ -981,7 +981,7 @@ export default function OvercomingProcrastinationClient({
           }}>
             {t(
               "What has procrastination cost you — not in productivity, but in relationships, calling, or courage? And what might faithfulness look like in the one task you have been putting off?",
-              "Apa yang telah hilang dari hidupmu karena menunda, bukan dalam produktivitas, tetapi dalam hubungan, panggilan, atau keberanian? Dan seperti apa kesetiaan dalam satu tugas yang selama ini kamu tunda?",
+              "Apa yang telah hilang dari hidup Anda karena menunda, bukan dalam produktivitas, tetapi dalam hubungan, panggilan, atau keberanian? Dan seperti apa kesetiaan dalam satu tugas yang selama ini Anda tunda?",
               lang
             )}
           </blockquote>

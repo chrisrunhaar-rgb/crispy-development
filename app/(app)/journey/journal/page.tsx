@@ -42,7 +42,7 @@ export default async function JourneyJournalPage() {
   );
 
   const t = isId
-    ? { back: "← Perjalanan", eyebrow: "Perjalanan Kepemimpinan yang Berpengaruh", title: "Jurnal saya", intro: "Semua refleksimu dari perjalanan ini, di satu tempat. Hanya kamu yang bisa melihatnya.", empty: "Belum ada jawaban jurnal. Selesaikan satu langkah dan tuliskan refleksimu.", start: "Ke perjalanan", step: "Langkah", edit: "Buka langkah ini", noAnswer: "Belum dijawab" }
+    ? { back: "← Perjalanan", eyebrow: "Perjalanan Kepemimpinan yang Berpengaruh", title: "Jurnal saya", intro: "Semua refleksi Anda dari perjalanan ini, di satu tempat. Hanya Anda yang bisa melihatnya.", empty: "Belum ada jawaban jurnal. Selesaikan satu langkah dan tuliskan refleksi Anda.", start: "Ke perjalanan", step: "Langkah", edit: "Buka langkah ini", noAnswer: "Belum dijawab" }
     : { back: "← Journey", eyebrow: "Influential Leadership Journey", title: "My journal", intro: "All your reflections from the journey, in one place. Only you can see them.", empty: "No journal answers yet. Complete a step and write down your reflections.", start: "Go to the journey", step: "Step", edit: "Open this step", noAnswer: "Not answered yet" };
 
   const qa = (q: string, a: string | null | undefined, key: string) => q ? (

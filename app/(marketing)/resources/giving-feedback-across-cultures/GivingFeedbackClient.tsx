@@ -223,7 +223,7 @@ const REFRAME_ROUNDS = [
     },
     reframe: {
       en: `"Thank you for the time you put into this draft. I wonder if this section might benefit from a little more development in the analysis. Perhaps we could look at it together before the final version goes out? I want to make sure it reflects the quality I know you're capable of."`,
-      id: `"Terima kasih atas waktu yang kamu curahkan untuk draf ini. Saya bertanya-tanya, bagian analisis ini mungkin bisa diperdalam sedikit. Mungkin kita bisa melihatnya bersama sebelum versi final keluar? Saya ingin memastikannya mencerminkan kualitas yang saya tahu kamu mampu capai."`,
+      id: `"Terima kasih atas waktu yang Anda curahkan untuk draf ini. Saya bertanya-tanya, bagian analisis ini mungkin bisa diperdalam sedikit. Mungkin kita bisa melihatnya bersama sebelum versi final keluar? Saya ingin memastikannya mencerminkan kualitas yang saya tahu Anda mampu capai."`,
     },
     explanationLabel: { en: "What changed and why:", id: "Apa yang berubah dan mengapa:" },
     explanation: {
@@ -246,7 +246,7 @@ const REFRAME_ROUNDS = [
     },
     reframe: {
       en: `"I want to talk this through with you first, before it goes wider. The last three reports framed the outcomes data differently, and that could affect how donors read our progress. Can we set time this week to align on one approach?"`,
-      id: `"Saya ingin membicarakan ini denganmu dulu, sebelum meluas. Tiga laporan terakhir membingkai data hasil secara berbeda, dan itu bisa mempengaruhi cara donor membaca kemajuan kita. Bisakah kita atur waktu minggu ini untuk menyepakati satu pendekatan?"`,
+      id: `"Saya ingin membicarakan ini dengan Anda dulu, sebelum meluas. Tiga laporan terakhir membingkai data hasil secara berbeda, dan itu bisa mempengaruhi cara donor membaca kemajuan kita. Bisakah kita atur waktu minggu ini untuk menyepakati satu pendekatan?"`,
     },
     explanationLabel: { en: "What changed and why:", id: "Apa yang berubah dan mengapa:" },
     explanation: {
@@ -263,7 +263,7 @@ const SILENCE_CARDS: { term: string; region: { en: string; id: string }; back: {
     region: { en: "Indonesia", id: "Indonesia" },
     back: {
       en: "More than embarrassment: the knowledge that your standing has dropped in others' eyes.³ One manager, criticized publicly, smiled through the meeting and resigned the next morning.",
-      id: "Lebih dari rasa malu biasa: kesadaran bahwa kedudukanmu telah turun di mata orang lain.³ Seorang manajer, dikritik di depan umum, tersenyum sepanjang rapat dan mengundurkan diri keesokan paginya.",
+      id: "Lebih dari rasa malu biasa: kesadaran bahwa kedudukan Anda telah turun di mata orang lain.³ Seorang manajer, dikritik di depan umum, tersenyum sepanjang rapat dan mengundurkan diri keesokan paginya.",
     },
   },
   {
@@ -305,21 +305,21 @@ const CASE_SETUP: Record<Lang, string[]> = {
     "You lead an NGO team in East Africa. James, your field reporting lead, frames outcomes data more optimistically than the numbers support. Nothing false, but it would not survive a direct donor question. He believes he is protecting the project.",
   ],
   id: [
-    "Kamu memimpin tim LSM di Afrika Timur. James, penanggung jawab pelaporan lapanganmu, membingkai data hasil lebih optimis daripada yang didukung angka. Tidak ada yang palsu, tetapi tidak akan bertahan jika donor bertanya langsung. Ia percaya sedang melindungi proyek.",
+    "Anda memimpin tim LSM di Afrika Timur. James, penanggung jawab pelaporan lapangan Anda, membingkai data hasil lebih optimis daripada yang didukung angka. Tidak ada yang palsu, tetapi tidak akan bertahan jika donor bertanya langsung. Ia percaya sedang melindungi proyek.",
   ],
 };
 
 const CASE_CP1: { heading: { en: string; id: string }; options: [CaseChoice, CaseChoice] } = {
   heading: {
     en: "Choice Point 1: How do you open?",
-    id: "Titik Pilihan 1: Bagaimana kamu membuka?",
+    id: "Titik Pilihan 1: Bagaimana Anda membuka?",
   },
   options: [
     {
       label: { en: "Option A: Begin with the issue", id: "Pilihan A: Mulai dengan masalah" },
       action: {
         en: ["You meet privately and name it straight away: the last three reports do not match the numbers."],
-        id: ["Kamu bertemu secara pribadi dan langsung menyebutkannya: tiga laporan terakhir tidak cocok dengan angkanya."],
+        id: ["Anda bertemu secara pribadi dan langsung menyebutkannya: tiga laporan terakhir tidak cocok dengan angkanya."],
       },
       outcome: {
         en: ["James nods, agrees, thanks you. Two weeks later the pattern has only half-changed: he heard a preference, not a correction."],
@@ -330,11 +330,11 @@ const CASE_CP1: { heading: { en: string; id: string }; options: [CaseChoice, Cas
       label: { en: "Option B: Begin with the relationship", id: "Pilihan B: Mulai dengan hubungan" },
       action: {
         en: [`You open with what you genuinely value in his work: "There's something I want to work through with you first, before it goes anywhere else."`],
-        id: [`Kamu membuka dengan apa yang sungguh kamu hargai dari kerjanya: "Ada sesuatu yang ingin saya selesaikan denganmu terlebih dahulu, sebelum pergi ke mana pun."`],
+        id: [`Anda membuka dengan apa yang sungguh Anda hargai dari kerjanya: "Ada sesuatu yang ingin saya selesaikan dengan Anda terlebih dahulu, sebelum pergi ke mana pun."`],
       },
       outcome: {
         en: ["James relaxes. You are not angry, and this is private. The hard content can now enter through an open door."],
-        id: ["James menjadi santai. Kamu tidak marah, dan ini bersifat pribadi. Konten yang sulit kini bisa masuk melalui pintu yang terbuka."],
+        id: ["James menjadi santai. Anda tidak marah, dan ini bersifat pribadi. Konten yang sulit kini bisa masuk melalui pintu yang terbuka."],
       },
     },
   ],
@@ -348,14 +348,14 @@ const CASE_CP2: Record<"A" | "B", { heading: { en: string; id: string }; intro: 
     },
     intro: {
       en: "James heard you, but not at the depth you intended.",
-      id: "James mendengarmu, tetapi tidak sedalam yang kamu maksudkan.",
+      id: "James mendengar Anda, tetapi tidak sedalam yang Anda maksudkan.",
     },
     options: [
       {
         label: { en: "Option A1: Cite the professional standard", id: "Pilihan A1: Rujuk standar profesional" },
         action: {
           en: ["You walk through the data policy and donor agreements. Contractual, not stylistic."],
-          id: ["Kamu menjelaskan kebijakan data dan perjanjian donor. Kontraktual, bukan soal gaya."],
+          id: ["Anda menjelaskan kebijakan data dan perjanjian donor. Kontraktual, bukan soal gaya."],
         },
         outcome: {
           en: ["He complies. The reports improve; the relationship cools. The behavior changed, but the understanding did not."],
@@ -366,11 +366,11 @@ const CASE_CP2: Record<"A" | "B", { heading: { en: string; id: string }; intro: 
         label: { en: "Option A2: Ask what he was protecting", id: "Pilihan A2: Tanyakan apa yang ia lindungi" },
         action: {
           en: [`"James, help me understand: when you framed the data this way, what were you trying to achieve?"`],
-          id: [`"James, bantu saya memahami: ketika kamu membingkai data seperti ini, apa yang ingin kamu capai?"`],
+          id: [`"James, bantu saya memahami: ketika Anda membingkai data seperti ini, apa yang ingin Anda capai?"`],
         },
         outcome: {
           en: ["He exhales. In his world, keeping donors confident is the job. Now you can change the mental model, not just the behavior."],
-          id: ["Ia menghembuskan napas. Dalam dunianya, menjaga kepercayaan donor adalah pekerjaannya. Sekarang kamu bisa mengubah model mentalnya, bukan hanya perilakunya."],
+          id: ["Ia menghembuskan napas. Dalam dunianya, menjaga kepercayaan donor adalah pekerjaannya. Sekarang Anda bisa mengubah model mentalnya, bukan hanya perilakunya."],
         },
       },
     ],
@@ -382,18 +382,18 @@ const CASE_CP2: Record<"A" | "B", { heading: { en: string; id: string }; intro: 
     },
     intro: {
       en: "The relational opening worked. Now you name the pattern.",
-      id: "Pembukaan relasional berhasil. Sekarang kamu menyebutkan polanya.",
+      id: "Pembukaan relasional berhasil. Sekarang Anda menyebutkan polanya.",
     },
     options: [
       {
         label: { en: "Option B1: Name it, then ask", id: "Pilihan B1: Sebutkan, lalu tanyakan" },
         action: {
           en: [`You describe the selective framing, then: "I want to understand your thinking before I say more."`],
-          id: [`Kamu menggambarkan pembingkaian selektif itu, lalu: "Saya ingin memahami pemikiranmu sebelum berbicara lebih jauh."`],
+          id: [`Anda menggambarkan pembingkaian selektif itu, lalu: "Saya ingin memahami pemikiran Anda sebelum berbicara lebih jauh."`],
         },
         outcome: {
           en: ["Because it feels safe, James explains the value behind the behavior: protecting the donor relationship. You have more to work with."],
-          id: ["Karena terasa aman, James menjelaskan nilai di balik perilakunya: melindungi hubungan dengan donor. Kamu punya lebih banyak bahan untuk dikerjakan."],
+          id: ["Karena terasa aman, James menjelaskan nilai di balik perilakunya: melindungi hubungan dengan donor. Anda punya lebih banyak bahan untuk dikerjakan."],
         },
       },
       {
@@ -404,7 +404,7 @@ const CASE_CP2: Record<"A" | "B", { heading: { en: string; id: string }; intro: 
         },
         outcome: {
           en: ["James reaches the verdict himself. By the time you name it, he is ready for both the accountability and the path forward."],
-          id: ["James sampai pada vonis itu sendiri. Saat kamu menyebutkannya, ia siap menerima akuntabilitas sekaligus jalan ke depan."],
+          id: ["James sampai pada vonis itu sendiri. Saat Anda menyebutkannya, ia siap menerima akuntabilitas sekaligus jalan ke depan."],
         },
       },
     ],
@@ -423,11 +423,11 @@ const CASE_CP3: {
   },
   intro: {
     en: "Whatever path you took, James knows the practice must change. What does he walk away with?",
-    id: "Apa pun jalur yang kamu ambil, James tahu praktiknya harus berubah. Apa yang ia bawa pulang?",
+    id: "Apa pun jalur yang Anda ambil, James tahu praktiknya harus berubah. Apa yang ia bawa pulang?",
   },
   promptsLabel: {
     en: "For you to consider:",
-    id: "Untuk kamu renungkan:",
+    id: "Untuk Anda renungkan:",
   },
   prompts: {
     en: [
@@ -436,9 +436,9 @@ const CASE_CP3: {
       "Did your path correct his behavior, or his understanding? Which one lasts?",
     ],
     id: [
-      `Matius 18 menyebut tujuannya "kamu telah mendapatkannya kembali." Seperti apa mendapatkan James kembali?`,
-      "Koreksi tanpa kehormatan yang dipulihkan bisa merusak lebih dari masalahnya. Bagaimana kamu memulihkan kedudukan James, di matanya dan di mata tim?",
-      "Apakah jalurmu mengoreksi perilakunya, atau pemahamannya? Mana yang bertahan?",
+      `Matius 18 menyebut tujuannya "engkau telah mendapatnya kembali." Seperti apa mendapatkan James kembali?`,
+      "Koreksi tanpa kehormatan yang dipulihkan bisa merusak lebih dari masalahnya. Bagaimana Anda memulihkan kedudukan James, di matanya dan di mata tim?",
+      "Apakah jalur Anda mengoreksi perilakunya, atau pemahamannya? Mana yang bertahan?",
     ],
   },
 };
@@ -470,12 +470,12 @@ const STEP_CARDS: Record<Lang, { num: string; title: string; body: string }[]> =
   id: [
     {
       num: "01",
-      title: "Kenali register defaultmu",
-      body: "Langsung atau tidak langsung: tidak ada yang lebih baik, tetapi sadarilah milikmu cukup dalam untuk menyesuaikannya.",
+      title: "Kenali register default Anda",
+      body: "Langsung atau tidak langsung: tidak ada yang lebih baik, tetapi sadarilah milik Anda cukup dalam untuk menyesuaikannya.",
     },
     {
       num: "02",
-      title: "Baca konteks yang kamu masuki",
+      title: "Baca konteks yang Anda masuki",
       body: "Di mana orang ini berada pada skala Evaluasi? Apa peran muka, martabat, dan komunitas?",
     },
     {
@@ -569,7 +569,7 @@ const KEY_TAKEAWAYS: Record<Lang, { title: string; body: string }[]> = {
   id: [
     { title: "Umpan balik tidak pernah netral secara budaya. Kata-kata yang sama diterima secara berbeda dalam sistem logika yang berbeda.", body: "" },
     { title: "Komunikasi dan Evaluasi adalah dua skala terpisah yang bergerak secara independen.", body: "" },
-    { title: "Penguat mengintensifkan, pelembut memperlunak. Intensitas adalah bagian umpan balikmu yang paling bisa disesuaikan.", body: "" },
+    { title: "Penguat mengintensifkan, pelembut memperlunak. Intensitas adalah bagian umpan balik Anda yang paling bisa disesuaikan.", body: "" },
     { title: "Dalam budaya kehormatan-malu, koreksi tanpa martabat yang dipulihkan sering merusak lebih dari tanpa koreksi sama sekali.", body: "" },
     { title: "Natan menceritakan kisahnya terlebih dahulu. Jalan tidak langsung itulah yang membuat kebenaran langsung tersampaikan.", body: "" },
   ],
@@ -591,19 +591,19 @@ const S2_PARAS: Record<Lang, string[]> = {
     "Look at your own culture on both spectra. Then look at the cultures you work with most. The gap between those positions, not just on one scale but on both, is where your feedback is getting lost.",
   ],
   id: [
-    "Ada asumsi umum di kalangan pemimpin yang bekerja lintas budaya: jika kamu tahu apakah seseorang berasal dari budaya berkonteks tinggi atau rendah, kamu tahu cara memberi mereka umpan balik. Lebih banyak konteks, lebih banyak ketidaklangsungan. Lebih sedikit konteks, lebih langsung. Sederhana.",
+    "Ada asumsi umum di kalangan pemimpin yang bekerja lintas budaya: jika Anda tahu apakah seseorang berasal dari budaya berkonteks tinggi atau rendah, Anda tahu cara memberi mereka umpan balik. Lebih banyak konteks, lebih banyak ketidaklangsungan. Lebih sedikit konteks, lebih langsung. Sederhana.",
     "Asumsi itu salah, dan salah dalam hal ini menghasilkan beberapa gesekan antarbudaya yang paling dapat diprediksi dalam tim global.",
-    "Perbedaan antara komunikasi berkonteks tinggi dan rendah berasal dari antropolog Edward T. Hall, yang mencatat pada 1950-an dan 1970-an bahwa budaya berbeda secara fundamental dalam seberapa banyak makna dibawa oleh kata-kata eksplisit versus konteks sekitarnya: hubungan, setting, sejarah bersama, sinyal non-verbal.² Dalam budaya berkonteks tinggi (umum di sebagian besar Asia, Afrika, dan Timur Tengah), makna berlapis dan relasional. Keheningan memiliki bobot. Apa yang tidak dikatakan sering kali lebih signifikan dari apa yang diucapkan. Dalam budaya berkonteks rendah (Jerman, Skandinavia, Belanda, Amerika Serikat), makna dikodekan secara eksplisit dalam kata-kata. Katakan apa yang kamu maksud. Maksudkan apa yang kamu katakan. Ambiguitas adalah masalah yang harus dipecahkan. (Catatan: konteks tinggi/rendah adalah kerangka deskriptif yang banyak digunakan — para akademisi mempertanyakan validitas pengukurannya lintas budaya, tetapi fenomena yang digambarkannya terdokumentasi dengan baik.)",
-    "Ini sungguh berguna sebagai peta awal. Tetapi Erin Meyer, yang mengajar perilaku organisasi di INSEAD, mengidentifikasi sesuatu yang tidak bisa ditunjukkan oleh model satu sumbu Hall: cara kamu berkomunikasi dan cara kamu memberi umpan balik adalah dua hal yang terpisah, dan keduanya bergerak secara independen satu sama lain.¹",
+    "Perbedaan antara komunikasi berkonteks tinggi dan rendah berasal dari antropolog Edward T. Hall, yang mencatat pada 1950-an dan 1970-an bahwa budaya berbeda secara fundamental dalam seberapa banyak makna dibawa oleh kata-kata eksplisit versus konteks sekitarnya: hubungan, setting, sejarah bersama, sinyal non-verbal.² Dalam budaya berkonteks tinggi (umum di sebagian besar Asia, Afrika, dan Timur Tengah), makna berlapis dan relasional. Keheningan memiliki bobot. Apa yang tidak dikatakan sering kali lebih signifikan dari apa yang diucapkan. Dalam budaya berkonteks rendah (Jerman, Skandinavia, Belanda, Amerika Serikat), makna dikodekan secara eksplisit dalam kata-kata. Katakan apa yang Anda maksud. Maksudkan apa yang Anda katakan. Ambiguitas adalah masalah yang harus dipecahkan. (Catatan: konteks tinggi/rendah adalah kerangka deskriptif yang banyak digunakan — para akademisi mempertanyakan validitas pengukurannya lintas budaya, tetapi fenomena yang digambarkannya terdokumentasi dengan baik.)",
+    "Ini sungguh berguna sebagai peta awal. Tetapi Erin Meyer, yang mengajar perilaku organisasi di INSEAD, mengidentifikasi sesuatu yang tidak bisa ditunjukkan oleh model satu sumbu Hall: cara Anda berkomunikasi dan cara Anda memberi umpan balik adalah dua hal yang terpisah, dan keduanya bergerak secara independen satu sama lain.¹",
     "Meyer menyebut ini skala Komunikasi dan skala Evaluasi. Kesenjangan di antara keduanya adalah tempat kebingungan berada.",
     "Skala Komunikasi mengukur seberapa banyak makna dibawa secara implisit versus eksplisit. Skala Evaluasi mengukur seberapa langsung umpan balik negatif disampaikan: apakah kritik dinyatakan terang-terangan atau dilembutkan, dilindungi, dan dibungkus dalam lapisan konteks relasional.",
     "Inilah yang membuat ini penting: kedua skala ini tidak bergerak bersama.",
-    "Orang Prancis adalah komunikator berkonteks tinggi yang tekstual, berlapis dan allusif, di mana subteks dan nuansa intelektual membawa banyak makna. Namun ketika seorang profesional Prancis menganggap pekerjaan kamu tidak memadai, mereka sering akan memberitahukannya dalam istilah yang tidak meninggalkan ambiguitas. Prancis berada di ujung langsung pada skala Evaluasi, meskipun berada di ujung tidak langsung pada skala Komunikasi.",
+    "Orang Prancis adalah komunikator berkonteks tinggi yang tekstual, berlapis dan allusif, di mana subteks dan nuansa intelektual membawa banyak makna. Namun ketika seorang profesional Prancis menganggap pekerjaan Anda tidak memadai, mereka sering akan memberitahukannya dalam istilah yang tidak meninggalkan ambiguitas. Prancis berada di ujung langsung pada skala Evaluasi, meskipun berada di ujung tidak langsung pada skala Komunikasi.",
     "Sebaliknya, orang Amerika adalah komunikator berkonteks rendah yang kuat. Budaya bisnis Amerika menghargai keeksplisitan: katakan dengan jelas, bersikaplah jelas, hindari ambiguitas. Namun budaya umpan balik profesional Amerika terkenal lembut. \u201cFeedback sandwich\u201d (positif, kritis, positif) adalah penemuan Amerika. Manajer Amerika secara rutin membungkus penilaian yang sulit dalam begitu banyak dorongan sehingga kritik itu sendiri hilang. Amerika Serikat adalah komunikator berkonteks rendah yang menyampaikan umpan balik negatif yang sangat tidak langsung.",
     "Seorang insinyur Belanda yang bekerja dengan kolega Prancis mungkin berasumsi: \u201ckita berdua berkomunikasi dengan jelas, jadi kita memiliki budaya umpan balik yang sama.\u201d Mereka tidak. Insinyur Belanda akan menyampaikan umpan balik secara blak-blakan dan mengharapkannya diterima secara profesional. Kolega Prancis akan menyampaikan umpan balik dengan kecanggihan retoris yang disalahartikan oleh insinyur Belanda sebagai kesopanan dan yang dimaksud oleh kolega Prancis sebagai presisi.",
     "Seorang manajer Amerika yang bekerja dengan kolega Jepang mungkin berasumsi: \u201ckita berdua tidak langsung, jadi kita pada halaman yang sama.\u201d Mereka tidak. Orang Amerika tidak langsung tentang kritik untuk menjaga hubungan; profesional Jepang tidak langsung sebagai fitur struktural dari bagaimana kebenaran dikomunikasikan sama sekali, dan sinyal yang dilewatkan oleh orang Amerika bukan perangkat pelembut tetapi komunikasi primer.",
     "Inilah mengapa model dua skala penting. Pertanyaannya bukan hanya \u201capakah ini budaya berkonteks tinggi?\u201d Pertanyaannya adalah \u201capa skala Evaluasi di sini, dan apakah itu berbeda dari asumsi saya?\u201d",
-    "Lihatlah budayamu sendiri pada kedua spektrum. Kemudian lihatlah budaya yang paling banyak kamu kerjakan. Kesenjangan antara posisi-posisi tersebut, bukan hanya pada satu skala tetapi pada keduanya, adalah tempat umpan balikmu hilang.",
+    "Lihatlah budaya Anda sendiri pada kedua spektrum. Kemudian lihatlah budaya yang paling banyak Anda kerjakan. Kesenjangan antara posisi-posisi tersebut, bukan hanya pada satu skala tetapi pada keduanya, adalah tempat umpan balik Anda hilang.",
   ],
 };
 const UDRG_TABLE = {
@@ -628,7 +628,7 @@ const UDRG_TABLE = {
       culture: { en: "Israel", id: "Israel" },
       pos: { en: "Very direct", id: "Sangat langsung" },
       lang: { en: "Upgraders, confrontational warmth", id: "Penguat, kehangatan konfrontatif" },
-      example: { en: "“I'll be straight with you: this doesn't work. Let's fix it together.”", id: "“Saya akan berbicara jujur denganmu: ini tidak berhasil. Mari kita perbaiki bersama.”" },
+      example: { en: "“I'll be straight with you: this doesn't work. Let's fix it together.”", id: "“Saya akan berbicara jujur dengan Anda: ini tidak berhasil. Mari kita perbaiki bersama.”" },
     },
     {
       culture: { en: "Australia", id: "Australia" },
@@ -658,7 +658,7 @@ const UDRG_TABLE = {
       culture: { en: "Kenya", id: "Kenya" },
       pos: { en: "Indirect with relational warmth", id: "Tidak langsung dengan kehangatan relasional" },
       lang: { en: "Indirect, community-impact framing", id: "Tidak langsung, bingkai dampak komunitas" },
-      example: { en: "“The team will need to see a stronger analysis before we can move forward. How can we support you in that?”", id: "“Tim perlu melihat analisis yang lebih kuat sebelum kita bisa melanjutkan. Bagaimana kita bisa mendukungmu dalam hal itu?”" },
+      example: { en: "“The team will need to see a stronger analysis before we can move forward. How can we support you in that?”", id: "“Tim perlu melihat analisis yang lebih kuat sebelum kita bisa melanjutkan. Bagaimana kita bisa mendukung Anda dalam hal itu?”" },
     },
     {
       culture: { en: "Japan", id: "Jepang" },
@@ -721,12 +721,12 @@ const S5_PARAS: Record<Lang, string[]> = {
   ],
   id: [
     "Sebelum kita masuk ke praktik, ada pertanyaan yang berada di bawah semua ini yang layak disebutkan secara langsung.",
-    "Kamu mungkin telah membaca modul ini dan berpikir: ini semua sangat bijaksana, tetapi pada titik mana kepekaan budaya menjadi alasan untuk tidak mengatakan hal yang sulit? Jika saya terus melembutkan dan melindungi dan membungkus dalam basa-basi relasional, pada titik mana saya berhenti menyampaikan umpan balik sama sekali?",
-    "Itu adalah pertanyaan yang adil. Dan tradisi biblika tidak membiarkan kamu lolos dengan jawaban sederhana.",
-    `Amsal 27:5-6 terus terang: "Lebih baik teguran yang nyata-nyata dari pada kasih yang tersembunyi. Seorang kawan memukul dengan maksud baik, tetapi seorang lawan mencium secara berlimpah-limpah." Tradisi hikmat Ibrani tidak memperlakukan pengalihan tidak langsung sebagai kebaikan. Ini memperlakukan penahanan koreksi sebagai kegagalan kasih dan, luar biasa, menyamakan kegagalan itu dengan sanjungan menipu dari seorang musuh. Jika kamu peduli pada seseorang, kamu memberitahu mereka kebenaran. Itu bukan opsional.`,
+    "Anda mungkin telah membaca modul ini dan berpikir: ini semua sangat bijaksana, tetapi pada titik mana kepekaan budaya menjadi alasan untuk tidak mengatakan hal yang sulit? Jika saya terus melembutkan dan melindungi dan membungkus dalam basa-basi relasional, pada titik mana saya berhenti menyampaikan umpan balik sama sekali?",
+    "Itu adalah pertanyaan yang adil. Dan tradisi biblika tidak membiarkan Anda lolos dengan jawaban sederhana.",
+    `Amsal 27:5-6 terus terang: "Lebih baik teguran yang nyata-nyata dari pada kasih yang tersembunyi. Seorang kawan memukul dengan maksud baik, tetapi seorang lawan mencium secara berlimpah-limpah." Tradisi hikmat Ibrani tidak memperlakukan pengalihan tidak langsung sebagai kebaikan. Ini memperlakukan penahanan koreksi sebagai kegagalan kasih dan, luar biasa, menyamakan kegagalan itu dengan sanjungan menipu dari seorang musuh. Jika Anda peduli pada seseorang, Anda memberitahu mereka kebenaran. Itu bukan opsional.`,
 
     "Namun, tepat di dalam tradisi yang sama, ada seorang pria bernama Natan yang memilih untuk tidak memulai dengan pernyataan langsung.",
-    `Daud telah berzinah dengan Batsyeba dan telah mengatur kematian Uria suaminya. Natan tahu. Tuhan mengutusnya untuk menghadapi raja. Dan Natan tidak berjalan masuk ke ruang takhta dan berkata, "Kamu bersalah atas perzinahan dan pembunuhan."`,
+    `Daud telah berzinah dengan Batsyeba dan telah mengatur kematian Uria suaminya. Natan tahu. Tuhan mengutusnya untuk menghadapi raja. Dan Natan tidak berjalan masuk ke ruang takhta dan berkata, "Anda bersalah atas perzinahan dan pembunuhan."`,
     "Ia menceritakan sebuah kisah.",
     `Seorang pria kaya memiliki banyak kawanan, tetapi ketika seorang musafir datang, ia mengambil satu-satunya domba betina kesayangan orang miskin alih-alih dari kawanannya sendiri, dan menyembelihnya untuk perjamuan. Daud, mendengar kisah itu, marah besar. "Orang itu layak mati!" katanya.`,
     `"Engkau sendiri orang itu," kata Natan.`,
@@ -761,13 +761,13 @@ const FAITH_PARAS: Record<Lang, string[]> = {
 
     `*Aletheuon en agape* (hidup dalam kebenaran dengan kasih) menolak kedua distorsi tersebut. Pertanyaan yang diajukan frasa ini kepada setiap pemimpin lintas budaya bukan "apakah saya mengatakan hal yang benar?" tetapi "apakah saya membawa hal yang benar dengan cara yang benar-benar bisa diterima orang ini?"`,
     "Amsal 27:5-6 memegang ketegangan yang tidak nyaman bagi pemimpin yang bekerja dalam budaya kehormatan-malu. Teguran yang terang-terangan (jelas, disebut, langsung) disajikan sebagai tanda persahabatan yang tulus. Namun logika budaya komunitas yang dibentuk oleh kepekaan malu dan pelestarian muka membuat teguran terbuka secara struktural merusak kecuali datang melalui jalur yang juga menawarkan martabat yang dipulihkan. Pertanyaannya bukan mana dari ini yang lebih biblika. Keduanya ada dalam teks. Pertanyaannya adalah bagaimana menghormati keduanya secara bersamaan, yang persis itulah yang dirancang metode Natan.",
-    `Model bertahap Yesus dalam Matius 18:15-17 (pribadi terlebih dahulu, kemudian dengan saksi, kemudian komunitas) mencolok dalam seberapa kompatibel secara strukturalnya dengan prinsip-prinsip umpan balik berkonteks tinggi. Mulai dengan pendekatan yang paling tidak konfrontatif, paling relasional. Eskalasi hanya jika diperlukan. Dan jaga tujuan tetap jelas: "kamu telah mendapatkan mereka kembali." Pemulihan adalah targetnya. Koreksi adalah jalannya, bukan tujuan itu sendiri.`,
+    `Model bertahap Yesus dalam Matius 18:15-17 (pribadi terlebih dahulu, kemudian dengan saksi, kemudian komunitas) mencolok dalam seberapa kompatibel secara strukturalnya dengan prinsip-prinsip umpan balik berkonteks tinggi. Mulai dengan pendekatan yang paling tidak konfrontatif, paling relasional. Eskalasi hanya jika diperlukan. Dan jaga tujuan tetap jelas: "Anda telah mendapatkan mereka kembali." Pemulihan adalah targetnya. Koreksi adalah jalannya, bukan tujuan itu sendiri.`,
 
     `Natan memahami ini pada tingkat yang layak mendapat perhatian cermat. Ia tidak memulai dengan "Engkau sendiri orang itu." Ia memulai dengan sebuah kisah yang membangun pemahaman moral Daud dari dalam, menariknya ke dalam vonis sebelum menerapkannya padanya. Perumpamaan itu bukan penghindaran. Itu adalah persiapan. Deklarasi langsung, "Engkau sendiri orang itu," memukul lebih keras karena apa yang mendahuluinya. Dan perlu dicatat: Natan tidak menghukum Daud. Ia memulihkannya. Koreksi itu menghancurkan, tetapi tujuannya bukan kehancuran.`,
 
     "Ada benang teologis yang mengalir melalui beasiswa kehormatan-malu yang memiliki implikasi langsung tentang bagaimana koreksi dipahami dalam konteks Kristen global. Dalam budaya berorientasi malu (yang mencakup sebagian besar Asia, Afrika, Timur Tengah, dan Amerika Latin) injil mengatasi rasa malu melalui pemulihan kehormatan. Anak yang diadopsi menerima nama baru, status baru, kedudukan baru di hadapan komunitas. Koreksi dalam konteks ini, ketika berfungsi seperti injil, tidak hanya menyebutkan kegagalan dan menuntut perilaku yang berubah. Ini menyebutkan kegagalan dengan jelas, kemudian menawarkan jalur kembali ke martabat: bukan karena orang itu mendapatkannya, tetapi karena pemulihan adalah apa yang dilakukan injil.",
     "Koreksi tanpa pemulihan dalam konteks ini tidak hanya tidak lengkap secara budaya. Ini tidak lengkap secara teologis. Ini menanggalkan setengah dari injil yang paling siap dipahami oleh budaya-budaya tersebut.",
-    "Implikasi praktisnya: ketika kamu mengoreksi seseorang dalam konteks budaya dengan kepekaan malu yang tinggi, pemulihan bukan opsional. Itu adalah intinya. Jalur kembali kepada kehormatan di hadapan Tuhan dan komunitas bukan renungan terhadap akuntabilitas. Itu adalah apa yang membuat koreksi menjadi tindakan kasih daripada tindakan penghakiman.",
+    "Implikasi praktisnya: ketika Anda mengoreksi seseorang dalam konteks budaya dengan kepekaan malu yang tinggi, pemulihan bukan opsional. Itu adalah intinya. Jalur kembali kepada kehormatan di hadapan Tuhan dan komunitas bukan renungan terhadap akuntabilitas. Itu adalah apa yang membuat koreksi menjadi tindakan kasih daripada tindakan penghakiman.",
   ],
 };
 // ─── Section 9 From the Field ─────────────────────────────────────────────────
@@ -1523,7 +1523,7 @@ function GivingFeedbackSpectrum({ lang }: { lang: Lang }) {
         <text x="462" y="238" textAnchor="middle"
           fontFamily={FONT_BODY} fontSize="11" fontWeight="700"
           letterSpacing="0.08em" fill={ORANGE} opacity="0.9">
-          {t("FRANCE: not where you expect", "PRANCIS: bukan di posisi yang kamu duga")}
+          {t("FRANCE: not where you expect", "PRANCIS: bukan di posisi yang Anda duga")}
         </text>
 
         {/* Band 2 zone labels */}
@@ -1625,7 +1625,7 @@ function ReframeTool({ lang }: { lang: Lang }) {
       <p style={{ ...proseDark, marginBottom: 28 }}>
         {t(
           "Same truth, different register. Try your version, then open the suggested reframe.",
-          "Kebenaran sama, gaya penyampaian berbeda. Coba versimu, lalu buka saran bingkai ulang.",
+          "Kebenaran sama, gaya penyampaian berbeda. Coba versi Anda, lalu buka saran bingkai ulang.",
         )}
       </p>
 
@@ -1649,7 +1649,7 @@ function ReframeTool({ lang }: { lang: Lang }) {
               <textarea
                 value={inputs[idx]}
                 onChange={(e) => setInput(idx, e.target.value)}
-                placeholder={t("Write your reframe here...", "Tulis bingkai ulangmu di sini...")}
+                placeholder={t("Write your reframe here...", "Tulis bingkai ulang Anda di sini...")}
                 readOnly={revealed[idx]}
                 style={{
                   width: "100%",
@@ -1668,7 +1668,7 @@ function ReframeTool({ lang }: { lang: Lang }) {
                   display: "block",
                   marginBottom: 12,
                 }}
-                aria-label={t(`Round ${round.num}: write your reframe`, `Babak ${round.num}: tulis bingkai ulangmu`)}
+                aria-label={t(`Round ${round.num}: write your reframe`, `Babak ${round.num}: tulis bingkai ulang Anda`)}
               />
               <button
                 onClick={() => reveal(idx)}
@@ -1742,15 +1742,15 @@ function ReframeTool({ lang }: { lang: Lang }) {
         <div style={{ display: "flex", alignItems: "flex-start", gap: 16, marginBottom: 12 }}>
           <span style={{ fontFamily: FONT_HEADLINE, fontSize: 44, fontWeight: 700, color: "oklch(35% 0.10 260)", lineHeight: 1 }}>3</span>
           <div>
-            <p style={{ fontFamily: FONT_BODY, fontSize: 16, fontWeight: 800, color: OFF_WHITE, margin: "0 0 4px" }}>{t("Your context", "Konteksmu")}</p>
-            <p style={{ fontFamily: FONT_BODY, fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: ORANGE, margin: 0 }}>{t("Your culture → theirs", "Budayamu → budaya mereka")}</p>
+            <p style={{ fontFamily: FONT_BODY, fontSize: 16, fontWeight: 800, color: OFF_WHITE, margin: "0 0 4px" }}>{t("Your context", "Konteks Anda")}</p>
+            <p style={{ fontFamily: FONT_BODY, fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: ORANGE, margin: 0 }}>{t("Your culture → theirs", "Budaya Anda → budaya mereka")}</p>
           </div>
         </div>
         <div style={{ background: "oklch(20% 0.09 260)", borderRadius: 10, padding: "20px 24px", marginBottom: 20 }}>
           <p style={{ fontFamily: FONT_HEADLINE, fontStyle: "italic", fontSize: 17, color: "oklch(85% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
             {t(
               "Think of one piece of feedback you must give this month. Up or down in intensity? Draft your reframe, then test: could the person repeat back exactly what needs to change?",
-              "Pikirkan satu umpan balik yang harus kamu berikan bulan ini. Naik atau turun intensitasnya? Tulis bingkai ulangmu, lalu uji: bisakah orang itu mengulang dengan tepat apa yang perlu berubah?",
+              "Pikirkan satu umpan balik yang harus Anda berikan bulan ini. Naik atau turun intensitasnya? Tulis bingkai ulang Anda, lalu uji: bisakah orang itu mengulang dengan tepat apa yang perlu berubah?",
             )}
           </p>
         </div>
@@ -1778,7 +1778,7 @@ function ReframeTool({ lang }: { lang: Lang }) {
           aria-label={t("Round 3 private reflection", "Refleksi pribadi babak 3")}
         />
         <p style={{ fontFamily: FONT_BODY, fontSize: 13, fontStyle: "italic", color: "oklch(55% 0.04 260)", lineHeight: 1.6 }}>
-          {t("No submission. No scoring. This round is yours alone.", "Tidak ada pengiriman. Tidak ada penilaian. Babak ini hanya untukmu.")}
+          {t("No submission. No scoring. This round is yours alone.", "Tidak ada pengiriman. Tidak ada penilaian. Babak ini hanya untuk Anda.")}
         </p>
       </div>
     </div>
@@ -2150,7 +2150,7 @@ export default function GivingFeedbackClient({ isSaved, ...rest }: Props) {
           <p style={{ ...proseDark, marginBottom: 0 }}>
             {t(
               "None responded wrongly. Each read the email through the logic their culture gave them. This module teaches you to see that logic and write for it.",
-              "Tak ada yang salah merespons. Masing-masing membaca email itu melalui logika budaya mereka. Modul ini mengajarkanmu melihat logika itu dan menulis untuknya.",
+              "Tak ada yang salah merespons. Masing-masing membaca email itu melalui logika budaya mereka. Modul ini mengajarkan Anda melihat logika itu dan menulis untuknya.",
             )}
           </p>
         </div>
@@ -2203,7 +2203,7 @@ export default function GivingFeedbackClient({ isSaved, ...rest }: Props) {
           <p style={{ fontFamily: FONT_HEADLINE, fontStyle: "italic", fontSize: "clamp(17px, 2vw, 21px)", color: BODY_TEXT, lineHeight: 1.6, textAlign: "center", maxWidth: 620, margin: "40px auto 0" }}>
             {t(
               "Find your culture on both dials. Then the culture you work with most. The gap is where your feedback disappears.",
-              "Temukan budayamu pada kedua skala. Lalu budaya yang paling sering kamu hadapi. Kesenjangan itulah tempat umpan balikmu menghilang.",
+              "Temukan budaya Anda pada kedua skala. Lalu budaya yang paling sering Anda hadapi. Kesenjangan itulah tempat umpan balik Anda menghilang.",
             )}
           </p>
           <DigDeeper
@@ -2422,7 +2422,7 @@ export default function GivingFeedbackClient({ isSaved, ...rest }: Props) {
           <p style={{ ...proseDark, marginBottom: 0 }}>
             {t(
               "Matthew 18 keeps the goal in view: private first, and always \"you have won them back.\" Restoration is the target; correction is the path.",
-              "Matius 18 menjaga tujuannya tetap terlihat: pribadi dahulu, dan selalu \"kamu telah mendapatkannya kembali.\" Pemulihan adalah target; koreksi adalah jalannya.",
+              "Matius 18 menjaga tujuannya tetap terlihat: pribadi dahulu, dan selalu \"engkau telah mendapatnya kembali.\" Pemulihan adalah target; koreksi adalah jalannya.",
             )}
           </p>
           <DigDeeper

@@ -50,13 +50,13 @@ const SPHERES: {
     en_title: "Master Care",
     id_title: "Pemeliharaan Ilahi",
     en_subtitle: "God's care for you",
-    id_subtitle: "Pemeliharaan Tuhan untuk kamu",
+    id_subtitle: "Pemeliharaan Tuhan untuk Anda",
     en_desc: "The foundation of everything. God is not a supervisor tracking your output. He is the shepherd who actively leads you to rest and restores your soul. Before you build any structure, you must believe that God's care for you is not contingent on your performance. He cares for the vessel, not just the mission.",
-    id_desc: "Fondasi dari segalanya. Tuhan bukan pengawas yang melacak outputmu. Ia adalah gembala yang secara aktif membimbingmu ke tempat istirahat dan memulihkan jiwamu. Sebelum kamu membangun struktur apapun, kamu harus percaya bahwa pemeliharaan Tuhan terhadapmu tidak tergantung pada kinerjamu. Ia merawat bejana, bukan hanya misi.",
+    id_desc: "Fondasi dari segalanya. Tuhan bukan pengawas yang melacak output Anda. Ia adalah gembala yang secara aktif membimbing Anda ke tempat istirahat dan memulihkan jiwa Anda. Sebelum Anda membangun struktur apapun, Anda harus percaya bahwa pemeliharaan Tuhan terhadap Anda tidak tergantung pada kinerja Anda. Ia merawat bejana, bukan hanya misi.",
     en_examples: ["Daily communion with God, not as a duty but as a source", "Prayer as honest conversation, not performance", "Trusting that God holds the mission when you step away", "Reading Scripture as nourishment, not information"],
-    id_examples: ["Persekutuan harian dengan Tuhan, bukan sebagai kewajiban tetapi sebagai sumber", "Doa sebagai percakapan jujur, bukan pertunjukan", "Mempercayai bahwa Tuhan memegang misi ketika kamu beristirahat", "Membaca Kitab Suci sebagai makanan rohani, bukan informasi"],
+    id_examples: ["Persekutuan harian dengan Tuhan, bukan sebagai kewajiban tetapi sebagai sumber", "Doa sebagai percakapan jujur, bukan pertunjukan", "Mempercayai bahwa Tuhan memegang misi ketika Anda beristirahat", "Membaca Kitab Suci sebagai makanan rohani, bukan informasi"],
     en_question: "When did you last come to God not to report, request, or produce, but simply to be held? What would it take to protect that space this week?",
-    id_question: "Kapan terakhir kali kamu datang kepada Tuhan bukan untuk melaporkan, meminta, atau menghasilkan, tetapi sekadar untuk ditopang? Apa yang diperlukan untuk melindungi ruang itu minggu ini?",
+    id_question: "Kapan terakhir kali Anda datang kepada Tuhan bukan untuk melaporkan, meminta, atau menghasilkan, tetapi sekadar untuk ditopang? Apa yang diperlukan untuk melindungi ruang itu minggu ini?",
     color: navy,
   },
   {
@@ -65,13 +65,13 @@ const SPHERES: {
     en_title: "Self-Care",
     id_title: "Kepedulian Diri",
     en_subtitle: "Your personal health architecture",
-    id_subtitle: "Pola hidup sehat pribadi kamu",
+    id_subtitle: "Pola hidup sehat pribadi Anda",
     en_desc: "Self-care is not indulgence. It is stewardship. You are the instrument God has chosen to use. The way you manage your body, mind, and spirit directly determines your capacity to love others and lead well. Neglect here is not humility; it is poor stewardship of a resource that belongs to God.",
-    id_desc: "Kepedulian diri bukan kemewahan. Itu adalah penatalayanan. Kamu adalah instrumen yang dipilih Tuhan untuk digunakan. Cara kamu mengelola tubuh, pikiran, dan roh secara langsung menentukan kapasitasmu untuk mengasihi orang lain dan memimpin dengan baik. Mengabaikan hal ini bukan kerendahan hati; itu adalah penatalayanan yang buruk atas sumber daya yang menjadi milik Tuhan.",
+    id_desc: "Kepedulian diri bukan kemewahan. Itu adalah penatalayanan. Anda adalah instrumen yang dipilih Tuhan untuk digunakan. Cara Anda mengelola tubuh, pikiran, dan roh secara langsung menentukan kapasitas Anda untuk mengasihi orang lain dan memimpin dengan baik. Mengabaikan hal ini bukan kerendahan hati; itu adalah penatalayanan yang buruk atas sumber daya yang menjadi milik Tuhan.",
     en_examples: ["Consistent sleep (7 to 8 hours) as a non-negotiable", "Physical movement, whatever fits your context and body", "Mental rest: time without inputs, screens, or demands", "Emotional awareness: naming what you're carrying"],
-    id_examples: ["Tidur yang konsisten (7 hingga 8 jam) sebagai hal yang tidak bisa ditawar", "Gerak fisik, apapun yang sesuai dengan konteks dan tubuhmu", "Istirahat mental: waktu tanpa masukan, layar, atau tuntutan", "Kesadaran emosional: mengungkapkan apa yang kamu tanggung"],
+    id_examples: ["Tidur yang konsisten (7 hingga 8 jam) sebagai hal yang tidak bisa ditawar", "Gerak fisik, apapun yang sesuai dengan konteks dan tubuh Anda", "Istirahat mental: waktu tanpa masukan, layar, atau tuntutan", "Kesadaran emosional: mengungkapkan apa yang Anda tanggung"],
     en_question: "Which of the three, body, mind, or spirit, is most depleted right now? What is one specific thing you could protect for it this week?",
-    id_question: "Di antara ketiganya, tubuh, pikiran, atau roh, mana yang paling terkuras saat ini? Apa satu hal konkret yang bisa kamu lindungi untuknya minggu ini?",
+    id_question: "Di antara ketiganya, tubuh, pikiran, atau roh, mana yang paling terkuras saat ini? Apa satu hal konkret yang bisa Anda lindungi untuknya minggu ini?",
     color: orange,
   },
   {
@@ -82,11 +82,11 @@ const SPHERES: {
     en_subtitle: "Teammates who know the real weight",
     id_subtitle: "Rekan tim yang mengenal beban nyata",
     en_desc: "The people you work alongside are not just colleagues. They are potential co-sustainers. Peer care happens when teammates hold one another's burdens, tell each other the truth, and create space to be human. It requires intentionality: in high-performance cultures, this care is often the first casualty of busyness.",
-    id_desc: "Orang-orang yang bekerja bersamamu bukan sekadar rekan kerja. Mereka adalah pemelihara bersama yang potensial. Kepedulian sesama terjadi ketika anggota tim saling menanggung beban, saling mengatakan kebenaran, dan menciptakan ruang untuk menjadi manusia. Ini membutuhkan kesengajaan: dalam budaya berkinerja tinggi, perawatan ini sering menjadi korban pertama dari kesibukan.",
+    id_desc: "Orang-orang yang bekerja bersama Anda bukan sekadar rekan kerja. Mereka adalah pemelihara bersama yang potensial. Kepedulian sesama terjadi ketika anggota tim saling menanggung beban, saling mengatakan kebenaran, dan menciptakan ruang untuk menjadi manusia. Ini membutuhkan kesengajaan: dalam budaya berkinerja tinggi, perawatan ini sering menjadi korban pertama dari kesibukan.",
     en_examples: ["Regular honest check-ins with a trusted peer, not just task updates", "Permission to name fatigue without it being seen as weakness", "Cross-cultural teams: acknowledge that care languages differ", "Celebrating wins together, not just pushing through to the next challenge"],
     id_examples: ["Waktu berbagi kabar secara jujur dan teratur dengan rekan yang dipercaya, bukan hanya pembaruan tugas", "Izin untuk mengungkapkan kelelahan tanpa dianggap sebagai kelemahan", "Tim lintas budaya: akui bahwa bahasa kepedulian berbeda-beda", "Merayakan kemenangan bersama, bukan hanya terus mendorong ke tantangan berikutnya"],
     en_question: "Who on your team is watching your pace right now, and what signals are you giving them about what is acceptable for them to carry?",
-    id_question: "Siapa di timmu yang sedang mengamati langkahmu saat ini, dan sinyal apa yang kamu berikan kepada mereka tentang apa yang boleh mereka tanggung?",
+    id_question: "Siapa di tim Anda yang sedang mengamati langkah Anda saat ini, dan sinyal apa yang Anda berikan kepada mereka tentang apa yang boleh mereka tanggung?",
     color: navy,
   },
   {
@@ -95,13 +95,13 @@ const SPHERES: {
     en_title: "Sender Care",
     id_title: "Kepedulian dari Pengirim",
     en_subtitle: "Your agency, church, or organisation",
-    id_subtitle: "Lembaga, gereja, atau organisasi kamu",
+    id_subtitle: "Lembaga, gereja, atau organisasi Anda",
     en_desc: "Sustainable leaders need a sending community that actively invests in their wellbeing, not just their output. This includes a clear financial sustainability arrangement — however it is structured, it must be openly named and continuously reviewed so that economic stress does not become a permanent background weight — alongside regular pastoral check-ins, accountability structures, and genuine interest in your personal flourishing. If this is missing or broken, that is a structural problem requiring structural solution, not just more personal resilience.",
-    id_desc: "Pemimpin yang berkelanjutan membutuhkan komunitas pengirim yang secara aktif berinvestasi dalam kesejahteraan mereka, bukan hanya output mereka. Ini termasuk pengaturan keberlanjutan finansial yang jelas — bagaimanapun strukturnya, harus secara terbuka dibicarakan dan terus ditinjau agar tekanan ekonomi tidak menjadi beban latar belakang yang permanen — disertai pendampingan pastoral rutin, struktur akuntabilitas, dan minat sejati dalam pertumbuhan pribadimu. Jika ini hilang atau rusak, itu adalah masalah struktural yang memerlukan solusi struktural, bukan hanya lebih banyak ketahanan pribadi.",
+    id_desc: "Pemimpin yang berkelanjutan membutuhkan komunitas pengirim yang secara aktif berinvestasi dalam kesejahteraan mereka, bukan hanya output mereka. Ini termasuk pengaturan keberlanjutan finansial yang jelas — bagaimanapun strukturnya, harus secara terbuka dibicarakan dan terus ditinjau agar tekanan ekonomi tidak menjadi beban latar belakang yang permanen — disertai pendampingan pastoral rutin, struktur akuntabilitas, dan minat sejati dalam pertumbuhan pribadi Anda. Jika ini hilang atau rusak, itu adalah masalah struktural yang memerlukan solusi struktural, bukan hanya lebih banyak ketahanan pribadi.",
     en_examples: ["Annual review conversations that include wellbeing, not just performance", "A financial arrangement that is clearly defined, sustainable, and kept under active review", "A pastor or mentor who knows your personal situation", "Clear re-entry support and debriefing after difficult seasons"],
-    id_examples: ["Percakapan tinjauan tahunan yang mencakup kesejahteraan, bukan hanya kinerja", "Pengaturan keuangan yang jelas, berkelanjutan, dan ditinjau secara aktif", "Seorang pendeta atau mentor yang mengenal situasi pribadimu", "Dukungan kepulangan dan debriefing yang jelas setelah musim-musim yang sulit"],
+    id_examples: ["Percakapan tinjauan tahunan yang mencakup kesejahteraan, bukan hanya kinerja", "Pengaturan keuangan yang jelas, berkelanjutan, dan ditinjau secara aktif", "Seorang pendeta atau mentor yang mengenal situasi pribadi Anda", "Dukungan kepulangan dan debriefing yang jelas setelah musim-musim yang sulit"],
     en_question: "What is one thing your sending community doesn't know about how you are really doing right now, and what would it take to tell them before the end of this month? If your sender relationship is healthy, what is one way you could go deeper in it?",
-    id_question: "Apa satu hal yang tidak diketahui komunitas pengirimmu tentang kondisimu yang sebenarnya saat ini, dan apa yang diperlukan untuk memberitahu mereka sebelum akhir bulan ini? Jika hubungan pengirimmu sehat, apa satu cara kamu bisa memperdalamnya?",
+    id_question: "Apa satu hal yang tidak diketahui komunitas pengirim Anda tentang kondisi Anda yang sebenarnya saat ini, dan apa yang diperlukan untuk memberitahu mereka sebelum akhir bulan ini? Jika hubungan pengirim Anda sehat, apa satu cara Anda bisa memperdalamnya?",
     color: navy,
   },
   {
@@ -110,13 +110,13 @@ const SPHERES: {
     en_title: "Specialist Care",
     id_title: "Kepedulian Spesialis",
     en_subtitle: "Professional support when you need it",
-    id_subtitle: "Dukungan profesional saat kamu membutuhkannya",
+    id_subtitle: "Dukungan profesional saat Anda membutuhkannya",
     en_desc: "There are moments when the weight you carry requires more than a good friend, a caring team, or a supportive organisation. Professional care (a counsellor, therapist, psychologist, doctor, or spiritual director) is not a sign of failure. It is the wise use of a resource God has provided. In many cross-cultural contexts, seeking specialist care carries stigma. That stigma costs lives and ministries.",
-    id_desc: "Ada saat-saat ketika beban yang kamu tanggung membutuhkan lebih dari sekadar teman yang baik, tim yang peduli, atau organisasi yang mendukung. Kepedulian profesional (konselor, terapis, psikolog, dokter, atau direktur spiritual) bukan tanda kegagalan. Itu adalah penggunaan bijak dari sumber daya yang telah Tuhan sediakan. Dalam banyak konteks lintas budaya, mencari kepedulian spesialis membawa stigma. Stigma itu merugikan kehidupan dan pelayanan.",
+    id_desc: "Ada saat-saat ketika beban yang Anda tanggung membutuhkan lebih dari sekadar teman yang baik, tim yang peduli, atau organisasi yang mendukung. Kepedulian profesional (konselor, terapis, psikolog, dokter, atau direktur spiritual) bukan tanda kegagalan. Itu adalah penggunaan bijak dari sumber daya yang telah Tuhan sediakan. Dalam banyak konteks lintas budaya, mencari kepedulian spesialis membawa stigma. Stigma itu merugikan kehidupan dan pelayanan.",
     en_examples: ["Regular counselling or therapy, preventive rather than crisis response only", "Medical check-ups, including mental health screening", "A spiritual director who provides structured reflection", "Crisis debriefing after traumatic field experiences"],
     id_examples: ["Konseling atau terapi teratur, preventif bukan hanya respons krisis", "Pemeriksaan kesehatan rutin, termasuk skrining kesehatan mental", "Seorang direktur spiritual yang memberikan refleksi terstruktur", "Debriefing krisis setelah pengalaman lapangan yang traumatis"],
     en_question: "Is there something you are carrying that would benefit from a professional conversation? What has been the barrier to seeking it?",
-    id_question: "Apakah ada sesuatu yang kamu tanggung yang akan mendapat manfaat dari percakapan profesional? Apa yang selama ini menjadi hambatan untuk mencarinya?",
+    id_question: "Apakah ada sesuatu yang Anda tanggung yang akan mendapat manfaat dari percakapan profesional? Apa yang selama ini menjadi hambatan untuk mencarinya?",
     color: navy,
   },
 ];
@@ -144,25 +144,25 @@ const STRESS_AUDIT: StressAuditArea[] = [
     questions: [
       {
         en: "How often do you end your workday feeling you focused on what matters most, rather than just responding to what was urgent?",
-        id: "Seberapa sering kamu mengakhiri hari kerja dengan merasa telah fokus pada hal yang paling penting, bukan hanya merespons yang mendesak?",
+        id: "Seberapa sering Anda mengakhiri hari kerja dengan merasa telah fokus pada hal yang paling penting, bukan hanya merespons yang mendesak?",
         en_anchor_low: "Rarely", id_anchor_low: "Jarang",
         en_anchor_high: "Consistently", id_anchor_high: "Konsisten",
       },
       {
         en: "When unexpected demands arise, how much margin do you have to absorb them without dropping essential commitments?",
-        id: "Ketika tuntutan tak terduga muncul, seberapa besar ruang yang kamu miliki untuk menyerapnya tanpa mengabaikan komitmen penting?",
+        id: "Ketika tuntutan tak terduga muncul, seberapa besar ruang yang Anda miliki untuk menyerapnya tanpa mengabaikan komitmen penting?",
         en_anchor_low: "No margin", id_anchor_low: "Tidak ada ruang",
         en_anchor_high: "Plenty of room", id_anchor_high: "Banyak ruang",
       },
       {
         en: "How sustainable does your current pace feel? Could you maintain it for another six months without significant personal cost?",
-        id: "Seberapa berkelanjutan kecepatan kerjamu saat ini? Bisakah kamu mempertahankannya selama enam bulan lagi tanpa pengorbanan pribadi yang signifikan?",
+        id: "Seberapa berkelanjutan kecepatan kerja Anda saat ini? Bisakah Anda mempertahankannya selama enam bulan lagi tanpa pengorbanan pribadi yang signifikan?",
         en_anchor_low: "Unsustainable", id_anchor_low: "Tidak berkelanjutan",
         en_anchor_high: "Sustainable", id_anchor_high: "Berkelanjutan",
       },
       {
         en: "How clearly have you communicated your workload limits to those who place demands on your time?",
-        id: "Seberapa jelas kamu telah mengomunikasikan batas beban kerjamu kepada mereka yang meminta waktumu?",
+        id: "Seberapa jelas Anda telah mengomunikasikan batas beban kerja Anda kepada mereka yang meminta waktu Anda?",
         en_anchor_low: "Not at all", id_anchor_low: "Sama sekali tidak",
         en_anchor_high: "Very clearly", id_anchor_high: "Sangat jelas",
       },
@@ -176,25 +176,25 @@ const STRESS_AUDIT: StressAuditArea[] = [
     questions: [
       {
         en: "How consistently are you getting 7 to 8 hours of sleep each night?",
-        id: "Seberapa konsisten kamu mendapatkan 7 hingga 8 jam tidur setiap malam?",
+        id: "Seberapa konsisten Anda mendapatkan 7 hingga 8 jam tidur setiap malam?",
         en_anchor_low: "Rarely", id_anchor_low: "Jarang",
         en_anchor_high: "Almost always", id_anchor_high: "Hampir selalu",
       },
       {
         en: "How often are you engaging in physical movement that genuinely restores your energy?",
-        id: "Seberapa sering kamu melakukan gerakan fisik yang benar-benar memulihkan energimu?",
+        id: "Seberapa sering Anda melakukan gerakan fisik yang benar-benar memulihkan energi Anda?",
         en_anchor_low: "Rarely", id_anchor_low: "Jarang",
         en_anchor_high: "Regularly", id_anchor_high: "Secara teratur",
       },
       {
         en: "How well are you eating in ways that sustain your energy throughout the day rather than relying on stimulants?",
-        id: "Seberapa baik kamu makan dengan cara yang menopang energimu sepanjang hari, bukan mengandalkan stimulan?",
+        id: "Seberapa baik Anda makan dengan cara yang menopang energi Anda sepanjang hari, bukan mengandalkan stimulan?",
         en_anchor_low: "Poorly", id_anchor_low: "Buruk",
         en_anchor_high: "Well", id_anchor_high: "Baik",
       },
       {
         en: "How would you rate your overall physical energy for the actual demands of your role right now?",
-        id: "Bagaimana kamu menilai energi fisik keseluruhanmu untuk tuntutan peranmu saat ini?",
+        id: "Bagaimana Anda menilai energi fisik keseluruhan Anda untuk tuntutan peran Anda saat ini?",
         en_anchor_low: "Depleted", id_anchor_low: "Terkuras",
         en_anchor_high: "Strong", id_anchor_high: "Kuat",
       },
@@ -208,25 +208,25 @@ const STRESS_AUDIT: StressAuditArea[] = [
     questions: [
       {
         en: "How often do you spend time with God that feels genuinely nourishing rather than obligatory?",
-        id: "Seberapa sering kamu menghabiskan waktu bersama Tuhan yang terasa benar-benar memelihara, bukan sekadar kewajiban?",
+        id: "Seberapa sering Anda menghabiskan waktu bersama Tuhan yang terasa benar-benar memelihara, bukan sekadar kewajiban?",
         en_anchor_low: "Rarely", id_anchor_low: "Jarang",
         en_anchor_high: "Regularly", id_anchor_high: "Secara teratur",
       },
       {
         en: "How connected do you feel to God's presence in your daily work and relationships, not just in designated spiritual time?",
-        id: "Seberapa terhubung kamu dengan kehadiran Tuhan dalam pekerjaan dan hubunganmu sehari-hari, bukan hanya dalam waktu rohani yang ditentukan?",
+        id: "Seberapa terhubung Anda dengan kehadiran Tuhan dalam pekerjaan dan hubungan Anda sehari-hari, bukan hanya dalam waktu rohani yang ditentukan?",
         en_anchor_low: "Disconnected", id_anchor_low: "Terputus",
         en_anchor_high: "Deeply connected", id_anchor_high: "Sangat terhubung",
       },
       {
         en: "How honest is your prayer life? Does it include your doubts, fears, and frustrations, or mostly your requests and reports?",
-        id: "Seberapa jujur kehidupan doamu? Apakah mencakup keraguan, ketakutan, dan frustrasimu, atau sebagian besar hanya permintaan dan laporan?",
+        id: "Seberapa jujur kehidupan doa Anda? Apakah mencakup keraguan, ketakutan, dan frustrasi Anda, atau sebagian besar hanya permintaan dan laporan?",
         en_anchor_low: "Surface only", id_anchor_low: "Permukaan saja",
         en_anchor_high: "Fully honest", id_anchor_high: "Sepenuhnya jujur",
       },
       {
         en: "How embedded are you in a local community of faith where you genuinely receive, rather than only give?",
-        id: "Seberapa tertanam kamu dalam komunitas iman lokal di mana kamu benar-benar menerima, bukan hanya memberi?",
+        id: "Seberapa tertanam Anda dalam komunitas iman lokal di mana Anda benar-benar menerima, bukan hanya memberi?",
         en_anchor_low: "Isolated", id_anchor_low: "Terisolasi",
         en_anchor_high: "Well embedded", id_anchor_high: "Sangat tertanam",
       },
@@ -240,25 +240,25 @@ const STRESS_AUDIT: StressAuditArea[] = [
     questions: [
       {
         en: "How many people in your life have full access to how you are really doing: not your ministry update, but your actual state?",
-        id: "Berapa banyak orang dalam hidupmu yang memiliki akses penuh ke kondisimu yang sesungguhnya: bukan pembaruan pelayananmu, tetapi keadaanmu yang sebenarnya?",
+        id: "Berapa banyak orang dalam hidup Anda yang memiliki akses penuh ke kondisi Anda yang sesungguhnya: bukan pembaruan pelayanan Anda, tetapi keadaan Anda yang sebenarnya?",
         en_anchor_low: "No one", id_anchor_low: "Tidak ada",
         en_anchor_high: "Several", id_anchor_high: "Beberapa",
       },
       {
         en: "How much genuine mutual support exists in your closest work relationships? Can weight be shared?",
-        id: "Seberapa besar dukungan saling yang tulus dalam hubungan kerjamu yang paling dekat? Bisakah beban dibagi?",
+        id: "Seberapa besar dukungan saling yang tulus dalam hubungan kerja Anda yang paling dekat? Bisakah beban dibagi?",
         en_anchor_low: "Very little", id_anchor_low: "Sangat sedikit",
         en_anchor_high: "Significant", id_anchor_high: "Signifikan",
       },
       {
         en: "How honest are your most important relationships? Can difficult things be said and received without damage?",
-        id: "Seberapa jujur hubunganmu yang paling penting? Bisakah hal-hal sulit dikatakan dan diterima tanpa merusak?",
+        id: "Seberapa jujur hubungan Anda yang paling penting? Bisakah hal-hal sulit dikatakan dan diterima tanpa merusak?",
         en_anchor_low: "Rarely", id_anchor_low: "Jarang",
         en_anchor_high: "Consistently", id_anchor_high: "Konsisten",
       },
       {
         en: "How connected do you feel to the people who matter most to you right now?",
-        id: "Seberapa terhubung kamu dengan orang-orang yang paling berarti bagimu saat ini?",
+        id: "Seberapa terhubung Anda dengan orang-orang yang paling berarti bagi Anda saat ini?",
         en_anchor_low: "Distant", id_anchor_low: "Jauh",
         en_anchor_high: "Close", id_anchor_high: "Dekat",
       },
@@ -272,25 +272,25 @@ const STRESS_AUDIT: StressAuditArea[] = [
     questions: [
       {
         en: "How often does financial concern actively occupy your attention as a source of stress?",
-        id: "Seberapa sering kekhawatiran finansial secara aktif menyita perhatianmu sebagai sumber stres?",
+        id: "Seberapa sering kekhawatiran finansial secara aktif menyita perhatian Anda sebagai sumber stres?",
         en_anchor_low: "Daily", id_anchor_low: "Setiap hari",
         en_anchor_high: "Rarely", id_anchor_high: "Jarang",
       },
       {
         en: "How adequately does your current income or support meet your basic needs and existing commitments?",
-        id: "Seberapa memadai penghasilan atau dukunganmu saat ini untuk memenuhi kebutuhan dasar dan komitmen yang ada?",
+        id: "Seberapa memadai penghasilan atau dukungan Anda saat ini untuk memenuhi kebutuhan dasar dan komitmen yang ada?",
         en_anchor_low: "Not adequately", id_anchor_low: "Tidak memadai",
         en_anchor_high: "Well", id_anchor_high: "Baik",
       },
       {
         en: "How much financial margin do you have to absorb unexpected costs without significant anxiety?",
-        id: "Seberapa besar ruang finansial yang kamu miliki untuk menyerap biaya tak terduga tanpa kecemasan yang signifikan?",
+        id: "Seberapa besar ruang finansial yang Anda miliki untuk menyerap biaya tak terduga tanpa kecemasan yang signifikan?",
         en_anchor_low: "None", id_anchor_low: "Tidak ada",
         en_anchor_high: "Significant", id_anchor_high: "Signifikan",
       },
       {
         en: "How stable does your financial situation feel looking six months ahead?",
-        id: "Seberapa stabil situasi finansialmu jika melihat enam bulan ke depan?",
+        id: "Seberapa stabil situasi finansial Anda jika melihat enam bulan ke depan?",
         en_anchor_low: "Very uncertain", id_anchor_low: "Sangat tidak pasti",
         en_anchor_high: "Stable", id_anchor_high: "Stabil",
       },
@@ -304,25 +304,25 @@ const STRESS_AUDIT: StressAuditArea[] = [
     questions: [
       {
         en: "How present and genuinely connected are you with your family in the time you spend together, not physically present but mentally elsewhere?",
-        id: "Seberapa hadir dan benar-benar terhubung kamu dengan keluargamu dalam waktu yang kamu habiskan bersama, bukan sekadar hadir secara fisik tetapi pikiran di tempat lain?",
+        id: "Seberapa hadir dan benar-benar terhubung Anda dengan keluarga Anda dalam waktu yang Anda habiskan bersama, bukan sekadar hadir secara fisik tetapi pikiran di tempat lain?",
         en_anchor_low: "Rarely present", id_anchor_low: "Jarang hadir",
         en_anchor_high: "Fully present", id_anchor_high: "Sepenuhnya hadir",
       },
       {
         en: "How well does your family understand and actively support the demands of your calling?",
-        id: "Seberapa baik keluargamu memahami dan secara aktif mendukung tuntutan panggilanmu?",
+        id: "Seberapa baik keluarga Anda memahami dan secara aktif mendukung tuntutan panggilan Anda?",
         en_anchor_low: "Poorly", id_anchor_low: "Buruk",
         en_anchor_high: "Very well", id_anchor_high: "Sangat baik",
       },
       {
         en: "How often does work pressure spill into your home environment in ways that damage family relationships?",
-        id: "Seberapa sering tekanan pekerjaan merembes ke lingkungan rumahmu dengan cara yang merusak hubungan keluarga?",
+        id: "Seberapa sering tekanan pekerjaan merembes ke lingkungan rumah Anda dengan cara yang merusak hubungan keluarga?",
         en_anchor_low: "Frequently", id_anchor_low: "Sering",
         en_anchor_high: "Rarely", id_anchor_high: "Jarang",
       },
       {
         en: "How would the people closest to you describe your availability to them right now?",
-        id: "Bagaimana orang-orang terdekatmu akan menggambarkan ketersediaanmu bagi mereka saat ini?",
+        id: "Bagaimana orang-orang terdekat Anda akan menggambarkan ketersediaan Anda bagi mereka saat ini?",
         en_anchor_low: "Largely unavailable", id_anchor_low: "Sebagian besar tidak tersedia",
         en_anchor_high: "Genuinely available", id_anchor_high: "Benar-benar tersedia",
       },
@@ -336,25 +336,25 @@ const STRESS_AUDIT: StressAuditArea[] = [
     questions: [
       {
         en: "How clearly connected is your daily work to the calling that brought you to it in the first place?",
-        id: "Seberapa jelas pekerjaan harianmu terhubung dengan panggilan yang membawamu ke sini sejak awal?",
+        id: "Seberapa jelas pekerjaan harian Anda terhubung dengan panggilan yang membawa Anda ke sini sejak awal?",
         en_anchor_low: "Disconnected", id_anchor_low: "Terputus",
         en_anchor_high: "Very clear", id_anchor_high: "Sangat jelas",
       },
       {
         en: "How motivated do you feel by the work itself, not by obligation or duty, but genuine engagement?",
-        id: "Seberapa termotivasi kamu oleh pekerjaan itu sendiri, bukan karena kewajiban atau tugas, tetapi keterlibatan yang tulus?",
+        id: "Seberapa termotivasi Anda oleh pekerjaan itu sendiri, bukan karena kewajiban atau tugas, tetapi keterlibatan yang tulus?",
         en_anchor_low: "Disengaged", id_anchor_low: "Tidak terlibat",
         en_anchor_high: "Genuinely motivated", id_anchor_high: "Benar-benar termotivasi",
       },
       {
         en: "How often do you experience a concrete sense of meaning and contribution in what you do?",
-        id: "Seberapa sering kamu merasakan makna dan kontribusi yang nyata dalam apa yang kamu lakukan?",
+        id: "Seberapa sering Anda merasakan makna dan kontribusi yang nyata dalam apa yang Anda lakukan?",
         en_anchor_low: "Rarely", id_anchor_low: "Jarang",
         en_anchor_high: "Regularly", id_anchor_high: "Secara teratur",
       },
       {
         en: "How aligned does your current role feel with where you believe God is leading you?",
-        id: "Seberapa selaras peranmu saat ini dengan ke mana kamu percaya Tuhan sedang membimbingmu?",
+        id: "Seberapa selaras peran Anda saat ini dengan ke mana Anda percaya Tuhan sedang membimbing Anda?",
         en_anchor_low: "Misaligned", id_anchor_low: "Tidak selaras",
         en_anchor_high: "Strongly aligned", id_anchor_high: "Sangat selaras",
       },
@@ -368,25 +368,25 @@ const STRESS_AUDIT: StressAuditArea[] = [
     questions: [
       {
         en: "How well do you identify and name your emotional state as you are experiencing it, rather than suppressing it?",
-        id: "Seberapa baik kamu mengenali dan mengungkapkan kondisi emosionalmu saat mengalaminya, bukan menekannya?",
+        id: "Seberapa baik Anda mengenali dan mengungkapkan kondisi emosional Anda saat mengalaminya, bukan menekannya?",
         en_anchor_low: "Rarely", id_anchor_low: "Jarang",
         en_anchor_high: "Consistently", id_anchor_high: "Konsisten",
       },
       {
         en: "How often do you actively process difficult experiences: with a trusted person, through writing, or in honest prayer?",
-        id: "Seberapa sering kamu secara aktif mengolah pengalaman sulit: dengan orang yang dipercaya, melalui tulisan, atau dalam doa yang jujur?",
+        id: "Seberapa sering Anda secara aktif mengolah pengalaman sulit: dengan orang yang dipercaya, melalui tulisan, atau dalam doa yang jujur?",
         en_anchor_low: "Almost never", id_anchor_low: "Hampir tidak pernah",
         en_anchor_high: "Regularly", id_anchor_high: "Secara teratur",
       },
       {
         en: "How much unprocessed weight are you carrying right now: things you have not had space to work through?",
-        id: "Seberapa besar beban yang belum diproses yang kamu tanggung saat ini: hal-hal yang belum sempat kamu selesaikan?",
+        id: "Seberapa besar beban yang belum diproses yang Anda tanggung saat ini: hal-hal yang belum sempat Anda selesaikan?",
         en_anchor_low: "Very heavy", id_anchor_low: "Sangat berat",
         en_anchor_high: "Minimal", id_anchor_high: "Minimal",
       },
       {
         en: "How emotionally honest are you with the people closest to you about what you are actually carrying?",
-        id: "Seberapa jujur kamu secara emosional dengan orang-orang terdekatmu tentang apa yang sebenarnya kamu tanggung?",
+        id: "Seberapa jujur Anda secara emosional dengan orang-orang terdekat Anda tentang apa yang sebenarnya Anda tanggung?",
         en_anchor_low: "Very guarded", id_anchor_low: "Sangat tertutup",
         en_anchor_high: "Fully open", id_anchor_high: "Sepenuhnya terbuka",
       },
@@ -400,25 +400,25 @@ const STRESS_AUDIT: StressAuditArea[] = [
     questions: [
       {
         en: "How often do you engage in a creative activity that is genuinely disconnected from your ministry or professional role?",
-        id: "Seberapa sering kamu terlibat dalam aktivitas kreatif yang benar-benar terpisah dari pelayanan atau peran profesionalmu?",
+        id: "Seberapa sering Anda terlibat dalam aktivitas kreatif yang benar-benar terpisah dari pelayanan atau peran profesional Anda?",
         en_anchor_low: "Never", id_anchor_low: "Tidak pernah",
         en_anchor_high: "Regularly", id_anchor_high: "Secara teratur",
       },
       {
         en: "How alive does your inner creative life feel right now: your capacity for wonder, play, and making?",
-        id: "Seberapa hidup kehidupan kreatif batinmu saat ini: kapasitasmu untuk kekaguman, bermain, dan berkreasi?",
+        id: "Seberapa hidup kehidupan kreatif batin Anda saat ini: kapasitas Anda untuk kekaguman, bermain, dan berkreasi?",
         en_anchor_low: "Dry", id_anchor_low: "Kering",
         en_anchor_high: "Alive", id_anchor_high: "Hidup",
       },
       {
         en: "How much time do you give to activities that restore you through beauty, exploration, or simply doing something you enjoy?",
-        id: "Seberapa banyak waktu yang kamu berikan untuk aktivitas yang memulihkanmu melalui keindahan, eksplorasi, atau sekadar melakukan sesuatu yang kamu nikmati?",
+        id: "Seberapa banyak waktu yang Anda berikan untuk aktivitas yang memulihkan Anda melalui keindahan, eksplorasi, atau sekadar melakukan sesuatu yang Anda nikmati?",
         en_anchor_low: "Almost none", id_anchor_low: "Hampir tidak ada",
         en_anchor_high: "Meaningful time", id_anchor_high: "Waktu yang berarti",
       },
       {
         en: "How often do you create or explore something simply for the joy of it, with no outcome in mind?",
-        id: "Seberapa sering kamu menciptakan atau menjelajahi sesuatu hanya karena kesenangannya, tanpa tujuan tertentu?",
+        id: "Seberapa sering Anda menciptakan atau menjelajahi sesuatu hanya karena kesenangannya, tanpa tujuan tertentu?",
         en_anchor_low: "Never", id_anchor_low: "Tidak pernah",
         en_anchor_high: "Often", id_anchor_high: "Sering",
       },
@@ -432,25 +432,25 @@ const STRESS_AUDIT: StressAuditArea[] = [
     questions: [
       {
         en: "How consistently are you protecting one full day each week as genuine rest, genuinely offline from your responsibilities?",
-        id: "Seberapa konsisten kamu melindungi satu hari penuh setiap minggu sebagai istirahat sejati, benar-benar offline dari tanggung jawabmu?",
+        id: "Seberapa konsisten Anda melindungi satu hari penuh setiap minggu sebagai istirahat sejati, benar-benar offline dari tanggung jawab Anda?",
         en_anchor_low: "Rarely", id_anchor_low: "Jarang",
         en_anchor_high: "Consistently", id_anchor_high: "Konsisten",
       },
       {
         en: "How restful is the rest you take? Are you truly recovering, or are you resting while remaining mentally on?",
-        id: "Seberapa memulihkan istirahat yang kamu ambil? Apakah kamu benar-benar pulih, atau beristirahat sambil tetap aktif secara mental?",
+        id: "Seberapa memulihkan istirahat yang Anda ambil? Apakah Anda benar-benar pulih, atau beristirahat sambil tetap aktif secara mental?",
         en_anchor_low: "Not restful", id_anchor_low: "Tidak memulihkan",
         en_anchor_high: "Genuinely restorative", id_anchor_high: "Benar-benar memulihkan",
       },
       {
         en: "How much guilt or resistance do you experience when you stop working before all the tasks are done?",
-        id: "Seberapa besar rasa bersalah atau penolakan yang kamu rasakan ketika berhenti bekerja sebelum semua tugas selesai?",
+        id: "Seberapa besar rasa bersalah atau penolakan yang Anda rasakan ketika berhenti bekerja sebelum semua tugas selesai?",
         en_anchor_low: "Significant guilt", id_anchor_low: "Rasa bersalah yang besar",
         en_anchor_high: "Little or none", id_anchor_high: "Sedikit atau tidak ada",
       },
       {
         en: "How intentional are you about creating genuine silence and stillness in your week?",
-        id: "Seberapa disengaja kamu dalam menciptakan keheningan dan ketenangan sejati dalam minggumu?",
+        id: "Seberapa disengaja Anda dalam menciptakan keheningan dan ketenangan sejati dalam minggu Anda?",
         en_anchor_low: "Not intentional", id_anchor_low: "Tidak disengaja",
         en_anchor_high: "Very intentional", id_anchor_high: "Sangat disengaja",
       },
@@ -477,9 +477,9 @@ const HABIT_CATEGORIES: {
     en_title: "Body",
     id_title: "Tubuh",
     en_tagline: "Your physical instrument",
-    id_tagline: "Instrumen fisik kamu",
+    id_tagline: "Instrumen fisik Anda",
     en_desc: "Your body is not separate from your ministry — it is the medium through which all of it happens. Leaders who neglect their physical health are not more sacrificial. They are less sustainable. Treat your body as the instrument it is.",
-    id_desc: "Tubuh kamu tidak terpisah dari pelayanan kamu — tubuh adalah medium di mana semua itu terjadi. Pemimpin yang mengabaikan kesehatan fisik mereka tidak lebih berkorban. Mereka lebih cepat habis. Perlakukan tubuh kamu sebagai instrumen yang seharusnya.",
+    id_desc: "Tubuh Anda tidak terpisah dari pelayanan Anda — tubuh adalah medium di mana semua itu terjadi. Pemimpin yang mengabaikan kesehatan fisik mereka tidak lebih berkorban. Mereka lebih cepat habis. Perlakukan tubuh Anda sebagai instrumen yang seharusnya.",
     habits: [
       {
         en: "Sleep 7 to 8 hours⁷. Not as a reward for finishing, but as a daily non-negotiable. Chronic sleep debt is not dedication — it is slow self-destruction.",
@@ -487,7 +487,7 @@ const HABIT_CATEGORIES: {
       },
       {
         en: "Move your body for 30 minutes, three times a week. Adapt the form to your context — walking is enough. Your cardiovascular health predicts your cognitive sharpness⁸.",
-        id: "Gerakkan tubuh kamu selama 30 menit, tiga kali seminggu. Sesuaikan bentuknya dengan konteks kamu — berjalan kaki sudah cukup. Kesehatan kardiovaskular kamu memprediksi ketajaman kognitif kamu⁸.",
+        id: "Gerakkan tubuh Anda selama 30 menit, tiga kali seminggu. Sesuaikan bentuknya dengan konteks Anda — berjalan kaki sudah cukup. Kesehatan kardiovaskular Anda memprediksi ketajaman kognitif kamu⁸.",
       },
       {
         en: "Eat food that sustains rather than numbs. In high-stress seasons, leaders often default to stimulants (caffeine, sugar) and neglect real nutrition. Notice the pattern.",
@@ -503,7 +503,7 @@ const HABIT_CATEGORIES: {
     en_title: "Mind",
     id_title: "Pikiran",
     en_tagline: "Your cognitive and emotional capacity",
-    id_tagline: "Kapasitas kognitif dan emosional kamu",
+    id_tagline: "Kapasitas kognitif dan emosional Anda",
     en_desc: "The mind needs input, processing time, and genuine limits. Leaders who never stop taking in information, never process what they experience, and never set cognitive limits eventually produce neither wisdom nor clarity — only noise.",
     id_desc: "Pikiran membutuhkan masukan, waktu pemrosesan, dan batasan yang sesungguhnya. Pemimpin yang tidak pernah berhenti menerima informasi, tidak pernah mengolah pengalaman mereka, dan tidak pernah menetapkan batasan kognitif pada akhirnya tidak menghasilkan kebijaksanaan atau kejernihan — hanya kebisingan.",
     habits: [
@@ -513,11 +513,11 @@ const HABIT_CATEGORIES: {
       },
       {
         en: "Create 20 minutes of daily processing time — journalling, walking without a podcast, or quiet prayer. Your brain needs white space to integrate experience into learning.",
-        id: "Ciptakan 20 menit waktu pemrosesan harian — jurnal, berjalan tanpa podcast, atau doa yang tenang. Otak kamu membutuhkan ruang kosong untuk mengintegrasikan pengalaman menjadi pembelajaran.",
+        id: "Ciptakan 20 menit waktu pemrosesan harian — jurnal, berjalan tanpa podcast, atau doa yang tenang. Otak Anda membutuhkan ruang kosong untuk mengintegrasikan pengalaman menjadi pembelajaran.",
       },
       {
         en: "Set a digital boundary: no screens for the first 30 minutes of your morning and the last 30 minutes before sleep. These are your highest-value thinking windows — protect them.",
-        id: "Tetapkan batasan digital: tidak ada layar selama 30 menit pertama di pagi hari dan 30 menit terakhir sebelum tidur. Ini adalah jendela berpikir bernilai tertinggi kamu — lindungi mereka.",
+        id: "Tetapkan batasan digital: tidak ada layar selama 30 menit pertama di pagi hari dan 30 menit terakhir sebelum tidur. Ini adalah jendela berpikir bernilai tertinggi Anda — lindungi mereka.",
       },
     ],
   },
@@ -529,13 +529,13 @@ const HABIT_CATEGORIES: {
     en_title: "Spirit",
     id_title: "Roh",
     en_tagline: "Your connection to the source",
-    id_tagline: "Koneksi kamu ke sumber",
+    id_tagline: "Koneksi Anda ke sumber",
     en_desc: "Spiritual health is not measured by religious activity — it is measured by your connectedness to God. A leader can be extraordinarily busy with spiritual work and be spiritually empty. The habits here are not about performance. They are about remaining connected to the one who called you.",
-    id_desc: "Kesehatan rohani tidak diukur dari aktivitas keagamaan — tetapi dari koneksi kamu dengan Tuhan. Seorang pemimpin bisa sangat sibuk dengan pekerjaan rohani dan tetap kosong secara rohani. Kebiasaan di sini bukan tentang performa. Ini tentang tetap terhubung dengan Dia yang memanggil kamu.",
+    id_desc: "Kesehatan rohani tidak diukur dari aktivitas keagamaan — tetapi dari koneksi Anda dengan Tuhan. Seorang pemimpin bisa sangat sibuk dengan pekerjaan rohani dan tetap kosong secara rohani. Kebiasaan di sini bukan tentang performa. Ini tentang tetap terhubung dengan Dia yang memanggil Anda.",
     habits: [
       {
         en: "Pray honestly — including your doubts, frustrations, and fears. Jesus withdrew to solitary places not to report his successes but to remain in communion with the Father.",
-        id: "Berdoa dengan jujur — termasuk keraguan, frustrasi, dan ketakutan kamu. Yesus menyendiri ke tempat-tempat yang sunyi bukan untuk melaporkan keberhasilan-Nya tetapi untuk tetap berada dalam persekutuan dengan Bapa.",
+        id: "Berdoa dengan jujur — termasuk keraguan, frustrasi, dan ketakutan Anda. Yesus menyendiri ke tempat-tempat yang sunyi bukan untuk melaporkan keberhasilan-Nya tetapi untuk tetap berada dalam persekutuan dengan Bapa.",
       },
       {
         en: "Read Scripture slowly — not for sermon preparation or content production, but for personal nourishment. Two verses read meditatively sustain more than two chapters read for information.",
@@ -543,7 +543,7 @@ const HABIT_CATEGORIES: {
       },
       {
         en: "Stay embedded in a local community of faith. Cross-cultural leaders are especially vulnerable to becoming 'everyone's pastor and no one's parishioner.' Find a community where you receive, not only give.",
-        id: "Tetaplah terhubung dalam komunitas iman lokal. Pemimpin lintas budaya sangat rentan menjadi 'gembala semua orang dan jemaat tidak seorang pun.' Temukan komunitas di mana kamu menerima, bukan hanya memberi.",
+        id: "Tetaplah terhubung dalam komunitas iman lokal. Pemimpin lintas budaya sangat rentan menjadi 'gembala semua orang dan jemaat tidak seorang pun.' Temukan komunitas di mana Anda menerima, bukan hanya memberi.",
       },
     ],
   },
@@ -552,7 +552,7 @@ const HABIT_CATEGORIES: {
 // -- FIELD STORY ---------------------------------------------------------------
 const FIELD_STORY = {
   en: "A field worker I know — I'll call her Miriam — sent me a message at 11pm on a Tuesday. She was asking for advice about her team. She wasn't burned out yet. Or so she thought.\n\nWe talked for an hour. Somewhere in the middle of the conversation, she mentioned she hadn't taken a full day off in four months. She said it almost as an aside, as if it were unremarkable.\n\nI asked how that felt. She said it felt normal. That was the part that worried me.\n\nWhen I pressed further, the picture became clearer. Her organisation had no structured pastoral check-in. Her sending church's idea of support was a WhatsApp message once a month. Her teammates were equally overloaded — so asking anyone for help felt like adding to their burden. She was quietly filling every role that wasn't getting filled, without telling anyone.\n\nThe spheres around her had collapsed one by one. Not dramatically. Just gradually.\n\nWhat she described wasn't a character flaw. It was an architecture problem. She had been faithful in every visible dimension — the work was good, the relationships were real, the impact was measurable. But no one had built the scaffolding that was supposed to hold her up. And she had been too busy holding everyone else up to notice.\n\nWe made a plan. She started with the Stress Audit. Her scores on Peer Care and Sender Care were the lowest. She started one honest conversation with her team leader. Then another. Slowly, the invisible weight became something speakable.\n\nShe is still in the field. She is pacing differently now. Not perfectly — but she knows what the slippage looks like, and she has people who notice it too.\n\nThat is the difference sustainable pace makes. Not the absence of pressure. Just the architecture to hold you when it comes.",
-  id: "Seorang pekerja lapangan yang saya kenal — sebut saja Miriam — mengirim pesan pukul 11 malam di hari Selasa. Dia meminta saran tentang timnya. Dia belum burnout. Begitu pikirnya.\n\nKami berbicara selama satu jam. Di tengah percakapan, dia menyebutkan bahwa dia tidak mengambil hari libur penuh selama empat bulan. Dia mengatakannya hampir sebagai tambahan, seolah itu bukan hal yang luar biasa.\n\nSaya bertanya bagaimana rasanya. Dia bilang terasa normal. Bagian itulah yang membuat saya khawatir.\n\nKetika saya terus bertanya, gambarannya semakin jelas. Organisasinya tidak memiliki pendampingan pastoral rutin yang terstruktur. Cara gereja pengirimnya memberikan dukungan adalah pesan WhatsApp sekali sebulan. Rekan-rekannya sama-sama kelebihan beban — jadi meminta bantuan kepada siapa pun terasa seperti menambah beban mereka. Dia diam-diam mengisi setiap peran yang tidak terisi, tanpa memberi tahu siapa pun.\n\nLingkup kepedulian di sekitarnya runtuh satu per satu. Bukan secara dramatis. Hanya secara bertahap.\n\nApa yang dia gambarkan bukan cacat karakter. Itu masalah struktur. Dia telah setia dalam setiap dimensi yang terlihat — pekerjaannya baik, hubungannya nyata, dampaknya terukur. Tetapi tidak ada yang membangun perancah yang seharusnya menopangnya. Dan dia terlalu sibuk menopang orang lain untuk menyadarinya.\n\nKami membuat rencana. Dia memulai dengan Audit Stres. Skornya pada Kepedulian Sesama dan Kepedulian dari Pengirim adalah yang terendah. Dia memulai satu percakapan jujur dengan pemimpin timnya. Lalu satu lagi. Perlahan, beban yang tidak terlihat menjadi sesuatu yang bisa dibicarakan.\n\nDia masih di lapangan. Sekarang dia mengatur kecepatannya secara berbeda. Tidak sempurna — tetapi dia tahu seperti apa kemerosotan itu, dan ada orang-orang yang juga memperhatikannya.\n\nItulah perbedaan yang dibuat oleh kecepatan yang berkelanjutan. Bukan ketiadaan tekanan. Hanya struktur untuk menopangmu ketika tekanan itu datang.",
+  id: "Seorang pekerja lapangan yang saya kenal — sebut saja Miriam — mengirim pesan pukul 11 malam di hari Selasa. Dia meminta saran tentang timnya. Dia belum burnout. Begitu pikirnya.\n\nKami berbicara selama satu jam. Di tengah percakapan, dia menyebutkan bahwa dia tidak mengambil hari libur penuh selama empat bulan. Dia mengatakannya hampir sebagai tambahan, seolah itu bukan hal yang luar biasa.\n\nSaya bertanya bagaimana rasanya. Dia bilang terasa normal. Bagian itulah yang membuat saya khawatir.\n\nKetika saya terus bertanya, gambarannya semakin jelas. Organisasinya tidak memiliki pendampingan pastoral rutin yang terstruktur. Cara gereja pengirimnya memberikan dukungan adalah pesan WhatsApp sekali sebulan. Rekan-rekannya sama-sama kelebihan beban — jadi meminta bantuan kepada siapa pun terasa seperti menambah beban mereka. Dia diam-diam mengisi setiap peran yang tidak terisi, tanpa memberi tahu siapa pun.\n\nLingkup kepedulian di sekitarnya runtuh satu per satu. Bukan secara dramatis. Hanya secara bertahap.\n\nApa yang dia gambarkan bukan cacat karakter. Itu masalah struktur. Dia telah setia dalam setiap dimensi yang terlihat — pekerjaannya baik, hubungannya nyata, dampaknya terukur. Tetapi tidak ada yang membangun perancah yang seharusnya menopangnya. Dan dia terlalu sibuk menopang orang lain untuk menyadarinya.\n\nKami membuat rencana. Dia memulai dengan Audit Stres. Skornya pada Kepedulian Sesama dan Kepedulian dari Pengirim adalah yang terendah. Dia memulai satu percakapan jujur dengan pemimpin timnya. Lalu satu lagi. Perlahan, beban yang tidak terlihat menjadi sesuatu yang bisa dibicarakan.\n\nDia masih di lapangan. Sekarang dia mengatur kecepatannya secara berbeda. Tidak sempurna — tetapi dia tahu seperti apa kemerosotan itu, dan ada orang-orang yang juga memperhatikannya.\n\nItulah perbedaan yang dibuat oleh kecepatan yang berkelanjutan. Bukan ketiadaan tekanan. Hanya struktur untuk menopang Anda ketika tekanan itu datang.",
 };
 
 // -- PROPS ---------------------------------------------------------------------
@@ -679,7 +679,7 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
           }}>
             {t(
               "Most leaders are not failing. They are surviving — managing output while quietly depleting. The question this module asks is not: can you keep going? It is: are you building to last?",
-              "Kebanyakan pemimpin tidak gagal. Mereka sedang bertahan — mengelola output sambil diam-diam menguras diri. Pertanyaan yang diajukan modul ini bukan: bisakah kamu terus berjalan? Melainkan: apakah kamu sedang membangun untuk bertahan lama?"
+              "Kebanyakan pemimpin tidak gagal. Mereka sedang bertahan — mengelola output sambil diam-diam menguras diri. Pertanyaan yang diajukan modul ini bukan: bisakah Anda terus berjalan? Melainkan: apakah Anda sedang membangun untuk bertahan lama?"
             )}
           </p>
           <p style={{
@@ -688,7 +688,7 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
           }}>
             {t(
               "This is not the Sabbath module — that is about theological rest. This is practical. It is about the architecture of your personal health: the systems, habits, and support structures that determine whether you are still effective in 10 years.",
-              "Ini bukan modul Sabat, yang membahas istirahat secara teologis. Modul ini bersifat praktis. Ini tentang pola hidup sehat pribadi kamu: sistem, kebiasaan, dan struktur dukungan yang menentukan apakah kamu masih efektif dalam 10 tahun ke depan."
+              "Ini bukan modul Sabat, yang membahas istirahat secara teologis. Modul ini bersifat praktis. Ini tentang pola hidup sehat pribadi Anda: sistem, kebiasaan, dan struktur dukungan yang menentukan apakah Anda masih efektif dalam 10 tahun ke depan."
             )}
           </p>
 
@@ -789,7 +789,7 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
             }}>
               {t(
                 "Proactive care prevents attrition. It is not a luxury reserved for those with energy to spare. It is the strategy that keeps you in the work long enough to see it bear fruit.",
-                "Perawatan proaktif mencegah keluarnya para pemimpin. Ini bukan kemewahan yang disimpan untuk mereka yang memiliki energi berlebih. Ini adalah strategi yang membuat kamu tetap dalam pekerjaan cukup lama untuk melihatnya berbuah."
+                "Perawatan proaktif mencegah keluarnya para pemimpin. Ini bukan kemewahan yang disimpan untuk mereka yang memiliki energi berlebih. Ini adalah strategi yang membuat Anda tetap dalam pekerjaan cukup lama untuk melihatnya berbuah."
               )}
             </p>
             <p style={{ marginBottom: 0 }}>
@@ -834,7 +834,7 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
           }}>
             {t(
               "Click any sphere to explore what it means and how strong yours is right now.",
-              "Klik lingkup mana saja untuk menjelajahi artinya dan seberapa kuat kondisi kamu saat ini."
+              "Klik lingkup mana saja untuk menjelajahi artinya dan seberapa kuat kondisi Anda saat ini."
             )}
           </p>
 
@@ -951,7 +951,7 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
             fontFamily: serif, fontSize: "clamp(28px, 3.5vw, 42px)",
             fontWeight: 700, color: navy, marginBottom: 16, lineHeight: 1.2, fontStyle: "italic",
           }}>
-            {t("Where Are You Right Now?", "Di Mana Kamu Sekarang?")}
+            {t("Where Are You Right Now?", "Di Mana Anda Sekarang?")}
           </h2>
           <p style={{
             fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 18px)",
@@ -959,7 +959,7 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
           }}>
             {t(
               "Forty questions across ten areas. Answer honestly. No one sees your results. The audit takes about five minutes and gives you a clear picture of where your energy is actually going.",
-              "Empat puluh pertanyaan di sepuluh area. Jawab dengan jujur. Hasilnya hanya untuk kamu. Audit ini membutuhkan sekitar lima menit dan memberikanmu gambaran jelas tentang ke mana energimu sebenarnya pergi."
+              "Empat puluh pertanyaan di sepuluh area. Jawab dengan jujur. Hasilnya hanya untuk Anda. Audit ini membutuhkan sekitar lima menit dan memberi Anda gambaran jelas tentang ke mana energi Anda sebenarnya pergi."
             )}
           </p>
 
@@ -1083,16 +1083,16 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
                         {allAvg <= 2.5
                           ? t(
                               "Significant depletion across multiple areas. This is the time for structural change, not more willpower. Start with your lowest area.",
-                              "Penipisan signifikan di beberapa area. Ini saatnya perubahan struktural, bukan kemauan yang lebih keras. Mulai dari area terendahmu."
+                              "Penipisan signifikan di beberapa area. Ini saatnya perubahan struktural, bukan kemauan yang lebih keras. Mulai dari area terendah Anda."
                             )
                           : allAvg <= 3.5
                           ? t(
                               "You are managing, but margin is thin. Your lowest areas need focused attention before they become crises.",
-                              "Kamu bisa bertahan, tetapi ruang gerakmu sempit. Area terendahmu perlu perhatian terfokus sebelum menjadi krisis."
+                              "Anda bisa bertahan, tetapi ruang gerak Anda sempit. Area terendah Anda perlu perhatian terfokus sebelum menjadi krisis."
                             )
                           : t(
                               "Your overall health looks solid. The practice now is maintenance: protect what is working and stay honest about any areas beginning to slip.",
-                              "Kesehatan keseluruhanmu terlihat solid. Praktik sekarang adalah pemeliharaan: lindungi apa yang berhasil dan tetap jujur tentang area yang mulai menurun."
+                              "Kesehatan keseluruhan Anda terlihat solid. Praktik sekarang adalah pemeliharaan: lindungi apa yang berhasil dan tetap jujur tentang area yang mulai menurun."
                             )}
                       </p>
                     </div>
@@ -1118,16 +1118,16 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
                   {lowestArea.area.habitCategory === "Body"
                     ? t(
                         "Your body is the first to signal overload and the last to receive care. Open the Body section below to find one habit to protect this week.",
-                        "Tubuhmu adalah yang pertama memberi sinyal kelebihan beban dan yang terakhir menerima perawatan. Buka bagian Tubuh di bawah untuk menemukan satu kebiasaan yang bisa kamu lindungi minggu ini."
+                        "Tubuh Anda adalah yang pertama memberi sinyal kelebihan beban dan yang terakhir menerima perawatan. Buka bagian Tubuh di bawah untuk menemukan satu kebiasaan yang bisa Anda lindungi minggu ini."
                       )
                     : lowestArea.area.habitCategory === "Mind"
                     ? t(
                         "Mental overload accumulates silently until it becomes unmistakable. Open the Mind section below to find one habit to protect this week.",
-                        "Kelebihan beban mental terakumulasi diam-diam sampai menjadi tak terbantahkan. Buka bagian Pikiran di bawah untuk menemukan satu kebiasaan yang bisa kamu lindungi minggu ini."
+                        "Kelebihan beban mental terakumulasi diam-diam sampai menjadi tak terbantahkan. Buka bagian Pikiran di bawah untuk menemukan satu kebiasaan yang bisa Anda lindungi minggu ini."
                       )
                     : t(
                         "Spiritual depletion often hides beneath religious busyness. Open the Spirit section below to find one habit to protect this week.",
-                        "Penipisan rohani sering tersembunyi di balik kesibukan keagamaan. Buka bagian Roh di bawah untuk menemukan satu kebiasaan yang bisa kamu lindungi minggu ini."
+                        "Penipisan rohani sering tersembunyi di balik kesibukan keagamaan. Buka bagian Roh di bawah untuk menemukan satu kebiasaan yang bisa Anda lindungi minggu ini."
                       )}
                 </p>
               </div>
@@ -1208,7 +1208,7 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
           }}>
             {t(
               "Three categories — nine habits. Not rules to comply with, but investments to protect. You are not going to do all nine perfectly. Pick the one or two that your Stress Audit revealed you need most.",
-              "Tiga kategori — sembilan kebiasaan. Bukan aturan untuk dipatuhi, tetapi investasi untuk dilindungi. kamu tidak akan melakukan semua sembilan dengan sempurna. Pilih satu atau dua yang diungkapkan Audit Stres kamu sebagai yang paling kamu butuhkan."
+              "Tiga kategori — sembilan kebiasaan. Bukan aturan untuk dipatuhi, tetapi investasi untuk dilindungi. Anda tidak akan melakukan semua sembilan dengan sempurna. Pilih satu atau dua yang diungkapkan Audit Stres Anda sebagai yang paling Anda butuhkan."
             )}
           </p>
 
@@ -1328,7 +1328,7 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
             <p style={{ marginBottom: 28 }}>
               {t(
                 "This is not simply an individual character flaw. In ministry and field contexts, the pressure not to rest is structurally embedded. Stopping feels like abandoning people who need you. Rest produces guilt because the work is never done. In collectivist cultures, taking personal time away from the team carries social cost — rest can feel like a statement about your commitment.",
-                "Ini bukan sekadar kelemahan karakter individu. Dalam konteks pelayanan dan lapangan, tekanan untuk tidak beristirahat tertanam secara struktural. Berhenti terasa seperti meninggalkan orang-orang yang membutuhkan kamu. Istirahat menimbulkan rasa bersalah karena pekerjaannya tidak pernah selesai. Dalam budaya kolektivis, mengambil waktu pribadi dari tim membawa harga sosial yang harus dibayar: istirahat bisa terasa seperti pernyataan tentang komitmen kamu."
+                "Ini bukan sekadar kelemahan karakter individu. Dalam konteks pelayanan dan lapangan, tekanan untuk tidak beristirahat tertanam secara struktural. Berhenti terasa seperti meninggalkan orang-orang yang membutuhkan Anda. Istirahat menimbulkan rasa bersalah karena pekerjaannya tidak pernah selesai. Dalam budaya kolektivis, mengambil waktu pribadi dari tim membawa harga sosial yang harus dibayar: istirahat bisa terasa seperti pernyataan tentang komitmen Anda."
               )}
             </p>
             <p style={{ marginBottom: 28 }}>
@@ -1351,7 +1351,7 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
             <p style={{ marginBottom: 0 }}>
               {t(
                 "The question is not whether you feel the pressure to keep going. Of course you do. The question is whether you are building a life where sustainable capacity is possible — or whether you are draining a reservoir you never refill.",
-                "Pertanyaannya bukan apakah kamu merasakan tekanan untuk terus maju. Tentu saja kamu merasakannya. Pertanyaannya adalah apakah kamu sedang membangun kehidupan di mana kapasitas yang berkelanjutan dimungkinkan — atau apakah kamu menguras waduk yang tidak pernah kamu isi kembali."
+                "Pertanyaannya bukan apakah Anda merasakan tekanan untuk terus maju. Tentu saja Anda merasakannya. Pertanyaannya adalah apakah Anda sedang membangun kehidupan di mana kapasitas yang berkelanjutan dimungkinkan — atau apakah Anda menguras waduk yang tidak pernah Anda isi kembali."
               )}
             </p>
           </div>
@@ -1456,7 +1456,7 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
             }}>
               {t(
                 "Notice the active verbs: he makes, he leads, he refreshes. The Psalm describes a God who does not simply permit rest — he initiates it. 'He makes me lie down' is a strong image: the shepherd leads the sheep to green pasture and the sheep lies down, because that is what the shepherd is doing. God is not passive about your wellbeing. He is actively guiding you toward renewal.",
-                "Perhatikan kata kerja aktif: Ia membaringkan, Ia membimbing, Ia menyegarkan. Mazmur ini menggambarkan Tuhan yang tidak sekadar mengizinkan istirahat. Ia sendiri yang memulainya. 'Ia membaringkan aku' adalah gambaran yang kuat: Gembala memimpin domba ke padang yang berumput hijau dan domba itu berbaring, karena itulah yang dilakukan Gembala. Tuhan tidak pasif terhadap kesejahteraanmu. Ia secara aktif memandumu menuju pembaruan."
+                "Perhatikan kata kerja aktif: Ia membaringkan, Ia membimbing, Ia menyegarkan. Mazmur ini menggambarkan Tuhan yang tidak sekadar mengizinkan istirahat. Ia sendiri yang memulainya. 'Ia membaringkan aku' adalah gambaran yang kuat: Gembala memimpin domba ke padang yang berumput hijau dan domba itu berbaring, karena itulah yang dilakukan Gembala. Tuhan tidak pasif terhadap kesejahteraan Anda. Ia secara aktif memandu Anda menuju pembaruan."
               )}
             </p>
           </div>
@@ -1473,13 +1473,13 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
               <p style={{ marginBottom: 24 }}>
                 {t(
                   "The fourth commandment appears twice in Scripture. In Exodus 20, the command to rest is grounded in creation: God rested on the seventh day, and so should you. In Deuteronomy 5, the command is grounded in liberation: you were slaves in Egypt, where no one rested. Rest is the mark of freedom.",
-                  "Perintah keempat muncul dua kali dalam Kitab Suci. Dalam Keluaran 20, perintah untuk beristirahat didasarkan pada penciptaan: Tuhan beristirahat pada hari ketujuh, dan demikian pula kamu. Dalam Ulangan 5, perintah itu didasarkan pada pembebasan: kamu adalah budak di Mesir, di mana tidak ada yang beristirahat. Istirahat adalah tanda kebebasan."
+                  "Perintah keempat muncul dua kali dalam Kitab Suci. Dalam Keluaran 20, perintah untuk beristirahat didasarkan pada penciptaan: Tuhan beristirahat pada hari ketujuh, dan demikian pula Anda. Dalam Ulangan 5, perintah itu didasarkan pada pembebasan: Anda adalah budak di Mesir, di mana tidak ada yang beristirahat. Istirahat adalah tanda kebebasan."
                 )}
               </p>
               <p style={{ marginBottom: 24 }}>
                 {t(
                   "For cross-cultural leaders, the second framing may be more personally necessary. Many carry an Egypt inside them — an internalized taskmaster that does not allow them to stop. The Deuteronomy 5 Sabbath is not just permission to rest. It is a declaration that you are no longer defined by what you produce.",
-                  "Bagi pemimpin lintas budaya, framing kedua mungkin lebih diperlukan secara pribadi. Banyak yang membawa Mesir di dalam diri mereka — seorang mandor yang diinternalisasi yang tidak mengizinkan mereka berhenti. Sabat Ulangan 5 bukan sekadar izin untuk beristirahat. Itu adalah deklarasi bahwa kamu tidak lagi didefinisikan oleh apa yang kamu hasilkan."
+                  "Bagi pemimpin lintas budaya, framing kedua mungkin lebih diperlukan secara pribadi. Banyak yang membawa Mesir di dalam diri mereka — seorang mandor yang diinternalisasi yang tidak mengizinkan mereka berhenti. Sabat Ulangan 5 bukan sekadar izin untuk beristirahat. Itu adalah deklarasi bahwa Anda tidak lagi didefinisikan oleh apa yang Anda hasilkan."
                 )}
               </p>
               <div style={{
@@ -1502,13 +1502,13 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
               <p style={{ marginBottom: 24 }}>
                 {t(
                   "Abraham Joshua Heschel⁵ described the Sabbath as a 'palace in time' — not a place you go, but a space you inhabit, regardless of geography. For leaders whose ministry takes them far from home, this is worth sitting with. Your Sabbath travels with you. It is not location-dependent.",
-                  "Abraham Joshua Heschel⁵ menggambarkan Sabat sebagai 'istana dalam waktu' — bukan tempat yang kamu datangi, tetapi ruang yang kamu huni, terlepas dari geografi. Bagi pemimpin yang pelayanannya membawa mereka jauh dari rumah, ini layak untuk direnungkan. Sabat kamu menemani kamu ke mana pun. Itu tidak tergantung pada lokasi."
+                  "Abraham Joshua Heschel⁵ menggambarkan Sabat sebagai 'istana dalam waktu' — bukan tempat yang Anda datangi, tetapi ruang yang Anda huni, terlepas dari geografi. Bagi pemimpin yang pelayanannya membawa mereka jauh dari rumah, ini layak untuk direnungkan. Sabat Anda menemani Anda ke mana pun. Itu tidak tergantung pada lokasi."
                 )}
               </p>
               <p style={{ marginBottom: 0 }}>
                 {t(
                   "The research adds a further dimension. Leaders who practise psychological detachment⁶ — genuine mental disengagement from work during rest — not only recover better themselves. Studies show that a leader's capacity to detach directly improves the recovery outcomes of their team. Protecting your rhythm is not just self-care. It is stewardship of those you lead.",
-                  "Penelitian menambahkan dimensi lain. Pemimpin yang mempraktikkan pelepasan psikologis⁶ — pelepasan mental yang tulus dari pekerjaan selama istirahat — tidak hanya pulih lebih baik sendiri. Studi menunjukkan bahwa kemampuan pemimpin untuk melepaskan diri secara langsung meningkatkan hasil pemulihan tim mereka. Melindungi ritme kamu bukan sekadar perawatan diri. Itu adalah penatalayanan atas mereka yang kamu pimpin."
+                  "Penelitian menambahkan dimensi lain. Pemimpin yang mempraktikkan pelepasan psikologis⁶ — pelepasan mental yang tulus dari pekerjaan selama istirahat — tidak hanya pulih lebih baik sendiri. Studi menunjukkan bahwa kemampuan pemimpin untuk melepaskan diri secara langsung meningkatkan hasil pemulihan tim mereka. Melindungi ritme Anda bukan sekadar perawatan diri. Itu adalah penatalayanan atas mereka yang Anda pimpin."
                 )}
               </p>
             </div>
@@ -1531,7 +1531,7 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
             }}>
               {t(
                 "You are not the energy source. You are the vessel. The same God who sent you into the work is the God who designed rest into the fabric of creation. Building a sustainable pace is not a concession to your weakness — it is an act of faith in his ongoing provision.",
-                "kamu bukan sumber energi. kamu adalah bejananya. Tuhan yang sama yang mengutus kamu ke dalam pekerjaan adalah Tuhan yang merancang istirahat ke dalam jalinan penciptaan. Membangun kecepatan yang berkelanjutan bukan konsesi terhadap kelemahan kamu — itu adalah tindakan iman dalam pemeliharaan-Nya yang terus-menerus."
+                "Anda bukan sumber energi. Anda adalah bejananya. Tuhan yang sama yang mengutus Anda ke dalam pekerjaan adalah Tuhan yang merancang istirahat ke dalam jalinan penciptaan. Membangun kecepatan yang berkelanjutan bukan konsesi terhadap kelemahan Anda — itu adalah tindakan iman dalam pemeliharaan-Nya yang terus-menerus."
               )}
             </p>
             <p style={{
@@ -1570,7 +1570,7 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
               },
               {
                 en: "Research consistently shows a recovery paradox⁶: leaders who build rest rhythms proactively recover better and lead better. Build the architecture before you need it, not when you are already running empty.",
-                id: "Penelitian secara konsisten menunjukkan paradoks pemulihan⁶: pemimpin yang membangun ritme istirahat secara proaktif pulih lebih baik dan memimpin lebih baik. Bangun struktur itu sebelum kamu membutuhkannya, bukan ketika kamu sudah kehabisan energi.",
+                id: "Penelitian secara konsisten menunjukkan paradoks pemulihan⁶: pemimpin yang membangun ritme istirahat secara proaktif pulih lebih baik dan memimpin lebih baik. Bangun struktur itu sebelum Anda membutuhkannya, bukan ketika Anda sudah kehabisan energi.",
               },
               {
                 en: "In high-demand cross-cultural contexts, rest-guilt is socially enforced, not just personally felt. Naming that pressure is the first honest step.",
@@ -1578,7 +1578,7 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
               },
               {
                 en: "When you protect your own rhythm, you give your team implicit permission to protect theirs. Your pace sets the system.",
-                id: "Ketika kamu melindungi ritme kamu sendiri, kamu memberi tim kamu izin implisit untuk melindungi ritme mereka. Kecepatan kamu mengatur sistem.",
+                id: "Ketika Anda melindungi ritme Anda sendiri, Anda memberi tim Anda izin implisit untuk melindungi ritme mereka. Kecepatan Anda mengatur sistem.",
               },
             ].map((item, i) => (
               <div key={i} style={{
@@ -1652,7 +1652,7 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
           }}>
             {t(
               "Look back at your Stress Audit. Which area scored lowest? That is where you begin: not the whole framework, just one habit, one sphere, one honest conversation. Sustainable pace is built one protected investment at a time.",
-              "Lihat kembali Audit Stres kamu. Area mana yang mendapat skor terendah? Di situlah kamu memulai: bukan seluruh kerangka, cukup satu kebiasaan, satu lingkup, satu percakapan yang jujur. Kecepatan berkelanjutan dibangun satu investasi yang terlindungi pada satu waktu."
+              "Lihat kembali Audit Stres Anda. Area mana yang mendapat skor terendah? Di situlah Anda memulai: bukan seluruh kerangka, cukup satu kebiasaan, satu lingkup, satu percakapan yang jujur. Kecepatan berkelanjutan dibangun satu investasi yang terlindungi pada satu waktu."
             )}
           </p>
           <p style={{
@@ -1662,7 +1662,7 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
           }}>
             {t(
               "Come back in seven days and re-score your lowest area. Sustainable pace is built in cycles, not single sessions.",
-              "Kembali dalam tujuh hari dan nilai ulang area terendahmu. Kecepatan berkelanjutan dibangun dalam siklus, bukan sesi tunggal."
+              "Kembali dalam tujuh hari dan nilai ulang area terendah Anda. Kecepatan berkelanjutan dibangun dalam siklus, bukan sesi tunggal."
             )}
           </p>
 
@@ -1801,7 +1801,7 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
         }}>
           {t(
             "Explore more training modules to deepen your cross-cultural leadership.",
-            "Jelajahi lebih banyak modul pelatihan untuk memperdalam kepemimpinan lintas budaya kamu."
+            "Jelajahi lebih banyak modul pelatihan untuk memperdalam kepemimpinan lintas budaya Anda."
           )}
         </p>
         <Link

@@ -50,7 +50,7 @@ const STAGES: StageData[] = [
     desc: { en: "You lack a skill, and you don't realise it. The gap between what you think you can do and what you actually can is widest here.",
       id: "Anda tidak memiliki keterampilan itu, dan Anda bahkan tidak menyadarinya. Celah antara apa yang Anda pikir bisa Anda lakukan dan apa yang sebenarnya bisa Anda lakukan paling lebar di sini." },
     growth: { en: "Seek feedback from someone further along. The gap can only be crossed once you can see it, often through someone else's eyes.",
-      id: "Carilah umpan balik dari orang yang lebih maju. Celah itu hanya bisa dilintasi setelah kamu bisa melihatnya, sering melalui mata orang lain." },
+      id: "Carilah umpan balik dari orang yang lebih maju. Celah itu hanya bisa dilintasi setelah Anda bisa melihatnya, sering melalui mata orang lain." },
   },
   {
     number: 2,
@@ -81,33 +81,33 @@ const STAGES: StageData[] = [
       id: "Keterampilan itu telah menjadi otomatis. Latihan mendalam telah memindahkannya dari kontrol sadar ke intuisi." },
     extraLabel: { en: "A leadership note", id: "Catatan kepemimpinan" },
     extra: { en: "This creates a teaching challenge. When a skill becomes automatic, you lose access to the memory of not knowing it.",
-      id: "Ini menciptakan tantangan mengajar. Ketika sebuah keahlian menjadi otomatis, kamu kehilangan akses pada ingatan tentang saat tidak mengetahuinya." },
+      id: "Ini menciptakan tantangan mengajar. Ketika sebuah keahlian menjadi otomatis, Anda kehilangan akses pada ingatan tentang saat tidak mengetahuinya." },
     growth: { en: "Mastery in one area reveals how far you still have to go in another. A new context returns you to Stage 1. That is not regression.",
-      id: "Penguasaan di satu area mengungkapkan seberapa jauh yang masih harus kamu tempuh di area lain. Konteks baru membawamu kembali ke Tahap 1. Itu bukan kemunduran." },
+      id: "Penguasaan di satu area mengungkapkan seberapa jauh yang masih harus Anda tempuh di area lain. Konteks baru membawa Anda kembali ke Tahap 1. Itu bukan kemunduran." },
   },
 ];
 
 const KEY_TAKEAWAYS: { lead: Pair; rest: Pair }[] = [
   { lead: { en: "Awareness of incompetence is the beginning of growth.", id: "Kesadaran akan ketidakmampuan adalah awal dari pertumbuhan." },
-    rest: { en: "Stage 1, not Stage 2, is the most dangerous: you don't know what you don't know.", id: "Tahap 1, bukan Tahap 2, yang paling berbahaya: kamu tidak tahu apa yang kamu tidak tahu." } },
+    rest: { en: "Stage 1, not Stage 2, is the most dangerous: you don't know what you don't know.", id: "Tahap 1, bukan Tahap 2, yang paling berbahaya: Anda tidak tahu apa yang Anda tidak tahu." } },
   { lead: { en: "Discomfort in Stage 2 is a signal, not a warning.", id: "Ketidaknyamanan di Tahap 2 adalah sinyal, bukan peringatan." },
     rest: { en: "It means learning has begun, not that something has gone wrong.", id: "Itu berarti pembelajaran telah dimulai, bukan bahwa ada yang salah." } },
   { lead: { en: "Stage 4 mastery creates a teaching challenge.", id: "Penguasaan Tahap 4 menciptakan tantangan mengajar." },
-    rest: { en: "You must learn to unpack what you have stopped noticing.", id: "Kamu harus belajar menguraikan apa yang telah kamu berhenti perhatikan." } },
+    rest: { en: "You must learn to unpack what you have stopped noticing.", id: "Anda harus belajar menguraikan apa yang telah Anda berhenti perhatikan." } },
   { lead: { en: "The stages repeat.", id: "Tahap-tahap ini berulang." },
     rest: { en: "Every new skill and every new culture returns a leader to Stage 1.", id: "Setiap keahlian baru dan setiap budaya baru membawa seorang pemimpin kembali ke Tahap 1." } },
 ];
 
 const THIS_WEEK: Pair[] = [
-  { en: "Pick one skill you are trying to grow. Name honestly which stage you are in.", id: "Pilih satu keterampilan yang sedang kamu kembangkan. Sebutkan dengan jujur di tahap mana kamu berada." },
+  { en: "Pick one skill you are trying to grow. Name honestly which stage you are in.", id: "Pilih satu keterampilan yang sedang Anda kembangkan. Sebutkan dengan jujur di tahap mana Anda berada." },
   { en: "Find one person in Stage 1. Create a moment, not a lecture, that lets them see the gap themselves.", id: "Temukan satu orang di Tahap 1. Ciptakan sebuah momen, bukan ceramah, yang membuat mereka melihat celah itu sendiri." },
-  { en: "Notice a skill that has become automatic for you. Practice putting it into words someone at Stage 2 could use.", id: "Perhatikan satu keahlian yang sudah otomatis bagimu. Latih mengungkapkannya dengan kata-kata yang bisa dipakai orang di Tahap 2." },
+  { en: "Notice a skill that has become automatic for you. Practice putting it into words someone at Stage 2 could use.", id: "Perhatikan satu keahlian yang sudah otomatis bagi Anda. Latih mengungkapkannya dengan kata-kata yang bisa dipakai orang di Tahap 2." },
 ];
 
 const QUESTIONS: Pair[] = [
-  { en: "Which of the four stages are you in right now, with the skill that matters most to your leadership?", id: "Di tahap mana kamu berada sekarang, dengan keterampilan yang paling penting bagi kepemimpinanmu?" },
-  { en: "Think of someone you lead who is stuck in Stage 1. What single experience could help them see the gap?", id: "Pikirkan seseorang yang kamu pimpin yang terjebak di Tahap 1. Pengalaman seperti apa yang bisa membantu mereka melihat celah itu?" },
-  { en: "Where might your own mastery be making it harder for you to teach someone at Stage 2?", id: "Di mana penguasaanmu sendiri mungkin membuatmu lebih sulit mengajar seseorang di Tahap 2?" },
+  { en: "Which of the four stages are you in right now, with the skill that matters most to your leadership?", id: "Di tahap mana Anda berada sekarang, dengan keterampilan yang paling penting bagi kepemimpinan Anda?" },
+  { en: "Think of someone you lead who is stuck in Stage 1. What single experience could help them see the gap?", id: "Pikirkan seseorang yang Anda pimpin yang terjebak di Tahap 1. Pengalaman seperti apa yang bisa membantu mereka melihat celah itu?" },
+  { en: "Where might your own mastery be making it harder for you to teach someone at Stage 2?", id: "Di mana penguasaan Anda sendiri mungkin membuat Anda lebih sulit mengajar seseorang di Tahap 2?" },
 ];
 
 // The two pairs of words the four stages are built from
@@ -257,7 +257,7 @@ const SLIDES: Slide[] = [
         </p>
         <p style={{ ...body, ...show(step >= 1), maxWidth: 1200 }}>
           {t("It tracks two things: your ability, and your awareness of it. Understanding which stage you are in changes how you learn, how you coach others, and how you read the discomfort of growth.",
-            "Model ini melacak dua hal: kemampuanmu, dan kesadaranmu akan hal itu. Memahami tahap mana yang kamu jalani mengubah cara kamu belajar, cara kamu melatih orang lain, dan cara kamu membaca ketidaknyamanan pertumbuhan.", lang)}
+            "Model ini melacak dua hal: kemampuan Anda, dan kesadaran Anda akan hal itu. Memahami tahap mana yang Anda jalani mengubah cara Anda belajar, cara Anda melatih orang lain, dan cara Anda membaca ketidaknyamanan pertumbuhan.", lang)}
         </p>
       </>
     ),
@@ -273,7 +273,7 @@ const SLIDES: Slide[] = [
         <div style={show(step >= 1)}>{rule(120)}</div>
         <p style={{ ...body, ...show(step >= 1), color: onNavy, maxWidth: 1100 }}>
           {t("As they shift, you move from not knowing what you don't know, to a skill that no longer needs thought at all.",
-            "Seiring keduanya berubah, kamu bergerak dari tidak tahu apa yang tidak kamu ketahui, menuju keahlian yang tidak lagi memerlukan pikiran sama sekali.", lang)}
+            "Seiring keduanya berubah, Anda bergerak dari tidak tahu apa yang tidak Anda ketahui, menuju keahlian yang tidak lagi memerlukan pikiran sama sekali.", lang)}
         </p>
       </>
     ),

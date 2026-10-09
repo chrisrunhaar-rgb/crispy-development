@@ -93,27 +93,27 @@ const SKILLS: {
     en_intro:
       "Most of us were trained to fix, advise and respond quickly. We offer solutions before the other person has finished speaking. In cross-cultural teams, where so much context stays hidden, the first skill is simple: stay longer in the question. Loving listening is an active choice. You try to understand before you are understood, and you ask before you assume.",
     id_intro:
-      "Sebagian besar dari kita dilatih untuk memperbaiki, memberi saran dan merespons dengan cepat. Kita menawarkan solusi sebelum orang lain selesai bicara. Dalam tim lintas budaya, di mana banyak konteks tidak terlihat, keterampilan pertama itu sederhana: bertahanlah lebih lama dalam pertanyaan. Mendengarkan dengan kasih adalah pilihan yang aktif. Kamu berusaha memahami sebelum dipahami, dan bertanya sebelum berasumsi.",
+      "Sebagian besar dari kita dilatih untuk memperbaiki, memberi saran dan menanggapi dengan cepat. Kita menawarkan solusi sebelum orang lain selesai bicara. Dalam tim lintas budaya, banyak hal yang tidak kelihatan. Karena itu, keterampilan pertama itu sederhana: bertahanlah lebih lama dalam pertanyaan. Mendengarkan dengan kasih adalah pilihan yang disengaja. Anda berusaha memahami sebelum dipahami, dan bertanya sebelum berasumsi.",
     en_scenario_heading: "The scenario",
     id_scenario_heading: "Skenario",
     en_scenario:
       "A colleague from a different cultural background approaches you after a team meeting. She says quietly: \"I'm not sure I can keep going like this. Everything feels so heavy.\"",
     id_scenario:
-      "Seorang kolega dari latar belakang budaya yang berbeda mendekatimu setelah rapat tim. Dia berkata pelan: \"Saya tidak yakin bisa terus seperti ini. Semuanya terasa begitu berat.\"",
+      "Seorang kolega dari latar belakang budaya yang berbeda menghampiri Anda setelah rapat tim. Dia berkata pelan: \"Saya tidak yakin bisa terus seperti ini. Semuanya terasa begitu berat.\"",
     en_typical_label: "Typical response",
     id_typical_label: "Respons umum",
     en_typical:
       "\"I know how you feel. Have you tried taking some time off? You probably just need rest. Things will get better. Remember why you're here. Let me know if I can help with your workload.\"",
     id_typical:
-      "\"Saya mengerti perasaanmu. Sudahkah kamu mencoba mengambil waktu istirahat? Kamu mungkin hanya perlu istirahat. Semuanya akan membaik. Ingat kenapa kamu ada di sini. Beri tahu saya kalau saya bisa membantu dengan beban kerjamu.\"",
+      "\"Saya mengerti perasaan Anda. Sudahkah Anda mencoba mengambil waktu istirahat? Mungkin Anda hanya perlu istirahat. Semuanya akan membaik. Ingat kenapa Anda ada di sini. Kabari saya kalau saya bisa membantu meringankan beban kerja Anda.\"",
     en_better_label: "Loving listening response",
     id_better_label: "Respons mendengarkan dengan kasih",
     en_better:
       "\"That sounds really hard. [Pause.] What's making it feel the heaviest right now?\" Then wait. Fully. Don't rescue, don't redirect. The pause may feel awkward, but it is often where the real issue comes to the surface.",
     id_better:
-      "\"Kedengarannya sangat berat. [Jeda.] Apa yang paling membuatnya terasa berat saat ini?\" Lalu tunggu. Sepenuhnya. Jangan menyelamatkan, jangan mengalihkan. Jeda itu mungkin terasa canggung, tetapi sering kali di situlah masalah yang sebenarnya muncul.",
+      "\"Kedengarannya sangat berat. [Jeda.] Apa yang paling membuatnya terasa berat saat ini?\" Lalu tunggu dengan sungguh-sungguh. Jangan buru-buru menolong, jangan mengalihkan pembicaraan. Jeda itu mungkin terasa canggung, tetapi sering kali di situlah masalah yang sebenarnya muncul.",
     en_technique_heading: "The technique: Reflect, Ask, Wait",
-    id_technique_heading: "Tekniknya: Refleksikan, Tanyakan, Tunggu",
+    id_technique_heading: "Tekniknya: Cerminkan, Tanyakan, Tunggu",
     en_technique_steps: [
       {
         label: "Reflect",
@@ -130,16 +130,16 @@ const SKILLS: {
     ],
     id_technique_steps: [
       {
-        label: "Refleksikan",
-        body: "Ulangi kembali apa yang kamu dengar. Cukup singkat: \"Kedengarannya melelahkan.\" \"Sepertinya ada yang berubah belakangan ini.\" Ini menunjukkan bahwa kamu sungguh menerima apa yang dia katakan. Mendengarkan dengan penuh perhatian adalah salah satu keterampilan inti dalam menangani konflik antarbudaya, dan semuanya dimulai di sini.⁴",
+        label: "Cerminkan",
+        body: "Ulangi apa yang Anda dengar. Cukup singkat: \"Kedengarannya melelahkan.\" \"Sepertinya ada yang berubah belakangan ini.\" Ini menunjukkan bahwa Anda sungguh menerima apa yang dia katakan. Mendengarkan dengan penuh perhatian adalah salah satu keterampilan inti dalam menangani konflik antarbudaya, dan semuanya dimulai di sini.⁴",
       },
       {
         label: "Tanyakan",
-        body: "Ajukan satu pertanyaan terbuka, bukan daftar periksa. \"Apa yang paling berat saat ini?\" atau \"Dari mana sebagian besar beban itu datang?\" Satu pertanyaan, lalu berhenti. Rentetan pertanyaan bisa terasa seperti interogasi, terutama dalam budaya high-context, dan orang pun jadi diam.",
+        body: "Ajukan satu pertanyaan terbuka, bukan daftar periksa. \"Apa yang paling berat saat ini?\" atau \"Dari mana sebagian besar beban itu datang?\" Satu pertanyaan, lalu berhenti. Rentetan pertanyaan bisa terasa seperti interogasi, terutama dalam budaya konteks tinggi, dan orang pun jadi diam.",
       },
       {
         label: "Tunggu",
-        body: "Keheningan bukan masalah yang harus diperbaiki. Dalam banyak budaya high-context, jeda sebelum menjawab menunjukkan rasa hormat dan pemikiran yang matang. Orang dari budaya yang lebih langsung sering buru-buru mengisi keheningan, padahal jawaban yang sebenarnya sering terbentuk di sana. Beri waktu 5 detik. Lalu 10.",
+        body: "Keheningan bukan masalah yang harus diperbaiki. Dalam banyak budaya konteks tinggi, jeda sebelum menjawab menunjukkan rasa hormat dan pemikiran yang matang. Orang dari budaya yang lebih langsung sering buru-buru mengisi keheningan, padahal jawaban yang sebenarnya sering terbentuk di sana. Beri waktu 5 detik. Lalu 10.",
       },
     ],
   },
@@ -154,7 +154,7 @@ const SKILLS: {
     en_intro:
       "Conflict in cross-cultural teams rarely announces itself. It often moves in patterns that newcomers miss, especially when cultures differ on directness, hierarchy and face.⁵ If you understand the three stages of escalation and what usually goes wrong at each one, your team has a far better chance of repairing instead of fracturing.",
     id_intro:
-      "Konflik dalam tim lintas budaya jarang muncul terang-terangan. Sering kali konflik bergerak dalam pola yang tidak terlihat oleh pendatang baru, terutama ketika budaya berbeda soal keterusterangan, hierarki dan menjaga muka.⁵ Kalau kamu memahami tiga tahap eskalasi dan apa yang biasanya salah di setiap tahap, timmu punya peluang jauh lebih besar untuk pulih daripada retak.",
+      "Konflik dalam tim lintas budaya jarang muncul terang-terangan. Sering kali konflik bergerak dalam pola yang tidak terlihat oleh pendatang baru, terutama ketika budaya berbeda soal keterusterangan, hierarki dan menjaga muka.⁵ Kalau Anda memahami tiga tahap eskalasi dan apa yang biasanya salah di setiap tahap, tim Anda punya peluang jauh lebih besar untuk pulih, bukan retak.",
     en_scenario_heading: "Three stages of escalation",
     id_scenario_heading: "Tiga tahap eskalasi",
     en_scenario:
@@ -166,15 +166,15 @@ const SKILLS: {
     en_typical:
       "The junior colleague's silence and withdrawal IS the signal. In many cultures, including Indonesian settings where harmony (rukun) and shame (malu) shape how people speak, conflict is often expressed indirectly.⁶ Pulling back carries a message. The common mistake: a leader from a more direct culture reads it as disengagement or personality, and misses the relational signal that something is wrong.",
     id_typical:
-      "Diam dan menarik dirinya kolega junior ITULAH sinyalnya. Dalam banyak budaya, termasuk di Indonesia di mana rukun dan malu membentuk cara orang berbicara, konflik sering diungkapkan secara tidak langsung.⁶ Menarik diri pun membawa pesan. Kesalahan yang sering terjadi: pemimpin dari budaya yang lebih langsung membacanya sebagai kurang peduli atau soal kepribadian, lalu melewatkan sinyal relasional bahwa ada yang tidak beres.",
+      "Diamnya kolega junior dan sikapnya menarik diri ITULAH sinyalnya. Dalam banyak budaya, termasuk di Indonesia di mana rukun dan malu membentuk cara orang berbicara, konflik sering diungkapkan secara tidak langsung.⁶ Menarik diri pun membawa pesan. Kesalahan yang sering terjadi: pemimpin dari budaya yang lebih langsung membacanya sebagai kurang peduli atau soal kepribadian, lalu melewatkan sinyal relasional bahwa ada yang tidak beres.",
     en_better_label: "Stage 2: Response",
     id_better_label: "Tahap 2: Respons",
     en_better:
       "When the signal is ignored, one of two things usually happens. The tension hardens into resentment and the relationship slowly dies, or it erupts later with more force, often in the wrong setting. The window to respond is between signal and escalation. A skilled leader names the pattern they have noticed, without labelling it a conflict. Privately, gently, specifically: \"I've noticed you've been quieter recently. Is there something I should be aware of?\"",
     id_better:
-      "Ketika sinyal diabaikan, biasanya terjadi salah satu dari dua hal. Ketegangan mengeras menjadi kepahitan dan hubungan perlahan mati, atau meledak kemudian dengan lebih keras, sering di situasi yang salah. Waktu terbaik untuk merespons ada di antara sinyal dan eskalasi. Pemimpin yang terampil menyebutkan pola yang dia perhatikan, tanpa menyebutnya konflik. Secara pribadi, lembut dan spesifik: \"Saya perhatikan kamu lebih pendiam belakangan ini. Apakah ada sesuatu yang perlu saya ketahui?\"",
+      "Ketika sinyal diabaikan, biasanya terjadi salah satu dari dua hal. Ketegangan mengeras menjadi kepahitan dan hubungan perlahan mati, atau meledak kemudian dengan lebih keras, sering di situasi yang salah. Waktu terbaik untuk menanggapi ada di antara sinyal dan eskalasi. Pemimpin yang terampil mengungkapkan pola yang dia lihat, tanpa menyebutnya konflik. Secara pribadi, lembut dan spesifik: \"Saya perhatikan Anda lebih pendiam belakangan ini. Apakah ada sesuatu yang perlu saya ketahui?\"",
     en_technique_heading: "Stage 3: Resolution",
-    id_technique_heading: "Tahap 3: Resolusi",
+    id_technique_heading: "Tahap 3: Penyelesaian",
     en_technique_steps: [
       {
         label: "Resolution is not the same as agreement",
@@ -191,8 +191,8 @@ const SKILLS: {
     ],
     id_technique_steps: [
       {
-        label: "Resolusi tidak sama dengan kesepakatan",
-        body: "Konflik lintas budaya jarang berakhir dengan kedua pihak terang-terangan membicarakan apa yang terjadi. Dalam budaya high-context, menyebut konflik secara langsung bisa terasa lebih merusak daripada konflik itu sendiri. Resolusi bisa terlihat seperti ini: anggota tim senior mulai memakai ide si junior, si junior kembali terlibat, dan tidak ada yang pernah menyebut kata 'konflik.' Hubungan pun bergerak maju.",
+        label: "Penyelesaian tidak sama dengan kesepakatan",
+        body: "Konflik lintas budaya jarang berakhir dengan kedua pihak terang-terangan membicarakan apa yang terjadi. Dalam budaya konteks tinggi, membicarakan konflik secara langsung bisa terasa lebih merusak daripada konflik itu sendiri. Penyelesaian bisa terlihat seperti ini: anggota tim senior mulai memakai ide kolega juniornya, si junior kembali terlibat, dan tidak ada yang pernah menyebut kata 'konflik.' Hubungan pun bergerak maju.",
       },
       {
         label: "Fasilitasi pihak ketiga",
@@ -215,7 +215,7 @@ const SKILLS: {
     en_intro:
       "Cross-cultural workers don't just experience losses. They accumulate them. Every departure, transition and goodbye is a small grief that rarely gets named, let alone processed. Families serving abroad and international team members often live with compacted grief: losses stack up faster than they can be processed, and field culture can make grieving feel out of place. Relational breakdown often starts here, in loss nobody has put into words, long before any open conflict.",
     id_intro:
-      "Pekerja lintas budaya tidak hanya mengalami kehilangan. Mereka mengumpulkannya. Setiap kepergian, transisi dan perpisahan adalah duka kecil yang jarang disebut, apalagi diolah. Keluarga pekerja lapangan dan anggota tim internasional sering hidup dengan duka yang menumpuk: kehilangan datang lebih cepat daripada yang bisa diolah, dan budaya lapangan bisa membuat berduka terasa tidak pantas. Kerusakan relasional sering dimulai di sini, dalam kehilangan yang tidak pernah diungkapkan, jauh sebelum ada konflik terbuka.",
+      "Pekerja lapangan tidak hanya mengalami kehilangan. Kehilangan itu menumpuk. Setiap kepergian, perpindahan dan perpisahan adalah duka kecil yang jarang diungkapkan, apalagi diolah. Keluarga pekerja lapangan dan anggota tim internasional sering hidup dengan duka yang menumpuk: kehilangan datang lebih cepat daripada yang bisa diolah, dan budaya lapangan bisa membuat berduka terasa tidak pantas. Kerusakan relasional sering dimulai di sini, dalam kehilangan yang tidak pernah diungkapkan, jauh sebelum ada konflik terbuka.",
     en_scenario_heading: "What accumulated loss looks like",
     id_scenario_heading: "Seperti apa kehilangan yang menumpuk",
     en_scenario:
@@ -227,13 +227,13 @@ const SKILLS: {
     en_typical:
       "Teams that run well on tasks often have no language for grief. Debriefs focus on tasks, logistics and planning, and never ask: \"What have we lost this season? What do we need to grieve before we move on?\" Many workers never get a debrief at all. One recent survey found only 14% of returning workers had received one.⁷ Unnamed loss has a cost: people disengage, resentment toward leaders grows, and some end up leaving.",
     id_typical:
-      "Tim yang berjalan baik dalam tugas sering tidak punya bahasa untuk duka. Debriefing berfokus pada tugas, logistik dan rencana, dan tidak pernah bertanya: \"Apa yang sudah kita kehilangan di musim ini? Apa yang perlu kita ratapi sebelum melangkah?\" Banyak pekerja bahkan tidak pernah mendapat debriefing. Sebuah survei terbaru menemukan hanya 14% pekerja yang pulang yang pernah menerimanya.⁷ Kehilangan yang tidak disebut ada harganya: orang menarik diri, kepahitan terhadap pemimpin tumbuh, dan sebagian akhirnya pergi.",
+      "Tim yang berjalan baik dalam tugas sering tidak punya bahasa untuk duka. Debriefing berfokus pada tugas, logistik dan rencana, dan tidak pernah bertanya: \"Apa yang telah hilang dari kita di musim ini? Apa yang perlu kita beri waktu untuk berduka sebelum melangkah?\" Banyak pekerja bahkan tidak pernah mendapat debriefing. Sebuah survei terbaru menemukan hanya 14% pekerja yang pulang yang pernah menerimanya.⁷ Kehilangan yang tidak diungkapkan ada harganya: orang menarik diri, kepahitan terhadap pemimpin tumbuh, dan sebagian akhirnya pergi.",
     en_better_label: "How to create space for loss",
     id_better_label: "Cara memberi tempat bagi duka",
     en_better:
       "It starts with the leader naming their own losses first. This is honest modelling, not a show of vulnerability: \"Before we look at the quarter ahead, I want to name something we've lost. Sarah leaving took something from this team. I miss working with her. Does anyone else want to name what they've been carrying?\" Naming, inviting and not rushing past builds the relational safety that helps people stay.",
     id_better:
-      "Semuanya dimulai dengan pemimpin yang lebih dulu menyebut kehilangannya sendiri. Ini teladan yang jujur, bukan pertunjukan kerentanan: \"Sebelum kita melihat kuartal ke depan, saya ingin menyebut sesuatu yang sudah kita kehilangan. Kepergian Sarah mengambil sesuatu dari tim ini. Saya rindu bekerja bersamanya. Ada yang ingin menyebut apa yang sedang kalian pikul?\" Menyebut, mengundang dan tidak buru-buru melewatinya membangun rasa aman yang membantu orang bertahan.",
+      "Semuanya dimulai dari pemimpin yang lebih dulu mengungkapkan kehilangannya sendiri. Ini teladan yang jujur, bukan pertunjukan kerentanan: \"Sebelum kita membahas tiga bulan ke depan, saya ingin mengungkapkan sesuatu yang telah hilang dari kita. Kepergian Sarah membuat tim ini kehilangan sesuatu. Saya rindu bekerja bersamanya. Adakah yang ingin berbagi tentang beban yang sedang dipikul?\" Mengungkapkan, mengundang dan tidak buru-buru melewatinya membangun rasa aman yang membantu orang bertahan.",
     en_technique_heading: "Three practices for teams",
     id_technique_heading: "Tiga praktik untuk tim",
     en_technique_steps: [
@@ -256,12 +256,12 @@ const SKILLS: {
         body: "Setiap kepergian layak mendapat perpisahan yang pantas. Lebih dari kue dan kartu, beri waktu khusus di mana tim berbicara jujur tentang apa yang sudah diberikan orang ini dan apa yang ikut pergi bersamanya. Ritual perpisahan adalah cara merawat duka. Ini menjaga agar kehilangan yang tak terucap tidak menumpuk.",
       },
       {
-        label: "Pemeriksaan duka triwulanan",
-        body: "Sekali setiap kuartal, sebelum membahas rencana ke depan, tambahkan satu pertanyaan di rapat tim: \"Apa yang sudah hilang dari tim ini, baik orang, semangat atau impian, yang belum kita akui?\" Simpan daftar tertulis yang bisa dilihat semua orang. Menyebut kehilangan membuat tim tetap tangguh, dan itu berbeda dengan larut dalam kesedihan.",
+        label: "Waktu untuk berduka setiap triwulan",
+        body: "Sekali setiap triwulan, sebelum membahas rencana ke depan, tambahkan satu pertanyaan di rapat tim: \"Apa yang telah hilang dari tim ini, baik orang, semangat atau impian, yang belum kita akui?\" Simpan daftar tertulis yang bisa dilihat semua orang. Mengungkapkan kehilangan membuat tim tetap tangguh, dan itu berbeda dengan larut dalam kesedihan.",
       },
       {
-        label: "Inventaris kehilangan pribadi",
-        body: "Sebagai pemimpin, tanyakan kepada anggota timmu satu per satu, dan sering: \"Bagaimana beban transisi ini terasa buatmu sekarang?\" 'Apa kabar?' hanya mendapat jawaban basa-basi. Pertanyaan yang spesifik dan jujur mendapat jawaban yang sebenarnya. Pekerja lintas budaya sering memikul kehilangan dalam diam karena tidak ada yang bertanya. Pertanyaanmu mengubah itu.",
+        label: "Menanyakan kehilangan secara pribadi",
+        body: "Sebagai pemimpin, tanyakan kepada anggota tim Anda satu per satu, dan sering: \"Bagaimana Anda menanggung beban masa peralihan ini sekarang?\" 'Apa kabar?' hanya mendapat jawaban basa-basi. Pertanyaan yang spesifik dan jujur mendapat jawaban yang sebenarnya. Pekerja lapangan sering memikul kehilangan dalam diam karena tidak ada yang bertanya. Pertanyaan Anda mengubah itu.",
       },
     ],
   },
@@ -287,7 +287,7 @@ const HEALTH_CHECKS: {
   {
     id: "hc3",
     en: "I feel free to name tension or awkwardness directly with the people I work with.",
-    id_lang: "Saya merasa bebas untuk menyebut ketegangan atau kecanggungan secara langsung dengan orang-orang yang bekerja bersama saya.",
+    id_lang: "Saya merasa bebas mengungkapkan ketegangan atau kecanggungan secara langsung kepada orang-orang yang bekerja bersama saya.",
   },
   {
     id: "hc4",
@@ -411,36 +411,6 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
             {t("Team & Facilitation", "Tim & Fasilitasi")}
           </p>
 
-          {/* Striking stat */}
-          <div
-            style={{
-              display: "inline-block",
-              background: "oklch(65% 0.15 45 / 0.12)",
-              border: "1px solid oklch(65% 0.15 45 / 0.4)",
-              borderRadius: 12,
-              padding: "10px 18px",
-              marginBottom: 28,
-            }}
-          >
-            <p
-              style={{
-                fontFamily: serif,
-                fontSize: "clamp(14px, 1.6vw, 17px)",
-                color: orange,
-                margin: 0,
-                fontStyle: "italic",
-                lineHeight: 1.5,
-              }}
-            >
-              {withSup(
-                t(
-                  "Most early departures from the field are preventable.¹ Team relationships are a big part of the story.²",
-                  "Sebagian besar kepergian dini dari lapangan sebenarnya bisa dicegah.¹ Hubungan dalam tim adalah bagian besar dari ceritanya.²"
-                )
-              )}
-            </p>
-          </div>
-
           <h1
             style={{
               fontFamily: serif,
@@ -493,7 +463,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
             >
               {t(
                 "Think of the last person who left your team or organisation earlier than expected. What was the real reason?",
-                "Pikirkan orang terakhir yang meninggalkan tim atau organisasimu lebih cepat dari yang diharapkan. Apa alasan sebenarnya?"
+                "Pikirkan orang terakhir yang meninggalkan tim atau organisasi Anda lebih cepat dari yang diharapkan. Apa alasan sebenarnya?"
               )}
             </p>
           </div>
@@ -506,8 +476,8 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
               aria-pressed={saved}
               aria-label={
                 saved
-                  ? t("Saved to your dashboard", "Tersimpan di dasbor kamu")
-                  : t("Save this module to your dashboard", "Simpan modul ini ke dasbor kamu")
+                  ? t("Saved to your dashboard", "Tersimpan di dasbor Anda")
+                  : t("Save this module to your dashboard", "Simpan modul ini ke dasbor Anda")
               }
               style={{
                 display: "inline-flex",
@@ -1076,7 +1046,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
                   : checkedItems.size >= 3
                   ? t(
                       "You have a foundation to build on. The statements you didn't check are the ones to sit with. What would need to shift for them to become true?",
-                      "Kamu punya fondasi untuk dibangun. Pernyataan yang tidak kamu centang adalah yang paling perlu direnungkan. Apa yang perlu berubah supaya pernyataan itu menjadi benar?"
+                      "Anda punya fondasi untuk dibangun. Pernyataan yang tidak Anda centang adalah yang paling perlu direnungkan. Apa yang perlu berubah supaya pernyataan itu menjadi benar?"
                     )
                   : t(
                       "Honesty is the starting point. These gaps are exactly where the three skills in this module do their work.",
@@ -1105,7 +1075,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
           >
             {t(
               "Even the best relationships can break, and God still works",
-              "Hubungan terbaik pun bisa retak, dan Allah tetap bekerja"
+              "Hubungan terbaik pun bisa retak, dan Tuhan tetap bekerja"
             )}
           </h2>
 
@@ -1208,7 +1178,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
             >
               {t(
                 "What this means for you: relational longevity is worth fighting for, and the three skills in this module are how you fight for it. Still, longevity is different from perfection. Some relationships will break despite your best efforts. Your relational health is measured by whether you brought love, honesty and humility to each relationship, and whether you keep doing so, more than by whether every one survived intact.",
-                "Artinya bagimu: kelanggengan relasional layak diperjuangkan, dan tiga keterampilan dalam modul ini adalah cara memperjuangkannya. Namun langgeng tidak sama dengan sempurna. Sebagian hubungan akan retak meskipun kamu sudah berusaha sebaik mungkin. Kesehatan relasionalmu tidak diukur dari apakah semua hubungan bertahan utuh, tetapi dari apakah kamu membawa kasih, kejujuran dan kerendahan hati ke dalamnya, dan terus melakukannya."
+                "Artinya bagi Anda: hubungan yang langgeng layak diperjuangkan, dan tiga keterampilan dalam modul ini adalah cara memperjuangkannya. Namun langgeng tidak sama dengan sempurna. Sebagian hubungan akan retak meskipun Anda sudah berusaha sebaik mungkin. Kesehatan hubungan Anda tidak diukur dari apakah semua hubungan bertahan utuh, tetapi dari apakah Anda membawa kasih, kejujuran dan kerendahan hati ke dalamnya, dan terus melakukannya."
               )}
             </p>
           </div>
@@ -1243,19 +1213,19 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
               },
               {
                 en: "Listen before you fix. Reflect, ask one open question, then wait.",
-                id: "Dengarkan sebelum memperbaiki. Refleksikan, ajukan satu pertanyaan terbuka, lalu tunggu.",
+                id: "Dengarkan sebelum memperbaiki. Cerminkan, ajukan satu pertanyaan terbuka, lalu tunggu.",
               },
               {
                 en: "Silence and withdrawal are often signals. Name the pattern privately and gently, before tension hardens or erupts.",
-                id: "Diam dan menarik diri sering kali adalah sinyal. Sebutkan polanya secara pribadi dan lembut, sebelum ketegangan mengeras atau meledak.",
+                id: "Diam dan menarik diri sering kali adalah sinyal. Ungkapkan polanya secara pribadi dan lembut, sebelum ketegangan mengeras atau meledak.",
               },
               {
                 en: "Resolution may not look like open agreement. In many cultures a trusted go-between is the right path.",
-                id: "Resolusi belum tentu berupa kesepakatan terbuka. Dalam banyak budaya, perantara yang dipercaya adalah jalan yang tepat.",
+                id: "Penyelesaian belum tentu berupa kesepakatan terbuka. Dalam banyak budaya, perantara yang dipercaya adalah jalan yang tepat.",
               },
               {
                 en: "Name loss out loud. Goodbye rituals and regular grief checks keep unspoken loss from piling up.",
-                id: "Sebutkan kehilangan dengan terbuka. Ritual perpisahan dan pemeriksaan duka rutin menjaga agar kehilangan yang tak terucap tidak menumpuk.",
+                id: "Ungkapkan kehilangan secara terbuka. Ritual perpisahan dan waktu berduka rutin menjaga agar kehilangan yang tak terucap tidak menumpuk.",
               },
             ].map((item, i) => (
               <div
@@ -1342,7 +1312,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
           >
             {t(
               "The skills that keep teams together take practice. Explore more training modules to deepen your cross-cultural leadership.",
-              "Keterampilan yang menjaga tim tetap bersatu perlu dilatih. Jelajahi modul pelatihan lain untuk memperdalam kepemimpinan lintas budayamu."
+              "Keterampilan yang menjaga tim tetap bersatu perlu dilatih. Jelajahi modul pelatihan lain untuk memperdalam kepemimpinan lintas budaya Anda."
             )}
           </p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
@@ -1381,7 +1351,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
                 borderRadius: 4,
               }}
             >
-              {t("Conflict Resolution", "Resolusi Konflik")}
+              {t("Conflict Resolution", "Penyelesaian Konflik")}
             </Link>
           </div>
         </div>

@@ -32,7 +32,7 @@ const DIMENSIONS = [
     en_desc: "Team members can speak up, disagree, and admit mistakes without fear of punishment or humiliation. This is the single most important factor in team effectiveness.",
     id_desc: "Anggota tim dapat berbicara, tidak setuju, dan mengakui kesalahan tanpa takut dihukum atau dipermalukan. Ini adalah faktor terpenting dalam efektivitas tim.",
     en_fix: "Start with one-on-one conversations. Ask: 'What's one thing you'd say if you knew there'd be no consequences?' Then make sure there aren't any.",
-    id_fix: "Mulailah dengan percakapan satu lawan satu. Tanyakan: 'Apa satu hal yang akan kamu katakan jika kamu tahu tidak ada konsekuensinya?' Kemudian pastikan tidak ada.",
+    id_fix: "Mulailah dengan percakapan satu lawan satu. Tanyakan: 'Apa satu hal yang akan Anda katakan jika Anda tahu tidak ada konsekuensinya?' Kemudian pastikan tidak ada.",
   },
   {
     en_name: "Clarity of Purpose & Roles", id_name: "Kejelasan Tujuan & Peran",

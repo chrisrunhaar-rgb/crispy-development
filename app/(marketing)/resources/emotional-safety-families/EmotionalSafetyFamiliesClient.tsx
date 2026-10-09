@@ -54,7 +54,7 @@ const SAFETY_MARKERS = [
     en_desc:
       "When a child reaches out — through words, behaviour, tears, or silence — the question they are asking is: do you notice me? A responsive parent doesn't fix everything; they turn toward the child first.",
     id_desc:
-      "Ketika seorang anak menjangkau — melalui kata-kata, perilaku, air mata, atau diam — pertanyaan yang mereka ajukan adalah: apakah kamu memperhatikanku? Orang tua yang tanggap tidak memperbaiki segalanya; mereka berpaling kepada anak terlebih dahulu.",
+      "Ketika seorang anak menjangkau — melalui kata-kata, perilaku, air mata, atau diam — pertanyaan yang mereka ajukan adalah: apakah Anda memperhatikanku? Orang tua yang tanggap tidak memperbaiki segalanya; mereka berpaling kepada anak terlebih dahulu.",
     en_practice:
       "In practice: put the phone face-down. Ask one more question before moving on. When a child is upset, name the feeling before explaining why they shouldn't have it.",
     id_practice:
@@ -84,7 +84,7 @@ const SAFETY_MARKERS = [
     en_practice:
       "In practice: replace \"Don't be upset about that\" with \"It makes sense you feel that way.\" Your child's emotions don't need to be managed away — they need to be witnessed.",
     id_practice:
-      "Dalam praktik: ganti \"Jangan kesal tentang hal itu\" dengan \"Masuk akal kamu merasakan itu.\" Emosi anak Anda tidak perlu dikelola menjadi hilang — mereka perlu disaksikan.",
+      "Dalam praktik: ganti \"Jangan kesal tentang hal itu\" dengan \"Wajar jika Anda merasakan itu.\" Emosi anak Anda tidak perlu dikelola menjadi hilang — mereka perlu disaksikan.",
     icon: "?",
   },
 ];
@@ -102,7 +102,7 @@ const REPAIR_STEPS = [
     en_example:
       "\"Earlier tonight I raised my voice when you were trying to tell me something. That was wrong of me. You were talking and I cut you off.\"",
     id_example:
-      "\"Tadi malam aku meninggikan suara ketika kamu sedang mencoba menceritakan sesuatu. Itu salah dariku. Kamu sedang berbicara dan aku memotongmu.\"",
+      "\"Tadi malam saya meninggikan suara ketika Anda sedang mencoba menceritakan sesuatu. Itu salah dari saya. Anda sedang berbicara dan saya memotong Anda.\"",
   },
   {
     en_label: "Apologise",
@@ -114,7 +114,7 @@ const REPAIR_STEPS = [
     en_example:
       "\"I'm sorry. You didn't deserve that. I was stressed and I took it out on you, and that wasn't okay.\"",
     id_example:
-      "\"Aku minta maaf. Kamu tidak layak mendapatkan itu. Aku sedang stres dan melampiaskannya kepadamu, dan itu tidak baik.\"",
+      "\"Saya minta maaf. Anda tidak layak mendapatkan itu. Saya sedang stres dan melampiaskannya kepada Anda, dan itu tidak baik.\"",
   },
   {
     en_label: "Reconnect",
@@ -126,7 +126,7 @@ const REPAIR_STEPS = [
     en_example:
       "\"Can I have a hug? I love you. And I want to hear what you were trying to tell me — I'm listening now.\"",
     id_example:
-      "\"Boleh aku peluk? Aku menyayangimu. Dan aku ingin mendengar apa yang ingin kamu ceritakan — aku mendengarkan sekarang.\"",
+      "\"Boleh saya peluk? Saya menyayangi Anda. Dan saya ingin mendengar apa yang ingin Anda ceritakan — saya mendengarkan sekarang.\"",
   },
 ];
 
@@ -139,7 +139,7 @@ const TCK_NEEDS = [
     en_body:
       "TCKs rarely have one stable home, neighbourhood, or school. What they can have is a stable parent. The most consistent thing in their world needs to be you — your warmth, your availability, your emotional steadiness across every transition.",
     id_body:
-      "Anak-anak lintas budaya jarang memiliki satu rumah, lingkungan, atau sekolah yang stabil. Yang bisa mereka miliki adalah orang tua yang stabil. Hal paling konsisten di dunia mereka perlu menjadi kamu — kehangatan, ketersediaan, dan kestabilan emosionalmu di setiap transisi.",
+      "Anak-anak lintas budaya jarang memiliki satu rumah, lingkungan, atau sekolah yang stabil. Yang bisa mereka miliki adalah orang tua yang stabil. Hal paling konsisten di dunia mereka perlu menjadi Anda — kehangatan, ketersediaan, dan kestabilan emosional Anda di setiap transisi.",
   },
   {
     en_title: "A Shared Language for Loss",
@@ -155,7 +155,7 @@ const TCK_NEEDS = [
     en_body:
       "A TCK lives in multiple cultural worlds simultaneously and often belongs fully to none of them. What they need is a parent who helps them hold multiple identities with pride rather than confusion — someone who says: all of who you are is valid, and we will figure out where you belong together.",
     id_body:
-      "Seorang anak lintas budaya hidup dalam beberapa dunia budaya secara bersamaan dan sering tidak sepenuhnya termasuk dalam satupun. Yang mereka butuhkan adalah orang tua yang membantu mereka memegang berbagai identitas dengan bangga daripada kebingungan — seseorang yang berkata: semua yang kamu miliki itu valid, dan kita akan mencari tahu di mana kamu termasuk bersama-sama.",
+      "Seorang anak lintas budaya hidup dalam beberapa dunia budaya secara bersamaan dan sering tidak sepenuhnya termasuk dalam satupun. Yang mereka butuhkan adalah orang tua yang membantu mereka memegang berbagai identitas dengan bangga daripada kebingungan — seseorang yang berkata: semua yang Anda miliki itu valid, dan kita akan mencari tahu di mana Anda termasuk bersama-sama.",
   },
 ];
 

@@ -210,7 +210,7 @@ const DISC_TYPES = [
     },
     digDeeper: {
       en: "In a high-context team (Indonesia, Levantine contexts, Japan), your directness can read as disrespect before you have said anything offensive. The skill is not softening your message — it is slowing your timeline. The same goal, arrived at through a longer road, often gets further faster. Watch what happens in your team when you let silence run three seconds longer than is comfortable for you.",
-      id: "Dalam tim high-context (Indonesia, konteks Levant, Jepang), ketegasanmu dapat dibaca sebagai ketidakhormatan sebelum kamu mengatakan sesuatu yang menyinggung. Keterampilannya bukan memperhalus pesanmu — melainkan memperlambat jadwalmu. Tujuan yang sama, dicapai melalui jalan yang lebih panjang, seringkali lebih jauh lebih cepat. Perhatikan apa yang terjadi dalam timmu ketika kamu membiarkan keheningan berlangsung tiga detik lebih lama dari yang nyaman bagimu.",
+      id: "Dalam tim high-context (Indonesia, konteks Levant, Jepang), ketegasan Anda dapat dibaca sebagai ketidakhormatan sebelum Anda mengatakan sesuatu yang menyinggung. Keterampilannya bukan memperhalus pesan Anda — melainkan memperlambat jadwal Anda. Tujuan yang sama, dicapai melalui jalan yang lebih panjang, seringkali lebih jauh lebih cepat. Perhatikan apa yang terjadi dalam tim Anda ketika Anda membiarkan keheningan berlangsung tiga detik lebih lama dari yang nyaman bagi Anda.",
     },
   },
   {
@@ -255,7 +255,7 @@ const DISC_TYPES = [
     },
     digDeeper: {
       en: "In reserved or formal cultural contexts (East Asia, Northern Europe, some Middle Eastern settings), your natural expressiveness can read as superficial or unserious. The growth move is not suppressing your energy — it is developing genuine depth in the relationship before the energy lands well. I-type leaders who master this become some of the most effective cross-cultural bridge-builders in any team.",
-      id: "Dalam konteks budaya yang tertutup atau formal (Asia Timur, Eropa Utara, beberapa lingkungan Timur Tengah), ekspresivitasmu yang alami bisa terbaca sebagai dangkal atau tidak serius. Langkah pertumbuhannya bukan menekan energimu — melainkan mengembangkan kedalaman sejati dalam hubungan sebelum energi itu diterima dengan baik. Pemimpin tipe I yang menguasai ini menjadi beberapa pembangun jembatan lintas budaya paling efektif dalam tim mana pun.",
+      id: "Dalam konteks budaya yang tertutup atau formal (Asia Timur, Eropa Utara, beberapa lingkungan Timur Tengah), ekspresivitas Anda yang alami bisa terbaca sebagai dangkal atau tidak serius. Langkah pertumbuhannya bukan menekan energi Anda — melainkan mengembangkan kedalaman sejati dalam hubungan sebelum energi itu diterima dengan baik. Pemimpin tipe I yang menguasai ini menjadi beberapa pembangun jembatan lintas budaya paling efektif dalam tim mana pun.",
     },
   },
   {
@@ -300,7 +300,7 @@ const DISC_TYPES = [
     },
     digDeeper: {
       en: "In Indonesian and other Southeast Asian contexts, your harmony-preservation behaviors are not a weakness label waiting to be overcome — they are culturally skilled leadership. The ability to read the room, protect relationships, and hold space for others before pushing to a conclusion reflects deep relational intelligence. The growth edge is not becoming more assertive for its own sake, but learning when speaking first protects others from carrying more than they should.",
-      id: "Dalam konteks Indonesia dan Asia Tenggara lainnya, perilaku pelestarian harmonimu bukan label kelemahan yang menunggu untuk diatasi — melainkan kepemimpinan yang terampil secara budaya. Kemampuan membaca situasi, melindungi hubungan, dan memberi ruang bagi orang lain sebelum mendorong ke kesimpulan mencerminkan kecerdasan relasional yang mendalam. Area pertumbuhannya bukan menjadi lebih asertif demi dirinya sendiri, tetapi belajar kapan berbicara lebih dulu melindungi orang lain dari membawa beban yang seharusnya tidak mereka tanggung.",
+      id: "Dalam konteks Indonesia dan Asia Tenggara lainnya, perilaku pelestarian harmoni Anda bukan label kelemahan yang menunggu untuk diatasi — melainkan kepemimpinan yang terampil secara budaya. Kemampuan membaca situasi, melindungi hubungan, dan memberi ruang bagi orang lain sebelum mendorong ke kesimpulan mencerminkan kecerdasan relasional yang mendalam. Area pertumbuhannya bukan menjadi lebih asertif demi dirinya sendiri, tetapi belajar kapan berbicara lebih dulu melindungi orang lain dari membawa beban yang seharusnya tidak mereka tanggung.",
     },
   },
   {
@@ -345,7 +345,7 @@ const DISC_TYPES = [
     },
     digDeeper: {
       en: "In oral-preference cultures (much of sub-Saharan Africa, oral-tradition communities across Asia and the Pacific), your documentation requests can read as distrust before a single question is asked. The skill is pairing precision with warmth — making clear that your thoroughness is in service of the mission, not a judgment on people. C-type leaders who learn to communicate the 'why' behind their standards become trusted quality anchors in diverse teams.",
-      id: "Dalam budaya berbasis lisan (sebagian besar Afrika sub-Sahara, komunitas tradisi lisan di seluruh Asia dan Pasifik), permintaan dokumentasimu dapat terbaca sebagai ketidakpercayaan bahkan sebelum satu pertanyaan pun diajukan. Keterampilannya adalah memadukan ketepatan dengan kehangatan — menjelaskan bahwa ketelitianmu adalah untuk melayani misi, bukan menghakimi orang. Pemimpin tipe C yang belajar mengkomunikasikan 'mengapa' di balik standar mereka menjadi jangkar kualitas yang dipercaya dalam tim yang beragam.",
+      id: "Dalam budaya berbasis lisan (sebagian besar Afrika sub-Sahara, komunitas tradisi lisan di seluruh Asia dan Pasifik), permintaan dokumentasi Anda dapat terbaca sebagai ketidakpercayaan bahkan sebelum satu pertanyaan pun diajukan. Keterampilannya adalah memadukan ketepatan dengan kehangatan — menjelaskan bahwa ketelitian Anda adalah untuk melayani misi, bukan menghakimi orang. Pemimpin tipe C yang belajar mengkomunikasikan 'mengapa' di balik standar mereka menjadi jangkar kualitas yang dipercaya dalam tim yang beragam.",
     },
   },
 ];
@@ -956,7 +956,7 @@ export default function DiscClient({
           >
             {lang === "en"
               ? "Your behavioral style shapes how you lead, communicate, and respond under pressure. DISC gives you a language for what is already visible in your team. Start with the assessment, then go deeper into the four types."
-              : "Gaya perilakumu membentuk cara kamu memimpin, berkomunikasi, dan merespons di bawah tekanan. DISC memberimu bahasa untuk apa yang sudah terlihat dalam timmu. Mulai dengan penilaian, lalu pelajari lebih dalam keempat tipe."}
+              : "Gaya perilaku Anda membentuk cara Anda memimpin, berkomunikasi, dan merespons di bawah tekanan. DISC memberi Anda bahasa untuk apa yang sudah terlihat dalam tim Anda. Mulai dengan penilaian, lalu pelajari lebih dalam keempat tipe."}
           </p>
 
           {/* CTAs */}
@@ -1033,9 +1033,9 @@ export default function DiscClient({
                   "Apply DISC awareness to one real collaboration challenge in your current team.",
                 ]
               : [
-                  "Mengidentifikasi gaya perilakumu dan menjelaskan bagaimana gaya tersebut membentuk komunikasi dan pengambilan keputusan defaultmu dalam konteks lintas budaya.",
+                  "Mengidentifikasi gaya perilaku Anda dan menjelaskan bagaimana gaya tersebut membentuk komunikasi dan pengambilan keputusan default Anda dalam konteks lintas budaya.",
                   "Mengenali keempat pola DISC dan menjelaskan apa yang dibawa masing-masing tipe ke dalam tim multikultural, serta di mana masing-masing tipe menimbulkan gesekan.",
-                  "Menerapkan kesadaran DISC pada satu tantangan kolaborasi nyata dalam timmu saat ini.",
+                  "Menerapkan kesadaran DISC pada satu tantangan kolaborasi nyata dalam tim Anda saat ini.",
                 ]
             ).map((outcome, i) => (
               <li
@@ -1218,7 +1218,7 @@ export default function DiscClient({
           >
             {lang === "en"
               ? `DISC is not a measure of intelligence, spiritual maturity, or calling. It is not a fixed identity. Your DISC result describes your behavioral tendency under typical conditions — not who you are under pressure of growth, grief, or transformation. The result shifts across cultures and contexts. Read it as a starting point. A "high D" in Sumba is not the same as a "high D" in Sydney.`
-              : `DISC bukan ukuran kecerdasan, kematangan rohani, atau panggilan. Ini bukan identitas tetap. Hasil DISC-mu menggambarkan kecenderungan perilakumu dalam kondisi biasa — bukan siapa dirimu di bawah tekanan pertumbuhan, kesedihan, atau transformasi. Hasilnya berubah di berbagai budaya dan konteks. Baca sebagai titik awal. Seorang "D tinggi" di Sumba tidak sama dengan "D tinggi" di Sydney.`}
+              : `DISC bukan ukuran kecerdasan, kematangan rohani, atau panggilan. Ini bukan identitas tetap. Hasil DISC Anda menggambarkan kecenderungan perilaku Anda dalam kondisi biasa — bukan siapa diri Anda di bawah tekanan pertumbuhan, kesedihan, atau transformasi. Hasilnya berubah di berbagai budaya dan konteks. Baca sebagai titik awal. Seorang "D tinggi" di Sumba tidak sama dengan "D tinggi" di Sydney.`}
           </p>
 
           {/* Teaching prose — paragraph 3 */}
@@ -1280,8 +1280,8 @@ export default function DiscClient({
                     { label: "Not universally calibrated", body: `DISC was developed primarily in Western, individualist research contexts. Hofstede's Indonesia data (Power Distance Index 78, Individualism 14) illustrates how far the underlying assumptions can sit from the contexts where many of us lead. S-type "weakness" labels — passivity, avoiding conflict, needing approval — may describe culturally skilled behavior in Indonesian and other Southeast Asian settings, not personal limitation.` },
                   ]
                 : [
-                    { label: "Bukan vonis", body: "Hasilmu adalah pola kecenderungan, bukan identitas tetap. Ini menggambarkan perilaku default-mu dalam kondisi biasa. Ini tidak memprediksi bagaimana kamu akan bertindak di bawah tekanan, pertumbuhan, kesedihan, atau transformasi." },
-                    { label: "Bukan prediksi", body: "DISC tidak memberitahumu apa yang akan dilakukan seseorang. Ini menggambarkan kecenderungan perilaku. Orang beradaptasi, tumbuh, dan berperilaku berbeda dalam konteks budaya yang berbeda. Tipe-mu adalah titik awal, bukan langit-langit." },
+                    { label: "Bukan vonis", body: "Hasil Anda adalah pola kecenderungan, bukan identitas tetap. Ini menggambarkan perilaku default Anda dalam kondisi biasa. Ini tidak memprediksi bagaimana Anda akan bertindak di bawah tekanan, pertumbuhan, kesedihan, atau transformasi." },
+                    { label: "Bukan prediksi", body: "DISC tidak memberitahu Anda apa yang akan dilakukan seseorang. Ini menggambarkan kecenderungan perilaku. Orang beradaptasi, tumbuh, dan berperilaku berbeda dalam konteks budaya yang berbeda. Tipe Anda adalah titik awal, bukan langit-langit." },
                     { label: "Tidak dikalibrasi secara universal", body: `DISC dikembangkan terutama dalam konteks penelitian Barat yang individualis. Data Indonesia Hofstede (Indeks Jarak Kekuasaan 78, Individualisme 14) menggambarkan betapa jauhnya asumsi mendasar dari konteks di mana banyak dari kita memimpin. Label "kelemahan" tipe S — pasif, menghindari konflik, butuh persetujuan — mungkin menggambarkan perilaku yang terampil secara budaya dalam konteks Indonesia dan Asia Tenggara lainnya, bukan keterbatasan pribadi.` },
                   ]
               ).map((item) => (
@@ -1588,7 +1588,7 @@ export default function DiscClient({
               marginBottom: "1.5rem",
             }}
           >
-            {lang === "en" ? "Discover your behavioral style." : "Temukan gaya perilakumu."}
+            {lang === "en" ? "Discover your behavioral style." : "Temukan gaya perilaku Anda."}
           </h2>
 
           {/* NOT-STARTED state */}
@@ -1606,7 +1606,7 @@ export default function DiscClient({
               >
                 {lang === "en"
                   ? "24 questions. Each presents four options — choose the one that best describes your natural tendency. There are no right or wrong answers. The whole assessment takes 6 to 8 minutes."
-                  : "24 pertanyaan. Setiap pertanyaan menyajikan empat pilihan — pilih yang paling menggambarkan kecenderungan alami kamu. Tidak ada jawaban benar atau salah. Seluruh penilaian membutuhkan 6 hingga 8 menit."}
+                  : "24 pertanyaan. Setiap pertanyaan menyajikan empat pilihan — pilih yang paling menggambarkan kecenderungan alami Anda. Tidak ada jawaban benar atau salah. Seluruh penilaian membutuhkan 6 hingga 8 menit."}
               </p>
 
               {/* Show prior result if available */}
@@ -1629,7 +1629,7 @@ export default function DiscClient({
                   >
                     {lang === "en"
                       ? `Your saved result: ${normalizedDiscResult}. You can retake the assessment below.`
-                      : `Hasil tersimpan kamu: ${normalizedDiscResult}. Kamu bisa mengulang penilaian di bawah ini.`}
+                      : `Hasil tersimpan Anda: ${normalizedDiscResult}. Anda bisa mengulang penilaian di bawah ini.`}
                   </p>
                 </div>
               )}
@@ -1785,7 +1785,7 @@ export default function DiscClient({
                         marginBottom: "0.75rem",
                       }}
                     >
-                      {lang === "en" ? "Your Result" : "Hasil Kamu"}
+                      {lang === "en" ? "Your Result" : "Hasil Anda"}
                     </p>
                     <h3
                       style={{
@@ -1885,7 +1885,7 @@ export default function DiscClient({
                       marginRight: "0.75rem",
                     }}
                   >
-                    {lang === "en" ? `Explore Your ${primaryType} Type` : `Jelajahi Tipe ${primaryType} Kamu`}
+                    {lang === "en" ? `Explore Your ${primaryType} Type` : `Jelajahi Tipe ${primaryType} Anda`}
                   </button>
                 )}
 
@@ -2038,7 +2038,7 @@ export default function DiscClient({
           >
             {lang === "en"
               ? "This reframes DISC entirely. The D-type leader is not the ideal that S and C types should aspire toward. The S-type's patience is not a weakness waiting to be fixed. Each orientation reflects something of the image of God in how human beings were made — rational, relational, creative, precise, bold, steadfast. 1 Corinthians 12 says you need all four around the table. Behavioral diversity is one expression of the reality that no single person fully images God — the community together carries what the individual cannot."
-              : "Ini membingkai ulang DISC sepenuhnya. Pemimpin tipe D bukan ideal yang seharusnya dicapai oleh tipe S dan C. Kesabaran tipe S bukan kelemahan yang menunggu untuk diperbaiki. Setiap orientasi mencerminkan sesuatu dari gambar Allah dalam cara manusia diciptakan — rasional, relasional, kreatif, presisi, berani, teguh. 1 Korintus 12 mengatakan kamu membutuhkan keempat tipe di sekitar meja. Keragaman perilaku adalah salah satu ungkapan dari kenyataan bahwa tidak ada satu orang pun yang sepenuhnya mencerminkan Tuhan — komunitas bersama-sama membawa apa yang tidak dapat dibawa oleh individu."}
+              : "Ini membingkai ulang DISC sepenuhnya. Pemimpin tipe D bukan ideal yang seharusnya dicapai oleh tipe S dan C. Kesabaran tipe S bukan kelemahan yang menunggu untuk diperbaiki. Setiap orientasi mencerminkan sesuatu dari gambar Allah dalam cara manusia diciptakan — rasional, relasional, kreatif, presisi, berani, teguh. 1 Korintus 12 mengatakan Anda membutuhkan keempat tipe di sekitar meja. Keragaman perilaku adalah salah satu ungkapan dari kenyataan bahwa tidak ada satu orang pun yang sepenuhnya mencerminkan Tuhan — komunitas bersama-sama membawa apa yang tidak dapat dibawa oleh individu."}
           </p>
 
           <p
@@ -2070,7 +2070,7 @@ export default function DiscClient({
           >
             {lang === "en"
               ? "Which type in your team carries what you cannot see on your own?"
-              : "Tipe apa dalam timmu yang membawa apa yang tidak bisa kamu lihat sendiri?"}
+              : "Tipe apa dalam tim Anda yang membawa apa yang tidak bisa Anda lihat sendiri?"}
           </p>
         </div>
       </section>
@@ -2124,11 +2124,11 @@ export default function DiscClient({
                   "Your type can grow. The history of biblical leadership is full of leaders whose style deepened and widened through friction, failure, and time.",
                 ]
               : [
-                  "DISC menggambarkan kecenderungan perilaku, bukan identitas tetap. Baca hasilmu sebagai pengaturan default-mu, bukan batas kemampuanmu.",
-                  "Setiap tipe membawa kekuatan yang dibutuhkan tiga tipe lainnya. Pertanyaannya bukan tipe mana yang terbaik — melainkan bagaimana timmu mencakup gambaran lengkap bersama.",
-                  "Tipe-mu diterima secara berbeda di berbagai budaya. Gaya D di Jakarta beroperasi secara berbeda dari gaya D di Amsterdam. Labelnya adalah titik awal, bukan kesimpulan.",
+                  "DISC menggambarkan kecenderungan perilaku, bukan identitas tetap. Baca hasil Anda sebagai pengaturan default Anda, bukan batas kemampuan Anda.",
+                  "Setiap tipe membawa kekuatan yang dibutuhkan tiga tipe lainnya. Pertanyaannya bukan tipe mana yang terbaik — melainkan bagaimana tim Anda mencakup gambaran lengkap bersama.",
+                  "Tipe Anda diterima secara berbeda di berbagai budaya. Gaya D di Jakarta beroperasi secara berbeda dari gaya D di Amsterdam. Labelnya adalah titik awal, bukan kesimpulan.",
                   "Kesadaran perilaku saja tidak cukup. Yang memungkinkannya adalah kosakata bersama — yang membuat percakapan sulit menjadi kurang mengancam.",
-                  "Tipe-mu bisa bertumbuh. Sejarah kepemimpinan Alkitabiah penuh dengan pemimpin yang gayanya semakin dalam dan melebar melalui gesekan, kegagalan, dan waktu.",
+                  "Tipe Anda bisa bertumbuh. Sejarah kepemimpinan Alkitabiah penuh dengan pemimpin yang gayanya semakin dalam dan melebar melalui gesekan, kegagalan, dan waktu.",
                 ]
             ).map((item, i) => (
               <li key={i} style={{ display: "flex", gap: "1.25rem", alignItems: "flex-start" }}>
@@ -2260,7 +2260,7 @@ export default function DiscClient({
                       Bagi pemimpin lintas budaya, DISC memberikan kosakata bersama untuk menggambarkan perbedaan perilaku tanpa mengatribusikan kesalahan atau patologi. Dalam tim multikultural — khususnya dalam konteks Indonesia dan Asia Tenggara — memahami bahwa perilaku pelestarian harmoni tipe S mencerminkan kompetensi budaya daripada kelemahan pribadi, dan bahwa permintaan dokumentasi tipe C mungkin terbaca sebagai ketidakpercayaan dalam budaya preferensi lisan, mengubah cara tim menavigasi konflik dan kolaborasi.
                     </p>
                     <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.875rem", color: "oklch(40% 0.04 260)", lineHeight: 1.75, marginBottom: "0" }}>
-                      Keempat tipe DISC — D (Dominance), I (Influence), S (Steadiness), C (Conscientiousness) — bukan kotak tetapi kecenderungan perilaku. Setiap pemimpin membawa keempat orientasi dalam tingkat yang bervariasi. Penilaian mengidentifikasi orientasi mana yang paling alami dalam kondisi biasa. Pertumbuhan dalam kepemimpinan lintas budaya melibatkan perluasan rentang perilakumu — bukan meninggalkan gaya utamamu, tetapi mengembangkan kelancaran dalam tiga lainnya.
+                      Keempat tipe DISC — D (Dominance), I (Influence), S (Steadiness), C (Conscientiousness) — bukan kotak tetapi kecenderungan perilaku. Setiap pemimpin membawa keempat orientasi dalam tingkat yang bervariasi. Penilaian mengidentifikasi orientasi mana yang paling alami dalam kondisi biasa. Pertumbuhan dalam kepemimpinan lintas budaya melibatkan perluasan rentang perilaku Anda — bukan meninggalkan gaya utama Anda, tetapi mengembangkan kelancaran dalam tiga lainnya.
                     </p>
                   </>
                 )}

@@ -283,7 +283,7 @@ const SLIDES: Slide[] = [
         <p style={kicker}>{t("The one question", "Satu pertanyaan", lang)}</p>
         <h2 style={{ ...midTitle, color: offWhite, maxWidth: 1300 }}>{t("Is this response above or below the line?", "Apakah respons ini di atas atau di bawah garis?", lang)}</h2>
         {rule()}
-        <p style={{ ...show(step >= 1), ...line(44, offWhite), fontWeight: 500 }}>{t("We never say: you are below the line.", "Kita tidak pernah berkata: kamu di bawah garis.", lang)}</p>
+        <p style={{ ...show(step >= 1), ...line(44, offWhite), fontWeight: 500 }}>{t("We never say: you are below the line.", "Kita tidak pernah berkata: Anda di bawah garis.", lang)}</p>
         <p style={{ ...show(step >= 2), ...line(48, orange), fontStyle: "italic", maxWidth: 1250 }}>
           {t("We ask the question. The person reflects and decides.", "Kita mengajukan pertanyaan. Orang itu merenung dan memutuskan sendiri.", lang)}
         </p>

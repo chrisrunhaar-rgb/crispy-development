@@ -584,7 +584,7 @@ const DICHOTOMY_LABELS_ID = [
 const MINISTRY_BENEFITS_ID = [
   {
     title: "Menurunkan suhu konflik",
-    body: "Ketika kebiasaan rekan tim yang membuat frustrasi dapat dinamai sebagai preferensi tipe daripada kelemahan karakter, menjadi jauh lebih mudah untuk ditangani tanpa penilaian. Percakapan bergerak dari \"kamu salah\" ke \"kita memiliki kabel yang berbeda — bagaimana kita bekerja dengan itu?\"",
+    body: "Ketika kebiasaan rekan tim yang membuat frustrasi dapat dinamai sebagai preferensi tipe daripada kelemahan karakter, menjadi jauh lebih mudah untuk ditangani tanpa penilaian. Percakapan bergerak dari \"Anda salah\" ke \"kita memiliki kabel yang berbeda — bagaimana kita bekerja dengan itu?\"",
     color: "oklch(65% 0.15 45)",
   },
   {

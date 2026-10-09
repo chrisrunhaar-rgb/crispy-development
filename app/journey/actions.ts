@@ -102,7 +102,7 @@ export async function getStepAiQuestion(stepNumber: number): Promise<string | nu
     }).join("\n\n");
 
     const prompt = lang === "id"
-      ? `Kamu adalah pelatih untuk perjalanan kepemimpinan 60 langkah. Orang ini baru menyelesaikan langkah di bawah. Tuliskan SATU pertanyaan refleksi pribadi untuk mereka.
+      ? `Anda adalah pelatih untuk perjalanan kepemimpinan 60 langkah. Orang ini baru menyelesaikan langkah di bawah. Tuliskan SATU pertanyaan refleksi pribadi untuk mereka.
 
 Aturan:
 - Hubungkan dengan inti langkah ini.${history ? "\n- Gunakan jawaban jurnal mereka sebelumnya agar pertanyaannya terasa pribadi. Sentuh celah, pola, atau ketegangan nyata dalam apa yang mereka tulis." : ""}
@@ -111,8 +111,8 @@ Aturan:
 - Singkat dan langsung. Satu kalimat. Kurang dari 20 kata.
 - Terdengar seperti orang nyata yang berbicara, bukan buku teks.
 
-Contoh buruk: "Asumsi dasar apa yang memposisikan bisnismu sebagai kekuatan berlawanan daripada lingkup bagi roh yang kamu nurture?"
-Contoh baik: "Seperti apa jadinya jika imanmu benar-benar membentuk cara kamu memimpin timmu minggu ini?"
+Contoh buruk: "Asumsi dasar apa yang memposisikan bisnis Anda sebagai kekuatan berlawanan daripada lingkup bagi roh yang Anda nurture?"
+Contoh baik: "Seperti apa jadinya jika iman Anda benar-benar membentuk cara Anda memimpin tim Anda minggu ini?"
 
 Kembalikan hanya pertanyaannya. Tidak ada yang lain.
 

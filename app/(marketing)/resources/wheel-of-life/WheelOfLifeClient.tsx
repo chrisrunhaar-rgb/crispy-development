@@ -688,7 +688,7 @@ export default function WheelOfLifeClient({
             <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 15, color: "oklch(44% 0.06 260)", marginBottom: 40, lineHeight: 1.65, maxWidth: 600 }}>
               {t(
                 "For each area of your life, reflect on what you're grateful for and name the one action that will lead to God-honoring results.",
-                "Untuk setiap area hidupmu, renungkan apa yang kamu syukuri dan tentukan satu tindakan yang akan menghasilkan hasil yang memuliakan Tuhan."
+                "Untuk setiap area hidup Anda, renungkan apa yang Anda syukuri dan tentukan satu tindakan yang akan menghasilkan hasil yang memuliakan Tuhan."
               )}
             </p>
 
@@ -712,7 +712,7 @@ export default function WheelOfLifeClient({
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1rem" }}>
                       <div>
                         <label style={{ display: "block", fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(42% 0.06 260)", marginBottom: 8 }}>
-                          {t("What are you thankful for in this area?", "Apa yang kamu syukuri di area ini?")}
+                          {t("What are you thankful for in this area?", "Apa yang Anda syukuri di area ini?")}
                         </label>
                         <textarea
                           value={reflection.gratitude}
@@ -805,7 +805,7 @@ export default function WheelOfLifeClient({
             {t("Key Takeaway", "Poin Utama")}
           </p>
           <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(18px, 2.2vw, 24px)", fontWeight: 800, color: "oklch(22% 0.10 260)", marginBottom: 36 }}>
-            {t("Three things to act on this week", "Tiga hal yang bisa kamu terapkan minggu ini")}
+            {t("Three things to act on this week", "Tiga hal yang bisa Anda terapkan minggu ini")}
           </h2>
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             {[
@@ -815,11 +815,11 @@ export default function WheelOfLifeClient({
               ),
               t(
                 "If your lowest-scoring domain involves relationships or rest, treat it as a leading indicator: it often degrades before the others follow. What is one small change you could make this week?",
-                "Jika domain dengan skor terendah melibatkan hubungan atau istirahat, anggap itu sebagai indikator awal: area itu sering memburuk sebelum yang lain mengikutinya. Perubahan kecil apa yang bisa kamu lakukan minggu ini?"
+                "Jika domain dengan skor terendah melibatkan hubungan atau istirahat, anggap itu sebagai indikator awal: area itu sering memburuk sebelum yang lain mengikutinya. Perubahan kecil apa yang bisa Anda lakukan minggu ini?"
               ),
               t(
                 "Share your Wheel of Life with one trusted person and ask them to reflect back what they observe. Sometimes our self-scores miss what others can see from the outside.",
-                "Bagikan Roda Kehidupanmu dengan seseorang yang kamu percaya dan minta mereka merefleksikan apa yang mereka amati. Terkadang penilaian diri kita melewatkan apa yang bisa dilihat orang lain dari luar."
+                "Bagikan Roda Kehidupan Anda dengan seseorang yang Anda percaya dan minta mereka merefleksikan apa yang mereka amati. Terkadang penilaian diri kita melewatkan apa yang bisa dilihat orang lain dari luar."
               ),
             ].map((item, i) => (
               <div key={i} style={{ display: "flex", gap: 16, alignItems: "flex-start", padding: "20px 24px", background: "oklch(95% 0.008 80)" }}>
@@ -861,7 +861,7 @@ export default function WheelOfLifeClient({
           {bgOpen && [
             t(
               "Most leaders who encounter the Wheel of Life for the first time find it disarmingly simple. You draw a circle, divide it into segments, give each segment a score, and connect the dots. The resulting shape, rarely a perfect circle, tells you something immediately visible about where life feels full and where it feels depleted. That simplicity is its strength. But simplicity also conceals assumptions, and for leaders working across cultures, those assumptions deserve careful examination.",
-              "Sebagian besar pemimpin yang pertama kali menemukan Roda Kehidupan merasa alat ini sangat sederhana. Kamu menggambar lingkaran, membaginya menjadi segmen, memberikan skor pada setiap segmen, dan menghubungkan titik-titiknya. Bentuk yang dihasilkan, jarang merupakan lingkaran sempurna, langsung menunjukkan di mana hidup terasa penuh dan di mana terasa terkuras. Kesederhanaan itu adalah kekuatannya. Namun kesederhanaan juga menyembunyikan asumsi, dan bagi pemimpin yang bekerja lintas budaya, asumsi-asumsi itu layak untuk diperiksa dengan seksama."
+              "Sebagian besar pemimpin yang pertama kali menemukan Roda Kehidupan merasa alat ini sangat sederhana. Anda menggambar lingkaran, membaginya menjadi segmen, memberikan skor pada setiap segmen, dan menghubungkan titik-titiknya. Bentuk yang dihasilkan, jarang merupakan lingkaran sempurna, langsung menunjukkan di mana hidup terasa penuh dan di mana terasa terkuras. Kesederhanaan itu adalah kekuatannya. Namun kesederhanaan juga menyembunyikan asumsi, dan bagi pemimpin yang bekerja lintas budaya, asumsi-asumsi itu layak untuk diperiksa dengan seksama."
             ),
             t(
               "The Wheel of Life is most commonly attributed to Paul J. Meyer¹, the founder of the Success Motivation Institute, who introduced it as a coaching tool in the mid-20th century. The standard version divides life into domains such as career, finances, health, family and friends, romance, personal growth, recreation, and spiritual life. Each domain receives a satisfaction score from 0 to 10, and the shape of the completed wheel reveals which areas are receiving abundant attention and which are running on empty. The visual metaphor of the wheel is intentional: a bumpy, uneven wheel does not roll smoothly.",

@@ -124,7 +124,7 @@ export default function CallingIsNeverSoloClient({ isSaved: initialSaved }: Prop
           <p style={{ fontFamily: serif, fontSize: "clamp(19px, 2.5vw, 23px)", color: "oklch(82% 0.025 80)", lineHeight: 1.75, marginBottom: 40, fontStyle: "italic" }}>
             {t(
               "Your calling is one thread in a much larger tapestry. How God builds through communities, teams, and generations, and what it means to steward your part well.",
-              "Panggilanmu adalah satu benang dalam permadani yang jauh lebih besar. Bagaimana Tuhan membangun melalui komunitas, tim, dan generasi, dan apa artinya mengelola bagianmu dengan baik."
+              "Panggilan Anda adalah satu benang dalam permadani yang jauh lebih besar. Bagaimana Tuhan membangun melalui komunitas, tim, dan generasi, dan apa artinya mengelola bagian Anda dengan baik."
             )}
           </p>
           <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 19px)", color: "oklch(72% 0.025 80)", lineHeight: 1.75, maxWidth: 580, margin: "0 auto 48px" }}>
@@ -207,7 +207,7 @@ export default function CallingIsNeverSoloClient({ isSaved: initialSaved }: Prop
           <p style={{ marginBottom: 0 }}>
             {t(
               "The idea that calling is a private experience, uniquely yours, lived out alone, needing no community to make it real, is not what we see in Scripture. It is more a product of Western, individualist thinking that has shaped how many of us read the Bible. Much of the world has always found this reading strange. In cultures where identity is naturally relational, the idea that God would speak your calling to you alone, and that you would carry it alone, feels foreign and small. They were right to notice.",
-              "Gagasan bahwa panggilan adalah pengalaman pribadi, hanya milikmu, dijalani sendirian, tidak membutuhkan komunitas untuk membuatnya nyata, bukanlah apa yang kita lihat dalam Kitab Suci. Ini lebih merupakan produk dari pemikiran Barat dan individualistis yang telah membentuk cara banyak dari kita membaca Alkitab. Sebagian besar dunia selalu merasa bacaan ini aneh. Dalam budaya di mana identitas secara alami bersifat relasional, gagasan bahwa Tuhan akan berbicara panggilan Anda kepada Anda sendirian, dan bahwa Anda akan membawanya sendirian, terasa asing dan kecil. Mereka benar untuk memperhatikan hal ini."
+              "Gagasan bahwa panggilan adalah pengalaman pribadi, hanya milik Anda, dijalani sendirian, tidak membutuhkan komunitas untuk membuatnya nyata, bukanlah apa yang kita lihat dalam Kitab Suci. Ini lebih merupakan produk dari pemikiran Barat dan individualistis yang telah membentuk cara banyak dari kita membaca Alkitab. Sebagian besar dunia selalu merasa bacaan ini aneh. Dalam budaya di mana identitas secara alami bersifat relasional, gagasan bahwa Tuhan akan berbicara panggilan Anda kepada Anda sendirian, dan bahwa Anda akan membawanya sendirian, terasa asing dan kecil. Mereka benar untuk memperhatikan hal ini."
             )}
           </p>
         </div>
@@ -315,7 +315,7 @@ export default function CallingIsNeverSoloClient({ isSaved: initialSaved }: Prop
           <p style={{ marginBottom: 0 }}>
             {t(
               "This is why the Great Commission is not a solo assignment. 'Go and make disciples of all nations' was spoken to a group, not a single person. And the pattern of how disciples are made, one life investing in another, generation after generation, requires relationship, community, and time. Your calling makes full sense inside a body. Outside one, it tends to drift, shrink, or harden. You were not designed to carry it alone.",
-              "Inilah mengapa Amanat Agung bukan tugas solo. 'Pergilah dan jadikanlah semua bangsa murid-Ku' diucapkan kepada sekelompok orang, bukan satu orang. Dan pola bagaimana murid-murid dibentuk, satu kehidupan berinvestasi dalam kehidupan lain, generasi demi generasi, membutuhkan hubungan, komunitas, dan waktu. Panggilanmu sepenuhnya masuk akal di dalam tubuh. Di luarnya, ia cenderung melayang, mengecil, atau mengeras. Anda tidak dirancang untuk menanggungnya sendirian."
+              "Inilah mengapa Amanat Agung bukan tugas solo. 'Pergilah dan jadikanlah semua bangsa murid-Ku' diucapkan kepada sekelompok orang, bukan satu orang. Dan pola bagaimana murid-murid dibentuk, satu kehidupan berinvestasi dalam kehidupan lain, generasi demi generasi, membutuhkan hubungan, komunitas, dan waktu. Panggilan Anda sepenuhnya masuk akal di dalam tubuh. Di luarnya, ia cenderung melayang, mengecil, atau mengeras. Anda tidak dirancang untuk menanggungnya sendirian."
             )}
           </p>
         </div>
@@ -411,7 +411,7 @@ export default function CallingIsNeverSoloClient({ isSaved: initialSaved }: Prop
           <p style={{ marginBottom: 24 }}>
             {t(
               "In one verse, Paul describes four generations: himself, Timothy, reliable people, and others beyond them. This is what Jesus called his followers to when he said 'make disciples': not to build a crowd around yourself, but to raise leaders who will raise leaders. The multiplication pattern. If it stops at you, something has gone wrong.",
-              "Dalam satu ayat, Paulus menggambarkan empat generasi: dirinya sendiri, Timotius, orang-orang yang dapat dipercaya, dan orang-orang lain di luar mereka. Inilah yang Yesus maksudkan ketika Ia berkata kepada para pengikut-Nya untuk 'membuat murid': bukan untuk membangun kerumunan di sekitar dirimu sendiri, tetapi untuk membina pemimpin yang akan membina pemimpin. Pola penggandaan. Jika berhenti pada dirimu, ada sesuatu yang salah."
+              "Dalam satu ayat, Paulus menggambarkan empat generasi: dirinya sendiri, Timotius, orang-orang yang dapat dipercaya, dan orang-orang lain di luar mereka. Inilah yang Yesus maksudkan ketika Ia berkata kepada para pengikut-Nya untuk 'membuat murid': bukan untuk membangun kerumunan di sekitar diri Anda sendiri, tetapi untuk membina pemimpin yang akan membina pemimpin. Pola penggandaan. Jika berhenti pada diri Anda, ada sesuatu yang salah."
             )}
           </p>
           <p style={{ marginBottom: 24 }}>
@@ -423,7 +423,7 @@ export default function CallingIsNeverSoloClient({ isSaved: initialSaved }: Prop
           <p style={{ marginBottom: 0 }}>
             {t(
               "The Great Commission was not a one-generation assignment. 'Teaching them to obey everything I have commanded you': that is a chain of investment. To receive well is to receive with open hands. And open hands, by design, let things pass through. Not before the time is right. But always with someone else reaching for what you carry.",
-              "Amanat Agung bukan tugas satu generasi. 'Ajarkan mereka untuk mentaati segala sesuatu yang telah Kuperintahkan kepadamu': itu adalah rantai investasi. Menerima dengan baik berarti menerima dengan tangan terbuka. Dan tangan yang terbuka, berdasarkan rancangan-Nya, membiarkan sesuatu mengalir melewatinya. Bukan sebelum waktunya tepat. Tetapi selalu ada orang lain yang meraih apa yang kamu emban."
+              "Amanat Agung bukan tugas satu generasi. 'Ajarkan mereka untuk mentaati segala sesuatu yang telah Kuperintahkan kepadamu': itu adalah rantai investasi. Menerima dengan baik berarti menerima dengan tangan terbuka. Dan tangan yang terbuka, berdasarkan rancangan-Nya, membiarkan sesuatu mengalir melewatinya. Bukan sebelum waktunya tepat. Tetapi selalu ada orang lain yang meraih apa yang Anda emban."
             )}
           </p>
         </div>
@@ -448,7 +448,7 @@ export default function CallingIsNeverSoloClient({ isSaved: initialSaved }: Prop
             <p style={{ marginBottom: 24 }}>
               {t(
                 "For much of the world, across sub-Saharan Africa, East and Southeast Asia, the Middle East, and Latin America, identity is relational by default. In these cultures, calling is not primarily a private discovery. It is something the community sees in you, names out loud, and sends you into. The calling does not fully exist until it has been spoken by people who know you and who will carry responsibility for you. This is not a weaker theology of calling. It may be the stronger one.",
-                "Bagi sebagian besar dunia, di seluruh Afrika Sub-Sahara, Asia Timur dan Tenggara, Timur Tengah, dan Amerika Latin, identitas secara alami bersifat relasional. Dalam budaya-budaya ini, panggilan bukan terutama sebuah penemuan pribadi. Itu adalah sesuatu yang komunitas lihat dalam dirimu, nyatakan dengan lantang, dan utus kamu ke dalamnya. Panggilan itu tidak sepenuhnya ada sampai diucapkan oleh orang-orang yang mengenalmu dan yang akan menanggung tanggung jawab atasmu. Ini bukan teologi panggilan yang lebih lemah. Mungkin ini adalah yang lebih kuat."
+                "Bagi sebagian besar dunia, di seluruh Afrika Sub-Sahara, Asia Timur dan Tenggara, Timur Tengah, dan Amerika Latin, identitas secara alami bersifat relasional. Dalam budaya-budaya ini, panggilan bukan terutama sebuah penemuan pribadi. Itu adalah sesuatu yang komunitas lihat dalam diri Anda, nyatakan dengan lantang, dan utus Anda ke dalamnya. Panggilan itu tidak sepenuhnya ada sampai diucapkan oleh orang-orang yang mengenal Anda dan yang akan menanggung tanggung jawab atas Anda. Ini bukan teologi panggilan yang lebih lemah. Mungkin ini adalah yang lebih kuat."
               )}
             </p>
             <p style={{ marginBottom: 0 }}>
@@ -468,7 +468,7 @@ export default function CallingIsNeverSoloClient({ isSaved: initialSaved }: Prop
             {t("From the Field", "Dari Lapangan")}
           </p>
           <h2 style={{ fontFamily: serif, fontSize: "clamp(28px, 3.5vw, 40px)", fontWeight: 700, color: navy, marginBottom: 32, lineHeight: 1.2, fontStyle: "italic" }}>
-            {t("Who Sent You?", "Siapa yang Mengutusmu?")}
+            {t("Who Sent You?", "Siapa yang Mengutus Anda?")}
           </h2>
           <div style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 20px)", color: bodyText, lineHeight: 1.9 }}>
             <p style={{ marginBottom: 24 }}>
@@ -486,7 +486,7 @@ export default function CallingIsNeverSoloClient({ isSaved: initialSaved }: Prop
             <p style={{ marginBottom: 24 }}>
               {t(
                 "A local elder asked her a question that stayed with her for months afterward. He was not unkind, only direct. \"Who sent you?\" he said. \"Who prays for you? Who is responsible for you when things go wrong?\"",
-                "Seorang tetua lokal mengajukan pertanyaan yang membuatnya berpikir selama berbulan-bulan setelahnya. Ia tidak tidak ramah, hanya langsung saja. \"Siapa yang mengutusmu?\" katanya. \"Siapa yang mendoakanmu? Siapa yang bertanggung jawab atasmu ketika sesuatu berjalan salah?\""
+                "Seorang tetua lokal mengajukan pertanyaan yang membuatnya berpikir selama berbulan-bulan setelahnya. Ia tidak tidak ramah, hanya langsung saja. \"Siapa yang mengutus Anda?\" katanya. \"Siapa yang mendoakan Anda? Siapa yang bertanggung jawab atas Anda ketika sesuatu berjalan salah?\""
               )}
             </p>
             <p style={{ marginBottom: 24 }}>
@@ -529,7 +529,7 @@ export default function CallingIsNeverSoloClient({ isSaved: initialSaved }: Prop
           <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 19px)", color: bodyText, lineHeight: 1.85, margin: 0 }}>
             {t(
               "Your calling is not made smaller by being one part of many. It becomes fully itself precisely because the whole body requires it.",
-              "Panggilanmu tidak menjadi lebih kecil karena menjadi satu bagian dari banyak bagian. Ia menjadi sepenuhnya dirinya sendiri justru karena seluruh tubuh membutuhkannya."
+              "Panggilan Anda tidak menjadi lebih kecil karena menjadi satu bagian dari banyak bagian. Ia menjadi sepenuhnya dirinya sendiri justru karena seluruh tubuh membutuhkannya."
             )}
           </p>
         </div>
@@ -550,10 +550,10 @@ export default function CallingIsNeverSoloClient({ isSaved: initialSaved }: Prop
               "A calling that is received but never passed on has quietly become a possession. Someone should be reaching for what you carry.",
             ] : [
               "Panggilan dalam Kitab Suci tidak pernah murni individual. Ia dibentuk, dikonfirmasi, dan ditopang melalui komunitas.",
-              "Baik panggilan internal (rasa panggilanmu sendiri) maupun panggilan eksternal (pengakuan komunitas) dibutuhkan. Tidak ada yang lengkap tanpa yang lain.",
+              "Baik panggilan internal (rasa panggilan Anda sendiri) maupun panggilan eksternal (pengakuan komunitas) dibutuhkan. Tidak ada yang lengkap tanpa yang lain.",
               "Panggilan tanpa akuntabilitas rapuh secara struktural. Isolasi bukan pengabdian. Itu adalah cacat desain.",
               "Di sebagian besar dunia, panggilan selalu bersifat relasional secara alami. Model komunal mungkin lebih dekat dengan pola alkitabiah daripada yang kita asumsikan.",
-              "Panggilan yang diterima tetapi tidak pernah diteruskan telah diam-diam menjadi kepemilikan. Seseorang seharusnya meraih apa yang kamu emban.",
+              "Panggilan yang diterima tetapi tidak pernah diteruskan telah diam-diam menjadi kepemilikan. Seseorang seharusnya meraih apa yang Anda emban.",
             ]).map((item, i) => (
               <div key={i} style={{ background: offWhite, border: `1.5px solid oklch(90% 0.008 80)`, borderLeft: `4px solid ${orange}`, borderRadius: "0 8px 8px 0", padding: "18px 24px" }}>
                 <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(14px, 1.5vw, 15px)", fontWeight: 700, color: navy, margin: 0, lineHeight: 1.6 }}>
