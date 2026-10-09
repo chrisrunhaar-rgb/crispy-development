@@ -1,7 +1,6 @@
 ﻿"use client";
 import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
-import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
 import LangToggle from "@/components/LangToggle";
 import SourcesDropdown from "@/components/SourcesDropdown";
@@ -568,7 +567,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
 
       {/* -- Three Skills Accordion ------------------------------------------ */}
       <div style={{ padding: "80px 24px", maxWidth: 860, margin: "0 auto" }}>
-        <p style={{ ...eyebrow, marginBottom: 12, textAlign: "center" }}>
+        <p style={{ ...eyebrow, marginBottom: 12 }}>
           {t("Three Relational Skills", "Tiga Keterampilan Relasional")}
         </p>
         <h2
@@ -578,8 +577,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
             fontWeight: 800,
             color: navy,
             marginBottom: 12,
-            textAlign: "center",
-          }}
+                      }}
         >
           {t("Build the skills that keep teams together", "Bangun keterampilan yang menjaga tim tetap bersatu")}
         </h2>
@@ -588,9 +586,8 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
             fontSize: 15,
             color: bodyText,
             lineHeight: 1.7,
-            textAlign: "center",
             maxWidth: 600,
-            margin: "0 auto 52px",
+            margin: "0 0 52px",
           }}
         >
           {t(
@@ -897,7 +894,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
       {/* -- Relational Health Check ----------------------------------------- */}
       <div style={{ background: lightGray, padding: "80px 24px" }}>
         <div style={{ maxWidth: 860, margin: "0 auto" }}>
-          <p style={{ ...eyebrow, marginBottom: 12, textAlign: "center" }}>
+          <p style={{ ...eyebrow, marginBottom: 12 }}>
             {t("Reflection", "Refleksi")}
           </p>
           <h2
@@ -907,8 +904,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
               fontWeight: 800,
               color: navy,
               marginBottom: 12,
-              textAlign: "center",
-            }}
+                          }}
           >
             {t("Relational Health Check", "Pemeriksaan Kesehatan Relasional")}
           </h2>
@@ -917,10 +913,9 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
               fontSize: 15,
               color: bodyText,
               lineHeight: 1.7,
-              textAlign: "center",
               marginBottom: 40,
               maxWidth: 560,
-              margin: "0 auto 40px",
+              margin: "0 0 40px",
             }}
           >
             {t(
@@ -1188,7 +1183,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
       {/* -- Key Takeaways ---------------------------------------------------- */}
       <section style={{ background: lightGray, padding: "96px 24px" }}>
         <div style={{ maxWidth: 860, margin: "0 auto" }}>
-          <p style={{ ...eyebrow, marginBottom: 12, textAlign: "center" }}>
+          <p style={{ ...eyebrow, marginBottom: 12 }}>
             {t("Key Takeaways", "Poin Utama")}
           </p>
           <h2
@@ -1200,8 +1195,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
               fontStyle: "italic",
               lineHeight: 1.2,
               marginBottom: 48,
-              textAlign: "center",
-            }}
+                          }}
           >
             {t("What to Carry Forward", "Yang Perlu Dibawa")}
           </h2>
@@ -1286,76 +1280,6 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
           "ReadingActs. \"Acts 15:36-40: Disagreement with Barnabas.\" On paroxysmos, and how later references to Barnabas and Mark suggest restoration. https://readingacts.com/2019/03/03/acts-1536-40-disagreement-with-barnabas-2/",
         ]}
       />
-
-      {/* -- Footer / Keep Going --------------------------------------------- */}
-      <section style={{ background: navy, padding: "80px 24px", textAlign: "center" }}>
-        <div style={{ maxWidth: 860, margin: "0 auto" }}>
-          <h2
-            style={{
-              fontFamily: "Montserrat, sans-serif",
-              fontSize: "clamp(20px, 2.5vw, 28px)",
-              fontWeight: 800,
-              color: offWhite,
-              marginBottom: 16,
-            }}
-          >
-            {t("Keep Growing", "Terus Bertumbuh")}
-          </h2>
-          <p
-            style={{
-              fontSize: 15,
-              color: "oklch(76% 0.03 80)",
-              lineHeight: 1.75,
-              maxWidth: 520,
-              margin: "0 auto 40px",
-            }}
-          >
-            {t(
-              "The skills that keep teams together take practice. Explore more training modules to deepen your cross-cultural leadership.",
-              "Keterampilan yang menjaga tim tetap bersatu perlu dilatih. Jelajahi modul pelatihan lain untuk memperdalam kepemimpinan lintas budaya Anda."
-            )}
-          </p>
-          <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-            <Link
-              href="/resources"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                minHeight: 44,
-                padding: "12px 36px",
-                background: orange,
-                color: offWhite,
-                fontFamily: "Montserrat, sans-serif",
-                fontSize: 14,
-                fontWeight: 700,
-                textDecoration: "none",
-                borderRadius: 4,
-              }}
-            >
-              {t("Training", "Pelatihan")}
-            </Link>
-            <Link
-              href="/resources/conflict-resolution"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                minHeight: 44,
-                padding: "12px 36px",
-                background: "transparent",
-                border: `2px solid ${offWhite}`,
-                color: offWhite,
-                fontFamily: "Montserrat, sans-serif",
-                fontSize: 14,
-                fontWeight: 700,
-                textDecoration: "none",
-                borderRadius: 4,
-              }}
-            >
-              {t("Conflict Resolution", "Penyelesaian Konflik")}
-            </Link>
-          </div>
-        </div>
-      </section>
 
       {/* -- Verse Popup ----------------------------------------------------- */}
       {activeVerse && verseData && (

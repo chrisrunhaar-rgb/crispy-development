@@ -1,14 +1,21 @@
 "use client";
 
-import { useState, useTransition } from "react";
-import type { ReactNode, CSSProperties } from "react";
+import { useState, useTransition, useEffect } from "react";
+import type { ReactNode, CSSProperties, ComponentType } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
-import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
 import LangToggle from "@/components/LangToggle";
 import SourcesDropdown from "@/components/SourcesDropdown";
-import { Compass, Scale, Users, Cross, BookOpen, HeartPulse, Mountain, Ship } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
+import { Compass, Scale, Users, BookOpen, HeartPulse, Mountain, Ship, ChevronDown } from "lucide-react";
+
+type IconComponent = ComponentType<{ size?: number; strokeWidth?: number; "aria-hidden"?: boolean | "true" | "false" }>;
+
+// Latin cross (long upright, short crossbar). Lucide's "Cross" reads as a plus sign.
+const CrossIcon: IconComponent = ({ size = 24, strokeWidth = 1.75, ...rest }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" {...rest}>
+    <path d="M12 2.5v19M6.5 8.5h11" />
+  </svg>
+);
 
 type Lang = "en" | "id";
 const t = (en: string, id: string, lang: Lang) =>
@@ -87,7 +94,7 @@ type AnchorKey = "calling" | "values" | "community" | "faith" | "story" | "body"
 
 const ANCHORS: {
   key: AnchorKey;
-  icon: LucideIcon;
+  icon: IconComponent;
   color: string;
   en_title: string; id_title: string;
   en_tagline: string; id_tagline: string;
@@ -156,7 +163,7 @@ const ANCHORS: {
   },
   {
     key: "faith",
-    icon: Cross,
+    icon: CrossIcon,
     color: "oklch(55% 0.18 305)",
     en_title: "Faith",
     id_title: "Iman",
@@ -273,6 +280,13 @@ export default function IdentityUnderPressureClient({ userPathway, isSaved: init
   const lang = (_ctxLang === "id" ? _ctxLang : "en") as Lang;
   const [activeVerse, setActiveVerse] = useState<string | null>(null);
   const [openAnchor, setOpenAnchor] = useState<AnchorKey | null>(null);
+  const [cols, setCols] = useState(3);
+  useEffect(() => {
+    const f = () => setCols(window.innerWidth < 640 ? 1 : window.innerWidth < 860 ? 2 : 3);
+    f();
+    window.addEventListener("resize", f);
+    return () => window.removeEventListener("resize", f);
+  }, []);
   const [ratings, setRatings] = useState<Partial<Record<AnchorKey, number>>>({});
   const [showRecommendation, setShowRecommendation] = useState(false);
   const [saved, setSaved] = useState(initialSaved);
@@ -311,7 +325,7 @@ export default function IdentityUnderPressureClient({ userPathway, isSaved: init
         <div style={{ position: "absolute", inset: 0, background: navy, opacity: 0.15, mixBlendMode: "multiply", pointerEvents: "none" }} />
         <div style={{ maxWidth: 860, margin: "0 auto", position: "relative" }}>
           <p style={{ ...eyebrow(), marginBottom: 20 }}>
-            {t("Faith & Calling · Article", "Iman & Panggilan · Artikel", lang)}
+            {t("Faith & Calling · Guide", "Iman & Panggilan · Panduan", lang)}
           </p>
           <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: offWhite, lineHeight: 1.08, margin: "0 0 24px" }}>
             {t("Identity Under Pressure", "Identitas di Bawah Tekanan", lang)}
@@ -331,16 +345,33 @@ export default function IdentityUnderPressureClient({ userPathway, isSaved: init
               {lang === "id" ? VERSES["col-3-3"].ref_id : VERSES["col-3-3"].ref}
             </button>
           </div>
+          <div style={{ marginTop: 28 }}>
+            <button
+              type="button"
+              onClick={handleSave}
+              disabled={saved || isPending}
+              aria-pressed={saved}
+              aria-label={saved
+                ? t("Saved to your dashboard", "Tersimpan di dasbor Anda", lang)
+                : t("Save this module to your dashboard", "Simpan modul ini ke dasbor Anda", lang)}
+              style={{ display: "inline-flex", alignItems: "center", gap: 10, minHeight: 44, padding: "10px 24px", border: "none", borderRadius: 4, background: saved ? "oklch(35% 0.05 260)" : orange, color: offWhite, fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 700, cursor: saved ? "default" : "pointer" }}
+            >
+              <svg viewBox="0 0 24 24" width={18} height={18} aria-hidden="true">
+                <path d="M6 3h12v18l-6-4.5L6 21z" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+              </svg>
+              <span>{saved ? t("Saved to Dashboard", "Tersimpan di Dasbor", lang) : isPending ? t("Saving...", "Menyimpan...", lang) : t("Save to Dashboard", "Simpan ke Dasbor", lang)}</span>
+            </button>
+          </div>
         </div>
       </section>
 
       {/* INTRO: WHAT IS IDENTITY UNDER PRESSURE */}
       <section style={{ background: offWhite, padding: "72px 24px" }}>
         <div style={{ maxWidth: 860, margin: "0 auto" }}>
-          <p style={{ ...eyebrow(), marginBottom: 12, textAlign: "center" }}>
+          <p style={{ ...eyebrow(), marginBottom: 12 }}>
             {t("The Challenge", "Tantangan", lang)}
           </p>
-          <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(24px, 3.5vw, 40px)", fontWeight: 800, color: navy, textAlign: "center", marginBottom: 32 }}>
+          <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(24px, 3.5vw, 40px)", fontWeight: 800, color: navy, marginBottom: 32 }}>
             {t("When pressure reshapes who you are", "Ketika tekanan mengubah siapa diri Anda", lang)}
           </h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 32, marginBottom: 40 }}>
@@ -378,13 +409,13 @@ export default function IdentityUnderPressureClient({ userPathway, isSaved: init
       {/* THE SIX ANCHORS */}
       <section style={{ background: lightGray, padding: "72px 24px" }}>
         <div style={{ maxWidth: 860, margin: "0 auto" }}>
-          <p style={{ ...eyebrow(), marginBottom: 12, textAlign: "center" }}>
+          <p style={{ ...eyebrow(), marginBottom: 12 }}>
             {t("The Six Anchors Identity Map", "Peta Identitas Enam Jangkar", lang)}
           </p>
-          <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(24px, 3.5vw, 40px)", fontWeight: 800, color: navy, textAlign: "center", marginBottom: 12 }}>
+          <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(24px, 3.5vw, 40px)", fontWeight: 800, color: navy, marginBottom: 12 }}>
             {t("What keeps you grounded", "Apa yang membuat Anda tetap teguh", lang)}
           </h2>
-          <p style={{ textAlign: "center", fontSize: 15, color: bodyText, lineHeight: 1.65, maxWidth: 580, margin: "0 auto 48px" }}>
+          <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.65, maxWidth: 580, margin: "0 0 48px" }}>
             {t(
               "Select each anchor to see what it gives you, how pressure attacks it, a realistic scenario and a grounding practice.",
               "Pilih setiap jangkar untuk melihat apa yang diberikannya, bagaimana tekanan menyerangnya, contoh situasi nyata dan latihan untuk meneguhkannya.",
@@ -392,118 +423,140 @@ export default function IdentityUnderPressureClient({ userPathway, isSaved: init
             )}
           </p>
 
-          {/* Anchor grid */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 12, marginBottom: 32 }}>
-            {ANCHORS.map(anchor => {
-              const isOpen = openAnchor === anchor.key;
-              return (
-                <button
-                  key={anchor.key}
-                  type="button"
-                  aria-expanded={isOpen}
-                  onClick={() => setOpenAnchor(isOpen ? null : anchor.key)}
-                  style={{
-                    textAlign: "left", padding: "22px 20px", borderRadius: 12,
-                    border: `2px solid ${isOpen ? anchor.color : "oklch(88% 0.008 260)"}`,
-                    background: isOpen ? `color-mix(in oklch, ${anchor.color} 10%, white)` : "white",
-                    cursor: "pointer", transition: "all 0.2s",
-                  }}
-                >
-                  <div style={{ marginBottom: 10, color: anchor.color }}><anchor.icon size={28} strokeWidth={1.75} aria-hidden="true" /></div>
-                  <div style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 800, fontSize: 14, color: isOpen ? anchor.color : navy, marginBottom: 4 }}>
-                    {t(anchor.en_title, anchor.id_title, lang)}
+          {/* Anchor grid: detail opens directly under the tile's row */}
+          <div style={{ display: "grid", gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`, gap: 14, marginBottom: 32 }}>
+            {(() => {
+              const openI = ANCHORS.findIndex(x => x.key === openAnchor);
+              const insertAfter = openI < 0 ? -1 : Math.min((Math.floor(openI / cols) + 1) * cols - 1, ANCHORS.length - 1);
+              const out: ReactNode[] = [];
+              ANCHORS.forEach((anchor, i) => {
+                const isOpen = openAnchor === anchor.key;
+                const row = cols === 1;
+                out.push(
+                  <button
+                    key={anchor.key}
+                    type="button"
+                    aria-expanded={isOpen}
+                    onClick={() => setOpenAnchor(isOpen ? null : anchor.key)}
+                    style={{
+                      position: "relative", width: "100%", textAlign: "left", cursor: "pointer",
+                      display: "flex", flexDirection: row ? "row" : "column", alignItems: row ? "center" : "flex-start", gap: row ? 16 : 18,
+                      minHeight: row ? 96 : 200, padding: row ? "18px 52px 18px 18px" : "26px 24px",
+                      borderRadius: 14, border: `2px solid ${isOpen ? orange : "oklch(32% 0.09 260)"}`,
+                      background: isOpen ? orange : navy, transition: "background 0.2s, border-color 0.2s",
+                    }}
+                  >
+                    <span style={{
+                      display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
+                      width: 60, height: 60, borderRadius: "50%",
+                      background: isOpen ? navy : "oklch(30% 0.09 260)", color: isOpen ? offWhite : orange,
+                    }}>
+                      <anchor.icon size={30} strokeWidth={1.75} aria-hidden="true" />
+                    </span>
+                    <span style={{ display: "block" }}>
+                      <span style={{ display: "block", fontFamily: "Montserrat, sans-serif", fontWeight: 800, fontSize: 21, lineHeight: 1.2, color: isOpen ? navy : offWhite, marginBottom: 6 }}>
+                        {t(anchor.en_title, anchor.id_title, lang)}
+                      </span>
+                      <span style={{ display: "block", fontFamily: "Cormorant Garamond, Georgia, serif", fontStyle: "italic", fontSize: 18, lineHeight: 1.35, color: isOpen ? navy : "oklch(86% 0.03 80)" }}>
+                        {t(anchor.en_tagline, anchor.id_tagline, lang)}
+                      </span>
+                    </span>
+                    <span aria-hidden="true" style={{
+                      position: "absolute", right: 16, top: row ? "50%" : 24, marginTop: row ? -10 : 0, display: "flex",
+                      color: isOpen ? navy : orange, transform: isOpen ? "rotate(180deg)" : "none", transition: "transform 0.2s",
+                    }}>
+                      <ChevronDown size={20} strokeWidth={2.25} />
+                    </span>
+                  </button>
+                );
+                if (i === insertAfter) {
+                  const open = ANCHORS[openI];
+                  const anchor = open;
+                  const Icon = anchor.icon;
+                  out.push(
+                  <div key={`${anchor.key}-panel`} role="region" aria-label={t(anchor.en_title, anchor.id_title, lang)} style={{ gridColumn: "1 / -1", background: "white", borderRadius: 16, padding: "32px clamp(18px, 4vw, 36px)", border: `2px solid ${orange}`, animation: "fadeIn 0.3s ease" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 28 }}>
+                      <span style={{ color: orange, display: "flex" }}><Icon size={40} strokeWidth={1.75} aria-hidden="true" /></span>
+                      <div>
+                        <div style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 800, fontSize: 22, color: navy }}>
+                          {t(anchor.en_title, anchor.id_title, lang)}
+                        </div>
+                        <div style={{ fontSize: 14, color: bodyText, fontStyle: "italic" }}>
+                          {t(anchor.en_tagline, anchor.id_tagline, lang)}
+                        </div>
+                      </div>
+                    </div>
+    
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 28, marginBottom: 28 }}>
+                      <div>
+                        <p style={{ ...eyebrow(), marginBottom: 10 }}>
+                          {t("When strong, it gives you", "Saat kuat, jangkar ini memberi Anda", lang)}
+                        </p>
+                        <p style={{ fontSize: 14, lineHeight: 1.75, color: bodyText, margin: 0 }}>
+                          {cite(t(anchor.en_strength, anchor.id_strength, lang))}
+                        </p>
+                      </div>
+                      <div>
+                        <p style={{ ...eyebrow("oklch(55% 0.18 25)"), marginBottom: 10 }}>
+                          {t("How pressure attacks it", "Bagaimana tekanan menyerangnya", lang)}
+                        </p>
+                        <p style={{ fontSize: 14, lineHeight: 1.75, color: bodyText, margin: 0 }}>
+                          {cite(t(anchor.en_threat, anchor.id_threat, lang))}
+                        </p>
+                      </div>
+                    </div>
+    
+                    {/* Pressure test scenario */}
+                    <div style={{ background: "oklch(96% 0.008 260)", borderRadius: 10, padding: "20px 24px", marginBottom: 24, borderLeft: `4px solid ${anchor.color}` }}>
+                      <p style={{ ...eyebrow(anchor.color), marginBottom: 8 }}>
+                        {t("Pressure Test", "Uji Tekanan", lang)}
+                      </p>
+                      <p style={{ fontSize: 14, lineHeight: 1.7, color: bodyText, fontStyle: "italic", margin: 0 }}>
+                        {t(anchor.en_scenario, anchor.id_scenario, lang)}
+                      </p>
+                    </div>
+    
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 20 }}>
+                      {/* Grounding practice */}
+                      <div style={{ background: `color-mix(in oklch, ${anchor.color} 8%, white)`, borderRadius: 10, padding: "20px 20px" }}>
+                        <p style={{ ...eyebrow(anchor.color), marginBottom: 8 }}>
+                          {t("Grounding Practice", "Latihan Meneguhkan", lang)}
+                        </p>
+                        <p style={{ fontSize: 14, lineHeight: 1.65, color: bodyText, margin: 0 }}>
+                          {t(anchor.en_practice, anchor.id_practice, lang)}
+                        </p>
+                      </div>
+                      {/* Reflection question */}
+                      <div style={{ background: offWhite, borderRadius: 10, padding: "20px 20px", border: `1px solid oklch(88% 0.008 260)` }}>
+                        <p style={{ ...eyebrow(), marginBottom: 8 }}>
+                          {t("Reflection Question", "Pertanyaan Refleksi", lang)}
+                        </p>
+                        <p style={{ fontSize: 14, lineHeight: 1.65, color: navy, fontStyle: "italic", margin: 0 }}>
+                          {t(anchor.en_question, anchor.id_question, lang)}
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                  <div style={{ fontSize: 12, color: isOpen ? anchor.color : bodyText, fontStyle: "italic", lineHeight: 1.4 }}>
-                    {t(anchor.en_tagline, anchor.id_tagline, lang)}
-                  </div>
-                </button>
-              );
-            })}
+    
+                  );
+                }
+              });
+              return out;
+            })()}
           </div>
-
-          {/* Anchor detail panel */}
-          {openAnchor && (() => {
-            const anchor = ANCHORS.find(a => a.key === openAnchor)!;
-            const Icon = anchor.icon;
-            return (
-              <div style={{ background: "white", borderRadius: 16, padding: "40px 36px", border: `2px solid color-mix(in oklch, ${anchor.color} 25%, white)`, animation: "fadeIn 0.3s ease" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 28 }}>
-                  <span style={{ color: anchor.color, display: "flex" }}><Icon size={40} strokeWidth={1.75} aria-hidden="true" /></span>
-                  <div>
-                    <div style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 800, fontSize: 22, color: anchor.color }}>
-                      {t(anchor.en_title, anchor.id_title, lang)}
-                    </div>
-                    <div style={{ fontSize: 14, color: bodyText, fontStyle: "italic" }}>
-                      {t(anchor.en_tagline, anchor.id_tagline, lang)}
-                    </div>
-                  </div>
-                </div>
-
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 28, marginBottom: 28 }}>
-                  <div>
-                    <p style={{ ...eyebrow(), marginBottom: 10 }}>
-                      {t("When strong, it gives you", "Saat kuat, jangkar ini memberi Anda", lang)}
-                    </p>
-                    <p style={{ fontSize: 14, lineHeight: 1.75, color: bodyText, margin: 0 }}>
-                      {cite(t(anchor.en_strength, anchor.id_strength, lang))}
-                    </p>
-                  </div>
-                  <div>
-                    <p style={{ ...eyebrow("oklch(55% 0.18 25)"), marginBottom: 10 }}>
-                      {t("How pressure attacks it", "Bagaimana tekanan menyerangnya", lang)}
-                    </p>
-                    <p style={{ fontSize: 14, lineHeight: 1.75, color: bodyText, margin: 0 }}>
-                      {cite(t(anchor.en_threat, anchor.id_threat, lang))}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Pressure test scenario */}
-                <div style={{ background: "oklch(96% 0.008 260)", borderRadius: 10, padding: "20px 24px", marginBottom: 24, borderLeft: `4px solid ${anchor.color}` }}>
-                  <p style={{ ...eyebrow(anchor.color), marginBottom: 8 }}>
-                    {t("Pressure Test", "Uji Tekanan", lang)}
-                  </p>
-                  <p style={{ fontSize: 14, lineHeight: 1.7, color: bodyText, fontStyle: "italic", margin: 0 }}>
-                    {t(anchor.en_scenario, anchor.id_scenario, lang)}
-                  </p>
-                </div>
-
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 20 }}>
-                  {/* Grounding practice */}
-                  <div style={{ background: `color-mix(in oklch, ${anchor.color} 8%, white)`, borderRadius: 10, padding: "20px 20px" }}>
-                    <p style={{ ...eyebrow(anchor.color), marginBottom: 8 }}>
-                      {t("Grounding Practice", "Latihan Meneguhkan", lang)}
-                    </p>
-                    <p style={{ fontSize: 14, lineHeight: 1.65, color: bodyText, margin: 0 }}>
-                      {t(anchor.en_practice, anchor.id_practice, lang)}
-                    </p>
-                  </div>
-                  {/* Reflection question */}
-                  <div style={{ background: offWhite, borderRadius: 10, padding: "20px 20px", border: `1px solid oklch(88% 0.008 260)` }}>
-                    <p style={{ ...eyebrow(), marginBottom: 8 }}>
-                      {t("Reflection Question", "Pertanyaan Refleksi", lang)}
-                    </p>
-                    <p style={{ fontSize: 14, lineHeight: 1.65, color: navy, fontStyle: "italic", margin: 0 }}>
-                      {t(anchor.en_question, anchor.id_question, lang)}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            );
-          })()}
         </div>
       </section>
 
       {/* SELF-ASSESSMENT */}
       <section style={{ background: offWhite, padding: "72px 24px" }}>
         <div style={{ maxWidth: 860, margin: "0 auto" }}>
-          <p style={{ ...eyebrow(), marginBottom: 12, textAlign: "center" }}>
+          <p style={{ ...eyebrow(), marginBottom: 12 }}>
             {t("Self-Assessment", "Penilaian Diri", lang)}
           </p>
-          <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(24px, 3.5vw, 40px)", fontWeight: 800, color: navy, textAlign: "center", marginBottom: 16 }}>
+          <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(24px, 3.5vw, 40px)", fontWeight: 800, color: navy, marginBottom: 16 }}>
             {t("How stable are your anchors?", "Seberapa stabil jangkar Anda?", lang)}
           </h2>
-          <p style={{ textAlign: "center", fontSize: 15, color: bodyText, lineHeight: 1.65, maxWidth: 540, margin: "0 auto 40px" }}>
+          <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.65, maxWidth: 540, margin: "0 0 40px" }}>
             {t(
               "Rate each anchor from 1 (very shaky) to 5 (very stable). Be honest. Only you will see this.",
               "Beri nilai setiap jangkar dari 1 (sangat goyah) sampai 5 (sangat stabil). Jujurlah. Hanya Anda yang melihat ini.",
@@ -605,10 +658,10 @@ export default function IdentityUnderPressureClient({ userPathway, isSaved: init
       {/* THE UNSHAKEABLE CORE: BIBLICAL REFLECTION */}
       <section style={{ background: navy, padding: "80px 24px" }}>
         <div style={{ maxWidth: 860, margin: "0 auto" }}>
-          <p style={{ ...eyebrow(), marginBottom: 16, textAlign: "center" }}>
+          <p style={{ ...eyebrow(), marginBottom: 16 }}>
             {t("The Unshakeable Core", "Inti yang Tidak Tergoyahkan", lang)}
           </p>
-          <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(24px, 3.5vw, 40px)", fontWeight: 800, color: offWhite, textAlign: "center", marginBottom: 40 }}>
+          <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(24px, 3.5vw, 40px)", fontWeight: 800, color: offWhite, marginBottom: 40 }}>
             {t("Identity in Christ", "Identitas di dalam Kristus", lang)}
           </h2>
 
@@ -720,51 +773,6 @@ export default function IdentityUnderPressureClient({ userPathway, isSaved: init
                 </p>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* SAVE & PATHWAY CTA */}
-      <section style={{ background: offWhite, padding: "64px 24px", textAlign: "center" }}>
-        <div style={{ maxWidth: 860, margin: "0 auto" }}>
-          <p style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: "clamp(18px, 2.5vw, 24px)", color: bodyText, lineHeight: 1.7, fontStyle: "italic", marginBottom: 12 }}>
-            {t(
-              "\"Your life is hidden with Christ in God.\"",
-              "\"Hidupmu tersembunyi bersama dengan Kristus di dalam Allah.\"",
-              lang
-            )}
-          </p>
-          <p style={{ fontSize: 12, color: orange, fontWeight: 700, letterSpacing: "0.08em", marginBottom: 40 }}>
-            {lang === "id" ? VERSES["col-3-3"].ref_id : VERSES["col-3-3"].ref}
-          </p>
-
-          <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-            <button
-              type="button"
-              onClick={handleSave}
-              disabled={saved || isPending}
-              aria-pressed={saved}
-              aria-label={saved
-                ? t("Saved to your dashboard", "Tersimpan di dasbor Anda", lang)
-                : t("Save this module to your dashboard", "Simpan modul ini ke dasbor Anda", lang)}
-              style={{ display: "inline-flex", alignItems: "center", gap: 10, minHeight: 44, padding: "12px 28px", background: saved ? navy : orange, color: "white", border: "none", borderRadius: 8, fontFamily: "Montserrat, sans-serif", fontWeight: 700, fontSize: 14, cursor: saved ? "default" : isPending ? "wait" : "pointer", letterSpacing: "0.06em" }}
-            >
-              <svg viewBox="0 0 24 24" width={18} height={18} aria-hidden="true">
-                <path d="M6 3h12v18l-6-4.5L6 21z" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
-              </svg>
-              <span>
-                {saved
-                  ? t("Saved to Dashboard", "Tersimpan di Dasbor", lang)
-                  : isPending
-                    ? t("Saving...", "Menyimpan...", lang)
-                    : t("Save to Dashboard", "Simpan ke Dasbor", lang)}
-              </span>
-            </button>
-            {userPathway && (
-              <Link href="/dashboard" style={{ display: "inline-flex", alignItems: "center", minHeight: 44, padding: "12px 28px", background: "transparent", color: navy, border: `1.5px solid oklch(72% 0.03 260)`, borderRadius: 8, fontFamily: "Montserrat, sans-serif", fontWeight: 700, fontSize: 14, textDecoration: "none", letterSpacing: "0.06em" }}>
-                {t("Back to Pathway", "Kembali ke Jalur", lang)}
-              </Link>
-            )}
           </div>
         </div>
       </section>

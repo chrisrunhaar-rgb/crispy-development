@@ -1,7 +1,6 @@
 ﻿"use client";
 import React, { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
-import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
 import LangToggle from "@/components/LangToggle";
 import SourcesDropdown from "@/components/SourcesDropdown";
@@ -67,37 +66,37 @@ const JOURNEY_STAGES = [
     id_title: "Kedatangan",
     en_timeframe: "0-3 months",
     id_timeframe: "0-3 bulan",
-    en_tagline: "The honeymoon that hides a wound",
-    id_tagline: "Bulan madu yang menyembunyikan luka",
-    en_vignette: "She walked into her parents' house and felt nothing. No relief, no joy, just a strange blankness. She smiled anyway, and everyone said how well she seemed.",
-    id_vignette: "Ia masuk ke rumah orang tuanya dan tidak merasakan apa-apa. Tidak ada kelegaan, tidak ada sukacita, hanya kekosongan yang aneh. Ia tetap tersenyum, dan semua orang berkata betapa baik penampilannya.",
+    en_tagline: "Relief, mixed with something harder to place",
+    id_tagline: "Lega, bercampur sesuatu yang sulit dijelaskan",
+    en_vignette: "She walked into her parents' house and felt less than she expected. Some relief, but also a strange blankness. She smiled, and her family said how well she seemed.",
+    id_vignette: "Ia masuk ke rumah orang tuanya, tetapi perasaannya tidak sekuat yang ia bayangkan. Ada sedikit kelegaan, tetapi juga kekosongan yang aneh. Ia tersenyum, dan keluarganya berkata ia tampak baik-baik saja.",
     en_feelings: [
       "A strange flatness where you expected to feel excited or relieved",
       "Hyper-awareness of everything you left behind: sounds, smells, conversations",
-      "Performing 'normal' for family and friends while feeling internally unmoored",
+      "Acting 'normal' for family and friends while feeling unsettled inside",
     ],
     id_feelings: [
       "Kekosongan aneh di mana Anda berharap merasa bersemangat atau lega",
       "Kesadaran yang berlebihan tentang semua yang Anda tinggalkan: suara, bau, percakapan",
-      "Berpura-pura 'normal' di depan keluarga dan teman sambil merasa tidak berakar secara internal",
+      "Bersikap 'normal' di depan keluarga dan teman sambil merasa gelisah di dalam hati",
     ],
     en_traps: [
       "Staying busy to avoid sitting with the disorientation",
-      "Telling stories about where you came from, constantly, to anyone who will listen",
+      "Telling stories about where you have been more often than others can take in",
       "Reassuring everyone (and yourself) that you're fine",
     ],
     id_traps: [
       "Tetap sibuk untuk menghindari duduk dengan disorientasi",
-      "Terus-menerus bercerita tentang tempat asal Anda kepada siapa saja yang mau mendengar",
+      "Bercerita tentang tempat Anda dulu tinggal lebih sering daripada yang sanggup didengar orang lain",
       "Meyakinkan semua orang (dan diri sendiri) bahwa Anda baik-baik saja",
     ],
     en_helps: [
-      "Name what you lost. Make a list and write it down. Losses only have power when they are unnamed.",
+      "Put your losses into words. Make a list and write it down. Losses that stay unspoken often weigh more.",
       "Allow yourself at least 30 minutes a day of quiet, with no screens and no productivity. Let your nervous system decompress.",
       "Find one person who has lived cross-culturally and tell them the real version of how you're doing.⁵",
     ],
     id_helps: [
-      "Ungkapkan apa yang hilang dari Anda: buat daftar, tuliskan. Kehilangan hanya memiliki kekuatan ketika tidak disebutkan.",
+      "Ungkapkan apa yang hilang dari Anda: buat daftar dan tuliskan. Kehilangan yang tidak diungkapkan sering terasa lebih berat.",
       "Izinkan diri Anda setidaknya 30 menit sehari dalam keheningan, tanpa layar dan tanpa target. Beri waktu bagi sistem saraf Anda untuk tenang kembali.",
       "Temukan satu orang yang pernah hidup lintas budaya dan ceritakan kepada mereka versi nyata tentang kondisi Anda.⁵",
     ],
@@ -111,16 +110,16 @@ const JOURNEY_STAGES = [
     id_timeframe: "3-9 bulan",
     en_tagline: "When home no longer feels like home",
     id_tagline: "Ketika rumah tidak lagi terasa seperti rumah",
-    en_vignette: "He sat across from his oldest friend and realized they had nothing to talk about. Three years ago they were inseparable. Now he felt more alone at this table than he had in the country he'd just left.",
-    id_vignette: "Ia duduk berhadapan dengan teman lamanya dan menyadari bahwa mereka tidak memiliki hal yang bisa dibicarakan. Tiga tahun lalu mereka tidak terpisahkan. Sekarang ia merasa lebih kesepian di meja ini daripada di negara yang baru saja ia tinggalkan.",
+    en_vignette: "He sat across from his oldest friend and found the conversation harder than before. Three years ago they talked for hours. Now there were long pauses, and he felt lonelier than he had expected.",
+    id_vignette: "Ia duduk berhadapan dengan sahabat lamanya dan mendapati percakapan mereka lebih sulit dari dulu. Tiga tahun lalu mereka bisa berbicara berjam-jam. Sekarang banyak jeda panjang, dan ia merasa lebih kesepian daripada yang ia duga.",
     en_feelings: [
-      "Grief that catches you off guard: a song, a smell, a WhatsApp message that breaks you open",
-      "Irritation with your home culture's pace, priorities, and superficiality",
+      "Grief that catches you off guard: a song, a smell, a WhatsApp message that brings it all back",
+      "Irritation with your home culture's pace and priorities",
       "A deep loneliness even when surrounded by people who love you",
     ],
     id_feelings: [
-      "Duka yang datang tiba-tiba: sebuah lagu, aroma, atau pesan WhatsApp yang membuat Anda hancur",
-      "Kejengkelan dengan kecepatan, prioritas, dan kedangkalan budaya asal Anda",
+      "Duka yang datang tiba-tiba: sebuah lagu, aroma, atau pesan WhatsApp yang membangkitkan semuanya kembali",
+      "Rasa jengkel terhadap irama hidup dan prioritas di budaya asal Anda",
       "Kesepian yang mendalam meski dikelilingi orang-orang yang menyayangi Anda",
     ],
     en_traps: [
@@ -134,14 +133,14 @@ const JOURNEY_STAGES = [
       "Mempertanyakan apakah Anda membuat keputusan yang tepat untuk kembali",
     ],
     en_helps: [
-      "Let the grief come. Grief is proof that what you had was real. Don't rush past it or explain it away with spiritual words.⁶",
+      "Let the grief come. It often shows how much that place and those people meant to you. Don't rush past it or explain it away with spiritual words.⁶",
       "Tell a few trusted people: 'I'm not adjusting as well as I look.' You don't need everyone to understand. One or two people who do will be enough.",
-      "Resist comparison. Your previous context was different, and that difference is easy to romanticise. Idealising the past is often grief speaking, so hold those memories loosely.",
+      "Go easy on comparison. Your previous context was different, and that difference is easy to romanticise. Idealising the past is often grief speaking, so hold those memories loosely.",
     ],
     id_helps: [
-      "Biarkan duka datang. Duka adalah bukti bahwa apa yang Anda miliki itu nyata. Jangan terburu-buru melewatinya atau menutupinya dengan kata-kata rohani.⁶",
+      "Biarkan duka itu datang. Duka sering menunjukkan betapa berartinya tempat dan orang-orang itu bagi Anda. Jangan terburu-buru melewatinya atau menutupinya dengan kata-kata rohani.⁶",
       "Beritahu beberapa orang yang Anda percaya: 'Saya tidak menyesuaikan diri sebaik yang terlihat.' Anda tidak perlu semua orang mengerti. Satu atau dua orang yang mengerti sudah cukup.",
-      "Tolak perbandingan. Tempat Anda sebelumnya memang berbeda, dan perbedaan itu mudah diromantisasi. Mengidealkan masa lalu sering kali adalah suara duka, jadi peganglah kenangan itu dengan longgar.",
+      "Batasi kebiasaan membandingkan. Tempat Anda sebelumnya memang berbeda, dan perbedaan itu mudah dibayangkan lebih indah daripada kenyataannya. Mengidealkan masa lalu sering kali adalah bagian dari duka, jadi jangan menggenggam kenangan itu terlalu erat.",
     ],
     verse_key: "rom-12-2",
   },
@@ -168,12 +167,12 @@ const JOURNEY_STAGES = [
     en_traps: [
       "Feeling guilty for adjusting, as though belonging here means betraying there",
       "Over-scheduling to create a sense of belonging before it's ready to form naturally",
-      "Expecting your identity to snap back to who you were before you left",
+      "Expecting to become the same person you were before you left",
     ],
     id_traps: [
       "Merasa bersalah karena menyesuaikan diri, seolah-olah menjadi bagian di sini berarti mengkhianati di sana",
       "Terlalu banyak jadwal untuk menciptakan rasa memiliki sebelum waktunya untuk terbentuk secara alami",
-      "Mengharapkan identitas Anda kembali ke siapa Anda sebelum pergi",
+      "Berharap menjadi orang yang sama seperti sebelum Anda pergi",
     ],
     en_helps: [
       "Give yourself permission to belong here without conditions. Adjusting is faithfulness to where God has placed you now.",
@@ -195,26 +194,26 @@ const JOURNEY_STAGES = [
     id_timeframe: "18 bulan ke atas",
     en_tagline: "The cross-cultural gift becomes available",
     id_tagline: "Karunia lintas budaya menjadi tersedia",
-    en_vignette: "He was leading a meeting when he noticed he was the only one who could see what was happening between two team members from different cultural backgrounds. He said something quiet and accurate. The room shifted. For the first time in years, his history felt like a gift.",
-    id_vignette: "Ia sedang memimpin rapat ketika ia menyadari bahwa ia adalah satu-satunya yang bisa melihat apa yang terjadi antara dua anggota tim dari latar belakang budaya yang berbeda. Ia mengatakan sesuatu yang tenang dan tepat. Ruangan berubah. Untuk pertama kalinya dalam bertahun-tahun, sejarahnya terasa seperti karunia.",
+    en_vignette: "He was leading a meeting when he noticed tension between two team members from different cultural backgrounds. He said something quiet and accurate, and the conversation eased. It was one of the first times his years abroad felt useful at home.",
+    id_vignette: "Ia sedang memimpin rapat ketika ia melihat ketegangan antara dua anggota tim dari latar belakang budaya yang berbeda. Ia mengatakan sesuatu yang tenang dan tepat, dan percakapan menjadi lebih cair. Itu salah satu saat pertama ia merasa pengalamannya bertahun-tahun di luar negeri berguna di tanah air.",
     en_feelings: [
       "A settled sense of who you are, shaped by where you have been without being defined by it",
       "The ability to hold grief and gratitude for the same experience at the same time",
-      "A quiet confidence that what you carry is genuinely useful to the people around you",
+      "A quiet confidence that what you carry can be useful to the people around you",
     ],
     id_feelings: [
       "Rasa tenang tentang siapa Anda, dibentuk oleh tempat-tempat yang pernah Anda tinggali tanpa ditentukan olehnya",
       "Kemampuan untuk menampung duka dan rasa syukur untuk pengalaman yang sama pada saat yang sama",
-      "Kepercayaan diri yang tenang bahwa apa yang Anda bawa benar-benar berguna bagi orang-orang di sekitar Anda",
+      "Keyakinan yang tenang bahwa apa yang Anda bawa bisa berguna bagi orang-orang di sekitar Anda",
     ],
     en_traps: [
       "Assuming integration means the grief is gone, when it has simply found its rightful place",
-      "Becoming the person who frames everything through 'when I was overseas'. Your history can serve others without taking over every conversation",
+      "Framing too much through 'when I was overseas'. Your history can serve others without taking over the conversation",
       "Stopping here. Integration opens the door to giving your cross-cultural experience away.",
     ],
     id_traps: [
       "Menganggap integrasi berarti duka sudah hilang, padahal duka itu hanya sudah menemukan tempatnya",
-      "Menjadi orang yang membingkai segalanya melalui 'waktu saya di luar negeri'. Pengalaman Anda bisa melayani orang lain tanpa menguasai setiap percakapan",
+      "Terlalu sering mengaitkan segala hal dengan 'waktu saya di luar negeri'. Pengalaman Anda bisa melayani orang lain tanpa mendominasi percakapan",
       "Berhenti di sini. Integrasi membuka pintu untuk membagikan pengalaman lintas budaya Anda kepada orang lain.",
     ],
     en_helps: [
@@ -237,8 +236,8 @@ const RAFT_CARDS = [
     letter: "R",
     en_title: "Reconciliation",
     id_title: "Rekonsiliasi",
-    en_body: "Before you left, did you seek peace with those relationships that were strained? If not, the work still waits, even across distance. Unreconciled relationships travel with you and surface in unexpected places.",
-    id_body: "Sebelum Anda pergi, apakah Anda mencari perdamaian dengan hubungan-hubungan yang tegang? Jika tidak, pekerjaan itu masih menunggu, bahkan dari jauh. Hubungan yang belum direkonsiliasi ikut bersama Anda dan muncul di tempat-tempat yang tidak terduga.",
+    en_body: "Before you left, did you seek peace in relationships that were strained? If not, the work can still be done, even across distance. Unresolved relationships can travel with you and surface in unexpected places.",
+    id_body: "Sebelum Anda pergi, apakah Anda mengupayakan perdamaian dalam hubungan yang tegang? Jika belum, hal itu masih bisa dilakukan, bahkan dari jauh. Hubungan yang belum dipulihkan bisa ikut bersama Anda dan muncul di tempat yang tidak terduga.",
     en_question: "Is there a relationship from your time overseas that you left without resolution? What would one step toward peace look like, even now?",
     id_question: "Apakah ada hubungan dari masa Anda di luar negeri yang Anda tinggalkan tanpa penyelesaian? Seperti apa satu langkah menuju perdamaian, bahkan sekarang?",
   },
@@ -246,17 +245,17 @@ const RAFT_CARDS = [
     letter: "A",
     en_title: "Affirmation",
     id_title: "Peneguhan",
-    en_body: "Did you tell the people who shaped you what they meant? Most people leave without closing this loop, and the people left behind carry an unnamed loss. Affirmation is the deliberate act of honouring a person before you go.",
-    id_body: "Apakah Anda memberitahu orang-orang yang membentuk Anda apa artinya mereka? Kebanyakan orang pergi tanpa menutup lingkaran ini, dan orang-orang yang ditinggalkan menanggung kehilangan yang tidak terucapkan. Peneguhan adalah tindakan yang disengaja untuk menghormati seseorang sebelum Anda pergi.",
+    en_body: "Did you tell the people who shaped you what they meant to you? Many people leave without saying it, and those left behind may carry a quiet loss. Affirmation is the deliberate act of honouring a person before you go.",
+    id_body: "Apakah Anda sudah memberi tahu orang-orang yang membentuk Anda betapa berartinya mereka? Banyak orang pergi tanpa mengatakannya, dan mereka yang ditinggalkan bisa menanggung kehilangan yang tidak terucapkan. Peneguhan berarti dengan sadar menghargai seseorang sebelum Anda pergi.",
     en_question: "Who are the 3 to 5 people from your cross-cultural season who most shaped you? Have you told them specifically what they gave you?",
-    id_question: "Siapa 3 sampai 5 orang dari musim lintas budaya Anda yang paling membentuk Anda? Apakah Anda sudah memberi tahu mereka secara spesifik apa yang mereka berikan kepada Anda?",
+    id_question: "Siapa 3 sampai 5 orang dari masa lintas budaya Anda yang paling membentuk Anda? Apakah Anda sudah memberi tahu mereka secara spesifik apa yang mereka berikan kepada Anda?",
   },
   {
     letter: "F",
     en_title: "Farewells",
     id_title: "Perpisahan",
-    en_body: "Grief that isn't expressed doesn't disappear. It gets stored. Unexpressed farewells become emotional weight you carry into the next season. Saying goodbye to a place, a community, a language, or a rhythm of life is not weakness. It is the evidence that what you had was real.",
-    id_body: "Duka yang tidak diungkapkan tidak hilang. Duka itu tersimpan. Perpisahan yang tidak diungkapkan menjadi beban emosional yang Anda bawa ke musim berikutnya. Mengucapkan selamat tinggal pada sebuah tempat, komunitas, bahasa, atau ritme kehidupan bukan kelemahan. Itu adalah bukti bahwa apa yang Anda miliki itu nyata.",
+    en_body: "Grief that isn't expressed tends to stay with you and can become weight you carry into the next season. Saying goodbye to a place, a community, a language or a rhythm of life is a healthy way to honour what you had.",
+    id_body: "Duka yang tidak diungkapkan cenderung tetap tinggal dan bisa menjadi beban yang Anda bawa ke masa berikutnya. Mengucapkan selamat tinggal kepada sebuah tempat, komunitas, bahasa, atau ritme hidup adalah cara yang sehat untuk menghargai apa yang pernah Anda alami.",
     en_question: "What did you not get to grieve before or during the transition? What do you still carry that hasn't been given its proper goodbye?",
     id_question: "Apa yang tidak bisa Anda berdukacitakan sebelum atau selama transisi? Apa yang masih Anda bawa yang belum mendapatkan perpisahan yang layak?",
   },
@@ -264,44 +263,76 @@ const RAFT_CARDS = [
     letter: "T",
     en_title: "Think Ahead",
     id_title: "Persiapkan Masa Depan",
-    en_body: "Returning tends to follow recognisable stages. Knowing that Collision is likely to come, and that it is temporary, changes how you face it. Naming the road ahead is wisdom, and it can make the hard seasons easier to bear.",
-    id_body: "Proses pulang biasanya mengikuti tahapan yang bisa dikenali. Mengetahui bahwa Benturan kemungkinan akan datang, dan bahwa itu sementara, mengubah cara Anda menghadapinya. Menyebutkan jalan di depan adalah kebijaksanaan, dan itu bisa membuat musim yang berat lebih mudah ditanggung.",
+    en_body: "Returning tends to follow recognisable stages. Knowing that Collision may come, and that it is usually temporary, can change how you face it. Thinking ahead can make the harder seasons easier to bear.",
+    id_body: "Proses pulang biasanya mengikuti tahapan yang bisa dikenali. Mengetahui bahwa Benturan mungkin datang, dan biasanya bersifat sementara, bisa mengubah cara Anda menghadapinya. Berpikir ke depan bisa membuat masa yang berat lebih mudah ditanggung.",
     en_question: "Which stage of the process do you think will be hardest for you personally, and what one thing could you put in place now to help when you arrive there?",
     id_question: "Menurut Anda, tahap mana dalam proses ini yang paling sulit bagi Anda secara pribadi, dan satu hal apa yang bisa Anda siapkan sekarang untuk membantu saat Anda tiba di sana?",
   },
 ];
 
 // --- REFLECTION STATEMENTS ---------------------------------------------------
-const REFLECTION_STATEMENTS = [
+const OBJECTIVES: { en: string; id: string }[] = [
+  { en: "Explain why many people expect returning to be easier than leaving, and how that affects preparation.", id: "Menjelaskan mengapa banyak orang mengira pulang lebih mudah daripada pergi, dan bagaimana hal itu memengaruhi persiapan." },
+  { en: "Recognise the four common stages of re-entry and identify which one you are in now.", id: "Memahami empat tahap umum saat pulang dan mengenali tahap yang sedang Anda alami." },
+  { en: "Use the RAFT framework to close a relationship, farewell or loss that is still open.", id: "Menerapkan kerangka RAFT pada hubungan, perpisahan, atau kehilangan yang belum tuntas." },
+  { en: "List the losses of your cross-cultural season and choose one way to grieve them well.", id: "Menuliskan kehilangan dari masa lintas budaya Anda dan memilih satu cara untuk berduka dengan sehat." },
+  { en: "Describe one way your cross-cultural experience can serve the people around you at home.", id: "Menjelaskan satu cara pengalaman lintas budaya Anda bisa melayani orang-orang di sekitar Anda di tanah air." },
+];
+
+// Self-assessment: higher = healthier, no reverse scoring
+const ASSESS: { en: string; id: string; en_label: string; id_label: string }[] = [
+  { en: "I have given my return as much thought and preparation as I gave my leaving.", id: "Saya memikirkan dan mempersiapkan kepulangan saya sama seriusnya seperti saat saya berangkat dulu.", en_label: "Realistic expectations", id_label: "Harapan yang realistis" },
+  { en: "I have put into words what I lost when I left, and I allow myself to grieve it.", id: "Saya sudah mengungkapkan apa yang hilang saat saya pergi, dan saya mengizinkan diri saya berduka.", en_label: "Grieving losses", id_label: "Berduka atas kehilangan" },
+  { en: "I have a settled sense of who I am now, shaped by both places.", id: "Saya merasa mantap tentang siapa saya sekarang, yang dibentuk oleh kedua tempat itu.", en_label: "Sense of identity", id_label: "Jati diri" },
+  { en: "I have at least one or two people at home I can be honest with about how I am doing.", id: "Saya punya setidaknya satu atau dua orang di sini yang bisa saya ajak bicara dengan jujur tentang keadaan saya.", en_label: "Honest relationships", id_label: "Hubungan yang jujur" },
+  { en: "I am finding a place to belong in a church or community here.", id: "Saya mulai merasa menjadi bagian dari sebuah gereja atau komunitas di sini.", en_label: "Church and community", id_label: "Gereja dan komunitas" },
+  { en: "I can talk about my cross-cultural years in a way that fits the listener.", id: "Saya bisa bercerita tentang tahun-tahun lintas budaya saya dengan cara yang sesuai bagi pendengar.", en_label: "Telling your story", id_label: "Menceritakan kisah Anda" },
+  { en: "I am getting enough rest and quiet time, without filling every day.", id: "Saya mendapat cukup istirahat dan waktu tenang, tanpa mengisi setiap hari dengan kesibukan.", en_label: "Rest", id_label: "Istirahat" },
+  { en: "I can handle the differences in my home culture without frequent irritation.", id: "Saya bisa menghadapi perbedaan di budaya asal saya tanpa sering merasa jengkel.", en_label: "Home culture adjustment", id_label: "Penyesuaian budaya asal" },
+  { en: "My relationship with God feels steady through this transition.", id: "Hubungan saya dengan Tuhan terasa stabil selama masa transisi ini.", en_label: "Faith", id_label: "Iman" },
+  { en: "I have a sense of direction for the next season, even if it is not fully clear.", id: "Saya punya gambaran arah untuk masa berikutnya, meskipun belum sepenuhnya jelas.", en_label: "Next steps", id_label: "Langkah berikutnya" },
+];
+
+const ASSESS_SCALE: { en: string; id: string }[] = [
+  { en: "Not at all", id: "Sama sekali tidak" },
+  { en: "A little", id: "Sedikit" },
+  { en: "Somewhat", id: "Sebagian" },
+  { en: "Mostly", id: "Sebagian besar" },
+  { en: "Fully", id: "Sepenuhnya" },
+];
+
+const ASSESS_BANDS = [
   {
-    en: "I have moments of genuine joy in my home culture, but they're followed by guilt, as if I shouldn't be enjoying it here.",
-    id: "Saya memiliki momen-momen sukacita sejati di tempat saya baru pulang ini, tetapi diikuti oleh rasa bersalah, seolah saya tidak seharusnya menikmatinya di sini.",
-    en_stage: "Adjustment",
-    id_stage: "Penyesuaian",
+    min: 10, max: 22, anchor: "journey-map-section",
+    en_title: "Still finding your footing", id_title: "Masih mencari pijakan",
+    en_body: "Coming home seems to be taking a lot out of you right now. That is common, especially in the first months, and it does not mean you are doing it wrong. Go slowly and let others help carry it.",
+    id_body: "Proses pulang tampaknya sedang menguras banyak tenaga Anda saat ini. Hal itu umum, terutama di bulan-bulan pertama, dan bukan berarti Anda melakukannya dengan salah. Jalani dengan perlahan dan biarkan orang lain ikut menolong.",
+    en_tip: "Start with \"What Can Help\" under Arrival in The Re-Entry Process, and talk with one person you trust this week.",
+    id_tip: "Mulailah dari \"Yang Bisa Membantu\" pada tahap Kedatangan di bagian Proses Kembali ke Tanah Air, dan bicaralah dengan satu orang yang Anda percaya minggu ini.",
   },
   {
-    en: "People around me assume I'm fine because I look fine. But inside I feel like a stranger in a place that's supposed to be home.",
-    id: "Orang-orang di sekitar saya menganggap saya baik-baik saja karena saya terlihat baik-baik saja. Tapi di dalam saya merasa seperti orang asing di tempat yang seharusnya menjadi rumah.",
-    en_stage: "Collision",
-    id_stage: "Benturan",
+    min: 23, max: 32, anchor: "journey-map-section",
+    en_title: "Working through it", id_title: "Sedang menjalaninya",
+    en_body: "Some areas are settling while others still feel raw. This mix is normal in the middle of re-entry. Your lowest areas show where a little attention may help most.",
+    id_body: "Beberapa area mulai tenang, sementara yang lain masih terasa berat. Campuran ini wajar di tengah masa pulang. Area terendah Anda menunjukkan di mana sedikit perhatian bisa paling menolong.",
+    en_tip: "Read \"What Can Help\" under Collision in The Re-Entry Process, and pick one step for your lowest area.",
+    id_tip: "Bacalah \"Yang Bisa Membantu\" pada tahap Benturan di bagian Proses Kembali ke Tanah Air, lalu pilih satu langkah untuk area terendah Anda.",
   },
   {
-    en: "I find myself constantly comparing my home culture unfavourably to where I came from: the pace, the priorities, the conversations.",
-    id: "Saya terus-menerus merasa tempat saya baru pulang ini lebih buruk dibandingkan tempat saya bertugas: kecepatannya, prioritasnya, percakapannya.",
-    en_stage: "Collision",
-    id_stage: "Benturan",
+    min: 33, max: 41, anchor: "raft-section",
+    en_title: "Finding your ground", id_title: "Mulai menemukan pijakan",
+    en_body: "Much of your return seems to be settling. There may still be a few loose ends from your cross-cultural season. Giving them some attention now can make the next season lighter.",
+    id_body: "Sebagian besar proses pulang Anda tampaknya mulai tenang. Mungkin masih ada beberapa hal yang belum selesai dari masa lintas budaya Anda. Memberi perhatian pada hal-hal itu sekarang bisa membuat masa berikutnya lebih ringan.",
+    en_tip: "Work through the RAFT section, starting with the card that matches your lowest area.",
+    id_tip: "Kerjakan bagian RAFT, mulai dari kartu yang paling sesuai dengan area terendah Anda.",
   },
   {
-    en: "There are relationships I left without saying what I needed to say, and I still feel the weight of that.",
-    id: "Ada hubungan yang saya tinggalkan tanpa mengatakan apa yang perlu saya katakan, dan hal itu masih terasa berat di hati saya.",
-    en_stage: "Arrival",
-    id_stage: "Kedatangan",
-  },
-  {
-    en: "I can see things in groups and teams that others miss: cross-cultural dynamics, unspoken tensions, misread signals. That feels like a gift now.",
-    id: "Saya bisa melihat hal-hal dalam kelompok dan tim yang dilewatkan orang lain: dinamika lintas budaya, ketegangan yang tidak terucapkan, sinyal yang salah dibaca. Itu terasa seperti karunia sekarang.",
-    en_stage: "Integration",
-    id_stage: "Integrasi",
+    min: 42, max: 50, anchor: "journey-map-section",
+    en_title: "Settling well", id_title: "Sudah merasa mantap",
+    en_body: "You seem to be holding both places well, with room for grief and gratitude. This is a good season to think about how your experience can serve others.",
+    id_body: "Anda tampaknya bisa merangkul kedua tempat itu dengan baik, dengan ruang untuk duka dan juga rasa syukur. Ini masa yang baik untuk memikirkan bagaimana pengalaman Anda bisa melayani orang lain.",
+    en_tip: "Read \"What Can Help\" under Integration in The Re-Entry Process, and look for one newcomer or returnee you could support.",
+    id_tip: "Bacalah \"Yang Bisa Membantu\" pada tahap Integrasi di bagian Proses Kembali ke Tanah Air, dan carilah satu pendatang baru atau orang yang baru pulang yang bisa Anda dukung.",
   },
 ];
 
@@ -330,9 +361,8 @@ export default function ReturningWellClient({ userPathway, isSaved: initialSaved
   const [activeStage, setActiveStage] = useState<string>("arrival");
   const [activeVerse, setActiveVerse] = useState<string | null>(null);
   const [activeRaft, setActiveRaft] = useState<number | null>(null);
-  const [reflectionAnswers, setReflectionAnswers] = useState<(boolean | null)[]>(
-    Array(REFLECTION_STATEMENTS.length).fill(null)
-  );
+  const [aStep, setAStep] = useState(0);
+  const [aAnswers, setAAnswers] = useState<(number | null)[]>(Array(ASSESS.length).fill(null));
 
   const t = (en: string, id: string) => tFn(en, id, lang);
 
@@ -351,20 +381,19 @@ export default function ReturningWellClient({ userPathway, isSaved: initialSaved
   };
   const verseData = activeVerse ? VERSES[activeVerse] : null;
 
-  const answeredCount = reflectionAnswers.filter((a) => a !== null).length;
-  const agreedStatements = reflectionAnswers
-    .map((a, i) => (a === true ? REFLECTION_STATEMENTS[i] : null))
-    .filter(Boolean);
-
-  // Infer stage from agreed statements
-  const stageCounts: Record<string, number> = {};
-  agreedStatements.forEach((s) => {
-    if (s) {
-      const stageKey = lang === "en" ? s.en_stage : lang === "id" ? s.id_stage : s.id_stage;
-      stageCounts[stageKey] = (stageCounts[stageKey] ?? 0) + 1;
-    }
-  });
-  const inferredStageRaw = Object.entries(stageCounts).sort((a, b) => b[1] - a[1])[0]?.[0] ?? null;
+  const aDone = aStep >= ASSESS.length;
+  const aTotal = aAnswers.reduce<number>((sum, a) => sum + (a ?? 0), 0);
+  const aBand = ASSESS_BANDS.find((b) => aTotal >= b.min && aTotal <= b.max) ?? ASSESS_BANDS[0];
+  const aLowest = aAnswers
+    .map((a, i) => ({ i, s: a ?? 0 }))
+    .sort((x, y) => x.s - y.s || x.i - y.i)
+    .slice(0, 2);
+  function answerQ(score: number) {
+    setAAnswers((prev) => { const next = [...prev]; next[aStep] = score; return next; });
+    setAStep((s) => Math.min(s + 1, ASSESS.length));
+  }
+  function backQ() { setAStep((s) => Math.max(0, s - 1)); }
+  function restartA() { setAAnswers(Array(ASSESS.length).fill(null)); setAStep(0); }
 
   return (
     <div style={{ fontFamily: "Montserrat, sans-serif", background: offWhite, minHeight: "100vh" }}>
@@ -395,8 +424,8 @@ export default function ReturningWellClient({ userPathway, isSaved: initialSaved
             marginBottom: 24,
           }}>
             {t(
-              "Personal Development · Article",
-              "Pengembangan Pribadi · Artikel",
+              "Personal Development · Guide",
+              "Pengembangan Pribadi · Panduan",
             )}
           </p>
           <h1 style={{
@@ -438,8 +467,8 @@ export default function ReturningWellClient({ userPathway, isSaved: initialSaved
             marginRight: "auto",
           }}>
             {t(
-              "Nobody warns you about this part. You prepared for the cross-cultural move: the language, the culture, the discomfort of being foreign. But nobody told you that coming home can be harder than going. That the country you return to is not the one you left. That you are not the person who left either. This module is for the part no one prepared you for.",
-              "Tidak ada yang memperingatkan Anda tentang bagian ini. Anda mempersiapkan diri untuk perpindahan lintas budaya: bahasa, budaya, ketidaknyamanan menjadi orang asing. Tetapi tidak ada yang memberi tahu Anda bahwa pulang bisa lebih sulit dari pergi. Bahwa negara tempat Anda kembali bukan negara yang Anda tinggalkan. Bahwa Anda juga bukan orang yang pergi itu. Modul ini untuk bagian yang tidak pernah disiapkan siapa pun bagi Anda.",
+              "Coming home can take as much care as leaving, and this module helps you give it that care.",
+              "Pulang bisa memerlukan perhatian yang sama besarnya dengan saat pergi, dan modul ini menolong Anda memberikan perhatian itu.",
             )}
           </p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
@@ -504,21 +533,21 @@ export default function ReturningWellClient({ userPathway, isSaved: initialSaved
           fontStyle: "italic",
         }}>
           {t(
-            "Reverse culture shock is real, and it can be harder than the first move",
-            "Gegar budaya terbalik itu nyata, dan bisa lebih berat daripada kepindahan pertama",
+            "Coming home is a transition of its own",
+            "Pulang adalah sebuah transisi tersendiri",
           )}
         </h2>
         <div style={{ fontSize: "clamp(16px, 1.9vw, 19px)", color: bodyText, lineHeight: 1.9 }}>
           <p style={{ marginBottom: 28 }}>
             {t(
-              "When you moved cross-culturally, everyone around you expected it to be difficult. They offered support, sent care packages, checked in. There was a structure of expectation that gave you permission to struggle.",
-              "Ketika Anda berpindah secara lintas budaya, semua orang di sekitar Anda mengharapkan itu akan sulit. Mereka menawarkan dukungan, mengirim paket perawatan, memeriksa keadaan Anda. Ada struktur harapan yang memberi Anda izin untuk berjuang.",
+              "When you moved cross-culturally, most people around you expected it to be hard. Many offered support, sent care packages and checked in. That made it easier to admit when you were struggling.",
+              "Ketika Anda pindah ke budaya lain, kebanyakan orang di sekitar Anda sudah menduga bahwa itu akan berat. Banyak yang memberi dukungan, mengirim paket, dan menanyakan kabar Anda. Hal itu membuat Anda lebih mudah mengakui saat Anda sedang bergumul.",
             )}
           </p>
           <p style={{ marginBottom: 28 }}>
             {cite(t(
-              "When you come back, no one extends that grace. People assume you are relieved. They assume you are home. What they don't understand, and what you may not have understood either, is that re-entry is its own form of culture shock. Researchers call it reverse culture shock, and many returnees find it harder than they expected.¹ One study that followed returnees for six months found that a harder re-entry predicted more loneliness, depression and stress later on.² Another found that when home turns out worse than people expected, their wellbeing drops.³",
-              "Ketika Anda kembali, tidak ada yang memperpanjang anugerah itu. Orang-orang berasumsi Anda lega. Mereka berasumsi Anda sudah di rumah. Yang tidak mereka mengerti, dan mungkin juga belum Anda mengerti, adalah bahwa pulang ke tanah air merupakan bentuk gegar budaya tersendiri. Para peneliti menyebutnya gegar budaya terbalik, dan banyak orang yang pulang merasakannya lebih berat daripada yang mereka duga.¹ Satu penelitian yang mengikuti para pulangan selama enam bulan menemukan bahwa masa pulang yang lebih berat memprediksi rasa kesepian, depresi, dan stres yang lebih tinggi sesudahnya.² Penelitian lain menemukan bahwa ketika keadaan di rumah ternyata lebih buruk dari yang diharapkan, kesejahteraan orang itu menurun.³",
+              "Coming back can feel different. Many people, returnees included, expect going home to be easier than leaving, so it often gets less preparation and less attention. Researchers call the adjustment reverse culture shock, and many returnees find it harder than they expected.¹ One study that followed returnees for six months found that a harder re-entry predicted more loneliness, depression and stress later on.² Another found that when home turns out worse than people expected, their wellbeing drops.³",
+              "Pulang bisa terasa berbeda. Banyak orang, termasuk mereka yang pulang, mengira pulang lebih mudah daripada pergi, sehingga persiapan dan perhatian untuknya sering lebih sedikit. Para peneliti menyebut masa penyesuaian ini gegar budaya terbalik, dan banyak orang yang pulang merasakannya lebih berat daripada yang mereka duga.¹ Satu penelitian yang mengikuti orang-orang yang pulang selama enam bulan menemukan bahwa masa pulang yang lebih berat diikuti oleh rasa kesepian, depresi, dan stres yang lebih tinggi sesudahnya.² Penelitian lain menemukan bahwa ketika keadaan di tanah air ternyata lebih buruk dari yang diharapkan, kesejahteraan mereka menurun.³",
             ))}
           </p>
           <blockquote style={{
@@ -533,16 +562,41 @@ export default function ReturningWellClient({ userPathway, isSaved: initialSaved
             marginLeft: 0,
           }}>
             {t(
-              "You changed. The people you left didn't, at least not in the same direction. The gap between who you became and who they expected you to be is where the collision happens.",
-              "Anda berubah. Orang-orang yang Anda tinggalkan tidak berubah, setidaknya tidak ke arah yang sama. Benturan terjadi di celah antara diri Anda yang sekarang dan diri Anda yang mereka harapkan.",
+              "You have changed while you were away, and so have the people at home, often in different directions. Much of the friction of coming back sits in that gap.",
+              "Anda telah berubah selama pergi, demikian juga orang-orang di tanah air, sering kali ke arah yang berbeda. Banyak gesekan saat pulang muncul dari perbedaan itu.",
             )}
           </blockquote>
           <p style={{ marginBottom: 0 }}>
             {t(
-              "This module maps the process. It names the stages, normalises what you are likely feeling, and gives you practical tools for each phase. It also holds the belief that your cross-cultural years were not wasted. They are a gift still being unwrapped.",
-              "Modul ini memetakan prosesnya. Modul ini menamai tahap-tahapnya, menolong Anda melihat bahwa apa yang Anda rasakan itu wajar, dan memberi alat praktis untuk setiap fase. Modul ini juga berpegang pada keyakinan bahwa tahun-tahun lintas budaya Anda tidak sia-sia. Tahun-tahun itu adalah karunia yang masih sedang dibuka.",
+              "This module maps the process. It describes the stages, shows that what you may be feeling is common, and gives practical tools for each phase. It also holds that your cross-cultural years still have value for the season ahead.",
+              "Modul ini memetakan prosesnya: menjelaskan tahap-tahapnya, menunjukkan bahwa apa yang mungkin Anda rasakan itu umum, dan memberi langkah praktis untuk setiap fase. Modul ini juga menegaskan bahwa tahun-tahun lintas budaya Anda tetap berharga untuk masa yang akan datang.",
             )}
           </p>
+        </div>
+      </div>
+
+      {/* -- After This Module ------------------------------------------------ */}
+      <div style={{ background: navy, padding: "56px 24px" }}>
+        <div style={{ maxWidth: 860, margin: "0 auto" }}>
+          <p style={{
+            fontFamily: "Montserrat, sans-serif", fontSize: "0.75rem", fontWeight: 700,
+            letterSpacing: "0.12em", textTransform: "uppercase", color: orange, marginBottom: 20,
+          }}>
+            {t("After This Module", "Setelah Modul Ini")}
+          </p>
+          <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "grid", gap: 14 }}>
+            {OBJECTIVES.map((o, i) => (
+              <li key={i} style={{ display: "flex", gap: 14, alignItems: "flex-start" }}>
+                <span aria-hidden="true" style={{ flex: "0 0 3px", height: 20, background: orange, marginTop: 3 }} />
+                <span style={{
+                  fontFamily: "Montserrat, sans-serif", fontSize: 14, fontWeight: 500,
+                  lineHeight: 1.7, color: "oklch(76% 0.03 80)",
+                }}>
+                  {lang === "id" ? o.id : o.en}
+                </span>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
 
@@ -572,7 +626,7 @@ export default function ReturningWellClient({ userPathway, isSaved: initialSaved
               fontStyle: "italic",
             }}>
               {t(
-                "Four stages, and where you might be right now",
+                "Four common stages of coming home",
                 "Empat tahap, dan di mana Anda mungkin berada sekarang",
               )}
             </h2>
@@ -703,7 +757,7 @@ export default function ReturningWellClient({ userPathway, isSaved: initialSaved
                     whiteSpace: "nowrap",
                   }}
                 >
-                  {t("Faith Anchor", "Pegangan Iman")} ?
+                  {t("Faith Anchor", "Pegangan Iman")} →
                 </button>
               </div>
             </div>
@@ -832,7 +886,7 @@ export default function ReturningWellClient({ userPathway, isSaved: initialSaved
                   color: "oklch(40% 0.12 155)",
                   marginBottom: 20,
                 }}>
-                  {t("What Actually Helps", "Yang Sebenarnya Membantu")}
+                  {t("What Can Help", "Yang Bisa Membantu")}
                 </p>
                 <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
                   {(lang === "en" ? currentStage.en_helps : lang === "id" ? currentStage.id_helps : currentStage.id_helps).map((h, i) => (
@@ -897,7 +951,7 @@ export default function ReturningWellClient({ userPathway, isSaved: initialSaved
       </div>
 
       {/* -- The RAFT Model ------------------------------------------------- */}
-      <div style={{ padding: "96px 24px 96px", maxWidth: 860, margin: "0 auto" }}>
+      <div id="raft-section" style={{ scrollMarginTop: 24, padding: "96px 24px 96px", maxWidth: 860, margin: "0 auto" }}>
 
         {/* Section header */}
         <div style={{ textAlign: "center", marginBottom: 64 }}>
@@ -931,8 +985,8 @@ export default function ReturningWellClient({ userPathway, isSaved: initialSaved
             margin: "0 auto",
           }}>
             {cite(t(
-              "Developed by Dave Pollock and Ruth Van Reken, RAFT is a framework for finishing well, so that you carry freedom into the next season instead of unfinished weight.⁷",
-              "Dikembangkan oleh Dave Pollock dan Ruth Van Reken, RAFT adalah kerangka untuk mengakhiri dengan baik, sehingga Anda membawa kebebasan ke musim berikutnya, bukan beban yang belum selesai.⁷",
+              "Developed by Dave Pollock and Ruth Van Reken, RAFT is a framework for finishing well, so you can enter the next season with less left unfinished.⁷",
+              "Dikembangkan oleh Dave Pollock dan Ruth Van Reken, RAFT adalah kerangka untuk mengakhiri dengan baik, sehingga Anda bisa memasuki masa berikutnya dengan lebih sedikit hal yang belum selesai.⁷",
             ))}
           </p>
         </div>
@@ -1063,8 +1117,8 @@ export default function ReturningWellClient({ userPathway, isSaved: initialSaved
             fontStyle: "italic",
           }}>
             {t(
-              "Re-entry is an old story, and Scripture tells it",
-              "Pulang ke tanah air adalah kisah lama, dan Alkitab menceritakannya",
+              "Scripture includes stories of leaving and returning",
+              "Alkitab memuat kisah-kisah tentang pergi dan pulang",
             )}
           </h2>
 
@@ -1088,8 +1142,8 @@ export default function ReturningWellClient({ userPathway, isSaved: initialSaved
               marginBottom: 20,
             }}>
               {t(
-                "Joseph spent years in Egypt as a slave, a prisoner and finally a senior official. He was thoroughly cross-cultural long before that was a category. When his brothers arrived, he had to manage the collision of his two worlds: the boy they remembered, and the man he had become. His weeping was the natural overflow of a person who had been holding two worlds apart for years, and whose integration finally arrived.",
-                "Yusuf menghabiskan bertahun-tahun di Mesir sebagai budak, tahanan, dan akhirnya pejabat tinggi. Ia sepenuhnya lintas budaya jauh sebelum itu menjadi sebuah kategori. Ketika saudara-saudaranya tiba, ia harus mengelola benturan dua dunianya: anak laki-laki yang mereka ingat, dan pria yang kini ia jadi. Tangisannya adalah luapan alami dari seseorang yang telah menahan dua dunia terpisah selama bertahun-tahun, dan integrasinya akhirnya tiba.",
+                "Joseph spent years in Egypt as a slave, a prisoner and later a senior official. He lived cross-culturally long before that was a category. When his brothers arrived, he had to hold his two worlds together: the boy they remembered and the man he had become. His weeping was the overflow of someone who had kept those two worlds apart for years.",
+                "Yusuf menghabiskan bertahun-tahun di Mesir sebagai budak, tahanan, dan kemudian pejabat tinggi. Ia hidup lintas budaya jauh sebelum istilah itu dikenal. Ketika saudara-saudaranya datang, ia harus menyatukan dua dunianya: anak laki-laki yang mereka ingat dan pria yang kini berdiri di hadapan mereka. Tangisannya adalah luapan dari seseorang yang bertahun-tahun memisahkan kedua dunia itu.",
               )}
             </p>
             <button
@@ -1131,8 +1185,8 @@ export default function ReturningWellClient({ userPathway, isSaved: initialSaved
               marginBottom: 20,
             }}>
               {t(
-                "Ruth's story is the inverse of re-entry. She chose to enter a foreign culture permanently, leaving everything familiar behind. But her experience mirrors what returning cross-cultural workers feel: the grief of leaving a people she loved, the courage of committing fully to a new place, the slow and costly work of being known as a foreigner in the place you now call home. Her wholehearted commitment in the face of complete uncertainty is the same posture integration asks of you.",
-                "Kisah Rut adalah kebalikan dari pulang ke tanah air. Ia memilih untuk masuk ke budaya asing secara permanen, meninggalkan semua yang familiar. Tetapi pengalamannya mencerminkan apa yang dirasakan oleh pekerja lintas budaya yang kembali: duka karena meninggalkan orang-orang yang ia cintai, keberanian untuk berkomitmen sepenuhnya pada tempat baru, pekerjaan yang lambat dan mahal untuk dikenal sebagai orang asing di tempat yang sekarang Anda sebut rumah. Komitmen sepenuh hati yang ia tunjukkan di tengah ketidakpastian total adalah sikap yang sama yang diminta integrasi dari Anda.",
+                "Ruth's story is the reverse of re-entry. She chose to settle in a foreign culture, leaving the familiar behind. Yet her experience mirrors what returning cross-cultural workers may feel: grief at leaving people she loved, the courage to commit to a new place, and the slow, demanding work of being known in a place you now call home. Her wholehearted commitment amid uncertainty is the same posture integration asks of you.",
+                "Kisah Rut adalah kebalikan dari pulang ke tanah air. Ia memilih menetap di budaya asing dan meninggalkan hal-hal yang familiar. Namun pengalamannya mirip dengan apa yang mungkin dirasakan pekerja lintas budaya yang pulang: duka karena meninggalkan orang-orang yang ia kasihi, keberanian untuk berkomitmen pada tempat yang baru, dan proses yang lambat serta penuh pengorbanan untuk dikenal di tempat yang sekarang Anda sebut rumah. Komitmen sepenuh hati di tengah ketidakpastian adalah sikap yang juga dibutuhkan dalam proses integrasi.",
               )}
             </p>
             <button
@@ -1168,8 +1222,8 @@ export default function ReturningWellClient({ userPathway, isSaved: initialSaved
               marginBottom: 24,
             }}>
               {t(
-                "The grief of re-entry is not a sign that something has gone wrong. It is a sign that something was real. Psalm 126 holds both realities: 'those who sow with tears will reap with songs of joy.' The sowing and the harvest are not separate stories. They are one story, told across time.",
-                "Duka dari kembali ke tanah air bukan tanda bahwa sesuatu telah salah. Itu tanda bahwa sesuatu itu nyata. Mazmur 126 memegang kedua kenyataan itu: 'orang-orang yang menabur dengan mencucurkan air mata, akan menuai dengan bersorak-sorai.' Penabur dan panen bukan cerita yang terpisah. Mereka adalah satu cerita, diceritakan sepanjang waktu.",
+                "Grief in re-entry is common and usually reflects how much the past season meant to you. Psalm 126 holds both: 'those who sow with tears will reap with songs of joy.' The sowing and the harvest belong to one story, told across time.",
+                "Duka saat pulang itu umum dan biasanya mencerminkan betapa berartinya masa lalu itu bagi Anda. Mazmur 126 memuat keduanya: 'orang-orang yang menabur dengan mencucurkan air mata, akan menuai dengan bersorak-sorai.' Menabur dan menuai adalah bagian dari satu kisah yang sama, yang terbentang dari waktu ke waktu.",
               )}
             </p>
             <button
@@ -1193,201 +1247,174 @@ export default function ReturningWellClient({ userPathway, isSaved: initialSaved
         </div>
       </div>
 
-      {/* -- Where Are You Right Now? --------------------------------------- */}
-      <div style={{ padding: "96px 24px 96px" }}>
+      {/* -- Self-Assessment (one question at a time) ----------------------- */}
+      <div id="self-assessment" style={{ background: lightGray, padding: "96px 24px", scrollMarginTop: 24 }}>
         <div style={{ maxWidth: 860, margin: "0 auto" }}>
-          <div style={{ textAlign: "center", marginBottom: 56 }}>
-            <p style={{
-              fontFamily: "Montserrat, sans-serif",
-              fontSize: "0.75rem",
-              fontWeight: 700,
-              letterSpacing: "0.12em",
-              textTransform: "uppercase",
-              color: orange,
-              marginBottom: 20,
-            }}>
-              {t("Self-Assessment", "Penilaian Diri")}
-            </p>
-            <h2 style={{
-              fontFamily: serif,
-              fontSize: "clamp(28px, 3.5vw, 44px)",
-              fontWeight: 700,
-              color: navy,
-              lineHeight: 1.18,
-              fontStyle: "italic",
-              marginBottom: 16,
-            }}>
-              {t("Where are you right now?", "Di mana Anda berada sekarang?")}
-            </h2>
-            <p style={{
-              fontSize: "clamp(15px, 1.7vw, 17px)",
-              color: bodyText,
-              lineHeight: 1.8,
-              maxWidth: 520,
-              margin: "0 auto",
-            }}>
-              {t(
-                "Read each statement. Mark whether it resonates with where you are today.",
-                "Baca setiap pernyataan. Tandai apakah itu beresonansi dengan posisi Anda hari ini.",
-              )}
-            </p>
-          </div>
+          <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: orange, marginBottom: 16 }}>
+            {t("Self-Assessment", "Penilaian Diri")}
+          </p>
+          <h2 style={{
+            fontFamily: serif, fontSize: "clamp(28px, 3.5vw, 42px)", fontWeight: 700,
+            color: navy, lineHeight: 1.2, fontStyle: "italic", marginBottom: 16,
+          }}>
+            {t("How is your return going?", "Bagaimana proses pulang Anda?")}
+          </h2>
+          <p style={{ fontSize: "clamp(15px, 1.7vw, 17px)", color: bodyText, lineHeight: 1.8, maxWidth: 620, marginBottom: 32 }}>
+            {t(
+              "Rate each statement from 1 to 5 based on the last few weeks. There are no right answers, only a clearer picture of where to give your attention.",
+              "Beri nilai 1 sampai 5 untuk setiap pernyataan berdasarkan beberapa minggu terakhir. Tidak ada jawaban benar atau salah, hanya gambaran yang lebih jelas tentang bagian yang perlu Anda perhatikan.",
+            )}
+          </p>
 
-          {/* Statements */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-            {REFLECTION_STATEMENTS.map((stmt, i) => {
-              const answer = reflectionAnswers[i];
-              return (
-                <div key={i} style={{
-                  background: answer === true ? "oklch(94% 0.01 155 / 0.5)" : answer === false ? lightGray : offWhite,
-                  border: answer === true
-                    ? "1px solid oklch(70% 0.1 155)"
-                    : answer === false
-                    ? "1px solid oklch(88% 0.01 80)"
-                    : `1px solid oklch(88% 0.01 80)`,
-                  borderRadius: 10,
-                  padding: "24px 28px",
-                  transition: "background 0.2s, border 0.2s",
-                }}>
-                  <p style={{
-                    fontFamily: serif,
-                    fontSize: "clamp(16px, 1.8vw, 19px)",
-                    color: navy,
-                    fontStyle: "italic",
-                    lineHeight: 1.7,
-                    margin: "0 0 16px",
-                  }}>
-                    "{lang === "en" ? stmt.en : stmt.id}"
+          <div aria-live="polite" style={{
+            background: "white", borderRadius: 10, padding: "28px clamp(18px, 4vw, 32px)",
+            borderLeft: `4px solid ${orange}`,
+          }}>
+            {!aDone ? (
+              <div key={aStep}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
+                  <p style={{ margin: 0, fontSize: 13, fontWeight: 700, color: bodyText, letterSpacing: "0.04em" }}>
+                    {aStep + 1} {t("of", "dari")} {ASSESS.length}
                   </p>
-                  <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
-                    <button
-                      onClick={() => {
-                        const updated = [...reflectionAnswers];
-                        updated[i] = answer === true ? null : true;
-                        setReflectionAnswers(updated);
-                      }}
-                      style={{
-                        padding: "7px 20px",
-                        border: `1px solid ${answer === true ? "oklch(50% 0.12 155)" : "oklch(80% 0.02 260)"}`,
-                        borderRadius: 4,
-                        background: answer === true ? "oklch(50% 0.12 155)" : "transparent",
-                        color: answer === true ? offWhite : bodyText,
-                        fontFamily: "Montserrat, sans-serif",
-                        fontSize: 12,
-                        fontWeight: 700,
-                        cursor: "pointer",
-                        letterSpacing: "0.04em",
-                        transition: "background 0.15s, color 0.15s",
-                      }}
-                    >
-                      {t("This is me", "Ini saya")}
+                  {aStep > 0 && (
+                    <button type="button" onClick={backQ} style={{
+                      background: "none", border: "none", cursor: "pointer", minHeight: 44, padding: "0 4px",
+                      fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 700, color: orange,
+                      textDecoration: "underline", textUnderlineOffset: 3,
+                    }}>
+                      {t("Back", "Kembali")}
                     </button>
-                    <button
-                      onClick={() => {
-                        const updated = [...reflectionAnswers];
-                        updated[i] = answer === false ? null : false;
-                        setReflectionAnswers(updated);
-                      }}
-                      style={{
-                        padding: "7px 20px",
-                        border: `1px solid oklch(80% 0.02 260)`,
-                        borderRadius: 4,
-                        background: answer === false ? lightGray : "transparent",
-                        color: bodyText,
-                        fontFamily: "Montserrat, sans-serif",
-                        fontSize: 12,
-                        fontWeight: 600,
-                        cursor: "pointer",
-                        letterSpacing: "0.04em",
-                      }}
-                    >
-                      {t("Not yet", "Belum")}
-                    </button>
-                    {answer === true && (
-                      <span style={{
-                        fontFamily: "Montserrat, sans-serif",
-                        fontSize: 11,
-                        fontWeight: 700,
-                        letterSpacing: "0.06em",
-                        textTransform: "uppercase",
-                        color: orange,
-                        marginLeft: 8,
-                      }}>
-                        {lang === "en" ? stmt.en_stage : lang === "id" ? stmt.id_stage : stmt.id_stage}
-                      </span>
-                    )}
-                  </div>
+                  )}
                 </div>
-              );
-            })}
+                <div aria-hidden="true" style={{ height: 4, background: lightGray, borderRadius: 2, marginBottom: 24 }}>
+                  <div style={{ height: 4, width: `${(aStep / ASSESS.length) * 100}%`, background: orange, borderRadius: 2, transition: "width 0.25s" }} />
+                </div>
+                <p style={{
+                  fontFamily: serif, fontSize: "clamp(19px, 2.4vw, 24px)", color: navy,
+                  lineHeight: 1.5, margin: "0 0 28px", fontWeight: 600,
+                }}>
+                  {lang === "id" ? ASSESS[aStep].id : ASSESS[aStep].en}
+                </p>
+                <div role="group" aria-label={t("Choose a score from 1 to 5", "Pilih nilai dari 1 sampai 5")}
+                  style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 8 }}>
+                  {ASSESS_SCALE.map((sc, k) => {
+                    const v = k + 1;
+                    const sel = aAnswers[aStep] === v;
+                    const word = lang === "id" ? sc.id : sc.en;
+                    return (
+                      <button key={v} type="button" onClick={() => answerQ(v)}
+                        aria-pressed={sel} aria-label={`${v}, ${word}`} title={word}
+                        style={{
+                          minHeight: 56, borderRadius: 8, cursor: "pointer",
+                          fontFamily: "Montserrat, sans-serif", fontSize: 18, fontWeight: 700,
+                          border: `2px solid ${sel ? navy : "oklch(80% 0.02 260)"}`,
+                          background: sel ? navy : "white", color: sel ? offWhite : navy,
+                        }}>
+                        {v}
+                      </button>
+                    );
+                  })}
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between", gap: 12, marginTop: 12, fontSize: 12, color: bodyText, lineHeight: 1.4 }}>
+                  <span>1 = {lang === "id" ? ASSESS_SCALE[0].id : ASSESS_SCALE[0].en}</span>
+                  <span style={{ textAlign: "right" }}>5 = {lang === "id" ? ASSESS_SCALE[4].id : ASSESS_SCALE[4].en}</span>
+                </div>
+              </div>
+            ) : (
+              <div>
+                <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: orange, marginBottom: 12 }}>
+                  {t("Your result", "Hasil Anda")}
+                </p>
+                <p style={{ fontFamily: serif, fontSize: "clamp(40px, 6vw, 56px)", fontWeight: 700, color: navy, lineHeight: 1, margin: "0 0 4px" }}>
+                  {aTotal}<span style={{ fontSize: "0.45em", color: bodyText, fontWeight: 600 }}> / {ASSESS.length * 5}</span>
+                </p>
+                <h3 style={{ fontFamily: serif, fontSize: "clamp(22px, 2.8vw, 28px)", fontWeight: 700, fontStyle: "italic", color: navy, margin: "12px 0 12px" }}>
+                  {lang === "id" ? aBand.id_title : aBand.en_title}
+                </h3>
+                <p style={{ fontFamily: serif, fontSize: "clamp(15px, 1.7vw, 17px)", color: bodyText, lineHeight: 1.85, margin: "0 0 20px" }}>
+                  {lang === "id" ? aBand.id_body : aBand.en_body}
+                </p>
+                <p style={{ fontSize: 14, color: navy, lineHeight: 1.7, margin: "0 0 8px" }}>
+                  <strong>{t("Your lowest areas: ", "Area terendah Anda: ")}</strong>
+                  {aLowest.map((x) => (lang === "id" ? ASSESS[x.i].id_label : ASSESS[x.i].en_label)).join(", ")}
+                </p>
+                <p style={{ fontSize: 14, color: bodyText, lineHeight: 1.7, margin: "0 0 24px" }}>
+                  {lang === "id" ? aBand.id_tip : aBand.en_tip}{" "}
+                  <a href={`#${aBand.anchor}`} style={{ color: orange, fontWeight: 700, textDecoration: "underline", textUnderlineOffset: 3 }}>
+                    {t("Go to this section", "Buka bagian ini")}
+                  </a>
+                </p>
+                <button type="button" onClick={restartA} style={{
+                  minHeight: 44, padding: "10px 24px", borderRadius: 4, cursor: "pointer",
+                  fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 700,
+                  background: "transparent", color: navy, border: `1.5px solid ${navy}`,
+                }}>
+                  {t("Start again", "Mulai lagi")}
+                </button>
+              </div>
+            )}
           </div>
+        </div>
+      </div>
 
-          {/* Inferred stage result */}
-          {answeredCount >= 3 && inferredStageRaw && (
-            <div style={{
-              marginTop: 40,
-              background: navy,
-              borderRadius: 12,
-              padding: "36px 40px",
-            }}>
-              <p style={{
-                fontFamily: "Montserrat, sans-serif",
-                fontSize: 11,
-                fontWeight: 700,
-                letterSpacing: "0.12em",
-                textTransform: "uppercase",
-                color: orange,
-                marginBottom: 16,
-              }}>
-                {t("Based on your responses", "Berdasarkan respons Anda")}
-              </p>
-              <p style={{
-                fontFamily: serif,
-                fontSize: "clamp(18px, 2vw, 22px)",
-                fontStyle: "italic",
-                color: offWhite,
-                lineHeight: 1.75,
-                marginBottom: 20,
-              }}>
-                {t(
-                  `You seem to be in the ${inferredStageRaw} stage of re-entry. That's useful to know. It gives you permission to be exactly where you are.`,
-                  `Anda tampaknya berada di tahap ${inferredStageRaw} dari kembali ke tanah air. Itu berguna untuk diketahui. Anda boleh berada tepat di tempat Anda sekarang.`,
-                )}
-              </p>
-              <button
-                onClick={() => {
-                  const stageMap: Record<string, string> = {
-                    "Arrival": "arrival", "Kedatangan": "arrival",
-                    "Collision": "collision", "Benturan": "collision",
-                    "Adjustment": "adjustment", "Penyesuaian": "adjustment",
-                    "Integration": "integration", "Integrasi": "integration",
-                  };
-                  const stageId = stageMap[inferredStageRaw];
-                  if (stageId) {
-                    setActiveStage(stageId);
-                    document.getElementById("journey-map-section")?.scrollIntoView({ behavior: "smooth" });
-                  }
-                }}
-                style={{
-                  padding: "11px 26px",
-                  background: orange,
-                  border: "none",
-                  borderRadius: 4,
-                  color: offWhite,
-                  fontFamily: "Montserrat, sans-serif",
-                  fontSize: 13,
-                  fontWeight: 700,
-                  cursor: "pointer",
-                  letterSpacing: "0.04em",
-                }}
-              >
-                {t(
-                  `See what helps in the ${inferredStageRaw} stage →`,
-                  `Lihat apa yang membantu di tahap ${inferredStageRaw} →`,
-                )}
-              </button>
-            </div>
-          )}
+
+      {/* -- Close: The Gift ----------------------------------------------- */}
+      <div style={{ background: offWhite, padding: "96px 24px" }}>
+        <div style={{ maxWidth: 860, margin: "0 auto" }}>
+          <p style={{
+            fontFamily: "Montserrat, sans-serif",
+            fontSize: "0.75rem",
+            fontWeight: 700,
+            letterSpacing: "0.12em",
+            textTransform: "uppercase",
+            color: orange,
+            marginBottom: 24,
+          }}>
+            {t("A Final Word", "Kata Akhir")}
+          </p>
+          <h2 style={{
+            fontFamily: serif,
+            fontSize: "clamp(28px, 3.5vw, 42px)",
+            fontWeight: 700,
+            color: navy,
+            lineHeight: 1.2,
+            fontStyle: "italic",
+            marginBottom: 32,
+          }}>
+            {t(
+              "Your cross-cultural years are still with you, carried inside you",
+              "Tahun-tahun lintas budaya Anda masih bersama Anda, tersimpan di dalam diri Anda",
+            )}
+          </h2>
+          <p style={{
+            fontFamily: serif,
+            fontSize: "clamp(15px, 1.7vw, 17px)",
+            color: bodyText,
+            lineHeight: 1.85,
+            marginBottom: 32,
+          }}>
+            {t(
+              "Over time, what you carry from those years may become useful in ways you can't yet see. You may notice things others miss, or help someone who is just arriving where you have been. That is part of integration, and it is worth the time it takes.",
+              "Seiring waktu, apa yang Anda bawa dari tahun-tahun itu bisa menjadi berguna dengan cara yang belum terlihat sekarang. Anda mungkin melihat hal-hal yang terlewat oleh orang lain, atau menolong seseorang yang baru mengalami apa yang dulu Anda alami. Itu bagian dari integrasi, dan layak diberi waktu.",
+            )}
+          </p>
+          <button
+            onClick={() => setActiveVerse("isa-43-18")}
+            style={{
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              color: orange,
+              fontWeight: 700,
+              fontFamily: "Montserrat, sans-serif",
+              fontSize: 14,
+              padding: 0,
+              textDecoration: "underline dotted",
+              textUnderlineOffset: 3,
+            }}
+          >
+            {lang === "en" ? VERSES["isa-43-18"].en_ref : lang === "id" ? VERSES["isa-43-18"].id_ref : VERSES["isa-43-18"].id_ref}
+          </button>
         </div>
       </div>
 
@@ -1409,8 +1436,8 @@ export default function ReturningWellClient({ userPathway, isSaved: initialSaved
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             {[
               {
-                en: "Re-entry is its own kind of culture shock, and many people find it harder than they expected.¹ Feeling lost at home is a normal response to a real transition.",
-                id: "Pulang ke tanah air adalah jenis gegar budaya tersendiri, dan banyak orang merasakannya lebih berat daripada yang mereka duga.¹ Merasa asing di rumah sendiri adalah respons yang wajar terhadap sebuah transisi yang nyata.",
+                en: "Many people expect coming home to be easier than leaving, and many find it harder than they expected.¹ Feeling out of place at home is a normal response to a real transition.",
+                id: "Banyak orang mengira pulang lebih mudah daripada pergi, dan banyak yang merasakannya lebih berat daripada yang mereka duga.¹ Merasa asing di rumah sendiri adalah respons yang wajar terhadap sebuah transisi yang nyata.",
               },
               {
                 en: "The four stages are a map, and the months are rough guides. You may move faster or slower, or circle back for a while.⁴",
@@ -1418,15 +1445,15 @@ export default function ReturningWellClient({ userPathway, isSaved: initialSaved
               },
               {
                 en: "Grief for the people and places you left is real. Name your losses and give them room instead of hurrying past them.⁶",
-                id: "Duka atas orang dan tempat yang Anda tinggalkan itu nyata. Sebutkan kehilangan Anda dan beri ruang baginya, jangan terburu-buru melewatinya.⁶",
+                id: "Duka atas orang dan tempat yang Anda tinggalkan itu nyata. Ungkapkan kehilangan Anda dan beri ruang baginya, jangan terburu-buru melewatinya.⁶",
               },
               {
                 en: "Finishing well matters. RAFT helps you leave with fewer loose ends, so you carry less unfinished weight into the next season.⁷",
-                id: "Mengakhiri dengan baik itu penting. RAFT menolong Anda pergi dengan lebih sedikit urusan yang tertinggal, sehingga beban yang Anda bawa ke musim berikutnya lebih ringan.⁷",
+                id: "Mengakhiri dengan baik itu penting. RAFT menolong Anda pergi dengan lebih sedikit urusan yang tertinggal, sehingga beban yang Anda bawa ke masa berikutnya lebih ringan.⁷",
               },
               {
                 en: "Time helps. In one study of long-term Christian workers, depression tended to ease the longer people had been home.⁸ While you wait, find one or two people who understand.⁵",
-                id: "Waktu menolong. Dalam satu penelitian tentang pekerja Kristen jangka panjang, depresi cenderung mereda seiring makin lamanya mereka berada di rumah.⁸ Sambil menunggu, carilah satu atau dua orang yang mengerti.⁵",
+                id: "Waktu menolong. Dalam satu penelitian tentang pekerja Kristen jangka panjang, depresi cenderung mereda seiring makin lamanya mereka berada di tanah air.⁸ Sambil menunggu, carilah satu atau dua orang yang mengerti.⁵",
               },
             ].map((item, i) => (
               <div key={i} style={{
@@ -1453,71 +1480,10 @@ export default function ReturningWellClient({ userPathway, isSaved: initialSaved
         </div>
       </section>
 
-      {/* -- Close: The Gift ----------------------------------------------- */}
-      <div style={{ background: offWhite, padding: "80px 24px" }}>
-        <div style={{ maxWidth: 860, margin: "0 auto", textAlign: "center" }}>
-          <p style={{
-            fontFamily: "Montserrat, sans-serif",
-            fontSize: "0.75rem",
-            fontWeight: 700,
-            letterSpacing: "0.12em",
-            textTransform: "uppercase",
-            color: orange,
-            marginBottom: 24,
-          }}>
-            {t("A Final Word", "Kata Akhir")}
-          </p>
-          <h2 style={{
-            fontFamily: serif,
-            fontSize: "clamp(26px, 3.2vw, 40px)",
-            fontWeight: 700,
-            color: navy,
-            lineHeight: 1.2,
-            fontStyle: "italic",
-            marginBottom: 32,
-          }}>
-            {t(
-              "Your cross-cultural years are still with you, carried inside you",
-              "Tahun-tahun lintas budaya Anda masih bersama Anda, tersimpan di dalam diri Anda",
-            )}
-          </h2>
-          <p style={{
-            fontFamily: serif,
-            fontSize: "clamp(17px, 2vw, 20px)",
-            color: bodyText,
-            lineHeight: 1.9,
-            marginBottom: 32,
-          }}>
-            {t(
-              "There will come a day, probably not yet but it will come, when what you carry from those years is the most useful thing in the room. When you can see what others can't. When your fluency in discomfort becomes someone else's safety. When your theology of grief becomes a lifeline for someone just arriving where you have been. That is integration. And it is worth the long road to get there.",
-              "Akan datang suatu hari, mungkin belum sekarang tetapi pasti datang, ketika apa yang Anda bawa dari tahun-tahun itu adalah hal paling berguna di ruangan. Ketika Anda bisa melihat apa yang tidak bisa dilihat orang lain. Ketika kemahiran Anda dalam ketidaknyamanan menjadi keamanan orang lain. Ketika teologi kesedihan Anda menjadi tali penyelamat bagi seseorang yang baru tiba di tempat yang pernah Anda jalani. Itulah integrasi. Dan itu layak diperjuangkan melalui jalan yang panjang.",
-            )}
-          </p>
-          <button
-            onClick={() => setActiveVerse("isa-43-18")}
-            style={{
-              background: "none",
-              border: "none",
-              cursor: "pointer",
-              color: orange,
-              fontWeight: 700,
-              fontFamily: "Montserrat, sans-serif",
-              fontSize: 14,
-              padding: 0,
-              textDecoration: "underline dotted",
-              textUnderlineOffset: 3,
-            }}
-          >
-            {lang === "en" ? VERSES["isa-43-18"].en_ref : lang === "id" ? VERSES["isa-43-18"].id_ref : VERSES["isa-43-18"].id_ref}
-          </button>
-        </div>
-      </div>
-
       {/* -- Sources -------------------------------------------------------- */}
-      <div style={{ background: offWhite, padding: "0 24px 48px" }}>
-        <div style={{ maxWidth: 860, margin: "0 auto" }}>
-          <SourcesDropdown
-            lang={lang}
+      <SourcesDropdown
+        lang={lang}
+        background={offWhite}
             sources={[
               "¹ Gaw, K. F. (2000). Reverse culture shock in students returning from overseas. International Journal of Intercultural Relations, 24, 83-104. https://www.sciencedirect.com/science/article/abs/pii/S0147176799000243",
               "² Fanari, A., & Segrin, C. (2021). Longitudinal effects of U.S. students' reentry shock on psychological health after returning home during the COVID-19 global pandemic. International Journal of Intercultural Relations, 82, 298-310. https://pmc.ncbi.nlm.nih.gov/articles/PMC8530500/",
@@ -1528,87 +1494,7 @@ export default function ReturningWellClient({ userPathway, isSaved: initialSaved
               "⁷ Pollock, D. C., Van Reken, R. E., & Pollock, M. V. (2017). Third Culture Kids: The Experience of Growing Up Among Worlds (3rd ed.). Nicholas Brealey Publishing.",
               "⁸ Zavala-Barajas, S. L., Eltiti, S., & Crawford, N. (2022). Contributing factors in the successful repatriation of long-term adult Christian missionaries. Journal of Psychology and Theology. https://journals.sagepub.com/doi/10.1177/00916471221082056",
             ]}
-          />
-        </div>
-      </div>
-
-      {/* -- Footer nav ----------------------------------------------------- */}
-      <div style={{
-        padding: "48px 24px",
-        background: offWhite,
-        borderTop: `1px solid oklch(90% 0.01 80)`,
-        display: "flex",
-        gap: 16,
-        justifyContent: "center",
-        flexWrap: "wrap",
-      }}>
-        <button
-          type="button"
-          onClick={handleSave}
-          disabled={saved || isPending}
-          aria-pressed={saved}
-          aria-label={saved
-            ? t("Saved to your dashboard", "Tersimpan di dasbor Anda")
-            : t("Save this module to your dashboard", "Simpan modul ini ke dasbor Anda")}
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 10,
-            minHeight: 44,
-            padding: "10px 24px",
-            border: "none",
-            cursor: saved ? "default" : "pointer",
-            fontFamily: "Montserrat, sans-serif",
-            fontSize: 13,
-            fontWeight: 700,
-            background: saved ? "oklch(35% 0.05 260)" : navy,
-            color: offWhite,
-            letterSpacing: "0.04em",
-            borderRadius: 4,
-          }}
-        >
-          <svg viewBox="0 0 24 24" width={18} height={18} aria-hidden="true">
-            <path d="M6 3h12v18l-6-4.5L6 21z" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
-          </svg>
-          <span>
-            {saved
-              ? t("Saved to Dashboard", "Tersimpan di Dasbor")
-              : t("Save to Dashboard", "Simpan ke Dasbor")}
-          </span>
-        </button>
-        <Link
-          href="/resources"
-          style={{
-            padding: "12px 28px",
-            border: `1px solid oklch(80% 0.02 260)`,
-            fontFamily: "Montserrat, sans-serif",
-            fontSize: 13,
-            fontWeight: 600,
-            color: bodyText,
-            textDecoration: "none",
-            borderRadius: 4,
-            display: "inline-block",
-          }}
-        >
-          {t("All Resources", "Semua Materi")}
-        </Link>
-        <Link
-          href="/resources/healthy-transitions"
-          style={{
-            padding: "12px 28px",
-            border: `1px solid oklch(80% 0.02 260)`,
-            fontFamily: "Montserrat, sans-serif",
-            fontSize: 13,
-            fontWeight: 600,
-            color: bodyText,
-            textDecoration: "none",
-            borderRadius: 4,
-            display: "inline-block",
-          }}
-        >
-          {t("Related: Healthy Transitions", "Terkait: Transisi yang Sehat")}
-        </Link>
-      </div>
+      />
 
       {/* -- Verse Modal ---------------------------------------------------- */}
       {activeVerse && verseData && (
