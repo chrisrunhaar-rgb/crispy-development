@@ -8,6 +8,7 @@ import { saveResourceToDashboard } from "../actions";
 import LangToggle from "@/components/LangToggle";
 import SourcesDropdown from "@/components/SourcesDropdown";
 import PresentLauncher from "@/components/PresentLauncher";
+import OnePagerLauncher from "@/components/OnePagerLauncher";
 
 // ── LANGUAGE ───────────────────────────────────────────────────────────────────
 
@@ -712,11 +713,14 @@ export default function HealthyConflictClient({ isSaved: initialSaved, signupBan
     <div className="hc">
       <style>{CSS}</style>
 
-      <LangToggle langs={["en", "id"]} extra={
+      <LangToggle langs={["en", "id"]} extra={<>
+        <OnePagerLauncher href="/resources/healthy-conflict/one-pager" lang={lang}
+          title={{ en: "The five rules on one page", id: "Lima aturan dalam satu halaman" }}
+          text={{ en: "Save, print or download a one-page summary to share with your team.", id: "Simpan, cetak, atau unduh ringkasan satu halaman untuk dibagikan kepada tim Anda." }} />
         <PresentLauncher href="/resources/healthy-conflict/present" lang={lang}
           title={{ en: "Teaching this to someone else?", id: "Mengajarkan ini kepada orang lain?" }}
           text={{ en: "Use the guided slideshow to walk your team through the five rules for healthy conflict.", id: "Gunakan slideshow terpandu untuk mengajak tim Anda melalui lima aturan untuk konflik yang sehat." }} />
-      } />
+      </>} />
 
       {/* ── 1. HERO ─────────────────────────────────────────────────────────── */}
       <header className="hc-hero">

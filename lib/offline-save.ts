@@ -30,10 +30,10 @@ function assetsIn(html: string) {
   return found;
 }
 
-export async function saveOffline(slug: string, pagePath: string, hasSlideshow: boolean) {
+export async function saveOffline(slug: string, pagePath: string, hasSlideshow: boolean, hasOnePager = false) {
   if (!navigator.serviceWorker.controller) await navigator.serviceWorker.ready;
   const cache = await caches.open(OFFLINE);
-  const pages = [pagePath, ...(hasSlideshow ? [`/resources/${slug}/present`] : [])];
+  const pages = [pagePath, ...(hasSlideshow ? [`/resources/${slug}/present`] : []), ...(hasOnePager ? [`/resources/${slug}/one-pager`] : [])];
   const assets = new Set<string>();
 
   for (const p of pages) {
@@ -82,4 +82,5 @@ export async function removeOffline(slug: string, pagePath: string) {
   const cache = await caches.open(OFFLINE);
   await cache.delete(pagePath, { ignoreSearch: true });
   await cache.delete(`/resources/${slug}/present`, { ignoreSearch: true });
+  await cache.delete(`/resources/${slug}/one-pager`, { ignoreSearch: true });
 }

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useLanguage } from "@/lib/LanguageContext";
 import { RESOURCES, Resource } from "@/lib/resources-data";
 import { SLIDESHOW_SLUGS } from "@/lib/slideshow-slugs";
+import { ONE_PAGER_SLUGS } from "@/lib/one-pager-slugs";
 import { saveResourceToDashboard } from "./actions";
 import ModuleChatHelper from "@/components/ModuleChatHelper";
 import { trackResourceSaved } from "@/lib/ga-events";
@@ -131,6 +132,9 @@ function ResourceTile({
   const displayTypes = types.length > 0 ? types : [resource.format];
   const hasSlideshow = !!resource.slug && SLIDESHOW_SLUGS.has(resource.slug);
   const slideshowLabel = lang === "id" ? "Termasuk slideshow" : "Includes a slideshow";
+  const hasOnePager = !!resource.slug && ONE_PAGER_SLUGS.has(resource.slug);
+  const onePagerLabel = lang === "id" ? "Termasuk ringkasan satu halaman" : "Includes a one-page summary";
+  const badgeCount = (hasSlideshow ? 1 : 0) + (hasOnePager ? 1 : 0);
 
   const barColor =
     access === "live_free"
@@ -167,15 +171,19 @@ function ResourceTile({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      {/* Slideshow badge: absolutely positioned so it never changes tile size */}
-      {hasSlideshow && (
-        <span
-          role="img"
-          aria-label={slideshowLabel}
-          title={slideshowLabel}
-          style={{ position: "absolute", top: "0.6rem", right: "0.6rem", display: "flex", lineHeight: 0 }}
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="oklch(65% 0.15 45)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2" /><path d="M12 16v4M8 20h8" /></svg>
+      {/* Slideshow / one-pager badges: absolutely positioned so it never changes tile size */}
+      {badgeCount > 0 && (
+        <span style={{ position: "absolute", top: "0.6rem", right: "0.6rem", display: "flex", gap: "0.4rem", lineHeight: 0 }}>
+          {hasOnePager && (
+            <span role="img" aria-label={onePagerLabel} title={onePagerLabel} style={{ display: "flex" }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="oklch(65% 0.15 45)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8.5" cy="8.5" r="1.5" /><path d="M21 15l-5-5L5 21" /></svg>
+            </span>
+          )}
+          {hasSlideshow && (
+            <span role="img" aria-label={slideshowLabel} title={slideshowLabel} style={{ display: "flex" }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="oklch(65% 0.15 45)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2" /><path d="M12 16v4M8 20h8" /></svg>
+            </span>
+          )}
         </span>
       )}
       {/* Left bar */}
@@ -216,7 +224,7 @@ function ResourceTile({
           fontSize: "0.875rem",
           color: "oklch(22% 0.005 260)",
           margin: 0,
-          paddingRight: hasSlideshow ? "1.25rem" : 0,
+          paddingRight: badgeCount === 2 ? "2.5rem" : badgeCount ? "1.25rem" : 0,
           overflow: "hidden",
           whiteSpace: "nowrap",
           textOverflow: "ellipsis",

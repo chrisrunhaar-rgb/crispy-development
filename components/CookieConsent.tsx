@@ -55,7 +55,7 @@ export default function CookieConsent({ gaId }: { gaId: string }) {
   }
 
   // Keep slideshows clear; the banner shows again on the next normal page
-  if (!visible || pathname?.endsWith("/present")) return null;
+  if (!visible || pathname?.endsWith("/present") || pathname?.endsWith("/one-pager")) return null;
 
   return (
     <div

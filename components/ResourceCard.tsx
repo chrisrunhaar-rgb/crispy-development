@@ -5,6 +5,7 @@ import Link from "next/link";
 import { removeResourceFromDashboard, saveResourceNote, saveResourceRating, markResourceRead } from "@/app/(marketing)/resources/actions";
 import { presentLinkTap } from "@/components/PresentPhone";
 import { SLIDESHOW_SLUGS } from "@/lib/slideshow-slugs";
+import { ONE_PAGER_SLUGS } from "@/lib/one-pager-slugs";
 import { isSavedOffline, offlineSupported, removeOffline, saveOffline } from "@/lib/offline-save";
 
 const FORMAT_ID: Record<string, string> = {
@@ -30,6 +31,7 @@ function Icon({ children, size = 20 }: { children: ReactNode; size?: number }) {
 }
 const ReadIcon = () => <Icon><path d="M3 5h5a4 4 0 0 1 4 4v11a3 3 0 0 0-3-3H3z" /><path d="M21 5h-5a4 4 0 0 0-4 4v11a3 3 0 0 1 3-3h6z" /></Icon>;
 const PresentIcon = () => <Icon><rect x="3" y="4" width="18" height="12" rx="2" /><path d="M12 16v4M8 20h8" /></Icon>;
+const ImageIcon = () => <Icon><rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8.5" cy="8.5" r="1.5" /><path d="M21 15l-5-5L5 21" /></Icon>;
 const ShareIcon = ({ size }: { size?: number }) => <Icon size={size}><path d="M8.5 10H7a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-1.5" /><path d="M12 14V3.5M8.5 7 12 3.5 15.5 7" /></Icon>;
 const RemoveIcon = () => <Icon><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3" /></Icon>;
 const OfflineIcon = () => <Icon><path d="M12 4v11M7.5 10.5 12 15l4.5-4.5" /><path d="M5 19h14" /></Icon>;
@@ -61,7 +63,7 @@ const CSS = `
 .rc-act:hover .rc-lbl { color: oklch(30% 0.06 260); }
 .rc-act-done .rc-lbl { color: oklch(42% 0.14 145); }
 
-.rc-badge { position: absolute; top: 9px; right: 10px; z-index: 2; display: inline-flex; color: oklch(30% 0.12 260); pointer-events: none; }
+.rc-badge { position: absolute; top: 9px; right: 10px; z-index: 2; display: inline-flex; gap: 6px; color: oklch(30% 0.12 260); pointer-events: none; }
 .rc-tools { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; padding-top: 0.75rem; border-top: 1px solid oklch(92% 0.005 80); }
 .rc-tools-left { display: flex; align-items: center; }
 .rc-act-remove { color: oklch(48% 0.02 260); }
@@ -134,6 +136,8 @@ export default function ResourceCard({
   const id = lang === "id";
   const hasSlideshow = SLIDESHOW_SLUGS.has(slug);
   const presentHref = `/resources/${slug}/present`;
+  const hasOnePager = ONE_PAGER_SLUGS.has(slug);
+  const onePagerHref = `/resources/${slug}/one-pager`;
   // Every tile in a list shares one language, so one slot width keeps the
   // icons aligned in columns down the dashboard. ID labels run longer.
   const slot = id ? "4.25rem" : "3.5rem";
@@ -147,7 +151,7 @@ export default function ResourceCard({
     if (offline === "saving") return;
     setOffline("saving");
     try {
-      const { failed } = await saveOffline(slug, path, hasSlideshow);
+      const { failed } = await saveOffline(slug, path, hasSlideshow, hasOnePager);
       setOffline(failed ? "error" : "saved");
     } catch {
       setOffline("error");
@@ -223,11 +227,21 @@ export default function ResourceCard({
       </div>
 
 
-      {/* Slideshow marker: a hint, not a button (Present lives in the panel) */}
-      {hasSlideshow && (
-        <span className="rc-badge" title={id ? "Ada slideshow" : "Slideshow available"}>
-          <Icon size={16}><rect x="3" y="4" width="18" height="12" rx="2" /><path d="M12 16v4M8 20h8" /></Icon>
-          <span className="rc-sr">{id ? "Ada slideshow" : "Slideshow available"}</span>
+      {/* Slideshow / one-pager markers: hints, not buttons (the actions live in the panel) */}
+      {(hasSlideshow || hasOnePager) && (
+        <span className="rc-badge">
+          {hasOnePager && (
+            <span title={id ? "Ada ringkasan satu halaman" : "One-page summary available"} style={{ display: "inline-flex" }}>
+              <Icon size={16}><rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8.5" cy="8.5" r="1.5" /><path d="M21 15l-5-5L5 21" /></Icon>
+              <span className="rc-sr">{id ? "Ada ringkasan satu halaman" : "One-page summary available"}</span>
+            </span>
+          )}
+          {hasSlideshow && (
+            <span title={id ? "Ada slideshow" : "Slideshow available"} style={{ display: "inline-flex" }}>
+              <Icon size={16}><rect x="3" y="4" width="18" height="12" rx="2" /><path d="M12 16v4M8 20h8" /></Icon>
+              <span className="rc-sr">{id ? "Ada slideshow" : "Slideshow available"}</span>
+            </span>
+          )}
         </span>
       )}
 
@@ -368,6 +382,16 @@ export default function ResourceCard({
                 </div>
               ) : (<>
                 <div className="rc-tools-left">
+                  {hasOnePager && (
+                    <Link
+                      href={onePagerHref}
+                      className="rc-act"
+                      aria-label={id ? `Buka ringkasan satu halaman ${title}` : `Open the one-page summary of ${title}`}
+                    >
+                      <ImageIcon />
+                      <span className="rc-lbl" aria-hidden="true">{id ? "Gambar" : "Image"}</span>
+                    </Link>
+                  )}
                   {hasSlideshow && (
                     <Link
                       href={presentHref}
