@@ -23,6 +23,8 @@ import { TEAM_UI, type TeamLang } from "@/lib/team-i18n";
 import AdminReplyNotification from "@/components/AdminReplyNotification";
 import RaftPlanTile from "@/components/RaftPlanTile";
 import { resolveCurrency } from "@/lib/pricing-server";
+import { hasPaidAccess } from "@/lib/paid-access";
+import ModuleChatHelper from "@/components/ModuleChatHelper";
 
 export const metadata = {
   title: "Dashboard — Crispy Development",
@@ -71,6 +73,9 @@ export default async function DashboardPage({
       viewedUserName = `${metadata.first_name ?? ""} ${metadata.last_name ?? ""}`.trim() || (targetUser.email ?? "User");
     }
   }
+
+  // "Need help?" module finder: same paid rule as /api/library-search, started early so it runs alongside the other queries
+  const chatHelperPromise = viewingAsAdmin ? Promise.resolve(false) : hasPaidAccess(user.id, user.email).catch(() => false);
 
   // Extract metadata from session user OR target user (if admin)
   const firstName = metadata.first_name ?? (viewingAsAdmin ? viewedUserName : user.email?.split("@")[0]) ?? "there";
@@ -480,9 +485,12 @@ export default async function DashboardPage({
     }
   }
 
+  const showChatHelper = await chatHelperPromise;
+
   return (
     <div style={{ background: "oklch(97% 0.005 80)", minHeight: "calc(100dvh - 80px)" }}>
       <TimezoneDetector savedTimezone={userTimezone} />
+      {showChatHelper && <ModuleChatHelper savedSlugs={savedResources} />}
       <DashboardTour show={tour === "1"} />
       <GaEventTracker gaEvent={ga} pathway={pathway} />
       {pendingReplies.length > 0 && <AdminReplyNotification replies={pendingReplies} />}
