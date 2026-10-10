@@ -1100,7 +1100,12 @@ export default function TimeAndCultureClient({ isSaved: initialSaved, signupBann
   function handleSave() {
     if (saved) return;
     startTransition(async () => {
-      await saveResourceToDashboard("time-and-culture");
+      const res = await saveResourceToDashboard("time-and-culture");
+      if (res?.error === "Not authenticated") {
+        window.location.href = "/signup";
+        return;
+      }
+      if (res?.error) return;
       setSaved(true);
     });
   }

@@ -9,7 +9,7 @@ import { useLanguage } from "@/lib/LanguageContext";
 const initialState = { error: "" };
 
 function LoginFormInner() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const l = t.login;
   const [state, formAction, pending] = useActionState(
     async (_prev: typeof initialState, formData: FormData) => {
@@ -22,12 +22,32 @@ function LoginFormInner() {
   const redirectTo = searchParams.get("redirectTo") || "/dashboard";
   const inviteToken = searchParams.get("invite") || "";
   const memberInviteToken = searchParams.get("member_invite") || "";
+  const urlError = searchParams.get("error");
+  const urlErrorMessage =
+    urlError === "confirmation_failed"
+      ? lang === "id"
+        ? "Email Anda mungkin sudah dikonfirmasi. Silakan masuk dengan email dan kata sandi Anda."
+        : "Your email may already be confirmed. Please log in with your email and password."
+      : null;
 
   return (
     <form action={formAction} style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
       <input type="hidden" name="redirectTo" value={redirectTo} />
       {inviteToken && <input type="hidden" name="inviteToken" value={inviteToken} />}
       {memberInviteToken && <input type="hidden" name="memberInviteToken" value={memberInviteToken} />}
+
+      {urlErrorMessage && !state.error && (
+        <div role="status" style={{
+          background: "oklch(95% 0.02 25)",
+          border: "1px solid oklch(75% 0.08 25)",
+          padding: "0.875rem 1rem",
+          fontFamily: "var(--font-montserrat)",
+          fontSize: "0.875rem",
+          color: "oklch(35% 0.1 25)",
+        }}>
+          {urlErrorMessage}
+        </div>
+      )}
 
       {state.error && (
         <div style={{

@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/lib/LanguageContext";
 import { createClient } from "@/lib/supabase/client";
-import { PRICES, formatPrice, type Currency } from "@/lib/pricing";
+import { PRICES, formatPrice, fillPrices, type Currency } from "@/lib/pricing";
 
 interface Props {
   // Resolved on the server (locked currency > IP country > USD), the same
@@ -115,7 +115,7 @@ function CheckoutButton({
       contact: "",
     },
     id: {
-      personal: "MULAI SEKARANG →",
+      personal: "Mulai sekarang →",
       team: "Bangun tim Anda →",
       loading: "Memuat…",
       unavailable: "Pembayaran sedang disiapkan.",
@@ -336,10 +336,19 @@ export default function PricingContent({ currency }: Props) {
 
   // ── Copy ────────────────────────────────────────────────────────────────
   const copy = {
+    // FREE TIER ──────────────────────────────────────────────────────────
+    freeLine: fillPrices(
+      id
+        ? "Gratis: modul pilihan, dengan dasbor untuk menyimpan kemajuan Anda. Personal: semua 50+ modul dan 8 asesmen, {personal} sekali bayar."
+        : "Free: selected modules, with a dashboard that saves your progress. Personal: all 50+ modules and 8 assessments, {personal} one time.",
+      currency,
+    ),
+    freeLink: id ? "Buat akun gratis" : "Create a free account",
+
     // PERSONAL ───────────────────────────────────────────────────────────
     personalLabel: "Personal",
     personalPrice: fmt(P.personal),
-    personalPriceNote: id ? "Sekali bayar - Akses permanen" : "One-time purchase · Permanent access",
+    personalPriceNote: id ? "Sekali bayar · Akses permanen" : "One-time purchase · Permanent access",
     personalFeatures: id
       ? [
           "50+ modul pelatihan dengan dasbor kemajuan",
@@ -362,7 +371,7 @@ export default function PricingContent({ currency }: Props) {
     teamSizeValue: (n: number) => (id ? `${n} orang` : `${n} people`),
     teamTotal: (n: number) => `Total ${fmt(n)}`,
     teamMore: id ? "Lebih dari 10 orang? Hubungi kami" : "More than 10 people? Contact us",
-    teamPriceNote: id ? "Sekali bayar - Akses permanen" : "One-time purchase · Permanent access",
+    teamPriceNote: id ? "Sekali bayar · Akses permanen" : "One-time purchase · Permanent access",
     teamFeatures: id
       ? [
           "Akun Personal lengkap untuk setiap anggota tim",
@@ -471,6 +480,23 @@ export default function PricingContent({ currency }: Props) {
         }}
       >
         <div className="container-wide">
+
+          <p
+            style={{
+              fontFamily: "var(--font-montserrat)",
+              fontSize: "0.95rem",
+              lineHeight: 1.6,
+              color: "oklch(32% 0.05 260)",
+              textAlign: "center",
+              margin: "0 auto clamp(1.5rem, 3vw, 2rem)",
+              maxWidth: "60ch",
+            }}
+          >
+            {copy.freeLine}{" "}
+            <Link href="/signup" style={{ color: "oklch(22% 0.10 260)", fontWeight: 700, textDecoration: "underline" }}>
+              {copy.freeLink}
+            </Link>
+          </p>
 
           {/* Card grid */}
           <div

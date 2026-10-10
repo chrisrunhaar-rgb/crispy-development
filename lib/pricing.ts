@@ -4,10 +4,10 @@
 // Client-safe: no server imports here. Server-side resolution lives in
 // lib/pricing-server.ts.
 
-export type Currency = "usd" | "eur" | "sgd" | "idr" | "myr" | "thb" | "inr";
+export type Currency = "usd" | "eur" | "sgd" | "idr" | "myr" | "thb" | "inr" | "php";
 export type MinutePackId = "1hr" | "3hr" | "5hr";
 
-export const CURRENCIES: Currency[] = ["usd", "eur", "sgd", "idr", "myr", "thb", "inr"];
+export const CURRENCIES: Currency[] = ["usd", "eur", "sgd", "idr", "myr", "thb", "inr", "php"];
 
 type PriceRow = {
   personal: number;
@@ -24,6 +24,7 @@ export const PRICES: Record<Currency, PriceRow> = {
   myr: { personal: 50, seat: 65, minutes: { "1hr": 35, "3hr": 95, "5hr": 120 } },
   thb: { personal: 400, seat: 500, minutes: { "1hr": 250, "3hr": 675, "5hr": 875 } },
   inr: { personal: 800, seat: 1000, minutes: { "1hr": 500, "3hr": 1350, "5hr": 1750 } },
+  php: { personal: 499, seat: 649, minutes: { "1hr": 349, "3hr": 949, "5hr": 1199 } },
 };
 
 // EU member states pay in euros, including the non-euro ones.
@@ -33,7 +34,7 @@ const EU = new Set([
 ]);
 
 const COUNTRY_CURRENCY: Record<string, Currency> = {
-  SG: "sgd", ID: "idr", MY: "myr", TH: "thb", IN: "inr",
+  SG: "sgd", ID: "idr", MY: "myr", TH: "thb", IN: "inr", PH: "php",
 };
 
 /** Currency for a visitor's IP country. Anything not listed pays in USD. */
@@ -47,7 +48,7 @@ export function isCurrency(v: unknown): v is Currency {
   return typeof v === "string" && (CURRENCIES as string[]).includes(v);
 }
 
-/** Stripe amount in the smallest unit. All seven are two-decimal in Stripe, IDR included. */
+/** Stripe amount in the smallest unit. All eight are two-decimal in Stripe, IDR included. */
 export function toStripeAmount(amount: number): number {
   return Math.round(amount * 100);
 }
@@ -56,7 +57,7 @@ function group(n: number, sep: string): string {
   return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, sep);
 }
 
-/** "$15", "€14", "S$20", "Rp 200.000", "RM50", "฿400", "₹1,000". */
+/** "$15", "€14", "S$20", "Rp 200.000", "RM50", "฿400", "₹1,000", "₱499". */
 export function formatPrice(currency: Currency, amount: number): string {
   switch (currency) {
     case "usd": return `$${group(amount, ",")}`;
@@ -66,6 +67,7 @@ export function formatPrice(currency: Currency, amount: number): string {
     case "myr": return `RM${group(amount, ",")}`;
     case "thb": return `฿${group(amount, ",")}`;
     case "inr": return `₹${group(amount, ",")}`;
+    case "php": return `₱${group(amount, ",")}`;
   }
 }
 

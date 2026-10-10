@@ -146,7 +146,12 @@ export default function JohariWindowClient({ userPathway, isSaved: initialSaved,
   function handleSave() {
     if (saved) return;
     startTransition(async () => {
-      await saveResourceToDashboard("johari-window");
+      const res = await saveResourceToDashboard("johari-window");
+      if (res?.error === "Not authenticated") {
+        window.location.href = "/signup";
+        return;
+      }
+      if (res?.error) return;
       setSaved(true);
     });
   }

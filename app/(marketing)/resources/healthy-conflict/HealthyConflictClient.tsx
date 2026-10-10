@@ -677,7 +677,12 @@ export default function HealthyConflictClient({ isSaved: initialSaved, signupBan
   function handleSave() {
     if (saved || isPending) return;
     startTransition(async () => {
-      await saveResourceToDashboard("healthy-conflict");
+      const res = await saveResourceToDashboard("healthy-conflict");
+      if (res?.error === "Not authenticated") {
+        window.location.href = "/signup";
+        return;
+      }
+      if (res?.error) return;
       setSaved(true);
       trackResourceSaved("healthy-conflict", true);
     });

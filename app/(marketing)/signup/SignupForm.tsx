@@ -183,12 +183,12 @@ export default function SignupForm({ defaultPathway = "personal", inviteToken = 
               </div>
 
               {/* ToS acceptance — required, affirmative consent */}
-              <label style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem", cursor: "pointer" }}>
+              <label style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem", cursor: "pointer", minHeight: 44, paddingBlock: "0.25rem" }}>
                 <input
                   type="checkbox"
                   name="tosAccepted"
                   required
-                  style={{ marginTop: "0.2rem", flexShrink: 0, accentColor: "oklch(30% 0.12 260)", width: "16px", height: "16px" }}
+                  style={{ marginTop: "0.05rem", flexShrink: 0, accentColor: "oklch(30% 0.12 260)", width: "24px", height: "24px" }}
                 />
                 <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(48% 0.008 260)", lineHeight: 1.5 }}>
                   {s.tosAccepted}{" "}
@@ -199,12 +199,12 @@ export default function SignupForm({ defaultPathway = "personal", inviteToken = 
               </label>
 
               {/* Marketing consent — optional opt-in */}
-              <label style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem", cursor: "pointer" }}>
+              <label style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem", cursor: "pointer", minHeight: 44, paddingBlock: "0.25rem" }}>
                 <input
                   type="checkbox"
                   name="marketingConsent"
                   value="true"
-                  style={{ marginTop: "0.2rem", flexShrink: 0, accentColor: "oklch(30% 0.12 260)", width: "16px", height: "16px" }}
+                  style={{ marginTop: "0.05rem", flexShrink: 0, accentColor: "oklch(30% 0.12 260)", width: "24px", height: "24px" }}
                 />
                 <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(48% 0.008 260)", lineHeight: 1.5 }}>
                   {s.marketingConsent}

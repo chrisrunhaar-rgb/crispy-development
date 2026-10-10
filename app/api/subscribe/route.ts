@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
-  const { email, lang } = await req.json();
+  const { email, lang, source } = await req.json();
+  // Optional origin tag, e.g. "module-vision-casting". Letters, digits and dashes only.
+  const sourceTag = typeof source === "string" && /^[a-z0-9-]{1,40}$/.test(source) ? source : null;
 
   if (!email || !email.includes("@")) {
     return NextResponse.json({ error: "Invalid email" }, { status: 400 });
@@ -28,7 +30,7 @@ export async function POST(req: NextRequest) {
       body: JSON.stringify({
         email_address: email,
         status: "subscribed",
-        tags: ["leadership-bytes", lang === "id" ? "lang-id" : "lang-en"],
+        tags: ["leadership-bytes", lang === "id" ? "lang-id" : "lang-en", ...(sourceTag ? [sourceTag] : [])],
       }),
     }
   );

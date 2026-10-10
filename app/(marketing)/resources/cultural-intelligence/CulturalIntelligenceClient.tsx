@@ -164,7 +164,12 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
   function handleSave() {
     if (saved) return;
     startTransition(async () => {
-      await saveResourceToDashboard("cultural-intelligence");
+      const res = await saveResourceToDashboard("cultural-intelligence");
+      if (res?.error === "Not authenticated") {
+        window.location.href = "/signup";
+        return;
+      }
+      if (res?.error) return;
       setSaved(true);
     });
   }

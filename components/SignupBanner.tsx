@@ -17,26 +17,38 @@ const montserrat = "var(--font-montserrat, Montserrat, sans-serif)";
 const COPY = {
   en: {
     eyebrow: "Free account",
-    headline: "This is one module. There is a whole library behind it.",
-    support: "Create a Crispy Leaders account to keep your progress in one place and keep learning.",
+    mid: {
+      headline: "This is one of 50+ short modules for cross-cultural leaders.",
+      support: "A free account keeps what you read in one place. A paid account opens the whole library.",
+      button: "Create your free account",
+    },
+    end: {
+      headline: "Save this module and open the next one, free.",
+      support: "Create a free account in under a minute. Here is what you get.",
+      button: "Create a free account and continue",
+    },
     benefits: [
-      "A personal dashboard that saves your modules, notes and progress",
-      "Many more modules on Christian cross-cultural leadership",
-      "Free to sign up",
+      "Free: save modules and your progress on a personal dashboard, and open the free modules any time",
+      "Paid: all 50+ modules and 8 assessments, for one payment and yours for good",
     ],
-    button: "Create your free account",
     alt: "Preview of the personal dashboard",
   },
   id: {
     eyebrow: "Akun gratis",
-    headline: "Ini baru satu modul. Masih banyak lagi yang menanti.",
-    support: "Buat akun Crispy Leaders agar semua kemajuan Anda tersimpan di satu tempat dan Anda bisa terus belajar.",
+    mid: {
+      headline: "Ini satu dari 50+ modul singkat untuk pemimpin lintas budaya.",
+      support: "Akun gratis menyimpan semua yang Anda baca di satu tempat. Akun berbayar membuka seluruh pustaka.",
+      button: "Buat akun gratis",
+    },
+    end: {
+      headline: "Simpan modul ini dan buka modul berikutnya, gratis.",
+      support: "Buat akun gratis dalam kurang dari satu menit. Ini yang Anda dapatkan.",
+      button: "Buat akun gratis dan lanjutkan",
+    },
     benefits: [
-      "Dasbor pribadi yang menyimpan modul, catatan, dan kemajuan Anda",
-      "Banyak modul lain tentang kepemimpinan Kristen lintas budaya",
-      "Gratis untuk mendaftar",
+      "Gratis: simpan modul dan kemajuan Anda di dasbor pribadi, dan buka modul gratis kapan saja",
+      "Berbayar: semua 50+ modul dan 8 asesmen, sekali bayar dan menjadi milik Anda selamanya",
     ],
-    button: "Buat akun gratis",
     alt: "Pratinjau dasbor pribadi",
   },
 };
@@ -82,9 +94,10 @@ function Check() {
   );
 }
 
-export default function SignupBanner({ redirectTo }: { redirectTo: string }) {
+export default function SignupBanner({ redirectTo, variant = "mid" }: { redirectTo: string; variant?: "mid" | "end" }) {
   const { lang } = useLanguage();
-  const c = COPY[lang === "id" ? "id" : "en"];
+  const all = COPY[lang === "id" ? "id" : "en"];
+  const c = { ...all, ...all[variant] };
 
   return (
     <aside

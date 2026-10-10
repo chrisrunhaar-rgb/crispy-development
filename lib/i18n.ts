@@ -188,7 +188,7 @@ export const translations = {
     },
     signup: {
       label: "Create account",
-      h1: "Start your pathway.",
+      h1: "Create your free account",
       hasAccount: "Already have an account?",
       loginLink: "Log in →",
       teamSummary: "Team of {n} people",
@@ -549,7 +549,7 @@ export const translations = {
     },
     signup: {
       label: "Buat akun",
-      h1: "Mulai jalur Anda.",
+      h1: "Buat akun gratis Anda",
       hasAccount: "Sudah punya akun?",
       loginLink: "Masuk →",
       teamSummary: "Tim {n} orang",

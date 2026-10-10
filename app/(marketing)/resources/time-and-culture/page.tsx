@@ -93,6 +93,7 @@ export default async function ResourcePage(props: any) {
       </div>
 
       <TimeAndCultureClient {...props} isSaved={isSaved} signupBanner={<FreeModuleSignupBanner slug="time-and-culture" isLoggedIn={!!user} />} />
+      <FreeModuleSignupBanner slug="time-and-culture" isLoggedIn={!!user} variant="end" />
       <div className="border-t border-gray-100 py-10">
         <div className="container-wide">
           <ModuleComments slug="time-and-culture" />
