@@ -7,6 +7,7 @@ import { saveResourceToDashboard } from "../actions";
 import LangToggle from "@/components/LangToggle";
 import SourcesDropdown from "@/components/SourcesDropdown";
 import PresentLauncher from "@/components/PresentLauncher";
+import OnePagerLauncher from "@/components/OnePagerLauncher";
 
 // -- TYPES ----------------------------------------------------------------------
 
@@ -268,9 +269,10 @@ export default function SixThinkingHatsClient({ userPathway, isSaved: initialSav
 
   return (
     <div style={{ fontFamily: "Montserrat, sans-serif", background: "oklch(97% 0.005 80)", minHeight: "100vh" }}>
-      <LangToggle extra={
+      <LangToggle extra={<>
+        <OnePagerLauncher href="/resources/six-thinking-hats/one-pager" lang={lang} title={{ en: "The six hats on one page", id: "Enam topi dalam satu halaman" }} text={{ en: "Save, print or download a one-page summary to use in your next meeting.", id: "Simpan, cetak, atau unduh ringkasan satu halaman untuk dipakai di rapat Anda berikutnya." }} />
         <PresentLauncher href="/resources/six-thinking-hats/present" lang={lang} title={{ en: "Teaching this to someone else?", id: "Mengajarkan ini kepada orang lain?" }} text={{ en: "Use the guided slideshow to walk your team through the Six Thinking Hats, one hat at a time.", id: "Gunakan slideshow terpandu untuk membawa tim Anda memahami Enam Topi Berpikir, satu topi demi satu topi." }} />
-      } />
+      </>} />
 
       {/* HERO */}
       <section style={{ background: "oklch(22% 0.10 260)", color: "white", padding: "96px 24px 80px", position: "relative", overflow: "hidden" }}>

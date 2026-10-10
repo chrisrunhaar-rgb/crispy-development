@@ -3,4 +3,5 @@
 // Used by the module launcher, the library tiles and the dashboard ResourceCard.
 export const ONE_PAGER_SLUGS: ReadonlySet<string> = new Set([
   "healthy-conflict",
+  "six-thinking-hats",
 ]);
