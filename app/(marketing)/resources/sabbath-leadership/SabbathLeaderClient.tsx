@@ -330,7 +330,9 @@ export default function SabbathLeaderClient({
   function handleSave() {
     if (saved) return;
     startTransition(async () => {
-      await saveResourceToDashboard("sabbath-leadership");
+      const res = await saveResourceToDashboard("sabbath-leadership");
+      if (res?.error === "Not authenticated") { window.location.href = "/signup"; return; }
+      if (res?.error) return;
       setSaved(true);
     });
   }

@@ -111,7 +111,9 @@ export default function EmotionalIntelligenceClient({ userPathway, isSaved: init
   function handleSave() {
     if (saved) return;
     startTransition(async () => {
-      await saveResourceToDashboard("emotional-intelligence");
+      const res = await saveResourceToDashboard("emotional-intelligence");
+      if (res?.error === "Not authenticated") { window.location.href = "/signup"; return; }
+      if (res?.error) return;
       setSaved(true);
     });
   }

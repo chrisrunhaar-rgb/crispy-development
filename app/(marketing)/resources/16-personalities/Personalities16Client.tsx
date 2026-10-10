@@ -763,7 +763,9 @@ export default function Personalities16Client({
     startTransition(async () => {
       const { type } = computeType(scores);
       if (!isSaved) {
-        await saveResourceToDashboard("16-personalities");
+        const res = await saveResourceToDashboard("16-personalities");
+        if (res?.error === "Not authenticated") { window.location.href = "/signup"; return; }
+        if (res?.error) return;
         setIsSaved(true);
       }
       const result = await save16PersonalitiesResult(type, scores);

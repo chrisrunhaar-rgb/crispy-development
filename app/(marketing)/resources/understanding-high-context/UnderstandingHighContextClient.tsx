@@ -838,7 +838,9 @@ export default function UnderstandingHighContextClient({ isSaved: initialSaved }
   const handleSave = () => {
     if (saved || isPending) return;
     startTransition(async () => {
-      await saveResourceToDashboard("understanding-high-context");
+      const res = await saveResourceToDashboard("understanding-high-context");
+      if (res?.error === "Not authenticated") { window.location.href = "/signup"; return; }
+      if (res?.error) return;
       setSaved(true);
     });
   };

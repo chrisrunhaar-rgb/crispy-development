@@ -9,6 +9,7 @@ import RelatedResources from "@/components/RelatedResources";
 import ModuleComments from "@/components/ModuleComments";
 import BigFiveClient from "./BigFiveClient";
 import ModuleConnector from "@/components/ModuleConnector";
+import FreeModuleSignupBanner from "@/components/FreeModuleSignupBanner";
 
 export const dynamic = "force-dynamic";
 
@@ -97,6 +98,8 @@ export default async function ResourcePage(props: any) {
       </div>
 
       <BigFiveClient {...props} isSaved={isSaved} startInQuiz={props.searchParams?.retake === "1"} />
+
+      <FreeModuleSignupBanner slug="big-five" isLoggedIn={!!user} variant="end" />
       <ModuleConnector currentSlug={RESOURCE_SLUG} savedResources={savedResources} isLoggedIn={!!user} />
       <div className="border-t border-gray-100 py-10">
         <div className="container-wide">

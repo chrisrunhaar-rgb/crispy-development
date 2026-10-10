@@ -197,7 +197,9 @@ export default function DebriefingReflectionClient({ userPathway, isSaved: initi
   function handleSave() {
     if (saved) return;
     startTransition(async () => {
-      await saveResourceToDashboard("debriefing-reflection");
+      const res = await saveResourceToDashboard("debriefing-reflection");
+      if (res?.error === "Not authenticated") { window.location.href = "/signup"; return; }
+      if (res?.error) return;
       setSaved(true);
     });
   }

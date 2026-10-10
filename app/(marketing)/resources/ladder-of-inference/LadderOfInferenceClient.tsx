@@ -279,7 +279,9 @@ export default function LadderOfInferenceClient({
 
   function handleSave() {
     startTransition(async () => {
-      await saveResourceToDashboard("ladder-of-inference");
+      const res = await saveResourceToDashboard("ladder-of-inference");
+      if (res?.error === "Not authenticated") { window.location.href = "/signup"; return; }
+      if (res?.error) return;
       setSaved(true);
     });
   }

@@ -282,6 +282,7 @@ export default function ThinkingStylesClient({
   function handleSave() {
     startTransition(async () => {
       const result = await saveResourceToDashboard("three-thinking-styles");
+      if (result.error === "Not authenticated") { window.location.href = "/signup"; return; }
       if (!result.error) setSaved(true);
     });
   }

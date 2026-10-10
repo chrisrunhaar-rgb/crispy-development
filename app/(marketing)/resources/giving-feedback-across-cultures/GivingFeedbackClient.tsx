@@ -2071,7 +2071,9 @@ export default function GivingFeedbackClient({ isSaved, ...rest }: Props) {
 
   function handleSave() {
     startTransition(async () => {
-      await saveResourceToDashboard("giving-feedback-across-cultures");
+      const res = await saveResourceToDashboard("giving-feedback-across-cultures");
+      if (res?.error === "Not authenticated") { window.location.href = "/signup"; return; }
+      if (res?.error) return;
       setSaved(true);
     });
   }

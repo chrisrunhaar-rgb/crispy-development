@@ -263,7 +263,7 @@ export default function SixThinkingHatsClient({ userPathway, isSaved: initialSav
 
   function handleSave() {
     if (saved) return;
-    startTransition(async () => { await saveResourceToDashboard("six-thinking-hats"); setSaved(true); });
+    startTransition(async () => { const res = await saveResourceToDashboard("six-thinking-hats"); if (res?.error === "Not authenticated") { window.location.href = "/signup"; return; } if (res?.error) return; setSaved(true); });
   }
 
   return (

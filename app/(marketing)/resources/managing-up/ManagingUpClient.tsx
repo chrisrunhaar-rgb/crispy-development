@@ -244,7 +244,9 @@ export default function ManagingUpClient({ userPathway, isSaved: initialSaved }:
   function handleSave() {
     if (saved) return;
     startTransition(async () => {
-      await saveResourceToDashboard("managing-up");
+      const res = await saveResourceToDashboard("managing-up");
+      if (res?.error === "Not authenticated") { window.location.href = "/signup"; return; }
+      if (res?.error) return;
       setSaved(true);
     });
   }

@@ -663,7 +663,9 @@ export default function BigFiveClient({
   function handleSave() {
     startTransition(async () => {
       if (!isSaved) {
-        await saveResourceToDashboard("big-five");
+        const res = await saveResourceToDashboard("big-five");
+        if (res?.error === "Not authenticated") { window.location.href = "/signup"; return; }
+        if (res?.error) return;
         setIsSaved(true);
       }
       const result = await saveBigFiveResult(scores);

@@ -9,6 +9,7 @@ import RelatedResources from "@/components/RelatedResources";
 import ModuleComments from "@/components/ModuleComments";
 import InterculturalCommunicationClient from "./InterculturalCommunicationClient";
 import ModuleConnector from "@/components/ModuleConnector";
+import FreeModuleSignupBanner from "@/components/FreeModuleSignupBanner";
 
 export const dynamic = "force-dynamic";
 
@@ -63,6 +64,8 @@ export default async function ResourcePage(props: any) {
       </div>
 
       <InterculturalCommunicationClient {...props} isSaved={isSaved} />
+
+      <FreeModuleSignupBanner slug="intercultural-communication" isLoggedIn={!!user} variant="end" />
       <ModuleConnector currentSlug={RESOURCE_SLUG} savedResources={savedResources} isLoggedIn={!!user} />
       <div className="border-t border-gray-100 py-10">
         <div className="container-wide">

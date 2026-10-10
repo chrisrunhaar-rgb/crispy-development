@@ -147,7 +147,9 @@ export default function TeamHealthClient({ userPathway, isSaved: initialSaved }:
       <div style={{ background: navy, padding: "12px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12 }}>
         <button onClick={() => {
           startTransition(async () => {
-            await saveResourceToDashboard("team-health");
+            const res = await saveResourceToDashboard("team-health");
+            if (res?.error === "Not authenticated") { window.location.href = "/signup"; return; }
+            if (res?.error) return;
             setSaved(true);
           });
         }} disabled={saved || isPending} style={{

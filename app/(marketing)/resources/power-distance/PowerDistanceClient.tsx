@@ -274,7 +274,9 @@ export default function PowerDistanceClient({ userPathway, isSaved: initialSaved
   function handleSave() {
     if (saved) return;
     startTransition(async () => {
-      await saveResourceToDashboard("power-distance");
+      const res = await saveResourceToDashboard("power-distance");
+      if (res?.error === "Not authenticated") { window.location.href = "/signup"; return; }
+      if (res?.error) return;
       setSaved(true);
     });
   }

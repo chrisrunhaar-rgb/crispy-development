@@ -815,7 +815,9 @@ export default function ServantLeadershipClient({ isSaved = false }: Props) {
 
   function handleSave() {
     startTransition(async () => {
-      await saveResourceToDashboard("servant-leadership");
+      const res = await saveResourceToDashboard("servant-leadership");
+      if (res?.error === "Not authenticated") { window.location.href = "/signup"; return; }
+      if (res?.error) return;
       setSaved(true);
     });
   }

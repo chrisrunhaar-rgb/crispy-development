@@ -248,7 +248,9 @@ export default function LeadershipAltitudesClient({ userPathway, isSaved: initia
   function handleSave() {
     if (saved) return;
     startTransition(async () => {
-      await saveResourceToDashboard("leadership-altitudes");
+      const res = await saveResourceToDashboard("leadership-altitudes");
+      if (res?.error === "Not authenticated") { window.location.href = "/signup"; return; }
+      if (res?.error) return;
       setSaved(true);
     });
   }

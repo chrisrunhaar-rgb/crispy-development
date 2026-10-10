@@ -242,7 +242,9 @@ export default function DecisionMakingClient({ userPathway, isSaved: initialSave
       <div style={{ background: navy, padding: "12px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12 }}>
         <button onClick={() => {
           startTransition(async () => {
-            await saveResourceToDashboard("decision-making");
+            const res = await saveResourceToDashboard("decision-making");
+            if (res?.error === "Not authenticated") { window.location.href = "/signup"; return; }
+            if (res?.error) return;
             setSaved(true);
           });
         }} disabled={saved || isPending} style={{

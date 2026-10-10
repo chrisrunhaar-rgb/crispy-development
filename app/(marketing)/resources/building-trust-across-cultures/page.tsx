@@ -8,6 +8,7 @@ import Breadcrumb from "@/components/Breadcrumb";
 import RelatedResources from "@/components/RelatedResources";
 import ModuleComments from "@/components/ModuleComments";
 import BuildingTrustClient from "./BuildingTrustClient";
+import FreeModuleSignupBanner from "@/components/FreeModuleSignupBanner";
 
 export const dynamic = "force-dynamic";
 
@@ -62,6 +63,8 @@ export default async function ResourcePage(props: any) {
       </div>
 
       <BuildingTrustClient {...props} isSaved={isSaved} />
+
+      <FreeModuleSignupBanner slug="building-trust-across-cultures" isLoggedIn={!!user} variant="end" />
       <div className="border-t border-gray-100 py-10">
         <div className="container-wide">
           <ModuleComments slug="building-trust-across-cultures" />

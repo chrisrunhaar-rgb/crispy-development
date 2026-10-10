@@ -8,6 +8,7 @@ import Breadcrumb from "@/components/Breadcrumb";
 import RelatedResources from "@/components/RelatedResources";
 import ModuleComments from "@/components/ModuleComments";
 import ServantLeadershipClient from "./ServantLeadershipClient";
+import FreeModuleSignupBanner from "@/components/FreeModuleSignupBanner";
 
 export const dynamic = "force-dynamic";
 
@@ -62,6 +63,8 @@ export default async function ResourcePage(props: any) {
       </div>
 
       <ServantLeadershipClient isSaved={isSaved} userId={user?.id ?? null} />
+
+      <FreeModuleSignupBanner slug="servant-leadership" isLoggedIn={!!user} variant="end" />
       <div className="border-t border-gray-100 py-10">
         <div className="container-wide">
           <ModuleComments slug="servant-leadership" />

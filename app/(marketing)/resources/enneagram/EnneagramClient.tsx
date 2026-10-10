@@ -840,6 +840,7 @@ export default function EnneagramClient({
   function handleSave() {
     startTransition(async () => {
       const r = await saveResourceToDashboard("enneagram");
+      if (r.error === "Not authenticated") { window.location.href = "/signup"; return; }
       if (!r.error) setIsSaved(true);
     });
   }

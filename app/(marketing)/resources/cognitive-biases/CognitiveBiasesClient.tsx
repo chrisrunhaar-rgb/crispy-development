@@ -654,7 +654,9 @@ export default function CognitiveBiasesClient({ userPathway, isSaved: initialSav
   function handleSave() {
     if (saved) return;
     startTransition(async () => {
-      await saveResourceToDashboard("cognitive-biases");
+      const res = await saveResourceToDashboard("cognitive-biases");
+      if (res?.error === "Not authenticated") { window.location.href = "/signup"; return; }
+      if (res?.error) return;
       setSaved(true);
     });
   }

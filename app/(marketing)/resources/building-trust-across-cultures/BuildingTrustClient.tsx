@@ -736,7 +736,9 @@ export default function BuildingTrustClient({ isSaved: initialSaved }: Props) {
   const handleSave = () => {
     if (saved || isPending) return;
     startTransition(async () => {
-      await saveResourceToDashboard("building-trust-across-cultures");
+      const res = await saveResourceToDashboard("building-trust-across-cultures");
+      if (res?.error === "Not authenticated") { window.location.href = "/signup"; return; }
+      if (res?.error) return;
       setSaved(true);
     });
   };

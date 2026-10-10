@@ -7,6 +7,7 @@ import Breadcrumb from "@/components/Breadcrumb";
 import RelatedResources from "@/components/RelatedResources";
 import ModuleComments from "@/components/ModuleComments";
 import UnderstandingHighContextClient from "./UnderstandingHighContextClient";
+import FreeModuleSignupBanner from "@/components/FreeModuleSignupBanner";
 
 export const dynamic = "force-dynamic";
 
@@ -101,6 +102,8 @@ export default async function ResourcePage(props: any) {
       </div>
 
       <UnderstandingHighContextClient {...props} isSaved={isSaved} />
+
+      <FreeModuleSignupBanner slug="understanding-high-context" isLoggedIn={!!user} variant="end" />
       <div className="border-t border-gray-100 py-10">
         <div className="container-wide">
           <ModuleComments slug="understanding-high-context" />

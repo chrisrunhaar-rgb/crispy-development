@@ -229,7 +229,9 @@ export default function WheelOfLifeClient({
 
   function handleSave() {
     startTransition(async () => {
-      await saveResourceToDashboard("wheel-of-life");
+      const res = await saveResourceToDashboard("wheel-of-life");
+      if (res?.error === "Not authenticated") { window.location.href = "/signup"; return; }
+      if (res?.error) return;
       setSaved(true);
     });
   }

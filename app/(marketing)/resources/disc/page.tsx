@@ -9,6 +9,7 @@ import RelatedResources from "@/components/RelatedResources";
 import ModuleComments from "@/components/ModuleComments";
 import DiscClient from "./DiscClient";
 import ModuleConnector from "@/components/ModuleConnector";
+import FreeModuleSignupBanner from "@/components/FreeModuleSignupBanner";
 
 export const dynamic = "force-dynamic";
 
@@ -100,6 +101,7 @@ export default async function ResourcePage(props: any) {
 
       {/* Assessment Content */}
       <DiscClient discResult={discResult} discScores={discScores} />
+      <FreeModuleSignupBanner slug="disc" isLoggedIn={!!user} variant="end" />
       <ModuleConnector currentSlug={RESOURCE_SLUG} savedResources={savedResources} isLoggedIn={!!user} />
 
       {/* Related Resources */}

@@ -99,7 +99,9 @@ export default function StorytellingLeadershipClient({ userPathway, isSaved: ini
   function handleSave() {
     if (saved) return;
     startTransition(async () => {
-      await saveResourceToDashboard("storytelling-leadership");
+      const res = await saveResourceToDashboard("storytelling-leadership");
+      if (res?.error === "Not authenticated") { window.location.href = "/signup"; return; }
+      if (res?.error) return;
       setSaved(true);
     });
   }
