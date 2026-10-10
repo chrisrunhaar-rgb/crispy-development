@@ -352,14 +352,14 @@ export default function IdentityUnderPressureClient({ userPathway, isSaved: init
               disabled={saved || isPending}
               aria-pressed={saved}
               aria-label={saved
-                ? t("Saved to your dashboard", "Tersimpan di dasbor Anda", lang)
-                : t("Save this module to your dashboard", "Simpan modul ini ke dasbor Anda", lang)}
+                ? t("Saved to My Pathway", "Tersimpan di Jalur Saya", lang)
+                : t("Save this module to My Pathway", "Simpan modul ini ke Jalur Saya", lang)}
               style={{ display: "inline-flex", alignItems: "center", gap: 10, minHeight: 44, padding: "10px 24px", border: "none", borderRadius: 4, background: saved ? "oklch(35% 0.05 260)" : orange, color: offWhite, fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 700, cursor: saved ? "default" : "pointer" }}
             >
               <svg viewBox="0 0 24 24" width={18} height={18} aria-hidden="true">
                 <path d="M6 3h12v18l-6-4.5L6 21z" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
               </svg>
-              <span>{saved ? t("Saved to Dashboard", "Tersimpan di Dasbor", lang) : isPending ? t("Saving...", "Menyimpan...", lang) : t("Save to Dashboard", "Simpan ke Dasbor", lang)}</span>
+              <span>{saved ? t("Saved to My Pathway", "Tersimpan di Jalur Saya", lang) : isPending ? t("Saving...", "Menyimpan...", lang) : t("Save to My Pathway", "Simpan ke Jalur Saya", lang)}</span>
             </button>
           </div>
         </div>

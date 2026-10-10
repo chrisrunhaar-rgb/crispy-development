@@ -33,7 +33,7 @@ export default function CoachPrivacyPage() {
           </Section>
 
           <Section label="Your session notes belong to you.">
-            <Body>After each session, WayPoint generates notes from your conversation: themes explored, insights, actions you named, values surfaced. These notes live in your private dashboard and are visible only to you.</Body>
+            <Body>After each session, WayPoint generates notes from your conversation: themes explored, insights, actions you named, values surfaced. These notes are saved to your Home page and are visible only to you.</Body>
           </Section>
 
           <Section label="Your voice is processed by Google.">

@@ -159,7 +159,7 @@ export default function TeamHealthClient({ userPathway, isSaved: initialSaved }:
           fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700,
           cursor: saved ? "default" : "pointer",
         }}>
-          {saved ? t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
+          {saved ? t("Saved to My Pathway", "Tersimpan di Jalur Saya", "Saved to My Pathway") : t("Save to My Pathway", "Simpan ke Jalur Saya", "Save to My Pathway")}
         </button>
       </div>
 

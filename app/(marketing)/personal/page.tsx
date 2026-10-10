@@ -5,7 +5,7 @@ import PersonalContent from "./PersonalContent";
 
 export const metadata = {
   title: "Personal Pathway | Crispy Development",
-  description: "Eight assessments, 50+ short modules on cross-cultural leadership, and a personal dashboard that keeps your results, notes and progress together.",
+  description: "Eight assessments, 50+ short modules on cross-cultural leadership, and a My Pathway page that keeps your results, notes and progress together.",
 };
 
 export default async function PersonalPathwayPage() {

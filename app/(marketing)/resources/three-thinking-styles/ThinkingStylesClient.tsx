@@ -364,7 +364,7 @@ export default function ThinkingStylesClient({
                   alignItems: "center",
                   gap: "0.375rem",
                 }}>
-                  ? {tr("In your dashboard", "Di dashboard Anda", "In jouw dashboard")}
+                  ? {tr("In My Pathway", "Di Jalur Saya", "In My Pathway")}
                 </Link>
               ) : (
                 <button
@@ -381,7 +381,7 @@ export default function ThinkingStylesClient({
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
                   {isPending
                     ? tr("Saving—", "Menyimpan—", "Opslaan—")
-                    : tr("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
+                    : tr("Save to My Pathway", "Simpan ke Jalur Saya", "Save to My Pathway")}
                 </button>
               )
             )}
@@ -919,7 +919,7 @@ export default function ThinkingStylesClient({
                     <div style={{ marginBottom: "1.5rem", padding: "1.25rem 1.5rem", background: "oklch(97% 0.005 80 / 0.06)", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "1.25rem", flexWrap: "wrap" }}>
                       <div>
                         <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.85rem", color: "oklch(95% 0.005 80)", marginBottom: "0.2rem" }}>
-                          {tr("Save your result to your dashboard", "Simpan hasilmu ke dashboard", "Sla je resultaat op in je dashboard")}
+                          {tr("Save your result to My Pathway", "Simpan hasil Anda ke Jalur Saya", "Save your result to My Pathway")}
                         </p>
                         <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.775rem", color: "oklch(72% 0.04 260)" }}>
                           {tr("See your thinking style snapshot any time.", "Lihat gaya berpikirmu kapan saja.", "Bekijk je denkstijl altijd terug.")}
@@ -927,7 +927,7 @@ export default function ThinkingStylesClient({
                       </div>
                       {resultSaved ? (
                         <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: "oklch(55% 0.15 145)", whiteSpace: "nowrap" }}>
-                          ? {tr("Saved to dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard")}
+                          ? {tr("Saved to My Pathway", "Tersimpan di Jalur Saya", "Saved to My Pathway")}
                         </span>
                       ) : (
                         <button
@@ -957,7 +957,7 @@ export default function ThinkingStylesClient({
                       </Link>
                     ) : (
                       <Link href="/dashboard" className="btn-primary" style={{ textDecoration: "none" }}>
-                        {tr("Go to Dashboard", "Ke Dashboard", "Naar dashboard")}
+                        {tr("Go to Home", "Buka Home", "Go to Home")}
                       </Link>
                     )}
                   </div>
@@ -1088,7 +1088,7 @@ export default function ThinkingStylesClient({
                 </Link>
               ) : saved ? (
                 <Link href="/dashboard" className="btn-primary">
-                  {tr("Go to Dashboard", "Ke Dashboard", "Naar dashboard")}
+                  {tr("Go to Home", "Buka Home", "Go to Home")}
                 </Link>
               ) : (
                 <button
@@ -1099,7 +1099,7 @@ export default function ThinkingStylesClient({
                 >
                   {isPending
                     ? tr("Saving—", "Menyimpan—", "Opslaan—")
-                    : tr("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
+                    : tr("Save to My Pathway", "Simpan ke Jalur Saya", "Save to My Pathway")}
                 </button>
               )}
               <Link href="/resources" className="btn-outline-navy">

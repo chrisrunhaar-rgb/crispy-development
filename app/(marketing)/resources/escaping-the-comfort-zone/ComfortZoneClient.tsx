@@ -332,19 +332,19 @@ export default function ComfortZoneClient({
             saved ? (
               <Link href="/dashboard" style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.875rem", fontWeight: 700, letterSpacing: "0.06em", color: "oklch(72% 0.14 145)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.375rem" }}>
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><path d="M3 2h10a1 1 0 011 1v11l-6-3-6 3V3a1 1 0 011-1z"/></svg>
-                {t("In your dashboard", "Di dashboard Anda", lang)}
+                {t("In My Pathway", "Di Jalur Saya", lang)}
               </Link>
             ) : (
               <button
                 onClick={handleSave}
                 disabled={isPending}
-                aria-label={t("Save to dashboard", "Simpan ke dasbor", lang)}
+                aria-label={t("Save to My Pathway", "Simpan ke Jalur Saya", lang)}
                 style={{ display: "inline-flex", alignItems: "center", gap: 8, minHeight: 44, padding: "10px 20px", background: "transparent", border: `1.5px solid oklch(55% 0.04 260)`, borderRadius: 8, fontFamily: "Montserrat, sans-serif", fontSize: 14, fontWeight: 600, color: "oklch(70% 0.04 260)", cursor: isPending ? "wait" : "pointer" }}
               >
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
                   <path d="M3 2h10a1 1 0 011 1v11l-6-3-6 3V3a1 1 0 011-1z"/>
                 </svg>
-                {isPending ? t("Saving...", "Menyimpan...", lang) : t("Save to Dashboard", "Simpan ke Dashboard", lang)}
+                {isPending ? t("Saving...", "Menyimpan...", lang) : t("Save to My Pathway", "Simpan ke Jalur Saya", lang)}
               </button>
             )
           )}
@@ -895,12 +895,12 @@ export default function ComfortZoneClient({
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
                     <path d="M3 2h10a1 1 0 011 1v11l-6-3-6 3V3a1 1 0 011-1z"/>
                   </svg>
-                  {isPending ? t("Saving...", "Menyimpan...", lang) : t("Save to Dashboard", "Simpan ke Dashboard", lang)}
+                  {isPending ? t("Saving...", "Menyimpan...", lang) : t("Save to My Pathway", "Simpan ke Jalur Saya", lang)}
                 </button>
               )}
               {showAddToDashboard && saved && (
                 <Link href="/dashboard" style={{ marginTop: "1.5rem", display: "inline-flex", alignItems: "center", gap: 8, minHeight: 44, padding: "10px 20px", background: "transparent", border: `1.5px solid ${ORANGE}`, borderRadius: 8, fontFamily: "Montserrat, sans-serif", fontSize: 14, fontWeight: 600, color: ORANGE, textDecoration: "none", width: "100%", boxSizing: "border-box" as const }}>
-                  {t("Go to Dashboard →", "Ke Dashboard →", lang)}
+                  {t("Go to Home →", "Buka Home →", lang)}
                 </Link>
               )}
             </div>

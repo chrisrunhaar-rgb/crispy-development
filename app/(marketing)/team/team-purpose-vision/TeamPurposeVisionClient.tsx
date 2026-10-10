@@ -831,7 +831,7 @@ export default function TeamPurposeVisionClient({ user, lang = "en" }: { user: U
             </div>
           )}
 
-          {/* Save to dashboard */}
+          {/* Save to My Pathway */}
           {user && finalAnswer.trim() && (
             <div style={{
               background: saved ? "oklch(52% 0.14 145 / 0.08)" : "oklch(95% 0.005 80)",
@@ -882,7 +882,7 @@ export default function TeamPurposeVisionClient({ user, lang = "en" }: { user: U
                   ? (lang === "id" ? "Menyimpan…" : "Saving…")
                   : saved
                   ? (lang === "id" ? "✓ Tersimpan" : "✓ Saved")
-                  : (lang === "id" ? "Simpan ke Dasbor" : "Save to Dashboard")}
+                  : (lang === "id" ? "Simpan ke Jalur Saya" : "Save to My Pathway")}
               </button>
             </div>
           )}

@@ -1092,7 +1092,7 @@ export default function SabbathLeaderClient({
 
           <p style={prose}>
             {t(
-              "The angel came back a second time. \"Get up and eat, for the pathway is too much for you.\" Elijah slept. He ate. He slept again. He ate again. And then he walked forty days and forty nights on the strength of that one meal.",
+              "The angel came back a second time. \"Get up and eat, for the journey is too much for you.\" Elijah slept. He ate. He slept again. He ate again. And then he walked forty days and forty nights on the strength of that one meal.",
               "Malaikat datang kembali untuk kedua kalinya. \"Bangun dan makanlah, karena proses yang ada di depanmu terlalu berat bagimu.\" Elia tidur. Dia makan. Dia tidur lagi. Dia makan lagi. Dan kemudian dia berjalan empat puluh hari empat puluh malam dari kekuatan satu kali makan itu."
             )}
           </p>
@@ -1558,7 +1558,7 @@ export default function SabbathLeaderClient({
               margin: 0,
             }}>
               {t(
-                `"Get up and eat, for the pathway is too much for you."`,
+                `"Get up and eat, for the journey is too much for you."`,
                 `"Bangunlah dan makanlah, sebab perjalananmu masih jauh bagimu."`
               )}
             </p>

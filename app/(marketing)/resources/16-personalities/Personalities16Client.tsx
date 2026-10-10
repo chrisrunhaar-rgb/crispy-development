@@ -1348,11 +1348,11 @@ export default function Personalities16Client({
                   cursor: isPending ? "wait" : "pointer",
                 }}>
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
-                {isPending ? (lang === "id" ? "Menyimpan…" : "Saving…") : (lang === "id" ? "Simpan ke Dasbor" : "Save to Dashboard")}
+                {isPending ? (lang === "id" ? "Menyimpan…" : "Saving…") : (lang === "id" ? "Simpan ke Jalur Saya" : "Save to My Pathway")}
               </button>
             ) : (
               <span style={{ display: "inline-flex", alignItems: "center", gap: 6, color: "oklch(72% 0.14 155)", fontFamily: "'Montserrat', sans-serif", fontSize: 14, fontWeight: 600 }}>
-                {lang === "id" ? "✓ Tersimpan di dasbor" : "✓ Saved to dashboard"}
+                {lang === "id" ? "✓ Tersimpan di Jalur Saya" : "✓ Saved to My Pathway"}
               </span>
             )}
             <button onClick={startQuiz}
@@ -1457,11 +1457,11 @@ export default function Personalities16Client({
                 cursor: isPending ? "wait" : "pointer",
               }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
-              {isPending ? (lang === "id" ? "Menyimpan…" : "Saving…") : (lang === "id" ? "Simpan ke Dasbor" : "Save to Dashboard")}
+              {isPending ? (lang === "id" ? "Menyimpan…" : "Saving…") : (lang === "id" ? "Simpan ke Jalur Saya" : "Save to My Pathway")}
             </button>
           ) : (
             <span style={{ display: "inline-flex", alignItems: "center", gap: 6, color: "oklch(38% 0.14 155)", fontFamily: "'Montserrat', sans-serif", fontSize: 14, fontWeight: 600 }}>
-              {lang === "id" ? "✓ Tersimpan di dasbor Anda" : "✓ Saved to your dashboard"}
+              {lang === "id" ? "✓ Tersimpan di Jalur Saya" : "✓ Saved to My Pathway"}
             </span>
           )}
           <button onClick={startQuiz}

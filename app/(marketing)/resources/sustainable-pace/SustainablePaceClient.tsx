@@ -740,12 +740,12 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
               {saved ? (
                 <>
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
-                  {t("Saved to Dashboard", "Tersimpan di Dashboard")}
+                  {t("Saved to My Pathway", "Tersimpan di Jalur Saya")}
                 </>
               ) : (
                 <>
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
-                  {isPending ? t("Saving...", "Menyimpan...") : t("Save to Dashboard", "Simpan ke Dashboard")}
+                  {isPending ? t("Saving...", "Menyimpan...") : t("Save to My Pathway", "Simpan ke Jalur Saya")}
                 </>
               )}
             </button>
@@ -1710,8 +1710,8 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
               }}
             >
               {saved
-                ? `✓ ${t("Saved to Dashboard", "Tersimpan di Dashboard")}`
-                : t("Save to Dashboard", "Simpan ke Dashboard")}
+                ? `✓ ${t("Saved to My Pathway", "Tersimpan di Jalur Saya")}`
+                : t("Save to My Pathway", "Simpan ke Jalur Saya")}
             </button>
             {userPathway && (
               <Link

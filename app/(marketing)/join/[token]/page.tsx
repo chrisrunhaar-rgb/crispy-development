@@ -46,7 +46,7 @@ const COPY: Record<Lang, {
   en: {
     eyebrow: "You're invited",
     heading: "Welcome to Crispy Leaders.",
-    body: "You have been personally invited to join this platform for Christian cross-cultural leaders. Create your account to access all 53 training modules and your personal dashboard.",
+    body: "You have been personally invited to join this platform for Christian cross-cultural leaders. Create your account to access all 53 training modules and your own My Pathway page.",
     cta: "Create Account & Get Access →",
     login: "Already have an account? Log in →",
     expiry: (days) => `This link expires in ${days} day${days !== 1 ? "s" : ""}.`,
@@ -54,7 +54,7 @@ const COPY: Record<Lang, {
   id: {
     eyebrow: "Anda diundang",
     heading: "Selamat datang di Crispy Leaders.",
-    body: "Anda telah diundang secara pribadi untuk bergabung dengan platform ini bagi para pemimpin lintas budaya Kristen. Buat akun Anda untuk mengakses ke-53 modul pelatihan dan dasbor pribadi Anda.",
+    body: "Anda telah diundang secara pribadi untuk bergabung dengan platform ini bagi para pemimpin lintas budaya Kristen. Buat akun Anda untuk mengakses ke-53 modul pelatihan dan halaman Jalur Saya Anda.",
     cta: "Buat Akun & Dapatkan Akses →",
     login: "Sudah punya akun? Masuk →",
     expiry: (days) => `Link ini berlaku ${days} hari lagi.`,

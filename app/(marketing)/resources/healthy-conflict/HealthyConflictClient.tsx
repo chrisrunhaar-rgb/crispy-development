@@ -737,13 +737,13 @@ export default function HealthyConflictClient({ isSaved: initialSaved, signupBan
             disabled={saved || isPending}
             aria-pressed={saved}
             aria-label={saved
-              ? t("Saved to your dashboard", "Tersimpan di dasbor Anda")
-              : t("Save this module to your dashboard", "Simpan modul ini ke dasbor Anda")}
+              ? t("Saved to My Pathway", "Tersimpan di Jalur Saya")
+              : t("Save this module to My Pathway", "Simpan modul ini ke Jalur Saya")}
           >
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M6 3h12v18l-6-4.5L6 21z" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
             </svg>
-            <span>{saved ? t("Saved to Dashboard", "Tersimpan di Dasbor") : t("Save to Dashboard", "Simpan ke Dasbor")}</span>
+            <span>{saved ? t("Saved to My Pathway", "Tersimpan di Jalur Saya") : t("Save to My Pathway", "Simpan ke Jalur Saya")}</span>
           </button>
         </div>
       </header>

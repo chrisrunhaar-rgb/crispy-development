@@ -1276,7 +1276,7 @@ export default function FiveLanguagesClient({
               >
                 {isSaving
                   ? (lang === "id" ? "Menyimpan..." : "Saving...")
-                  : (lang === "id" ? "Simpan hasil Anda" : "Save to dashboard")
+                  : (lang === "id" ? "Simpan hasil Anda" : "Save to My Pathway")
                 }
               </button>
               {saveError && (
@@ -1287,7 +1287,7 @@ export default function FiveLanguagesClient({
             </div>
           ) : (
             <span style={{ fontSize: "14px", color: "oklch(65% 0.12 150)", fontWeight: 600 }}>
-              {lang === "id" ? "Hasil tersimpan" : "Saved to your dashboard"}
+              {lang === "id" ? "Hasil tersimpan" : "Saved to My Pathway"}
             </span>
           )}
           <button

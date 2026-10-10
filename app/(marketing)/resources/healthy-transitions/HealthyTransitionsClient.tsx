@@ -283,8 +283,8 @@ export default function HealthyTransitionsClient({ userPathway, isSaved: initial
               }}
             >
               {saved
-                ? t("Saved to Dashboard", "Tersimpan di Dashboard")
-                : t("Save to Dashboard", "Simpan ke Dashboard")}
+                ? t("Saved to My Pathway", "Tersimpan di Jalur Saya")
+                : t("Save to My Pathway", "Simpan ke Jalur Saya")}
             </button>
           </div>
         </div>
@@ -769,7 +769,7 @@ export default function HealthyTransitionsClient({ userPathway, isSaved: initial
               {planSaved ? (
                 <div style={{ marginTop: 28, padding: "14px 20px", background: "oklch(93% 0.012 65)", borderRadius: 8, borderLeft: `3px solid ${orange}`, display: "flex", alignItems: "center", gap: 12 }}>
                   <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: "oklch(44% 0.08 50)", margin: 0 }}>
-                    {t("Plan saved to your dashboard.", "Rencana tersimpan di dashboard Anda.")}
+                    {t("Plan saved to My Pathway.", "Rencana tersimpan di Jalur Saya.")}
                   </p>
                 </div>
               ) : planSavePending ? (

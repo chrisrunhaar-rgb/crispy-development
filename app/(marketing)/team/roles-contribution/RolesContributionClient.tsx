@@ -1017,7 +1017,7 @@ export default function RolesContributionClient({ user }: { user: User | null })
                     opacity: isSaving ? 0.7 : 1,
                   }}
                 >
-                  {isSaving ? "Saving…" : "Save to Dashboard →"}
+                  {isSaving ? "Saving…" : "Save to My Pathway →"}
                 </button>
                 {saveError && (
                   <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(58% 0.18 20)", marginTop: "0.75rem" }}>
@@ -1030,7 +1030,7 @@ export default function RolesContributionClient({ user }: { user: User | null })
             {saved && (
               <div style={{ color: "oklch(55% 0.18 145)" }}>
                 <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.875rem" }}>
-                  ✓ Saved to your dashboard
+                  ✓ Saved to My Pathway
                 </span>
               </div>
             )}

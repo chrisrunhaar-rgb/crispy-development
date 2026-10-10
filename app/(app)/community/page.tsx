@@ -90,7 +90,7 @@ export default async function CommunityPage({
             </h1>
           </div>
           <Link href="/dashboard" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", fontWeight: 600, letterSpacing: "0.06em", color: "oklch(88% 0.008 80)", textDecoration: "none" }}>
-            ← Dashboard
+            ← Back to Home
           </Link>
         </div>
       </div>

@@ -254,7 +254,7 @@ export default function DecisionMakingClient({ userPathway, isSaved: initialSave
           fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.06em",
           cursor: saved ? "default" : "pointer",
         }}>
-          {saved ? t("Saved to Dashboard", "Tersimpan di Dashboard") : t("Save to Dashboard", "Simpan ke Dashboard")}
+          {saved ? t("Saved to My Pathway", "Tersimpan di Jalur Saya") : t("Save to My Pathway", "Simpan ke Jalur Saya")}
         </button>
       </div>
 

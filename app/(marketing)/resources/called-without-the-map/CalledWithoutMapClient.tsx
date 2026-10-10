@@ -153,8 +153,8 @@ export default function CalledWithoutMapClient({ isSaved: initialSaved }: Props)
               style={{ padding: "12px 28px", border: "none", cursor: saved ? "default" : "pointer", fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 700, background: saved ? "oklch(35% 0.05 260)" : orange, color: offWhite, letterSpacing: "0.04em", borderRadius: 4 }}
             >
               {saved
-                ? t("Saved to Dashboard", "Tersimpan di Dashboard")
-                : t("Save to Dashboard", "Simpan ke Dashboard")}
+                ? t("Saved to My Pathway", "Tersimpan di Jalur Saya")
+                : t("Save to My Pathway", "Simpan ke Jalur Saya")}
             </button>
           </div>
         </div>

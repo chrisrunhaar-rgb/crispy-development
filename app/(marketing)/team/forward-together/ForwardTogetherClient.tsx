@@ -1147,7 +1147,7 @@ export default function ForwardTogetherClient({ user, lang = "en" }: Props) {
                   letterSpacing: "0.02em",
                 }}
               >
-                Back to Dashboard →
+                Back to Home →
               </Link>
             ) : (
               <Link

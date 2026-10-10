@@ -276,11 +276,11 @@ const UI: Record<string, T3> = {
   personalityAssessment: { en: "Personality Assessment", id: "Penilaian Kepribadian" },
   enneagram:             { en: "Enneagram",              id: "Enneagram" },
   startAssessment:       { en: "Start Assessment →",     id: "Mulai Penilaian →" },
-  saveDashboard:         { en: "Save to Dashboard",      id: "Simpan ke Dashboard" },
-  saved:                 { en: "✓ Saved to Dashboard",                id: "✓ Tersimpan di Dashboard" },
+  saveDashboard:         { en: "Save to My Pathway",      id: "Simpan ke Jalur Saya" },
+  saved:                 { en: "✓ Saved to My Pathway",                id: "✓ Tersimpan di Jalur Saya" },
   saving:                { en: "Saving…",                id: "Menyimpan…" },
   saveMyResult:          { en: "Save My Result →",       id: "Simpan Hasil Saya →" },
-  resultSaved:           { en: "✓ Result saved to your dashboard", id: "✓ Hasil disimpan ke dasbor Anda" },
+  resultSaved:           { en: "✓ Result saved to My Pathway", id: "✓ Hasil disimpan di Jalur Saya" },
   retake:                { en: "Retake",                 id: "Ulangi" },
   yourType:              { en: "Your Type",              id: "Tipe Anda" },
   wing:                  { en: "Wing — ",                id: "Wing — " },
@@ -1051,7 +1051,7 @@ export default function EnneagramClient({
                   {isPending ? t(UI.saving) : t(UI.saveMyResult)}
                 </button>
                 <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "oklch(52% 0.006 260)", lineHeight: 1.5, margin: 0 }}>
-                  {lang === "en" ? "Save your type to your dashboard to compare with your team." : lang === "id" ? "Simpan tipe Anda ke dashboard untuk dibandingkan dengan tim Anda." : "Sla uw type op in uw dashboard om het met uw team te vergelijken."}
+                  {lang === "en" ? "Save your type to My Pathway to compare with your team." : lang === "id" ? "Simpan tipe Anda ke Jalur Saya untuk dibandingkan dengan tim Anda." : "Sla uw type op in uw dashboard om het met uw team te vergelijken."}
                 </p>
               </div>
             ) : (

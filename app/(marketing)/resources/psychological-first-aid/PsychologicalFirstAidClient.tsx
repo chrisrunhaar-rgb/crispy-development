@@ -650,12 +650,12 @@ export default function PsychologicalFirstAidClient({ userPathway, isSaved: init
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
                 {isPending
                   ? t("Saving—", "Menyimpan—", "Opslaan—", lang)
-                  : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard", lang)}
+                  : t("Save to My Pathway", "Simpan ke Jalur Saya", "Save to My Pathway", lang)}
               </button>
             ) : (
               <button disabled style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "oklch(35% 0.08 260)", color: "oklch(75% 0.04 260)", padding: "14px 28px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", cursor: "default" }}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
-                ? {t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard", lang)}
+                ? {t("Saved to My Pathway", "Tersimpan di Jalur Saya", "Saved to My Pathway", lang)}
               </button>
             )}
             {userPathway && (

@@ -224,12 +224,12 @@ export default function AboveBelowClient(_props: {
 
           {saveState === "saved" && (
             <p style={{ fontSize: 13, color: "oklch(72% 0.18 145)", fontWeight: 600 }}>
-              {t("Saved to your dashboard.", "Tersimpan ke dasbor Anda.", lang)}
+              {t("Saved to My Pathway.", "Tersimpan di Jalur Saya.", lang)}
             </p>
           )}
           {saveState === "already" && (
             <p style={{ fontSize: 13, color: "rgba(255,255,255,0.45)" }}>
-              {t("Already in your dashboard.", "Sudah ada di dasbor Anda.", lang)}
+              {t("Already in My Pathway.", "Sudah ada di Jalur Saya.", lang)}
             </p>
           )}
           {saveState === "signin" && (
@@ -243,7 +243,7 @@ export default function AboveBelowClient(_props: {
               disabled={saveState === "saving"}
               style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "white", background: orange, border: "none", borderRadius: 8, padding: "10px 20px", cursor: saveState === "saving" ? "default" : "pointer", opacity: saveState === "saving" ? 0.6 : 1 }}
             >
-              {saveState === "saving" ? t("Saving…", "Menyimpan…", lang) : t("Save to Dashboard", "Simpan ke Dasbor", lang)}
+              {saveState === "saving" ? t("Saving…", "Menyimpan…", lang) : t("Save to My Pathway", "Simpan ke Jalur Saya", lang)}
             </button>
           )}
         </div>

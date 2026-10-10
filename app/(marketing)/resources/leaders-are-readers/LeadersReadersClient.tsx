@@ -685,7 +685,7 @@ export default function LeadersReadersClient({
                       strokeLinejoin="round"
                     />
                   </svg>
-                  {t("Saved to Dashboard", "Tersimpan di Dashboard", lang)}
+                  {t("Saved to My Pathway", "Tersimpan di Jalur Saya", lang)}
                 </Link>
               ) : (
                 <button
@@ -726,7 +726,7 @@ export default function LeadersReadersClient({
                   </svg>
                   {isPending
                     ? t("Saving…", "Menyimpan…", lang)
-                    : t("Save to Dashboard", "Simpan ke Dashboard", lang)}
+                    : t("Save to My Pathway", "Simpan ke Jalur Saya", lang)}
                 </button>
               )}
             </div>
@@ -1694,7 +1694,7 @@ export default function LeadersReadersClient({
               </Link>
             ) : saved ? (
               <Link href="/dashboard" className="btn-primary">
-                {t("Go to Dashboard", "Ke Dashboard", lang)}
+                {t("Go to Home", "Buka Home", lang)}
               </Link>
             ) : (
               <button
@@ -1708,7 +1708,7 @@ export default function LeadersReadersClient({
               >
                 {isPending
                   ? t("Saving…", "Menyimpan…", lang)
-                  : t("Save to Dashboard", "Simpan ke Dashboard", lang)}
+                  : t("Save to My Pathway", "Simpan ke Jalur Saya", lang)}
               </button>
             )}
             <Link href="/resources" className="btn-outline-navy">

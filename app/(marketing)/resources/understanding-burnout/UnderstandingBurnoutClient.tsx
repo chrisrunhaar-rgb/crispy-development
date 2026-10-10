@@ -558,7 +558,7 @@ export default function UnderstandingBurnoutClient({
           <button
             onClick={handleSave}
             disabled={saved || isPending}
-            aria-label={t(saved ? "Saved to dashboard" : "Save to dashboard", saved ? "Tersimpan di dasbor" : "Simpan ke dasbor")}
+            aria-label={t(saved ? "Saved to My Pathway" : "Save to My Pathway", saved ? "Tersimpan di Jalur Saya" : "Simpan ke Jalur Saya")}
             style={{
               display: "inline-flex", alignItems: "center", gap: 8,
               minHeight: 44, padding: "10px 20px",
@@ -570,7 +570,7 @@ export default function UnderstandingBurnoutClient({
             <svg width="16" height="16" viewBox="0 0 16 16" fill={saved ? orange : "none"} stroke={saved ? orange : "currentColor"} strokeWidth="1.5" aria-hidden="true">
               <path d="M3 2h10a1 1 0 011 1v11l-6-3-6 3V3a1 1 0 011-1z"/>
             </svg>
-            {t(saved ? "Saved" : "Save to Dashboard", saved ? "Tersimpan" : "Simpan ke Dasbor", lang)}
+            {t(saved ? "Saved" : "Save to My Pathway", saved ? "Tersimpan" : "Simpan ke Jalur Saya", lang)}
           </button>
         </div>
       </section>

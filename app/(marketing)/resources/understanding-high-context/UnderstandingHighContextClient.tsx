@@ -885,7 +885,7 @@ export default function UnderstandingHighContextClient({ isSaved: initialSaved }
           <button
             onClick={handleSave}
             disabled={saved || isPending}
-            aria-label={t("Save this module to your dashboard", "Simpan modul ini ke dashboard Anda")}
+            aria-label={t("Save this module to My Pathway", "Simpan modul ini ke Jalur Saya")}
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -908,8 +908,8 @@ export default function UnderstandingHighContextClient({ isSaved: initialSaved }
             {isPending
               ? t("Saving…", "Menyimpan…")
               : saved
-                ? t("Saved to Dashboard", "Tersimpan di Dashboard")
-                : t("Save to Dashboard", "Simpan ke Dashboard")}
+                ? t("Saved to My Pathway", "Tersimpan di Jalur Saya")
+                : t("Save to My Pathway", "Simpan ke Jalur Saya")}
           </button>
         </div>
       </div>

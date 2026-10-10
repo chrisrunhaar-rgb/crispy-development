@@ -517,12 +517,12 @@ export const ui: {
   },
   buttons: {
     saveToDashboard: {
-      en: "Save to Dashboard",
-      id: "Simpan ke Dashboard",
+      en: "Save to My Pathway",
+      id: "Simpan ke Jalur Saya",
     },
     savedToDashboard: {
-      en: "✓ Saved to Dashboard",
-      id: "✓ Tersimpan di Dashboard",
+      en: "✓ Saved to My Pathway",
+      id: "✓ Tersimpan di Jalur Saya",
     },
     startAudit: {
       en: "Run the Discernment Audit",

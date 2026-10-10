@@ -32,8 +32,8 @@ const CONTENT = {
       subtitle: "The unwritten give-and-take",
       intro:
         "In much of the world, help moves through people rather than through forms. Someone with more resources helps someone with fewer, and the help is answered over the years with loyalty and support. This module explains how that system works, why it makes good sense to the people inside it, and where its limits lie for a leader.",
-      save: "Save to Dashboard",
-      saved: "Saved to Dashboard",
+      save: "Save to My Pathway",
+      saved: "Saved to My Pathway",
     },
     what: {
       eyebrow: "The Concept",

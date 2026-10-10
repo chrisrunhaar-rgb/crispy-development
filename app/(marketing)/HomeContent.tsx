@@ -199,7 +199,7 @@ export default function HomeContent() {
               <div style={{ borderRadius: "6px", overflow: "hidden", boxShadow: "0 32px 64px oklch(10% 0.08 260 / 0.5)" }}>
                 <img
                   src="/dashboard-personal.jpg"
-                  alt={lang === "id" ? "Contoh dasbor pribadi" : "Personal dashboard preview"}
+                  alt={lang === "id" ? "Contoh halaman Jalur Saya" : "My Pathway preview"}
                   style={{ width: "100%", display: "block" }}
                 />
               </div>
@@ -365,13 +365,13 @@ export default function HomeContent() {
               {
                 num: "04",
                 title: h.reason4Title ?? "A journey, not just content",
-                body: h.reason4Body ?? "A personal dashboard with progress tracking, saved assessments, and a structured pathway. Not just resources to consume — a development journey to follow.",
+                body: h.reason4Body ?? "A My Pathway page with progress tracking, saved assessments, and a structured pathway. Not just resources to consume — a development journey to follow.",
                 delay: "240ms",
               },
               {
                 num: "05",
                 title: h.reason5Title ?? "Simple subscription",
-                body: h.reason5Body ?? "Monthly or annual. Full library access, personal dashboard, and WayPoint AI coaching included. Cancel any time.",
+                body: h.reason5Body ?? "Monthly or annual. Full library access, a My Pathway page, and WayPoint AI coaching included. Cancel any time.",
                 delay: "320ms",
               },
               {

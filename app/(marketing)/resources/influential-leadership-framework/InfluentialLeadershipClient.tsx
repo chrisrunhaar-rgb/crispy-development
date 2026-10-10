@@ -363,8 +363,8 @@ export default function InfluentialLeadershipClient({
             }}
           >
             {saved
-              ? t("Saved to Dashboard", "Tersimpan di Dashboard")
-              : t("Save to Dashboard", "Simpan ke Dashboard")}
+              ? t("Saved to My Pathway", "Tersimpan di Jalur Saya")
+              : t("Save to My Pathway", "Simpan ke Jalur Saya")}
           </button>
         </div>
       </div>

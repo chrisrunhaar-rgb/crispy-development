@@ -16,7 +16,7 @@ const STEPS: TourStep[] = [
   {
     targetId: "tour-header",
     title: "Your leadership hub",
-    body: "Welcome to your personal dashboard — everything you need for cross-cultural leadership development in one place.",
+    body: "Welcome to Home. Everything you need for cross-cultural leadership development in one place.",
   },
   {
     targetId: "tour-tabs",

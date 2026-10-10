@@ -962,7 +962,7 @@ export default function NavigatingConflictClient({ user }: { user: User | null }
                         opacity: isPending ? 0.7 : 1,
                       }}
                     >
-                      {isPending ? "Saving…" : "Save to My Dashboard →"}
+                      {isPending ? "Saving…" : "Save to My Pathway →"}
                     </button>
                   ) : (
                     <p style={{
@@ -971,7 +971,7 @@ export default function NavigatingConflictClient({ user }: { user: User | null }
                       fontWeight: 600,
                       color: "oklch(50% 0.18 145)",
                     }}>
-                      ✓ Saved to your dashboard
+                      ✓ Saved to My Pathway
                     </p>
                   )}
                   {saveError && (
@@ -1015,7 +1015,7 @@ export default function NavigatingConflictClient({ user }: { user: User | null }
                     color: "oklch(38% 0.008 260)",
                     margin: 0,
                   }}>
-                    Create a free account to save your conflict style to your dashboard.
+                    Create a free account to save your conflict style to My Pathway.
                   </p>
                   <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
                     <Link

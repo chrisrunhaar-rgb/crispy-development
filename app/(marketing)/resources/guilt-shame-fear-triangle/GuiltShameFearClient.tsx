@@ -33,8 +33,8 @@ const CONTENT = {
       subtitle: "How cultures handle wrongdoing, and what that means for leaders",
       intro:
         "Every group carries a quiet answer to two questions: what happens when someone does wrong, and what puts it right? This guide explains three common answers, how they mix inside every culture, and how leaders can work with all of them.",
-      save: "Save to Dashboard",
-      saved: "Saved to Dashboard",
+      save: "Save to My Pathway",
+      saved: "Saved to My Pathway",
     },
     objectives: {
       title: "By the end of this module you will be able to",

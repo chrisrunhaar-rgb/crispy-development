@@ -47,10 +47,10 @@ const CONTENT = {
       subtitle: "Why ordinary life can feel harder in a culture that is not your own, and what helps",
       intro:
         "Living or working in another culture asks more of you than it first appears. This module explains the difference between culture shock and culture stress, where the strain comes from, how to recognise it, and what helps individuals and the teams they belong to.",
-      save: "Save to Dashboard",
-      saved: "Saved to Dashboard",
-      saveAria: "Save this module to your dashboard",
-      savedAria: "Saved to your dashboard",
+      save: "Save to My Pathway",
+      saved: "Saved to My Pathway",
+      saveAria: "Save this module to My Pathway",
+      savedAria: "Saved to My Pathway",
     },
     objectives: {
       eyebrow: "After This Module",

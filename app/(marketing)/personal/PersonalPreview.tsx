@@ -49,7 +49,7 @@ const COPY = {
     hero: {
       eyebrow: "Personal Pathway",
       title: "Know how you lead, wherever you are leading.",
-      subline: "Eight assessments, 50+ short modules on cross-cultural leadership, and a personal dashboard that keeps your results, your notes and your progress together. Read on your phone between meetings, save what matters, and come back to it when you need it.",
+      subline: "Eight assessments, 50+ short modules on cross-cultural leadership, and a My Pathway page that keeps your results, your notes and your progress together. Read on your phone between meetings, save what matters, and come back to it when you need it.",
       cta: "See pricing",
       libraryCta: "Browse the library",
     },
@@ -59,7 +59,7 @@ const COPY = {
       body: "Most of cross-cultural leadership happens far from any training room. The Personal Pathway gives you short modules for the moments that matter, assessments that show how you are wired, and space to reflect on how God is shaping you. You set the pace.",
       points: [
         "50+ modules on cross-cultural leadership",
-        "8 assessments, with every result saved to your dashboard",
+        "8 assessments, with every result saved in My Pathway",
         "Save modules, add your own notes, track what you have finished",
         "One payment, permanent access",
       ],
@@ -67,7 +67,7 @@ const COPY = {
     assessments: {
       label: "Know yourself",
       title: "Eight ways to see how you are wired.",
-      body: "Every leader carries defaults into a new culture: how fast to decide, how directly to speak, what rest looks like, how to show someone they matter. Those defaults feel normal until they meet someone else's. The eight assessments help you name yours. Each one takes 20 to 35 minutes, and your results stay on your dashboard so you can return to them after a hard week, before a big conversation, or when a new role asks something different of you.",
+      body: "Every leader carries defaults into a new culture: how fast to decide, how directly to speak, what rest looks like, how to show someone they matter. Those defaults feel normal until they meet someone else's. The eight assessments help you name yours. Each one takes 20 to 35 minutes, and your results stay in My Pathway so you can return to them after a hard week, before a big conversation, or when a new role asks something different of you.",
       note: "Your results stay in your own account. If you later join a team, your team can see them.",
       list: [
         { name: "DISC", desc: "Your natural pace and style, and how it comes across to others" },
@@ -100,22 +100,22 @@ const COPY = {
       title: "A rhythm you can keep in a full week.",
       intro: "No schedule to follow and no deadlines. Most modules take 15 to 25 minutes, so one quiet half hour is enough to move forward.",
       steps: [
-        { label: "Discover", body: "Take an assessment. Your result is saved to your dashboard, ready to revisit whenever you need it." },
+        { label: "Discover", body: "Take an assessment. Your result is saved in My Pathway, ready to revisit whenever you need it." },
         { label: "Choose", body: "Browse the library and save the modules that fit what you are facing. They become your personal plan." },
         { label: "Read and reflect", body: "Read a module on your phone, then write a note on what you want to try. Your notes stay with the module." },
-        { label: "Track", body: "Mark a module complete when you have worked through it, and watch your progress grow on your dashboard." },
+        { label: "Track", body: "Mark a module complete when you have worked through it, and watch your progress grow in My Pathway." },
       ],
     },
     cta: {
       title: "Start with one assessment and one module.",
-      body: "50+ modules, all eight assessments and your own dashboard, plus new content as it launches. {personal} once, with permanent access. Nothing recurring, nothing to cancel.",
+      body: "50+ modules, all eight assessments and your own My Pathway page, plus new content as it launches. {personal} once, with permanent access. Nothing recurring, nothing to cancel.",
       button: "Get the Personal Pathway",
       team: "Leading a team?",
       teamButton: "Get the Team Pathway",
     },
     caption: {
-      dashboard: "Your personal dashboard: saved modules, assessment results and progress, all in one view.",
-      result: "Each result stays on your dashboard, so you can come back to it before the next hard conversation.",
+      dashboard: "My Pathway: saved modules, assessment results and progress, all in one view.",
+      result: "Each result stays in My Pathway, so you can come back to it before the next hard conversation.",
       resultAlt: "A Wheel of Life result on a phone: scores for eight life areas, a focus area and a strongest area.",
       video: "Read on your computer or your phone, whichever is closer. Every module has short sections, plain language and something practical to try.",
       reading: "Inside a module: short sections that end with a few key takeaways to carry into your week.",
@@ -126,7 +126,7 @@ const COPY = {
     hero: {
       eyebrow: "Jalur Pribadi",
       title: "Kenali cara Anda memimpin, di mana pun Anda memimpin.",
-      subline: "Delapan asesmen, 50+ modul singkat tentang kepemimpinan lintas budaya, dan dasbor pribadi yang menyimpan hasil, catatan, dan kemajuan Anda di satu tempat. Baca di ponsel di sela rapat, simpan yang penting, dan kembali kapan pun Anda membutuhkannya.",
+      subline: "Delapan asesmen, 50+ modul singkat tentang kepemimpinan lintas budaya, dan halaman Jalur Saya yang menyimpan hasil, catatan, dan kemajuan Anda di satu tempat. Baca di ponsel di sela rapat, simpan yang penting, dan kembali kapan pun Anda membutuhkannya.",
       cta: "Lihat harga",
       libraryCta: "Jelajahi perpustakaan",
     },
@@ -136,7 +136,7 @@ const COPY = {
       body: "Sebagian besar kepemimpinan lintas budaya terjadi jauh dari ruang pelatihan. Jalur Pribadi memberi Anda modul singkat untuk momen yang penting, asesmen yang menunjukkan karakter Anda, dan ruang untuk merenungkan bagaimana Tuhan membentuk Anda. Anda yang menentukan kecepatannya.",
       points: [
         "50+ modul tentang kepemimpinan lintas budaya",
-        "8 asesmen, dengan setiap hasil tersimpan di dasbor Anda",
+        "8 asesmen, dengan setiap hasil tersimpan di Jalur Saya",
         "Simpan modul, tambahkan catatan pribadi, pantau apa yang sudah selesai",
         "Sekali bayar, akses permanen",
       ],
@@ -144,7 +144,7 @@ const COPY = {
     assessments: {
       label: "Kenali diri Anda",
       title: "Delapan cara untuk melihat karakter Anda.",
-      body: "Setiap pemimpin membawa kebiasaan bawaan ke dalam budaya baru: seberapa cepat mengambil keputusan, seberapa langsung berbicara, seperti apa istirahat itu, dan bagaimana menunjukkan bahwa seseorang berharga. Kebiasaan itu terasa wajar sampai bertemu dengan kebiasaan orang lain. Delapan asesmen ini membantu Anda mengenali kebiasaan Anda sendiri. Masing-masing butuh 20 sampai 35 menit, dan hasilnya tetap tersimpan di dasbor Anda, sehingga Anda bisa melihatnya lagi setelah minggu yang berat, sebelum percakapan penting, atau saat peran baru menuntut hal yang berbeda dari Anda.",
+      body: "Setiap pemimpin membawa kebiasaan bawaan ke dalam budaya baru: seberapa cepat mengambil keputusan, seberapa langsung berbicara, seperti apa istirahat itu, dan bagaimana menunjukkan bahwa seseorang berharga. Kebiasaan itu terasa wajar sampai bertemu dengan kebiasaan orang lain. Delapan asesmen ini membantu Anda mengenali kebiasaan Anda sendiri. Masing-masing butuh 20 sampai 35 menit, dan hasilnya tetap tersimpan di Jalur Saya, sehingga Anda bisa melihatnya lagi setelah minggu yang berat, sebelum percakapan penting, atau saat peran baru menuntut hal yang berbeda dari Anda.",
       note: "Hasil Anda tersimpan di akun Anda sendiri. Jika nanti Anda bergabung dengan sebuah tim, tim Anda dapat melihatnya.",
       list: [
         { name: "DISC", desc: "Tempo dan gaya alami Anda, serta bagaimana orang lain menangkapnya" },
@@ -177,22 +177,22 @@ const COPY = {
       title: "Ritme yang bisa Anda jalani di minggu yang padat.",
       intro: "Tidak ada jadwal yang harus diikuti dan tidak ada tenggat waktu. Sebagian besar modul butuh 15 sampai 25 menit, jadi setengah jam yang tenang sudah cukup untuk melangkah maju.",
       steps: [
-        { label: "Temukan", body: "Kerjakan sebuah asesmen. Hasilnya tersimpan di dasbor Anda, siap dilihat lagi kapan pun Anda perlu." },
+        { label: "Temukan", body: "Kerjakan sebuah asesmen. Hasilnya tersimpan di Jalur Saya, siap dilihat lagi kapan pun Anda perlu." },
         { label: "Pilih", body: "Jelajahi perpustakaan dan simpan modul yang sesuai dengan apa yang sedang Anda hadapi. Modul itu menjadi rencana pribadi Anda." },
         { label: "Baca dan renungkan", body: "Baca sebuah modul di ponsel, lalu tulis catatan tentang apa yang ingin Anda coba. Catatan Anda tetap tersimpan bersama modulnya." },
-        { label: "Pantau", body: "Tandai modul sebagai selesai setelah Anda menjalaninya, dan lihat kemajuan Anda bertambah di dasbor." },
+        { label: "Pantau", body: "Tandai modul sebagai selesai setelah Anda menjalaninya, dan lihat kemajuan Anda bertambah di Jalur Saya." },
       ],
     },
     cta: {
       title: "Mulailah dengan satu asesmen dan satu modul.",
-      body: "50+ modul, kedelapan asesmen, dan dasbor pribadi Anda, ditambah konten baru saat diluncurkan. {personal} sekali bayar, dengan akses permanen. Tanpa biaya berulang, tanpa perlu membatalkan langganan.",
+      body: "50+ modul, kedelapan asesmen, dan halaman Jalur Saya Anda, ditambah konten baru saat diluncurkan. {personal} sekali bayar, dengan akses permanen. Tanpa biaya berulang, tanpa perlu membatalkan langganan.",
       button: "Dapatkan Jalur Pribadi",
       team: "Memimpin tim?",
       teamButton: "Dapatkan Jalur Tim",
     },
     caption: {
-      dashboard: "Dasbor pribadi Anda: modul yang disimpan, hasil asesmen, dan kemajuan, semuanya dalam satu tampilan.",
-      result: "Setiap hasil tetap ada di dasbor Anda, sehingga Anda bisa melihatnya lagi sebelum percakapan sulit berikutnya.",
+      dashboard: "Jalur Saya: modul yang disimpan, hasil asesmen, dan kemajuan, semuanya dalam satu tampilan.",
+      result: "Setiap hasil tetap ada di Jalur Saya, sehingga Anda bisa melihatnya lagi sebelum percakapan sulit berikutnya.",
       resultAlt: "Hasil Roda Kehidupan di ponsel: skor untuk delapan area kehidupan, area fokus, dan area terkuat.",
       video: "Baca di komputer atau ponsel, mana pun yang lebih dekat. Setiap modul punya bagian-bagian singkat, bahasa sederhana, dan sesuatu yang praktis untuk dicoba.",
       reading: "Di dalam modul: bagian-bagian singkat yang diakhiri beberapa poin penting untuk dibawa ke minggu Anda.",

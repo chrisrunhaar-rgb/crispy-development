@@ -311,11 +311,11 @@ export default function WheelOfLifeClient({
           <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
             {!saved ? (
               <button onClick={handleSave} disabled={isPending} style={{ background: "transparent", color: "oklch(85% 0.04 260)", padding: "13px 28px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", cursor: "pointer" }}>
-                {isPending ? t("Saving—", "Menyimpan—") : t("Save to Dashboard", "Simpan ke Dashboard")}
+                {isPending ? t("Saving—", "Menyimpan—") : t("Save to My Pathway", "Simpan ke Jalur Saya")}
               </button>
             ) : (
               <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "oklch(65% 0.15 145)", fontSize: 14, fontWeight: 600, padding: "13px 0" }}>
-                ? {t("Saved to Dashboard", "Tersimpan di Dashboard")}
+                ? {t("Saved to My Pathway", "Tersimpan di Jalur Saya")}
               </span>
             )}
           </div>
@@ -788,7 +788,7 @@ export default function WheelOfLifeClient({
                 >
                   {isSavingReflections
                     ? t("Saving—", "Menyimpan—")
-                    : t("Save to Dashboard", "Simpan ke Dashboard")}
+                    : t("Save to My Pathway", "Simpan ke Jalur Saya")}
                 </button>
               ) : (
                 <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "oklch(38% 0.14 145)", fontSize: 14, fontWeight: 700, fontFamily: "Montserrat, sans-serif" }}>

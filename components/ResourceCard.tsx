@@ -358,7 +358,7 @@ export default function ResourceCard({
             <div className="rc-tools" style={{ "--rc-slot": slot } as CSSProperties}>
               {confirmRemove ? (
                 <div className="rc-confirm" role="group" aria-label={id ? "Konfirmasi hapus" : "Confirm removal"} style={{ minHeight: "52px" }}>
-                  <span className="rc-confirm-q">{id ? "Hapus dari dasbor?" : "Remove from dashboard?"}</span>
+                  <span className="rc-confirm-q">{id ? "Hapus dari Jalur Saya?" : "Remove from My Pathway?"}</span>
                   <button type="button" className="rc-btn rc-yes" onClick={handleRemove} disabled={removing}>
                     {removing ? (id ? "Menghapus..." : "Removing...") : (id ? "Ya, hapus" : "Yes, remove")}
                   </button>
@@ -416,7 +416,7 @@ export default function ResourceCard({
                   ref={removeRef}
                   className="rc-act rc-act-remove"
                   onClick={openConfirm}
-                  aria-label={id ? `Hapus ${title} dari dasbor` : `Remove ${title} from dashboard`}
+                  aria-label={id ? `Hapus ${title} dari Jalur Saya` : `Remove ${title} from My Pathway`}
                 >
                   <RemoveIcon />
                   <span className="rc-lbl" aria-hidden="true">{id ? "Hapus" : "Remove"}</span>

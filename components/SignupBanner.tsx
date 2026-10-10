@@ -28,10 +28,10 @@ const COPY = {
       button: "Create a free account and continue",
     },
     benefits: [
-      "Free: save modules and your progress on a personal dashboard, and open the free modules any time",
+      "Free: save modules and your progress in My Pathway, and open the free modules any time",
       "Paid: all 50+ modules and 8 assessments, for one payment and yours for good",
     ],
-    alt: "Preview of the personal dashboard",
+    alt: "Preview of My Pathway",
   },
   id: {
     eyebrow: "Akun gratis",
@@ -46,10 +46,10 @@ const COPY = {
       button: "Buat akun gratis dan lanjutkan",
     },
     benefits: [
-      "Gratis: simpan modul dan kemajuan Anda di dasbor pribadi, dan buka modul gratis kapan saja",
+      "Gratis: simpan modul dan kemajuan Anda di Jalur Saya, dan buka modul gratis kapan saja",
       "Berbayar: semua 50+ modul dan 8 asesmen, sekali bayar dan menjadi milik Anda selamanya",
     ],
-    alt: "Pratinjau dasbor pribadi",
+    alt: "Pratinjau Jalur Saya",
   },
 };
 

@@ -318,8 +318,8 @@ export default function ManagingUpClient({ userPathway, isSaved: initialSaved }:
             onClick={handleSave}
             disabled={saved || isPending}
             aria-label={saved
-              ? t("Saved to your dashboard", "Tersimpan di dashboard Anda")
-              : t("Save this resource to your dashboard", "Simpan materi ini ke dashboard Anda")}
+              ? t("Saved to My Pathway", "Tersimpan di Jalur Saya Anda")
+              : t("Save this resource to My Pathway", "Simpan materi ini ke Jalur Saya")}
             style={{
               display: "inline-flex", alignItems: "center", gap: 8,
               minHeight: 44, padding: "14px 28px", borderRadius: 12,
@@ -338,8 +338,8 @@ export default function ManagingUpClient({ userPathway, isSaved: initialSaved }:
               <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
             </svg>
             {saved
-              ? t("Saved to Dashboard", "Tersimpan di Dashboard")
-              : t("Save to Dashboard", "Simpan ke Dashboard")}
+              ? t("Saved to My Pathway", "Tersimpan di Jalur Saya")
+              : t("Save to My Pathway", "Simpan ke Jalur Saya")}
           </button>
         </div>
       </div>

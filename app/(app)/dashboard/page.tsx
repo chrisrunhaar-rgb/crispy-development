@@ -453,7 +453,7 @@ export default async function DashboardPage({
 
   const tabLabel = currentTab === "team"
     ? (languagePreference === "id" ? "Dasbor Tim" : "Team Dashboard")
-    : (languagePreference === "id" ? "Dasbor Pribadi" : "Personal Dashboard");
+    : null;
 
   // ── Course progress for personal tab ──
   type CourseProgress = { courseId: string; slug: string; title: string; completed: number; total: number; firstIncompleteSlug: string | null };
@@ -533,9 +533,11 @@ export default async function DashboardPage({
                 style={{ width: "64px", height: "64px", objectFit: "contain", flexShrink: 0 }}
               />
               <div>
-                <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.375rem", fontSize: "0.62rem" }}>
-                  {tabLabel}
-                </p>
+                {tabLabel && (
+                  <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.375rem", fontSize: "0.62rem" }}>
+                    {tabLabel}
+                  </p>
+                )}
                 <h1 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.375rem", color: "oklch(97% 0.005 80)", lineHeight: 1.2 }}>
                   {languagePreference === "id" ? `Selamat datang kembali, ${firstName}.` : `Welcome back, ${firstName}.`}
                 </h1>
@@ -886,8 +888,8 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
           <div style={{ paddingBlock: "2rem", display: "flex", flexDirection: "column", gap: "0.75rem" }}>
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", color: "oklch(52% 0.008 260)", lineHeight: 1.6 }}>
               {languagePreference === "id"
-                ? <span>Belum ada sumber daya yang disimpan. Lihat perpustakaan dan ketuk <strong>Simpan ke Dasbor</strong> pada sumber daya mana pun.</span>
-                : <span>No resources saved yet. Browse the library and tap <strong>Save to Dashboard</strong> on any resource.</span>}
+                ? <span>Belum ada sumber daya yang disimpan. Lihat perpustakaan dan ketuk <strong>Simpan ke Jalur Saya</strong> pada sumber daya mana pun.</span>
+                : <span>No resources saved yet. Browse the library and tap <strong>Save to My Pathway</strong> on any resource.</span>}
             </p>
             <Link href="/resources" className="btn-primary" style={{ alignSelf: "flex-start", fontSize: "0.78rem", padding: "0.6rem 1.25rem" }}>
               {languagePreference === "id" ? "Ke Perpustakaan →" : "Go to Library →"}

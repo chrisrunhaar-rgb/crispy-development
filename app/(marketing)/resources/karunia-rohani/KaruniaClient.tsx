@@ -686,7 +686,7 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
                     <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
-                    {lang === "id" ? "Ã¢Å“â€œ Tersimpan di Dashboard" : "Ã¢Å“â€œ Saved to Dashboard"}
+                    {lang === "id" ? "Ã¢Å“â€œ Tersimpan di Jalur Saya" : "Ã¢Å“â€œ Saved to My Pathway"}
                   </div>
                 ) : (
                   <button
@@ -708,7 +708,7 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
                   >
                     {isPending
                       ? (lang === "id" ? "Menyimpan..." : "Saving...")
-                      : (lang === "id" ? "Simpan ke Dashboard Ã¢â€ â€™" : "Save to Dashboard Ã¢â€ â€™")}
+                      : (lang === "id" ? "Simpan ke Jalur Saya Ã¢â€ â€™" : "Save to My Pathway Ã¢â€ â€™")}
                   </button>
                 )}
                 <button
@@ -1212,9 +1212,9 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
           </h2>
           <p style={{ fontSize: "0.9375rem", color: "oklch(78% 0.008 80)", lineHeight: 1.7, marginBottom: "2rem" }}>
             {lang === "id"
-              ? "76 pernyataan. Sekitar 20 menit. Hasil Anda disimpan ke dashboard untuk referensi tim."
+              ? "76 pernyataan. Sekitar 20 menit. Hasil Anda disimpan di Jalur Saya untuk referensi tim."
              
-              : "76 statements. Around 20 minutes. Your results are saved to your dashboard for team reference."}
+              : "76 statements. Around 20 minutes. Your results are saved to My Pathway for team reference."}
           </p>
           <button
             onClick={() => { setShowQuiz(true); scrollTop(); }}

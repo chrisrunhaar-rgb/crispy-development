@@ -187,7 +187,7 @@ export default function PwaInstall() {
                 fontStyle: "italic",
               }}
             >
-              Once installed, it opens directly to your dashboard.
+              Once installed, it opens directly to Home.
             </p>
           </div>
         </div>

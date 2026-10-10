@@ -911,7 +911,7 @@ export default function CommunicationCultureClient({ user }: { user: User | null
                       transition: "background 0.15s",
                     }}
                   >
-                    {isPending ? "Saving…" : "Save to Dashboard →"}
+                    {isPending ? "Saving…" : "Save to My Pathway →"}
                   </button>
                 )}
 
@@ -922,7 +922,7 @@ export default function CommunicationCultureClient({ user }: { user: User | null
                     color: "oklch(72% 0.14 145)",
                     display: "inline-flex", alignItems: "center", gap: "0.375rem",
                   }}>
-                    ✓ Saved to Dashboard
+                    ✓ Saved to My Pathway
                   </Link>
                 )}
 

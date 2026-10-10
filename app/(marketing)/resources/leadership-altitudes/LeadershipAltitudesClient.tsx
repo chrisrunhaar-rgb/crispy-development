@@ -295,8 +295,8 @@ export default function LeadershipAltitudesClient({ userPathway, isSaved: initia
             }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
               {saved
-                ? t("Saved to Dashboard", "Tersimpan di Dashboard")
-                : t("Save to Dashboard", "Simpan ke Dashboard")}
+                ? t("Saved to My Pathway", "Tersimpan di Jalur Saya")
+                : t("Save to My Pathway", "Simpan ke Jalur Saya")}
             </button>
           </div>
         </div>
@@ -646,7 +646,7 @@ export default function LeadershipAltitudesClient({ userPathway, isSaved: initia
               border: "1px solid oklch(42% 0.08 260)", textDecoration: "none",
             }}>
               {userPathway
-                ? t("Go to Dashboard", "Ke Dashboard")
+                ? t("Go to Home", "Buka Home")
                 : t("Explore Pathways", "Jelajahi Jalur")}
             </Link>
           </div>

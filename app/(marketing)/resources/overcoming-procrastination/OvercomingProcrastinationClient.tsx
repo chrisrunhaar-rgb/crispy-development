@@ -399,7 +399,7 @@ export default function OvercomingProcrastinationClient({
               <button
                 onClick={handleSave}
                 disabled={isPending}
-                aria-label={t("Save to Dashboard", "Simpan ke Dashboard", lang)}
+                aria-label={t("Save to My Pathway", "Simpan ke Jalur Saya", lang)}
                 style={{
                   display: "inline-flex", alignItems: "center", gap: "0.5rem",
                   background: ORANGE, color: "oklch(15% 0.05 45)",
@@ -411,14 +411,14 @@ export default function OvercomingProcrastinationClient({
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                   <path d="M3 2h10a1 1 0 0 1 1 1v11l-6-3-6 3V3a1 1 0 0 1 1-1z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
                 </svg>
-                {isPending ? t("Saving...", "Menyimpan...", lang) : t("Save to Dashboard", "Simpan ke Dashboard", lang)}
+                {isPending ? t("Saving...", "Menyimpan...", lang) : t("Save to My Pathway", "Simpan ke Jalur Saya", lang)}
               </button>
             ) : (
               <span style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", color: "oklch(72% 0.14 145)", fontSize: "0.85rem", fontWeight: 600, minHeight: 44 }}>
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                   <path d="M3 8l4 4 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                {t("Saved to Dashboard", "Tersimpan di Dashboard", lang)}
+                {t("Saved to My Pathway", "Tersimpan di Jalur Saya", lang)}
               </span>
             )
           )}

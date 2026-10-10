@@ -351,8 +351,8 @@ export default function StorytellingLeadershipClient({ userPathway, isSaved: ini
           fontWeight: 700, fontSize: 14,
         }}>
           {saved
-            ? t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard")
-            : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
+            ? t("Saved to My Pathway", "Tersimpan di Jalur Saya", "Saved to My Pathway")
+            : t("Save to My Pathway", "Simpan ke Jalur Saya", "Save to My Pathway")}
         </button>
         <Link href="/resources" style={{ fontFamily: "Montserrat, sans-serif", fontSize: 13, color: bodyText, textDecoration: "none", fontWeight: 600 }}>
           ? {t("Training", "Pelatihan", "Contentbibliotheek")}

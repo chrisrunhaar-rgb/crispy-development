@@ -359,7 +359,7 @@ function ResourceRow({
                 border: "1px solid oklch(45% 0.14 145 / 0.3)",
                 cursor: "default",
               }}>
-                ✓ In Dashboard
+                ✓ In My Pathway
               </span>
             ) : (
               <button
@@ -372,7 +372,7 @@ function ResourceRow({
                   opacity: isPending ? 0.7 : 1,
                 }}
               >
-                {isPending ? "Saving…" : "+ Dashboard"}
+                {isPending ? "Saving…" : "+ My Pathway"}
               </button>
             )
           )}

@@ -365,7 +365,7 @@ export default function FourStagesClient({ isSaved: initialSaved }: Props) {
                 display: "inline-flex", alignItems: "center", gap: "0.375rem",
               }}>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
-                {t("In your dashboard", "Di dasbor Anda", lang)}
+                {t("In My Pathway", "Di Jalur Saya", lang)}
               </Link>
             ) : (
               <button
@@ -381,7 +381,7 @@ export default function FourStagesClient({ isSaved: initialSaved }: Props) {
                 }}
               >
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
-                {isPending ? t("Saving…", "Menyimpan…", lang) : t("Save to Dashboard", "Simpan ke Dasbor", lang)}
+                {isPending ? t("Saving…", "Menyimpan…", lang) : t("Save to My Pathway", "Simpan ke Jalur Saya", lang)}
               </button>
             )}
           </div>

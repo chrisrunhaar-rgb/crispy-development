@@ -25,9 +25,9 @@ const COPY = {
     hero: {
       eyebrow: "Crispy Development",
       title: "Raising leaders who cross cultures.",
-      subline: "Practical training for leaders who serve far from home. Short modules, honest assessments and a private dashboard that keeps your growth in one place, for you or for your whole team.",
+      subline: "Practical training for leaders who serve far from home. Short modules, honest assessments and a My Pathway page that keeps your growth in one place, for you or for your whole team.",
       cta: "Set up your free account",
-      ctaIn: "Go to your dashboard",
+      ctaIn: "Go to Home",
     },
     paths: {
       label: "Two pathways",
@@ -39,20 +39,20 @@ const COPY = {
         name: "Personal Pathway",
         what: "Know how you lead.",
         why: "Leading far from home stretches you in ways you can't always see. Growth starts when you understand your own patterns.",
-        how: "Eight assessments, 50+ short modules and a private dashboard that keeps your notes and progress together.",
+        how: "Eight assessments, 50+ short modules and a My Pathway page that keeps your notes and progress together.",
         cta: "Explore Personal",
       },
       team: {
         name: "Team Pathway",
         what: "Lead a team that understands each other.",
         why: "Cross-cultural teams lose a lot of energy to misunderstanding. When people see how their colleagues work, conflict becomes conversation.",
-        how: "Everyone gets their own dashboard. You see the whole team's results side by side, ready for your next team meeting.",
+        how: "Everyone gets their own My Pathway page. You see the whole team's results side by side, ready for your next team meeting.",
         cta: "Explore Team",
       },
     },
     inside: {
       label: "Inside the platform",
-      title: "Your personal development dashboard.",
+      title: "Your own development pathway.",
       points: [
         "50+ modules, most of them 15 to 25 minutes",
         "8 assessments, every result saved",
@@ -73,15 +73,15 @@ const COPY = {
       title: "Take your first step today.",
       options: ["Set up your free account", "Choose your pathway", "Explore the full library waiting for you"],
     },
-    dashAlt: "The Crispy dashboard with saved modules, assessment results and progress.",
+    dashAlt: "My Pathway with saved modules, assessment results and progress.",
   },
   id: {
     hero: {
       eyebrow: "Crispy Development",
       title: "Raising leaders who cross cultures.",
-      subline: "Pelatihan praktis bagi pemimpin yang melayani jauh dari rumah. Modul singkat, asesmen yang jujur, dan dasbor pribadi yang menyimpan pertumbuhan Anda di satu tempat, untuk Anda sendiri atau untuk seluruh tim Anda.",
+      subline: "Pelatihan praktis bagi pemimpin yang melayani jauh dari rumah. Modul singkat, asesmen yang jujur, dan halaman Jalur Saya yang menyimpan pertumbuhan Anda di satu tempat, untuk Anda sendiri atau untuk seluruh tim Anda.",
       cta: "Buat akun gratis Anda",
-      ctaIn: "Buka dasbor Anda",
+      ctaIn: "Buka Home",
     },
     paths: {
       label: "Dua jalur",
@@ -93,20 +93,20 @@ const COPY = {
         name: "Jalur Pribadi",
         what: "Kenali cara Anda memimpin.",
         why: "Memimpin jauh dari rumah menguji Anda dengan cara yang tidak selalu terlihat. Pertumbuhan dimulai saat Anda memahami pola Anda sendiri.",
-        how: "Delapan asesmen, 50+ modul singkat, dan dasbor pribadi yang menyimpan catatan serta kemajuan Anda di satu tempat.",
+        how: "Delapan asesmen, 50+ modul singkat, dan halaman Jalur Saya yang menyimpan catatan serta kemajuan Anda di satu tempat.",
         cta: "Lihat Jalur Pribadi",
       },
       team: {
         name: "Jalur Tim",
         what: "Pimpin tim yang saling memahami.",
         why: "Tim lintas budaya banyak kehilangan tenaga karena salah paham. Saat setiap orang melihat cara rekannya bekerja, konflik berubah menjadi percakapan.",
-        how: "Setiap orang mendapat dasbornya sendiri. Anda melihat hasil seluruh tim berdampingan, siap untuk pertemuan tim berikutnya.",
+        how: "Setiap orang mendapat halaman Jalur Saya sendiri. Anda melihat hasil seluruh tim berdampingan, siap untuk pertemuan tim berikutnya.",
         cta: "Lihat Jalur Tim",
       },
     },
     inside: {
       label: "Di dalam platform",
-      title: "Dasbor pengembangan pribadi Anda.",
+      title: "Jalur pengembangan pribadi Anda.",
       points: [
         "50+ modul, sebagian besar 15 sampai 25 menit",
         "8 asesmen, setiap hasil tersimpan",
@@ -127,7 +127,7 @@ const COPY = {
       title: "Ambil langkah pertama Anda hari ini.",
       options: ["Buat akun gratis Anda", "Pilih jalur Anda", "Jelajahi seluruh perpustakaan yang menanti Anda"],
     },
-    dashAlt: "Dasbor Crispy dengan modul tersimpan, hasil asesmen, dan kemajuan.",
+    dashAlt: "Jalur Saya dengan modul tersimpan, hasil asesmen, dan kemajuan.",
   },
 } as const;
 

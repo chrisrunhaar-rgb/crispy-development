@@ -266,7 +266,7 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
               border: "1px solid oklch(42% 0.08 260)", cursor: saved ? "default" : "pointer",
             }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
-              {saved ? tr("Saved to Dashboard", "Tersimpan di Dashboard") : tr("Save to Dashboard", "Simpan ke Dashboard")}
+              {saved ? tr("Saved to My Pathway", "Tersimpan di Jalur Saya") : tr("Save to My Pathway", "Simpan ke Jalur Saya")}
             </button>
           </div>
         </div>
@@ -582,7 +582,7 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
               padding: "14px 32px", borderRadius: 12, fontWeight: 600, fontSize: 14,
               border: "1px solid oklch(42% 0.08 260)", textDecoration: "none",
             }}>
-              {userPathway ? tr("Go to Dashboard", "Ke Dashboard") : tr("Explore Pathways", "Jelajahi Jalur")}
+              {userPathway ? tr("Go to Home", "Buka Home") : tr("Explore Pathways", "Jelajahi Jalur")}
             </Link>
           </div>
         </div>

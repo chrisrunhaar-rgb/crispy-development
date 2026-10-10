@@ -324,11 +324,11 @@ export default function LadderOfInferenceClient({
           <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
             {!saved ? (
               <button onClick={handleSave} disabled={isPending} style={{ background: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)", padding: "13px 28px", borderRadius: 12, fontWeight: 700, fontSize: 14, border: "none", cursor: "pointer" }}>
-                {isPending ? t("Saving—", "Menyimpan—", lang) : t("Save to Dashboard", "Simpan ke Dashboard", lang)}
+                {isPending ? t("Saving—", "Menyimpan—", lang) : t("Save to My Pathway", "Simpan ke Jalur Saya", lang)}
               </button>
             ) : (
               <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "oklch(65% 0.15 145)", fontSize: 14, fontWeight: 600, padding: "13px 0" }}>
-                ? {t("Saved to Dashboard", "Tersimpan di Dashboard", lang)}
+                ? {t("Saved to My Pathway", "Tersimpan di Jalur Saya", lang)}
               </span>
             )}
           </div>

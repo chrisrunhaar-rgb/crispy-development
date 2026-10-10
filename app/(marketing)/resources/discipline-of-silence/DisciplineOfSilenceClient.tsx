@@ -395,7 +395,7 @@ export default function DisciplineOfSilenceClient({
           <button
             onClick={handleSave}
             disabled={saved || isPending}
-            aria-label={saved ? t("Saved to Dashboard", "Tersimpan di Dashboard") : t("Save to Dashboard", "Simpan ke Dashboard")}
+            aria-label={saved ? t("Saved to My Pathway", "Tersimpan di Jalur Saya") : t("Save to My Pathway", "Simpan ke Jalur Saya")}
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -419,7 +419,7 @@ export default function DisciplineOfSilenceClient({
                 : <path d="M7 1v8M4 6l3 3 3-3M2 11h10" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
               }
             </svg>
-            {saved ? t("Saved to Dashboard", "Tersimpan di Dashboard") : t("Save to Dashboard", "Simpan ke Dashboard")}
+            {saved ? t("Saved to My Pathway", "Tersimpan di Jalur Saya") : t("Save to My Pathway", "Simpan ke Jalur Saya")}
           </button>
         </div>
       </section>

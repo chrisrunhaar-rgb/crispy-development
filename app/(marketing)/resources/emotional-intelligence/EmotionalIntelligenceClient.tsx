@@ -158,12 +158,12 @@ export default function EmotionalIntelligenceClient({ userPathway, isSaved: init
             <div style={{ marginTop: "1.5rem" }}>
               {saved ? (
                 <Link href="/dashboard" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.06em", color: "oklch(72% 0.14 145)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.375rem" }}>
-                  ? {t("In your dashboard", "Di dashboard Anda")}
+                  ? {t("In My Pathway", "Di Jalur Saya")}
                 </Link>
               ) : (
                 <button onClick={handleSave} disabled={isPending} style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "transparent", color: "oklch(75% 0.04 260)", padding: "14px 28px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", cursor: isPending ? "wait" : "pointer" }}>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
-                  {isPending ? t("Saving—", "Menyimpan—") : t("Save to Dashboard", "Simpan ke Dashboard")}
+                  {isPending ? t("Saving—", "Menyimpan—") : t("Save to My Pathway", "Simpan ke Jalur Saya")}
                 </button>
               )}
             </div>
@@ -423,10 +423,10 @@ export default function EmotionalIntelligenceClient({ userPathway, isSaved: init
               {!userPathway ? (
                 <Link href="/membership" className="btn-primary">{t("Join the Community", "Bergabung")}</Link>
               ) : saved ? (
-                <Link href="/dashboard" className="btn-primary">{t("Go to Dashboard", "Ke Dashboard")}</Link>
+                <Link href="/dashboard" className="btn-primary">{t("Go to Home", "Buka Home")}</Link>
               ) : (
                 <button onClick={handleSave} disabled={isPending} className="btn-primary" style={{ border: "none", cursor: isPending ? "wait" : "pointer" }}>
-                  {isPending ? t("Saving—", "Menyimpan—") : t("Save to Dashboard", "Simpan ke Dashboard")}
+                  {isPending ? t("Saving—", "Menyimpan—") : t("Save to My Pathway", "Simpan ke Jalur Saya")}
                 </button>
               )}
               <Link href="/resources" className="btn-outline-navy">{t("Browse the Library", "Jelajahi Perpustakaan")}</Link>

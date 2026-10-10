@@ -186,11 +186,11 @@ export default function JohariWindowClient({ userPathway, isSaved: initialSaved,
           {showSave && (
             saved ? (
               <Link href="/dashboard" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.06em", color: "oklch(72% 0.14 145)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.375rem" }}>
-                ✓ {t("In your dashboard", "Di dashboard Anda")}
+                ✓ {t("In My Pathway", "Di Jalur Saya")}
               </Link>
             ) : (
               <button onClick={handleSave} disabled={isPending} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.06em", color: "oklch(97% 0.005 80)", background: isPending ? "oklch(40% 0.10 260)" : "oklch(30% 0.12 260)", border: "none", padding: "0.625rem 1.25rem", cursor: isPending ? "wait" : "pointer" }}>
-                {isPending ? t("Saving…", "Menyimpan…") : t("Save to Dashboard", "Simpan ke Dashboard")}
+                {isPending ? t("Saving…", "Menyimpan…") : t("Save to My Pathway", "Simpan ke Jalur Saya")}
               </button>
             )
           )}
@@ -571,10 +571,10 @@ export default function JohariWindowClient({ userPathway, isSaved: initialSaved,
               {!userPathway ? (
                 <Link href="/membership" className="btn-primary">{t("Join the Community →", "Bergabung →")}</Link>
               ) : saved ? (
-                <Link href="/dashboard" className="btn-primary">{t("Go to Dashboard →", "Ke Dashboard →")}</Link>
+                <Link href="/dashboard" className="btn-primary">{t("Go to Home →", "Buka Home →")}</Link>
               ) : (
                 <button onClick={handleSave} disabled={isPending} className="btn-primary" style={{ border: "none", cursor: isPending ? "wait" : "pointer" }}>
-                  {isPending ? t("Saving…", "Menyimpan…") : t("Save to Dashboard", "Simpan ke Dashboard")}
+                  {isPending ? t("Saving…", "Menyimpan…") : t("Save to My Pathway", "Simpan ke Jalur Saya")}
                 </button>
               )}
               <Link href="/resources" className="btn-outline-navy">{t("Browse the Library", "Jelajahi Perpustakaan")}</Link>

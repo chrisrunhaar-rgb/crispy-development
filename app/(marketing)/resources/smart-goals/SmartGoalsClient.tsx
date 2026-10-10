@@ -750,12 +750,12 @@ export default function SmartGoalsClient({
                 disabled={savingWorksheet}
                 style={{ background: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)", padding: "12px 24px", borderRadius: 12, fontWeight: 700, fontSize: 14, border: "none", cursor: savingWorksheet ? "not-allowed" : "pointer" }}
               >
-                {savingWorksheet ? t("Saving—", "Menyimpan—") : t("Save to Dashboard", "Simpan ke Dashboard")}
+                {savingWorksheet ? t("Saving—", "Menyimpan—") : t("Save to My Pathway", "Simpan ke Jalur Saya")}
               </button>
             ) : (
               <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "oklch(46% 0.16 145)", fontSize: 14, fontWeight: 700, padding: "12px 0" }}>
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="8" fill="oklch(46% 0.16 145)"/><path d="M4.5 8l2.5 2.5 4.5-4.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                {t("Saved to Dashboard", "Tersimpan di Dashboard")}
+                {t("Saved to My Pathway", "Tersimpan di Jalur Saya")}
               </span>
             )}
             <button
@@ -806,10 +806,10 @@ export default function SmartGoalsClient({
             </button>
             {!saved ? (
               <button onClick={handleSave} disabled={isPending} style={{ background: "transparent", color: "oklch(85% 0.04 260)", padding: "13px 28px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", cursor: "pointer" }}>
-                {isPending ? t("Saving—", "Menyimpan—") : t("Save to Dashboard", "Simpan ke Dashboard")}
+                {isPending ? t("Saving—", "Menyimpan—") : t("Save to My Pathway", "Simpan ke Jalur Saya")}
               </button>
             ) : (
-              <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "oklch(65% 0.15 145)", fontSize: 14, fontWeight: 600, padding: "13px 0" }}>? {t("Saved to Dashboard", "Tersimpan di Dashboard")}</span>
+              <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "oklch(65% 0.15 145)", fontSize: 14, fontWeight: 600, padding: "13px 0" }}>? {t("Saved to My Pathway", "Tersimpan di Jalur Saya")}</span>
             )}
           </div>
         </div>

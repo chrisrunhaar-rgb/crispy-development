@@ -98,7 +98,7 @@ export default function VisionCastingClient({ userPathway, isSaved: initialSaved
   // Helper
   const t = (field: Lang): string => field[lang];
 
-  // ─── Save to Dashboard ───────────────────────────────────────────
+  // ─── Save to My Pathway ───────────────────────────────────────────
   const [saved, setSaved] = useState(initialSaved);
   const [isPending, startTransition] = useTransition();
 

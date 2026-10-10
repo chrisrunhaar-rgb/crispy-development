@@ -32,7 +32,7 @@ export default async function AccountLayout({ children }: { children: React.Reac
             href="/dashboard"
             style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "oklch(48% 0.04 260)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.375rem", minHeight: 44 }}
           >
-            ← {language === "id" ? "Dasbor" : "Dashboard"}
+            ← {language === "id" ? "Home" : "Home"}
           </Link>
           <AccountMenu firstName={firstName} lastName={lastName} email={email} currentLanguage={language} pathway={pathway} onLight />
         </div>

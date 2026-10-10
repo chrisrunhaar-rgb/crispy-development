@@ -468,7 +468,7 @@ export default function ReceiverMeaningClient({ isSaved }: Props) {
             onClick={handleSave}
             disabled={saved || isPending}
             aria-pressed={saved}
-            aria-label={saved ? "Saved to your dashboard" : "Save this module to your dashboard"}
+            aria-label={saved ? "Saved to My Pathway" : "Save this module to My Pathway"}
             style={{
               display: "inline-flex", alignItems: "center", gap: 10, minHeight: 44,
               padding: "10px 24px", border: "none", cursor: saved ? "default" : "pointer",
@@ -480,7 +480,7 @@ export default function ReceiverMeaningClient({ isSaved }: Props) {
             <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M6 3h12v18l-6-4.5L6 21z" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
             </svg>
-            {saved ? "Saved to Dashboard" : "Save to Dashboard"}
+            {saved ? "Saved to My Pathway" : "Save to My Pathway"}
           </button>
         </div>
       </section>

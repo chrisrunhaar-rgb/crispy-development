@@ -569,8 +569,8 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
               aria-pressed={saved}
               aria-label={
                 saved
-                  ? t("Saved to your dashboard", "Tersimpan di dasbor Anda")
-                  : t("Save this module to your dashboard", "Simpan modul ini ke dasbor Anda")
+                  ? t("Saved to My Pathway", "Tersimpan di Jalur Saya")
+                  : t("Save this module to My Pathway", "Simpan modul ini ke Jalur Saya")
               }
               style={{
                 display: "inline-flex",
@@ -597,7 +597,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
                   strokeLinejoin="round"
                 />
               </svg>
-              <span>{saved ? t("Saved to Dashboard", "Tersimpan di Dasbor") : t("Save to Dashboard", "Simpan ke Dasbor")}</span>
+              <span>{saved ? t("Saved to My Pathway", "Tersimpan di Jalur Saya") : t("Save to My Pathway", "Simpan ke Jalur Saya")}</span>
             </button>
           </div>
         </div>

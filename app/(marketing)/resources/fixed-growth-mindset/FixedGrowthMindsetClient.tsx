@@ -375,7 +375,7 @@ export default function FixedGrowthMindsetClient({
               <button
                 onClick={handleSave}
                 disabled={isPending}
-                aria-label={t("Save to Dashboard", "Simpan ke Dashboard")}
+                aria-label={t("Save to My Pathway", "Simpan ke Jalur Saya")}
                 style={{
                   background: "transparent",
                   color: "oklch(100% 0 0)",
@@ -395,11 +395,11 @@ export default function FixedGrowthMindsetClient({
                 onMouseEnter={e => (e.currentTarget.style.background = "oklch(100% 0 0 / 0.1)")}
                 onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
               >
-                {isPending ? t("Saving...", "Menyimpan...") : t("Save to Dashboard", "Simpan ke Dashboard")}
+                {isPending ? t("Saving...", "Menyimpan...") : t("Save to My Pathway", "Simpan ke Jalur Saya")}
               </button>
             ) : (
               <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "oklch(65% 0.15 145)", fontSize: 14, fontWeight: 600, padding: "13px 0" }}>
-                ✓ {t("Saved to Dashboard", "Tersimpan di Dashboard")}
+                ✓ {t("Saved to My Pathway", "Tersimpan di Jalur Saya")}
               </span>
             )}
             {growthScore != null && (

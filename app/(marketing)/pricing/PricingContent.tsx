@@ -339,8 +339,8 @@ export default function PricingContent({ currency }: Props) {
     // FREE TIER ──────────────────────────────────────────────────────────
     freeLine: fillPrices(
       id
-        ? "Gratis: modul pilihan, dengan dasbor untuk menyimpan kemajuan Anda. Personal: semua 50+ modul dan 8 asesmen, {personal} sekali bayar."
-        : "Free: selected modules, with a dashboard that saves your progress. Personal: all 50+ modules and 8 assessments, {personal} one time.",
+        ? "Gratis: modul pilihan, dengan halaman Jalur Saya untuk menyimpan kemajuan Anda. Personal: semua 50+ modul dan 8 asesmen, {personal} sekali bayar."
+        : "Free: selected modules, with a My Pathway page that saves your progress. Personal: all 50+ modules and 8 assessments, {personal} one time.",
       currency,
     ),
     freeLink: id ? "Buat akun gratis" : "Create a free account",
@@ -351,14 +351,14 @@ export default function PricingContent({ currency }: Props) {
     personalPriceNote: id ? "Sekali bayar · Akses permanen" : "One-time purchase · Permanent access",
     personalFeatures: id
       ? [
-          "50+ modul pelatihan dengan dasbor kemajuan",
-          "Dasbor pribadi + pelacakan kemajuan",
+          "50+ modul pelatihan dengan pelacakan kemajuan",
+          "Halaman Jalur Saya + pelacakan kemajuan",
           "8 Asesmen Kepribadian\nDISC - Enneagram - 5 Bahasa Penghargaan - Roda Kehidupan - Tiga Gaya Berpikir - Karunia Rohani - Big Five - 16 Kepribadian",
           "Konten baru saat diluncurkan",
         ]
       : [
           "50+ training modules on Cross-Cultural Leadership",
-          "Personal dashboard + progress tracking",
+          "My Pathway page + progress tracking",
           "8 Personality Assessments\nDISC - Enneagram - 5 Languages of Appreciation - Wheel of Life - Three Thinking Styles - Spiritual Gifts - Big Five - 16 Personalities",
           "Direct access to new content as it launches",
         ],
@@ -397,7 +397,7 @@ export default function PricingContent({ currency }: Props) {
           },
           {
             q: "Apa yang termasuk dalam paket Personal dan Tim?",
-            a: `Paket Personal memberikan satu orang akses permanen ke seluruh perpustakaan konten, dasbor pribadi, dan seluruh asesmen kepribadian. Paket Tim memberikan semua isi Personal kepada setiap anggota tim, ditambah Perjalanan Pertumbuhan Tim: modul yang ditulis khusus untuk pengembangan tim dan membentuk budaya tim. Anda juga mendapat hasil seluruh tim dan dasbor tim dengan kontrol untuk pemimpin.`,
+            a: `Paket Personal memberikan satu orang akses permanen ke seluruh perpustakaan konten, halaman Jalur Saya, dan seluruh asesmen kepribadian. Paket Tim memberikan semua isi Personal kepada setiap anggota tim, ditambah Perjalanan Pertumbuhan Tim: modul yang ditulis khusus untuk pengembangan tim dan membentuk budaya tim. Anda juga mendapat hasil seluruh tim dan dasbor tim dengan kontrol untuk pemimpin.`,
           },
           {
             q: "Bagaimana harga paket Tim dihitung?",
@@ -427,7 +427,7 @@ export default function PricingContent({ currency }: Props) {
           },
           {
             q: "What's included in Personal vs Team?",
-            a: `Personal gives one person lifetime access to the full content library, a personal dashboard, and every personality assessment. Team gives everything in Personal to every person on the team, plus the Team Growth Journey: modules written for team development and shaping team culture. You also get the whole team's results and a team dashboard with leader controls.`,
+            a: `Personal gives one person lifetime access to the full content library, a My Pathway page, and every personality assessment. Team gives everything in Personal to every person on the team, plus the Team Growth Journey: modules written for team development and shaping team culture. You also get the whole team's results and a team dashboard with leader controls.`,
           },
           {
             q: "How is Team priced?",

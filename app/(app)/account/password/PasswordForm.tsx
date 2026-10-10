@@ -60,7 +60,7 @@ export default function PasswordForm() {
           href="/dashboard"
           style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.875rem", color: "white", background: orange, padding: "0.875rem 2rem", textDecoration: "none", display: "inline-block" }}
         >
-          Back to Dashboard →
+          Back to Home →
         </Link>
       </div>
     );

@@ -268,11 +268,11 @@ export default function RedLightGreenLightClient({
           <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
             {!saved ? (
               <button onClick={handleSave} disabled={isPending} style={{ background: "transparent", color: "oklch(85% 0.04 260)", padding: "13px 28px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", cursor: "pointer" }}>
-                {isPending ? t("Saving—", "Menyimpan—", "Opslaan—") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
+                {isPending ? t("Saving—", "Menyimpan—", "Opslaan—") : t("Save to My Pathway", "Simpan ke Jalur Saya", "Save to My Pathway")}
               </button>
             ) : (
               <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "oklch(65% 0.15 145)", fontSize: 14, fontWeight: 600, padding: "13px 0" }}>
-                ? {t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard")}
+                ? {t("Saved to My Pathway", "Tersimpan di Jalur Saya", "Saved to My Pathway")}
               </span>
             )}
           </div>
@@ -519,7 +519,7 @@ export default function RedLightGreenLightClient({
                         disabled={isSavingScore}
                         style={{ background: "oklch(22% 0.10 260)", color: "white", padding: "12px 28px", borderRadius: 12, fontWeight: 700, fontSize: 13, border: "none", cursor: "pointer", letterSpacing: "0.04em" }}
                       >
-                        {isSavingScore ? t("Saving—", "Menyimpan—", "Opslaan—") : t("Save Score to Dashboard", "Simpan Skor ke Dashboard", "Score Opslaan in Dashboard")}
+                        {isSavingScore ? t("Saving—", "Menyimpan—", "Opslaan—") : t("Save Score to My Pathway", "Simpan Skor ke Jalur Saya", "Save Score to My Pathway")}
                       </button>
                     ) : (
                       <span style={{ display: "flex", alignItems: "center", gap: 6, color: "oklch(40% 0.16 145)", fontWeight: 700, fontSize: 13 }}>? {t("Score Saved", "Skor Disimpan", "Score Opgeslagen")}</span>

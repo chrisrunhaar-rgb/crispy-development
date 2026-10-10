@@ -293,7 +293,7 @@ export default function SixThinkingHatsClient({ userPathway, isSaved: initialSav
           <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
             <button onClick={handleSave} disabled={saved || isPending} style={{ display: "inline-flex", alignItems: "center", gap: 8, background: saved ? "oklch(35% 0.08 260)" : "transparent", color: "oklch(75% 0.04 260)", padding: "14px 28px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", cursor: saved ? "default" : "pointer" }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
-              {saved ? tr("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard") : tr("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
+              {saved ? tr("Saved to My Pathway", "Tersimpan di Jalur Saya", "Saved to My Pathway") : tr("Save to My Pathway", "Simpan ke Jalur Saya", "Save to My Pathway")}
             </button>
           </div>
         </div>

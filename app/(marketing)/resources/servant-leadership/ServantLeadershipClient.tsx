@@ -419,8 +419,8 @@ const L: Record<Lang, {
     bgBody: "David Crowther's critique (2024) distinguishes moral integrity — consistent across cultures — from egalitarianism, which research consistently identifies as the weakest cross-cultural dimension of servant leadership. Greenleaf's (1970) original framework places the test in followers: do those served grow as persons? Biblical scholarship on Philippians 2 identifies four kenosis implications: status relinquishment, receptive learning, power distribution, and identity transformation. Ezekiel 34 provides the negative image — the failed shepherd — against which servant leadership is measured. The deepest challenge for cross-cultural servant leaders is not learning humility but learning whose definition of humility applies.",
     readMore: "Read the research background",
     readLess: "Read less",
-    saveDashboard: "Save to Dashboard",
-    savedDashboard: "Saved to Dashboard",
+    saveDashboard: "Save to My Pathway",
+    savedDashboard: "Saved to My Pathway",
   },
 
   id: {
@@ -477,8 +477,8 @@ const L: Record<Lang, {
     bgBody: "Kritik David Crowther (2024) membedakan integritas moral — konsisten lintas budaya — dari egalitarianisme, yang penelitian secara konsisten mengidentifikasi sebagai dimensi lintas budaya yang paling lemah dalam kepemimpinan hamba. Kerangka asli Greenleaf (1970) menempatkan ujian pada pengikut: apakah mereka yang dilayani tumbuh sebagai pribadi? Beasiswa Alkitab tentang Filipi 2 mengidentifikasi empat implikasi kenosis: pelepasan status, belajar dengan terbuka, distribusi kuasa, dan transformasi identitas. Yehezkiel 34 memberikan gambaran negatif — gembala yang gagal — di mana kepemimpinan hamba diukur.",
     readMore: "Baca latar belakang penelitian",
     readLess: "Baca lebih sedikit",
-    saveDashboard: "Simpan ke Dasbor",
-    savedDashboard: "Tersimpan di Dasbor",
+    saveDashboard: "Simpan ke Jalur Saya",
+    savedDashboard: "Tersimpan di Jalur Saya",
   },
 };
 

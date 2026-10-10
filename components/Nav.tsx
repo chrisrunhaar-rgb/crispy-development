@@ -156,7 +156,7 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
               /* Logged in: Dashboard button + avatar */
               <>
                 <Link href="/dashboard" className="btn-primary hidden-mobile" style={{ padding: "0.5rem 1.25rem", fontSize: "0.75rem" }}>
-                  My Dashboard
+                  Home
                 </Link>
 
                 {/* Profile avatar with dropdown */}
@@ -270,7 +270,7 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
 
             {firstName ? (
               <Link href="/dashboard" className="btn-primary" style={{ marginTop: "0.5rem", justifyContent: "center" }} onClick={() => setOpen(false)}>
-                My Dashboard
+                Home
               </Link>
             ) : (
               <>

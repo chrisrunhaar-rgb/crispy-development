@@ -414,7 +414,7 @@ export default function WelcomeClient({ firstName, currentLanguage, preview = fa
             <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", marginBottom: "2.5rem" }}>
               {[
                 { icon: "📚", title: "Resource Library", desc: "Assessments, frameworks, and tools for cross-cultural leaders." },
-                { icon: "🧭", title: "Personal Dashboard", desc: "Track your progress, save resources, and see your assessment results." },
+                { icon: "🧭", title: "My Pathway", desc: "Track your progress, save resources, and see your assessment results." },
                 { icon: "🗺️", title: "Your Learning Path", desc: "Work through modules at your own pace and build your leadership toolkit." },
               ].map(({ icon, title, desc }) => (
                 <div key={title} style={{ display: "flex", gap: "1rem", padding: "1rem", background: "white", border: "1px solid oklch(90% 0.005 80)" }}>
@@ -428,7 +428,7 @@ export default function WelcomeClient({ firstName, currentLanguage, preview = fa
             </div>
 
             <PrimaryBtn onClick={finish} disabled={completing}>
-              {completing ? "Setting up…" : "Go to Dashboard →"}
+              {completing ? "Setting up…" : "Go to Home →"}
             </PrimaryBtn>
           </div>
         )}
