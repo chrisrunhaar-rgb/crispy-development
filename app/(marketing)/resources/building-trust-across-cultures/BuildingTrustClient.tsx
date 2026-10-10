@@ -324,6 +324,93 @@ const CHECKLIST = {
   },
 };
 
+const OPEN_DOOR_INTRO = {
+  en: "Trust grows partly through what a leader says on purpose. Each sentence below is a small promise. It builds trust only when your behaviour keeps it.",
+  id: "Kepercayaan tumbuh sebagian dari apa yang seorang pemimpin ucapkan dengan sengaja. Setiap kalimat di bawah ini adalah janji kecil. Kalimat itu membangun kepercayaan hanya jika perilaku Anda menepatinya.",
+};
+
+const OPEN_DOOR_CLOSING = {
+  en: "In relationship-based cultures, the meal, the visit and the time you give often speak louder than any sentence.",
+  id: "Dalam budaya yang berbasis hubungan, makan bersama, kunjungan, dan waktu yang Anda berikan sering berbicara lebih keras daripada kalimat apa pun.",
+};
+
+const OPEN_DOOR_PHRASES = {
+  en: [
+    {
+      sentence: "I want to understand what is working here before I change anything.",
+      signal: "Affective and cognitive. People hear that their past work counts, and that your decisions will rest on facts.",
+      note: "The promise holds only if your first weeks are spent asking and listening. One early change made without explanation can undo it.",
+    },
+    {
+      sentence: "What do you need from me to do your work well?",
+      signal: "Cognitive. It presents you as someone who helps the work move, rather than someone who only checks results.",
+      note: "In high power-distance teams, people may hesitate to ask a leader for anything. Ask one-on-one, offer a few examples, and act quickly on the first small request.",
+    },
+    {
+      sentence: "I am still learning how things work here, so I will lean on your experience.",
+      signal: "Affective. It shows humility and gives people a real part in your learning.",
+      note: "Where people expect a strong leader, admitting gaps may read as weakness. Pair it with clear competence in the areas you do know, and keep decisions moving.",
+    },
+    {
+      sentence: "When I get something wrong, I would like you to tell me. I will listen and put it right.",
+      signal: "Both. It invites honesty, and the promise to put things right shows you can still deliver.",
+      note: "Many teams may not correct a leader in public. Make room for private feedback, and thank the first person who uses it so others can see it is safe.",
+    },
+    {
+      sentence: "I would like to know what you are good at, beyond your job description.",
+      signal: "Affective and cognitive. People feel seen, and you learn where the real strengths sit.",
+      note: "Some people may feel uncomfortable talking about their own strengths. Ask their colleagues too, and pay attention to the work itself.",
+    },
+    {
+      sentence: "If something is not working for the team, I would rather hear about it early.",
+      signal: "Cognitive. It shows you want problems raised while they are still small.",
+      note: "Asking people to name their own frustrations can cost them face. Ask about the team rather than the person, keep it one-on-one, or let a trusted colleague bring concerns to you.",
+    },
+    {
+      sentence: "What happened before I arrived will not count against you.",
+      signal: "Affective. It eases old fears and gives people a fresh start.",
+      note: "People will test this promise. Keep old reports and past mistakes out of your early judgements, and over time it will be believed.",
+    },
+  ],
+  id: [
+    {
+      sentence: "Saya ingin memahami apa yang sudah berjalan baik di sini sebelum saya mengubah apa pun.",
+      signal: "Afektif dan kognitif. Orang mendengar bahwa pekerjaan mereka selama ini dihargai, dan bahwa keputusan Anda akan berdasarkan fakta.",
+      note: "Janji ini hanya bertahan jika minggu-minggu pertama Anda diisi dengan bertanya dan mendengarkan. Satu perubahan awal tanpa penjelasan dapat merusaknya.",
+    },
+    {
+      sentence: "Apa yang Anda butuhkan dari saya agar dapat bekerja dengan baik?",
+      signal: "Kognitif. Anda tampil sebagai orang yang membantu pekerjaan berjalan, bukan hanya orang yang memeriksa hasil.",
+      note: "Dalam tim dengan jarak kekuasaan tinggi, orang mungkin ragu meminta sesuatu kepada pemimpin. Tanyakan secara empat mata, berikan beberapa contoh, dan tanggapi permintaan kecil pertama dengan cepat.",
+    },
+    {
+      sentence: "Saya masih belajar bagaimana segala sesuatu berjalan di sini, jadi saya akan mengandalkan pengalaman Anda.",
+      signal: "Afektif. Ini menunjukkan kerendahan hati dan memberi orang peran nyata dalam proses belajar Anda.",
+      note: "Di tempat yang mengharapkan pemimpin yang kuat, mengakui kekurangan dapat terlihat sebagai kelemahan. Imbangi dengan kompetensi yang jelas di bidang yang Anda kuasai, dan pastikan keputusan tetap berjalan.",
+    },
+    {
+      sentence: "Ketika saya keliru, saya ingin Anda memberi tahu saya. Saya akan mendengarkan dan memperbaikinya.",
+      signal: "Keduanya. Ini mengundang kejujuran, dan janji untuk memperbaiki menunjukkan bahwa Anda tetap mampu bekerja dengan baik.",
+      note: "Banyak tim mungkin tidak mengoreksi pemimpin di depan umum. Sediakan ruang untuk masukan secara pribadi, dan berterima kasihlah kepada orang pertama yang memakainya agar yang lain melihat bahwa itu aman.",
+    },
+    {
+      sentence: "Saya ingin tahu apa keahlian Anda, lebih dari sekadar yang tertulis di uraian tugas.",
+      signal: "Afektif dan kognitif. Orang merasa diperhatikan, dan Anda belajar di mana kekuatan yang sebenarnya.",
+      note: "Sebagian orang mungkin merasa tidak nyaman membicarakan kekuatan mereka sendiri. Tanyakan juga kepada rekan-rekannya, dan perhatikan pekerjaannya secara langsung.",
+    },
+    {
+      sentence: "Jika ada sesuatu yang tidak berjalan baik bagi tim, saya lebih suka mendengarnya sejak awal.",
+      signal: "Kognitif. Ini menunjukkan bahwa Anda ingin masalah diangkat selagi masih kecil.",
+      note: "Meminta orang menyebut kekecewaan pribadinya dapat membuat mereka kehilangan muka. Tanyakan tentang tim, bukan tentang orangnya, bicarakan secara empat mata, atau biarkan rekan yang dipercaya menyampaikan kekhawatiran kepada Anda.",
+    },
+    {
+      sentence: "Apa yang terjadi sebelum saya datang tidak akan diperhitungkan terhadap Anda.",
+      signal: "Afektif. Ini meredakan ketakutan lama dan memberi orang awal yang baru.",
+      note: "Orang akan menguji janji ini. Jauhkan laporan lama dan kesalahan masa lalu dari penilaian awal Anda, dan seiring waktu janji ini akan dipercaya.",
+    },
+  ],
+};
+
 const KEY_TAKEAWAYS = [
   {
     en: {
@@ -1123,6 +1210,43 @@ export default function BuildingTrustClient({ isSaved: initialSaved }: Props) {
               })}
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* 9b: Words that open the door */}
+      <div style={{ background: OFF_WHITE, padding: "72px 24px" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+          <p style={eyebrow}>{t("Leader Language", "Bahasa Pemimpin")}</p>
+          <h2 style={{ fontFamily: FONT_HEADLINE, fontSize: "clamp(24px, 3vw, 36px)", fontWeight: 600, color: NAVY, margin: "0 0 8px", lineHeight: 1.2 }}>
+            {t("Words that open the door", "Kata-kata yang membuka pintu")}
+          </h2>
+          <p style={{ fontFamily: FONT_BODY, fontSize: 15, color: BODY_TEXT, lineHeight: 1.75, margin: "0 0 36px" }}>
+            {OPEN_DOOR_INTRO[lang]}
+          </p>
+          <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+            {OPEN_DOOR_PHRASES[lang].map((item, i) => (
+              <div key={i} style={{ background: LIGHT_GRAY, borderRadius: 12, padding: "24px 28px" }}>
+                <p style={{ fontFamily: FONT_HEADLINE, fontSize: "clamp(20px, 2.4vw, 24px)", fontStyle: "italic", fontWeight: 600, color: NAVY, lineHeight: 1.35, margin: "0 0 16px" }}>
+                  &ldquo;{item.sentence}&rdquo;
+                </p>
+                <p style={{ fontFamily: FONT_BODY, fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: NAVY, margin: "0 0 4px" }}>
+                  {t("What it signals", "Sinyal yang dikirim")}
+                </p>
+                <p style={{ fontFamily: FONT_BODY, fontSize: 15, color: BODY_TEXT, lineHeight: 1.7, margin: "0 0 14px" }}>
+                  {item.signal}
+                </p>
+                <p style={{ fontFamily: FONT_BODY, fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: NAVY, margin: "0 0 4px" }}>
+                  {t("Across cultures", "Lintas budaya")}
+                </p>
+                <p style={{ fontFamily: FONT_BODY, fontSize: 15, color: BODY_TEXT, lineHeight: 1.7, margin: 0 }}>
+                  {item.note}
+                </p>
+              </div>
+            ))}
+          </div>
+          <p style={{ fontFamily: FONT_HEADLINE, fontSize: "clamp(19px, 2.2vw, 22px)", fontStyle: "italic", color: NAVY, lineHeight: 1.5, margin: "36px 0 0", textAlign: "center" }}>
+            {OPEN_DOOR_CLOSING[lang]}
+          </p>
         </div>
       </div>
 
